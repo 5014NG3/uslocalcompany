@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask import g
 import os
@@ -42,8 +42,18 @@ def hello(name):
 
 @app.route('/api/<state>')
 def index(state):
+
+    offset = 0
+    if 'offset' in request.args:
+        offset = request.args['offset']
+        if offset.isdigit():
+            offset = int(offset)
+        else:
+            offset = 0
+
     state = str(state).upper()
-    results = query_db("SELECT * FROM public.usa_sba WHERE state = %s;", (state,), one=False)
+    print("offset : ", offset)
+    results = query_db("SELECT * FROM public.usa_sba WHERE state = %s ORDER BY zip LIMIT 10 OFFSET %s;", (state,offset,), one=False)
     columns = ["index","view","firm_name","person","title","address_line_1","address_line_2","city","state","zip","capabilities","email","website","area","plusfour","full_zip","actual_city"]
     json_data = []
     for row in results:
