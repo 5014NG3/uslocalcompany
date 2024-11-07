@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Pagination, Dropdown, Container, Col, Row } from "react-bootstrap";
+import { Pagination, Container, Col, Row } from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
+import Select from 'react-select'
+
 
 
 
@@ -15,6 +17,68 @@ export default function App() {
     biz_count: 0
 
   });
+
+  let abbreviation_to_name = {
+    "AK": "Alaska",
+    "AL": "Alabama",
+    "AR": "Arkansas",
+    "AZ": "Arizona",
+    "CA": "California",
+    "CO": "Colorado",
+    "CT": "Connecticut",
+    "DE": "Delaware",
+    "FL": "Florida",
+    "GA": "Georgia",
+    "HI": "Hawaii",
+    "IA": "Iowa",
+    "ID": "Idaho",
+    "IL": "Illinois",
+    "IN": "Indiana",
+    "KS": "Kansas",
+    "KY": "Kentucky",
+    "LA": "Louisiana",
+    "MA": "Massachusetts",
+    "MD": "Maryland",
+    "ME": "Maine",
+    "MI": "Michigan",
+    "MN": "Minnesota",
+    "MO": "Missouri",
+    "MS": "Mississippi",
+    "MT": "Montana",
+    "NC": "North Carolina",
+    "ND": "North Dakota",
+    "NE": "Nebraska",
+    "NH": "New Hampshire",
+    "NJ": "New Jersey",
+    "NM": "New Mexico",
+    "NV": "Nevada",
+    "NY": "New York",
+    "OH": "Ohio",
+    "OK": "Oklahoma",
+    "OR": "Oregon",
+    "PA": "Pennsylvania",
+    "RI": "Rhode Island",
+    "SC": "South Carolina",
+    "SD": "South Dakota",
+    "TN": "Tennessee",
+    "TX": "Texas",
+    "UT": "Utah",
+    "VA": "Virginia",
+    "VT": "Vermont",
+    "WA": "Washington",
+    "WI": "Wisconsin",
+    "WV": "West Virginia",
+    "WY": "Wyoming",
+    "DC": "District of Columbia",
+    "AS": "American Samoa",
+    "GU": "Guam GU",
+    "MP": "Northern Mariana Islands",
+    "PR": "Puerto Rico PR",
+    "VI": "U.S. Virgin Islands",
+  }
+
+
+
 
   useEffect(() => {
     if (state.city !== "" && state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
@@ -79,39 +143,44 @@ export default function App() {
     <div className="App">
       <h2 className="mt-5 px-4">US Small bizzes</h2>
 
+
       <Container>
-
         <Row>
-
-          <Col xs="auto">
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                State
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu style={{ minWidth: '1vh', maxHeight: '25vh', overflowY: 'auto' }}>
-                {Object.keys(state_meta_data).map((key) => (
-                  <Dropdown.Item key={key} onClick={() => handleStateChange(key)}>{key}</Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-
-
-          <Col xs="auto">
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                City
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu style={{ maxHeight: '25vh', overflowY: 'auto' }}>
-                {state_meta_data[state.stateName]?.map((item) => (
-                  <Dropdown.Item key={item.city} onClick={() => handleCityChange(item.city, item.business_count)}>{item.city}</Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+          <Col>
+            <Select onChange = {(option) => handleStateChange(option.value)} styles={{
+              control: (base, state) => ({
+                ...base,
+                borderColor: state.isFocused ? 'grey' : 'red',
+                width: '20vh'
+              }),
+              menu: (base) => ({
+                ...base,
+                width: '20vh'
+              })
+            }}
+              options={Object.keys(state_meta_data).map(key => ({ value: key, label: abbreviation_to_name[key] }))} />
           </Col>
         </Row>
+
+        <Row>
+          <Col>
+            <Select onChange = {(option) => handleCityChange(option.value.city, option.value.business_count)} styles={{
+              control: (base, state) => ({
+                ...base,
+                borderColor: state.isFocused ? 'grey' : 'red',
+                width: '20vh'
+              }),
+              menu: (base) => ({
+                ...base,
+                width: '20vh'
+              })
+            }}
+              options={state_meta_data[state.stateName]?.map((item) => ({ value: item, label: item.city }))} />
+          </Col>
+        </Row>
+
+
+
 
 
       </Container>
@@ -132,7 +201,7 @@ export default function App() {
 
 
       <Pagination className="px-4">
-        {[...Array(Math.ceil(state.biz_count/10))].map((_, index) => {
+        {[...Array(Math.ceil(state.biz_count / 10))].map((_, index) => {
           const pageNumber = index + 1;
           return (
             <Pagination.Item
