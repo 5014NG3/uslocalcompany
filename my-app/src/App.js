@@ -4,19 +4,21 @@ import { Pagination, Dropdown, Container, Col, Row } from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
 
 
+
+
 export default function App() {
   const [state, setState] = useState({
     data: [],
     activePage: 1,
-    stateName: "sd",
+    stateName: "",
     city: "",
     biz_count: 0
 
   });
 
   useEffect(() => {
-    if (state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
-      fetch(`http://localhost:5000/api/${state.stateName}?offset=${10 * (state.activePage - 1)}`)
+    if (state.city !== "" && state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
+      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${10 * (state.activePage - 1)}`)
         .then(response => response.json())
         .then(responseData => {
           setState(prevState => ({
@@ -28,12 +30,12 @@ export default function App() {
           console.error('Error fetching data:', error);
         });
     }
-  }, [state.activePage, state.stateName]);
+  }, [state.activePage, state.stateName, state.city]);
 
   const handlePageChange = (pageNumber) => {
 
-    if (state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
-      fetch(`http://localhost:5000/api/${state.stateName}?offset=${10 * (pageNumber - 1)}`)
+    if (state.city !== "" && state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
+      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${10 * (pageNumber - 1)}`)
         .then(response => response.json())
         .then(responseData => {
           setState(prevState => ({
@@ -51,19 +53,29 @@ export default function App() {
   const handleStateChange = (new_state) => {
     setState(prevState => ({
       ...prevState,
-      stateName: new_state
+      stateName: new_state,
+      city: "",
+      biz_count: 0,
+      data: [],
+      activePage: 1
+
     }));
   }
 
-  const handleCityChange = (new_city) => {
+  const handleCityChange = (new_city, business_count) => {
     setState(prevState => ({
       ...prevState,
-      city: new_city
+      city: new_city,
+      biz_count: business_count,
+      activePage: 1,
     }));
   }
 
 
   return (
+
+
+
     <div className="App">
       <h2 className="mt-5 px-4">US Small bizzes</h2>
 
@@ -94,7 +106,7 @@ export default function App() {
 
               <Dropdown.Menu style={{ maxHeight: '25vh', overflowY: 'auto' }}>
                 {state_meta_data[state.stateName]?.map((item) => (
-                  <Dropdown.Item key={item.city} onClick={() => handleCityChange(item.city)}>{item.city}</Dropdown.Item>
+                  <Dropdown.Item key={item.city} onClick={() => handleCityChange(item.city, item.business_count)}>{item.city}</Dropdown.Item>
                 ))}
               </Dropdown.Menu>
             </Dropdown>
@@ -117,15 +129,18 @@ export default function App() {
         })}
       </ul>
 
+
+
       <Pagination className="px-4">
-        {Array(6).fill(null, 0, 5).map((_, index) => {
+        {[...Array(Math.ceil(state.biz_count/10))].map((_, index) => {
+          const pageNumber = index + 1;
           return (
             <Pagination.Item
-              onClick={() => handlePageChange(index + 1)}
-              key={index + 1}
-              active={index + 1 === state.activePage}
+              onClick={() => handlePageChange(pageNumber)}
+              key={pageNumber}
+              active={pageNumber === state.activePage}
             >
-              {index + 1}
+              {pageNumber}
             </Pagination.Item>
           );
         })}
