@@ -70,7 +70,7 @@ def index(state):
             offset = 0
 
     state = str(state).upper()
-    results = query_db("SELECT * FROM public.usa_sba WHERE state = %s AND actual_city = %s ORDER BY zip LIMIT 10 OFFSET %s;", (state,city,offset,), one=False)
+    results = query_db("SELECT * FROM public.usa_sba WHERE state = %s AND actual_city = %s ORDER BY zip LIMIT 20 OFFSET %s;", (state,city,offset,), one=False)
     columns = ["index","view","firm_name","person","title","address_line_1","address_line_2","city","state","zip","capabilities","email","website","area","plusfour","full_zip","actual_city"]
     json_data = []
     for row in results:

@@ -4,9 +4,7 @@ import { Pagination, Container, Col, Row } from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
 import Select from 'react-select'
 
-
-
-
+const query_offset = 20
 
 export default function App() {
   const [state, setState] = useState({
@@ -82,7 +80,7 @@ export default function App() {
 
   useEffect(() => {
     if (state.city !== "" && state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
-      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${10 * (state.activePage - 1)}`)
+      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${query_offset * (state.activePage - 1)}`)
         .then(response => response.json())
         .then(responseData => {
           setState(prevState => ({
@@ -99,7 +97,7 @@ export default function App() {
   const handlePageChange = (pageNumber) => {
 
     if (state.city !== "" && state.stateName !== "" && !isNaN(state.activePage) && state.activePage > 0) {
-      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${10 * (pageNumber - 1)}`)
+      fetch(`http://localhost:5000/api/${state.stateName}?city=${state.city}&offset=${query_offset * (pageNumber - 1)}`)
         .then(response => response.json())
         .then(responseData => {
           setState(prevState => ({
@@ -164,7 +162,7 @@ export default function App() {
 
         <Row>
           <Col>
-            <Select onChange = {(option) => handleCityChange(option.value.city, option.value.business_count)} styles={{
+            <Select key = {state.stateName} onChange = {(option) => handleCityChange(option.value.city, option.value.business_count)} styles={{
               control: (base, state) => ({
                 ...base,
                 borderColor: state.isFocused ? 'grey' : 'red',
@@ -201,7 +199,7 @@ export default function App() {
 
 
       <Pagination className="px-4">
-        {[...Array(Math.ceil(state.biz_count / 10))].map((_, index) => {
+        {[...Array(Math.ceil(state.biz_count / 20))].map((_, index) => {
           const pageNumber = index + 1;
           return (
             <Pagination.Item
