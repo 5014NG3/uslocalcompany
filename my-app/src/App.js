@@ -142,44 +142,47 @@ export default function App() {
       <h2 className="mt-5 px-4">US Small bizzes</h2>
 
 
-      <Container >
-        <Row>
-          <Col>
+      <Container className="d-flex">
+        <Row >
+          <Col  >
             <Select
-              placeholder = "State"
+              
+              placeholder="State"
               onChange={(option) => handleStateChange(option.value)}
               styles={{
                 control: (base) => ({
                   ...base,
-                  width: '10vw',
+                  width: '25vh',
                   backgroundColor: 'var(--bs-body-bg)',
 
                 }),
-                menu: (base, state) => ({
+                menu: (base) => ({
                   ...base,
-                  width: '10vw',
+                  width: '25vh',
                   backgroundColor: 'var(--bs-body-bg)',
                   color: 'var(--bs-body-color)',
+                  zIndex: 9999, // Set a very high zIndex
+
                 }),
                 singleValue: (base) => ({
                   ...base,
-                  color: 'var(--bs-body-color)' 
+                  color: 'var(--bs-body-color)'
                 }),
                 placeholder: (base) => ({
                   ...base,
-                  color: 'var(--bs-body-color)'  
+                  color: 'var(--bs-body-color)'
                 }),
                 input: (base) => ({
                   ...base,
-                  color: 'var(--bs-body-color)'  
+                  color: 'var(--bs-body-color)'
                 }),
-                option: (base,state) => ({
+                option: (base, state) => ({
                   ...base,
                   backgroundColor: state.isSelected
-                  ? 'var(--bs-primary)'         // Color for selected option
-                  : state.isFocused
+                    ? 'var(--bs-primary)'         // Color for selected option
+                    : state.isFocused
                       ? 'var(--bs-primary)'     // Color when hovering
-                      : 'var(--bs-body-bg)'              
+                      : 'var(--bs-body-bg)'
                 })
 
               }}
@@ -187,53 +190,50 @@ export default function App() {
 
             />
           </Col>
-        </Row>
 
-        <Row>
-          <Col>
-            <Select placeholder = "City" 
-            key={state.stateName} 
-            onChange={(option) => handleCityChange(option.value.city, option.value.business_count)} 
-            styles={{
-              control: (base) => ({
-                ...base,
-                backgroundColor: 'var(--bs-body-bg)',
-                width: '10vw',
-              }),
-              menu: (base) => ({
-                ...base,
-                width: '10vw',
-                backgroundColor: 'var(--bs-body-bg)',
-              }),
-              singleValue: (base) => ({
-                ...base,
-                color: 'var(--bs-body-color)' 
-              }),
-              placeholder: (base) => ({
-                ...base,
-                color: 'var(--bs-body-color)'  
-              }),
-              input: (base) => ({
-                ...base,
-                color: 'var(--bs-body-color)'  
-              }),
-              option: (base,state) => ({
-                ...base,
-                backgroundColor: state.isSelected
-                ? 'var(--bs-primary)'         // Color for selected option
-                : state.isFocused
-                    ? 'var(--bs-primary)'     // Color when hovering
-                    : 'var(--bs-body-bg)'              
-              })
+          <Col >
+            <Select placeholder="City"
+              key={state.stateName}
+              onChange={(option) => handleCityChange(option.value.city, option.value.business_count)}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  backgroundColor: 'var(--bs-body-bg)',
+                  width: '25vh',
 
-            }}
-            options={state_meta_data[state.stateName]?.map((item) => ({ value: item, label: item.city }))} />
+                }),
+                menu: (base) => ({
+                  ...base,
+                  width: '25vh',
+                  backgroundColor: 'var(--bs-body-bg)',
+                  zIndex: 9999, // Set a very high zIndex
+
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)'
+                }),
+                placeholder: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)'
+                }),
+                input: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)'
+                }),
+                option: (base, state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected
+                    ? 'var(--bs-primary)'         // Color for selected option
+                    : state.isFocused
+                      ? 'var(--bs-primary)'     // Color when hovering
+                      : 'var(--bs-body-bg)'
+                })
+
+              }}
+              options={state_meta_data[state.stateName]?.map((item) => ({ value: item, label: item.city }))} />
           </Col>
         </Row>
-
-
-
-
 
       </Container>
 
