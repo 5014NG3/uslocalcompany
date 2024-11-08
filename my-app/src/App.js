@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Pagination, Container, Col, Row, Card, Button , Stack, Badge} from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
@@ -14,9 +14,70 @@ const area_to_name = {
 const area_to_color = {
   "RAD" : "success",
   "SVC" : "danger",
-  "MFG" : "info",
+  "MFG" : "primary",
   "CON" : "secondary"
 }
+
+
+const abbreviation_to_name = {
+  "AK": "Alaska",
+  "AL": "Alabama",
+  "AR": "Arkansas",
+  "AZ": "Arizona",
+  "CA": "California",
+  "CO": "Colorado",
+  "CT": "Connecticut",
+  "DE": "Delaware",
+  "FL": "Florida",
+  "GA": "Georgia",
+  "HI": "Hawaii",
+  "IA": "Iowa",
+  "ID": "Idaho",
+  "IL": "Illinois",
+  "IN": "Indiana",
+  "KS": "Kansas",
+  "KY": "Kentucky",
+  "LA": "Louisiana",
+  "MA": "Massachusetts",
+  "MD": "Maryland",
+  "ME": "Maine",
+  "MI": "Michigan",
+  "MN": "Minnesota",
+  "MO": "Missouri",
+  "MS": "Mississippi",
+  "MT": "Montana",
+  "NC": "North Carolina",
+  "ND": "North Dakota",
+  "NE": "Nebraska",
+  "NH": "New Hampshire",
+  "NJ": "New Jersey",
+  "NM": "New Mexico",
+  "NV": "Nevada",
+  "NY": "New York",
+  "OH": "Ohio",
+  "OK": "Oklahoma",
+  "OR": "Oregon",
+  "PA": "Pennsylvania",
+  "RI": "Rhode Island",
+  "SC": "South Carolina",
+  "SD": "South Dakota",
+  "TN": "Tennessee",
+  "TX": "Texas",
+  "UT": "Utah",
+  "VA": "Virginia",
+  "VT": "Vermont",
+  "WA": "Washington",
+  "WI": "Wisconsin",
+  "WV": "West Virginia",
+  "WY": "Wyoming",
+  "DC": "District of Columbia",
+  "AS": "American Samoa",
+  "GU": "Guam GU",
+  "MP": "Northern Mariana Islands",
+  "PR": "Puerto Rico PR",
+  "VI": "U.S. Virgin Islands",
+}
+
 
 
 const query_offset = 20
@@ -81,64 +142,13 @@ export default function App() {
 
   });
 
-  let abbreviation_to_name = {
-    "AK": "Alaska",
-    "AL": "Alabama",
-    "AR": "Arkansas",
-    "AZ": "Arizona",
-    "CA": "California",
-    "CO": "Colorado",
-    "CT": "Connecticut",
-    "DE": "Delaware",
-    "FL": "Florida",
-    "GA": "Georgia",
-    "HI": "Hawaii",
-    "IA": "Iowa",
-    "ID": "Idaho",
-    "IL": "Illinois",
-    "IN": "Indiana",
-    "KS": "Kansas",
-    "KY": "Kentucky",
-    "LA": "Louisiana",
-    "MA": "Massachusetts",
-    "MD": "Maryland",
-    "ME": "Maine",
-    "MI": "Michigan",
-    "MN": "Minnesota",
-    "MO": "Missouri",
-    "MS": "Mississippi",
-    "MT": "Montana",
-    "NC": "North Carolina",
-    "ND": "North Dakota",
-    "NE": "Nebraska",
-    "NH": "New Hampshire",
-    "NJ": "New Jersey",
-    "NM": "New Mexico",
-    "NV": "Nevada",
-    "NY": "New York",
-    "OH": "Ohio",
-    "OK": "Oklahoma",
-    "OR": "Oregon",
-    "PA": "Pennsylvania",
-    "RI": "Rhode Island",
-    "SC": "South Carolina",
-    "SD": "South Dakota",
-    "TN": "Tennessee",
-    "TX": "Texas",
-    "UT": "Utah",
-    "VA": "Virginia",
-    "VT": "Vermont",
-    "WA": "Washington",
-    "WI": "Wisconsin",
-    "WV": "West Virginia",
-    "WY": "Wyoming",
-    "DC": "District of Columbia",
-    "AS": "American Samoa",
-    "GU": "Guam GU",
-    "MP": "Northern Mariana Islands",
-    "PR": "Puerto Rico PR",
-    "VI": "U.S. Virgin Islands",
-  }
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [state.data]);
+
 
 
 
