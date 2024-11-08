@@ -142,38 +142,92 @@ export default function App() {
       <h2 className="mt-5 px-4">US Small bizzes</h2>
 
 
-      <Container>
+      <Container >
         <Row>
           <Col>
-            <Select onChange = {(option) => handleStateChange(option.value)} styles={{
-              control: (base, state) => ({
-                ...base,
-                borderColor: state.isFocused ? 'grey' : 'red',
-                width: '20vh'
-              }),
-              menu: (base) => ({
-                ...base,
-                width: '20vh'
-              })
-            }}
-              options={Object.keys(state_meta_data).map(key => ({ value: key, label: abbreviation_to_name[key] }))} />
+            <Select
+              placeholder = "State"
+              onChange={(option) => handleStateChange(option.value)}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  width: '10vw',
+                  backgroundColor: 'var(--bs-body-bg)',
+
+                }),
+                menu: (base, state) => ({
+                  ...base,
+                  width: '10vw',
+                  backgroundColor: 'var(--bs-body-bg)',
+                  color: 'var(--bs-body-color)',
+                }),
+                singleValue: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)' 
+                }),
+                placeholder: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)'  
+                }),
+                input: (base) => ({
+                  ...base,
+                  color: 'var(--bs-body-color)'  
+                }),
+                option: (base,state) => ({
+                  ...base,
+                  backgroundColor: state.isSelected
+                  ? 'var(--bs-primary)'         // Color for selected option
+                  : state.isFocused
+                      ? 'var(--bs-primary)'     // Color when hovering
+                      : 'var(--bs-body-bg)'              
+                })
+
+              }}
+              options={Object.keys(state_meta_data).map(key => ({ value: key, label: abbreviation_to_name[key] }))}
+
+            />
           </Col>
         </Row>
 
         <Row>
           <Col>
-            <Select key = {state.stateName} onChange = {(option) => handleCityChange(option.value.city, option.value.business_count)} styles={{
-              control: (base, state) => ({
+            <Select placeholder = "City" 
+            key={state.stateName} 
+            onChange={(option) => handleCityChange(option.value.city, option.value.business_count)} 
+            styles={{
+              control: (base) => ({
                 ...base,
-                borderColor: state.isFocused ? 'grey' : 'red',
-                width: '20vh'
+                backgroundColor: 'var(--bs-body-bg)',
+                width: '10vw',
               }),
               menu: (base) => ({
                 ...base,
-                width: '20vh'
+                width: '10vw',
+                backgroundColor: 'var(--bs-body-bg)',
+              }),
+              singleValue: (base) => ({
+                ...base,
+                color: 'var(--bs-body-color)' 
+              }),
+              placeholder: (base) => ({
+                ...base,
+                color: 'var(--bs-body-color)'  
+              }),
+              input: (base) => ({
+                ...base,
+                color: 'var(--bs-body-color)'  
+              }),
+              option: (base,state) => ({
+                ...base,
+                backgroundColor: state.isSelected
+                ? 'var(--bs-primary)'         // Color for selected option
+                : state.isFocused
+                    ? 'var(--bs-primary)'     // Color when hovering
+                    : 'var(--bs-body-bg)'              
               })
+
             }}
-              options={state_meta_data[state.stateName]?.map((item) => ({ value: item, label: item.city }))} />
+            options={state_meta_data[state.stateName]?.map((item) => ({ value: item, label: item.city }))} />
           </Col>
         </Row>
 
