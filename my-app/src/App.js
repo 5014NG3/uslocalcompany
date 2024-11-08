@@ -1,10 +1,62 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Pagination, Container, Col, Row } from "react-bootstrap";
+import { Pagination, Container, Col, Row, Card, Button , Stack, Badge} from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
 import Select from 'react-select'
 
+const area_to_name = {
+  "RAD" : "Research & Development",
+  "SVC" : "Service",
+  "MFG" : "Manufacturing",
+  "CON" : "Construction"
+}
+
+const area_to_color = {
+  "RAD" : "success",
+  "SVC" : "danger",
+  "MFG" : "info",
+  "CON" : "secondary"
+}
+
+
 const query_offset = 20
+
+function GetAreaBadges({ areas }) {
+  const words = areas.split(" "); 
+  return (
+    <Stack direction="horizontal" gap={2} className = "pb-3" >
+      {words.map((area, index) => (
+        <Badge  style={{fontSize: '1.05rem'}} bg = {area_to_color[area]} key={index}>{area_to_name[area]}</Badge>
+      ))}
+    </Stack>
+  );
+}
+
+
+function HorizontalCard({item}) {
+
+  //"view","firm_name","person","title","address_line_1","address_line_2","city","state","zip","capabilities",
+  //"email","website","area","plusfour","full_zip","actual_city"
+  return (
+    <Card  style = {{maxWidth : "150vh"}}>
+      <Card.Header as="h4">{item.firm_name}</Card.Header>
+      <Card.Body>
+        <Card.Title as="h5">{item.person}</Card.Title>
+        <Card.Title as="h5">{item.title}</Card.Title>
+        <Card.Text>{`${item.address_line_1} ${item.address_line_2}, ${item.actual_city}, ${item.state}, ${item.full_zip}`}</Card.Text>
+        <Card.Text>{item.website}</Card.Text>
+        <Card.Text>{item.email}</Card.Text>
+        <Card.Text> {item.capabilities} </Card.Text>
+        <GetAreaBadges areas={item.area} />
+
+
+        <Button variant="primary">Go somewhere</Button>
+
+      </Card.Body>
+    </Card>
+  );
+}
+
 
 export default function App() {
   const [state, setState] = useState({
@@ -136,12 +188,8 @@ export default function App() {
 
   return (
 
-
-
     <div className="App">
       <h2 className="mt-5 px-4">US Small bizzes</h2>
-
-
       <Container className="d-flex">
         <Row >
           <Col  >
@@ -240,12 +288,14 @@ export default function App() {
 
 
       <ul className="list-group p-4">
-        {state.data.map((item) => {
-          return (
-            <li key={item.index} className="list-group-item">
-              <span className="font-weight-bold pr-2">{item.firm_name}.</span>{" "}
-              {item.area}
-            </li>
+        {state.data.map((item, index) => {
+          return (  
+
+            <div key = {index} className = "pb-5" >
+              <HorizontalCard item = {item}/>
+            </div>
+
+
           );
         })}
       </ul>
