@@ -26,11 +26,25 @@ function GetAreaBadges({ areas }) {
   return (
     <Stack direction="horizontal" gap={2} className = "pb-3" >
       {words.map((area, index) => (
-        <Badge  style={{fontSize: '1.05rem'}} bg = {area_to_color[area]} key={index}>{area_to_name[area]}</Badge>
+        <Badge style={{fontSize: '1.05rem'}} bg = {area_to_color[area]} key={index}>{area_to_name[area]}</Badge>
       ))}
     </Stack>
   );
 }
+
+
+function CreateLink({link}){
+  const protocol = "http";
+
+  if (link.toLowerCase().startsWith(protocol)){
+    return <a href={link} target="_blank" rel="noopener noreferrer">{link}</a>
+  }
+
+  else{
+    return <span>{link}</span>
+  }
+}
+
 
 
 function HorizontalCard({item}) {
@@ -41,10 +55,9 @@ function HorizontalCard({item}) {
     <Card  style = {{maxWidth : "150vh"}}>
       <Card.Header as="h4">{item.firm_name}</Card.Header>
       <Card.Body>
-        <Card.Title as="h5">{item.person}</Card.Title>
-        <Card.Title as="h5">{item.title}</Card.Title>
+        <Card.Title as="h5">{item.person}{item.title ? `, ${item.title}` : ''}</Card.Title>
         <Card.Text>{`${item.address_line_1} ${item.address_line_2}, ${item.actual_city}, ${item.state}, ${item.full_zip}`}</Card.Text>
-        <Card.Text>{item.website}</Card.Text>
+        <Card.Text> <CreateLink link={item.website} /> </Card.Text>
         <Card.Text>{item.email}</Card.Text>
         <Card.Text> {item.capabilities} </Card.Text>
         <GetAreaBadges areas={item.area} />
