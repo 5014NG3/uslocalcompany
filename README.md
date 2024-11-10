@@ -1,11 +1,19 @@
-mockup of local business finder within the united states
+# Local Business Finder (United States)
 
-made a basic webscraper for https://dsbs.sba.gov/search/dsp_dsbs.cfm , scrapes all city/zip code level small businesses within a state clean data using pandas and finally make into an sqlite db
-python using sqlite, pandas, beautiful soup to parse through the html data on each page of scraped data
+A web application for searching small businesses in the United States by state and city/zip code.
 
-flask server with basic api to query sqlite3 db for state and city level small businesses
+## Features:
 
-react app frontend, using react-bootstrap and react-select for the frontend 
+### Web Scraper:
+- Scrapes small business data (city/zip code level) from [DSBS](https://dsbs.sba.gov/search/dsp_dsbs.cfm) using Python.
+- Utilizes **BeautifulSoup** to parse HTML data from each page.
+- **Pandas** is used for cleaning and processing the scraped data.
+- Data is stored in an **SQLite** database.
 
+### Backend:
+- **Flask** server with a basic **API** to query the SQLite database by state and city.
 
-
+### Frontend:
+- **React** app for the user interface.
+- Uses **React-Bootstrap** for responsive design.
+- **React-Select** is used for state and city selection.
