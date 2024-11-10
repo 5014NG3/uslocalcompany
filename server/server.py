@@ -2,20 +2,30 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import sqlite3
 import pandas as pd
+from pathlib import Path
 
 DATABASE = 'us_sba.db'
 
-valid_cities = set(pd.read_csv("./valid_business_data/valid_cities.csv")["actual_city"])
-valid_states = set(pd.read_csv("./valid_business_data/valid_states.csv")["state"])
+
+base_dir = Path(__file__).resolve().parent
+valid_cities_path = base_dir / "valid_business_data" / "valid_cities.csv"
+valid_states_path = base_dir / "valid_business_data" / "valid_states.csv"
+valid_cities = set(pd.read_csv(valid_cities_path)["actual_city"])
+valid_states = set(pd.read_csv(valid_states_path)["state"])
 
 app = Flask(__name__)
 CORS(app)  
 
 def get_db_connection():
-    conn = sqlite3.connect('sbdata.db')
+    db_path = str(base_dir / 'sbdata.db')
+
+    print(db_path)
+    conn = sqlite3.connect(db_path)
     conn.execute("PRAGMA journal_mode=WAL;")
     conn.close()
     conn = sqlite3.connect('file:sbdata.db?mode=ro', uri=True)
+    # Query the sqlite_master table to get the table names
+
     return conn
 
 
