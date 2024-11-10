@@ -24,7 +24,6 @@ def get_db_connection():
     conn.execute("PRAGMA journal_mode=WAL;")
     conn.close()
     conn = sqlite3.connect('file:sbdata.db?mode=ro', uri=True)
-    # Query the sqlite_master table to get the table names
 
     return conn
 
@@ -43,12 +42,6 @@ def health_check():
         'message': 'Server is running'
     })
 
-# Example route with parameters
-@app.route('/api/hello/<name>', methods=['GET'])
-def hello(name):
-    return jsonify({
-        'message': f'Hello, {name}!'
-    })
 
 @app.route('/api/<state>')
 def index(state):
