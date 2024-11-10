@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 119 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.93 seconds and 2.01 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 16 
+(of 16 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1MNWKXL4MX9">1</a>","TACTICAL ELEMENT, INC.","DONALD HEATH","","11242 COUNTY ROAD 229","","OXFORD","FL","34484-3356","Tactical Element conducts a wide range of operations and training opportunities required of tactical law enforcement operators, tactical emergency medical operators, and military special operations forces expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#104;&#53;&#54;&#53;&#55;&#64;&#116;&#97;&#99;&#116;&#105;&#99;&#97;&#108;&#101;&#108;&#101;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">dch5657@tacticalelement.com</a>","http://www.tacticalelement.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KHABACBVBNM6">2</a>","CLEANROOM MANAGEMENT ASSOCIATES, INC.","ANNE MARIE DIXON","","2127 ISLEWORTH CIR","","THE VILLAGES","FL","32163-2662","We were founded over 40 years ago. We specialize in bench mark auditing, technical writing, design review and training for cleanrooms and controlled environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#101;&#109;&#97;&#114;&#105;&#101;&#64;&#99;&#108;&#101;&#97;&#110;&#114;&#111;&#111;&#109;&#109;&#97;&#110;&#97;&#103;&#101;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">annemarie@cleanroommanagement.com</a>","http://www.cleanroommanagement.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E5ACSBP2KK61">3</a>","THE ARCANUM GROUP, INC.","DAVID WATERS","","4076 E STATE ROAD 44 STE 39","","WILDWOOD","FL","34785-7486","The Arcanum Group is a Denver-based Service-Disabled Veteran-Owned Small Business (SDVOSB) providing nationwide program and project management support, technology solutions, and staffing support services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#46;&#119;&#97;&#116;&#101;&#114;&#115;&#64;&#116;&#104;&#101;&#97;&#114;&#99;&#97;&#110;&#117;&#109;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">david.waters@thearcanumgroup.com</a>","http://www.thearcanumgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DCL4D3SVG2X6">4</a>","MEDFIRST HEALTHCARE SUPPLY INC","KRISTEN ELLIS-LEGROS","","2842 COUNTY ROAD 523 STE B-05","","WILDWOOD","FL","34785-8043","Established 1990, attentive Customer Service, Assistance and Research, Women Owned Small Business, offering various Medical Supplies, Equipment, Instruments, Gloves.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#101;&#110;&#64;&#109;&#101;&#100;&#102;&#105;&#114;&#115;&#116;&#46;&#98;&#105;&#122;">kristen@medfirst.biz</a>","http://www.medfirst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K8HXF8WC7ZT4">5</a>","MEMCO, INC.","AMELIA EVANS","","1789 E C 48","","BUSHNELL","FL","33513-8182","We manufacture steel and stainless steel tanks from 300 gallons to 30,000 gallons complete with pumping systems, filters and monitoring equipment. we are also a distributer for petroleum equipment related to fuel systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#101;&#108;&#105;&#97;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#115;&#97;&#102;&#101;&#116;&#97;&#110;&#107;&#115;&#46;&#99;&#111;&#109;">amelia@envirosafetanks.com</a>","www.envirosafetanks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULT4XJJFN4Z5">6</a>","DORAN CONSULTING LLC","JOHN DORAN","","976 MAYNARD PATH","","THE VILLAGES","FL","32163-5636","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#111;&#114;&#97;&#110;&#64;&#100;&#111;&#114;&#97;&#110;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jdoran@doranconsulting.com</a>","http://www.doranconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1TXWXFVJGR6">7</a>","BLACK COACH TRANSPORTATION SERVICES LLC","ROBERT DIXON","","500 GILLIAM ST APT A2","","WILDWOOD","FL","34785-4658","Passenger Transportation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#99;&#107;&#99;&#111;&#97;&#99;&#104;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">blackcoachexpress@gmail.com</a>","www.blackcoachexpress.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K4ABFKAKVA53">8</a>","BIZOLUTIONS CONSULTING LLC","MICHAEL VONPLINSKY","","1663 OSPREY AVE","","THE VILLAGES","FL","32162-2218","BIZolutions Consulting is a Service-Disabled Veteran Owned Small Business (SDVOSB) registered with the Government (Federal SAM, the State of Florida and the VA). We team with commercial clients to provide our cost effective services to the Gov’t, primarily under SDVOSB set-aside contracts. We also selectively market & distribute unique and high impact Client products. Right now, we feature ENOZO’s hand-held, non-toxic, water-based, hand-held “Aqueous Ozone” sanitation devices that kill over 99.9% of all bacteria, microbes and most viruses, including SARS-CoV-2 (the virus that causes COVID-19)! BIZolutions Consulting supports the start-up or well-established business to improve their bottom line with creative, targeted, efficient and cost-effective business solutions across a wide array of needs. We offer Business / Financial Plan development, Proposal and Grant writing, certification support, marketing planning, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#118;&#112;&#64;&#98;&#105;&#122;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#46;&#99;&#111;&#109;">mvp@bizolutionsconsult.com</a>","www.bizolutionsconsult.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K9UMJ2MCNDG4">9</a>","BETSY MOQUIN","BETSY MOQUIN","","2385 JANESY CT","","THE VILLAGES","FL","32163-1017","Graphic design, Web Design, Web Development, WordPress, Ecommerce, Logo design, print design, internet marketing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#98;&#109;&#97;&#115;&#116;&#101;&#114;&#64;&#98;&#103;&#114;&#97;&#112;&#104;&#105;&#99;&#46;&#110;&#101;&#116;">webmaster@bgraphic.net</a>","https://bgraphic.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XA96MXDHEQL8">10</a>","OVERSON INVESTIGATIVE GROUP LLC","KARI OVERSON","","6162 GRASSO CIR","","THE VILLAGES","FL","32163-5948","Conducts internal reviews, investigations, fraud training, wellness training, compliance reviews, Suspension/Debarment monitoring, litigation support, financial analysis. Over 29 years experience conducting criminal, civil, administrative investigations for the Federal government and in the private sector.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#105;&#111;&#118;&#101;&#114;&#115;&#111;&#110;&#64;&#111;&#118;&#101;&#114;&#115;&#111;&#110;&#105;&#110;&#118;&#101;&#115;&#116;&#105;&#103;&#97;&#116;&#105;&#118;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">karioverson@oversoninvestigativegroup.com</a>","www.oversoninvestigativegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XSKYJU6Y5Z31">11</a>","WATSON SERVICES LLC","DEREK WATSON","","5473 CR 577","","CENTER HILL","FL","33514-4537","Providing a large catalog of high quality, U.S. made replacement parts to best support Government and Business entities maintain their various earth-moving equipment. Watson Services LLC has past performance with DOD (Air Force).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#114;&#101;&#107;&#64;&#119;&#97;&#116;&#115;&#111;&#110;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">derek@watsonservicesllc.com</a>","https://watsonservicesllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFWYCAJLRGC1">12</a>","NATTEAL BROADCAST COMMUNICATION LLC","ARTHUR NATTEAL","","7655 CR 714","","CENTER HILL","FL","33514-6219","Assure your message will be heard.  www.nattealbroadcastcommunication.com •Natteal Broadcast Communication, LLC. /Faith and Action Community Outreach. Inc. •Since 2013, Natteal Broadcast Communication is a sister company of The Source WJLN 88.7 FM that broadcasts out of Lake City, FL we target 125,000 plus people terrestrial radio stations/and internet radio stations that broadcast national/international. •Internet streaming into these counties, United Kingdom, Germany, Canada, Ukraine, Japan, Puerto Rico, France, Netherland, Finland, Russian Federation, and the United States. •Culture Community Outreach Events Planner","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#116;&#104;&#117;&#114;&#64;&#110;&#97;&#116;&#116;&#101;&#97;&#108;&#98;&#114;&#111;&#97;&#100;&#99;&#97;&#115;&#116;&#99;&#111;&#109;&#109;&#117;&#110;&#105;&#99;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">arthur@nattealbroadcastcommunication.com</a>","https://www.nattealbroadcastcommunication.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WUMHT35MVM29">13</a>","I'M THE GUY, LLC","RAMON RIVERA","","11261 ANTEPENKO CT","","OXFORD","FL","34484-3580","Offering residential and commercial handyman and remodeling services as well as pressure washing, interior and exterior sealing and painting, tree trimming, debris removal and hauling, window treatment and installing fixtures, concrete grinding, water sealant and moisture barriers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#109;&#116;&#104;&#101;&#110;&#121;&#99;&#103;&#117;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">imthenycguy@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y1Z9MERMAA35">14</a>","FLORIDAS FIRST BEE CITY LLC","LAFREDA GAVIN","","871 NW 6TH ST","","WEBSTER","FL","33597-4095","I'm a highly qualified reading educator and learning coach with six years of outstanding student achievement at two high school on Florida's reading assessments. Felony probation and education experience. Experience administering and using assessments results to drive instruction and purchases. Efficacious, Florida DOE vetted reading tutor to students reading below grade level in three Florida Counties. Implementation of research-based instructional strategies for the 5 components of reading. Florida Center for Reading Research trained language and vocabulary coach for pre-kindergarten students. Certified Florida Notary Public. Collaborative partner with UF/IFAS, residents, and municipality on community improvement and future planning. Established a structural historical resource in Sumter County, Florida via Florida Department of Historical Resources. Past director of summer reading, book give away, and FDACS feeding site.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#102;&#114;&#101;&#100;&#97;&#46;&#103;&#97;&#118;&#105;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">lafreda.gavin@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMVQYMFU7BN9">15</a>","TONCH GENERAL MAINTENANCE FLORIDA LLC","FREDY GONZALEZ","","1391 W C 48","","BUSHNELL","FL","33513-8973","TGM posses the abilities and capabilities for the residential, commercial and industrial general maintenance with a wide spectrum: Painting, Electrician, Demolition, Construction and Disasters Cleaning, Labor, Manpower. We can create fast takeoff for accurate estimating of small and large scale projects. We are all licensed, insured and certified with OSHA 30. We require our employees and subcontractors to have FEMA compliant methods, OSHA certifications and more in order to provide the best service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#103;&#111;&#110;&#122;&#97;&#108;&#101;&#122;&#64;&#116;&#111;&#110;&#99;&#104;&#103;&#109;&#46;&#99;&#111;&#109;">fgonzalez@tonchgm.com</a>","www.tonchgm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYF9H4MFJ823">16</a>","FABOW SOFTWARE SOLUTIONS LLC","VICKI BEALMAN","","3027 DAFOE TER","","THE VILLAGES","FL","32163-2599","FABOW provides customized training to elevate performance from new personnel to skilled veterans and management. FABOW can instruct personnel in diverse and cross-disciplinary areas, including cybersecurity, software development, application development, web development, accounting, finance, improving performance, and managing time and resources. We also train personnel on specific software, programming languages, security, and deployment. FABOW's programs are designed to meet your needs based on a thorough analysis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#114;&#86;&#105;&#99;&#107;&#105;&#64;&#70;&#65;&#66;&#79;&#87;&#83;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#83;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#111;&#114;&#103;">DrVicki@FABOWSoftwareSolutions.org</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.946&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

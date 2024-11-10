@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Hawaii;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.10 seconds and 1.11 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 63 
+(of 63 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NWCNRNEE4AG7">1</a>","DAVID'S FENCING, INC.","JOANNE ABELLANIDA","VICE PRESIDENT","94-079 LEOKANE ST","","WAIPAHU","HI","96797-2207","CHAIN LINK FENCING AND VINYL FENCING.CHAIN LINK WIRE ,MATERIALS, WE DO FENCE RENTAL FOR JOBS SITES. WE SALE ALL FENCING MATERIALS. DRILLING OF HOLES. DUST SCREEN FENCING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#65;&#86;&#73;&#68;&#70;&#69;&#78;&#67;&#69;&#64;&#65;&#79;&#76;&#46;&#67;&#79;&#77;">DAVIDFENCE@AOL.COM</a>","HTTPS://WWW.DAVIDSFENCINGHI.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJGFJ6TJFQJ3">2</a>","Y HATA & COMPANY LIMITED","BOB PICCININO","DIRECTOR OF ADMINISTRATION","285 SAND ISLAND ACCESS RD","","HONOLULU","HI","96819-2227","GROCERY WHOLESALER AND IMPORTER OF ORIENTAL PRODUCTS, ALSO FROZEN POULTRY, PORK & BEEF. PAPER AND DISPOSABLES; CLEANING SUPPLIES. WHOLESALING; PUBLIC WAREHOUSING; MASTER DISTRIBUTORSHIP PROGRAMS; CONTRACT DISTRIBUTION; MILITARY AND CIVILIAN MARKETS, RETAI","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#105;&#99;&#99;&#105;&#110;&#105;&#110;&#111;&#64;&#121;&#104;&#97;&#116;&#97;&#46;&#99;&#111;&#109;">bpiccinino@yhata.com</a>","http://www.yhata.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLWUBJMZ71F6">3</a>","COORDINATED WIRE ROPE OF HAWAII, INC.","ESTELLA TAVARES","VICE PRESIDENT/GEN. MGR.","120 MOKAUEA ST","","HONOLULU","HI","96819-3156","RIGGING AND MATERIAL HANDLING EQUIPMENT, CONSTRUCTION & INDUSTRIAL SUPPLIES: CHAIN, WIRE ROPE, FIBER ROPE, RELATED FITTINGS, CABLE, HAND TOOLS, FASTENING DEVICES, BUOYS, MARINE HARDWARE, BLOCK, TACKLE, NYLON STRAPS, WIRE ROPE SLINGS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#108;&#108;&#97;&#64;&#99;&#119;&#114;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">stella@cwrhawaii.com</a>","https://www.cwrhawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGD7ZCJ2VGP8">4</a>","FEPSCO INC","ALLAN CADINHA","PRESIDENT","300 PUUHALE RD","","HONOLULU","HI","96819-3236","REPLACEMENT PARTS AND ACCESSORIES FOR COMMERCIAL FOODSERVICE APPLIANCES AND EQUIPMENT, REPAIR SERVICING OF COMMERCIAL FOODSERVICE APPLIANCES AND EQUIPMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#97;&#100;&#105;&#110;&#104;&#97;&#64;&#102;&#101;&#112;&#115;&#99;&#111;&#46;&#110;&#101;&#116;">acadinha@fepsco.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E3ZAUEGH79U1">5</a>","COAST PRODUCTS INC","JAMES GARCIA","PRESIDENT","975 QUEEN ST","","HONOLULU","HI","96814-4117","COAST PRODUCTS, INC. SUPPLIES INDUSTRIAL CLEANING SOLVENTS AND EQUIPMENT. PRODUCT LINES INCLUDE THE ORANGE MUSCLE, ENVIROKLEAN, THE SAFETY FLOOR CARE SYSTEM, RENU METAL AND ALL-PURPOSE KLEEN FOR KITCHENS, AND THE HOST CARPET CLEANING SYSTEM.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#97;&#115;&#116;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#115;&#46;&#105;&#110;&#99;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#97;&#110;&#116;&#101;&#108;&#46;&#110;&#101;&#116;">coastproducts.inc@hawaiiantel.net</a>","http://www.coast-products.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNVEW2MCPWD7">6</a>","STARR & CO INC","JIM GRIFFIN","PRESIDENT","680 KAKOI ST","","HONOLULU","HI","96819-2019","BOILERS, WATERHEATERS, PUMPS, AIR COMPRESSORS, VACUUM PUMPS, BRIDGE CRANES, HOISTS, CONVEYORS, PRESSURE WASHERS, SUMP PUMPS, WATER PUMPS AND AIR DRYING/FILTERING, SALES AND SERVICE, ASME CODE WELDING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#46;&#103;&#64;&#115;&#116;&#97;&#114;&#114;&#99;&#111;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">jim.g@starrcohawaii.com</a>","www.starrcohawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKWMV1DGXVF9">7</a>","COMPUTER RESOURCES HAWAII INC","KEITH LEANDRO","PRESIDENT","875 WAIMANU ST STE 509","","HONOLULU","HI","96813-5266","SELL COMPUTER, COPIER, FAX SUPPLIES & ACCESSORIES, SOFTWARE & HARDWARE ALSO.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#82;&#72;&#64;&#67;&#82;&#72;&#45;&#72;&#73;&#46;&#67;&#79;&#77;">CRH@CRH-HI.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DH3DTSPDXVE4">8</a>","MILLER INDUSTRIES, INC.","MARK MILLER","OWNER","425 KALIHI ST","","HONOLULU","HI","96819-3266","SALE & SERVICE OF TIRE REPAIR & AUTOMOTIVE SERVICE EQUIPMENT & SUPPLY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#108;&#108;&#101;&#114;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#56;&#48;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">millerindustries808@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBD1M3SN5NU4">9</a>","D & M HYDRAULIC SALES & SERVICE, INC.","PAULINE SIMAO","MANAGER","94-148 LEOWAENA ST","","WAIPAHU","HI","96797-2229","SALES AND SERVICE, HYDRAULIC HOSES, FITTINGS, ADAPTERS, COUPLERS. INDUSTRIAL HOSE, FITTINGS AND KAMLOK QUICK DISCONNECTS. WE REPAIR HOSES ON THE JOB SITES. INDUSTRIAL SUPPLIES, FIRE PROTECTION, FIRE RETARDANTS, FIRE & SAFETY EQUIP, ENVIRONMENTAL SUPPLIES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#100;&#109;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#110;&#101;&#116;">mark@dmhawaii.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T9J5JZZ4TDH4">10</a>","AMERICAN CONTROLS & EQUIPMENT INC","KAUILA KEALOHA","PRESIDENT","2001 KAHAI ST","STE A","HONOLULU","HI","96819-4922","COMMERCIAL & INDUSTRIAL PRODUCTS: VARIABLE FREQUENCY DRIVES, CUSTOM CONTROL PANELS, SOLENOID VALVES, AUTO FLOW CONTROL VALVES, HVAC CONTROLS, PUMPS, HEAT EXCHANGERS, ELECTRIC HEATING EQUIPMENT, DUCT HEATERS, LOW PRESSURE CONTROLS, MOTOR CONTROLS, STEAM TR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#117;&#105;&#108;&#97;&#46;&#97;&#109;&#99;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kauila.amcon@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EWPBQNGRCYM3">11</a>","VIDEO WAREHOUSE, INC.","RYAN ITAMOTO","Government Sales Manager","98-810 MOANALUA RD","","AIEA","HI","96701-5234","Command and Control, Briefing rooms, Conference rooms, Training rooms, multimedia, systems integration EQUIPMENT AND SUPPLIES, AUDIO VISUAL PRODUCTS, COMPUTER PERIPHERALS, INSTALLATION AND REPAIR SERVICE. GSA DEALER FOR MANY PRODUCTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#116;&#97;&#109;&#111;&#116;&#111;&#64;&#116;&#104;&#101;&#97;&#118;&#99;&#111;&#46;&#110;&#101;&#116;">ritamoto@theavco.net</a>","http://www.theavco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LU4AP72FBN12">12</a>","SIGNS HAWAII LLC","JAMES BROGAN","OWNER","980 KAAHUE ST","","HONOLULU","HI","96825-1341","SIGNS HAWAII IS A COMPLETE SERVICE SIGN COMPANY; DESIGN, INSTALLATION, SERVICE AND REPAIR. EVERY KIND OF SIGN IS AVAILABLE FROM SIGNS HAWAII. INDOOR OR OUTDOOR ELECTRONIC MESSAGE CENTERS AND L.E.D. SIGNS. PROJECT MANAGEMENT FOR WORLDWIDE SIGNAGE PROGRAMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#64;&#115;&#105;&#103;&#110;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">james@signshawaii.com</a>","http://www.signshawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EWZMJX72JFZ4">13</a>","G P ROADWAY SOLUTIONS, INC","DAVID TAKIGUCHI","President","660 MAPUNAPUNA ST","","HONOLULU","HI","96819-2031","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#116;&#97;&#107;&#105;&#103;&#117;&#99;&#104;&#105;&#64;&#103;&#112;&#114;&#111;&#97;&#100;&#119;&#97;&#121;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">dtakiguchi@gproadwaysolutions.com</a>","http://www.gproadwaysolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEJ6GJ3H9GS3">14</a>","HENRYS EQUIPMENT RENTAL & SALES, INC.","FRANCES KAMA-SILVA","President","86-104 LEIHOKU ST","","WAIANAE","HI","96792-2959","Construction trucking company and General Contractor specializing in demolition, site work, utilities (water line and sewer line installation) and road work involving installation of ac, curbs, sidewalks, landscaping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#110;&#114;&#121;&#115;&#101;&#113;&#117;&#48;&#48;&#49;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">henrysequ001@hawaii.rr.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHKFGCHMXED1">15</a>","TROPICAL J'S INC","JUSTIN BARNES","President","1052 ULUPONO ST","","HONOLULU","HI","96819-4333","Manufacturer of commercial/residential awnings, umbrellas, shade curtains, outdoor furniture, cushions, contract sewing, equipment covers and tents.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#64;&#116;&#114;&#111;&#112;&#105;&#99;&#97;&#108;&#106;&#115;&#46;&#99;&#111;&#109;">justin@tropicaljs.com</a>","www.tropicaljs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q4QTNQ6JNLD4">16</a>","OAHU SEALCOATING & PAVING, LLC","RANDALL TAMURA","President","91 545 AWAKUMOKU ST","","KAPOLEI","HI","96707-","Oahu Sealcoating & Paving (AC-23469) engages in all phases of civil construction, specializing in asphalt paving, sealcoating and pavement striping. Engages in site prep, earthwork, asphalt paving, concrete, pavement markings ans asphalt sealcoating.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#64;&#111;&#97;&#104;&#117;&#115;&#101;&#97;&#108;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">randy@oahusealcoating.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H77EMSJ7LJA1">17</a>","JAMES PETERS DESIGN, INC.","JAMES PETERS","President","99-421 PALAIALII WAY","","AIEA","HI","96701-3153","Design of brochures, flyers, stationary, packaging, posters. Design, fabrication & installation of all types of signs & banners. Design of logos, websites, audio/visual presentations, 3-D displays, digital photography, and advertising.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#64;&#106;&#112;&#101;&#116;&#101;&#114;&#115;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">james@jpetersdesign.com</a>","http://www.jpetersdesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PDAAEGBE3CJ3">18</a>","G&L PROFESSIONAL SOUND, INC.","RICK PARLEE","","320 WARD AVE STE 105","","HONOLULU","HI","96814-4016","Audissey offers quality services and products in the audiovisual field as well as strives to understand our client's needs and expectations. At Audissey, we offer quality services and products by presenting unique and creative solutions and keeping current as our industry changes. At Audissey, we consider all of our clients relations as long-term relationships built on a foundation of products and trust. For more information on how we can help you today visit us at http://www.audissey.net","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#64;&#97;&#117;&#100;&#105;&#115;&#115;&#101;&#121;&#46;&#110;&#101;&#116;">rick@audissey.net</a>","http://audissey.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GTS5YJLFWLC6">19</a>","REFRIGERANT RECYCLING INC","ALLEN EVANS","","91-220 KOMOHANA ST","","KAPOLEI","HI","96707-1737","Full service refrigerant management. Largest inventory of refrigerants in Hawaii. We perform high-speed on-site refrigerat recovery and recaim. Appliance disposal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#101;&#110;&#64;&#114;&#101;&#102;&#114;&#105;&#103;&#101;&#114;&#97;&#110;&#116;&#114;&#101;&#99;&#121;&#99;&#108;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">allen@refrigerantrecycling.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R5K5B2T2GBS3">20</a>","PRESSURE SYSTEMS INC","SADAO TSUCHIYA","","99-1135 IWAENA ST","STE 5","AIEA","HI","96701-3266","Sales, Service of SCBA, SCUBA Air Compressor. Bauer Breathing Air Compressor, Parts and Supply.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#105;&#64;&#98;&#97;&#117;&#101;&#114;&#45;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">psi@bauer-hawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DWEWGNELJQU1">21</a>","RAFAELITA OBISPO MORENO","NENE MORENO","","91-1012 WAIHUNA PL","","EWA BEACH","HI","96706-3778","Create designs for embroidered uniforms, supply custom made items for ships, submarines and squadrons from Pearl Harbor, Mainland, Guam, & Japan per accounts'specifications. Upholstery existing bunks, chairs & cushions. Carpeting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#110;&#101;&#109;&#111;&#114;&#101;&#110;&#111;&#50;&#53;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">nenemoreno25@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5CLWKFJGGB9">22</a>","BEAR MACHINERY, INC.","BLAIR STULTZ","President","46-153 MALINA PL","","KANEOHE","HI","96744-3804","Precision CNC and conventional machine work. Custom fabrication, all metals, all types of welding. Waterjet cutting. Assembly work including painting, mechanical, pneumatic and hydraulic. Quality assurance: CMM Inspection, MIL-I-45208 & MIL-STD-45622.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#105;&#114;&#115;&#116;&#117;&#108;&#116;&#122;&#64;&#98;&#101;&#97;&#114;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#114;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">blairstultz@bearmachineryinc.com</a>","https://www.bearmachineryinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S8SQA9ZYF638">23</a>","CONTRACT FURNISHERS OF HAWAII INC","BRUCE SHEWALTER","VP of Operations/ GSA Contract Rep.","50 S BERETANIA ST","STE C208B","HONOLULU","HI","96813-2222","Provide office furniture: chairs, desks, systems and/or modular furniture, rotary files, lateral files, bookcases, storage units, demountable walls, medical offices, etc. Services include design, installation and warehousing of office furniture.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#117;&#99;&#101;&#64;&#111;&#112;&#45;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">bruce@op-hawaii.com</a>","www.op-hawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KY84JJ932TJ7">24</a>","FIRST RESPONSE PROFESSIONAL SECURITY SERVICES LLC","JIN KIM","COO","2110 LAUWILIWILI ST STE 104H","","KAPOLEI","HI","96707-1867","Full service integrated security services, CCTV, digital video recorder, burglary systems, hold up, fire, access control, bio-metric, residential systems, commercial systems, 24 hour central station monitoring services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#110;&#64;&#97;&#108;&#97;&#114;&#109;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">jin@alarmhawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7J3MQBWTVF7">25</a>","SYSTEMS INTEGRATION GROUP, INC.","LULU BLESSING","Engineer","1154 FORT STREET MALL","SUITE 320","HONOLULU","HI","96813-2712","Programming of PLCs, Process control programming for embedded micro-controllers, Windows programming using Delphi. Electric panel fabrication. Generator paralleling control system design and fabrication","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#64;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#105;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">engineer@systemsintegrationgroup.com</a>","https://www.systemsintegrationgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RFEWEFJB9U76">26</a>","NORTH STAR SCIENTIFIC CORP","ROBERT SWISHER","Chief Financial Officer/ Corp Counsel","91-238 KALAELOA BLVD","","KAPOLEI","HI","96707-1820","North Star Scientific Corporation (NSS) is a diversified enterprise principally engaged in the conception, design, manufacture and integration of advanced technology products and services for the United States Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#110;&#115;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">rob@nsshawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ECNELDJ697Q4">27</a>","JAS. W. GLOVER, LTD.","MAILE V.O. ROMANOWSKI","","248 SAND ISLAND ACCESS RD","","HONOLULU","HI","96819-2228","Supply crushed and broken stone, gravel, aggregate, rock, manufactured sand. Supply ready-mix concrete. Supply asphalt concrete paving material, hot mix, AC, HMA, RAP. Install Hot Mix Asphalt Pavement and Site Work as a Large Business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#105;&#108;&#101;&#114;&#64;&#103;&#108;&#111;&#118;&#101;&#114;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">mailer@gloverltd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQZSD63X9VB5">28</a>","VALVE SERVICE AND SUPPLY, INC.","TALA FAAMAUSILI-ULI","","91-210 OLAI ST","","KAPOLEI","HI","96707-1720","Valve Service & Supply Inc. provides consistent and competitive pricing along with personalized service & prompt accurate quotations. For more information, please visit us at http://www.valvess.com/index.html.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#65;&#76;&#65;&#64;&#118;&#97;&#108;&#118;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">TALA@valvess.com</a>","http://valvess.com/index.php"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRL8YFVGUJM8">29</a>","WINDWARD BOATS INC","JOSEPH ADAMS","","789 KAILUA RD","","KAILUA","HI","96734-2831","we sell everything from catamarans, sail boats, inflatable rafts, kayaks, and fishing boats... to EZ Loader Trailers... to multiple brands of marine engines. Stop by for a visit at our location in Kailua or give us a call if you have any questions as you're searching for the craft that meets your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#79;&#65;&#84;&#77;&#65;&#78;&#64;&#65;&#76;&#79;&#72;&#65;&#46;&#78;&#69;&#84;">BOATMAN@ALOHA.NET</a>","windwardboats.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1WZRB6JKWJ4">30</a>","PACMAR TECHNOLOGIES LLC","JAMES OTA","","841 BISHOP ST STE 1110","","HONOLULU","HI","96813-3916","Marine Engineering and Naval Architecture, Boat Building, Boat Building and Repairing, Ship Repair, System Design & Prototyping, Autonomy & Data Science, Cyber, Power & Energy, Advanced Materials & Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#116;&#101;&#97;&#109;&#64;&#112;&#97;&#99;&#109;&#97;&#114;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">contractsteam@pacmartech.com</a>","http://www.pacmartech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VSTGNK4JBKA9">31</a>","PUNA KAMALI'I FLOWERS, INC.","TIARA FUNES","","16-211 KALARA ST","","KEAAU","HI","96749-8005","Puna Kamalii Flowers,Inc.,dba Employment Network Hawaii; employ&training for the developmentally disabled through the production of shredded packing material and growing tropical flowers/foliage which is sold to all 50 states and floriculture industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#101;&#110;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">admin@enhawaii.com</a>","http://www.flowersfromhawaii.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTGTLEEUMJK5">32</a>","HAWTHORNE PACIFIC CORP.","KRISTY AKIONA","","94-025 FARRINGTON HWY","","WAIPAHU","HI","96797-2201","Hawthorne Pacific Corp is a Caterpillar Dealership located in Hawaii. We sell generators, diesel engines, machinery to include service - Coast Guard, Navy and other ship engines and ship generators and have extensive experience in that area.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#107;&#105;&#111;&#110;&#97;&#64;&#104;&#97;&#119;&#116;&#104;&#111;&#114;&#110;&#101;&#99;&#97;&#116;&#46;&#99;&#111;&#109;">kakiona@hawthornecat.com</a>","https://www.hawthornecat.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAZLJVLUH8E7">33</a>","THE PATISSERIE, INC.","ROBERT PAPARELLI","","96-1345 WAIHONA ST","UNIT 1","PEARL CITY","HI","96782-1975","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#64;&#116;&#104;&#101;&#112;&#97;&#116;&#105;&#115;&#115;&#101;&#114;&#105;&#101;&#46;&#99;&#111;&#109;">bob@thepatisserie.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NHTAKKYKL899">34</a>","MOOS MACHINE WORKS INC","CHELSEY SHIRAKATA","","685 MAPUNAPUNA ST","","HONOLULU","HI","96819-2032","General machine shop, welding repair and fabrication, hydraulic cylinder reconditioning, custom fabrication, compactor repair, SEM shredder maintenance, pipe bending","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#111;&#115;&#46;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#119;&#111;&#114;&#107;&#115;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#97;&#110;&#116;&#101;&#108;&#46;&#110;&#101;&#116;">moos.machineworks@hawaiiantel.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPWGR8NTKR26">35</a>","GUIDE STAR ENGINEERING, LLC","SEIBERT MURPHY","","91-1058 KEKUILANI LOOP","APT N1301","KAPOLEI","HI","96707-2732","Electronic design, mechanical design, acoustics, signal processing, photovoltaic technology, communications, field testing, research and development, data acquisition systems, shipyard/waterfront support, remote sensors, computers, antenna development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#117;&#114;&#112;&#104;&#121;&#64;&#103;&#115;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">smurphy@gsellc.com</a>","http://www.gsellc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UXZFTD5JG237">36</a>","H NU PHOTONICS LLC","DANIEL OCONNELL","","350 HOOHANA ST","","KAHULUI","HI","96732-2931","Precision Optics Space Optics Bio imaging systems Micro-fluidic systems 3D imaging systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#99;&#111;&#110;&#110;&#101;&#108;&#108;&#64;&#104;&#110;&#117;&#112;&#104;&#111;&#116;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">doconnell@hnuphotonics.com</a>","http://www.hnuphotonics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M69YAZDQ7UM3">37</a>","ALAKONA CORP.","ELISABETH WILSON","","2906 KAIHIKAPU ST","","HONOLULU","HI","96819-2012","Asphalt paving and asphalt paving maintenance Manufacture Foamed Asphalt Treated Base, LEED approved base course.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#115;&#121;&#64;&#97;&#108;&#97;&#107;&#111;&#110;&#97;&#46;&#99;&#111;&#109;">betsy@alakona.com</a>","http://www.alakona.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DU51ZTER28H9">38</a>","NIPPON FOOD TAKEOUT & CATERING, INC","BYUNG NOH","","725 KAPIOLANI BLVD STE C110","","HONOLULU","HI","96813-6000","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#112;&#112;&#111;&#110;&#102;&#111;&#111;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">nipponfood@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GY89GZM6DJ68">39</a>","NATIVE NURSERY LLC","ETHAN ROMANCHAK","","1267 NAALAE RD","","KULA","HI","96790-7744","Provide Plant Material for Reforestation/Restoration, Tree Nursery, Tree Planting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#111;&#109;&#97;&#110;&#99;&#104;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#101;&#100;&#117;">eromanch@hawaii.edu</a>","http://www.mauinativenursery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBBPPLTZNV18">40</a>","KAUAI BOAT ENTERPRISES LLC","JOE WALDVOGEL","","4030 HALEHAKA RD","","LIHUE","HI","96766-8852","We are a boat builder and repair shop as well as automotive repair. We also do welding, filming and research for marine support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#105;&#99;&#111;&#110;&#97;&#107;&#98;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jliconakbe@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNB9C162J4Q7">41</a>","INTERNATIONAL UNDERWATER EXPLORATIONS, LLC","JOHN SULLIVAN","","590 LIPOA PKWY","SUITE C2","KIHEI","HI","96753-6911","IUE provides software, server solutions and web services to the renewable energy, defense, and marine sectors. We provide GIS solutions and information management tools that bring data online to provide a rich visualization environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#64;&#105;&#117;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">jd@iuetech.com</a>","http://www.iuetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WNG9J3TJAKE7">42</a>","BLACK PLUMERIA LLC","MAILE ROMANOWSKI","","248 SAND ISLAND ACCESS RD","","HONOLULU","HI","96819-2228","Manufacture and Supply Asphalt Concrete (AC) Paving Hot Mix (HMA), Recycled Asphalt Paving Mix(RAP) and Cold Patch Mix on Oahu","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#105;&#108;&#101;&#114;&#64;&#103;&#108;&#111;&#118;&#101;&#114;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">mailer@gloverltd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1NTJFJ3YYR6">43</a>","MILLENNIUM EXPRESS AND TRAVEL INC","JOSE SERVIDA","","94 350 KEAOLANI STREET","","MILILANI","HI","96789-","We provide freightforwarding services for wholesalers and direct to consumers needing customs brokerage and delivery logistics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#108;&#108;&#101;&#110;&#110;&#105;&#117;&#109;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">millenniumexpress@gmail.com</a>","https://www.millenniumexpress.biz/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F12CC992AM95">44</a>","EDWIN DELUZ TRUCKING & GRAVEL LLC","KEVIN BALOG","","68-1560 MAMALAHOA HWY","","KAMUELA","HI","96743-","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#111;&#103;&#114;&#97;&#110;&#99;&#104;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">blogranch@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKW6R7K4JS51">45</a>","ALL NATURAL STONE FABRICATION, INC.","MARY DAVIS OWEN","","74-555 HONOKOHAU ST","STE A4","KAILUA KONA","HI","96740-2718","All Natural Stone Fabrication, Inc is a fabrication and installation company of all natural stone and engineered quartz stone products for residential and commercial applications, interior and exterior.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#110;&#97;&#116;&#117;&#114;&#97;&#108;&#115;&#116;&#111;&#110;&#101;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">allnaturalstone@hawaii.rr.com</a>","www.allnaturalstonefabrication.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N7EDAFSTN6L9">46</a>","UNIFAB LLC","CHUCK LEIS","","202 LALO ST","","KAHULUI","HI","96732-2924","Steel metal ductwork and other sheet metal product manufacturing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#64;&#116;&#111;&#109;&#108;&#101;&#105;&#115;&#46;&#99;&#111;&#109;">chuck@tomleis.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCN5VPWHHKN1">47</a>","PELAGIC REASEARCH GROUP LLC","MICHAEL MUSYL","","1327 WILHELMINA RISE","APT 1","HONOLULU","HI","96816-3254","To fill a niche for an agile and flexible research consortium, Pelagic Research Group LLC was founded to design post-release mortality studies in fisheries, bycatch mitigation studies, conduct meta-analyses on mortality rates and bycatch to inform management and future research and to design and optimise electronic tagging experiments. PRG brings a blend of “hands-on” field and laboratory experiences in marine and freshwater biology with strong cross-disciplinary core competencies in analytics, research, meta-analysis, and cost-benefit. For each new project, PRG assembles and works with leading pelagic biologists and researchers with state, federal, academic institutions, NGOs, and non-profits to maximise project goals and deliverables. PRG is committed to produce novel research of high scholarly achievement to better inform management but also to save precious research funds by reducing overhead costs and designing better studies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#109;&#117;&#115;&#121;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">michael.musyl@gmail.com</a>","https://pelagicresearchgroup.com/services"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VAS6YLWJFLG5">48</a>","WAY SINE LLC","AJ HARPER","","2449 SONOMA ST","","HONOLULU","HI","96822-1918","Way Sine LLC. (Way Sine) designs & manufactures hardwired and solar powered real time signage solutions for the public transit industry. These energy efficient signage products help satisfy a demand for safer, environmentally friendly, and more inviting transit amenities for street furniture, at transit stops and transit shelters.  Way Sine has extensive experience with system design and solar powered transit shelter amenities. Our staff have designed, manufactured and installed many solar bus stop and bus shelter real time signage systems across the USA. Our success has been through the superior quality, innovation and performance recognized through state transit agencies’ RFP processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#106;&#46;&#104;&#97;&#114;&#112;&#101;&#114;&#64;&#119;&#97;&#121;&#115;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">aj.harper@waysine.com</a>","www.waysine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H8N8DVFQNKD5">49</a>","TISSUEGRAB BIOPSY SYSTEMS LLC","MICHAEL MUSYL","","1327 WILHELMINA RISE APT 1","","HONOLULU","HI","96816-3254","To meet growing demands, TissueGrab TM Biopsy Systems LLC (pelagicresearchgroup.com/biopsy-device) designed and developed a unique one-use, gamma-irradiated, minimally invasive biopsy sampling device for marine research. TG specializes in the development of innovative biopsy instruments and tag heads/systems to carry electronic tags for extended periods in marine animals and fishes. Principals of TG bring a blend of hands-on field and laboratory experiences in marine biology with strong cross-disciplinary core competencies in analytics, research, meta-analysis, cost-benefit and product/patent development. TG has familiarity with 3D printing and plastic injection moulding processes, technical drawings, various medical-grade materials and ISO sterilization standards; Patent & product development (US Patent 10,376,248). TG teamed with its sister company, Pelagic Research Group LLC (DUNS 078708073), to offer a broad range of products and services in pelagic fisheries research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#105;&#115;&#115;&#117;&#101;&#71;&#114;&#97;&#98;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">TissueGrab@gmail.com</a>","https://pelagicresearchgroup.com/biopsy-device"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F1Q4GL8T61K4">50</a>","BIOSOCKS HAWAII INC.","MELBA CAVASSO","","41-530 WAIKUPANAHA ST","","WAIMANALO","HI","96795-1438","Delivery of BMP Erosion control Biosocks.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#98;&#105;&#111;&#115;&#111;&#99;&#107;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">admin@biosockshawaii.com</a>","www.biosockshawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T3XBS6VX6W98">51</a>","BIG ISLAND COUNTERTOPS INC.","NELSON ZUKERAN","","261 KEKUANAOA ST","STE A","HILO","HI","96720-4367","Big Island Countertops, Inc. is a locally owned and operated custom countertop fabrication company providing installation services and manufacturing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#108;&#115;&#111;&#110;&#64;&#98;&#105;&#103;&#105;&#115;&#108;&#97;&#110;&#100;&#99;&#111;&#117;&#110;&#116;&#101;&#114;&#116;&#111;&#112;&#115;&#46;&#99;&#111;&#109;">nelson@bigislandcountertops.com</a>","https://www.bigislandcountertops.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLM6KPB8K1W7">52</a>","ADVANCED SILICON CARBIDE MATERIALS LLC","BILL FISCHER","","3038 AUKELE ST","","LIHUE","HI","96766-1464","Advanced Silicon Carbide Materials (ASCM) designs and manufactures high performance mirrors and telescopes made of CVC SiC® or composites. These precision-engineered optical products are used in a wide range of civilian, military and aerospace applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#102;&#105;&#115;&#99;&#104;&#101;&#114;&#64;&#97;&#115;&#99;&#109;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">wfischer@ascmtech.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WSEPX1X6CBQ5">53</a>","UNCLES ICE CREAM","PAUL LOGAN","","67-106 KEALOHANUI ST","","WAIALUA","HI","96791-8103","Happy people handcrafting ultra-premium ice cream sandwiches at the old sugar mill in Waialua, HI, using all-natural, real food ingredients (locally sourced and organic whenever possible). Awarded 'Best of Honolulu' by Honolulu Magazine. We pride ourselves on creating a real “wow” experience for our customers with premium ingredients and great flavor combinations.  We like to think we’re spreading joy, one sandwich at a time. We distribute them ourselves to locations across Oahu, including Whole Foods Markets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#117;&#110;&#99;&#108;&#101;&#115;&#105;&#99;&#101;&#99;&#114;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">paul@unclesicecream.com</a>","unclesicecream.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DZA2FG8EC6L7">54</a>","SALTY WAHINE GOURMET HAWAIIAN SEA SALTS, LLC","LAURA CRISTOBAL ANDERSLAND","","1-3529 KAUMUALII HWY UNIT 2B","","HANAPEPE","HI","96716-","Manufacture Hawaiian Sea Salts and seasonings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#115;&#97;&#108;&#116;&#121;&#119;&#97;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">info@saltywahine.com</a>","www.saltywahine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GXN4TWNN9LH5">55</a>","ULU MANA INC","LOREN SHOOP","","916 KAAAHI PL STE A","","HONOLULU","HI","96817-6604","We manufacture food product made out of Breadfruit","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#101;&#110;&#64;&#117;&#108;&#117;&#109;&#97;&#110;&#97;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">loren@ulumanahawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PCNJXFQL4LM5">56</a>","AHT RESINS LLC","DANIEL AKIU","","1415 CALIFORNIA AVE","","WAHIAWA","HI","96786-2541","- APR-Lite Holy grail for pothole and crack repairs - APR-Nano Advanced Topical Sealer and Crack Filler","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#107;&#105;&#117;&#51;&#64;&#103;&#114;&#111;&#117;&#112;&#105;&#113;&#46;&#99;&#111;&#109;">dakiu3@groupiq.com</a>","www.AHTResins.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJD8Q6MZ8MG6">57</a>","ALOHA PACKAGING & SUPPLIES LLC","REED TANAKA","","91-544 AWAKUMOKU ST","","KAPOLEI","HI","96707-1841","Wholesalers and Distributors disposable foodservice products & janitorial/sanitation products; manufacturer of flavored juice syrups","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#97;&#110;&#97;&#107;&#97;&#64;&#97;&#108;&#111;&#104;&#97;&#115;&#104;&#111;&#121;&#117;&#46;&#99;&#111;&#109;">rtanaka@alohashoyu.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C9RDE56UPPT5">58</a>","NKM ENTERPRISES LLC","LYNN MATSUSHIMA","","3130 KAUNAOA ST","","HONOLULU","HI","96815-4258","Manufacture Hawaiian Sea Salt Seasonings and Sauces Made in Hawaii","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#89;&#78;&#78;&#64;&#115;&#111;&#109;&#103;&#111;&#111;&#100;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#110;&#101;&#116;">LYNN@somgoodhawaii.net</a>","www.somgoodhawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HS4PZP64LM53">59</a>","HELE FITNESS VETERANS LLC","JOSEPH CASALE","","59 729 KAWOA WAY","","HALEIWA","HI","96712-","Hele Fitness Veterans, LLC (Hele) is a Service-Disabled Veteran-Owned Small Business that provides commercial gyms and functional fitness equipment to federal government agencies, prime contractors, state governments and local municipalities. Hele is a highly respected, service-oriented business built on strong client relationships, providing the highest quality product and tailoring its services to meet its customers’ specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#104;&#101;&#108;&#101;&#102;&#105;&#116;&#110;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">joe@helefitness.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNALD3QUMQE8">60</a>","ALOHA EMPIRE LLC","ZHULIETA IBISHEVA","","435 SEASIDE AVE APT 1505","","HONOLULU","HI","96815-2616","Hometown Vinegars are all certified organic and made by the highest standard of manufacturing. We can produce 40,000,000 bottles of vinegar annually with capabilities to increase manufacturing if needed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#104;&#111;&#109;&#101;&#116;&#111;&#119;&#110;&#118;&#105;&#110;&#101;&#103;&#97;&#114;&#46;&#99;&#111;&#109;">info@hometownvinegar.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKJGTBLHEKD9">61</a>","PRIVATEER SPACE, INC.","ALEX FIELDING","","1305 N. HOLOPONO ST","SUITE 3","KIHEI","HI","96753-6916","Orbital space debris from space launches, satellite systems, and space collisions has resulted in over 21,000 man made objects larger than 10cm primarily in low earth orbit that are causing extreme risk to national security, global communications, and human space flight. Privateer offers an artificial satellite solution with capability to deorbit and remove space debris including existing inaccessible or incommunicative satellites in low earth and medium earth orbit. Capability to remove from GEO is expected in 2024.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#64;&#112;&#114;&#105;&#118;&#97;&#116;&#101;&#101;&#114;&#46;&#99;&#111;&#109;">af@privateer.com</a>","privateer.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QCKGSSKZDW84">62</a>","R2 LOGISTICS SOLUTIONS, LLC","PATRICK ROSE","","92 820 OPALIPALI PL","","KAPOLEI","HI","96707-","Primary business is delivering Strategic and Operational Planning Services to government-funded requirements. Support program solutions include Strategic and Operational Planning, Information Security, Additive Manufacturing to include design and 3D printing, Training program development to include curriculum development and delivery. Emergency Managment Planning, and Logistics Consulting Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#114;&#50;&#108;&#111;&#103;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@r2logsolutions.com</a>","www.r2logsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGDNSGD4KE43">63</a>","BAYVIEW INVESTMENT GROUP, LLC","JOSHUA HU","","44-283 KANEOHE BAY DR","","KANEOHE","HI","96744-2607","KBay Consulting (KBC) specializes in providing Taiwan focused support to U.S. government clients. Our client support includes Language, Security Cooperation, Logistics, ISR, IT/Cyber, Technology Integration, Medical, and Project Management. KBay Consulting was founded by Mr. Josh Hu, who was born in Taiwan and immigrated to the U.S. at a young age. Josh is a retired USAF officer and a native Chinese-Mandarin speaker and has extensive military engagements and operational experience in the Indo-Pacific region. Leveraging his unique cultural insights and language skills, Josh successfully planned and executed numerous military operations and activities across the strategic, operational, and tactical levels to support U.S. government objectives and interests. Additionally, our team of consultants have DECADES of private sector and government leadership experience, and ALWAYS work closely with the customers to minimize project risks and maximize mission SUCCESS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#107;&#98;&#97;&#121;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">josh@kbayconsulting.com</a>","www.kbayconsulting.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.254&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

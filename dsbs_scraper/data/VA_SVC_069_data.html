@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 069 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.73 seconds and 1.80 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 25 
+(of 25 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CQLKB2YEK426">1</a>","COUNTY COURT REPORTERS INC","TONIE WALLACE","PRESIDENT","1160 JORDAN SPRINGS RD","","STEPHENSON","VA","22656-2015","STENOGRAPHIC SERVICES, COURT REPORTING SERVICES, VIDEO SERVICES, TRANSCRIPTION SERVICES. CONFERENCE REPORTING, PUBLIC HEARINGS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#105;&#101;&#119;&#97;&#108;&#108;&#97;&#99;&#101;&#64;&#99;&#111;&#117;&#110;&#116;&#121;&#99;&#111;&#117;&#114;&#116;&#114;&#101;&#112;&#111;&#114;&#116;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">toniewallace@countycourtreporters.com</a>","www.countycourtreporters.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=THCFKWAYH6H9">2</a>","WINCHESTER METALS, INC.","BEN PHELPS","Sales Manager","195 EBERT RD","","WINCHESTER","VA","22603-4703","Metals Service Center. Oxy-fuel and plasma burning. Shear and brake. Plate roll. Punching, drilling, and custom saw cutting. Stainless, Aluminum, Carbon. Standard sizes/shapes in stock or readily available. Fabrication services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#104;&#101;&#108;&#112;&#115;&#64;&#119;&#105;&#110;&#99;&#104;&#101;&#115;&#116;&#101;&#114;&#109;&#101;&#116;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">bphelps@winchestermetals.com</a>","http://www.winchestermetals.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G7GKMERPJKP8">3</a>","JOHNNY BLUE, INC.","KRISTEN BUSH","","255 LENOIR DR","","WINCHESTER","VA","22603-4603","Portable Sanitation, Rentals and services. Government clearance. Local, county, state, and federal contracts. Licensed, permitted, bonded, and insured.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#101;&#110;&#64;&#106;&#111;&#104;&#110;&#110;&#121;&#98;&#108;&#117;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">kristen@johnnyblueinc.com</a>","www.johnnyblueinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHZYE2KWJYU5">4</a>","BLUE RIDGE LANDSCAPE AND DESIGN, INC.","CARL THOMAS","","172 IMBODEN DR","STE 12","WINCHESTER","VA","22603-5799","commercial and government landscape installation, landscape maintenance, seeding, hydroseeding, sod installation, watering, mowing, snow removal, irrigation, retaining walls, walkways, patios","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#64;&#98;&#108;&#117;&#101;&#114;&#105;&#100;&#103;&#101;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#101;&#46;&#99;&#111;&#109;">carl@blueridgelandscape.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MEJDTJTBNM15">5</a>","PRIMEEDGE TECHNOLOGY INC.","SUSAN SAXION","","180 PROSPERITY DR STE 3","","WINCHESTER","VA","22602-5384","Managed Services Provider with a strong focus on managed it and print services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#97;&#120;&#105;&#111;&#110;&#64;&#112;&#114;&#105;&#109;&#101;&#101;&#100;&#103;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">ssaxion@primeedgetech.com</a>","http://www.primeedgetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKUFJKFA6EQ5">6</a>","MIC INDUSTRIES INC","RICK LINDVIG","","4150 MARTINSBURG PIKE","","CLEAR BROOK","VA","22624-1534","Sole manufacturer of the Machines that Make Buildings - Ultimate Building Machines (UBMs), ABMs, K-spans, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#64;&#109;&#105;&#99;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">rick@micindustries.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LNNKKWNY7FY4">7</a>","THE VIRGINIAN, INC.","DEBORAH WILSON","","121 MERCEDES CT","","WINCHESTER","VA","22603-4638","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#98;&#105;&#101;&#64;&#106;&#114;&#115;&#97;&#117;&#116;&#111;&#98;&#111;&#100;&#121;&#46;&#99;&#111;&#109;">debbie@jrsautobody.com</a>","www.jrsautobody.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PBAHUL8JAE74">8</a>","WINCHESTER FLOORING INC.","KEVIN SMITH","","200 LENOIR DR STE C1","","WINCHESTER","VA","22603-4660","Medium to heavy flooring contractor for medical office buildings, hospital environments, government clearance facilities, average contract size $300,000.00. Travel throughout the mid-atlantic region. We have held secret security clearances. Security clearance not required.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#119;&#105;&#110;&#99;&#104;&#101;&#115;&#116;&#101;&#114;&#102;&#108;&#111;&#111;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">kevin@winchesterflooring.com</a>","www.winchesterflooring.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NU7NQV2CG364">9</a>","BEGNAUD SALES, LLC","KIMBERLY BEGNAUD","","2135 SHAWN DR","","MIDDLETOWN","VA","22645-9522","We offer a full line of Medical Equipment and supplies. Medical Gas Pipeline Line & Accessories for such Departments as:Anesthesia,Biomed/Clinical Engineering,Critical Care,Facilities, Maintenance,MRI,Respiratory,Emergency response teams & Surgery Centers.EMS/EMT Supplies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#98;&#101;&#103;&#110;&#97;&#117;&#100;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">info@begnaudsales.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L6XAEKVM33G6">10</a>","BYTE SYSTEMS, L.L.C.","LEN HICKEY","","107 WINTERBERRY CT","","WINCHESTER","VA","22602-6829","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#110;&#46;&#104;&#105;&#99;&#107;&#101;&#121;&#64;&#98;&#121;&#116;&#101;&#115;&#121;&#115;&#46;&#110;&#101;&#116;">len.hickey@bytesys.net</a>","https://www.bytesys.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MQN9MNJS9HE3">11</a>","SUNRISE HOSPITALITY LLC","HEATHER RAVER","","1135 MILLWOOD PIKE","","WINCHESTER","VA","22602-4313","The Candlewood Suites Winchester extended stay hotel is the ideal choice for long-term travelers. We're conveniently located near Interstate 81 and the attractions of downtown Winchester, VA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#101;&#97;&#116;&#104;&#101;&#114;&#46;&#82;&#97;&#118;&#101;&#114;&#64;&#104;&#97;&#119;&#107;&#101;&#121;&#101;&#104;&#111;&#116;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">Heather.Raver@hawkeyehotels.com</a>","https://www.ihg.com/candlewood/hotels/us/en/reservation"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WH4HUESL5MD3">12</a>","ARORSOFT, INC","SAEED ABDULKAREEM","","531 PARKLAND DR","","STEPHENSON","VA","22656-2131","Arorsoft,Inc. provides Data Warehousing and Business Intelligence solutions to clients based on business requirements. We design and develop enterprise data integration, analysis and reporting. Also, we implement and manage all phases of SDLC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#101;&#101;&#100;&#46;&#97;&#98;&#100;&#117;&#108;&#107;&#97;&#114;&#101;&#101;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">saeed.abdulkareem@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EMPLJ4ERAN18">13</a>","JDI FACILITY SERVICES, LLC","CHRISTINA TU","","160 INEZ LN","","STEPHENS CITY","VA","22655-5272","performs facility condition assessments, steam trap assessments, facility related maintenance, ultrasonic pipe thickness testing, drone services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#117;&#104;&#117;&#105;&#119;&#97;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tuhuiwa@hotmail.com</a>","jdifacilityservices.company"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBJ2KCDFNM41">14</a>","SHULER GROUP, LLC, THE","DAWN SHULER","","480 SHICKLE LN","","GORE","VA","22637-2560","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#121;&#109;&#101;&#110;&#116;&#115;&#64;&#116;&#104;&#101;&#115;&#104;&#117;&#108;&#101;&#114;&#103;&#114;&#111;&#117;&#112;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">payments@theshulergroupllc.com</a>","www.TheShulerGroupLLC.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HL34XDE31V47">15</a>","HALCYON REFLECTIONS LLC","TINA CLAFLIN","","1257 FRONT ROYAL PIKE","","WINCHESTER","VA","22602-4425","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#104;&#97;&#108;&#99;&#121;&#111;&#110;&#114;&#101;&#102;&#108;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@halcyonreflections.com</a>","https://halcyonreflections.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSN4B2K3JCA5">16</a>","MISSION ESSENTIAL SOLUTIONS, LLC","JAMES MURPHY","","290 EYLES LANE","","WINCHESTER","VA","22603-2478","Mission Essential Solutions, LLC, founded in 2013, is a Service Disabled Veteran Owned Small Business. Our mission is to help government agencies and companies solve complex technological problems by delivering cost-effective tools, technologies, and experienced resources. We use agile processes, methodologies, and project delivery expertise to enable our clients to achieve resilient, effective, and sustainable operations by helping them implement high quality and cost-efficient software and IT applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#109;&#117;&#114;&#112;&#104;&#121;&#64;&#109;&#105;&#115;&#115;&#105;&#111;&#110;&#101;&#115;&#115;&#101;&#110;&#116;&#105;&#97;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">jamesmurphy@missionessentialsolutions.com</a>","www.missionessentialsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GB91VBNLEE53">17</a>","VETERANS ENTERPRISE TECHNOLOGIES AND SERVICES LLC","GERMAN BARON","","329 MONTGOMERY CIR","","STEPHENS CITY","VA","22655-5934","OUR TECHNOLOGY AND BUSINESS PROFESSIONALS RESEARCH, ANALYZE AND ASSIST IN THE DESIGN OF SOLUTIONS IN THE AREAS OF, BUT NOT LIMITED TO: HEALTHCARE TECHNOLOGY, MEDICAL DEVICE IT SECURITY, MEDICAL INFORMATICS ,IT SECURITY , HEMODIALYSIS CLINICAL AND BUSINESS MANAGEMENT , ELECTRONIC TECHNOLOGIES and Real Estate support for Veterans and Veterans with special needs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#98;&#97;&#114;&#111;&#110;&#64;&#118;&#101;&#116;&#115;&#108;&#108;&#99;&#46;&#110;&#101;&#116;">gbaron@vetsllc.net</a>","vetsllc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RLMKVJ1C1LW4">18</a>","LANGUAGE IN BLOOM LLC","TAMARA BJELLAND","","110 GARNETT CT","","WINCHESTER","VA","22602-2707","WORKPLACELESS CREATES COURSES AND LEARNING PROGRAMS THAT HELP PROFESSIONALS AND TEAMS LEARN THE SKILLS NEEDED TO THRIVE IN A DISTRIBUTED ENVIRONMENT. We offer standardized courses in remote work fundamentals, remote leadership, remote learning and development, and programs empowering companies to go remote. We also customize learning programs for organizations and offer learning & development consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#109;&#109;&#121;&#64;&#119;&#111;&#114;&#107;&#112;&#108;&#97;&#99;&#101;&#108;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">tammy@workplaceless.com</a>","workplaceless.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTM5KSKMNK38">19</a>","CARDINAL TECHNOLOGY SOLUTIONS, INC.","LESLIE HICKS","","3363 SHAWNEE DR STE 1B","","WINCHESTER","VA","22602-6301","We provide complete IT support solutions for businesses, from strategic consulting and planning, to implementation, management, 24x7 monitoring, layered security & digital defenses, and remote/onsite help desk support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#104;&#105;&#99;&#107;&#115;&#64;&#99;&#97;&#114;&#100;&#105;&#110;&#97;&#108;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">lhicks@cardinaltek.com</a>","www.cardinaltek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMA2AP3BC443">20</a>","JHS GROUP LLC","JOSH JOHNSON","","704 BAKER LN STE 2","","WINCHESTER","VA","22603-5757","JHS Group, LLC. is a woman & minority owned, veteran operated emergency maintenance service provider. We serve facility maintenance companies and Federal/Local governments throughout the United States.  We provide a high-performance turnkey service to clients needing a vast array of operational and maintenance expertise. Our team is comprised of veterans located nationwide,they're specialized skills and training includes construction, electrical, plumbing, HVAC, landscaping, exterior and interior maintenance. We act as your single point of contact, providing multiple trades for clients with geographically dispersed locations across the United States requiring Maintenance, Repair & Operations services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#74;&#79;&#72;&#78;&#83;&#79;&#78;&#64;&#74;&#72;&#83;&#71;&#82;&#79;&#85;&#80;&#85;&#83;&#65;&#46;&#67;&#79;&#77;">JJOHNSON@JHSGROUPUSA.COM</a>","WWW.JHSGROUPUSA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKCZAMAGBM93">21</a>","AMPLIFIED AUDIO VIDEO LLC","BRIAN BAKOS","","513 SLEIGH DR","","CROSS JUNCTION","VA","22625-2484","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#106;&#98;&#97;&#107;&#111;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">brianjbakos@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V7E1CYDZWMC5">22</a>","ENGAGED CTC LLC","WENDY ANSON","","148 OWENS LN","","STEPHENS CITY","VA","22655-4851","About: Engaged CTC LLC is committed to helping clients achieve long term success through an organization’s greatest asset: people. Through the use of behavioral science research, best practices, and active assessments, Engaged CTC LLC provides the following core capabilities: Strategy Development & Implementation, Organizational Design, Knowledge Management, Project Management, Change Management & Strategic Communication, Leadership Training & Development, Coaching Description of Major Services: Consulting, Training, Coaching Federal Small Business Certifications – in progress Virginia Department of Social Services State Certifications – Virginia Department of Small Business & Supplier Diversity SWaM Certified Prior Clients •	Saint Francis University •	National Child Support Enforcement Association •	Incaendium Initiative Corporation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#110;&#115;&#111;&#110;&#64;&#101;&#110;&#103;&#97;&#103;&#101;&#100;&#99;&#116;&#99;&#46;&#99;&#111;&#109;">wanson@engagedctc.com</a>","www.engagedctc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WBAGGQQ4EWH4">23</a>","THE VARLAND GROUP, LLC","JESSICA FREELAND","","101 LIKENS WAY","","WINCHESTER","VA","22602-7636","Experienced in synthesis, analytical and process development of small & large molecules, intermediates, bulk drug substances and finished drug products. Well versed in core analytical methods, solid scientific knowledge of pharmaceutical sciences","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#112;&#114;&#117;&#100;&#101;&#110;&#116;&#105;&#97;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">jfprudential@yahoo.com</a>","EchelonShopping.Com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z43MAN19CZR8">24</a>","BURLINGTON, LLC","JAMES SCHLICHITING","","1055 MILLWOOD PIKE","","WINCHESTER","VA","22602-4311","We are a hotel. From our free Bright Side Breakfast® served every morning to pet-friendly rooms, we make sure you have everything you need for a comfortable stay.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#109;&#101;&#115;&#46;&#83;&#99;&#104;&#108;&#105;&#99;&#104;&#105;&#116;&#105;&#110;&#103;&#64;&#104;&#97;&#119;&#107;&#101;&#121;&#101;&#104;&#111;&#116;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">James.Schlichiting@hawkeyehotels.com</a>","https://www.wyndhamhotels.com/laquinta"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQTQRFNYU1M8">25</a>","ABSOLUTE RENOVATION LLC","MACK GEBERT","","211 CREEKVIEW LN","","MIDDLETOWN","VA","22645-2090","Absolute Renovation LLC is a full-service property renovation company, including exterior projects, as well as residential and commercial construction and electrical services. • Comprehensive property renovation services • Expertise in exterior projects • Residential & Commercial construction services • Residential & Commercial electrical services • End to End project management using latest tech","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#99;&#107;&#64;&#97;&#98;&#104;&#114;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">mack@abhrllc.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.552&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 029 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.36 seconds and 2.50 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 63 
+(of 63 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGNXHQMGKPC8">1</a>","APPLIED TECHNOLOGY GROUP INC","GENE HANSON","CEO","4440 EASTON DR","","BAKERSFIELD","CA","93309-1028","TWO WAY RADIO SALES AND SERVICE, SCADA PRODUCTS, BROADBAND MICROWAVE, WEB HOSTING, WIRELESS INTERNET, SURVELLIENCE CAMERAS, COMPUTER SERVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#104;&#97;&#110;&#115;&#111;&#110;&#64;&#97;&#116;&#103;&#105;&#110;&#116;&#101;&#114;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">ghanson@atginternet.com</a>","http://www.atginternet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4TNKR1BMB64">2</a>","LUSTER NATIONAL INC","EMILY LUSTER","CEO","1701 WESTWIND DR STE 117","","BAKERSFIELD","CA","93301-3045","A management consulting firm with 20 years experience providing strategic planning, program, project & construction mgmt, information assurance, signal intelligence, & facilities management for private sector clients and governmental agencies nationwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#117;&#115;&#116;&#101;&#114;&#64;&#108;&#117;&#115;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">eluster@luster.com</a>","http://www.luster.com//"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GF82WQ7CMEL4">3</a>","NEW DIRECTIONS TECHNOLOGIES, INC.","TARA MCKINNON","President/CEO","137 DRUMMOND AVE","STE A","RIDGECREST","CA","93555-3583","SDVOSB,SERDS,IA,IT/IS,QA,COE,IT/IO,C4ISR, CM,Facilities,Help Desk,Legacy Systems,logistics,computer support,software development,communication,security,safety, operations,maintenance,Network Support,Financial Management,Systems Engineering,Threat Analysis","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#114;&#97;&#46;&#109;&#99;&#107;&#105;&#110;&#110;&#111;&#110;&#64;&#110;&#100;&#116;&#105;&#46;&#110;&#101;&#116;">tara.mckinnon@ndti.net</a>","http://www.ndti.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KG7EAAM1K758">4</a>","D. A. C. ENTERPRISES, INC.","TERREL CAMPBELL","","821 W INYOKERN RD","","RIDGECREST","CA","93555-2417","HVAC (Heating, Ventilation, Air nConditioning, Sheetmetal, Construction, Sales, Service, Installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#99;&#105;&#110;&#99;&#64;&#114;&#105;&#100;&#103;&#101;&#110;&#101;&#116;&#46;&#110;&#101;&#116;">dacinc@ridgenet.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C6VSS67LEKD7">5</a>","ADAPTIVE AEROSPACE CORP","WILLIAM MCCUNE","","501 BAILEY AVE","","TEHACHAPI","CA","93561-9012","We do design/analyze/manufacture/certify/install /test. 18 year history: innovative aircraft modification enabling our customers to perform unusual and critical missions. We provide you with a competitive advantage: performance, schedule, and cost.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#99;&#99;&#117;&#110;&#101;&#64;&#97;&#100;&#97;&#112;&#116;&#46;&#97;&#101;&#114;&#111;">bmccune@adapt.aero</a>","http://www.adapt.aero"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H29GC53NAP14">6</a>","CAROLYN BERTRAND","ROBERT BERTRAND","","1210 W GRAAF AVE","","RIDGECREST","CA","93555-2354","We provide Cargo Containers, Mini Storage, Self-Storage, RV Park Services, Trucking Services, landscaping materials and Contractor Services for Grading and Paving and water trucks.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#114;&#116;&#114;&#97;&#110;&#100;&#114;&#111;&#99;&#107;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">bertrandrocks@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6DNRPELDNJ5">7</a>","MODY LLC","SAMIR MODY","","2166 ZEUS CT","","BAKERSFIELD","CA","93308-6866","Sales and Service of Submersible Pumps","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#105;&#114;&#64;&#109;&#111;&#100;&#121;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">samir@modypump.com</a>","http://WWW.MODYPUMP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SEC4AC34KA48">8</a>","DIAL GENERAL ENGINEERING","FRANK TYNING","Owner","2226 ALTA VISTA DR","","BAKERSFIELD","CA","93305-2502","Hazardous Waste Removal, Excavation, Demolition, Building Maintenance, Electrical, Concrete, Carpentry, Domestic Water Lines, Sewer Lines, Painting,Grounds Maintenance, Weed Control, Pest Control","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#107;&#116;&#121;&#110;&#105;&#110;&#103;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">franktyning@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLG7QJA2VJL1">9</a>","EREMICO BIOLOGICAL SERVICES, LLC","DENISE LABERTEAUX","","211 SNOW ST","","WELDON","CA","93283-9544","endangered species surveys; rare plant surveys; protocol surveys for Mohave ground squirrel, Inyo California Towhee, Southwestern Willow Flycatcher, Yellow-billed Cuckoo; Federal bird banding permit; mitigation planning and monitoring; authorized desert tortoise biologists; desert bighorn sheep surveys; remote sensing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#101;&#109;&#105;&#99;&#111;&#98;&#105;&#111;&#108;&#111;&#103;&#105;&#99;&#97;&#108;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">eremicobiologicalservices@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZGANLCA3BB83">10</a>","FRONTIER ENVIRONMENTAL SOLUTIONS INC","EDWARD WINCHESTER II","President","8118 COYOTE TRAIL AVE","","INYOKERN","CA","93527-2031","Design and install bat-compatible closures for abandoned mines. Design and install power systems for remote locations using photovoltaics and wind turbines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#119;&#105;&#110;&#99;&#104;&#101;&#115;&#116;&#101;&#114;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#45;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">edwinchester@frontier-environmental.com</a>","http://www.frontier-environmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJFWCZKA5UB1">11</a>","SPARTAN, INC","MICHAEL FRIDAY","CEO/President","3030 M ST","","BAKERSFIELD","CA","93301-2137","We are an engineering service company, manufacturing of piping presswure vessels and above ground fuel tanks and fuel dispensing systems, we also upgrade existing fuel dispensing systems and fuel monitoring systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#102;&#114;&#105;&#100;&#97;&#121;&#64;&#115;&#112;&#97;&#114;&#116;&#97;&#110;&#116;&#101;&#99;&#104;&#110;&#105;&#99;&#97;&#108;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mfriday@spartantechnicalinc.com</a>","http://www.spartaninc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PL1BV492LXP8">12</a>","CLEAR CREEK SYSTEMS, INC.","JOE GANNON","Controller","4101 UNION AVENUE","","BAKERSFIELD","CA","93305-2457","CCS specializes in provding a complete line of temporary water treatment systems, filtration equipment rentals and filtrations media . Provide temporary treatment systems on an emergency and rapid response basis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#97;&#110;&#110;&#111;&#110;&#64;&#99;&#108;&#101;&#97;&#114;&#99;&#114;&#101;&#101;&#107;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">jgannon@clearcreeksystems.com</a>","http://www.clearcreeksystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3ZXL1UDA6C3">13</a>","BERCHTOLD EQUIPMENT COMPANY","JERRY OLIVA","","3000 PEGASUS DR","","BAKERSFIELD","CA","93308-6817","Full Equipment, Parts & Service Dealership for Agriculture, Construction & industry featuring New Holland Tractors & Backhoes, Kubota Tractors, Utility Vehicles & Construction Equipment, Bobcat Loaders & Attachments, Doosan Construction Equipment, Harlo Ag Forklifts and others","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#79;&#76;&#73;&#86;&#65;&#64;&#98;&#101;&#114;&#99;&#104;&#116;&#111;&#108;&#100;&#46;&#99;&#111;&#109;">JOLIVA@berchtold.com</a>","http://www.berchtold.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WUTBMJWN4JH4">14</a>","EARTH LANDSCAPING","PETER BROWN","Co-Owner","1230 W REEVES AVE","","RIDGECREST","CA","93555-2342","We provide all forms of Landscape Contracting and Grounds Maintenance. We Specialize in Design Build residential and commercial landscaping. We are Licensed California Landscape contractors and have been serving the high desert for over 25 Years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#97;&#114;&#116;&#104;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">earthlandscaping@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FQYLNFCKEQ31">15</a>","AMERICAN SAFETY SERVICES INC","BRETT MOSELEY","","3215 FRUITVALE AVE","","BAKERSFIELD","CA","93308-5915","American Safety Services, Inc., has been providing various safety services and equipment to the petroleum production, drilling, maintenance, manufacturing and refining industries since 1991.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#82;&#69;&#84;&#84;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#115;&#97;&#102;&#101;&#116;&#121;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">BRETT@americansafetyservices.com</a>","www.americansafetyservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JKH5K9C8NGF9">16</a>","KERN STEEL FABRICATION, INC.","ALI CHAMPNESS","VP - GM","627 WILLIAMS ST","","BAKERSFIELD","CA","93305-5437","Specialize in Aircraft Maintenance Docking Stands,Fabricating Steel Structures. Designs/ Build, fabricates/installs aircraft maintenance stands, dock systems, wing docks, nose stands, tail stands. ISO 9001:2000,AISC Certified HUBZone certified.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#105;&#64;&#107;&#101;&#114;&#110;&#115;&#116;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">ali@kernsteel.com</a>","http://www.kernsteel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULE3GTCK5JP1">17</a>","KYLE LAWLESS","KYLE LAWLESS","","12306 PALM AVE","","BAKERSFIELD","CA","93312-3645","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#98;&#119;&#97;&#116;&#101;&#114;&#116;&#114;&#117;&#99;&#107;&#115;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">kbwatertrucks@att.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1L8P9T23XJ8">18</a>","M.P. ENVIRONMENTAL SERVICES, INC.","GINA BLANKENSHIP","","3400 MANOR ST","","BAKERSFIELD","CA","93308-1451","Full service environmental firm specializing in hazardous waste remediation and transportation. Services include soil excavations, industrial cleaning, solids separation, hydro-excavation, demolition and hydro-excavation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#98;&#108;&#97;&#110;&#107;&#101;&#110;&#115;&#104;&#105;&#112;&#64;&#109;&#112;&#101;&#110;&#118;&#105;&#114;&#111;&#46;&#99;&#111;&#109;">gblankenship@mpenviro.com</a>","www.mpenviro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKXXBHK46JS5">19</a>","TRIDANT SOLUTIONS, INC.","ANNETTE PALAZUELOS","","206 S RICHMOND RD STE C","","RIDGECREST","CA","93555-4463","Founded in 2005, Tridant Solutions (Tridant) delivers essential support services to military/federal partners in the key areas of admin., financial, audit readiness, procurement, healthcare, data management, medical abstractor, case mgmt., HR mgmt., safety mgmt. and program mgmt. Tridant is a 3-time INC 500 Fastest Growing Company awardee with over $35,000,000 in successfully completed or underway multi-year programs. We serve NAVSEA, NAVAIR, US Air Force, US Dept. of Homeland Security, Air/Army National Guard, and the private healthcare industry. Clients choose us for our 100% Exceptional CPAR ratings; web-based contract mgmt.; automated cost controls, employee onboarding & labor mgmt., and schedule systems. The firm's loyal clients benefit from Tridant's active SECRET clearance, mission-critical DoD experience, and established SeaPort-NxG contract.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#101;&#116;&#116;&#101;&#46;&#112;&#97;&#108;&#97;&#122;&#117;&#101;&#108;&#111;&#115;&#64;&#116;&#114;&#105;&#100;&#97;&#110;&#116;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">annette.palazuelos@tridantsolutions.com</a>","www.tridantsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FM8BBTVDLBB5">20</a>","SANTANA'S PUMPING AND PLUMBING, INC.","SANTANA MOLINA","","111 LANDFILL RD","","LEBEC","CA","93243-","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#78;&#84;&#65;&#78;&#65;&#80;&#85;&#77;&#80;&#73;&#78;&#71;&#64;&#65;&#79;&#76;&#46;&#67;&#79;&#77;">SANTANAPUMPING@AOL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCL1QLJK1BC1">21</a>","ADVANCE COMMUNICATIONS & CONSULTING, INC.","AJ RAMIREZ","","5909 NATHANIEL WAY","UNIT A","BAKERSFIELD","CA","93313-2966","Design, Consult, Install, Maintain & Svc computer networks, Cat6/fiber cabling, switches, routers, and servers; phone systems; surveillance cameras, CCTV, access control; outside plant fiber, copper backbone, fusion splicing, termination; A/V systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#106;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#99;&#111;&#109;&#109;&#46;&#110;&#101;&#116;">aj@advancecomm.net</a>","advancecomm.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C2N6JCLFN9A8">22</a>","JONES-WALBAUM CORPORATION","RYAN JONES","","821 18TH ST","","BAKERSFIELD","CA","93301-4823","Sell and service office machines and equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#106;&#111;&#110;&#101;&#115;&#64;&#97;&#98;&#109;&#49;&#46;&#99;&#111;&#109;">rjones@abm1.com</a>","https://www.abm1.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G8GJAHL7WDV3">23</a>","J TORRES CO INC","MIKE FEROLA","Director of Operations","5810 S UNION AVE","","BAKERSFIELD","CA","93307-5426","J.TorresCo.Inc.(JTC) provides Remediation - Thermally, Stabalization, Recycling and disposal. We provide Trans.- EndDumps, roll offs, Drums and liquids. We manage ED,AFB AFB Refuse/Recycling and collection program. JTC provides GIS and GPS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#107;&#101;&#64;&#74;&#84;&#67;&#67;&#79;&#82;&#80;&#46;&#67;&#111;&#109;">Mike@JTCCORP.Com</a>","JTCCORP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L16YHCKVMMU4">24</a>","R.L. ENVIRONMENTAL, INC.","ERIN LOWE","","4400 FANUCCHI WAY","","SHAFTER","CA","93263-9552","Hazardous Waste Treatment and Disposal, Other Nonhazardous Waste Treatment and Disposal, Remediation Services, All Other Miscellaneous Waste Management Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#111;&#119;&#101;&#64;&#114;&#108;&#101;&#105;&#110;&#99;&#46;&#117;&#115;">elowe@rleinc.us</a>","http://www.rleinc.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SAJHETTMPKE4">25</a>","DUNK'S EQUIPMENT L.L.C.","JACKIE DUNCAN","","12401 LONGMEADOW WAY","","BAKERSFIELD","CA","93312-4631","Provide non-potable water transport services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#117;&#110;&#99;&#97;&#110;&#54;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jduncan6a@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G8JWGWJDHRP4">26</a>","SOUTH VALLEY SOLUTIONS","CLAY LOMAX","","9103 ELIZABETH GROVE CT","","BAKERSFIELD","CA","93312-6227","Soil and Erosion Control specialists emphasizing in stabilization services for roads, shoulders, runways, air decks, parade fields etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#108;&#111;&#109;&#97;&#120;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#115;&#111;&#105;&#108;&#46;&#99;&#111;&#109;">Clomax@advancedsoil.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQAAH17P5NN3">27</a>","KNIGHT SITE SERVICES, INC.","TRACEY LINCE","","1550 JAMES RD","","BAKERSFIELD","CA","93308-9749","We would like to take this opportunity to introduce you to our company. Knight's Pumping & Portable Services, Inc. has been providing sanitation and temporary services to Kern County for over 25 years. We are a family-owned business and employ approximately 60 people who are comitted to providing friendly, quality service to all of our customers. We look forward to doing business with you. For more information please visit our website http://www.knightsservices.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#101;&#121;&#64;&#107;&#110;&#105;&#103;&#104;&#116;&#115;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">tracey@knightsservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MWFFNLC2EX15">28</a>","JCJ CHAVEZ CONSTRUCTION INC","MARILUPE CHAVEZ","","115 S GOLD CANYON ST","","RIDGECREST","CA","93555-4121","Established in 2010, JCJ Chavez is an emerging contractor. This firm is continues establishing strong relationships with clients. JCJ, collaborate with the clients to provide initial concept development, design, engineering, procurement, construction, and management support and solutions. Our team focus on making our client successful to accomplish their mission.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#108;&#117;&#112;&#101;&#64;&#106;&#99;&#106;&#99;&#104;&#97;&#118;&#101;&#122;&#46;&#99;&#111;&#109;">marilupe@jcjchavez.com</a>","jcjchavez.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=THFDK9ZQ5AP7">29</a>","CENTRAL CALIFORNIA CONSTRUCTION, INC","TAMMIE RANKIN GERECKE","","7221 DOWNING AVE","","BAKERSFIELD","CA","93308-5817","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#109;&#109;&#105;&#101;&#64;&#99;&#101;&#110;&#116;&#114;&#97;&#108;&#99;&#97;&#108;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">tammie@centralcalinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJMPGBMM7SZ5">30</a>","INQU, LLC","LORI WILKENS","","9678 LEWIS AVE","","CALIFORNIA CITY","CA","93505-6202","INQU, LLC is a premier provider of innovative technical, managerial, engineering, maintenance support, and advisory and assistance services to advance aerospace technology and operations of manned and unmanned air vehicles and systems supporting Department of Defense and NASA programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#107;&#101;&#110;&#115;&#46;&#108;&#111;&#114;&#105;&#64;&#105;&#110;&#113;&#117;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">wilkens.lori@inqullc.com</a>","http://www.inqullc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RNM6ZUY2LAK6">31</a>","MCBRIDES WELDING","EDWARD MCBRIDE","","205 W RIDGECREST BLVD","","RIDGECREST","CA","93555-4010","Mcbride's Welding is a welding company based out of Ridgecrest, CA. We specialize in aluminum and stainless steel welding. We provide on site welding, as well as steel supply. To view more on our Federal Contracting please visit <a href='https://www.fedlinks.com/admin/profiles/mcbrides-we...'>Fedlinks</a>. Mcbride's Welding","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#105;&#114;&#111;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">ed@americanironinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CZ33HL2Z1L48">32</a>","FIREQUICK PRODUCTS, INC.","JOYCE WATSON","","1137 N REDROCK INYOKERN RD","","INYOKERN","CA","93527-","Manufacturer of wild land fire management tools. Qualified H-3 hazardous materials manufacturer. Hold ATF explosive user's permit. Design engineering and manufacturing. Federal Firearms Dealer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#102;&#105;&#114;&#101;&#113;&#117;&#105;&#99;&#107;&#46;&#99;&#111;&#109;">admin@firequick.com</a>","http://www.firequick.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YM8BKJS66ND7">33</a>","MOLLY AND BRUCE BUSACCA, INC.","MARGARET BUSACCA","","2235 H ST STE A","","BAKERSFIELD","CA","93301-3924","Burglar and Fire Alarm Installation and Monitoring, CCTV Systems, Access Control, Fire Alarm Inspection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#108;&#108;&#121;&#64;&#109;&#121;&#115;&#101;&#99;&#117;&#114;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">molly@mysecuresystems.com</a>","https://www.MySecureSystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z5GNK5JC97G8">34</a>","J. NOBLE BINNS PLUMBING COMPANY, INC.","DON SCHIMNOWSKI","","3529 PEGASUS DR","","BAKERSFIELD","CA","93308-6856","24/7 emergency service in all plumbing areas. Water Heaters, Drain Lines, Backflows, Faucets, Sinks, Showers, Tubs - repaired and replaced. New Construction - Design/Build, Site Utilites. Commerical, Industrial, Restaurants","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#64;&#98;&#105;&#110;&#110;&#115;&#112;&#108;&#117;&#109;&#98;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">don@binnsplumbing.com</a>","http://www.binnsplumbing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQDHMJKJMJJ8">35</a>","CENTERLINE CONCRETE CUTTING CO, INC","DAN TUFTS","","19400 LOOKOUT PL","","TEHACHAPI","CA","93561-8202","Incorporated in 2004, providing services such as concrete and asphalt, cutting, coring, demolition, grinding, and planing. We are also union affiliated, and a California certified small business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#64;&#99;&#101;&#110;&#116;&#101;&#114;&#108;&#105;&#110;&#101;&#99;&#99;&#99;&#46;&#99;&#111;&#109;">dan@centerlineccc.com</a>","http://www.centerlineccc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RHQHDM5LWAM9">36</a>","ROSSER INC","BRANDEN ROSSER","","230 STATION AVE","","RIDGECREST","CA","93555-3840","Transport of equipment, dirt, compaction media, demolition, and all things pertaining to this field.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#110;&#100;&#101;&#110;&#64;&#114;&#111;&#115;&#115;&#101;&#114;&#105;&#110;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">branden@rosserincorp.com</a>","www.rosserincorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TNSJYV7BJRM1">37</a>","TRINITY SAFETY COMPANY LLC","BRADFORD NEWBURG","","7501 MEANY AVE","","BAKERSFIELD","CA","93308-5196","Trinity Safety is a leading safety solutions provider to industrial, oil & gas, and agricultural industries. Safety Protective Equipment, Respiratory Devices, Gas Detection & Monitoring, Heat Mitigation Services, and Emergency Rapid Rescue Response.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#110;&#101;&#119;&#98;&#117;&#114;&#103;&#64;&#116;&#114;&#105;&#110;&#105;&#116;&#121;&#115;&#97;&#102;&#101;&#116;&#121;&#99;&#111;&#46;&#99;&#111;&#109;">bnewburg@trinitysafetyco.com</a>","http://www.TRINITYSAFETYCO.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T9L9P2NYJL33">38</a>","PADRE ENGINEERING LLC","RICHARD BRUCE","","627 KEVIN CT","","RIDGECREST","CA","93555-3421","I provide Aviation Consulting, Flight Test, Integration Test, and Interoperability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#100;&#114;&#101;&#64;&#105;&#119;&#118;&#105;&#115;&#112;&#46;&#99;&#111;&#109;">padre@iwvisp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SAVBNPJTA8N9">39</a>","WEM ENTERPRISES LLC","ALI MORRIS","","135 OLIVE ST","","BAKERSFIELD","CA","93304-2421","Small Business Assistance Services in Start Up and Operations. Strategic Advisory Services, Financial Forecasting Services, Government Contracting Assistance and Business Certification Assistance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#111;&#114;&#114;&#105;&#115;&#64;&#119;&#101;&#109;&#101;&#110;&#116;&#49;&#46;&#99;&#111;&#109;">amorris@wement1.com</a>","www.aement1.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KSCBEL6MCXK5">40</a>","KERN CPR, LLC","TERRIN GRIDER","","2001 WESTWIND DR","# U15","BAKERSFIELD","CA","93301-3034","We are a full service AHA and HSI training facility. We also teach NREMT and NAEMT courses such as TCCC, PHTLS and Stop the Bleed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#107;&#101;&#114;&#110;&#99;&#112;&#114;&#46;&#99;&#111;&#109;">admin@kerncpr.com</a>","www.kerncpr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFNJX53NYL78">41</a>","TAFT PLUMBING CO INC","GLENN BLACK","","120 E MAIN ST","","TAFT","CA","93268-9727","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#98;&#108;&#97;&#99;&#107;&#64;&#116;&#97;&#102;&#116;&#112;&#108;&#117;&#109;&#98;&#105;&#110;&#103;&#46;&#117;&#115;">gblack@taftplumbing.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JHQKJ3FHH787">42</a>","BUSINESS CLASS AVIATION INC.","JEREMY BRYANT","","7472 CYPRESS AVE","","ROSAMOND","CA","93560-7205","N/A","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#99;&#108;&#97;&#115;&#115;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">businessclassaviation@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RHHMHLAS4F56">43</a>","SMITH WILLIAM","WILLIAM CHARLES SMITH","","2804 PECANGROVE DR","","BAKERSFIELD","CA","93311-2313","WCS Protection Services is a private security organization formed in 2015 Bakersfield California. The Owner and founder William C Smith has over 20 years of security guard experience with an impeccable background and thorough knowledge in the field of private security services. WCS Protection Services is built on Respect, Consistency, Loyalty, Honesty and Integrity. We pride ourselves on giving our customers maximum effort complete satisfaction while providing 110% professional quality services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#99;&#115;&#109;&#105;&#116;&#104;&#51;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">willcsmith39@gmail.com</a>","http://wcsprotectionservices.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HE4HJM59L6S4">44</a>","KITCHEN PRODUCTIONS, INC","EDWARD TIPLER","","216 N JACKS RANCH RD","","RIDGECREST","CA","93555-7912","Radio communications systems engineering, sales and service. Radio and broadcast mountaintop site and tower rental space. Paging, 2-way radio","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#112;&#108;&#101;&#114;&#101;&#107;&#64;&#105;&#119;&#118;&#105;&#115;&#112;&#46;&#99;&#111;&#109;">tiplerek@iwvisp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FP5KNNEUVAK1">45</a>","MESA BIOLOGICAL LLC","JOE MCFADDIN","","1654B CALLOWAY DR","","BAKERSFIELD","CA","93312-2863","Environmental Permitting and Compliance, Permit Application, Compliance Monitor, CESA, FESA, NEPA, Section 404 Preliminary Jurisdictional Wetland (Survey and Inventory)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#109;&#101;&#115;&#97;&#98;&#105;&#111;&#46;&#99;&#111;&#109;">joe@mesabio.com</a>","www.mesabio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P2YDYLRUBM79">46</a>","BAKOBOY ENTERPRISE, INC.","JUSTIN PATT","","1811 JUNE AVE","","BAKERSFIELD","CA","93304-4513","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#97;&#116;&#116;&#64;&#98;&#97;&#107;&#111;&#98;&#111;&#121;&#46;&#99;&#111;&#109;">jpatt@bakoboy.com</a>","www.bakoboy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S52KC4134K15">47</a>","TEN-WEST ENVIRONMENTAL","CHUCK HUSTON","","2701 PATTON WAY","","BAKERSFIELD","CA","93308-5707","FULL SERVICE ENVIRONMENTAL CLEANUP AND REMEDIATION COMPANY SPECIALIZING IN EMERGENCY RESPONSE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#72;&#85;&#67;&#75;&#64;&#84;&#69;&#78;&#87;&#69;&#83;&#84;&#69;&#78;&#86;&#73;&#82;&#79;&#78;&#77;&#69;&#78;&#84;&#65;&#76;&#46;&#67;&#79;&#77;">CHUCK@TENWESTENVIRONMENTAL.COM</a>","www.tenwestenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WPVYCV1LMVY5">48</a>","VALLEY CYCLE AND MOTORSPORTS, INC.","KAREN HARTZELL","","3917 BUCK OWENS BLVD","","BAKERSFIELD","CA","93308-4927","Sell New and Used Off Highway Vehicles, Motorcycles and PWC. We have a Parts and Accessories dept and a full service repair shop with factory trained technicians.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#97;&#114;&#116;&#122;&#101;&#108;&#108;&#64;&#118;&#97;&#108;&#108;&#101;&#121;&#99;&#121;&#99;&#108;&#101;&#97;&#110;&#100;&#109;&#111;&#116;&#111;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">khartzell@valleycycleandmotorsports.com</a>","https://www.kerncountypowersports.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZGP2L2CC1DY6">49</a>","WINLAD ELECTRICAL CONTROLS LLC","DANIEL MUWANGUZI","","5817 SEASONS VALLEY CT","","BAKERSFIELD","CA","93313-5209","Winlad Electrical Controls, LLC is a vendor neutral consulting firm, specializing in Specification, Design, Implementation and Support, of Supervisory Control and Data Acquisition (SCADA) Systems, PLC platform software development and associated applications for various industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#117;&#119;&#97;&#110;&#103;&#117;&#122;&#105;&#64;&#119;&#105;&#110;&#108;&#97;&#100;&#101;&#99;&#46;&#99;&#111;&#109;">dmuwanguzi@winladec.com</a>","https://winlad.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENHBSADKDDA1">50</a>","A&D SERVICES LLC","DAWNA BROWN","","13500 MONARCH PALM AVE","","BAKERSFIELD","CA","93314-6667","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#46;&#100;&#95;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#54;&#54;&#49;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">a.d_services661@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPNXFQ4A3DB5">51</a>","HIGH DESERT AIR DUCTOR INCORPORATED","JERRY NEWBURY","","120 E CHURCH AVE STE A","","RIDGECREST","CA","93555-4081","Heating and Air conditioning service, repair and installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#103;&#104;&#100;&#101;&#115;&#101;&#114;&#116;&#97;&#105;&#114;&#100;&#117;&#99;&#116;&#111;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">highdesertairductor@gmail.com</a>","https://www.highdesertairductor.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WY7JVZLNN5V4">52</a>","VETERAN TECHNICAL CONSULTING & CONSTRUCTION INC","GABE KUHNERT","","13321 STERLING HEIGHTS DR","","BAKERSFIELD","CA","93306-7269","A service disabled, Veteran owned business providing personnel and business operations consulting, coaching and mentoring supervision and senior management in leadership and collaboration, construction evaluations and performance in project management/program management, technical assistance in quality functions like analysis, continuous improvement and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#98;&#101;&#107;&#117;&#104;&#110;&#101;&#114;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">gabekuhnert@gmail.com</a>","https://www.vettcc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQZ6KPEMEJD4">53</a>","MID CAL TECHNICAL LLC","CHRISTINE LUJAN","","5016 CALIFORNIA AVE","","BAKERSFIELD","CA","93309-1649","Mid-Cal Technical, LLC operates as a full-service staffing firm offering customized employment solutions that meet your specific needs. Our emphasis is on both field personal (semi-skilled) and technical professionals (highly skilled) individuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#76;&#117;&#106;&#97;&#110;&#64;&#109;&#105;&#100;&#99;&#97;&#108;&#116;&#101;&#99;&#104;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">CLujan@midcaltechnical.com</a>","https://www.midcaltechnical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJS7N8YNNH39">54</a>","EMERALD ENTERPRISES OF CA, LLC","CHRYSTAL ABBOTT","","4500 PERRIS WAY","","BAKERSFIELD","CA","93309-1730","Been in business since 2014. Women owned, minority owned small business. Providing full HR and payroll services, consulting and training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#64;&#99;&#114;&#121;&#115;&#116;&#97;&#108;&#99;&#108;&#101;&#97;&#114;&#104;&#114;&#115;&#46;&#99;&#111;&#109;">hr@crystalclearhrs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNQXG459BUX7">55</a>","THE FULLWAVE GROUP LLC","JOSEPH BRAY","","22830 LAKE DR","","TEHACHAPI","CA","93561-8254","Nondestructive Testing, Consulting, Engineering, Training, Development, Inspection, RCCA, Turnkey Program, FEM, Materials testing and certification","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#101;&#112;&#104;&#46;&#98;&#114;&#97;&#121;&#64;&#116;&#104;&#101;&#102;&#117;&#108;&#108;&#119;&#97;&#118;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">joseph.bray@thefullwavegroup.com</a>","www.thefullwavegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VS6CKNE5UUF8">56</a>","HOT FUEL LLC","HENRY ROEDIGER","","22609 TALLYHO CT","","TEHACHAPI","CA","93561-7977","Hot Fuel Services ? Fuel Operations & Fuel Lab Testing ? Mobile Mil-STD-1518/1548 Operation ? Temporary Fuel Storage at Designated Landing Points & Airports Near Fires ? Mobile Fuel Testing Services (T.0 42B-1-1) ? Ground Fuel Service ? Fuel Consulting ? Fuel Equipment Solutions ? Fuels Apparel ? Fuel Inspection Readiness o NFPA 407 - Mil-STD-1548 & 1518 - DCMA 8210 - 14 CFR Part 139.321","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#111;&#116;&#102;&#117;&#101;&#108;&#108;&#108;&#99;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">hotfuelllc@outlook.com</a>","www.hotfuelllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SGTXBHYZ8CY6">57</a>","EDWARD S ROBINSON ENTERPRISES, LLC","EDWARD ROBINSON","","11710 WALDERI ST","","BAKERSFIELD","CA","93311-9316","The Edward S. Robinson, LLC. – The Social Servant agency mission is: To ensure that all people have equal access to municipal, state, and federal social and human services, community resources, employment services, and opportunities that they require to meet their basic human needs, and/or secure self-sufficiency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#119;&#97;&#114;&#100;&#114;&#111;&#98;&#105;&#110;&#115;&#111;&#110;&#64;&#116;&#104;&#101;&#115;&#111;&#99;&#105;&#97;&#108;&#115;&#101;&#114;&#118;&#97;&#110;&#116;&#46;&#99;&#111;&#109;">edwardrobinson@thesocialservant.com</a>","www.thesocialservant.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYM5LM3FNNE9">58</a>","BOGOB ENTERPRISES","OMAR CEJA","","5507 CARROTWOOD AVE","","BAKERSFIELD","CA","93313-9408","BOGOB Enterprises provides professional management support services to federal, state, local, private for-profit, and nonprofit clients. As a customer-focused, quality-driven organization, BOGOB Enterprises uses industry best practices to drive continuous improvement. 	Our planning capabilities are complemented by strong support from our venues of vendors who work closely with us to meet our clients' overall program, project, and goal objectives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#97;&#99;&#101;&#106;&#97;&#50;&#55;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">oaceja27@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RSAKY1EX59Z5">59</a>","BLUE RAVEN SCIENTIFIC LLC","AIMEE BRYAN","","1545 S BRADY ST","","RIDGECREST","CA","93555-8840","Blue Raven Scientific LLC supports organizations to achieve breakthrough and innovative advances in science and technology. Core qualifications include physical, biological, and forensic sciences across sectors of government, private industry, academia, and law enforcement. We provide depth of technical expertise and extensive experience on research and development efforts to procure funding, formulate and guide scientifically established research, inspire the ideation process and aid innovation of scientific programs, analyze and communicate results, and transition technology to new fields and markets. In summary, we provide Scientific, Engineering, and Technical Assistance, as well as administrative, and programmatic support to scientific portfolios.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#105;&#109;&#101;&#101;&#64;&#98;&#108;&#117;&#101;&#114;&#97;&#118;&#101;&#110;&#115;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">aimee@blueravenscientific.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JG15YJMF34G1">60</a>","EL SILVERBACK TRUCKING LLC","CARLOS NUNEZ","","6404 BAMA ROSE CT","","BAKERSFIELD","CA","93308-7412","El Silverback Trucking LLC is a family-owned and operated Super 10's transportation company. Established in 2020 and headquartered in Bakersfield, Ca. We are proud to bring dependable heavy haul services to the Central Valley. We pride ourselves on our cost-efficient reliability and 24/7 communication. Specializing in dirt, asphalt, wet batch, demo, grindings, base, rock and more. We are a disadvantaged business enterprise and we have achieved to expand our fleet with commitment and integrity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#117;&#110;&#101;&#122;&#64;&#101;&#108;&#115;&#105;&#108;&#118;&#101;&#114;&#98;&#97;&#99;&#107;&#46;&#99;&#111;&#109;">cnunez@elsilverback.com</a>","elsilverback.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQL8GKSE52R3">61</a>","ATLAS PRODUCE & DISTRIBUTION, INC.","NICOLE DOBRZANSKI","","830 21ST ST","","BAKERSFIELD","CA","93301-2915","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#111;&#108;&#101;&#64;&#97;&#116;&#108;&#97;&#115;&#112;&#114;&#111;&#100;&#117;&#99;&#101;&#46;&#99;&#111;&#109;">nicole@atlasproduce.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P7JRT9AA39H8">62</a>","ATECH MSP LLC","ROSEMARIE TURNER","","3434 TRUXTUN AVE STE 250","","BAKERSFIELD","CA","93301-3053","ATECH MSP has been serving the Bakersfield area since 2009 , providing IT Support such as technical helpdesk support, computer support, and consulting to small and medium-sized businesses. It's always been our goal to provide enterprise-level IT practices and solutions to the small business sector, with small business prices. Our experience has allowed us to build and develop the infrastructure needed to keep our prices affordable and our clients up and running. We partner with many types of businesses in the area, and strive to eliminate IT issues before they cause expensive downtime, so you can continue to drive your business forward. Our dedicated staff loves seeing our clients succeed. Your success is our success, and as you grow, we grow.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#115;&#101;&#109;&#97;&#114;&#105;&#101;&#64;&#97;&#116;&#101;&#99;&#104;&#109;&#115;&#112;&#46;&#99;&#111;&#109;">rosemarie@atechmsp.com</a>","https://www.atechmsp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZHGXEBQQ7SC8">63</a>","RIVER VALLEY INSPECTIONS & TESTING, INC.","MICHELLE WATKINS","","8218 CHISM TRL","","ONYX","CA","93255-8000","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#118;&#101;&#114;&#118;&#97;&#108;&#108;&#101;&#121;&#105;&#97;&#110;&#100;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rivervalleyiandt@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.909&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

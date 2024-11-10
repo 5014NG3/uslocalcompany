@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 073 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.94 seconds and 2.01 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 73 
+(of 73 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJJVTL1VRN13">1</a>","INFINITY SOFTWARE DEVELOPMENT, INC.","CHAPIN FRAZEE","Business Consultant","1901 COMMONWEALTH LN","","TALLAHASSEE","FL","32303-3196","Infinity Software Development, Inc. delivers award winning web sites, mainframe & client/server consulting, e-commerce, custom software development, interactive multimedia communication tools & network solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#122;&#101;&#101;&#99;&#64;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#121;&#45;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">frazeec@infinity-software.com</a>","http://www.infinity-software.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q96CPJW6J7Z5">2</a>","DIANE WILKINS PRODUCTIONS","DIANE WILKINS","Owner/Producer","4648 INISHEER DR","","TALLAHASSEE","FL","32309-2418","Video production","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#100;&#101;&#111;&#119;&#105;&#108;&#107;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">videowilk@comcast.net</a>","http://www.dianewilkinsproductions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J13KANLQHDZ6">3</a>","DATAMAXX APPLIED TECHNOLOGIES, INC.","STEPHANI MILLER","President and CEO","2001 DRAYTON DR","","TALLAHASSEE","FL","32311-7854","Installation, Support, Training & Consulting Services for Law Enforcement and Criminal Justice Agencies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#97;&#110;&#105;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#100;&#97;&#116;&#97;&#109;&#97;&#120;&#120;&#46;&#99;&#111;&#109;">stephani.miller@datamaxx.com</a>","https://www.datamaxx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQHSK3WZL8J1">4</a>","LAMPL/HERBERT CONSULTANTS, INC.","LINDA LAMPL","President","546 E CALL ST","","TALLAHASSEE","FL","32301-2509","Generalists trained in the disciplines of business, cultural anthropology, human communication,geology, environmental science, and resource development and we are focused in three broad, often overlapping areas of interest -- Public Policy, The Environment, and New Technologies. Stated another way, we work with coastal resources, land & water, minerals, and energy sources including oil & natural gas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#108;&#97;&#109;&#112;&#108;&#64;&#108;&#97;&#109;&#112;&#108;&#45;&#104;&#101;&#114;&#98;&#101;&#114;&#116;&#46;&#99;&#111;&#109;">llampl@lampl-herbert.com</a>","https://www.lampl-herbert.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T64FXXH7T8Q7">5</a>","ADVANCED SYSTEMS DESIGN, INC.","JOHN DUBARD","Senior Account Executive","2120 KILLARNEY WAY","","TALLAHASSEE","FL","32309-3402","turnkey project or staffing services for network/systems support, project management, database administration, systems analysis, programming, client server/web development, operations, systems programming, IT training, desktop support, technical writing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#100;&#117;&#98;&#97;&#114;&#100;&#64;&#97;&#115;&#100;&#45;&#119;&#101;&#98;&#46;&#99;&#111;&#109;">john.dubard@asd-web.com</a>","http://www.asd-web.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VF5YB4JK5RN6">6</a>","INNOVATIVE COSTING SOLUTIONS LLC","JENNY FRASURE","","5424 WHISTLER DR","","TALLAHASSEE","FL","32317-1414","Innovative Costing Solutions, LLC provides Indirect Cost Allocation Services to state and local governments, assisting them in recovering overhead costs expended in the administration of state and federal grants and programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#102;&#114;&#97;&#115;&#117;&#114;&#101;&#46;&#105;&#99;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jhfrasure.ics@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G5DDHAXYMNJ8">7</a>","FORESTECH CONSULTING, INC","MARK MILLIGAN","Vice President","3059 HIGHLAND OAKS TER","","TALLAHASSEE","FL","32301-3841","F4 Tech is a premiere provided of technical products and services for forestry and natural resources management. Offerings are centered around forest inventory, growth and yield, GIS/GPS, field forest management assistance and planning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#105;&#108;&#108;&#105;&#103;&#97;&#110;&#64;&#116;&#104;&#105;&#110;&#107;&#102;&#52;&#46;&#99;&#111;&#109;">mmilligan@thinkf4.com</a>","www.thinkf4.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4LWCLECCAX6">8</a>","WILDERNESS GRAPHICS INC","JESSIE BUCHHOLZ","","3465 GARBER DR","","TALLAHASSEE","FL","32303-1115","Planning and products to support outreach, education, interpretation, and heritage tourism. Exhibit design, fabrication, wayside exhibits. Complete service including writing/editing, interactive programming, artwork, design, fabrication, installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#98;&#64;&#119;&#103;&#105;&#46;&#99;&#99;">jmb@wgi.cc</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMG4P38AXE67">9</a>","WILDLANDS SERVICE, INC.","NANCY WILLIAMS","","1862 JEFFERSON RD S","","TALLAHASSEE","FL","32317-8100","Type 3 and 6 Engines. Fireline Plowing. Prescribed burning. Mowing and disking","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#111;&#100;&#102;&#105;&#114;&#101;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">goodfires@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G82HLVJML9U4">10</a>","JEFF S GLITZENSTEIN","JEFF GLITZENSTEIN","","9509 LISKA DR","","TALLAHASSEE","FL","32305-1909","botanical surveys and longleaf pine groundcover restoration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#103;&#108;&#105;&#116;&#122;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">jeffglitz@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K7RVVS7FHHK6">11</a>","CLOUD NAVIGATOR, INC.","MARK ALEXANDER","V. P. Business Development","2551 WELAUNEE BLVD","","TALLAHASSEE","FL","32308-4500","We are cloud computing evangelists and technologists with the discipline and experience required to manage complex solution delivery. Our mission is to modernize the workplace and eliminate risks so that organizations can achieve more every day. We enable organizations to leverage modern cloud solutions so they can realize their maximum potential.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#97;&#108;&#101;&#120;&#97;&#110;&#100;&#101;&#114;&#64;&#99;&#108;&#111;&#117;&#100;&#110;&#97;&#118;&#46;&#99;&#111;&#109;">mark.alexander@cloudnav.com</a>","http://www.cloudnav.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KL26APNLL253">12</a>","PREMIER SURFACE SOLUTIONS, INC","RODNEY REAMS","","2850 INDUSTRIAL PLAZA DR","","TALLAHASSEE","FL","32301-3539","Design, construction, maintenance, repair, and/or resurfacing of outdoor athletic facilities, including, but not limited to tennis courts, basketball courts, and running tracks.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#100;&#110;&#101;&#121;&#64;&#115;&#117;&#114;&#102;&#97;&#99;&#105;&#110;&#103;&#116;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">rodney@surfacingteam.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7TUNVFKGK99">13</a>","SPARTACUS CONSULTING, INC.","HENRY LOWERY","","413 ALL SAINTS ST","","TALLAHASSEE","FL","32301-2201","Design, Configure, Test and Train ERP packages such as SAP, Oracle and Peoplesoft. Capabilities also include accounting services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#110;&#114;&#121;&#64;&#115;&#99;&#105;&#99;&#112;&#97;&#46;&#99;&#111;&#109;">henry@scicpa.com</a>","http://www.scicpa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GEMPUMJAMST7">14</a>","H2ENGINEERING, INC","MATT SCARINGE","","114 E 5TH AVE","","TALLAHASSEE","FL","32303-6123","Founded as Hines, Hartman, & Assoc in 1977 to provide mechanical & electrical engineering services across the United States. In 2008 we introduced a new name, H2Engineering, keeping our roots but positioning ourselves to move forward.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#99;&#97;&#114;&#105;&#110;&#103;&#101;&#64;&#104;&#50;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mscaringe@h2engineering.com</a>","http://www.h2engineering.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKDEDXNLTP65">15</a>","MORRIS ALLEN & ASSOCIATES, INC.","WALTER DAVIS","","1140 CAPITAL CIR SE","SUITE 12","TALLAHASSEE","FL","32301-3836","Civil Engineering, IT Consulting, and Business Management Consulting Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#100;&#97;&#118;&#105;&#115;&#55;&#64;&#109;&#111;&#114;&#114;&#105;&#115;&#97;&#108;&#108;&#101;&#110;&#97;&#46;&#99;&#111;&#109;">drdavis7@morrisallena.com</a>","http://www.morrisallena.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JMTTXLNCFEG3">16</a>","RESIDENTIAL & COMMERCIAL TRANSPORT COMPANY LLC","GLORIA PUGH","","319 ROSS RD","","TALLAHASSEE","FL","32305-7484","household goods and office movers; Intrastate & Interstate Movers; International Movers, Warehousing, Receiving and Distribution, Storage, Moving Supplies, Custom Crating, Freight, Logistics, climate control storage, portable storage units, military certified, SCAC Code AMWR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#111;&#114;&#105;&#97;&#64;&#97;&#109;&#119;&#97;&#116;&#109;&#111;&#118;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">gloria@amwatmovers.com</a>","https://www.amwatmovers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJAFQ3QNLM28">17</a>","AMERICAN BACKFLOW PRODUCTS, COMPANY","DOUG TAYLOR","","7580 W TENNESSEE ST","","TALLAHASSEE","FL","32304-9332","We are a complete supplier of backflow repair parts, devices and accessories. Our full offering is shown on our website www.backflowparts.com We represent Ames, Apollo, Conbraco, Febco, Flomatic, Hersey, Watts and Wilkins.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#116;&#64;&#98;&#97;&#99;&#107;&#102;&#108;&#111;&#119;&#112;&#97;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">dougt@backflowparts.com</a>","http://www.backflowparts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFY7ACGM41R5">18</a>","AIR-SEA SYSTEMS, LLC","JIM NAVARRO","","113 S MONROE ST","","TALLAHASSEE","FL","32301-1529","Environmental Monitoring Services, Weather Stations, Groundwater systems Tide Gauges Environmental Consulting Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#97;&#105;&#114;&#45;&#115;&#101;&#97;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">jim@air-seasystems.com</a>","http://www.air-seasystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZAZREN39E9X1">19</a>","PMC ASSOCIATES LLC","DAN MARELLI","","1119 CLARK AVE","","TALLAHASSEE","FL","32301-5713","Manage scient.diving programs, start up scient& publ safety dive progrs, cond reviews of progrs, manage diver/equip. data, maint/repair equip, cond diver/safety (CPR, etc) training, investigate diving accidents, UW surveys inc. forensic, expert witnesses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#97;&#114;&#101;&#108;&#108;&#105;&#64;&#115;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#100;&#105;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">dmarelli@scientificdiving.com</a>","www.scientificdivinginternational.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVKHLZAA6C89">20</a>","BIG BEND RESTAURANT SUPPLY, INC.","TYSON WORKMAN","","400 CAPITAL CIR SE STE 15","","TALLAHASSEE","FL","32301-3839","Big Bend Restaurant Supply is a restaurant supply and consultation company. Our highly trained staff continuously attends training seminars on efficient design and interior design. We attend factory training classes several times each year on all commercial brands of refrigeration and cooking. Our small wares specialists are versed in their individual specialties. We train in all of the latest cooking techniques to enhance flavor, speed up delivery, and help with labor. From the smallest part to the largest project you are important to us. For additional information visit us at http://bbrsupply.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#115;&#111;&#110;&#46;&#119;&#111;&#114;&#107;&#109;&#97;&#110;&#64;&#98;&#98;&#114;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">tyson.workman@bbrsupply.com</a>","https://www.bbrsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R7ECFD5EPA31">21</a>","TITUS SPORTS ACADEMY, LLC","ADAM FAUROT","","1425 VILLAGE SQUARE BLVD STE 2","","TALLAHASSEE","FL","32312-1272","Performance Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#109;&#64;&#116;&#105;&#116;&#117;&#115;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">adam@titussports.com</a>","https://www.titushp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNK4GY2KTTM5">22</a>","TECH CARE X-RAY, LLC","ERIN PATTERSON-BLAND","","106 W 5TH AVE","","TALLAHASSEE","FL","32303-6125","TECH CARE X-RAY, LLC is a dynamic mobile radiology company. We offer X-rays, mammograms, ultrasounds, CT scans, and MRI's.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#98;&#108;&#97;&#110;&#100;&#64;&#116;&#101;&#99;&#104;&#99;&#97;&#114;&#101;&#120;&#114;&#97;&#121;&#46;&#99;&#111;&#109;">ebland@techcarexray.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KHAQFR7C9DQ3">23</a>","B & T FENCING, INC.","KARA MURDOCK","","5159 WOODLANE CIR","","TALLAHASSEE","FL","32303-6811","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#97;&#114;&#97;&#64;&#98;&#97;&#110;&#100;&#116;&#102;&#101;&#110;&#99;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Kara@bandtfencing.com</a>","http://www.BandTFencing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J9ZXDFH6KPQ6">24</a>","WILLIAMS COMMUNICATIONS INC","BRYAN KOCHER","","5046 TENNESSEE CAPITAL BLVD","","TALLAHASSEE","FL","32303-4698","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#111;&#99;&#104;&#101;&#114;&#64;&#119;&#109;&#115;&#99;&#111;&#109;&#46;&#99;&#111;&#109;">bkocher@wmscom.com</a>","http://www.wmscom.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HWN2YJUQNNC6">25</a>","SPLIT PINE TECHNOLOGIES LLC","SAM WADDILL","","1400 METROPOLITAN BLVD","STE 100","TALLAHASSEE","FL","32308-1516","Electronic Security Systems and Controls","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#46;&#119;&#97;&#100;&#100;&#105;&#108;&#108;&#64;&#115;&#112;&#108;&#105;&#116;&#112;&#105;&#110;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">sam.waddill@splitpinetech.com</a>","www.splitpinetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2KJLKD4BAK5">26</a>","RUVOS, LLC","EDUARDO LOUMIET","","2324 KILLEARN CENTER BLVD","STE 100","TALLAHASSEE","FL","32309-3679","Data integration services for the health care industry. Open source data integration tool experts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#100;&#105;&#101;&#64;&#114;&#117;&#118;&#111;&#115;&#46;&#99;&#111;&#109;">eddie@ruvos.com</a>","http://www.ruvos.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L4GCLMEAX593">27</a>","GEEK SOURCES INC","DENIZ FRANCK","","1900 S MONROE ST UNIT 100","","TALLAHASSEE","FL","32301-5530","Founded in 1998, GeekSources is a small woman owned business providing IT and engineering services to local, state and federal government as well as the commercial industry for over 25 years. We are passionately dedicated to the success of our clients in accomplishing their mission, providing the best technical brainpower in the industry with those who truly care about doing what is right in all circumstances. Our clients span multiple business domains, including VA, DoD, Healthcare, Finance, Transportation, and Telecommunications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#105;&#122;&#46;&#102;&#114;&#97;&#110;&#99;&#107;&#64;&#103;&#101;&#101;&#107;&#115;&#105;&#46;&#116;&#101;&#99;&#104;">deniz.franck@geeksi.tech</a>","http://www.geeksi.tech"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKS4HYJHGHS7">28</a>","ADVON CORPORATION","BILL GRAHAM","","2882 REMINGTON GREEN LN","","TALLAHASSEE","FL","32308-3757","Experienced SDVOSB Specializing in Institutional, Industrial, Commercial, and Other Building Heavy Commercial and Civil Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#105;&#109;&#97;&#116;&#105;&#110;&#103;&#64;&#97;&#100;&#118;&#111;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">estimating@advonconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E48APG8PTD86">29</a>","GORDIAN LITIGATION SOLUTIONS GROUP, INC.","JEFFERY CRUMPLER","","1882 CAPITAL CIR NE","STE 203","TALLAHASSEE","FL","32308-4568","GLSGI partners with attorneys and other key personnel at federal agencies to develop and implement the best solution for each issue encountered throughout the litigation lifecycle from litigation prevention efforts to post-trial support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#114;&#117;&#109;&#112;&#108;&#101;&#114;&#64;&#103;&#108;&#115;&#103;&#105;&#46;&#99;&#111;&#109;">jcrumpler@glsgi.com</a>","http://www.glsgi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJ58UCL4YEG1">30</a>","INSPIRED TECHNOLOGIES OF NORTH FLORIDA, INC.","CRAIG GOODSON","","3058 HIGHLAND OAKS TER","","TALLAHASSEE","FL","32301-3841","Comprehensive technology solutions integrator with capabilities in managed services, professional services, wireless services, infrastructure services, and broadband services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#105;&#110;&#115;&#112;&#105;&#114;&#101;&#100;&#45;&#116;&#101;&#99;&#104;&#46;&#110;&#101;&#116;">accounting@inspired-tech.net</a>","http://www.inspired-tech.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFNVF1FLK8S9">31</a>","TECHNICAL RECRUITING SOLUTIONS, INC.","KYLE HARTMANN","","4239 MILLWOOD LN","","TALLAHASSEE","FL","32312-9763","TRS is a Women-Owned Small Business providing Engineering, IT and Operations support to companies in the federal government realm. We work with clients on a Pre-Award/Post-Award basis to deliver technical/non-technical services to support our partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#46;&#104;&#97;&#114;&#116;&#109;&#97;&#110;&#110;&#64;&#103;&#111;&#84;&#82;&#83;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">kyle.hartmann@goTRSinc.com</a>","www.goTRSinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YVE8BBX4VFQ4">32</a>","OPTIMUM SOFTWARE SOLUTIONS INC","RAVI PENMETCHA","","1277 CEDAR CENTER DR","","TALLAHASSEE","FL","32301-4877","Optimum Software Solutions, Inc. (OptimumSSI) is an SBA 8(a) certified minority-owned small disadvantaged business. Since 2007, OptimumSSI has been providing technology consulting and application development services for a wide spectrum of clients in State and Local Governments, in Healthcare, Education, Workforce Development, Financial sector, and Non-Profit organizations. OptimumSSI offers some of the best technology services in project management, Information Technology (IT), software design, application and product development, operational support and maintenance, technical training, database management - both for on-site projects and off-site remote projects. Our employees are recruited after rigorous screening to ensure we offer our customers the best talent. Our IT services include analysis, design, development, testing, implementation, productization, maintenance, installation, customer support and training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#118;&#105;&#46;&#112;&#101;&#110;&#109;&#101;&#116;&#99;&#104;&#97;&#64;&#111;&#112;&#116;&#105;&#109;&#117;&#109;&#115;&#115;&#105;&#46;&#99;&#111;&#109;">ravi.penmetcha@optimumssi.com</a>","http://www.optimumssi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YHHXLR7ALSG9">33</a>","TAYLOR, RITA","RITA TAYLOR","","9528 BUCK HAVEN TRAIL","","TALLAHASSEE","FL","32312-3770","Expertise-admin. support, training, and ed. develop. A EDWOSB with unmatched top rated svc. With over 30 yrs. of admin. mgmt., training and HR mgmt. A diplomatic communicator; effective at developing partnerships with a drive to succeed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#116;&#97;&#116;&#97;&#121;&#108;&#111;&#114;&#53;&#52;&#46;&#114;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ritataylor54.rt@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UEXMERS79V64">34</a>","K2 TECHNICAL, LLC","DAVID ALCORN","","3571 MOSSY CREEK LN","","TALLAHASSEE","FL","32311-3642","Team expertise is in the Antiterrorism/Force Protection realm. K2 founders are the recipients of significant Industry, Air Force and DoD level AT/FP awards and have held significant positions of responsibility at virtually all levels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#46;&#97;&#108;&#99;&#111;&#114;&#110;&#64;&#107;&#50;&#45;&#116;&#101;&#99;&#104;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">david.alcorn@k2-technical.com</a>","www.k2-technical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V56QTXNPEE94">35</a>","FOLSOM, LLC","SCOTT WILLIAMS","","221 E 6TH AVE","","TALLAHASSEE","FL","32303-6207","8(a) general contractor with experience in upgrades, renovations, mechanical, electrical, painting, roofing, plumbing, HVAC, and design/build construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#102;&#111;&#108;&#115;&#111;&#109;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#99;&#111;&#109;">scott@folsomenterprises.com</a>","folsomllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LCGNPHM6N435">36</a>","HILL PROFESSIONAL SERVICES, INC.","VIVIAN BAMFORD HILL","","14231 OTTER RUN RD","","TALLAHASSEE","FL","32312-9738","Hill Professional Services, Inc. serves clients who do not have the accounting personnel within their organization and would like to outsource bookkeeping, accounting and payroll responsibilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#101;&#116;&#116;&#101;&#64;&#104;&#105;&#108;&#108;&#112;&#114;&#111;&#102;&#101;&#115;&#115;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">annette@hillprofessional.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D88FCP9KC823">37</a>","ABELITA LLC","ADRIENE WRIGHT","","203 YOUNG ST","","TALLAHASSEE","FL","32301-5437","Abelita partners with client organizations to effect positive change within the organization. We work across three spectrums including people development, organizational development, and community engagement. Abelita LLC was established August 2012 as a management, and administrative services consulting company. Abelita's core capabilities include organizational development, strategic planning, workforce development and training, Public Engagement, Communications, and special studies. Abelita works with HR organizations to advance equity-centered policies and an inclusive workforce through bootcamps, assessments, facilitated dialogues, data analysis, training, and leadership coaching.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#114;&#105;&#101;&#110;&#101;&#64;&#97;&#98;&#101;&#108;&#105;&#116;&#97;&#46;&#99;&#111;">adriene@abelita.co</a>","www.abelitaconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UJGDKD4BDHY7">38</a>","TRINITY GLOBAL FINANCIAL GROUP PLLC","ERICKA WILLIAMS","","267 JOHN KNOX RD STE 212","","TALLAHASSEE","FL","32303-6692","Bookkeeping for businesses and corporations •On-site, Off-site and Virtual Bookkeeping •Payroll Administration •Invoice Processing •Financial Statement Preparation •Check Drafting and Ledger Entries •Accounts Payable and Receivable Tracking •Bank Reconciliations  Tax Preparation •Individual Tax Return Preparation •Form Completion and Filing (1096 & 1099) •Identity Theft and Amended Tax Returns •IRS Tax Collections and Resolutions •Installment Agreements •Penalty Abatement for fines resolving for the non-filing of W-2 and 1099 •Injured/Injured Spouse Allocation of Tax Refund •Small Business Tax Returns (Schedule C) •Corporate and Partnership Returns (1120, 1120S, and 1065) Certified Masters in Microsoft Office Specialist to provide training's in Computer programs. Enrolled Agent - expert in taxation empowered by the Department of the Treasury to represent taxpayers and company's before all levels of the IRS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#87;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#116;&#114;&#105;&#110;&#105;&#116;&#121;&#103;&#108;&#111;&#98;&#97;&#108;&#102;&#105;&#110;&#97;&#110;&#99;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">EWilliams@trinityglobalfinancial.com</a>","www.trinityglobalfinancial.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WHHJU67JYKC8">39</a>","INTACT PARTNERS INC","BRIAN KILLOUGH","","267 JOHN KNOX RD","STE 203","TALLAHASSEE","FL","32303-6611","Provide Microsoft software development using automated tools for user requirements collection and robotic code generation directly from user requirements. Cutting development time by as much as 2/3rds. Providing Microsoft Azure Government cloud hosting as an Authorized Azure Government Service Provider (MSP). Have 37 years experience in government and industry with computing systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#46;&#107;&#105;&#108;&#108;&#111;&#117;&#103;&#104;&#64;&#105;&#116;&#105;&#110;&#116;&#97;&#99;&#116;&#46;&#99;&#111;&#109;">brian.killough@itintact.com</a>","https://www.itintact.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PM8MWP7EK6M5">40</a>","ELITE BUSINESS STRATEGIES, LLC","PRINCESS OUSLEY","","504 CAPITAL CIR SE STE A","","TALLAHASSEE","FL","32301-3807","Elite Business Strategies specializes in: Management Services -Program and project management support -Community planning and engagement; -Contract staffing and support;  Construction -Building Construction Services -Design Build -New Construction and Renovation -Site Work -Facilities Repair and Maintenance -Engineering Design Service -Products and equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#114;&#105;&#110;&#99;&#101;&#115;&#115;&#46;&#79;&#117;&#115;&#108;&#101;&#121;&#64;&#101;&#98;&#115;&#108;&#101;&#97;&#100;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Princess.Ousley@ebsleaders.com</a>","www.EBSLeaders.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NVC5JR1C3KP9">41</a>","1 -800-AGENTMATCH.COM, LLC","SONNIE BERRIEUM JR.","","1342 TIMBERLANE RD","","TALLAHASSEE","FL","32312-1762","Real Estate Consulting and services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#97;&#108;&#116;&#111;&#114;&#64;&#49;&#56;&#48;&#48;&#97;&#103;&#101;&#110;&#116;&#109;&#97;&#116;&#99;&#104;&#46;&#99;&#111;&#109;">realtor@1800agentmatch.com</a>","www.1800agentmatch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FS3MATZMBLN5">42</a>","305 BROTHERS ALL IN ONE LLC","JOFREE JOSEPH","","1228 VOLUSIA ST","","TALLAHASSEE","FL","32304-1947","HUB Zone, Disadvantage Business Enterprise, Minority Business Enterprise Certified Company providing Federal, State and Local Agencies and Business our Renovation and Remodeling services throughout all the Southeast Region of the United States. Using industry-best practices for continuous improvement and increased quality to meet our customers complex needs and requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#102;&#114;&#101;&#101;&#64;&#51;&#48;&#53;&#98;&#114;&#111;&#116;&#104;&#101;&#114;&#115;&#98;&#105;&#122;&#46;&#99;&#111;&#109;">jofree@305brothersbiz.com</a>","305BROTHERSBIZ.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YENACLD9JQV7">43</a>","CRICKET'S TREE SERVICE, INC.","ERIN WALKER","","6392 FITZ LN","","TALLAHASSEE","FL","32311-7724","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#99;&#114;&#105;&#99;&#107;&#101;&#116;&#115;&#116;&#114;&#101;&#101;&#46;&#99;&#111;&#109;">office@cricketstree.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLNCCCP7YB38">44</a>","KALINA LANGUAGE SERVICES LLC","SVITLANA JAROSZYNSKI","","2724 BRENNER PASS","","TALLAHASSEE","FL","32303-2255","Kalina Language Services provides high-quality translation and interpreting services to Russian and Ukrainian. The owner is certified by the American Translators Association and has over 20 years of experience in nuclear-related, construction, and general business fields. Worked as a technical translator and interpreter at a Ukrainian nuclear power plant for over 10 years. Supported multiple international projects sponsored by US Department of Energy, and Department of State. Also specializes in education and immigration translation and interpreting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#118;&#105;&#116;&#108;&#97;&#110;&#97;&#46;&#107;&#97;&#108;&#105;&#110;&#115;&#107;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">svitlana.kalinska@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K9E3K8SLG977">45</a>","S & S ENVIRONMENTAL CONSULTANTS LLC","RICHARD STEPHENS","","3811 LONGFORD DR","","TALLAHASSEE","FL","32309-3335","S&S Environmental Consulting is a full service consultant providing services, primarily in the fields of due diligence, site assessment, environmental planning, NEPA, natutal resource planning, storm water (NPDES) and renewable energy development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#115;&#64;&#115;&#115;&#101;&#99;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">richards@ssecmail.com</a>","https://www.ssenvironmentalconsultants.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WLF5UDLCZ9M3">46</a>","CRITICAL INTEGRATED SOLUTIONS INC.","BENNY ST. JOHN","","6420 JET PILOT TRL","","TALLAHASSEE","FL","32309-1918","CIS Inc is proud to support Emergency Management, public health, healthcare coalitions and medical facilities in Incident Command System training and Homeland Security Exercise Evaluation Program (HSEEP) exercising. We prepare your organization for worse case scenarios which may include natural disasters, terrorism, and technical disasters. Our experienced and talented team have years of experience serving communities across the country and world in disaster preparedness and response. We take pride in delivering a quality product within schedule. We will work with your organization to provide the services that fits your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#83;&#116;&#46;&#74;&#111;&#104;&#110;&#64;&#67;&#114;&#105;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">BSt.John@Crilutions.com</a>","http://criticalintegratedsolutions.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBNTY1GXL2M1">47</a>","TMR CONSULTING & MANAGEMENT, LLC","TAZA ROGERS","","292 N MAGNOLIA DR STE 2","","TALLAHASSEE","FL","32301-0435","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#111;&#103;&#101;&#114;&#115;&#64;&#116;&#109;&#114;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">trogers@tmrconsultinggroup.com</a>","https://www.tmrconsultinggroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJKKV7L4DJY7">48</a>","MOYE CONSULTANTS LLC","DAVIS GEORGE MOYE","","527 E PARK AVE","","TALLAHASSEE","FL","32301-2571","Moye Consultants provides electrical engineering services and specializes in designing energy storage technology. This includes modeling novel electrochemical energy storage devices, integrating energy storage technologies into larger systems, and other electrochemical techniques, as far ranging as water purification. Moye Consultants can design new, custom energy storage devices using its Simultaneous Battery and Capacitor Design Model (SBCDM). Many energy storage products are on the market, but a one-size fits all approach is seldom appropriate. Total energy storage and cost are important factors, but so are maximum power, cycle life, volatility, and flammability. Moye Consultants has the expertise to optimize a customer’s energy storage experiences by properly combining commercial of the shelf products. It is working on a Power Smoothing Module (PSM) for Solar Plus Storage renewable energy-energy storage combinations on the kilowatt scale.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#121;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#114;&#101;&#99;&#101;&#105;&#112;&#116;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">moyeconsultantsreceipts@gmail.com</a>","moyeconsultants.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBGRG9KY96S3">49</a>","ATLENVRON LLC","EDWARD OLOJO","","295 BERMUDA RD","","TALLAHASSEE","FL","32312-2343","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#119;&#97;&#114;&#100;&#111;&#64;&#97;&#116;&#108;&#101;&#110;&#118;&#114;&#111;&#110;&#46;&#99;&#111;&#109;">edwardo@atlenvron.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPD2XYN36QC1">50</a>","CAMPBELL CONSULTING SERVICES OF TALLAHASSEE, LLC","DANIEL CAMPBELL","","1028 E PARK AVE","","TALLAHASSEE","FL","32301-2673","Campbell Consulting Services is a SDVOSB company that provides Business Analysis and Systems Engineering within the Government and Commercial sectors, for IT Strategy and Consulting. By focusing on Full Life Cycle Systems Thinking, Requirements Engineering, and Configuration Management Support, we aim to ensure that the clients needs are met and they are setup for success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#64;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#99;&#97;&#109;&#112;&#98;&#101;&#108;&#108;&#46;&#99;&#111;&#109;">dan@consultcampbell.com</a>","https://www.consultcampbell.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLZUL37QXA14">51</a>","KIPERTEK, LLC","SONIA KIPER","","818 SHANNON ST","","TALLAHASSEE","FL","32305-7528","KiperteK LLC provides consulting, hands-on training, curriculum development and instructor training (train the trainer) in a variety of technical subjects, including information security and law enforcement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#112;&#101;&#114;&#116;&#101;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kipertek@gmail.com</a>","www.kipertekusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UPLNRSFWLHZ9">52</a>","MORGAN PARKER GROUP, LLC","MIA PARKER","","1560 CAPITAL CIR NW STE 2","","TALLAHASSEE","FL","32303-3180","Capable for providing services related to EEO, HR and Project Management consulting services. Able to manage contracts from procurement phase to the end of the cycle including ensuring programmatic and fiscal compliance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#97;&#64;&#109;&#111;&#114;&#103;&#97;&#110;&#112;&#97;&#114;&#107;&#101;&#114;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mia@morganparkergroup.com</a>","www.morganparkergroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CDHXNMWWD724">53</a>","STORM SERVICES ENGINEERING, LLC","GLYNESE IRBY","","234 OFFICE PLAZA DR","","TALLAHASSEE","FL","32301-2808","Storm Services Engineering has the ability to adapt to different scopes of work. From our daily engineering services provided to our customers, to damage assessment, to line crew support, we are able to change daily tasks to emergency disaster relief. In all areas of work, we keep safety as our top priority.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#121;&#110;&#101;&#115;&#101;&#64;&#115;&#116;&#111;&#114;&#109;&#115;&#108;&#46;&#99;&#111;&#109;">glynese@stormsl.com</a>","https://www.stormsl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VTM3MWVMK2K5">54</a>","MICROSYSTEMS FIRST INC","JUDY JONES-COLSTON","","3050 HIGHLAND OAKS TER","STE 5","TALLAHASSEE","FL","32301-3841","engineering, design, community and small business development,economic development, sop's, product development, training, systems integration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#100;&#121;&#64;&#109;&#105;&#99;&#114;&#111;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#112;&#114;&#111;">judy@microsystems.pro</a>","WWW.MICROSYSTEMS.PRO"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CU8EFMGH26K6">55</a>","ASTUTE WOMAN INSTITUTE, LLC","ANISA TURNER","","2537 GLOVER RD","","TALLAHASSEE","FL","32305-1197","Astute Woman Institute, LLC (AWI), is a Women-Owned Small Business delivering top-level soft-skills Learning and Development services, entrepreneurial development & training, business consultancy, customized course curriculum services, office management, and administrative services. AWI is known for its innovation, business integrity, and roll-up-your sleeves work ethic. Collectively, the Team boasts over 40 years of higher education, management, training, and business finance/entrepreneurial experience, all of which is dedicated to providing best-in-class service to Federal, State and Local Government Agencies, Private Sector, Non-profit Organizations and Individuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#97;&#115;&#116;&#117;&#116;&#101;&#119;&#111;&#109;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">theastutewoman@gmail.com</a>","www.astutewomaninstitute.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XJJ2AB8JNLF3">56</a>","SEVEN HILLS AUCTIONS, LLC","BUDDY LEE","","3110 CAPITAL CIR NE","STE 200","TALLAHASSEE","FL","32308-3706","Seven Hills Auctions is a national provider of real estate auction services. Auctions are conducted through online, live, simulcast and sealed bid auctions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#117;&#100;&#100;&#121;&#64;&#55;&#104;&#97;&#117;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">buddy@7hauctions.com</a>","www.7hauctions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QHMJS14PULG5">57</a>","SOUTHERN EARTH SCIENCES INC","LEWIS COPELAND","","2467 CENTERVILLE RD","","TALLAHASSEE","FL","32308-4417","Southern Earth Sciences, Inc. (SESI) provides geotechnical engineering, subsurface investigations, construction materials testing and environmental services throughout the southeast on industrial, commercial, government and private projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#99;&#111;&#112;&#101;&#108;&#97;&#110;&#100;&#64;&#115;&#111;&#101;&#97;&#114;&#116;&#104;&#46;&#99;&#111;&#109;">lcopeland@soearth.com</a>","www.soearth.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBRHQ126GSU6">58</a>","JET SET II LLC","JAMES WILCOX","","2700 WELAUNEE BLVD UNIT 301","","TALLAHASSEE","FL","32308-4998","Jet Set Company is a Service-Disabled Veteran Owned Construction & Facilities Maintenance Company that specializes servicing government contracts throughout the United States. We service cities, counties, federal, & military properties. We annually perform millions of square feet of exterior services including but not limited to the following areas: Commerical Roofing & Roof Coatings Waterproofing & Coatings High-and Low- pressure Exterior Washing High Rise Window Cleaning Exterior Restoration Concrete Repair & Sealing Epoxy Finishes Window Glazing & Expansion Joint Replacement. Jet Set Company was founded by General Contractor James Wilcox. James is a second is a second-generation contractor with over 30 yrs. experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#105;&#108;&#99;&#111;&#120;&#64;&#106;&#101;&#116;&#115;&#101;&#116;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">jwilcox@jetsetcompany.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPFMJ69HZWL6">59</a>","EW VISIONS LLC","EDDIE WILLIAMS","","1615 TRAIL BLAZER DR","","TALLAHASSEE","FL","32310-3651","Multimedia production company specializing in digital storytelling and elevating the relationship between organizations and their target audience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#119;&#118;&#105;&#115;&#105;&#111;&#110;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ewvisions@gmail.com</a>","https://www.ewvisionsllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1WKFWT75U97">60</a>","TZ PHILLIPS ENTERPRISE INC","TAWANA PHILLIPS","","8125 BUCK LAKE RD","","TALLAHASSEE","FL","32317-8509","Emergency and other relief services. Trees and debris removal. Site clearing and cleanup","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#122;&#112;&#104;&#105;&#108;&#108;&#105;&#112;&#115;&#49;&#50;&#56;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">tzphillips128@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FHZ5EMMYY6S8">61</a>","EDUCATIONAL TESTING CONSULTANTS INC","STEVEN SHOTTS","","2077 W FOREST DR","","TALLAHASSEE","FL","32303-5112","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#111;&#116;&#116;&#115;&#64;&#101;&#116;&#99;&#116;&#101;&#115;&#116;&#112;&#114;&#101;&#112;&#46;&#99;&#111;&#109;">shotts@etctestprep.com</a>","etctestprep.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H35LHA887LN4">62</a>","LAT CREATIVE, LLC","LYNNE TAKACS","","317 E PARK AVE","","TALLAHASSEE","FL","32301-1513","LAT Creative is a certified woman-owned small business and full-service graphic design studio that helps clients achieve their goals by developing smart, strategic creative that connects with audiences and inspires action. Since 2014, LAT has built a reputation for helping clients communicate their message in an attractive and compelling way. Whether it’s developing the forward-facing brand for the State of Florida’s vaccination effort or designing an engaging water quality report that invites residents to view their utilities differently, LAT has a record of delivering top-notch creative on time and within budget. We design an extensive number of materials including collateral for marketing and awareness campaigns and brand identity development. LAT also creates award-winning print designs, including annual reports, brochures, toolkits, advertisements, fact sheets and direct mail as well as digital solutions for advertising, websites and social media.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#121;&#110;&#110;&#101;&#64;&#108;&#97;&#116;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">Lynne@latcreative.com</a>","LATcreative.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNTYSM43WWX5">63</a>","BLUE SKY EMERGENCY MANAGEMENT, LLC","LISA LAGERGREN","","2120 KILLARNEY WAY","","TALLAHASSEE","FL","32309-3402","We provide services to many hundreds of local and state governmental entities and non-profit organizations affected by nationally declared disasters. Through this program, federal funding is provided to reimburse state and local governmental entities and certain non-profits for eligible costs incurred as the result of a Presidential Declared disaster.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#108;&#97;&#103;&#101;&#114;&#103;&#114;&#101;&#110;&#64;&#116;&#104;&#101;&#105;&#110;&#116;&#101;&#103;&#114;&#105;&#116;&#121;&#103;&#114;&#111;&#117;&#112;&#46;&#110;&#101;&#116;">lisa.lagergren@theintegritygroup.net</a>","http://www.theintegritygroup.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TALLQMFBKNR9">64</a>","CANOPY MANAGEMENT CONSULTING GROUP LLC","DAMON STEFFENS","","118 N MONROE ST","STE 402","TALLAHASSEE","FL","32301-1531","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#109;&#111;&#110;&#46;&#115;&#116;&#101;&#102;&#102;&#101;&#110;&#115;&#64;&#99;&#109;&#99;&#103;&#102;&#108;&#97;&#46;&#99;&#111;&#109;">damon.steffens@cmcgfla.com</a>","https://www.canopymcgroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T6WGCH7UYLZ3">65</a>","STUMP RANGERS LLC","WENDI GRAHAM","","1020 CAP TRAM RD","","TALLAHASSEE","FL","32317-9678","As a small Woman Owned Business Stump Rangers LLC is located in Tallahassee, Florida. We primarily do stump removal services, along with debris and storm cleaning up services and landscaping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#117;&#109;&#112;&#114;&#97;&#110;&#103;&#101;&#114;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">stumprangers@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNU6V4EYP9S6">66</a>","DC SMITH ADVISORY PLLC","CAMEISHA SMITH","","914 RAILROAD AVE","","TALLAHASSEE","FL","32310-4348","DC Smith Advisory is a professional consulting firm providing internal audit and grant management services. We collaborate with our clients to deliver risk-based, data-driven solutions. Together, we create innovative business processes that align with industry best practices and facilitate accountability, transparency, and financial stewardship. INTERNAL AUDIT | Full service internal audit function, developing and performing risk-based audit plans in accordance with the International Professional Practices Framework (IPPF) and, where applicable, the Generally Accepted Government Auditing Standards (GAGAS).  GRANTS MANAGEMENT | Expert guidance in federal financial assistance administration from grant planning through implementation, closeout, and reporting.  Our services are designed to provide clients with the resources for continuity of services through organizational resources, resulting in future cost-savings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#109;&#64;&#100;&#99;&#115;&#109;&#105;&#116;&#104;&#97;&#100;&#118;&#105;&#115;&#111;&#114;&#121;&#46;&#99;&#111;&#109;">cam@dcsmithadvisory.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8XJYWCEFH95">67</a>","THE GRANGER BASKETBALL LEAGUE LLC","EUGENE GRANGER","","212 BARBOURVILLE DR","","TALLAHASSEE","FL","32301-4213","We are an event management company that specializes in consulting and business development and branding. We provide clients maximum exposure through opportunities to play on a premiere stage. We provide team registration services, including solicitation of teams for tournaments; securing team commitments; develop brackets; communicates to secure possible sponsorship’s; conduct tournament preparation, marketing activities and consultations. We provide all of the behind the scenes pre planning and post event services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#110;&#101;&#64;&#103;&#98;&#108;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#105;&#110;&#102;&#111;">gene@gblonline.info</a>","www.gblonline.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LWXGY67KRLP4">68</a>","RED HILLS APEX JV LLC","MELISSA OGLESBY","","9552 BUCK HAVEN TRL","","TALLAHASSEE","FL","32312-3770","Construction firm with many years government experience to include multiple GC IDIQ's. Red Hills Team has over 500 completed contracts and task orders. Licensed General Contractors on staff. Design/Build construction experience in new construction, repair and renovations, general construction, demolition, historic renovations, waterproofing, structural repairs, marine construction, interior renovations, electrical, mechanical, roofing, waterproofing, site work, disaster response, carpentry, painting, security, lighting, access systems, HVAC, piping, sewer, specialty construction, concrete, hangers, and fencing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#101;&#108;&#105;&#115;&#115;&#97;&#64;&#114;&#101;&#100;&#104;&#105;&#108;&#108;&#115;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Melissa@redhillspartners.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZFYHG5L2HZB5">69</a>","ADAMS EDRMS LLC","MICHELLE ADAMS","","446 MCDANIEL ST","","TALLAHASSEE","FL","32303-6251","Adams EDRMS LLC has thirty years' experience (across three continents) implementing Electronic Document Records Management Solutions (EDRMS) with a specific focus on TRIM, HPE Records Manager, Micro Focus Content Manager (MFCM), OpenText Content Manager, OpenText eDOCS, ControlPoint and Intelligent Data Operating Layer (IDOL): - Business Analysis - Data Migrations - Documentation - Health Checks - Implementations - Problem Resolution - Upgrades Top Secret security clearance, active CAC, Security+ (Plus) certification, and up-to-date continuing education.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#65;&#100;&#97;&#109;&#115;&#69;&#68;&#82;&#77;&#83;&#46;&#99;&#111;&#109;">Michelle@AdamsEDRMS.com</a>","https://www.AdamsEDRMS.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PQAWAKTFC2C9">70</a>","CTW BROADCASTING LLC","CARLOS WILDER","","5224 OLD RETREAT WAY","","TALLAHASSEE","FL","32317-9449","CTW Broadcasting LLC is a HIGH QUALITY Video Production Agency for all government and corporate videography/presentation needs. We are an excellent team offering a full range of creative services from concept development to final product.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#99;&#116;&#119;&#98;&#99;&#46;&#99;&#111;&#109;">sales@ctwbc.com</a>","www.ctwbc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4E9ACQ377J5">71</a>","TERRAVENT ENVIRONMENTAL INC","KEVIN POPE","","2680 BAUM RD","","TALLAHASSEE","FL","32317-8803","TerraVent Environmental, Inc. is a Florida based energy technology company.  Heatwave® ElectroMagnetic (EM) Industrial microwave heating systems are electrically sourced and can be fully powered with renewable energy and emit no Green House Gasses (GHG). Industrial Heating Systems adapted to many heavy industries, including:  ---Mining Process & Minerals Extraction ---Hydrogen Generation & Pyrolysis ---Waste to Energy System Our IP portfolio and comprehensive staff expertise in: ---ElectroMagnetic (EM) Engineering ---Microwave & Radio Frequency Tech ---Process Engineering ---Computer Modeling & Simulations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#101;&#118;&#105;&#110;&#80;&#111;&#112;&#101;&#64;&#116;&#101;&#114;&#114;&#97;&#45;&#118;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">KevinPope@terra-vent.com</a>","https://terra-vent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FKW9KCVC1758">72</a>","SDR ENGINEERING INC","ANN SHAHAWY","","2260 WEDNESDAY ST STE 500","","TALLAHASSEE","FL","32308-8313","SDR Engineering specializes in structural design, evaluation and rehabilitation; load testing; non-destructive testing; emergency repair; and research and code development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#97;&#104;&#97;&#119;&#121;&#64;&#115;&#100;&#114;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ashahawy@sdrengineering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P7WHJ765HLK3">73</a>","GULF COAST CENTER FOR INDOOR AIR QUALITY SERVICES LLC","JASON YOST","","229 HEMLEY LOOP","","TALLAHASSEE","FL","32312-4528","We specialize in mold assessments, indoor air quality testing, and occupational safety and health consultations. Whether for a proactive or reactive need, our accredited experts provide comprehensive evaluations to identify location and extent of contamination, causal factor(s) (i.e., source(s)), develop a corrective action plan (i.e., remediation protocol), and provide post remediation verification assessments. With a strict no conflict-of-interest policy, our staff will provide unbiased services and adhere to ethical standards set by professional organizations (e.g., ACAC and ABIH). Whether you’re dealing with mold, a water-damage related complaint, bacteria, or other indoor hazards, we can help ensure a healthier indoor environment. We are family owned and managed by Jason and Cynthia Yost. ","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#64;&#103;&#117;&#108;&#102;&#99;&#111;&#97;&#115;&#116;&#105;&#97;&#113;&#46;&#99;&#111;&#109;">jason@gulfcoastiaq.com</a>","http://www.gulfcoastiaq.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.989&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

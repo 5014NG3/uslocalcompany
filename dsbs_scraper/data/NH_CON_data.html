@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: New Hampshire;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.05 seconds and 1.05 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 76 
+(of 76 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GBBKMGGCNCY6">1</a>","F.A. GRAY, LLC","JOHN GRAY","PRESIDENT","300 WEST RD STE 4","","PORTSMOUTH","NH","03801-5652","PAINTING, WALLCOVERING, SPECIALTY COATINGS UNDER CONSTRUCTION, UNDER SUPPLIES, PAINTS, MIL SPECS, WALLCOVERINGS, PAINT SUNDRIES, PAINT STRIPPERS. PITTSBURGH PAINTS, SPRAY EQUIPMENT (GRACO). KYANIZE PAINT, CABOTS STAIN, OLYMPIC, SIKKENS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#114;&#97;&#121;&#64;&#102;&#97;&#103;&#114;&#97;&#121;&#46;&#99;&#111;&#109;">jgray@fagray.com</a>","www.fagray.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S7NLGP9ZUKG5">2</a>","TRI-STATE PAINTING LLC","RICHARD PESCINSKI","PRESIDENT","612 W MAIN ST UNIT 2","","TILTON","NH","03276-5022","PREPARATION, PAINTING CONTAINMENT, LEAD ABATEMENT OF STRUCTURAL STEEL BRIDGES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#80;&#69;&#83;&#67;&#73;&#78;&#83;&#75;&#73;&#64;&#71;&#79;&#84;&#79;&#84;&#83;&#73;&#46;&#67;&#79;&#77;">RPESCINSKI@GOTOTSI.COM</a>","HTTP://WWW.GOTOTSI.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J49NKUPKV6V4">3</a>","NOBIS ENGINEERING, INC","SCOTT HARDING","Vice President/Program Manager","18 CHENELL DR","","CONCORD","NH","03301-8537","For more than 30 years, the award-winning Nobis team has provided Federal & State clients a full range of engineering, environmental, remediation, construction-related and O&M services at more than 250 military and governmental sites throughout the U.S.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#100;&#105;&#110;&#103;&#64;&#110;&#111;&#98;&#105;&#115;&#45;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">sharding@nobis-group.com</a>","http://www.nobis-group.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E2W6TRUP2FA8">4</a>","CUSA CONSULTING LLC","MARK THURSTON","President","6 MERRILL INDUSTRIAL DR UNIT 6","","HAMPTON","NH","03842-1970","Provide Government Services in the form of: Program /Project/Construction Management, Transition Planning, Cost Benefit Analysis, Develop RFPs, Electrical Engineering, Publishing, Site Surveys, Assist companies in obtaining Government contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#116;&#104;&#117;&#114;&#115;&#116;&#111;&#110;&#64;&#67;&#117;&#115;&#97;&#67;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mthurston@CusaConsulting.com</a>","http://www.cusaconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FQ8SWYUU91Y9">5</a>","RTH MECHANICAL CONTRACTORS INC","RICHARD HANSELL","Owner","17 PRODUCTION DR","","DOVER","NH","03820-5917","All Mechanical including HVAC, Plumbing, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#64;&#114;&#116;&#104;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">rich@rthmechanical.com</a>","rthmechanical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H3NAF151Y5A4">6</a>","RICHARDSON ELECTRICAL CO INC","VAUGHAN RICHARDSON","President","17 BATCHELDER RD","","SEABROOK","NH","03874-4402","Full service Eectrical Contruction and Engineering Firm providing support for industrial, commercial, institutional projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#117;&#103;&#104;&#97;&#110;&#64;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#115;&#111;&#110;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#97;&#108;&#46;&#117;&#115;">vaughan@richardsonelectrical.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VJPUKLLY1SV5">7</a>","DEFIANCE ELECTRIC LLC","TRAVIS BOUCHER","","86 CHOSEN VALE LN STE 202","","ENFIELD","NH","03748-3590","All forms of electrical power, lighting, fire alarm systems, low voltage cabling & terminations. Specializing in advanced lighting and control solutions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#98;&#111;&#117;&#99;&#104;&#101;&#114;&#64;&#100;&#101;&#102;&#105;&#97;&#110;&#99;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">taboucher@defianceelectric.com</a>","http://www.defianceelectric.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N5WMB4CX9BM1">8</a>","BROOKSTONE BUILDERS, INC.","PAULA SCALES","","600 HARVEY RD","","MANCHESTER","NH","03103-3320","Commercial & Industrial Construction Management firm. Experienced in construction of Clean Rooms, Laboratory, medical & government facilities in NH, MA & ME","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#97;&#46;&#115;&#99;&#97;&#108;&#101;&#115;&#64;&#98;&#114;&#111;&#111;&#107;&#98;&#117;&#105;&#108;&#100;&#46;&#99;&#111;&#109;">paula.scales@brookbuild.com</a>","http://www.brookbuild.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK4YKJJ2R8H1">9</a>","SUBSTRUCTURE INC","THOMAS REIS","","185 WENTWORTH RD","","PORTSMOUTH","NH","03801-5507","Substructure provides marine survey and industrial services to commercial and government organizations worldwide. Substructure offers a team of engineers, marine scientists, computer specialists, commercial divers, and skilled tradesmen with extensive experience in marine engineering, archaeological search and recovery, and geophysical survey operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#115;&#117;&#98;&#115;&#116;&#114;&#117;&#99;&#116;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">tom@substructure.com</a>","http://www.substructure.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4T1FGE3PJS3">10</a>","INTEGRISYS COMMUNICATIONS GROUP, INC.","TIM FOLEY","","720 E INDUSTRIAL PARK DR","UNIT 9","MANCHESTER","NH","03109-5626","We are a full service provider of Information Technology products and services in data, voice, video, and broadband communications systems. We provide all hardware, cabling and installation for data and networking applications and infrastructures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#102;&#111;&#108;&#101;&#121;&#64;&#105;&#110;&#116;&#101;&#103;&#114;&#105;&#115;&#121;&#115;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">tfoley@integrisysgroup.com</a>","http://www.integrisysgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TJW4E8JXT7X3">11</a>","U.S. HYDRAULICS, INCORPORATED","MICHELLE ALLARD","","229 SHASTA ST","","MANCHESTER","NH","03103-5619","The #1 Hydraulic Service Provider in New England for all your Fluid Power Service needs! US Hydraulics Inc is a Woman,Veteran-owned company which has over 30 years of design experience in the application, selection and manufacture of standard and specialized hydraulic equipment.  We Repair, Replace, Fabricate and Design all makes and models of Cylinders, Motors, Pumps, Valves, Servo-hydraulic components, Hydraulic power unit design and rental, and supply all your components needs from hose to fittings to adaptors- We are truly your one-stop hydraulic service center","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#85;&#83;&#72;&#121;&#100;&#114;&#97;&#117;&#108;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Michelle@USHydraulics.com</a>","www.USHydraulics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZJAS3Y5C6Y5">12</a>","TURNSTONE CORP","STACY CLARK","","479 NASHUA ST","","MILFORD","NH","03055-4919","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#108;&#97;&#114;&#107;&#64;&#116;&#117;&#114;&#110;&#115;&#116;&#111;&#110;&#101;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">sclark@turnstonecorp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y1T4DV6YKMU3">13</a>","LIGHTHOUSE PRODUCTIONS, INC","TODD GERRISH","","24 LONDON LN","","SEABROOK","NH","03874-4328","Lighting production sales, service, installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#64;&#112;&#111;&#114;&#116;&#108;&#105;&#103;&#104;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">todd@portlighting.com</a>","http://www.portlighting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TPXVXYMYBML7">14</a>","MICRODAQ LLC","EDWARD LOMBARDI","Sales Manager","29 PEMBROKE RD","","CONCORD","NH","03301-5653","Data loggers and Data Acquisition Systems, battery powered, small, rugged, intrinsicaly safe. RF modems RS232/485. Represent and stock HOBO, AEMC, ACR Systems, SUPCO, Yokogawa, Dataq Inst, LogTag, Lascar, MadgeTech, MaxStream, ICP das, Telaire and others.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#64;&#109;&#105;&#99;&#114;&#111;&#100;&#97;&#113;&#46;&#99;&#111;&#109;">ed@microdaq.com</a>","http://www.microdaq.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UGZTWYCH7ZF8">15</a>","YARRA DESIGN AND FABRICATION, LLC","DENISE SANDBERG","President","1 TALLWOOD DR","","BOW","NH","03304-3302","Awning design, fabrication, repair, recover and cleaning. Custom designed and engineered fabrications in canvas and vinyl materials, including industrial curtains, rollup and motorized window shades, custom equipment covers, bucket truck control panel covers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#105;&#115;&#101;&#64;&#99;&#111;&#110;&#99;&#111;&#114;&#100;&#97;&#119;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">denise@concordawning.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JYZ1DHLNHNR5">16</a>","R.M. PIPER, INC.","KAREN PRINCE","","141 SMITH BRIDGE RD","","PLYMOUTH","NH","03264-3134","Heavy, Highway Bridge Construction. Excavation, utilities, site work, concrete","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#101;&#110;&#46;&#112;&#114;&#105;&#110;&#99;&#101;&#64;&#114;&#109;&#112;&#105;&#112;&#101;&#114;&#46;&#99;&#111;&#109;">karen.prince@rmpiper.com</a>","http://www.rmpiper.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBWRPQ5D62T4">17</a>","OMNI SERVICES INC","JEFF ELWELL","","15 BANFIELD RD","","PORTSMOUTH","NH","03801-5607","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#108;&#119;&#101;&#108;&#108;&#64;&#111;&#109;&#110;&#105;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">jelwell@omniservices.com</a>","http://www.omniservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNE8X9KBT7K7">18</a>","L A DREW INC","KYLER DREW","Vice President","15 DREW RD","","BARTLETT","NH","03812-","General Contracting Firm for over 35 years that is involved in commerical/industrial and steel frame construction projects in addition to design/build of residential homes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#114;&#64;&#108;&#97;&#100;&#114;&#101;&#119;&#46;&#99;&#111;&#109;">kyler@ladrew.com</a>","http://www.ladrew.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VVMRMNNF1EU8">19</a>","GREEN MOUNTAIN COMMUNICATIONS, INC.","VICTOR DROUIN","CEO & PRESIDENT","702 RIVERWOOD DR","","PEMBROKE","NH","03275-3700","Experienced and dedicated professional team that offers complete wireless telecommunication services from towers, DAS and complete inbuilding wireless systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#46;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#103;&#114;&#101;&#101;&#110;&#109;&#116;&#110;&#99;&#111;&#109;&#109;&#46;&#99;&#111;&#109;">w.solutions@greenmtncomm.com</a>","https://www.greenmtncomm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQKLY85ALKP7">20</a>","ENVIRONMENTAL RESTORATIONS INC","STUART GREGERMAN","Business Development","16 HAZEL DR","","HAMPSTEAD","NH","03841-2338","Asbestos, Mold, & lead abatement. Fire restoration. Interior & complete demolition. Builback & new construction. siding, doors, windows, roofing, sheet rock, flooring, painting. Sand blasting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#117;&#103;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#114;&#101;&#115;&#116;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">stug@environmentalrestorations.com</a>","http://www.environmentalrestorations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GHP7WMSSDHV2">21</a>","NH ELEVATOR INC","DAN RUSSELL","Service","548 DONALD ST","STE 5","BEDFORD","NH","03110-5953","Elevator, dumbwaiter, wheelchair lift, maintenance modernization repair and installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#46;&#114;&#117;&#115;&#115;&#101;&#108;&#108;&#64;&#110;&#104;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">d.russell@nhelevator.com</a>","http://www.nhelevator.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JEU7YG1HCVD1">22</a>","TRUMBULL-NELSON CONSTRUCTION COMPANY, INC.","MARIA SHINDLER","","19 PLAZA HEIGHTS RD","","WEST LEBANON","NH","03784-4404","Our Company has grown from its beginnings in 1917 as a builder of fine homes to become a full-service Construction firm, specializing in management, supervision, demolition, excavation, site work, concrete, steel erection, general carpentry, finish carpentry, drywall and painting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#104;&#105;&#110;&#100;&#108;&#101;&#114;&#64;&#116;&#45;&#110;&#46;&#99;&#111;&#109;">mshindler@t-n.com</a>","http://www.t-n.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGMDLA2YJ9C4">23</a>","APPLEDORE MARINE ENGINEERING, LLC","NOAH ELWOOD, P.E.","","600 STATE ST STE E","","PORTSMOUTH","NH","03801-4370","We are a dynamic consulting engineering firm dedicated to providing marine/waterfront design and inspection services around the world. Our responsiveness and quality is well documented in many years of excellent performance ratings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#108;&#119;&#111;&#111;&#100;&#64;&#97;&#112;&#112;&#108;&#101;&#100;&#111;&#114;&#101;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">nelwood@appledoremarine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z9ZYDH4LHJ65">24</a>","HALO MARITIME DEFENSE SYSTEMS INC","DAVID TOLLY","","5 PUZZLE LN","","NEWTON","NH","03858-3717","As a marine & ocean engineering company, HALO’s products protect critical waterside infrastructure such as US military ships & bases, power plants, desalinization plants, & oil/gas industry assets. HALO’s advanced composite barrier & mooring designs & automatic retractable gates are cutting edge technology.  Engineering capabilities include: metocean analysis, bathymetric survey, hydrodynamic & hydrostatic analyses, impact analysis, geotechnical validation, specification of design loads, fatigue analysis, safety factors, detailed general arrangement drawings, system & Individual component drawings, gate operational procedures, & constructability specifications. Deliverables include full drawing package, detailed bills of materials, specification sheets, method statements, project execution plans, compliance tables, EPC costs, EPC schedule, vendor quotation package, factory inspection & test plans, acceptance test plans, system maintenance & operating manuals, and training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#116;&#111;&#108;&#108;&#121;&#64;&#104;&#97;&#108;&#111;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">dtolly@halodefense.com</a>","halodefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U2AGHH5NM319">25</a>","BASIX AUTOMATION INTEGRATORS INC.","JASON BRUGGEMAN","","10 CROSBY RD","","DOVER","NH","03820-4334","building automation integration specialists","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#114;&#117;&#103;&#103;&#101;&#109;&#97;&#110;&#64;&#98;&#97;&#115;&#105;&#120;&#97;&#105;&#46;&#99;&#111;&#109;">jbruggeman@basixai.com</a>","http://www.BASIXAI.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKRCDAH4EPJ3">26</a>","GEORGE R CAIRNS & SONS INC","GLENN CAIRNS","","31 LOWELL RD","UNIT 6","WINDHAM","NH","03087-1858","Full Site, Utilities, Road, Bridge, Seawall, Earthwork, Airport, Dam construction. Heavy Civil Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#110;&#99;&#97;&#105;&#114;&#110;&#115;&#64;&#103;&#99;&#97;&#105;&#114;&#110;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">glenncairns@gcairnsinc.com</a>","http://www.gcairnsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E52CCUU9ALF5">27</a>","ALLIANT METALS, INC.","CHRIS BUCHANAN","","134B ROUTE 111","","HAMPSTEAD","NH","03841-2343","Cut steel on following: Plasma up to 2 inch thick 11 ft x 22 ft bed, waterjet cut up to 6 inches thick x 6 ft x 12 ft; shear 1/8 inch thick x 10 ft; band saws up to 20 inches round and Polish plate and bar to 180 grit or #4 Polish. Centerless grind material up to 14 feet long","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#97;&#108;&#108;&#105;&#97;&#110;&#116;&#109;&#101;&#116;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">chris@alliantmetals.com</a>","www.alliantmetals.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K48RD9E6X5C6">28</a>","CURTIN ENTERPRISES, LLC","JAKE CURTIN","","155 RIVER RD","","BOW","NH","03304-3361","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#100;&#99;&#64;&#110;&#111;&#114;&#116;&#104;&#101;&#97;&#115;&#116;&#100;&#111;&#111;&#114;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">ndc@northeastdoorcorp.com</a>","www.northeastdoorcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S4FPWEMR7GL8">29</a>","VIKING WELDING & FABRICATION LLC","JENNIFER THEWES","","243 AMESBURY RD STE 6","","KENSINGTON","NH","03833-5703","AWS Certified.Manufacturer of welded aluminum boats: rescue & fire type,skiffs,landing craft, tri-hull.Also does manfg.welding of: docks, bridges, structural shapes.Engineering design capabilities.See Website & call for more details 603-394-7887","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#64;&#118;&#105;&#107;&#105;&#110;&#103;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">jen@vikingwelding.net</a>","http://www.vikingwelding.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MM4CSGHEK717">30</a>","RAY'S ELECTRIC AND GENERAL CONTRACTING, INC.","STEVEN BINETTE","","33 JERICHO RD","","BERLIN","NH","03570-1315","Electrical contracting, electric motor and generator sales and service, industrial and residential general contracting, fire alarm installation, air conditioning, refrigeration. UL Listed panel shop.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#115;&#64;&#114;&#97;&#121;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">rays@rayselectricinc.net</a>","www.rayselectricnh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DWUWQMEWL499">31</a>","EOC SOLUTIONS LLC","CHRISTOPHER LITTRELL","","117 APPLE BROOK WAY","","MANCHESTER","NH","03109-5144","Solution provider for Life Safety Problems w/in the Healthcare Environment. Specialize in :(design,inspection,repair,install & maint. contracts)Firestopping, Life Safety Codes,Fire/Smoke damper, Medical Gases/vacuum, Fire Doors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#116;&#116;&#114;&#101;&#108;&#108;&#64;&#101;&#111;&#99;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">clittrell@eocsolutions.com</a>","http://www.eocsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QBKZHCLBAMJ1">32</a>","CARENO CONSTRUCTION COMPANY LLC","PAUL CARENO","","270 WEST RD","STE 4A","PORTSMOUTH","NH","03801-7611","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#117;&#105;&#108;&#100;&#64;&#99;&#97;&#114;&#101;&#110;&#111;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">build@carenoconstruction.com</a>","www.carenoconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSS3HMUPH195">33</a>","ASSOCIATED CONCRETE COATINGS, LLC","CHRISTINE HALL","","476 VALLEY ST","","MANCHESTER","NH","03103-4906","Waterproofing, Caulking, Concrete Restoration, Epoxy Flooring, Masonry Restoration, Parking Garage Restoration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#101;&#64;&#99;&#111;&#110;&#99;&#111;&#97;&#116;&#46;&#99;&#111;&#109;">christine@concoat.com</a>","www.associatedconcretecoatings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E26FFGM6DHP3">34</a>","DBU CONSTRUCTION INC","ADAM TOWNE","","10 DOVER RD","","CHICHESTER","NH","03258-6516","We specialize in directional drilling, sitework and utilities thorough out New Hampshire. Only directional drilling/boring thoughtout the Northeast regional","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#111;&#119;&#110;&#101;&#64;&#100;&#98;&#117;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">atowne@dbu-construction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TZ4WDTQ6TLG9">35</a>","JEREMY HILTZ EXCAVATING, INC","CHRISTINA THERIAULT","","859 LAKE ST","","BRISTOL","NH","03222-4506","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#108;&#116;&#122;&#101;&#120;&#99;&#64;&#104;&#105;&#108;&#116;&#122;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">hiltzexc@hiltzexcavating.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXK4W1G8G7T5">36</a>","CARRIGG COMMERCIAL BUILDERS LLC","ROBERT CARRIGG","","454 SHEFFIELD RD","","MANCHESTER","NH","03103-2317","CCB encompases all aspects of commercial construction and facilities maintenance. Services include but not limited to: general contracting, construction management, labor, architectural, engineering related services, renovation, contract","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#99;&#97;&#114;&#114;&#105;&#103;&#103;&#64;&#99;&#97;&#114;&#114;&#105;&#103;&#103;&#46;&#99;&#111;&#109;">robert.carrigg@carrigg.com</a>","http://www.carrigg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEFNYSWVQB37">37</a>","BK SYSTEMS, INC.","DARIA DENONCOURT","","27 SHEEP DAVIS RD","","PEMBROKE","NH","03275-3705","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#105;&#97;&#100;&#64;&#98;&#107;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dariad@bksystemsinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLQMC69ABZ17">38</a>","SCHROEDER CONSTRUCTION MANAGEMENT INC","JOHN SCHROEDER","","2 TOWNSEND W STE 3","","NASHUA","NH","03063-1277","General construction work including renovations, new construction, metal buildings, design build.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#99;&#107;&#64;&#115;&#99;&#104;&#114;&#111;&#101;&#100;&#101;&#114;&#99;&#109;&#105;&#46;&#99;&#111;&#109;">Jack@schroedercmi.com</a>","http://www.schroedercmi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4NLDJMDNJN6">39</a>","P&L LANDSCAPING, LLC","BILL MULLEN","","79 DANIEL WEBSTER HIGHWAY","","MERRIMACK","NH","03054-4808","Landscaping,Design,Lawn Maintenance,Irrigation,Lawn Seeding,Snow Plowing,Walls,Mulch,Soil,Brick Pavers,Snow Removal,Spinklers,Dumping,Maintenance,landscaping materials","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#117;&#108;&#108;&#101;&#110;&#64;&#112;&#108;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bmullen@pllandscaping.com</a>","www.pllandscaping.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCUWLHDYLMD8">40</a>","MONUMENT CONSTRUCTION LLC","DANIEL PROULX JR","","149 LOWELL RD","","HUDSON","NH","03051-4906","Monument Construction is a verified SDVOSB prime general contractor. Our staff has completed 100+ public and federally funded projects: design-build and bid-build general construction, renovation, rehabilitation, repair and electrical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#114;&#111;&#117;&#108;&#120;&#64;&#109;&#111;&#110;&#117;&#109;&#101;&#110;&#116;&#110;&#104;&#46;&#99;&#111;&#109;">dproulx@monumentnh.com</a>","http://www.monument.us.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2PPTAZS1DP1">41</a>","NEW ENGLAND ORBITAL SERVICES, INC.","SCOTT KING","","47 NORTHWESTERN DR UNIT B","","SALEM","NH","03079-4809","Process piping: Process/laboratory piping, Process tool installation, gas delivery systems, specialty plastic piping, Bulk gas delivery, Fabrication: mechanical/electrical assembly, prototype weldments, machining, ASME tig welding, Orbital welding","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#95;&#107;&#105;&#110;&#103;&#64;&#110;&#101;&#111;&#114;&#98;&#105;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">scott_king@neorbital.com</a>","http://www.neorbital.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FCMJWYF6Y9M3">42</a>","CONSTRUX INC","GARY LADD","","630 DANIEL WEBSTER HWY","","PLYMOUTH","NH","03264-4310","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#97;&#100;&#100;&#64;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#120;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">gladd@construxinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA6VCFFQ4596">43</a>","SCHAIBLE, MARK","MARK SCHAIBLE","","27 GROUSE RUN","","PELHAM","NH","03076-3587","Full service procurement company that acquires and delivers products and services anywhere in the world. We also provide construction and freight movement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#115;&#99;&#104;&#97;&#105;&#98;&#108;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mark.schaible@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHNRYNCD2MR9">44</a>","VR CONCRETE, LLC","MICHELLE ROSCILLO","","324 US ROUTE 3","","NORTH STRATFORD","NH","03590-6426","Industrial and Commercial construction specializing in concrete and structural steel; crane work; bridge work; waste water treatment facilities, water treatment plants","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#118;&#114;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#99;&#111;&#109;">michelle@vrconcrete.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBBNENKQNYD3">45</a>","FROLING LLC","MARK FROLING","","20 MANCHESTER ST","","KEENE","NH","03431-4047","Froling Energy is a mechanical contractor focused on installation of all biomass boiler system components for the burning wood pellets, semi-dry wood chips, precision dry wood chips PDCs and green wood chips. We often act as a subcontractor to retrofit our systems into schools, institutional and commercial buildings. We also self perform on the installation of complete biomass systems including boilers, silos, storage bins, material handling and buffer tanks. Our service division maintains, cleans and repairs biomass boiler systems. We manufacture and deliver PDCs to NH, MA and VT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#102;&#114;&#111;&#108;&#105;&#110;&#103;&#101;&#110;&#101;&#114;&#103;&#121;&#46;&#99;&#111;&#109;">mark@frolingenergy.com</a>","www.frolingenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LV68BC4EJM43">46</a>","JOHN TURNER CONSULTING INC","JOHN TURNER","","44 LAFAYETTE RD","UNIT 6","NORTH HAMPTON","NH","03862-7000","geotechnical engineering and consulting, environmental consulting, special inspections, utility inspections, highway inspections, materials testing, and structural and infrared evaluations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#116;&#64;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#106;&#116;&#99;&#46;&#99;&#111;&#109;">johnt@consultjtc.com</a>","http://www.consultjtc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLX5NJEDMLL3">47</a>","LEE T CORRIGAN LLC","LEE CORRIGAN","","12 WILFRED ST","","GORHAM","NH","03581-1613","MSHA/OSHA Certified CPR Certified 18 years Const. Experience Full site prep service (excavation) Aggregate Delivery Water/Sewer/Septic Landscape Construction/Maintenance Snowplowing/Removal Drainage Projects Tri-Axle Dump Truck Service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#101;&#99;&#111;&#114;&#114;&#105;&#103;&#97;&#110;&#108;&#108;&#99;&#64;&#110;&#101;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">leecorriganllc@ne.rr.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EFQPM651Q7J7">48</a>","LEADING EDGE DESIGN GROUP INC","TODD BOUCHER","","86 CHOSEN VALE LN","STE 201","ENFIELD","NH","03748-3590","LEDG plans, designs, and builds data centers and smart buildings that help our customers deliver services with speed, resiliency, and scale. Our services provide information technology, network, facilities, and design teams in federal, state, and local municipalities services to create technology infrastructures needed for reliable, agile computing and responsive integrated systems. We also provide data intelligence services and solutions for the built environment for leaders to gain actionable insights critical to high-performance. Since 2007, LEDG has worked on some of the most progressive technology, mission-critical, and building projects in the U.S.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#98;&#64;&#108;&#101;&#100;&#101;&#115;&#105;&#103;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">tmb@ledesigngroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=REYLK7NLRLJ9">49</a>","HOMES OF NEW HAMPSHIRE REALTY, LLC","CHERYL WAITT","","200 ROCKINGHAM RD","","LONDONDERRY","NH","03053-2129","35 Years experience in the sale, leasing and development of real estate. Knowledge of construction and subdivisions. Notary, REALTOR, CPDE, etc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#114;&#121;&#108;&#64;&#104;&#111;&#109;&#101;&#115;&#111;&#102;&#110;&#104;&#114;&#101;&#97;&#108;&#116;&#121;&#46;&#99;&#111;&#109;">cheryl@homesofnhrealty.com</a>","www.homesofnhrealty.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RJUVKYJLNW65">50</a>","RADOME SERVICES LLC","HEATHER LAROWE","","155 FLEET ST","","PORTSMOUTH","NH","03801-4050","Radome & antenna installations, dismantling, maintenance, repairs & inspection services, in the U.S. & international locations. Our extremely competent team of management & installers averages 22 years of experience in the radome business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#97;&#116;&#104;&#101;&#114;&#64;&#114;&#97;&#100;&#111;&#109;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">heather@radomeservices.com</a>","https://www.radomeservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VA77AJWFRWD4">51</a>","CMGC BUILDING CORP","FRANCISCO SWANSON","","360 HARVEY RD","","MANCHESTER","NH","03103-3372","CMGC Building Corp. is a full service commercial construction company that offers design/build services, construction management, and general contracting. We perform work in medical, government, industrial, high security environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#115;&#119;&#97;&#110;&#115;&#111;&#110;&#64;&#99;&#109;&#103;&#99;&#98;&#117;&#105;&#108;&#100;&#105;&#110;&#103;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">fswanson@cmgcbuildingcorp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EMXNE5TAEAZ6">52</a>","BRYANT PAVING LLC","LESLIE BRYANT","","177 WAUKEWAN ST","","MEREDITH","NH","03253-6022","Residential & commercial paving company.Asphalt Paving, Maintenance, roadways, driveways, sidewalks, parking lots.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#98;&#114;&#121;&#97;&#110;&#116;&#64;&#98;&#114;&#121;&#97;&#110;&#116;&#112;&#97;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">lbryant@bryantpaving.com</a>","http://www.bryantpaving.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S8D7J64NFJE3">53</a>","TEKON-TECHNICAL CONSULTANTS INC","PATTY HERSOM","","110 CORPORATE DR","","PORTSMOUTH","NH","03801-6822","NEBB certified in Testing, Adjusting, and Balancing of air and hydronic (water)systems of new and existing HVAC, Building Systems Commissioning, sound and vibration testing;capabilities include Retro-Commissioning,LEED,Duct Air Leak Testing, clean room","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#116;&#121;&#64;&#116;&#101;&#107;&#111;&#110;&#116;&#97;&#98;&#46;&#99;&#111;&#109;">patty@tekontab.com</a>","http://www.tekontab.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EHH6JPKML7Y5">54</a>","MARK E JOHNSTON CONSTRUCTION LLC","MARK JOHNSTON","","2281 US ROUTE 3","","CAMPTON","NH","03223-4501","Construction company specializing in all aspects of residential & commercial site-work. Experience in site clearing, blasting & installation of roads, water mains, septic systems and&bridge replacement/construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#106;&#111;&#104;&#110;&#115;&#116;&#111;&#110;&#99;&#111;&#110;&#115;&#116;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mejohnstonconst@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGR6CYCE3QC3">55</a>","SWAN CONTRACTING LLC","MARIA FALLON","","93 OLD GREENFIELD RD","","PETERBOROUGH","NH","03458-1203","Provide commercial electrical and general construction contracting services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#97;&#64;&#115;&#119;&#97;&#110;&#50;&#98;&#46;&#99;&#111;&#109;">maria@swan2b.com</a>","www.swan2b.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQ31PV5UA5R3">56</a>","TFMORAN, INC.","DYLAN CRUESS","","48 CONSTITUTION DR","","BEDFORD","NH","03110-6096","TFM is a regionally recognized land surveying, civil engineering, and land¬scape architectural firm with over forty (40) years of service to private and public clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#114;&#117;&#101;&#115;&#115;&#64;&#116;&#102;&#109;&#111;&#114;&#97;&#110;&#46;&#99;&#111;&#109;">dcruess@tfmoran.com</a>","tfmoran.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PV3DL6HMEJM1">57</a>","RIVERSIDE MARINE CONSTRUCTION, INC","KEN ANDERSON","","34 PATTERSON LN","","NEWINGTON","NH","03801-2806","pier construction, dock construction, marine construction, tugboat services, barge services, marine towing, float repair, float rebuild, tugboat rentals, tugboat charters, shoreline, stabilization, shoreline mangegemnt, retaining walls","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#64;&#114;&#105;&#118;&#101;&#114;&#115;&#105;&#100;&#101;&#97;&#110;&#100;&#112;&#105;&#99;&#107;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ken@riversideandpickering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EH7NBA5CS6V4">58</a>","NEXT EVOLUTION WATER SOLUTIONS, INC.","RAYMOND RODON","","18 ROSS RD","","DURHAM","NH","03824-4219","Water and Waste water design, construction and service. Consulting in Logistics including warehousing, supply chain, distribution, base camp design and services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#46;&#114;&#111;&#100;&#111;&#110;&#64;&#110;&#101;&#108;&#111;&#103;&#105;&#115;&#46;&#99;&#111;&#109;">ray.rodon@nelogis.com</a>","www.nelogis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UFBWSHQ1GJP6">59</a>","ACUTE MEDICAL GAS SERVICES INC","JONATHAN WILLARD","","470 MAST RD","STE B","GOFFSTOWN","NH","03045-5248","Comprehensive medical gas and environmental services including installation, repairs, maintenance, verification, certification, training, and consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#97;&#99;&#117;&#116;&#101;&#109;&#101;&#100;&#103;&#97;&#115;&#46;&#99;&#111;&#109;">jon@acutemedgas.com</a>","www.acutemedgas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K97RWXWMEXS7">60</a>","JBC UTILITY LLC","BETTY WUELLENWEBER","","588 RIVER RD UNIT 1","","BOW","NH","03304-3364","Telecommunication constructions line construction, fiber optic line constructions, fiber optic splicing, underground utility construction, conduit installation, aerial line installation for phone, coax and fiber optic lines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#116;&#121;&#64;&#106;&#98;&#99;&#117;&#116;&#105;&#108;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">betty@jbcutility.com</a>","www.jbcutility.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V3SLFAY9ZAK3">61</a>","K J FISHER & SONS, LLC","BARBARA FISHER","","95 OLD CENTER RD","","DEERFIELD","NH","03037-1335","Sitework, slope stabilization, utility installation, road construction, small bridge and dam repair, concrete construction. Reputable experience in all facets of excavation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#106;&#102;&#105;&#115;&#104;&#101;&#114;&#115;&#111;&#110;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kjfishersons@gmail.com</a>","kjfisherandsons.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YTYLCREGR4R7">62</a>","TBD LIGHTING LLC","DEBORAH KRAVITZ","","40 BIRKDALE RD","","BEDFORD","NH","03110-4300","TBD Lighting was established in 2017 and is rebranding as TBD Lighting and Energy to reflect our commitment to empowering businesses and organizations to take meaningful strides toward sustainability and enhanced energy efficiency. Located in Bedford, NH, TBD Lighting and Energy is a certified Service-Disabled Veteran-Owned and Woman-Owned Small Business (SDVOSB and WOSB) committed to diversity and inclusion, and employs a team of experts with 40+ years of experience in lighting and energy solutions. We deliver impactful results drawn from our years of industry field experience, knowledge, and understanding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#98;&#100;&#108;&#105;&#103;&#104;&#116;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tbdlighting@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNZCUU5VMGN8">63</a>","KIDDER CONCRETE CUTTING & CORING, INC","LISA REPPUCCI","","22 DANVILLE RD","","PLAISTOW","NH","03865-2720","Cutting of any concrete, slab, brick, ect.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#73;&#83;&#65;&#64;&#75;&#73;&#68;&#68;&#69;&#82;&#67;&#79;&#78;&#67;&#82;&#69;&#84;&#69;&#46;&#67;&#79;&#77;">LISA@KIDDERCONCRETE.COM</a>","WWW.KIDDERCONCRETE.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GMDKL7FJNW27">64</a>","INSURCOMM, INC","GLENN PAFFORD","","290 HERITAGE AVE UNIT 1","","PORTSMOUTH","NH","03801-6874","Our specialty is fire and water emergency damage cleanup. We also offer mold remediation, asbestos and lead abatement and full remodeling and reconstruction services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#110;&#64;&#105;&#110;&#115;&#117;&#114;&#99;&#111;&#109;&#109;&#46;&#99;&#111;&#109;">glenn@insurcomm.com</a>","www.insurcomm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z9VJGXABJLC9">65</a>","LANDRY AND SON EXCAVATION LLC","JUSTIN LANDRY","","148 PERLEY RD","","FRANCESTOWN","NH","03043-3820","Landry and son excavation LLC provides Site Preparation, Logging, Excavation, Land Clearing, Mulching, Thinning, Right of Way clearing, Forestry Mulching, Mowing, Timber Stand Improvement, Wildlife Habitat, Timber for animal habitat","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#108;&#97;&#110;&#100;&#114;&#121;&#46;&#108;&#97;&#115;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Jlandry.lase@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FVS1Q6HLAEC5">66</a>","FAIRWAY ELECTRIC INC","SHANE CARIGNAN","","1268 TURNPIKE RD","","NEW IPSWICH","NH","03071-3125","Powerline, Storm Restoration, Electrical transmission maintenance, Electrical distribution construction, High Voltage Tower Painting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#46;&#99;&#97;&#114;&#105;&#103;&#110;&#97;&#110;&#64;&#102;&#97;&#105;&#114;&#119;&#97;&#121;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#111;&#114;&#103;">s.carignan@fairwayelectric.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VB1MG5KVR718">67</a>","ATLANTIC COAST TUG & MARINE LLC","MARIEL WHITAMORE","","5 BIRCH ST","","DERRY","NH","03038-2154","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#108;&#97;&#110;&#116;&#105;&#99;&#99;&#111;&#97;&#115;&#116;&#116;&#117;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">atlanticcoasttug@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLQJPC8KEAB3">68</a>","WILLIAM P DAVIS EXCAVATION LLC","WILLIAM DAVIS","","252 WINNACUNNET RD","","HAMPTON","NH","03842-2726","William P. Davis Excavation LLC is a self performing General Contractor for Civil related construction project. In addition to typical excavation and utility projects, we specialize in unique projects that don't fall under a particular trade classification which can be difficult to source a qualified contractor to complete.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#87;&#105;&#108;&#108;&#64;&#119;&#112;&#100;&#97;&#118;&#105;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Will@wpdavisexcavation.com</a>","wpdavisexcavation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFN4LMLWMKS7">69</a>","ADVANCED AUTOMATION LLC","CHRIS BICKFORD","","27 PRODUCTION DR","","DOVER","NH","03820-5917","Advanced Automation is an engineering firm and production house that specializes in the design and manufacture of automated systems for the industrial and construction markets","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#105;&#99;&#107;&#102;&#111;&#114;&#100;&#64;&#97;&#100;&#118;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#46;&#117;&#115;">cbickford@advautomation.us</a>","ADVautomation.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EL1RSYJBCLE5">70</a>","MONUMENT CONSTRUCTION SERVICES, LLC","DANIEL PROULX, JR","","149 LOWELL RD","","HUDSON","NH","03051-4906","Monument Construction Services LLC, is an affiliate of Monument Construction a verified Service-Disabled Veteran-Owned Small Business (SDVOSB) Prime General Contractor headquartered in Hudson, NH, Both firms are led by the same experienced team and have completed projects ranging from $100K to the largest project to-date of $16 million. This is one of 180+ federal projects exceeding $227 million in aggregate, including design-build and bid-build general construction, renovation, rehabilitation, repair and electrical construction. This experience includes work for such clients as the Department of Homeland Security, Department of Veterans Affairs, National Guard, US Army, US Army Corps of Engineers, the Department of the Interior, National Park service, and Space Force.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#114;&#111;&#117;&#108;&#120;&#64;&#109;&#111;&#110;&#117;&#109;&#101;&#110;&#116;&#110;&#104;&#46;&#99;&#111;&#109;">dproulx@monumentnh.com</a>","http://www.monumentnh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5XXTXCGLBE9">71</a>","ISLES BRIDGE LLC","JUSTIN BOREN","","24 INTERCHANGE DR","","WEST LEBANON","NH","03784-2003","LockNLube builds and sells the world's best equipment for lubrication, machine maintenance, and fence repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#121;&#64;&#108;&#111;&#99;&#107;&#110;&#108;&#117;&#98;&#101;&#46;&#99;&#111;&#109;">jay@locknlube.com</a>","www.locknlube.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UC5XZ5TXHDP1">72</a>","VERDE GROUP INCORPORATED","ROY AMOEDO","","112 MILTON ROAD","","ROCHESTER","NH","03867-","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#101;&#114;&#100;&#101;&#46;&#108;&#108;&#99;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">verde.llc@comcast.net</a>","www.verdegroupinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SLCMBA2HE9W8">73</a>","ULTRASEA, INC.","JUDSON DECEW","","5 PATRIDGE LANE","","EAST KINGSTON","NH","03827-","Ultrasea specializes in advanced ocean engineering and non-kinetic counter-UUV technologies, providing tailored solutions across maritime defense, environmental protection, and aquaculture innovation. We offer comprehensive consulting and design expertise, including numerical analysis, CAD, FEA, prototyping, and field testing, supporting complex marine security, infrastructure, and renewable energy projects. Our unique focus on non-kinetic counter-UUV solutions strengthens underwater threat mitigation for military and commercial clients. From mooring designs to pollution control, Ultrasea delivers impactful, environmentally conscious engineering for diverse marine environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#101;&#99;&#101;&#119;&#64;&#117;&#108;&#116;&#114;&#97;&#115;&#101;&#97;&#46;&#110;&#101;&#116;">jdecew@ultrasea.net</a>","https://ultrasea.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJ48YLM5DDJ7">74</a>","AMERICAN RESTORATION LLC","PETER TATARONIS","","16 CHENEY DR","","HUDSON","NH","03051-3945","American Restoration, established in 2023, emerges as a premier construction entity, boasting a founding partner and executive team with extensive experience gleaned from a prior company founded in 2008. THIS DISTINGUISHED TEAM SPEARHEADED THE COMPLETION OF OVER 185 FEDERAL PROJECTS, SURPASSING $200 MILLION IN CONSTRUCTION VALUE. American Restoration's executive team adeptly managed task orders across 21 States on 18 IDIQ/MATOC contracts, showcasing our ability to oversee complex projects nationwide with seamless coordination and execution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#64;&#97;&#114;&#108;&#108;&#99;&#46;&#117;&#115;">peter@arllc.us</a>","arllc.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LS59VYL7VZR6">75</a>","BLUFOR, LLC","SHAWN CONNORS","","60 LOWELL RD","","SALEM","NH","03079-4018","Blufor LLC is a versatile business management company dedicated to delivering excellence across a wide range of federal contracts. Our core competency lies in partnering with the most qualified subcontractors to ensure competitive pricing and optimal project execution. We excel in overseeing project management to guarantee top-quality results. Our services encompass sectors such as Construction, Promotional Products, EV Infrastructure, Security Services, Business and Child Services, Event Services, Healthcare, Renewable Energy, Professional Services, and Sports Equipment. At Blufor LLC, our mission is to deliver superior project management by leveraging our extensive network of subcontractors and in-house capabilities. We ensure each project is completed on time, within budget, and to the highest standards. Whether managing large-scale construction projects or producing high-quality marketing materials, we are your trusted partner for exceptional results.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#98;&#108;&#117;&#102;&#111;&#114;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">info@bluforllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WYEXTMJXB1L1">76</a>","MB2 RESTORE, LLC","RONNY MARTENSON","","815 LAFAYETTE RD","","PORTSMOUTH","NH","03801-5406","MB2 Restore is a privately-owned, full-service remediation and restoration company specializing in all forms of loss-mitigation and restoration, including mold, water, and fire damage. We provide comprehensive remediation and restoration services to residential, commercial and government properties. Our expert team is equipped with the latest equipment and techniques to handle projects of any size, from initial damage mitigation through to full restoration. With a focus on fast response times and exceptional customer service, we ensure that each project is handled efficiently and thoroughly, helping clients return to normalcy quickly and safely.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#110;&#121;&#109;&#64;&#109;&#98;&#50;&#99;&#97;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">ronnym@mb2cares.com</a>","https://mb2restore.com/"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.132&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

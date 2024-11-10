@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Rhode Island;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.95 seconds and 0.96 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 87 
+(of 87 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GQKLAUXMXFS3">1</a>","HUESTIS MACHINE CORP","FREDERICK CORREIRA","Navy Liaison Officer","68 BUTTONWOOD ST","","BRISTOL","RI","02809-3626","PRODUCTS: THE BENDMASTER IS A CNC TUBE BENDER. WE MANUFACTURE PRODUCTS USED IN THE WIRE AND CABLE INDUSTRY, THE MEDICAL FIELD AND FEDERAL GOVERNMENT. COMPLETE FACILITIES FOR FABRICATION, MACHINING AND ASSEMBLY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#101;&#100;&#99;&#64;&#104;&#117;&#101;&#115;&#116;&#105;&#115;&#46;&#99;&#111;&#109;">fredc@huestis.com</a>","HTTP://www.huestis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DGUXWJP9U4G9">2</a>","M-F ATHLETIC CO INC","JENNIFER LACHAPELLE","VICE PRES","11 AMFLEX DR","","CRANSTON","RI","02921-2072","ATHLETIC EQUIPMENT DEALER. SPECIFICALLY TRACK AND FIELD EQUIPMENT AND INNOVATIVE EQUIPMENT FOR IMPROVING CONDITIONING OF ATHLETES INCLUDING REHABILITATION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#46;&#108;&#97;&#99;&#104;&#97;&#112;&#101;&#108;&#108;&#101;&#64;&#109;&#102;&#97;&#116;&#104;&#108;&#101;&#116;&#105;&#99;&#46;&#99;&#111;&#109;">jenn.lachapelle@mfathletic.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VG9PMPRYV571">3</a>","SPECTRUM COATINGS LABORATORIES, INC.","LYNNE CHRISTENSEN","Military Sales Director","217 CHAPMAN ST","","PROVIDENCE","RI","02905-4507","FORMULATORS OF A WIDE VARIETY OF INDUSTRIAL AND MILITARY COATING SYSTEMS INCLUDING: 2K WATERBORNE CARC URETHANE, 2K EPOXY TOP COATINGS, EPOXY PRIMERS, PRETREATMENT WASH PRIMERS, URETHANES, WATER BASED ENAMELS, WATER BASE LACQUERS, WATER BASE URETHANES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#112;&#101;&#99;&#116;&#114;&#117;&#109;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#46;&#117;&#115;">sales@spectrumcoatings.us</a>","http://www.spectrumcoatings.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWTCFYHTG6S4">4</a>","INTERNATIONAL MANUFACTURING SERVICES, INC","JOHN SILVIA, JR.","Director of Sales and Marketing","50 SCHOOLHOUSE LN","","PORTSMOUTH","RI","02871-2435","MANUFACTURES CHIP RESISTORS, 0.1 OHMS TO 1 TERA OHMS, CHIP ATTENUATORS, TEMPERATURE VARIALBE CHIP ATTENUATORS, HIGH POWER ALUMINUM NITRIDE CHIP RESISTORS. CUSTOM RESISTOR SIZES AND VALUES. 24 HOUR DELIVERY SERVICE, MIL SPEC TESTING AND INSPECTION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#105;&#108;&#118;&#105;&#97;&#64;&#105;&#109;&#115;&#45;&#114;&#101;&#115;&#105;&#115;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">jsilvia@ims-resistors.com</a>","www.ims-resistors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PZGKKRM4AK23">5</a>","PURVIS SYSTEMS INC","DEBORAH PROFFITT","VICE PRESIDENT","88 SILVA LN","STE 2","MIDDLETOWN","RI","02842-7628","Laboratory/Facility Design, Operations & Maintenance, Operational Capability Assessment, T&E, System Acquisition Design Development & Integration, Acquisition & Operational Logistics, Installation & Checkout, Custom Software Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#114;&#111;&#102;&#102;&#105;&#116;&#116;&#64;&#112;&#117;&#114;&#118;&#105;&#115;&#46;&#99;&#111;&#109;">dproffitt@purvis.com</a>","http://www.purvis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RDRYVJJX3NA5">6</a>","ELECTRO STANDARDS LABORATORY, INC.","RAYMOND SEPE JR","PRESIDENT","36 WESTERN INDUSTRIAL DR","","CRANSTON","RI","02921-3403","Computer and data network cables, standard or custom. Telco test leads for T-1, T-3 interface. Computer interface sharing, routing or fallback switches. Motor development & test platforms. Load cell displays.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#115;&#101;&#112;&#101;&#64;&#69;&#108;&#101;&#99;&#116;&#114;&#111;&#83;&#116;&#97;&#110;&#100;&#97;&#114;&#100;&#115;&#46;&#99;&#111;&#109;">rsepe@ElectroStandards.com</a>","https://www.electrostandards.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GXMASFXXZ6S4">7</a>","FRANCO INDUSTRIAL SUPPLIES CORPORATION","JOSEPH FRANCO","PRESIDENT","1820 BROAD ST","","CRANSTON","RI","02905-3502","CUTTING TOOLS, PRECISION TOOLS, ABRASIVES, POWER TOOLS, FASTENERS, HAND TOOLS, COMPOUNDS, ADHESIVES BRUSHES, MACHINISTS TOOLS, WRENCHES, STEEL RODS, VISES, SHOP TOOLS. INSPECTION EQUIPMENT, HANDLING EQUIPMENT, HACKSAW AND BANDSAW BLADES, ETC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#99;&#111;&#45;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">franco-industrial@verizon.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q34NAWMZJW79">8</a>","READE INTERNATIONAL CORP","BETHANY SATTERFIELD","General Sales Manager","850 WATERMAN AVE","","EAST PROVIDENCE","RI","02914-1729","Manufacturer / distributor of specialty chemical solids (metal, alloy, mineral, ceramic, composite, natural fiber, nanoparticle, nanotube, magnetic, conductive, additives, fillers, reinforcements, coatings, abrasives, toll processing, blending, packaging)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#115;&#97;&#116;&#116;&#101;&#114;&#102;&#105;&#101;&#108;&#100;&#64;&#114;&#101;&#97;&#100;&#101;&#46;&#99;&#111;&#109;">bsatterfield@reade.com</a>","http://www.reade.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TENNCDLKQN28">9</a>","MICHAEL HEALY DESIGNS, INC","IAN POIRIER","Marketing Manager","60 NEW RIVER RD","","MANVILLE","RI","02838-1712","NON FERROUS FOUNDRY BRONZE AND ALUMINUM CASTINGS, MEDALLIONS, CAST BRONZE PLAQUES, CAST BRONZE & ALUMINUM SIGNS & LETTERS, BRONZE TABLETS, Monuments, Markers. Door handles,door knockers, and doorbells.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#104;&#101;&#97;&#108;&#121;&#46;&#99;&#111;&#109;">accounting@michaelhealy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D1SJHEW26Y75">10</a>","IRA GREEN INC","SUSAN FINUCCI","Govrnment Contracting Department","177 GEORGIA AVE","","PROVIDENCE","RI","02905-4422","Military Uniform Accessories","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#102;&#105;&#110;&#117;&#99;&#99;&#105;&#64;&#105;&#114;&#97;&#103;&#114;&#101;&#101;&#110;&#46;&#99;&#111;&#109;">sfinucci@iragreen.com</a>","http://www.iragreen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SK21NL71J2M3">11</a>","INTERNATIONAL INSIGNIA CORPORATION","CHERYL JERNQUIST","Office Manager","1280 EDDY ST","","PROVIDENCE","RI","02905-4534","MANUFACTURE MILITARY INSIGNIA, ALSO DO CUSTOMIZED WORK","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#114;&#121;&#108;&#64;&#105;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#105;&#110;&#115;&#105;&#103;&#110;&#105;&#97;&#46;&#99;&#111;&#109;">cheryl@internationalinsignia.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WW2XFHZLCDK5">12</a>","INDUSTRIAL PUMP SALES AND SERVICE INC","BRUCE LEVESQUE","President","37 WILLIAM S CANNING BLVD","","TIVERTON","RI","02878-3003","Pump Sales & Service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#117;&#99;&#101;&#108;&#64;&#105;&#112;&#115;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">brucel@ipspump.com</a>","http://www.ipspump.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGB1VMRUZRF1">13</a>","AVTECH SOFTWARE INC","RUSSELL BENOIT","Government Sales Mgr","16 CUTLER ST","UNIT 103","WARREN","RI","02885-2761","PAGER ENTERPRISE is complete system, server & network monitoring made easy, reliable & immediate. ROOM ALERT & ENVIRONMENT ALARM monitor data center temperature, humidity, flood, power, smoke, intruder, more. ALL w/full alert & auto correction features.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#117;&#115;&#115;&#101;&#108;&#108;&#66;&#101;&#110;&#111;&#105;&#116;&#64;&#82;&#111;&#111;&#109;&#65;&#108;&#101;&#114;&#116;&#46;&#99;&#111;&#109;">RussellBenoit@RoomAlert.com</a>","http://www.AVTECH.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UBQ9S5D2MPU4">14</a>","ADOLF MELLER CO","SCOTT COHEN","PRESIDENT","120 CORLISS ST","","PROVIDENCE","RI","02904-2602","MELLER OPTICS MANUFACTURES INDUSTRIAL OPTICS IN THE FORM OF WINDOWS, SUBSTRATES,LENSES, DOMES,AND PRISMS.TYPICAL USES ARE FRONT SURFACE OPTICS FOR MISSILES AND ANALYTICAL INSTRUMENTS,SUBSTRATES FOR THIN FILM DEPOSITION, AND LASER DELIVERY OPTICS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#104;&#101;&#110;&#64;&#109;&#101;&#108;&#108;&#101;&#114;&#111;&#112;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">scohen@melleroptics.com</a>","http://www.melleroptics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E2FBKGMCEDZ4">15</a>","ALLIED GROUP, LLC","LYNANNE MURPHY","Controller","25 AMFLEX DR","","CRANSTON","RI","02921-2073","In the business of manufacturing printed business forms, fulfillment, variable imaging","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#117;&#114;&#112;&#104;&#121;&#64;&#116;&#104;&#101;&#97;&#108;&#108;&#105;&#101;&#100;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">lmurphy@thealliedgrp.com</a>","www.thealliedgrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5Q8UZFKFV22">16</a>","STRETCH PRODUCTS CORP.","WAYNE STEINHOFF","Vice President","392 PINE ST","","PAWTUCKET","RI","02860-1833","Narrow Elastics: Shock Cords, Bungee Cords 1/16-in. to 1-in. diameter:Flat Elastic Braid, Elastic Knit, Soutache, Trims, Webbing--all up to 12' wide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#121;&#110;&#101;&#64;&#115;&#116;&#114;&#101;&#116;&#99;&#104;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">wayne@stretchproducts.com</a>","www.stretchproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NA7LD2ZBCRT7">17</a>","GS RUBBER INDUSTRIES, LLC","JOSEPH SARLO","Owner","1 S MAIN ST","","COVENTRY","RI","02816-5719","Mold Design,Compound Development and Molded Rubber product Manufacturing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#97;&#114;&#108;&#111;&#64;&#103;&#115;&#114;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">jsarlo@gsrind.com</a>","gsrind.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M618ETNNYA77">18</a>","DROITCOUR CO","KEITH JOHNSON","President","28 GRAYSTONE ST","","WARWICK","RI","02886-1384","Single, multi-spindle & CNC Swiss screw machining from prototype to 10 million pieces. Up to 2.625 bar capacity. CNC vertical & turning centers, centerless grinding and secondary operations. Engineering support for product improvement is available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#64;&#100;&#114;&#111;&#105;&#116;&#99;&#111;&#117;&#114;&#46;&#99;&#111;&#109;">keith@droitcour.com</a>","www.droitcour.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NVPEBL51CSF8">19</a>","GUILL TOOL & ENGINEERING CO INC","JOSHUA CARR","","10 PIKE ST","","WEST WARWICK","RI","02893-3612","Guill Tool has supplied precision machined Level 1/SUBSAFE, Level 1, Nuclear and non-level fittings, valves, flanges and other components to the Defense industry since 1962. ISO-9001, MIL-I-45208A, MIL-STD-45662A. Veteran owned.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#97;&#114;&#114;&#64;&#103;&#117;&#105;&#108;&#108;&#46;&#99;&#111;&#109;">jcarr@guill.com</a>","http://www.guilldefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L74NLU52MNY6">20</a>","HYMAN BRICKLE & SON INC","MAX BRICKLE","Director of Sales and Marketing","235 SINGLETON ST","","WOONSOCKET","RI","02895-1832","Prime contractor of wool blankets for the Dept of Defense. Manufacturer of blankets for disaster and homeless Relief. Wool and wool blends. Custom blends and colors available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#120;&#64;&#104;&#98;&#114;&#105;&#99;&#107;&#108;&#101;&#46;&#99;&#111;&#109;">Max@hbrickle.com</a>","http://www.northwestwoolen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W4NRGPEN97H4">21</a>","KCP ACQUISITION LLC","NANCY OLSON","Member","141 FAIRGROUNDS RD","","WEST KINGSTON","RI","02892-1512","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#46;&#111;&#108;&#115;&#111;&#110;&#64;&#107;&#101;&#110;&#121;&#111;&#110;&#99;&#111;&#110;&#115;&#117;&#109;&#101;&#114;&#46;&#99;&#111;&#109;">n.olson@kenyonconsumer.com</a>","https://www.kenyon.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SRFBCM7WP3W5">22</a>","ANALYTICAL SERVICES CO","JOHN TOTH","","10 DEAN KNAUSS DR","","NARRAGANSETT","RI","02882-1142","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#115;&#99;&#115;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">sales@ascscientific.com</a>","http://www.ascscientific.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLHRAFPUAXC3">23</a>","RITEC, INC","MICHAEL FICOCELLI","","60 ALHAMBRA RD STE 5","","WARWICK","RI","02886-1442","Manufacture Ultrasonic Test Equipment for research","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#102;&#64;&#82;&#105;&#116;&#101;&#99;&#73;&#110;&#99;&#46;&#99;&#111;&#109;">mikef@RitecInc.com</a>","http://www.RitecInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5XLYWSTMGM5">24</a>","NEW ENGLAND OVERSEAS CORPORATION","STEVEN FOX","","358 LOWDEN ST","","PAWTUCKET","RI","02860-6052","Manufacturer of all types of Rope, Bungee and High Temperature cordage and other High Temperature Textiles","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#110;&#102;&#64;&#110;&#101;&#111;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">stevenf@neocorp.com</a>","http://www.neocorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBAGJYGKKLW6">25</a>","ZAMPINI INDUSTRIAL GROUP, LLC","LOUIS ZAMPINI","","85 INDUSTRIAL CIR STE 2211","","LINCOLN","RI","02865-2645","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#97;&#105;&#114;&#116;&#111;&#111;&#108;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">info@airtoolpro.com</a>","https://www.AirToolPro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE3XBH6LQ1E5">26</a>","AMERICAN CORD & WEBBING CO INC","JORDAN KRAUSS","","88 CENTURY DR","","WOONSOCKET","RI","02895-6172","Manufacturer of Narrow Fabrics, webbing,tape, custom molding, buckles, slides, side release fasteners,logo webbing, and Etextiles . Many item in stock for immediate delivery. Complete sewing, assembly and packaging.    MADE IN THE USA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#107;&#114;&#97;&#117;&#115;&#115;&#64;&#97;&#99;&#119;&#49;&#46;&#99;&#111;&#109;">Jkrauss@acw1.com</a>","http://www.acw1.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CK7KEQ6GCJ45">27</a>","DEWETRON INC","COURTNEY PONTARELLI","President","2850 S COUNTY TRL","UNIT 1","EAST GREENWICH","RI","02818-1731","Distributor and manufacturer of PC-based data acquisition systems, and dynamic signal conditioning front-ends, acquisition and analysis software, and ruggedized computers.For more information please visit our website https://www.dewetron.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#117;&#115;&#46;&#99;&#117;&#115;&#116;&#111;&#109;&#101;&#114;&#99;&#97;&#114;&#101;&#64;&#100;&#101;&#119;&#101;&#116;&#114;&#111;&#110;&#46;&#99;&#111;&#109;">us.customercare@dewetron.com</a>","http://www.dewetron.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K9EUESL574N1">28</a>","VR INDUSTRIES, INC","BRIAN PESTANA","Sales Manager","333 STRAWBERRY FIELD RD STE 6","","WARWICK","RI","02886-2459","NPI, Printed Circuit Board Assembly, Electromechanical/Box Assembly, Program Management, Supply Chain Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#101;&#115;&#116;&#97;&#110;&#97;&#64;&#118;&#114;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">bpestana@vrindustries.com</a>","http://www.vrindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NNUZHGWLLZB9">29</a>","AMERICAN ECOTECH L.C.","ANDY TOLLEY","Business Manager","100 ELM STREET","FACTORY D","WARREN","RI","02885-2045","Air Monitoring Equipment Air Samplers Gas Analyzers Gas Dilutors Gas Calibrators Dataloggers Environmental Air Pollution monitoring software for air monitoring networks Nephelometers Pollution Monitoring Equipment Water Analyzer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#111;&#108;&#108;&#101;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#101;&#99;&#111;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">atolley@americanecotech.com</a>","http://www.AmericanEcotech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DK4JPREZYEP4">30</a>","WHITTET-HIGGINS COMPANY","KATHRYN FERRERA","","33 HIGGINSON AVE","","CENTRAL FALLS","RI","02863-2412","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#104;&#115;&#97;&#108;&#101;&#115;&#64;&#119;&#104;&#105;&#116;&#116;&#101;&#116;&#45;&#104;&#105;&#103;&#103;&#105;&#110;&#115;&#46;&#99;&#111;&#109;">whsales@whittet-higgins.com</a>","www.whittet-higgins.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2SNLMZ4X3N3">31</a>","CIMINI & ASSOCIATES INC","BRIDGET TOBIN","Associate","46 AIRPORT RD","POLE 5479","WESTERLY","RI","02891-3402","The company casts, rolls, extrudes and machines precious metals and their alloys. We have the ability to alloy and machine these metals to exact specifications. we enjoy business relationships with the jewelry, dentistry, and nuclear power industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#116;&#111;&#98;&#105;&#110;&#64;&#99;&#105;&#109;&#105;&#110;&#105;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">btobin@ciminiassociates.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KS7DV93AL4K5">32</a>","MAXSON AUTOMATIC MACHINERY CO","RYAN TRACEY","","70 AIRPORT RD","","WESTERLY","RI","02891-3402","Machining capabilities include ‘large cube’ dimensioned CNC machine tools with between 3 – 9 axis of programming with overhead 3 – 5 ton capacity hoists","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#114;&#97;&#99;&#101;&#121;&#64;&#109;&#97;&#120;&#115;&#111;&#110;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#99;&#46;&#99;&#111;&#109;">rtracey@maxsonautomatic.com</a>","http://www.maxsonautomatic.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQNVUELYRDL6">33</a>","SHANIX, INC.","KEKIN SHAH","President, VP and Office Manager","40 WORTHINGTON RD","","CRANSTON","RI","02920-7940","Closed Circuit Television Surveillance, Card Access System, Conference Room Video Presentation, Paging and Intercom System. Installation and Sales of all of the above. For more information visit our website at http://www.shanix.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#69;&#75;&#73;&#78;&#64;&#83;&#72;&#65;&#78;&#73;&#88;&#46;&#67;&#79;&#77;">KEKIN@SHANIX.COM</a>","http://www.shanix.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGNMDRNJTMZ3">34</a>","ADVANCED INTERCONNECTIONS CORPORATION","CHANNY CHEK","","5 ENERGY WAY","","WEST WARWICK","RI","02893-2389","Advanced Interconnections designs and manufactures customized interconnect solutions for semiconductor development and high reliability electronic applications including medical, military, automotive, and telecommunications. Our IC sockets, package conversion adapters, and board to board connectors feature screw-machined terminals for field-proven performance and durability. From prototype to production volumes, innovative designs are produced to customer-specific requirements in our fully integrated manufacturing facility in the USA. Advanced Interconnections Corporation is a high-quality connector manufacturer. We specialize in building custom interconnect solutions. Our core products are BGA socket and adapter solutions, BGA testing, board to board interconnect solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#67;&#72;&#69;&#75;&#64;&#65;&#68;&#86;&#65;&#78;&#67;&#69;&#68;&#46;&#67;&#79;&#77;">CCHEK@ADVANCED.COM</a>","https://www.advanced.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q1B3NG6LP9B5">35</a>","EXAIL DEFENSE SYSTEMS, INC.","TED CURLEY","U.S. Sales Manager","27 WELLINGTON RD","","LINCOLN","RI","02865-4411","Fiber Optic Gyroscopes (FOG) technologies, OCTANS (gyrocompass & motion sensor) and PHINS (Inertial Navigation System). Underwater acoustic tracking GAPS and POSIDONIA USBL systems. Acoustic Releases and Transponders. Coastal to full ocean depth.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#100;&#46;&#99;&#117;&#114;&#108;&#101;&#121;&#64;&#101;&#120;&#97;&#105;&#108;&#45;&#117;&#115;&#46;&#99;&#111;&#109;">ted.curley@exail-us.com</a>","http://www.exail.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7NEEM9RL436">36</a>","TRAWLWORKS, INC.","STEPHEN TABER","","30 WALTS WAY","","NARRAGANSETT","RI","02882-3438","MANUFACTURER AND RESELLER OF COMMERICAL FISHING GEAR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#119;&#108;&#64;&#116;&#114;&#97;&#119;&#108;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">trawl@trawlworks.com</a>","www.trawlworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DH6JMBFCL6M1">37</a>","NATIONAL LAMINATING, INC","CRAIG CARDULLO","general mgr.","165 AMARAL ST","","RIVERSIDE","RI","02915-2221","National Laminating, Inc. sells laminating and digital photo ID equipment and supplies to end-users, including governement agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#106;&#99;&#64;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#108;&#97;&#109;&#105;&#110;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">cjc@nationallaminating.com</a>","http://www.nationallaminating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDJLF5UZ2XY5">38</a>","BOSWORTH CO","DOUGLAS REILLY","","930 WATERMAN AVE","","EAST PROVIDENCE","RI","02914-1337","Manufacturer of diaphragm pumps - hand operated, foot operated and motorized - for water and general fluid transfer, pump priming and vacuum service. Manufacturer of diverter valves for marine applications. Manufacturer of foot/check valves.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#46;&#114;&#101;&#105;&#108;&#108;&#121;&#64;&#116;&#104;&#101;&#98;&#111;&#115;&#119;&#111;&#114;&#116;&#104;&#99;&#111;&#46;&#99;&#111;&#109;">doug.reilly@thebosworthco.com</a>","http://www.thebosworthco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K8D1SDXNK4J5">39</a>","FASANO CORP","RONALD FASANO","Vice President","333 WELLINGTON AVE","","CRANSTON","RI","02910-1338","Swiss screw machine shop with stock capacity from .030' to 1.25' in diameter. High quality parts manufactured from stainless steel, steel alloys, brass, aluminum, phosphorous, bronze, copper, and various plastics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#46;&#102;&#97;&#115;&#97;&#110;&#111;&#64;&#102;&#97;&#115;&#97;&#110;&#111;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">ron.fasano@fasanocorp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EK1BW1KSLAG1">40</a>","CHEMART COMPANY","ANA LOPES","","15 NEW ENGLAND WAY","","LINCOLN","RI","02865-4252","ChemTec specializes in the manufacture of precision etched parts and components using the photo chemical machining process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#111;&#112;&#101;&#115;&#64;&#98;&#101;&#97;&#99;&#111;&#110;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">alopes@beacondesign.com</a>","http://www.beacondesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ4FCS82ZZW5">41</a>","TORBOT GROUP, INC","LISA BLANCHETTE","","1367 ELMWOOD AVE","","CRANSTON","RI","02910-3821","Torbot Group Inc. (TGI) provides quality vascular and burn compression garments, ostomy appliances, ostomy accessories, and skin care products most of which we manufacture and many which are customized to fit your patients individual needs. Our manufacturing capabilities and years of experience in the cut and sewing industry along with decades of ostomy experience allow us to offer a wide range of products and services at an affordable price. Our product experts and management professional’s capabilities include the ability to effectively analyze research, design and implement solutions in the areas of product design and manufacturing. Our converyorized laser cutter for fabrics allows us to cut high volumes of fabric pieces, regardless of type and sew it in our sewing room with one or more of our 30 commercial sewing machines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#98;&#108;&#97;&#110;&#99;&#104;&#101;&#116;&#116;&#101;&#64;&#116;&#111;&#114;&#98;&#111;&#116;&#46;&#99;&#111;&#109;">lisa.blanchette@torbot.com</a>","http://www.TORBOT.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPJJKM7M9BP7">42</a>","INDUSTRIAL POWER SERVICES, INC","CATHERINE LAMBERT","","36 OXFORD ST","","PROVIDENCE","RI","02905-4748","Integrated Electrical Services Industrial, Marine & Commercial applications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#76;&#97;&#109;&#98;&#101;&#114;&#116;&#64;&#109;&#117;&#108;&#116;&#105;&#45;&#115;&#116;&#97;&#116;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">CLambert@multi-stateelectric.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FM4PUGS6VHS5">43</a>","BREN CORP","EDMUND CIANCIARULO","","1763 PLAINFIELD PIKE","","JOHNSTON","RI","02919-5919","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#99;&#49;&#50;&#51;&#64;&#103;&#120;&#116;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">edc123@gxtgroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLFSSG2QSB33">44</a>","LOCKHEED ARCHITECTURAL SOLUTIONS, INC.","MICHAEL KOSIVER","","925 S MAIN ST","","PASCOAG","RI","02859-3521","Since 1955, we have been manufacturing replacement/new construction window and door systems. Our Commercial Sales Division installs aluminum windows, curtainwalls, storefronts and doors made by Lockheed or by nationally recognized business partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#107;&#111;&#115;&#105;&#118;&#101;&#114;&#64;&#108;&#111;&#99;&#107;&#104;&#101;&#101;&#100;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mskosiver@lockheedsolutions.com</a>","http://lockheedsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ER8FM41CYN29">45</a>","LINDON GROUP, INC","ROBERT PENNEY","","310 BOURNE AVE BLDG 67F","","RUMFORD","RI","02916-3368","We are a Small, woman owned, DBE who specializes product design and manufacturing. 1st Defense Group is a division that manufactures explosives detection kits. Lindon Group also provides products in the area of construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#101;&#110;&#110;&#101;&#121;&#64;&#108;&#105;&#110;&#100;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">bpenney@lindongroup.com</a>","www.lindongroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4UFBZ436LD8">46</a>","MALCOM COMPANY, INC.","JONO BIXBY","","207 HIGHPOINT AVE STE 7B","","PORTSMOUTH","RI","02871-1387","We build robust hand tools and kits specializing in heating applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#79;&#78;&#79;&#46;&#66;&#73;&#88;&#66;&#89;&#64;&#77;&#65;&#76;&#67;&#79;&#77;&#46;&#67;&#79;&#77;">JONO.BIXBY@MALCOM.COM</a>","http://www.malcom.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMPKMH1MFSQ1">47</a>","SEACORP, LLC","GREG WIDMER","","62 JOHNNY CAKE HILL RD","","MIDDLETOWN","RI","02842-5639","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#119;&#105;&#100;&#109;&#101;&#114;&#64;&#115;&#101;&#97;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">gwidmer@seacorp.com</a>","http://www.seacorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E1QPDAM79BV9">48</a>","AUTOMATED INDUSTRIAL MACHINE, INC.","ANDREW LEWIS","","347 FARNUM PIKE","","SMITHFIELD","RI","02917-1205","Manufacturer of assembly equipment, PLC and automated solutions, custom tooling, pneumatic presses and rotary indexers, stamping and die sets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#76;&#101;&#119;&#105;&#115;&#64;&#74;&#111;&#114;&#97;&#99;&#111;&#46;&#99;&#111;&#109;">ALewis@Joraco.com</a>","http://www.joraco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1NTD8SF7F98">49</a>","NETCABLESPLUS INC","JANE RODRIGUES","","54 GREENFIELD RD","","CUMBERLAND","RI","02864-4713","PC and network cables, tools and accessories, including Ethernet, Fiber Optic, USB, DVI, Firewire, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#110;&#101;&#116;&#99;&#97;&#98;&#108;&#101;&#115;&#112;&#108;&#117;&#115;&#46;&#99;&#111;&#109;">sales@netcablesplus.com</a>","http://www.netcablesplus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PB7ZTKBBNU44">50</a>","NORTH EAST KNITTING, INC.","ROSALIE DAROSA","","179 CONANT STREET","","PAWTUCKET","RI","02860-7204","MANUFACTURER OF KNITTED ELASTIC & WEBBING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#100;&#97;&#114;&#111;&#115;&#97;&#64;&#110;&#101;&#107;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">rdarosa@nekinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZYGUVRK4FN7">51</a>","CUSTOM COMPOSITE MANUFACTURING INC","BARRY MCCOY","","21 PALMER AVE","","CRANSTON","RI","02920-6533","Our desire is to provide practitioners with another option to their patients. Not to replace the use of pre-fab braces when they work, but to give practitioners and their patients a choice.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#114;&#121;&#64;&#99;&#99;&#45;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">barry@cc-mfg.com</a>","HTTP://WWW.CC-MFG.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M6G9LNSK2LC8">52</a>","LUTHER'S REPAIR SHOP, INC","JENNIFER JOUBERT","","500 WOOD ST","","BRISTOL","RI","02809-2342","We a metal fabricating facility. We specialize in fuel, water and holding tanks for the marine industry but we are capable of many metal fabrications as well. We have an engineer on staff. Our business has done projects across many areas such as art projects, metal frames, cradles for boat hauling, and rudders, chainplates, etc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#64;&#108;&#117;&#116;&#104;&#101;&#114;&#115;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jennifer@lutherswelding.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8DKT4Z1AZV3">53</a>","ABSORBENT SPECIALTY PRODUCTS LLC","CAROL DANCER","","30 HAMLET ST","","PAWTUCKET","RI","02861-2827","Manufacture of flood control, industrial and mortuary products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#64;&#97;&#98;&#115;&#111;&#114;&#98;&#115;&#112;&#46;&#99;&#111;&#109;">carol@absorbsp.com</a>","www.absorbsp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UNG7G6S4JRA6">54</a>","5TH AXIS LLC","DOUGLAS POSCICH","","35 MECHANIC ST","","HOPE VALLEY","RI","02832-2017","5th Axis Corporation specializes in 5- axis CNC routing and fabrication of prototypes, first article production, pattern and tooling, scale modeling, and custom sculptural accents.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#53;&#116;&#104;&#97;&#120;&#105;&#115;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">5thaxis@sbcglobal.net</a>","https://www.5th-axis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N9NPQ7DHHGN5">55</a>","PROPEL, LLC","BRITTANY SCUNCIO","","425 W FOUNTAIN ST UNIT 110","","PROVIDENCE","RI","02903-3530","Textile technology for personal protection, Research and development for technical textile technology.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#115;&#99;&#117;&#110;&#99;&#105;&#111;&#64;&#112;&#114;&#111;&#112;&#101;&#108;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bscuncio@propel-llc.com</a>","www.propel-llc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XA3VAXMUA9A8">56</a>","EAGLE INDUSTRIES, INC.","DANIEL HOLDRIDGE","","23 GRAY LN","","ASHAWAY","RI","02804-1205","Electrical services provider, including facilities upgrade and maintenance; automation specialists; industrial control panel builder - UL Certified Shop, Certified Solar Installer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#108;&#100;&#114;&#105;&#100;&#103;&#101;&#64;&#101;&#97;&#103;&#108;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">dholdridge@eagleelectric.com</a>","http://www.eagleelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MM8ZCWP2G6V6">57</a>","EAST BAY MANUFACTURERS INC","LOUIS VICTORINO","","400 FRANKLIN ST","","BRISTOL","RI","02809-3827","East Bay Manufactures, Inc. is a full service CNC machining center, located in Bristol, RI. EBM has been machining parts in this facility since 1960. We are dedicated to providing on-time, fast, courteous service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#117;&#64;&#101;&#97;&#115;&#116;&#98;&#97;&#121;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">lou@eastbaymfg.com</a>","http://www.eastbaymfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JL1FAQTDKX91">58</a>","RONSTAN INTERNATIONAL, INC","JANE WEATHERBY","","1170 E MAIN RD","","PORTSMOUTH","RI","02871-2332","Manufacture and supply equipment for harsh environment including pulley, rope, sheave and turnbuckle systems. For use n maritime, architectural and industrial aplications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#101;&#97;&#116;&#104;&#101;&#114;&#98;&#121;&#64;&#114;&#111;&#110;&#115;&#116;&#97;&#110;&#46;&#117;&#115;">jweatherby@ronstan.us</a>","www.ronstan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDFNL43KKPL3">59</a>","PORTER MACHINE, INC.","ELIZABETH CHATELLE","","765 VICTORY HWY","","WEST GREENWICH","RI","02817-2111","Porter Machine is an ISO certified precision manufacturing job shop. We have a 10,000 square foot manufacturing facility with in house engineering and CAD design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#108;&#105;&#122;&#97;&#98;&#101;&#116;&#104;&#64;&#80;&#111;&#114;&#116;&#101;&#114;&#77;&#97;&#99;&#104;&#105;&#110;&#101;&#73;&#110;&#99;&#46;&#99;&#111;&#109;">Elizabeth@PorterMachineInc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MX3KNNMVMUA5">60</a>","CLEAR CARBON & COMPONENTS, INC.","MATTHEW DUNHAM","","108 TUPELO ST","","BRISTOL","RI","02809-2810","Clear Carbon and Components (C3) specializes in developing and manufacturing high-end composite components for manufacturers and wholesale distributors in a wide variety of industries. Experienced professionals are equipped to take composite projects through all phases from design through commercial production. We have skilled in-house engineering staff and expert composite techs with decades of experience. CNC machining capabilities gives us the ability to create our own tooling and develop new processing technologies. This allows C3 to be a very nimble company with a wide range of capabilities. Experts in out-of-autoclave processing technology such as: infusion, pre-preg, and compression molding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#99;&#108;&#101;&#97;&#114;&#99;&#97;&#114;&#98;&#111;&#110;&#46;&#99;&#111;&#109;">matt@clearcarbon.com</a>","http://www.clearcarbon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GFFMQGMGA2N5">61</a>","PEDORTHIC TECHNOLOGIES INC","ERIC PALMER","","285 PARK AVE","STE 3","CRANSTON","RI","02905-1241","Manufacture and fit custom made and off the shelf Orthotics, Prosthetics and Diabetic Shoes","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#100;&#116;&#101;&#99;&#104;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">pedtech@verizon.net</a>","ptibrace.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLKLBDRADBJ7">62</a>","MF ENGINEERING COMPANY, INC.","PAUL FERREIRA, JR.","","7 PETER RD","","BRISTOL","RI","02809-2621","CNC Precision Machined Components, CNC Turning / Milling / Honing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#109;&#102;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">paul@mfeng.com</a>","http://www.mfeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQXSJNURLXB4">63</a>","SUN FARM OYSTERS LLC","CHRISTOPHER WARFEL","","1247 EBBETTS HOLLOW","","BLOCK ISLAND","RI","02807-","Renewable energy research and design for aquaculture farm. Solar/Wind in particular.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#119;&#97;&#114;&#102;&#101;&#108;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">cwarfel@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHP8Q44SK635">64</a>","TEXCEL INDUSTRIES, INC.","RICHARD WASSERMAN","","18 MEETING ST","","CUMBERLAND","RI","02864-8323","We’re a leader in the manufacturing of military solid & camouflage webbing for over 18 years. We’ve been involved in almost every major military contract, including IOTV, OTV, ILBE, FILBE, PLATE CARRIER, MTV, IMTV and MOLLE COMPONENTS and the first approved supplier of AOR1 and AOR2 for use in Special Forces programs. We’ve been involved with developing certain military specifications for webbings. We’re the exclusive manufacturer of webbing using the ATACS camouflage print and are proud to be fully Berry Amendment Compliant. We’re known for manufacturing solution-dyed webbings. We’ve been involved in State Law Enforcement Programs, as well as FBI, Border Patrol, and overseas military programs. Working with materials such as Cordura nylon, polyester, Kevlar, Nomex, Teflon, PBI, Twaron, and Spectra. Texcel is also a leader in both technical and industrial webbings and is a manufacturer of woven, knitted and camouflage elastic webbing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#87;&#65;&#83;&#83;&#69;&#82;&#77;&#65;&#78;&#64;&#84;&#69;&#88;&#67;&#69;&#76;&#73;&#78;&#68;&#85;&#83;&#84;&#82;&#73;&#69;&#83;&#46;&#67;&#79;&#77;">RWASSERMAN@TEXCELINDUSTRIES.COM</a>","http://www.texcelindustries.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZZBBAJLBMCB4">65</a>","COMPOSITE ENERGY TECHNOLOGIES, INC.","CHASE HOGOBOOM","","52 BALLOU BLVD","","BRISTOL","RI","02809-2728","capable of design, development and manufacturing of complex carbon fiber structures, marine structures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#97;&#115;&#101;&#46;&#72;&#111;&#103;&#111;&#98;&#111;&#111;&#109;&#64;&#117;&#115;&#97;&#99;&#101;&#116;&#46;&#99;&#111;&#109;">Chase.Hogoboom@usacet.com</a>","www.compositeenergytechnologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XQ2FNSEVHWL1">66</a>","GOODWIN-BRADLEY PATTERN CO., INC.","PAULA ALBRO","","216 OXFORD ST","","PROVIDENCE","RI","02905-2041","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#97;&#117;&#108;&#97;&#64;&#71;&#111;&#111;&#100;&#119;&#105;&#110;&#45;&#66;&#114;&#97;&#100;&#108;&#101;&#121;&#46;&#110;&#101;&#116;">Paula@Goodwin-Bradley.net</a>","www.goodwin-bradley.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TMFVUXPLMKZ5">67</a>","PRIMARY FLOW SIGNAL INC","SYL LEDO","","800 WELLINGTON AVE","","CRANSTON","RI","02910-3732","Primary Flow Signal Inc. is a full service Manufacturer, including but not limited to CNC Turning, CNC Milling, Welding and Fabricating. Some of our capabilities include; 5 Axis Wire EDM 4 and 5 Axis Milling 15 Turning centers with varying capabilities including Live Milling and Sub Spindles CNC Turning up to 40in Dia CNC Milling up to X240in Y118in Manual turning up to 96in Dia and lengths up to 360in Deep Hole boring up to 26in Dia X 250in Deep, Welding to Navsea 278, ASME U and S, PED Large Weldments up to 30 ton Currently Produce Virginia Class Stowage Pallets, in different configurations. Launch Tubes, Barrels, cylinders, UUV/ ROUV/ AUV, Bulkheads and Vehicle sections. WE ARE CMMC 2.0 CERTIFIED FOR CYBER SECURITY!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#108;&#101;&#100;&#111;&#64;&#112;&#114;&#105;&#109;&#97;&#114;&#121;&#102;&#108;&#111;&#119;&#115;&#105;&#103;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">sledo@primaryflowsignal.com</a>","www.primaryflowsignal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRGJUCPYLW13">68</a>","NAUTILUS DEFENSE LLC","JIM OWENS","","999 MAIN ST UNIT 7060","","PAWTUCKET","RI","02860-7821","Nautilus Defense builds advanced textile and composite-integrated systems. With a focus on rapid experimental development, Nautilus is structured to deliver innovative material-based capabilities with speed and proficiency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#110;&#97;&#117;&#116;&#105;&#108;&#117;&#115;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">jim@nautilusdefense.com</a>","nautilusdefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q92KWW1U7Y84">69</a>","ATTOLLO LLC","ANTHONY FELICIO","","30 MARTIN ST","STE 3F","CUMBERLAND","RI","02864-5321","Attollo is a service disabled veteran owned small business (SDVOSB) that provides superior training, engineering and consulting in the technology industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#46;&#102;&#101;&#108;&#105;&#99;&#105;&#111;&#64;&#97;&#116;&#116;&#111;&#108;&#108;&#111;&#117;&#97;&#115;&#46;&#99;&#111;&#109;">anthony.felicio@attollouas.com</a>","www.AttolloDefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1GHSBK5BJY9">70</a>","T. TECH MACHINE, INC","JOHN FICORILLI","","11 KNIGHT ST","BLDG A","WARWICK","RI","02886-1397","T-Tech Machine, Inc., was founded in 1989 and throughout we have never lost focus on giving our customers outstanding service, prices and quality. You’ll never be put into voice mail at T-Tech Machine. We understand that when you call, you need answers right away so you’ll always speak to a professional. Quotes are processed quickly and Purchase Orders acknowledged promptly.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#116;&#45;&#116;&#101;&#99;&#104;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">john@t-techmachine.com</a>","https://ttechmachine-1.myfreesites.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XLW5JS7LHFK8">71</a>","VEMALINE PRODUCTS INC","JEFFREY PANEK","","200 1ST AVE","","CRANSTON","RI","02910-5029","In business for over 60 years, Handles Unlimited is an ISO 9001 compliant manufacturer of standard and custom handles, pulls and knobs for use in the commercial, military, electronics, medical and food service industries. Our handles and knobs are manufactured in the USA with durable materials including aluminum, brass and DFARS compliant stainless steel with a variety of finishes. We specialize in engineered solutions for custom designs, with metric equivalents and mil spec/RoHs compliance, while keeping many standard products in stock.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#64;&#104;&#97;&#110;&#100;&#108;&#101;&#115;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">jeff@handlesunlimited.com</a>","www.handlesunlimited.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UE9ZP9KJKQ67">72</a>","AMERICAN TOOL COMPANY","PHIL MCCALLY","","623 WASHINGTON HWY ROUTE 116","","LINCOLN","RI","02865-4245","Machine shop specializing in large diameter and one-off parts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#109;&#99;&#99;&#97;&#108;&#108;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#116;&#111;&#111;&#108;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">pmccally@americantoolcompany.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EE89UKSJAY38">73</a>","DIFRUSCIA INDUSTRIES, INC","FRANK DEFRUSCIO","","1425 CRANSTON ST","","CRANSTON","RI","02920-6739","Mil Spec Anodizing, Electroplating and Painting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#107;&#100;&#64;&#100;&#105;&#102;&#114;&#117;&#115;&#99;&#105;&#97;&#46;&#99;&#111;&#109;">frankd@difruscia.com</a>","www.difruscia.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z3AZEHZNBR88">74</a>","SPROCKET INDUSTRIES LLC","OLIVER BASHAN","","79 MIANTONOMI AVE","","MIDDLETOWN","RI","02842-5427","Engineering services, research and deployment, prototyping, metal processing, milling, turning, cutting, manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#114;&#111;&#99;&#107;&#101;&#116;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sprocketindustriesllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DPJHWWF53S29">75</a>","AUSTRIAN MACHINE CORP","KURT KERN","","25 STAMP FARM RD","","CRANSTON","RI","02921-3401","AMC has the ability to reverse engineer and manufacture most any mechanical part as well as machine/manufacture parts from existing detail engineering drawings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#117;&#114;&#116;&#64;&#97;&#109;&#99;&#45;&#100;&#109;&#46;&#99;&#111;&#109;">kurt@amc-dm.com</a>","www.amc-dm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1MZUSH3LQN7">76</a>","HENDERSON JR CHARLES M","CHARLES HENDERSON JR","","26 BRIDGE ST","","WARREN","RI","02885-4006","35 years leading Continuous Improvement and systems change as a Naval Officer, Principal Analyst, Department Manager and Industrial/Systems Engineer. Am an ASQ and VA Six Sigma Black Belt mentoring continuous improvement at the facility and project level. Also adapt at construction safety and Joint Commission inspections and an expert in submarine tactics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#116;&#99;&#104;&#64;&#66;&#108;&#97;&#99;&#107;&#66;&#101;&#108;&#116;&#67;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#117;&#115;">mitch@BlackBeltConsulting.us</a>","https://blackbeltconsulting.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DYBJCKL4VXJ7">77</a>","KASSUMAY LLC","BACARY DIATTA","","43 ARLINGTON AVE","","WARREN","RI","02885-1905","Kassumay LLC is a dynamic and innovative small business specializing in the production of high-quality food and beverage products. Established with a commitment to excellence and sustainability, we have built a reputation for crafting unique, gourmet offerings that combine traditional ingredients with modern culinary techniques. Production Facility: Our state-of-the-art manufacturing facility is equipped with modern machinery and technology to ensure efficient, high-volume production while maintaining stringent quality control standards. We have the capacity to produce up to 300000 units of canned food and other specialty products per day, with flexibility for scaling up based on demand. Quality Control: At Kassumay LLC, quality is paramount. Our facility is compliant with FDA regulations, and we follow Good Manufacturing Practices (GMP) to ensure the safety and integrity of our products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#107;&#97;&#115;&#115;&#117;&#109;&#97;&#121;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">hello@kassumayllc.com</a>","https://kassumayllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VM3ESVPAMEW4">78</a>","SEALEGS US CORPORATION","GREG EWEN","","259 FRANKLIN ST","","BRISTOL","RI","02809-3832","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#64;&#115;&#101;&#97;&#108;&#101;&#103;&#115;&#46;&#99;&#111;&#109;">greg@sealegs.com</a>","www.sealegs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8GYJ91RKNL4">79</a>","DERECKTOR MARINE TECHNOLOGY LLC","MICHAEL MILLER","","257 FRANKLIN ST","UNIT 15","BRISTOL","RI","02809-3831","engineering, manufacturing, metal fabrication, machining, composites, boat repair, boat building, welding, engineering design, engineering research, product development, prototyping, engineering consulting, technical consulting, mold manufacturing, tool and die manufacturing, jig manufacturing, CAD modelling, design failure modes and effects analysis, finite element simulation, prototype fabrication and testing, photography and rendering","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#100;&#101;&#114;&#101;&#99;&#107;&#116;&#111;&#114;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">admin@derecktormarine.com</a>","www.derecktordesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJ9ACW6P1HX6">80</a>","SAYDE TROTTER CORPORATION","LISA MACKEY","","1005 MAIN ST","UNIT 117","PAWTUCKET","RI","02860-7803","jewelry","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#102;&#109;&#97;&#99;&#107;&#101;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">lfmackey@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGAQFQQ8NFK1">81</a>","STEC TECHNOLOGY, INC","ERIC CHAU","","19 BROADCOMMON RD STE 200","","BRISTOL","RI","02809-2768","nitrogen oxides pollution reduction system designed for diesel-powered boats","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#46;&#99;&#104;&#97;&#117;&#64;&#115;&#116;&#101;&#99;&#45;&#100;&#101;&#118;&#46;&#99;&#111;&#109;">eric.chau@stec-dev.com</a>","https://stec-dev.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TEZRS4F9CTN5">82</a>","PNEUHAUS LLC","LEVI BEDALL","","310 BOURNE AVE STE 4","","RUMFORD","RI","02916-3368","Design and fabricate custom inflatable installations, sculptures, and novel constructions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#118;&#105;&#64;&#112;&#110;&#101;&#117;&#46;&#104;&#97;&#117;&#115;">levi@pneu.haus</a>","https://www.pneu.haus/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VAJHPZNJCP77">83</a>","INDUSTRIAL SENSOR CORPORATION","APARNA ONEAL","","75 STONE SOUP FARM WAY","","WAKEFIELD","RI","02879-2556","Industrial Sensor Corporation is a U.S.-based manufacturer of premium sensors and electronic controllers for automating homes, offices, factories, and the military. Capabilities include: product design, electrical engineering, electronics, circuit design, printed circuit board design, printed circuit board manufacturing, design for manufacturing (DFM), mechanical design, 3D modeling, mechanical fabrication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#112;&#97;&#114;&#110;&#97;&#64;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#115;&#101;&#110;&#115;&#111;&#114;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">aparna@industrialsensorcorporation.com</a>","https://www.industrialsensorcorporation.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QFMHGD6R6C35">84</a>","DAY ONE INDUSTRIES INC","JESSICA MULARSKI","","36 BELLAIR AVE","","WARWICK","RI","02886-2268","Renova Lighting Systems is a women-owned, commercial lighting manufacturer. We specialize in energy efficient, LED lighting, retrofit lighting kits, custom lighting sizes and specifications, innovative lighting control systems, sheet metal fabrication, and superior customer service, including visiting job sites. Our products are BABA and BAA compliant, DLC listed, and UL listed. Renova has over 25 years of experience in both the public and private sector. Renova lighting solutions illuminate various notable locations, including URI Feinstein Providence Campus, RI Department of Correction buildings, and Rhode Island Air National Guard buildings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#105;&#99;&#97;&#64;&#114;&#101;&#110;&#111;&#118;&#97;&#46;&#99;&#111;&#109;">jessica@renova.com</a>","https://www.renova.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S9ATQNGN2X17">85</a>","ANCHORS AWEIGH TOGETHER LLC","DARRYL LINDIE","","221 JEFFERSON BLVD","","WARWICK","RI","02888-3818","AA Thrifty Sign embodies a seasoned and proficient team of professionals with a proven track record in design and fabrication. We can meet the stringent requirements of diverse businesses, managing projects that span from routine and small-scale to large, highly specialized endeavors and high-volume contracts. Our hallmark is a well-earned reputation for prompt, professional, and competitively priced work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#108;&#105;&#110;&#100;&#101;&#64;&#97;&#97;&#116;&#104;&#114;&#105;&#102;&#116;&#121;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">dlinde@aathriftysign.com</a>","www.aathriftysign.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSD5ZGSFPGK7">86</a>","NUTS 'N MORE LLC","PETER FERREIRA","","10 ALMEIDA AVE STE 14","","EAST PROVIDENCE","RI","02914-1027","Eight years ago, driven by my love for fitness and frustration with tasteless protein options, I founded Nuts ‘N More. As a fitness enthusiast and runner with a strict diet, I longed for the delicious treats from my family’s bakery in Providence, RI. Desperate for a tasty, high-protein alternative, I had an epiphany: protein-packed peanut butter that didn’t compromise on flavor. Testing recipes in the family bakery, I created mouth-watering flavors that my friends and family adored. In 2013, we launched the first high-protein nut butter spread and caught the attention of investors Mark Cuban and Robert Herjavec on Shark Tank, propelling our rapid expansion. Today, Nuts ‘N More is a Shark Tank success story, dedicated to bringing our delicious, high-protein spreads to more customers. We’re excited to introduce more people to our amazing products and continue our journey.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#69;&#84;&#69;&#64;&#78;&#85;&#84;&#83;&#45;&#78;&#45;&#77;&#79;&#82;&#69;&#46;&#67;&#79;&#77;">PETE@NUTS-N-MORE.COM</a>","https://nuts-n-more.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5ZLNJ2BZT21">87</a>","ASTRONOVA, INC.","DONNA DUCKWORTH","National Sales Manager","600, EAST GREENWICH AVENUE","","WEST WARWICK","RI","02893-7526","MANUFACTURES A WIDE VARIETY OF SPECIALTY PRINTERS AND ACCESSORIES AS FOLLOWS: THERMAL ARRAY RECORDERS, DATA ACQUISITION RECORDERS AND CHART PAPER, BAR CODE PRINTERS, LABELS, THERMAL TRANSFER RIBBON AND RUGGEDIZED PRINTERS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#100;&#117;&#99;&#107;&#119;&#111;&#114;&#116;&#104;&#64;&#97;&#115;&#116;&#114;&#111;&#110;&#111;&#118;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dduckworth@astronovainc.com</a>","http://www.astronovainc.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 1.94&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

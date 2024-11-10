@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 027 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.04 seconds and 2.12 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 61 
+(of 61 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNFMYF4PF1E3">1</a>","R.K. BASS ELECTRIC, INC.","ANDY BASS","SECRETARY/TREASURER","1200 E FM 2410 RD","","HARKER HEIGHTS","TX","76548-6846","ALL PHASES OF ELECTRICAL CONSTRUCTION AND ELECTRICAL SERVICE WORK.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#98;&#97;&#115;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">andy@basselectric.com</a>","http://www.basselectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2PPMLJNXM18">2</a>","HEIGHTS LUMBER & SUPPLY, INC.","LUIS PEDRO OCADA","Operations Manager","602 W FM 2410 RD","","HARKER HEIGHTS","TX","76548-1610","HEIGHTS LUMBER & SUPPLY, INC. IS AN ACE HARDWARE STORE, CENTRALY LOCATED IN THE MIDDLE OF BELL COUNTY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#85;&#73;&#83;&#79;&#64;&#72;&#69;&#73;&#71;&#72;&#84;&#83;&#76;&#85;&#77;&#66;&#69;&#82;&#83;&#85;&#80;&#80;&#76;&#89;&#46;&#67;&#79;&#77;">LUISO@HEIGHTSLUMBERSUPPLY.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZJ9EXG3YK3S9">3</a>","RONALD CARROLL SURVEYORS, INC","AMY BARGEN-SILER","President","5302 S 31ST ST","","TEMPLE","TX","76502-3577","Land Surveying, Development and Planning. 30 years in land boundary, topographic, right of way & design surveys, construction layout, subdivision platting, transmission utility routes, aerial mapping & GPS/GIS.Also provide consulting for development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#114;&#99;&#115;&#117;&#114;&#118;&#101;&#121;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">info@rcsurveyors.com</a>","https://rcsurveyors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YC91UFGX6E78">4</a>","PERRY OFFICE PRODUCTS INC","SHELLI HELLINGHAUSEN","President","1401 N 3RD ST","","TEMPLE","TX","76501-1648","Perry Office Plus is Central Texas' largest independently owned office products/furniture dealer. Retail stores in Killeen, Belton, Temple, Waco. Supporting Central Texas since 1920. We accept all major credit cards; have no minimum order; free delivery.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#108;&#108;&#105;&#46;&#104;&#101;&#108;&#108;&#105;&#110;&#103;&#104;&#97;&#117;&#115;&#101;&#110;&#64;&#112;&#101;&#114;&#114;&#121;&#111;&#112;&#46;&#99;&#111;&#109;">shelli.hellinghausen@perryop.com</a>","http://www.perryop.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D5BNEHB3UL89">5</a>","CSI AVIATION, INC","THOMAS DUNN","Manager - Marketing & Business Dev.","6006 REESE CREEK RD","","KILLEEN","TX","76549-7160","CSI is the oldest air charter management company in the U.S., specializing in air charter transportation for passengers worldwide. Aircraft capabilities include turbo-props, executive jets, and airliners. 24 Hour Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#117;&#110;&#110;&#64;&#99;&#115;&#105;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">dunn@csiaviation.com</a>","http://www.csiaviation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LNMJMKP64QA3">6</a>","ADVANCED ELECTRICAL SYSTEMS, INC.","KEVIN MCANDREW","President","1093 BRIGGS RD","","KILLEEN","TX","76549-3340"," We have over 25 years commercial, industrial and residential electrical experience. Design, consultation,installation, service, data cable, fiber optics, controls, PLC programming, communications, and security camera systems are services we offer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#101;&#115;&#105;&#46;&#99;&#111;&#109;">kevin@advancedesi.com</a>","http://www.advancedesi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MMMFKKVK52R8">7</a>","OLEAH INC","TOBE SWEENEY","","206 W AVENUE B","","KILLEEN","TX","76541-5202","construction of a one story building using Insulating Concrete Forms (ICF) with PermaCrete with is a versatile resurfacing product that can be applied to concrete, masonry, foam, steel, stucco and aggregate. www.oleahinc.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#98;&#101;&#46;&#115;&#119;&#101;&#101;&#110;&#101;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tobe.sweeney@gmail.com</a>","http://www.oleah.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGLUQLHKF2L7">8</a>","CF SUPPLY INC.","TRAVIS OWENS","","7180 W US HIGHWAY 190","","BELTON","TX","76513-7834","We provide/supply commercial construction building materials. These materials include doors, door hardware, dry wall materials, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#118;&#105;&#115;&#64;&#99;&#102;&#115;&#117;&#112;&#112;&#108;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">travis@cfsupplyinc.com</a>","http://www.cfsupplyinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSSKZXAVGY57">9</a>","KAMICO INSTRUCTIONAL MEDIA, INC","KATHY MICHAEL","President and CEO","4477 FM 2843","","SALADO","TX","76571-5145","Kamico is a publisher and distributor of standards based assessment preparation products and services for K-12 schools. This includes books, games, instructional software, data disaggregation software and teacher training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#107;&#97;&#109;&#105;&#99;&#111;&#46;&#99;&#111;&#109;">kmichael@kamico.com</a>","https://www.kamico.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G4BENVHMACK4">10</a>","MICRO DISTRIBUTING MANAGEMENT, L.C.","DON ROBB","","620 KENNEDY CT","","BELTON","TX","76513-4140","Micro-Distributing is a leading provider of drug and alcohol testing products and services.MD has developed proprietary products and strategic partnerships with the best the drug testing and screening industry has to offer for a true One-Source Solution.And Providing PPE products such as gloves, masks, hand sanitizer, digital thermometer, disinfecting wipes, face shield foam, covid-19 testing kits and drug testing kits.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#111;&#98;&#98;&#46;&#109;&#102;&#103;&#114;&#101;&#112;&#64;&#109;&#105;&#99;&#114;&#111;&#45;&#100;&#105;&#115;&#116;&#114;&#105;&#98;&#117;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">drobb.mfgrep@micro-distributing.com</a>","http://www.micro-distributing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLGANNEDNLH7">11</a>","CAP-A-BUS INC","ROBERT (BOB) PIATT","General Manager","2416 ROYAL ST","","SALADO","TX","76571-9304","Paint & Body Work large vehicles, Welding of aluminum,steel, Decal Application","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#97;&#112;&#45;&#97;&#45;&#98;&#117;&#115;&#46;&#99;&#111;&#109;">info@cap-a-bus.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8ADPKV6L6U3">12</a>","SOLUTION ONE INDUSTRIES, INC.","TYRONE MCLAURIN","President/CEO","412 N GRAY ST","","KILLEEN","TX","76541-5247","Solution One Industries, Inc. (SOI) provides services including Engineering, Information Technology, Logistics and Maintenance, Training, Testing, Integration and Program/Project Management support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#99;&#108;&#97;&#117;&#114;&#105;&#110;&#64;&#49;&#115;&#111;&#105;&#46;&#99;&#111;&#109;">tmclaurin@1soi.com</a>","http://www.1soi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MD8HDWPQQVD7">13</a>","LOOP DENTAL CLINIC","STEVEN RODRIGUEZ D.D.S","","301 W STAN SCHLUETER LOOP","","KILLEEN","TX","76542-5282","we are a dental clinic. we provide dental services to patients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#111;&#112;&#109;&#110;&#103;&#114;&#64;&#104;&#111;&#116;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">loopmngr@hot.rr.com</a>","https://www.loopdentalclinic.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PZEKH4FNSGZ2">14</a>","THE PRAEVIUS GROUP, INC","JASON TORCZYNSKI","","417 N MAIN ST STE 104","","SALADO","TX","76571-6134","The Praevius Group, Inc. exists to advance organizational excellence through the innovative fusion of Leader Development and Technology.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#64;&#112;&#114;&#97;&#101;&#118;&#105;&#117;&#115;&#46;&#99;&#111;&#109;">jason@praevius.com</a>","http://www.praevius.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2C7HM92UDQ6">15</a>","TOPSARGE BUSINESS SOLUTIONS, LLC","DANIEL ELDER","","112 SW H K DODGEN LOOP","","TEMPLE","TX","76504-7557","Topsarge Business Solutions, LLC (TBS) is an Organizational Improvement, Leader Development, Training and Research firm whose clients seek change. A Service-disabled, Veteran-owned business, TBS was first created as a digital collaboration project in 1991. Today, TBS provides professional services to customers in how to manage change through communication, collaboration and professional training. TBS is a consulting firm that assists federal customers with business solutions in critical areas such as support services, process improvement and change management, professional development training, executive coaching, 360-degree assessments, technical writing and digital strategy creation and facilitating online communities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#46;&#101;&#108;&#100;&#101;&#114;&#64;&#116;&#111;&#112;&#115;&#97;&#114;&#103;&#101;&#98;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">dan.elder@topsargebusinesssolutions.com</a>","https://www.topsarge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTJ2Y2L8ZWB3">16</a>","RW LONE STAR SECURITY, LLC","J. LEE DAVIS","","2904 S GENERAL BRUCE DR","","TEMPLE","TX","76504-5119","Document Imaging, Archiving, Indexing, Storage and Destruction (On Site Shredding) · FACTA and HIPAA compliant · National Association of Information Destruction (NAID) Certified","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#114;&#119;&#108;&#111;&#110;&#101;&#115;&#116;&#97;&#114;&#46;&#99;&#111;&#109;">office@rwlonestar.com</a>","rwlonestar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JB3KM4N1LEV3">17</a>","REMEDY TECHNOLOGICAL SERVICES, LP","ABDUL SUBHANI","","501 N 4TH ST","","KILLEEN","TX","76541-4865","Centex Technologies is a computer consulting company located in Central Texas, Dallas, and Atlanta. Our goal is to provide innovative IT solutions that exceed expectations. We assist our clients through a wide range of comprehensive and cost-effective services to advise, install, service and repair, configure, maintain, and teach Information Technology.  Our highly skilled and professional staff has extensive experience in diverse areas such as Network Administration; Technical Support; Project Management; and Web, App, and Software Development. We serve medium to large scale businesses and government agencies, helping manage their online presence with our state-of-the-art Search Engine Optimization (SEO), Internet Marketing, and Website Design and Development solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#117;&#98;&#104;&#97;&#110;&#105;&#64;&#99;&#101;&#110;&#116;&#101;&#120;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">asubhani@centextech.com</a>","http://www.centextech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEPTQ65QJHQ5">18</a>","KERBEROS INTERNATIONAL, INC.","DAWN COLE","","2109 BIRDCREEK TER","","TEMPLE","TX","76502-1083","Kerberos is an extremely responsive provider of services and solutions including specialized communications, and armed/unarmed security guards. Our unique RF communications platforms support DOD and intelligence missions worldwide. We offer specialists in electronic warfare, RF communications, electrical engineering, RF engineering, network management and other disciplines. Kerberos takes pride in providing outstanding support to the warfighter and intelligence communities. We also provide solar powered generators that thrive in the worlds most harsh and remote environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#119;&#110;&#46;&#99;&#111;&#108;&#101;&#64;&#107;&#101;&#114;&#98;&#101;&#114;&#111;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dawn.cole@kerberosinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKUSHDY8Q685">19</a>","JOHN T COX LC","JOHN COX","","717 E ADAMS AVE","","TEMPLE","TX","76501-4534","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#111;&#120;&#119;&#101;&#108;&#100;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">Coxweld@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LETBKXCKL8M3">20</a>","PRESLEY DESIGN STUDIO, L.C.","HEATHER PRESLEY","","503 N WALL ST","","BELTON","TX","76513-2676","• Graphic design and illustrations • Fresh branding concepts • Copy writing for newsletters, press kits, website text, print materials, etc. • Professional photography • Drone and ground-level videography • Video editing/commercial development • Printing services • Apparel design and production services • Advertising specialties/promotional products • Industry-positioning website design, development, and navigation layout consultation • Maintaining an up-to-date knowledge of cutting-edge web design and development techniques/UX Design with HTML5, CSS3, PHP development, JavaScript/JQuery capabilities • WordPress theme and plug-in implementation and customization","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#97;&#116;&#104;&#101;&#114;&#64;&#112;&#114;&#101;&#115;&#108;&#101;&#121;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#116;&#117;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">heather@presleydesignstudio.com</a>","https://www.presleydesignstudio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLCHQ2JDD1U1">21</a>","RANDALS TOWER TECH, INC.","RILEY BREWER","","5685 DICE GROVE RD","","BELTON","TX","76513-7789","Tower, antenna & coax installation and maintenance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#100;&#46;&#98;&#114;&#101;&#119;&#101;&#114;&#64;&#116;&#111;&#119;&#101;&#114;&#116;&#101;&#99;&#104;&#116;&#120;&#46;&#99;&#111;&#109;">rd.brewer@towertechtx.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RRG4LHAFHHD4">22</a>","JOSE FRANCISCO CANTU JR","JOSE CANTU","","1010 WILLIAMSON DR","","KILLEEN","TX","76541-2360","With crew that has over 15 years combined experience in tree/forestry industry, serving Texas with professional services: trimming/pruning, removals, stump grinding, and forestry services for residential/commercial/government agencies throughout Texas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#101;&#46;&#99;&#97;&#110;&#116;&#117;&#46;&#106;&#114;&#64;&#99;&#97;&#110;&#116;&#117;&#116;&#114;&#101;&#101;&#116;&#114;&#105;&#109;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jose.cantu.jr@cantutreetrimming.com</a>","http://www.cantutreetrimming.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCFGJYHTK6B5">23</a>","CONNECTED MINDS ENTERPRISE LLC","TALISA PORCH","","205 E AVENUE D","","KILLEEN","TX","76541-5238","Connected Minds Enterprise provides management consulting services, develops people and improves processes primarily through analyzing existing organizational concerns and providing recommendations for improvement. Our expertise in military operations, security, training, safety, logistics, management and international relations can give the client an upper hand by providing critical data that can be used as a competitive advantage in the business world and can save money, time and resources. We value our customers and with every project assigned, and we ensure client satisfaction.  We team with businesses in the local area and across the United States that have the capabilities to align with CME's mission. Our services cover multiple areas giving our clients a well rounded services support company: safety, training, logistics, project management, janitorial, security, and administrative support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#108;&#105;&#115;&#97;&#112;&#111;&#114;&#99;&#104;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">talisaporch@yahoo.com</a>","http://www.connectedmindsenterprise.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S8FKX8AZRJB3">24</a>","MATERIALYTICS, LLC","CATHERINE MCMANUS","","902 MOUNTAIN LION CIR STE 200","","HARKER HEIGHTS","TX","76548-5720","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#109;&#99;&#109;&#97;&#110;&#117;&#115;&#64;&#109;&#97;&#116;&#101;&#114;&#105;&#97;&#108;&#121;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">c.mcmanus@materialytics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WDKLMEUNHF95">25</a>","CUETO CONSULTING & CONSTRUCTION LLC","ANDREW CUETO","","518 N 5TH ST","","TEMPLE","TX","76501-3112","Cueto Consulting & Construction LLC (C3-LLC) was established with origins its in the A/E services industry. We have become a SBA certified 8(a)/HUBZone full-service Design/Build General Contractor serving Federal Clients nationwide. Our capabilities include multiple construction delivery approaches ranging from Design-Build and Construction Management at Risk, RFP’s to IFB’s and RFQ’s. Our general construction services include vertical and horizontal construction, underground utilities, new construction and SRM services, pollution control systems, demolition services, lead abatement services, prefabricated metal structures, and A/E design services. Our projects are diverse ranging from training ranges to office facilities. Our clients include: USACE, NAVFAC, US Air Force, US Army, NPS, BLM, and the VA.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#110;&#100;&#114;&#101;&#119;&#46;&#67;&#117;&#101;&#116;&#111;&#64;&#67;&#51;&#45;&#76;&#76;&#67;&#46;&#110;&#101;&#116;">Andrew.Cueto@C3-LLC.net</a>","www.C3-LLC.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q2FZU5BLWKQ8">26</a>","MAT-ERIEL VAL-UES, LLC","MATHEW MEVERDEN","","3223 EAGLE RDG","","HARKER HEIGHTS","TX","76548-8677","Sell electrical supplies, cables, wiring, connectors, fixtures, lamps, switches, circuit breakers, panels and related equipment, and equipment and tools.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#101;&#114;&#105;&#101;&#108;&#118;&#97;&#108;&#117;&#101;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">materielvalues@aol.com</a>","https://materielvaluesllc.vistaprintdigital.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D58LGNSSZXL5">27</a>","TITAN QUALITY POWER SERVICES LLC","NANCY JOHN","","1922 S MARTIN LUTHER KING JR DR","","TEMPLE","TX","76504-8611","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#116;&#105;&#116;&#97;&#110;&#113;&#112;&#115;&#46;&#99;&#111;&#109;">accounting@titanqps.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQJWA2D5WED6">28</a>","MAYFIELD III THOMAS DEWITT","THOMAS MAYFIELD","","16047 SALADO DR","","TEMPLE","TX","76502-6550","Provide Facility Support Services and related activities. Background in Army Operations and Support. Army Installation Support Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#97;&#121;&#102;&#105;&#101;&#108;&#100;&#64;&#115;&#104;&#105;&#101;&#108;&#100;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dmayfield@shieldsupportservices.com</a>","shieldsupportservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJD7JBC4JZW6">29</a>","WATTS CATERING","GEORGE WATTS","","6702 BAYBERRY DR","","KILLEEN","TX","76542-5775","Caterer, Mobile Food Trailer, Veteran Owned, capable of feeding 100-5000 people. Knowledge in field feeding and garrison feeding. Company functions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#97;&#119;&#97;&#116;&#116;&#115;&#49;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">supawatts1@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HR94Z3N9WFH9">30</a>","RELIABLE GLOBAL SOLUTIONS LLC","BRIAN BURT","","3529 SHORELINE DR","","HARKER HEIGHTS","TX","76548-8122","Our efforts focus on developing robust, secure and stable technology solutions for our clients. By incorporating common sense solutions, we can ensure at the start of the project that we will efficiently deliver the product to completion. Our services include:  •	Server and workstation Installation and Management •	Commercial Off the Shelf (COTS) Integration •	Hardware and Software Upgrades •	Virus, Malware and Spyware Detection and Removal •	Wired and Wireless Network Installation and Configuration •	Information Assurance Training (HIPAA/PII Awareness) •	Monthly Maintenance and Updates","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#64;&#114;&#101;&#108;&#105;&#97;&#98;&#108;&#101;&#103;&#108;&#111;&#98;&#97;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">consultant@reliableglobalsolutions.com</a>","https://www.reliableglobalsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JB3GEJ5221U8">31</a>","911 TARGET AND MEDICAL CONCEPTS PLLC","MATTHEW KINNEY","","2519 ALPINE FIR DR","","HARKER HEIGHTS","TX","76548-7635","911 Target and Medical Concepts, PLLC is a compact, aggressive company that specializes in tailoring tactical and medical training courses, to the needs of clients operating across the spectrum of Military, EMS, Fire, and Law Enforcement in disciplines critical. We provide our clients with the ability to train at multiple facilities or utilize 911 Tactical Medicine as a Mobile training center. We also provide consultation in the design of planning and implementation of support structures necessary to ensure mission success for our clients. For further information, please visit us online at: http://www.911tacmed.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#57;&#49;&#49;&#116;&#97;&#99;&#109;&#101;&#100;&#46;&#99;&#111;&#109;">admin@911tacmed.com</a>","http://www.911tacmed.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFUHDP547UN7">32</a>","J STAR ENTERPRISES INC","JILL COLEMAN","","2820 W AVENUE O","STE B5","TEMPLE","TX","76504-6417","JSTAR IS A FULL SERVICE GENERAL CONSTRUCTION COMAPANY THAT SPECIALIZES IN ROAD AND HIGHWAY, HEAVY CIVIL, RENOVATIONS, ROOFING, AND MARINE REPAIRS. WIRELESS TELECOMMUNICATIONS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#116;&#97;&#114;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">jstarenterprises@bellsouth.net</a>","www.gojstar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G84MKWCLKRJ5">33</a>","CROWN CLEANING SERVICES, LLC","CAROLINE PAGAN","","1203 ESTES DR","","KILLEEN","TX","76542-","Crown Cleaning Services, LLC offers a variety of housekeeping, flooring services to commercial buildings. We include things like daily routine, monthly, yearly and all around cleaning special needs. We also accommodate to floor Cleaning and polishing from old buildings to more modern buildings. All types of flooring like for example; concrete, carpet and tile.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#103;&#97;&#110;&#46;&#99;&#97;&#114;&#111;&#108;&#105;&#110;&#101;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">pagan.caroline1@gmail.com</a>","crowncleaningservices.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HPXUTLJSJMW7">34</a>","KIM, JOON H","JOON KIM","","1002 VIA TOSCANA","","NOLANVILLE","TX","76559-4596","Carpentry Roofing Drywall Hang Drywall Finish Painting Texture Janitorial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#97;&#114;&#112;&#97;&#105;&#110;&#116;&#105;&#110;&#103;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">starpaintingcompany@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V57XDZXKHCM4">35</a>","TRIPLE IMPACT CONNECTIONS, INC.","GEOFFREY HOM","","3400 KAYDENCE CT","","KILLEEN","TX","76542-3338","NexTech Services, a provider of Business Process Solutions with clients across North America, is uniquely positioned to deliver on clients’ evolving needs through the Military Spouse Employee Partnership Together with support from Fort Hood Leadership, Fort Hood MSEP, the Killeen Chamber of Commerce and the State House of Texas, NexTech Services is able to provide a unique solution for all BPO needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#104;&#111;&#109;&#64;&#116;&#114;&#105;&#112;&#108;&#101;&#105;&#109;&#112;&#97;&#99;&#116;&#46;&#99;&#111;&#109;">ghom@tripleimpact.com</a>","https://www.tripleimpact.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBMLSLFA6ZK7">36</a>","APPOINTED WORLDWIDE HOLDINGS LLC","RICHARD BRUCE JR","","1604 S W S YOUNG DR","","KILLEEN","TX","76543-5003","To ensure and provide support all services Insurance, Retirement benefits, Pension Maximization, Medical Supplies & equipment, Business tax incentives, emergency relief, Ambulance & wheelchair transportation, Rip Rock, Boulders, biodegradable de-greaser, all purpose cleaners, environmentally safe chemicals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#114;&#117;&#99;&#101;&#64;&#97;&#112;&#112;&#111;&#105;&#110;&#116;&#101;&#100;&#119;&#111;&#114;&#108;&#100;&#119;&#105;&#100;&#101;&#104;&#111;&#108;&#100;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">rbruce@appointedworldwideholdings.com</a>","appointedworldwideholdings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TEFRC4JADDJ6">37</a>","MK RESULTS LLC","KAYREN GRAY","","813 SNOW BIRD DR","","HARKER HEIGHTS","TX","76548-8834","MK Results, LLC. is a minority and women-owned small business providing professional development workshops and training on Educational Equity, Culture and Diversity, Inclusion, and Leadership, Climate and Morale, Employee Relations, and more. We focus on curriculum development, instruction, and data to build the capacity of your organization. Our mission is to help organizations and leaders on the road to equity by becoming culturally-conscious through policies, practices, and procedures in order to close the achievement gap.Our vision is to create a more equitable society through best practices in Diversity & Inclusion through shared experiences, friendly conversations, and mindfulness. Our Services include: Consulting, Contracting, Graphic Design, Interview Prep, Speaker Series, Workshops/Training, and Youth Programs. Visit our website for a complete detailed list.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#121;&#114;&#101;&#110;&#64;&#116;&#104;&#101;&#114;&#111;&#97;&#100;&#116;&#111;&#101;&#113;&#117;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">kayren@theroadtoequity.com</a>","https://www.theroadtoequity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F7VZJCKLUT31">38</a>","RUCKSACK TO VACUUM PACK CLEANING SERVICES LLC","CALVIN KORNEGAY","","2202 SPARROW RD","","KILLEEN","TX","76542-5830","Rucksack to Vacuum Pack LLC, is a SDVOSB-Certified enterprise founded in 2019. We specialize in delivering top-tier janitorial services, custodial, emergency clean-up, and hazardous waste clean-up. With a strategic focus on quality, efficiency, and client satisfaction; we offer an array of comprehensive services tailored to meet the unique needs of various industries. Our primary expertise is commercial cleaning. This includes, but is not limited to: Floor Care, Carpet, Upholstery and Window Cleaning, Restroom Sanitation, and Specialized Cleaning Services. We are committed to providing excellence and remarkable services. Our skilled team ensures superior quality to our Local, City, State, and Federal Government Customers. Our core values center on leveraging cutting-edge techniques and a client-centric approach so that government agencies can operate in clean, sanitized areas, and reduce infestations, and illness.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#108;&#118;&#105;&#110;&#46;&#107;&#111;&#114;&#110;&#101;&#103;&#97;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">calvin.kornegay@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCBMPKFRPUS5">39</a>","CANNON-LEAR ENTERPRISES LLC","CORY CANNON","","9497 STRINGTOWN RD","","TEMPLE","TX","76501-7252","Provide Knowledge, Innovation, Change Management services along with Team Building, Executive Coaching, and Strategic Planning Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#110;&#110;&#111;&#110;&#99;&#111;&#64;&#99;&#97;&#110;&#110;&#111;&#110;&#99;&#111;&#46;&#110;&#101;&#116;">cannonco@cannonco.net</a>","https://cannonco.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VX4FDZ95D6N6">40</a>","AA MECHANICAL SERVICES LLC","JUAN RODRIGUEZ","","205 TROY VIEW DR","","TROY","TX","76579-3574","We are a HVAC, plumbing, heating and refridgeration contractor. We offer installation as well as maintenance and repair. We also program and install Johnson controls Equipment and software.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#110;&#121;&#46;&#97;&#97;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">johnny.aamechanical@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P1FARMW2UMH4">41</a>","BROWN & BROWN OF KILLEEN CONSULTING LLC","ALPHONSO BROWN","","5301 WHITE ROCK DR","","KILLEEN","TX","76542-4359","Brown & Brown of Killeen Consulting, LLC is a multifaceted company with over 30 years of combined experience. Our goal is to provided outstanding customer service and provide realistic time lines to the task at hand. We have a variety of services under the North American Industry Classification System Codes (NAICS); no order is too small under the services which we provide. We believe in doing the job right the first time, every time; we are here to serve you. Core Competencies: *Communication *Organizational skills *Adaptability *Problem-solving skills *Trustworthiness & Ethics *Teamwork","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#112;&#104;&#111;&#110;&#115;&#111;&#98;&#51;&#48;&#52;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">alphonsob304@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LTV2RJL1JXL8">42</a>","4D7 INC.","KEVIN BERGAN","","3606 WOODCREST RD","","TEMPLE","TX","76502-2140","IT Solutions including design, development, deployment, management, backup services, training, Data Analytics and Warehousing, Cyber Security, Mobile Development, Query Optimization, Document Management, Project Management, IT equipment installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#52;&#100;&#55;&#73;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">4d7Inc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJ76UUT13CD9">43</a>","SOJATEC LLC","MARCUS DANCY","","816 OLIVE LN","","HARKER HEIGHTS","TX","76548-8849","At Sojatec LLC, we specialize in providing high-quality 3d printing solutions tailored to your unique needs. Our team of skilled professionals utilize state-of-the-art technology and innovative techniques to bring your vision to life. Contact us today to get started on your next project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#117;&#115;&#64;&#115;&#111;&#106;&#97;&#116;&#101;&#99;&#46;&#99;&#111;&#109;">marcus@sojatec.com</a>","https://www.sojatec.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJE9N6DLHR29">44</a>","CENTEX ENGINEERING & DESIGN, LLC","COOPER GILL","","805 N MAIN ST STE G","","SALADO","TX","76571-5864","Founded in 2009, Cen-Tex Engineering is an experienced MEP Engineering project team with a diverse range of experience in the design of HVAC, plumbing and electrical systems in both private and public projects. We deliver high quality, energy efficient designs with healthy indoor air quality for projects of all sizes. When innovative design matters, Cen-Tex Engineering experts deliver for stakeholders who rely on our focused and open communication and par excellence service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#99;&#101;&#110;&#116;&#101;&#120;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">cooper@centexeng.com</a>","www.centexeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFGXWLP2EL17">45</a>","NEWLIFE INVESTMENT PROPERTIES, LLC","DEONTA DAVIS","","1014 N 3RD ST","","TEMPLE","TX","76501-2540","real estate investing, affordable housing, low income housing, short term rental, renovation and repair, land acquisitions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#111;&#110;&#116;&#97;&#46;&#100;&#97;&#118;&#105;&#115;&#64;&#110;&#101;&#119;&#108;&#105;&#102;&#101;&#105;&#112;&#46;&#99;&#111;&#109;">deonta.davis@newlifeip.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q8HLDDNLFW35">46</a>","GET WRITE TO BUSINESS, LLC","CHRISTINA MORTEL","","2109 RED ROCK DR","","BELTON","TX","76513-1009","Formed in 2019, Get Write to Business LLC advances B2B and B2G communications by writing Case Studies, White Papers, and Articles, that inform, educate, and explain complex topics to the reader and decision maker.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#97;&#109;&#64;&#103;&#101;&#116;&#119;&#114;&#105;&#116;&#101;&#116;&#111;&#98;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">christinam@getwritetobusiness.com</a>","https://getwritetobusiness.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XBMNUXWFF698">47</a>","CHIRAL MEDICAL CONSULTING, LLC","WALTER ENGLE","","201 MOUNTAIN ROSE LN","","BELTON","TX","76513-9409","CHIRAL MEDICAL CONSULTING, LLC Providing Services In Medical Consultation, Medical logistics, Clinical, Training, Casualty Care, Pediatric Trauma, Tactical Combat, Coordination, Readiness Procurement, Program Development, P&D, And Canine Trauma Training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#103;&#108;&#101;&#64;&#99;&#104;&#105;&#114;&#97;&#108;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#111;&#114;&#103;">wengle@chiralconsulting.org</a>","https://www.chiralconsulting.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4NBAP8LTWL1">48</a>","LIFEGIVER LLC","CORIE WEATHERS","","5553 PERDITA DR","","BELTON","TX","76513-5878","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#105;&#101;&#64;&#99;&#111;&#114;&#105;&#101;&#119;&#101;&#97;&#116;&#104;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">corie@corieweathers.com</a>","www.corieweathers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T7GDNFKYVMZ2">49</a>","BAM-TEX CONSULTING, LLC","ERIC DAVIS","","1509 H K ALLEN PKWY","","TEMPLE","TX","76502-3672","BAM Consulting presents a highly flexible team capable of adapting to various cultures and diverse industries while providing a comprehensive environment to assess risk, define problems, clarify solutions, and research opportunities. The process includes multiple resources and services to safeguard sustainability while evaluating scalable approaches. The benefits of working with BAM include a committed team with the latest knowledge and skills to support multi-level businesses while remaining a lifetime partner to the company.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#97;&#118;&#105;&#115;&#55;&#49;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">edavis71@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C1M9E5AXH6T3">50</a>","SPARTA CRANE & CONSTRUCTION, LLC","JONATHAN GALLAGHER","","700 N GENERAL BRUCE DR","","TEMPLE","TX","76504-2336","Sparta Crane & Construction, LLC. provides Government agencies with infrastructure and structural services. Founded in 2014, Sparta Crane and Construction, LLC, has years of industry experience and quality you can trust. We handle projects involving crane service, drilled piers, sign construction, steel erection, transmission and distribution, and telecommunication work. Based in the heart of central Texas, we can conveniently and quickly dispatch to geographically cover the entire state, and other neighboring states. We have diverse and highly trained teams with NCCCO operators and certified welders. We have a fleet of mobile hydraulic cranes, ranging from 15 to 110 tons; and a fleet of both truck and track mounted drilling rigs, capable of drilling to depths of 100' and 10' diameter. In addition to our cranes and drilling rigs, we have various aerial equipment, support trucks, trailers, skid steers, and material handlers to accommodate any project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#103;&#64;&#115;&#112;&#97;&#114;&#116;&#97;&#99;&#114;&#97;&#110;&#101;&#97;&#110;&#100;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">tonyg@spartacraneandconstruction.com</a>","www.spartacraneandconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3Z4SLHJ83L5">51</a>","FIRE PROTECTION & CODE CONSULTANTS, LLC","AMY FLOWER","","6904 BEN HOUSTON CT","","TEMPLE","TX","76502-4633","Since 1984, we have been a leader in preparing our federal health care clients for their tri-annual accreditation survey. We provide three key services: Statement of Conditions, Fire and Life Safety Drawings and Code Consulting. We have consistently performed beyond the call of duty to help our clients meet compliance standards of the AHJ, NFPA, and CMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#102;&#64;&#102;&#112;&#99;&#99;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">amyf@fpccllc.com</a>","https://fpccllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TGYRPL6C8SF4">52</a>","360 DEGREE TURN AROUND CONSTRUCTION INC.","SALVADOR MENDEZ","","3010 CRYSTAL ANN DR","","TEMPLE","TX","76502-5789","We are a SDVOSB owned small business that specializes in commercial and residential construction & carpentry services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#118;&#97;&#100;&#111;&#114;&#64;&#51;&#54;&#48;&#100;&#101;&#103;&#114;&#101;&#101;&#116;&#117;&#114;&#110;&#97;&#114;&#111;&#117;&#110;&#100;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">salvador@360degreeturnaroundconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PDYYJ4LT9MS5">53</a>","ADVANCED ECHELON CONSULTING GROUP LLC","HAROLD DINKINS","","5821 ST CHARLES DR","","BELTON","TX","76513-2291","As an emerging consulting firm, we at Advanced Echelon Consulting Group (AECG) pride ourselves in our unfettered ability to provide truly comprehensive strategic, operational, and organizational solutions to clients in both public and private sectors.  Whether the client requires a business strategy, public relations, or one of our many wide-ranging, consulting services, they get results. Unlike other firms that may over-promise and under-deliver, at AECG we consistently deliver results. We are nimble. We get the job done. We are not encumbered by the same levels of hierarchy and inertia that can stifle firms much larger than ours. We don't have to climb several layers of bureaucracy to deliver to a client. When it comes to client service, we are first.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#64;&#97;&#101;&#99;&#103;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">consult@aecggov.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FUU8GLYRDC63">54</a>","THE DEPLOYMENT SUPPLY STORE LLC","CLINTON BAILEY","","445 BELLA ROSE","","BELTON","TX","76513-0203","The Deployment Supply Store LLC provides all of your deployment needs in one place. We offer a Single Source Platform Saving Unit Time and Money! Prepackaged or Customized Deployment Supply Sets. Hazmat Supplies Bundle (Regulation, Placard and Labels). Block, Bracing, Packing, and Cargo Tie-Down Supplies. AG Sanitization / AG Wash Supplies / Hazmat Spill Kits. Save your Unit Hundreds of Personnel Hours and Countless Dollars with TDSS Container Management Services. Our Team has the Expertise, Personnel and Time that is required to solve the Complexity of Container Management. We start from Ground Zero and rebuild your entire Container Management Program. 100% DOD Biennial Container Management Compliance Guaranteed. Our Services are in accordance with Armed Forces Pest Management Board Technical Guide No. 31 Operational Washdown and Agricultural Inspection Preparation for Military Conveyances and Equipment. We also offer Military Shipping Labels Printing Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#110;&#116;&#95;&#98;&#97;&#105;&#108;&#101;&#121;&#50;&#48;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">clint_bailey20@yahoo.com</a>","www.thedeploymentsupplystore.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLJXA7L7HGG6">55</a>","CARTER HOME AND COMMERCIAL SERVICES LLC","DOUG HOPKINS","","517 HOLSTEIN DR","","BELTON","TX","76513-4225","Steve “Twister” Carter is a man of many talents and experiences. With a career spanning from professional bull riding to serving as a US Army Airborne Ranger, he has seen and accomplished a great deal in his life. Steve’s love for adventure and challenge led him to join the US Army, where he became an Airborne Ranger. He served his country with distinction, completing multiple deployments to Afghanistan and Iraq where he was received a Purple Heart. During his time in the military, he developed a strong work ethic and a deep appreciation for teamwork and perseverance.  After leaving the military, Steve decided to put his skills to work in a new way. He started a contracting business. With his experience in construction and his dedication to quality and customer satisfaction, Steve quickly built a reputation as one of the top contractors in his area. Today, Steve is proud to be a successful businessman, and a respected member of his community.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#46;&#99;&#97;&#114;&#116;&#101;&#114;&#115;&#97;&#108;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">doug.cartersales@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NEE7AU6H3SS7">56</a>","KN HOSPITALITY, LLC","JAVED ASLAM","","2702 O W CURRY DR","","KILLEEN","TX","76542-2600","Welcome to our modernized, newly-renovated Comfort Inn ® in Killeen, TX. Here, we offer everything you need to take on the day. Shake off the travel fatigue with an early-morning workout in the fitness center, then come downstairs to enjoy our free hot breakfast served up every day in the lobby. We also offer free WiFi so you can stay connected; we’re serving up benefits that matter.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#108;&#97;&#109;&#107;&#50;&#53;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jaslamk255@gmail.com</a>","https://thechoicehotels.com/txm36"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YYM5CF4K3D18">57</a>","PURE TONE DIAGNOSTICS LLC","NATHAN DUSEK","","7914 KENDALL HILL DR","","TEMPLE","TX","76502-6093","Pure Tone Diagnostics is a Texas based independent company providing industry leading products, services, and calibration of audiometric testing devices for clinical, industrial, and government applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#104;&#97;&#110;&#64;&#112;&#117;&#114;&#101;&#116;&#111;&#110;&#101;&#100;&#120;&#46;&#99;&#111;&#109;">nathan@puretonedx.com</a>","https://puretonedx.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L8HVEGLEV295">58</a>","88 LOGISTICS LLC","JONATHAN WILLIAMS","","6801 ALVIN DR","","KILLEEN","TX","76542-6335","88 Logistics LLC is a provider of comprehensive logistics solutions tailored to meet the diverse needs of our clients. With a steadfast commitment to excellence and a wealth of industry experience, we deliver reliable, efficient, and cost-effective logistical and other services that drive operational success and facilitate business growth.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#97;&#116;&#104;&#97;&#110;&#46;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#56;&#56;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">jonathan.williams@88logisticsllc.com</a>","https://88logisticsllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YLZ1UNPAUZ63">59</a>","NEWMAN TECHNOLOGY SOLUTIONS, INC.","RYLIND NEWMAN","","1902 N 3RD ST","","TEMPLE","TX","76501-1658","Newman Technology Solutions, Inc. (NTSI), a SBA Certified Service-Disabled Veteran-Owned Small Business (SDVOSB), is a premier provider of audio visual solutions for diverse industries. We offer design, installation, maintenance, and support of cutting-edge AV systems, security, IT systems, and network cabling. Our services cover small to large projects, ensuring seamless integration and optimal performance. Committed to exceptional service and client satisfaction, we use the latest technology to meet specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#121;&#108;&#105;&#110;&#100;&#64;&#110;&#116;&#115;&#105;&#45;&#117;&#115;&#46;&#99;&#111;&#109;">Rylind@ntsi-us.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LN8TSWCTN8T5">60</a>","ALICE BROWN","ALICE BROWN","","501 LEO LN","","KILLEEN","TX","76542-5414","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#105;&#99;&#101;&#98;&#114;&#111;&#119;&#110;&#50;&#53;&#52;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">allicebrown254@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R63YWCBZXX35">61</a>","THE ART OF RUCKING LLC","MICHAEL GLOVER","","3201 BLACKBURN DR","","KILLEEN","TX","76543-2702","The Art of Rucking, LLC is a veteran-owned small business dedicated to utilizing physical fitness as a powerful therapeutic tool. Specializing in rucking, functional fitness, bodybuilding, and bootcamp-style workouts, we provide tailored programs that promote both physical health and mental well-being. Our approach integrates weight lifting, gym exercises, and structured fitness classes designed to enhance overall wellness. With a focus on supporting veterans and individuals managing PTSD and mental health challenges, The Art of Rucking offers comprehensive workout routines that foster resilience, strength, and lasting health outcomes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#97;&#114;&#116;&#111;&#102;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">theartofrucking@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.186&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

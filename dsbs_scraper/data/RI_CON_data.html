@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Rhode Island;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.96 seconds and 0.98 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 42 
+(of 42 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WW2XFHZLCDK5">1</a>","INDUSTRIAL PUMP SALES AND SERVICE INC","BRUCE LEVESQUE","President","37 WILLIAM S CANNING BLVD","","TIVERTON","RI","02878-3003","Pump Sales & Service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#117;&#99;&#101;&#108;&#64;&#105;&#112;&#115;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">brucel@ipspump.com</a>","http://www.ipspump.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TL96JHZ71HV6">2</a>","J.C. ELECTRIC, INC.","JOHN CRUZ","President","95 HATHAWAY ST STE 21","","PROVIDENCE","RI","02907-3780","Electrical Contracting, lighting, power, communications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#106;&#99;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">john@jcelectricinc.com</a>","http://www.jcelectricinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNYMT5D7NLS5">3</a>","MARON CONSTRUCTION CO., INC.","THOMAS MARON","Vice President","180 BUTTONHOLE DRIVE","","PROVIDENCE","RI","02909-5746","General Contractor -- new construction and renovation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#97;&#114;&#111;&#110;&#64;&#109;&#99;&#99;&#114;&#105;&#46;&#99;&#111;&#109;">tmaron@mccri.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XMD1S76H9F13">4</a>","ARDENTE SUPPLY CO INC","MARK ARDENTE","TREASURER","404 VALLEY ST","","PROVIDENCE","RI","02908-5664","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#65;&#82;&#75;&#64;&#65;&#82;&#68;&#69;&#78;&#84;&#69;&#46;&#67;&#79;&#77;">MARK@ARDENTE.COM</a>","http://www.ardente.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NNUZHGWLLZB9">5</a>","AMERICAN ECOTECH L.C.","ANDY TOLLEY","Business Manager","100 ELM STREET","FACTORY D","WARREN","RI","02885-2045","Air Monitoring Equipment Air Samplers Gas Analyzers Gas Dilutors Gas Calibrators Dataloggers Environmental Air Pollution monitoring software for air monitoring networks Nephelometers Pollution Monitoring Equipment Water Analyzer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#111;&#108;&#108;&#101;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#101;&#99;&#111;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">atolley@americanecotech.com</a>","http://www.AmericanEcotech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQNVUELYRDL6">6</a>","SHANIX, INC.","KEKIN SHAH","President, VP and Office Manager","40 WORTHINGTON RD","","CRANSTON","RI","02920-7940","Closed Circuit Television Surveillance, Card Access System, Conference Room Video Presentation, Paging and Intercom System. Installation and Sales of all of the above. For more information visit our website at http://www.shanix.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#69;&#75;&#73;&#78;&#64;&#83;&#72;&#65;&#78;&#73;&#88;&#46;&#67;&#79;&#77;">KEKIN@SHANIX.COM</a>","http://www.shanix.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F8Z3EH848VJ1">7</a>","FATHOM RESOURCES LLC","WARD MCINTYRE","President","62 GREYLOCK DR","","PORTSMOUTH","RI","02871-2256","Fathom Research assists scientific and technological industries, furnishing underwater investigation and exploration. Employing the latest technologies, the diverse and experienced staff of Fathom Research solidifies client project goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#109;&#99;&#105;&#110;&#116;&#121;&#114;&#101;&#64;&#102;&#97;&#116;&#104;&#111;&#109;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">wmcintyre@fathomresources.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPJJKM7M9BP7">8</a>","INDUSTRIAL POWER SERVICES, INC","CATHERINE LAMBERT","","36 OXFORD ST","","PROVIDENCE","RI","02905-4748","Integrated Electrical Services Industrial, Marine & Commercial applications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#76;&#97;&#109;&#98;&#101;&#114;&#116;&#64;&#109;&#117;&#108;&#116;&#105;&#45;&#115;&#116;&#97;&#116;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">CLambert@multi-stateelectric.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLFSSG2QSB33">9</a>","LOCKHEED ARCHITECTURAL SOLUTIONS, INC.","MICHAEL KOSIVER","","925 S MAIN ST","","PASCOAG","RI","02859-3521","Since 1955, we have been manufacturing replacement/new construction window and door systems. Our Commercial Sales Division installs aluminum windows, curtainwalls, storefronts and doors made by Lockheed or by nationally recognized business partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#107;&#111;&#115;&#105;&#118;&#101;&#114;&#64;&#108;&#111;&#99;&#107;&#104;&#101;&#101;&#100;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mskosiver@lockheedsolutions.com</a>","http://lockheedsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VZLZCEB8Y145">10</a>","J J CARDOSI INC","JOHN CARDOSI JR","","150 AMARAL ST","","RIVERSIDE","RI","02915-2223","New Construction and Renovations for Industrial and Commercial buildings. Site Work and Excavation, Demolition, Concrete Work, Rough and Finish Carpentry, Framing, Windows and Doors, Construction Management, Design Build, and Preparation for Sub trades.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#121;&#64;&#106;&#106;&#99;&#97;&#114;&#100;&#111;&#115;&#105;&#46;&#99;&#111;&#109;">jay@jjcardosi.com</a>","http://www.jjcardosi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ER8FM41CYN29">11</a>","LINDON GROUP, INC","ROBERT PENNEY","","310 BOURNE AVE BLDG 67F","","RUMFORD","RI","02916-3368","We are a Small, woman owned, DBE who specializes product design and manufacturing. 1st Defense Group is a division that manufactures explosives detection kits. Lindon Group also provides products in the area of construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#101;&#110;&#110;&#101;&#121;&#64;&#108;&#105;&#110;&#100;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">bpenney@lindongroup.com</a>","www.lindongroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DM95LASKJG41">12</a>","CATALANO CONSTRUCTION, INC","JASON CATALANO","","10 NATE WHIPPLE HWY","UNIT 19","CUMBERLAND","RI","02864-1421","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#97;&#116;&#97;&#108;&#97;&#110;&#111;&#64;&#99;&#97;&#116;&#97;&#108;&#97;&#110;&#111;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">jcatalano@catalanoconstruction.com</a>","www.catalanoconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2FVLKPCSRT1">13</a>","TOWER CONSTRUCTION CORP","SHAWN SOUZA","","10 SOUTHERN INDUSTRIAL DR","","CRANSTON","RI","02921-3442","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#119;&#110;&#64;&#116;&#111;&#119;&#101;&#114;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">shawn@towerconstructioncorp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QCHFR5UGGBA6">14</a>","J. G. EDWARDS CONSTRUCTION CO INC","JAMES EDWARDS","","120 HARGRAVES DR","","PORTSMOUTH","RI","02871-4006","Commercial General Contractor and Construction Manager, new construction and renovation, including historical restoration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#69;&#68;&#87;&#65;&#82;&#68;&#83;&#64;&#74;&#71;&#69;&#68;&#87;&#65;&#82;&#68;&#83;&#67;&#79;&#78;&#83;&#84;&#82;&#85;&#67;&#84;&#73;&#79;&#78;&#46;&#67;&#79;&#77;">JEDWARDS@JGEDWARDSCONSTRUCTION.COM</a>","JGEDWARDSCONSTRUCTION.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJB3GG3PCLM1">15</a>","SUPERIOR PAINTING & WALLCOVERING CO., INC","JAMES CAMPBELL","","47 CEDAR SWAMP ROAD","STE 6","SMITHFIELD","RI","02917-2459","Painting & Wall covering contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#106;&#99;&#56;&#56;&#54;&#55;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">jjc8867@cox.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFLDJ1BKTGC1">16</a>","W F SHEA & CO INC","MICHAEL SHEA","","405 KILVERT ST","","WARWICK","RI","02886-1364","Painting, Wall Coverings, Faux Finishes, Specialty Coatings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#119;&#102;&#115;&#104;&#101;&#97;&#112;&#97;&#105;&#110;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">michael@wfsheapainting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XA3VAXMUA9A8">17</a>","EAGLE INDUSTRIES, INC.","DANIEL HOLDRIDGE","","23 GRAY LN","","ASHAWAY","RI","02804-1205","Electrical services provider, including facilities upgrade and maintenance; automation specialists; industrial control panel builder - UL Certified Shop, Certified Solar Installer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#108;&#100;&#114;&#105;&#100;&#103;&#101;&#64;&#101;&#97;&#103;&#108;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">dholdridge@eagleelectric.com</a>","http://www.eagleelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J3RAYY2ANGM3">18</a>","KWV CONSTRUCTION INC.","VANESSA PONTARELLI","","163 STELLA ST","","PROVIDENCE","RI","02909-5701","general contractor commercial renovation and new building","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#112;&#111;&#110;&#116;&#97;&#114;&#101;&#108;&#108;&#105;&#64;&#107;&#119;&#118;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">vpontarelli@kwvconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NCK9RZ9NMUG8">19</a>","M & L HOME IMPROVEMENT & LANDSCAPING LLC","MIKE UNDERWOOD","","600 COLE FARM RD","UNIT A35","WARWICK","RI","02889-1365","complete landscaping services. including maintenance, install, construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#112;&#101;&#115;&#116;&#101;&#114;&#49;&#48;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">mopester10@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QFHZMNKK6LG7">20</a>","AMERICAN TELE-CONNECT SERVICES INC","DAVID HOWE","","231 ELM ST","","WARWICK","RI","02888-3157","Structured low voltage cabling for voice, data, and fiber optics. Telecommuniations systems installer and repairer.CCTV and security systems.Backbone cabling.Data rack.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#119;&#101;&#64;&#97;&#116;&#115;&#101;&#97;&#103;&#108;&#101;&#46;&#99;&#111;&#109;">dhowe@atseagle.com</a>","http://www.atseagle.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JL1FAQTDKX91">21</a>","RONSTAN INTERNATIONAL, INC","JANE WEATHERBY","","1170 E MAIN RD","","PORTSMOUTH","RI","02871-2332","Manufacture and supply equipment for harsh environment including pulley, rope, sheave and turnbuckle systems. For use n maritime, architectural and industrial aplications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#101;&#97;&#116;&#104;&#101;&#114;&#98;&#121;&#64;&#114;&#111;&#110;&#115;&#116;&#97;&#110;&#46;&#117;&#115;">jweatherby@ronstan.us</a>","www.ronstan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XQMVMCYTNLQ3">22</a>","DBS DEVELOPMENT LLC","WILLIAM WILBUR","","300 JEFFERSON BLVD","STE 211","WARWICK","RI","02888-3860","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#114;&#111;&#115;&#101;&#64;&#119;&#105;&#108;&#99;&#111;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">nrose@wilcodevelopment.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QKZ4C3YU82L9">23</a>","S & S TRUCKING, LLC","CLARENCE SNEAD JR","","96 JOHN STREET 2ND FL.","","PAWTUCKET","RI","02861-1010","Our services consist of transporting, hauling broken concrete, demolition, asphalt, highway debris, aggregated materials such as mulch, loam, gravel, crushed stone and sand.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sstruckingllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPW8KTH63M65">24</a>","TAVARES LLC","FERNANDO TAVARES","","1017 BROAD ST","FL 2","CRANSTON","RI","02905-1739","General Building Construction Commercial and Industrial, Design-Build, Demolition and Sitework, Historical Renovations, Masonry Work, Environmental Remediation & Lead Paint Removal, Self-Perform Carpentry, Painting, Drywall, Dust/Noise Protections, Asbestos Abatement and Interior Build Outs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#101;&#114;&#110;&#97;&#110;&#100;&#111;&#64;&#102;&#106;&#116;&#97;&#118;&#97;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">fernando@fjtavares.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQXSJNURLXB4">25</a>","SUN FARM OYSTERS LLC","CHRISTOPHER WARFEL","","1247 EBBETTS HOLLOW","","BLOCK ISLAND","RI","02807-","Renewable energy research and design for aquaculture farm. Solar/Wind in particular.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#119;&#97;&#114;&#102;&#101;&#108;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">cwarfel@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SDGQX4YAWGG2">26</a>","DOYON MANAGEMENT SERVICES, LLC","ANTHONY WOODS","","33 COLLEGE HILL RD BLDG 31","","WARWICK","RI","02886-2776","Doyon Management Services provides Design-Build and General Construction Services on demolition, new construction, renovations, repairs, and civil projects at government-owned facilities and military installations. We work with government clients to meet agency goals and deliver high quality construction projects in the safest manner possible.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#46;&#119;&#111;&#111;&#100;&#115;&#64;&#100;&#111;&#121;&#111;&#110;&#103;&#111;&#118;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">anthony.woods@doyongovgrp.com</a>","http://www.doyongovgrp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QA1EKNNNLJJ4">27</a>","BENTLEY BUILDERS LLC","JASON PANNONE","","1160 POST RD STE 4","","WARWICK","RI","02888-3265","Bentley Builders is committed to developing solutions and executing construction services with a personalized, collaborative approach. We are driven by our passion to serve our clients, partners and industry colleagues and safely deliver every project with enthusiasm, integrity, and unsurpassed quality. Mission: Exceeding Client Expectations  Core Principles: *Resiliency: Develop resourceful solutions to resolve problems and overcome challenges. *Integrity: Conduct business with integrity and accountability. *Inclusiveness: Cultivate diversity of thought, experience, and background. *Partnership: Foster teamwork, innovation, and collaboration. *Safety Mindset: Make safe, responsible choices, and inspire a culture of safety. Core Capabilities: *Construction Management *Design-Build *Facilities Management *Preconstruction Planning and Scheduling *Value Engineering & Alternate Delivery Method *Best-in-Class Construction Safety & Quality Control *Turn-Key Delivery","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#97;&#110;&#110;&#111;&#110;&#101;&#64;&#98;&#101;&#110;&#116;&#108;&#101;&#121;&#99;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">jpannone@bentleycompanies.com</a>","https://bentleycompanies.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCLJPM45JQV8">28</a>","NATIONAL SECURITY CORP","CHRISTOPHER MORRA JR","","65 NEWPORT AVE STE 7","","RUMFORD","RI","02916-2037","National Security is in the business of installing and maintaining security alarm systems, fire alarm systems, camera systems, and access control systems. We maintain our own UL-listed central station to monitor our systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#109;&#111;&#114;&#114;&#97;&#46;&#106;&#114;&#64;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#97;&#108;&#97;&#114;&#109;&#46;&#99;&#111;&#109;">chris.morra.jr@nationalalarm.com</a>","www.nationalalarm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGJBE2TLNK23">29</a>","PAJAN SERVICES INC","WILLIAM SALISBURY","","48 NORTH RD","","FOSTER","RI","02825-1616","Pajan Services has been in business since 1999 installing, maintaining and repairing all aspects in the electrical field. All our employees go through an extensive screening process to ensure only the most qualified electricians will service your home or business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#115;&#115;&#51;&#50;&#53;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">wss32599@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E14JDRUTLYB1">30</a>","RED OAK REMODELING, INC.","WILLIAM CONLAN JR","","300 WHALEY HOLLOW RD","","COVENTRY","RI","02816-4626","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#100;&#111;&#97;&#107;&#114;&#101;&#109;&#111;&#100;&#101;&#108;&#105;&#110;&#103;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">redoakremodeling@cox.net</a>","E14JDRUTLYB1"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EECQVSCH1J93">31</a>","TRIDENT WATERPROOFING, INC.","BRADY NOEL","","2633 MAIN RD","","TIVERTON","RI","02878-3920","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#105;&#100;&#101;&#110;&#116;&#119;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tridentwp@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HPQUYT6MJJ45">32</a>","JOMAR PAINTING LLC","JOSE MARCANO","","31 GRAYSTONE ST","STE B JOMAR PAINTING","WARWICK","RI","02886-1313","Decorative Painting, Wallcovering, Electrostatic Painting, Caulking, Lead Abatement, Power Washing, Epoxy Flooring","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#97;&#114;&#99;&#97;&#110;&#111;&#64;&#106;&#111;&#109;&#97;&#114;&#112;&#97;&#105;&#110;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jmarcano@jomarpainting.com</a>","www.jomarpainting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QSV4GJKC69T3">33</a>","KEY CORP","HUGO KEY","","170 FIORE INDUSTRIAL DR","","WAKEFIELD","RI","02879-2156","Full service site contractors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#103;&#111;&#64;&#107;&#101;&#121;&#99;&#111;&#114;&#112;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">hugo@keycorpconstruction.com</a>","www.keycorpconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VMHQE74WLJ61">34</a>","TEMPTEC MECHANICAL LLC","ISMAIL OULDSFIYA","","84 SPRAGUE ST","","PROVIDENCE","RI","02907-2503","HVAC Installation and Service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#115;&#109;&#97;&#105;&#108;&#64;&#116;&#101;&#109;&#112;&#116;&#101;&#99;&#114;&#105;&#46;&#99;&#111;&#109;">ismail@temptecri.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1MZUSH3LQN7">35</a>","HENDERSON JR CHARLES M","CHARLES HENDERSON JR","","26 BRIDGE ST","","WARREN","RI","02885-4006","35 years leading Continuous Improvement and systems change as a Naval Officer, Principal Analyst, Department Manager and Industrial/Systems Engineer. Am an ASQ and VA Six Sigma Black Belt mentoring continuous improvement at the facility and project level. Also adapt at construction safety and Joint Commission inspections and an expert in submarine tactics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#116;&#99;&#104;&#64;&#66;&#108;&#97;&#99;&#107;&#66;&#101;&#108;&#116;&#67;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#117;&#115;">mitch@BlackBeltConsulting.us</a>","https://blackbeltconsulting.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VM3ESVPAMEW4">36</a>","SEALEGS US CORPORATION","GREG EWEN","","259 FRANKLIN ST","","BRISTOL","RI","02809-3832","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#64;&#115;&#101;&#97;&#108;&#101;&#103;&#115;&#46;&#99;&#111;&#109;">greg@sealegs.com</a>","www.sealegs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FECDDR1VFM21">37</a>","DOYON TECHNICAL SERVICES, LLC","ZACHEUS RITCHEY","","33 COLLEGE HILL RD BLDG 31","","WARWICK","RI","02886-2776","Doyon Technical Services provides Design-Build and General Construction Services on demolition, new construction, renovations, repairs, and civil projects at government-owned facilities and military installations. We work with government clients to meet agency goals and deliver high quality construction projects in the safest manner possible.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#99;&#104;&#101;&#117;&#115;&#46;&#114;&#105;&#116;&#99;&#104;&#101;&#121;&#64;&#100;&#111;&#121;&#111;&#110;&#103;&#111;&#118;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">zacheus.ritchey@doyongovgrp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RN5VGVTG3SK1">38</a>","CUSTOM IRON WORKS INC","JACQUELINE GRACE","","1600 FLAT RIVER RD","","COVENTRY","RI","02816-8904","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#103;&#114;&#97;&#99;&#101;&#64;&#99;&#117;&#115;&#116;&#111;&#109;&#105;&#114;&#111;&#110;&#119;&#46;&#99;&#111;&#109;">Jgrace@customironw.com</a>","customironworksri.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S9DALN6FBMQ7">39</a>","CONSTRUCTION JUNCTION INC.","STEPHEN RODERICK","","181 LAPHAM FARM RD","","PASCOAG","RI","02859-4003","Construction Junction LLC is a General Contracting company, based out in Rhode Island, that specializes in residential, commercial, and industrial construction. With over 10 years of experience, Construction Junction LLC ensures to deliver superior construction services, consistently. Our services include, but are not limited to, site preparation, landscaping, excavating, foundation pouring, framework, welding services, drywall and siting, flooring, roofing, carpentry, remediation, Demolition Services, and more. Furthermore, Construction Junction LLC offers full turn-key operations to include staffing, material procurement, strategic planning, scheduling, and project management. We provide customer satisfaction, from inception to completion, every time. In addition, we offer a full crew to complete projects of all size and standards. We are your Construction team ready to serve you. Contact us directly to see how Construction Junction LLC can best serve you, at (401) 639-2036.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#106;&#117;&#110;&#99;&#116;&#105;&#111;&#110;&#49;&#48;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">constructionjunction1012@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QEFJMDBLCKB8">40</a>","PROVCITY GROUP INC","AYO OSIMBONI","","600 BROAD ST","","PROVIDENCE","RI","02907-1456","Project Management, Construction Management & Construction Inspection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#111;&#115;&#105;&#109;&#98;&#111;&#110;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">aosimboni@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHXQC5X94FG7">41</a>","CCI FACILITY CONTRACTORS LLC","JOHN MORRISON","","38 ISABELLA DR","STE A","TIVERTON","RI","02878-3332","CCI Facility Contractors, LLC is a small, disadvantaged, 8(a) company and subsidiary of Bristol Bay Construction Holdings LLC, a holding company of Bristol Bay Native Corporation. All BBCH subsidiaries have full access to numerous resources including common executive leadership, administrative support systems, and institutional knowledge based on industry experience, supporting our team in providing clients with a best-value approach to cost-effective, innovative, and sustainable solutions. Current and past work is primarily in construction projects for the federal government. Our construction work focuses on facility sustainment, restoration, and modernization and new construction projects in the $1M to $30M range.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#98;&#98;&#99;&#104;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmorrison@bbch-llc.com</a>","https://www.cci-alliance.com/home/cci-facility-contractors-llc-4/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FZC9SP6LW6B3">42</a>","JN STRATEGICS LLC","JACKELINE NUNEZ","","400 RESERVOIR AVE STE 2","H/I","PROVIDENCE","RI","02907-3565","JN Strategics LLC is a women-owned consulting firm dedicated to finding quality and cost effective solutions for businesses and individuals. We offer a wide array list of services, from IT and construction project management, facility management, temporary staffing, administrative support staffing, to facility management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#101;&#108;&#105;&#110;&#101;&#46;&#110;&#117;&#110;&#101;&#122;&#64;&#106;&#110;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">jackeline.nunez@jnstrategics.com</a>","https://www.jnstrategics.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 1.957&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

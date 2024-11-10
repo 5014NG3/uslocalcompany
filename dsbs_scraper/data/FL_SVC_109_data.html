@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 109 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.90 seconds and 1.95 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 60 
+(of 60 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SKGMS17MLE85">1</a>","LEXES ASSOCIATES, INC","DONZLEIGH WHITE","President","217 LIONS GATE DR","","SAINT AUGUSTINE","FL","32080-4101","Software Development and Sustainment, Management Consulting and Program Management Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#119;&#64;&#108;&#101;&#120;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dw@lexesinc.com</a>","HTTP://WWW.LEXESINC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L355JMSN66M3">2</a>","MAXIT CORP","EARLE BARUCH","","132 OCEANS EDGE DR","","PONTE VEDRA BEACH","FL","32082-4046","We provide custom training solutions to help manage and track customer training. We also provide a huge library of training content that can be run in our system or competitive systems to help delivery training to clients needed. Additionally, we provide training authoring solutions to help clients develop custom learning content.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#98;&#97;&#114;&#117;&#99;&#104;&#64;&#109;&#97;&#120;&#105;&#116;&#46;&#99;&#111;&#109;">ebaruch@maxit.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F2Y4MRAP3AN5">3</a>","GLOBAL MARITEK SYSTEMS INC","JOHN DOUGLAS JR","President","6080 US HIGHWAY 1 N","","SAINT AUGUSTINE","FL","32095-8008","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#100;&#64;&#103;&#108;&#111;&#98;&#97;&#108;&#109;&#97;&#114;&#105;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">jad@globalmaritek.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SY24DDJVLR79">4</a>","EDITECH SERVICES, INC.","JULIE WILLLICH","","216 CLEARWATER DRIVE","","PONTE VEDRA BEACH","FL","32082-4167","Editech’s services cover every step in the publication process, from concept development through final production, and every level of support you need, from short-term, temporary staffing to long-term, temp-to-hire, or permanent placement. We have access to more than 1,200 writers, editors, proofreaders, proposal specialists, and production personnel, and we offer you the flexibility to use them as needed. For more information please visit: http://editech1.com/index.htm or call: (703) 925-9100.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#64;&#101;&#100;&#105;&#116;&#101;&#99;&#104;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">julie@editechstaffing.com</a>","http://www.editechstaffing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X3Z2L531Q514">5</a>","CONDITION ANALYZING CORPORATION","MICHAEL KONDRACKI","","1637 RACE TRACK RD","STE 136","SAINT JOHNS","FL","32259-3264","Specialize in vibration analysis of ships structures and machinery. Trouble shoot of specific machinery anomalies. Perform ongoing condition monitoring programs. Perform thermographic surveys of electrical panels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#111;&#110;&#100;&#114;&#97;&#99;&#107;&#105;&#64;&#99;&#97;&#99;&#118;&#105;&#98;&#101;&#46;&#99;&#111;&#109;">mkondracki@cacvibe.com</a>","www.cacvibe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLTPSE2JRJL5">6</a>","W. LEIGH & ASSOCIATES, INC","WHITNEY MURRAY","","3600 STATE ROAD 13 N","","SAINT JOHNS","FL","32259-9272","Barge & Tug Rental & Sales, Marine towing, Tug & Barge services, Marine Transportation Logistic Services, Marine Transport Consultants, New Barge Construction & Repairs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#104;&#105;&#116;&#110;&#101;&#121;&#64;&#119;&#108;&#101;&#105;&#103;&#104;&#46;&#99;&#111;&#109;">whitney@wleigh.com</a>","http://www.wleigh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HJHWCAJBTAP7">7</a>","COMPUTER EVIDENCE SPECIALISTS, LLC","CARL FLOREZ","","5315 A1A S","","SAINT AUGUSTINE","FL","32080-7109","Investigations: Financial Fraud Healthcare Fraud Public Benefit Programs International Fraud Equal Employment Opportunity (EEO) Human Resources & Administrative Forensic Genealogy Compliance: Public Benefit Programs Tobacco Compliance Worker's Compensation Federal Policies & Regulations Data Collection Medical Coding & Review On-Site Inspections Staffing & Recruiting Subject Matter Experts Investigators & Analysts Program Managers Data & IT Personnel Licensed Clinical Personnel Administrative Personnel Personnel Training Intelligence Social Media Open Source Risk Assessments Organizational Analysis Inside & Emerging Threat Analysis Organized Crime Terrorist Organizations CES, LLC is the leading SDVOSB provider of compliance, audit, and investigation services, specializing in supporting public benefit programs within government agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#46;&#102;&#108;&#111;&#114;&#101;&#122;&#64;&#99;&#101;&#115;&#110;&#98;&#46;&#99;&#111;&#109;">carl.florez@cesnb.com</a>","www.cesnb.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJRZNGRZ1PJ3">8</a>","CONTINUOUS CASH RECOVERY, LLC","TERRENCE MCGRANE","","130 MOORE ST","","SAINT AUGUSTINE","FL","32084-4809","Company performs accounting and auditing services, process and data analysis to identify opportunities for cash recovery, gaps in internal controls and operating efficiency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#108;&#109;&#99;&#103;&#114;&#97;&#110;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tlmcgrane@gmail.com</a>","http://www.continuouscashrecovery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P6A9WA1N6111">9</a>","BURCHFIELD ELECTRIC, INC","JANA BURCHFIELD","","2900 PLEASURE LN","","SAINT AUGUSTINE","FL","32084-0537","We are electrical contractors able to provide services to new construction and installations as well as maintenance on existing systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#110;&#97;&#64;&#98;&#117;&#114;&#99;&#104;&#102;&#105;&#101;&#108;&#100;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jana@burchfieldelectric.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJV6UQC5J7J9">10</a>","TURNBULL ENVIRONMENTAL, INCORPORATED","RICHARD TURNBULL","","50 AGNES CIR","","SAINT AUGUSTINE","FL","32080-5930","TEI specializes in providing cost-effective environmental solutions, and offers a complete range of services specific to restoration and construction activities in sensitive ecological communities. Our experience includes wetland restoration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#64;&#116;&#117;&#114;&#110;&#98;&#117;&#108;&#108;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">rich@turnbullenvironmental.com</a>","http://www.turnbullenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDS3NRU9JRM7">11</a>","AML LABORATORIES INC","ANGELA AMATRUDA","","4405 SARTILLO RD","STE C","SAINT AUGUSTINE","FL","32095-5240","AML Laboratories provides histology and immunohistochemistry services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#97;&#109;&#108;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">service@amllabs.com</a>","http://www.amllabs.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJ3JQE1JJ7K5">12</a>","D3 AIR AND SPACE OPERATIONS, INC.","MIKE DOUGHTY","","6225 A1A S","UNIT A","SAINT AUGUSTINE","FL","32080-7534","range o&m, airport operations, air traffic control, air-side operations, land-side operations, and communications support, emergency air operations, asymmetric threat simulations and realistic training scenarios, transient aircraft services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#100;&#111;&#117;&#103;&#104;&#116;&#121;&#64;&#100;&#51;&#97;&#115;&#111;&#46;&#99;&#111;&#109;">mdoughty@d3aso.com</a>","http://www.d3aso.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EF5NATVYJZM6">13</a>","WILDWOOD CONSULTING, INC.","TIFFANY BUSBY","","69 S DIXIE HWY","STE B","SAINT AUGUSTINE","FL","32084-4183","Development of TMDLs and water quality restoration plans for surface waters. Natural resource management plans. Project management for restoration projects. Strategic planning. Database development and management. Facilitation on environmental issues.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#108;&#98;&#117;&#115;&#98;&#121;&#64;&#119;&#105;&#108;&#100;&#119;&#111;&#111;&#100;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">tlbusby@wildwoodconsulting.net</a>","http://www.wildwoodconsultingfl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X15SET3R5ER3">14</a>","STRATEGIC TECHNOLOGY PARTNERS LLC","JAMES GANDER","","464 DEER VALLEY DR","","PONTE VEDRA","FL","32081-8361","Information Technology Infrastructure Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#110;&#100;&#101;&#106;&#105;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">gandeji@msn.com</a>","www.stpfederal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLWMSSP3R558">15</a>","MANLEY SOLUTIONS INC","STUART MANLEY","","81 LOMOND CT","","SAINT AUGUSTINE","FL","32095-7571","Our goal is to create and implement innovative strategies that wirelessly enable mission critical applications. Manley Solutions offers independent consulting, as well as analysis, design and application of wireless network solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#97;&#110;&#108;&#101;&#121;&#64;&#109;&#97;&#110;&#108;&#101;&#121;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">smanley@manleysolutions.com</a>","http://www.manleysolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDDXWZRCB9S6">16</a>","AMERICAN MANAGEMENT PROFESSIONALS, LLC","PATRICK FLYNN","","18 SANDPIPER DR","","SAINT AUGUSTINE","FL","32080-4718","Provides a wide spectrum of management and consulting services. Particular emphasis in Enterprise-wide Strategy Planning and Change Management and Lean 6 Sigma Deployment, Training and Support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#97;&#116;&#114;&#105;&#99;&#107;&#46;&#70;&#108;&#121;&#110;&#110;&#64;&#65;&#77;&#80;&#76;&#76;&#67;&#46;&#85;&#83;">Patrick.Flynn@AMPLLC.US</a>","http://www.ampllc.us/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KH7NFXMVDJL5">17</a>","XIP CONSULTING LLC","HEATH KOLMAN","","63 BEAUCLAIR BLVD","","ST AUGUSTINE","FL","32084-1196","Information Technology (IT) and Physical Security (video survelliance, access control, perimeter) consulting, planning, systems design. Technology consulting, research and planning. Telecommunications cabling planning and design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#64;&#120;&#105;&#112;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">account@xipconsulting.com</a>","http://www.xipconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EX5AGMNE7LX9">18</a>","SQA, INC.","THOMPSON GRANT","","581 WILD CYPRESS CIR","","PONTE VEDRA","FL","32081-5730","SQA, Inc., a Virginia Corporation, has been in business since 2005. The organization provides Software System Strategic Analysis, Enterprise Business Application Architecture design, Project and Software Development Management, Software Quality Assurance, Testing and Configuration management solutions and implementation to the federal government and commercial firms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#103;&#114;&#97;&#110;&#116;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">thompsongrant0@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DG9MMVMK3DJ9">19</a>","REG PRODUCTS, LLC","GARRETT LUEBKER","","830-13 A1A NORTH","STE 343","PONTE VEDRA BEACH","FL","32082-","Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#114;&#114;&#101;&#116;&#116;&#64;&#118;&#101;&#116;&#117;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">garrett@vetusllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NN6YKYXU1518">20</a>","DSF CONSULTING LLC","DAVID FOXX","","1576 AUSTIN LN","","SAINT AUGUSTINE","FL","32092-1047","Foxx Solutions provides strategy, operational excellence and LSS services and training specialized and customized for your needs to support and drive rapid turnaround, rapid improvement, rapid design and rapid growth for commercial industry, logistics, healthcare and the public sector. We begin with your business needs and then customize a solution path that will best meet and exceed your business needs. Services include; Strategic Planning and Deployment Innovation, Design and Improvement of Product, Process and Service Operational Excellence including Organizational Maturity Assessments ISO 9001 Implementation, Auditing and Training Supply Chain Management Lean and Six Sigma - Manufacturing, Transactional, Service, Logistics and Healthcare","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#111;&#120;&#120;&#68;&#83;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">FoxxDS@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DYBFQWP3JJ17">21</a>","TAINO CONSULTANTS, INC.","ANA DELGADO","","604 KETTNER CT","","SAINT AUGUSTINE","FL","32086-6823","Scanning, microfilm, microfish.CAD.Back-up.Document management system. Electronic health records.Web design/hosting. Healthcare consulting. HIPAA/OSHA/Identity theft/CMS compliance programs. Self-defense and martial arts instruction. Business start-up.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#105;&#101;&#100;&#101;&#108;&#103;&#97;&#100;&#111;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">anniedelgado@att.net</a>","http://www.tainoconsultants.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E9CXNNXKT1R9">22</a>","SPERRY SOFTWARE INC","MICHAEL SPERRY","","833 PHEASANT CT","","JACKSONVILLE","FL","32259-8325","Sperry Software provides Microsoft Outlook email enhancements and customization's through custom and retail add-ins. These tools can organize sent emails, warn when sending outside the domain, automatically print, improve email security and many more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#83;&#112;&#101;&#114;&#114;&#121;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">sales@Sperrysoftware.com</a>","https://www.SperrySoftware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DYRWM2STFMZ9">23</a>","RILEY RISK INC.","JACOB ALLEN","","1301 PLANTATION ISLAND DR S","STE 202A","ST AUGUSTINE","FL","32080-3111","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#107;&#101;&#46;&#97;&#108;&#108;&#101;&#110;&#64;&#114;&#105;&#108;&#101;&#121;&#114;&#105;&#115;&#107;&#46;&#99;&#111;&#109;">jake.allen@rileyrisk.com</a>","https://rileyrisk.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VGEMG2H9WZD5">24</a>","ACE SCHEDULING CONSULTING SERVICES INC","DEBRA SWENSON","","1009 BERRY RIDGE CT","","SAINT AUGUSTINE","FL","32092-3770","ACE Scheduling and Consulting Services,Inc. is a Project Management company specializing in the scheduling, staffing, and controling of Construction Developments, Power Plants, and Waste Management Facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#114;&#97;&#115;&#119;&#101;&#110;&#115;&#111;&#110;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">debraswenson@hotmail.com</a>","http://www.acescsi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XNRYDJE1GQH6">25</a>","PASSERO ASSOCIATES LLC","ANDREW HOLESKO","","4730 CASA COLA WAY","STE 200","SAINT AUGUSTINE","FL","32095-6116","Engineering consulting, Architecture, Master planning, construction inspection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#72;&#111;&#108;&#101;&#115;&#107;&#111;&#64;&#112;&#97;&#115;&#115;&#101;&#114;&#111;&#46;&#99;&#111;&#109;">AHolesko@passero.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EASDK6MGVNJ7">26</a>","JONES, THOMAS","THOMAS JONES","","1860 STATE ROAD 207","","ST AUGUSTINE","FL","32086-9322","Communications Mobile and Portable Radios with service and supplies as needed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#106;&#99;&#111;&#109;&#109;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">tjcomm@bellsouth.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EFEPRKZMUL53">27</a>","KAES LLC","BRIAN WALLING","","1213 OWL HOLLOW CT","","SAINT AUGUSTINE","FL","32092-5084","KAES provides structural analysis and design services with experience on several military platforms. - Stress Analysis using classical methods, FEM, crack initiation, damage tolerance in support of safe life, fail safe, damage tolerant and total life approaches","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#46;&#119;&#97;&#108;&#108;&#105;&#110;&#103;&#64;&#107;&#97;&#101;&#115;&#46;&#115;&#105;&#116;&#101;">brian.walling@kaes.site</a>","kaes.site"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K3J2QJ3GKEB5">28</a>","VESTED METALS INTERNATIONAL, LLC","AUSTIN LOWE","","7000 US HIGHWAY 1 N STE 504","","SAINT AUGUSTINE","FL","32095-8373","Our three decades of experience specializing in hard-to-find raw material metal alloys, grades, & sizes makes us a valuable partner. DLA Aviation (San Diego FRC), Micropulse Inc, and Hudson Technologies depend on our capabilities. We stock various grades of competitively priced items, such as aluminum, low alloy steels, tool steel, stainless steel, titanium, & high temperature alloys, offering immediate delivery. MOSB/SDB/DBE/ISO-9000/AS-9100","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#111;&#119;&#101;&#64;&#118;&#101;&#115;&#116;&#101;&#100;&#109;&#101;&#116;&#97;&#108;&#115;&#46;&#110;&#101;&#116;">alowe@vestedmetals.net</a>","www.vestedmetals.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TWN5UEB4CEF3">29</a>","MCWILLIAMS COLLECTIVE, LLC","ERIC MCWILLIAMS","","176 MIDWAY PARK DR","","SAINT AUGUSTINE","FL","32084-6625","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#46;&#109;&#99;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#109;&#99;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#99;&#111;&#108;&#108;&#101;&#99;&#116;&#105;&#118;&#101;&#46;&#99;&#111;">eric.mcwilliams@mcwilliamscollective.co</a>","www.mcwilliamscollective.co"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKRPKS6RF9G1">30</a>","RISK CONFIDENCE GROUP, LLC","TONI CHRABOT","","165 BOUGANVILLA DR","","PONTE VEDRA BEACH","FL","32082-3679","Risk Confidence Group LLC provides professional private investigation, consulting and special project services. We pride ourselves on serving our clients well. We help clients and decision makers gain a clear picture of the facts and circumstances surrounding areas of concern. Successful engagements include investigation of Human Resources issues, business email compromise, complex fraud, analysis for business decisions, strategy development, due diligence, and litigation support including case consultation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#111;&#110;&#105;&#46;&#67;&#72;&#82;&#65;&#66;&#79;&#84;&#64;&#114;&#105;&#115;&#107;&#99;&#111;&#110;&#102;&#105;&#100;&#101;&#110;&#99;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">Toni.CHRABOT@riskconfidencegroup.com</a>","www.RiskConfidenceGroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JBE7QBX64FM8">31</a>","REGIONAL MOBILITY GROUP, LLC","ELIZABETH PEAK","","1428 FOREST LN","","SAINT JOHNS","FL","32259-2803","Regional Mobility Group, LLC (RMG) was founded in July 2016 to help transit agencies create seamless and friction-less multi-modal transportation access for all people, across all jurisdictional boundaries. RMG’s award winning staff is known for helping agencies obtain highly competitive federal grants; demonstrating passion and authenticity to encourage people to participate in public involvement activities; writing clear and concise study documents that are enjoyable to read and implementing innovative transit and paratransit projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#122;&#64;&#114;&#101;&#103;&#105;&#111;&#110;&#97;&#108;&#109;&#111;&#98;&#105;&#108;&#105;&#116;&#121;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">liz@regionalmobilitygroup.com</a>","www.regionalmobilitygroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZN7NA9LMN6H7">32</a>","DEEPCLEAN4LIFE, LLC","SHANNON HOROVSKY","","5800 COUNTY ROAD 208","","SAINT AUGUSTINE","FL","32092-0806","A family owned company with over 25 years of experience cleaning public contracts, and 12 years of experience cleaning commercial contracts. Healthcare Administrator is a COO of the company, and implements special training procedures accordingly. OSHA and safety guidelines are always followed. We specialize in deep cleaning the interior of buildings and floors and their exteriors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#101;&#112;&#99;&#108;&#101;&#97;&#110;&#52;&#108;&#105;&#102;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">deepclean4life@gmail.com</a>","www.facebook.com/deepclean4life"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TR6FT4XBRGN8">33</a>","CINKA CONSTRUCTION & CONSULTING SERVICES LLC","CYNTHIA MARTIN","","307 SAINT KITTS LOOP","","SAINT AUGUSTINE","FL","32092-1181","General Construction. Contract and subcontract management, federal proposal support, customer relationship development, and business development services. Compliance support for 8a and other small businesses. Construction Equipment and Supplies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#105;&#110;&#100;&#121;&#46;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#99;&#105;&#110;&#107;&#97;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">cindy.martin@cinka-llc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MBYRJ2RLLWL6">34</a>","RAMTEK CONSULTING, LLC","JAMES GILLELAND","","1839 CROSS POINTE WAY","","SAINT AUGUSTINE","FL","32092-5011","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#105;&#108;&#108;&#101;&#108;&#97;&#110;&#100;&#64;&#114;&#97;&#109;&#116;&#101;&#107;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jgilleland@ramtekconsulting.com</a>","www.ramtekconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L2TQB3CPTP18">35</a>","SUSTAINABLE SOLUTIONS, LLC","JANICE MONTANUS","","4805 OTTER CREEK LN","","PONTE VEDRA BEACH","FL","32082-3033","Over 20 years specializing in the manufacture of ozone laundry support systems for commercial use in on premises laundries. Ecofriendly ozone helps to reduce any laundry's carbon footprint by reducing energy consumption: water, hot water, chemicals, electricity and drying times. Distributed throughout the USA and other countries. Ozone kills 99.99% of bacteria and viruses making linen truly sanitized in all customer environments. We investigate and apply for, on behalf of the end user, utility company incentives to improve ROI. NuTek certified technicians complete all installations, service and training of laundry staff and engineers/maintenance personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#111;&#110;&#116;&#97;&#110;&#117;&#115;&#64;&#111;&#122;&#111;&#110;&#101;&#45;&#108;&#97;&#117;&#110;&#100;&#114;&#121;&#46;&#99;&#111;&#109;">jmontanus@ozone-laundry.com</a>","www.ozone-laundry.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C85EMMN367C3">36</a>","ORDINARY HERO COACHING INC","JASON RONCORONI","","203 UNION HILL DR","","PONTE VEDRA","FL","32081-1035","Transition coaching, Executive Coaching, and Life Coaching for military and veteran leaders. Focus on military leaders with more than 10 years of military service and retirees to re-purpose their potential to serve and lead in life beyond the military. Works 1 on 1 and in groups of up to 15. Provides on-boarding coaching for companies who hire veterans into director, management, and other leadership positions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#46;&#114;&#111;&#110;&#99;&#111;&#114;&#111;&#110;&#105;&#64;&#111;&#114;&#100;&#105;&#110;&#97;&#114;&#121;&#104;&#101;&#114;&#111;&#99;&#111;&#97;&#99;&#104;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jason.roncoroni@ordinaryherocoaching.com</a>","ordinaryherocoaching.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KY7TFXVK2M11">37</a>","BLACKHAYS GROUP LLC","SCOTT HAYFORD","","3880 HICKORY LN","","SAINT AUGUSTINE","FL","32086-7103","In Depth Experience in Military and Law Enforcement Operations to include Special Operations, Signals Intelligence, Targeting and Analysis, Ground Operations, Airborne Operations, Joint Operation, Cyber Defense, Information Operations, and Intelligence, Reconnaissance and Surveillance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#99;&#111;&#116;&#116;&#64;&#66;&#108;&#97;&#99;&#107;&#72;&#97;&#121;&#115;&#71;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">Scott@BlackHaysGroup.com</a>","www.blackhaysgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBKFC3K6BTE1">38</a>","ALLIANCE NETWORKING, LLC","REGINALD GRANT","","10033 SAWGRASS DR W STE 117","","PONTE VEDRA BEACH","FL","32082-3523","Sales of Wide Area Networking equipment. Support and Repair services of Cisco hardware - plus other such as Juniper, Paradyne, Lucent","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#103;&#103;&#105;&#101;&#64;&#97;&#108;&#108;&#105;&#97;&#110;&#99;&#101;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">reggie@alliancenetworking.com</a>","https://www.alliancenetworking.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DFEMNM6N4FQ6">39</a>","HENDERSON & ASSOCIATES, PLLC","SHAWN HENDERSON","","424 S LAKEWOOD RUN DR","","PONTE VEDRA BEACH","FL","32082-4338","Henderson & Associates, PLLC is an ocean engineering company. The firm specializes in structural inspection, scanning, and custom design projects that span multiple technical disciplines requiring detailed engineering and logistical support as well as project management of skilled trades.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#119;&#110;&#64;&#111;&#99;&#101;&#97;&#110;&#45;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">shawn@ocean-engineers.com</a>","www.ocean-engineers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULN4UGACAKN7">40</a>","CRISIS ACTION SPECIALISTS, LLC","WILLIAM LEFEVRE","","673 E BIANCA CIR","","SAINT AUGUSTINE","FL","32086-7654","Specializing in disaster response, emergency management and disaster planning. Performs business continuity, strategic planning. Experienced in U.S. Army and National Guard activities, strategies, doctrine. Supports business continuity through planning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#87;&#73;&#76;&#76;&#73;&#65;&#77;&#46;&#76;&#69;&#70;&#69;&#86;&#82;&#69;&#46;&#67;&#65;&#83;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">WILLIAM.LEFEVRE.CAS@GMAIL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CCNEV539PFQ1">41</a>","MADISON RESTORATION GROUP INC","DAVID MACINNES","","1424 CANDY CT","","SAINT JOHNS","FL","32259-1807","We Provide The Following Services: Busted Pipes, Flooding, Appliance Failure, Storm Damage, Roof Leaks Residential and Commercial Structural Drying Water Removal Humidity Control Content Drying & Cleaning Moisture Detection Raw Sewage Cleanup Mold Remediation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#97;&#109;&#116;&#97;&#108;&#108;&#97;&#104;&#97;&#115;&#115;&#101;&#101;&#64;&#114;&#121;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">teamtallahassee@rytechinc.com</a>","http://www.rytechinc.com/tallahassee"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S857Z8E5H415">42</a>","IVYTEK, INC.","SANDY GRIGGS","","873 CLOUDBERRY BRANCH WAY","","SAINT JOHNS","FL","32259-4453","IvyTek, Is a 3rd generation veteran owned business. We developed a Loan Management Software product called IvyTek Finance, available on the Salesforce platform. As a certified Salesforce Partner we can provide consulting services to our customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#118;&#111;&#105;&#99;&#105;&#110;&#103;&#64;&#105;&#118;&#121;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">invoicing@ivytek.com</a>","www.ivytek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TJ74RJU3UE31">43</a>","MFAF VENTURES, INC.","MARC FRAGA","","801 HABOR PRESERVE CT","","PONTE VEDRA","FL","32081-","Smash My Trash multiplies the capacity of roll off dumpsters by compacting the waste. Our technology reduces the frequency of hauls and the impact on the environment, which results in financial savings and reductions of emissions. Businesses in Jacksonville, FL with roll off dumpsters receive the benefit of on-site service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#46;&#102;&#114;&#97;&#103;&#97;&#64;&#115;&#109;&#97;&#115;&#104;&#109;&#121;&#116;&#114;&#97;&#115;&#104;&#46;&#99;&#111;&#109;">marc.fraga@smashmytrash.com</a>","www.smashmytrash.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V1G5EJ41LQV5">44</a>","DIRECT CONNECTIONS, INC.","JEFF WILLIS","","104 DEER HAVEN DR","","PONTE VEDRA BEACH","FL","32082-2171","Design, sell, program, install, support business telecommunication systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#105;&#108;&#108;&#105;&#115;&#64;&#100;&#105;&#114;&#101;&#99;&#116;&#45;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;">jwillis@direct-connections.net</a>","https://www.direct-connections.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNCELJ6C5NB4">45</a>","AAVA LLC","JAMES HANDLEY","","1252 MATENGO CIR","","SAINT JOHNS","FL","32259-8008","AAVA, LLC is a 100% controlled and operated Service-Disabled Veteran Owned Small Business (SDVOSB). The company was founded in 2020 by Navy Veteran, Dr. J. Rob Handley. Dr. Handley has a Doctorate in Business Administration whose research and training specializes in turnaround leadership, change management. Dr. Handley founded AAVA, LLC to provided management consulting services to both government and private entities. The consulting services/training include: leadership, sales, organizational change management, productivity, emotional intelligence, organizational development, organizational behavior, and executive development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#97;&#97;&#118;&#97;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">rob@aavaconsulting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBBNY2TC3JA7">46</a>","ROYAL QUAIL BUSINESS SOLUTIONS LLC","AKINKAWON FRIERSON","","2744 US HIGHWAY 1 S","","SAINT AUGUSTINE","FL","32086-6366","ARCpoint Labs of St. Augustine is a Service-Disabled Veteran-Owned Healthcare Small Business that provides comprehensive Toxicology and Clinical Services to the public. At ARCpoint Labs of St. Augustine our business built on strong client relationships and tailoring services to meet our customers’ specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#114;&#105;&#101;&#114;&#115;&#111;&#110;&#64;&#97;&#114;&#99;&#112;&#111;&#105;&#110;&#116;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">afrierson@arcpointlabs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GCG1JS4XXH53">47</a>","JOINT FORCE CONTRACTING INC","NATHAN REY","","78 STROBE CT","","SAINT AUGUSTINE","FL","32095-7513","Joint Force Contracting Inc. delivers professional services and products to the federal government, state and local municipalities. JFC brings fast, reliable, productive and experienced resources from multiple disciplines to reduce risk and ensure customer satisfaction. Supplying are nations first responders, law enforcement military or private sector, our focus is to continuously prepare and procure the best products or personnel to your specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#121;&#64;&#106;&#102;&#99;&#117;&#115;&#46;&#99;&#111;&#109;">rey@jfcus.com</a>","www.jfcus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DYRJSN579651">48</a>","K & B JAX ENTERPRISES INC","BRUCE HAMER","","4628 PECOS CT","","SAINT JOHNS","FL","32259-2189","New or existing residential or commercial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#109;&#101;&#114;&#98;&#107;&#106;&#97;&#120;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">hamerbkjax@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZDK3ZFLLP2M7">49</a>","TOPSIDE SOLUTIONS LLC","CANDACE STAYTON","","708 W KINGS COLLEGE DR","","SAINT JOHNS","FL","32259-5942","Asset Management, Business process reengineering, efficiency and effectiveness SME for transportation and logistic companies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#97;&#110;&#100;&#97;&#99;&#101;&#64;&#116;&#111;&#112;&#115;&#105;&#100;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">Candace@topsidesolutionsllc.com</a>","www.topsidesolutionsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W2LWNAJSLWN8">50</a>","LINE DRIVE LOGISTICS LLC","DANIEL BESSMAN","","518 CLOISTERBANE DR","","SAINT JOHNS","FL","32259-8236","Provides pallet & crate materials, panels, retail/commercial distribution, building & truss materials, industrial/manufacturing, hardwood products, and animal bedding to any of the contiguous states.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#64;&#108;&#105;&#110;&#101;&#100;&#114;&#105;&#118;&#101;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">daniel@linedriveusa.com</a>","www.linedriveusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SJ8QZGJQXTD5">51</a>","NUSEEKA BUSINESS PARTNERS LLC","RICHARD MURRAY","","435 GLORIETA DR","","ST AUGUSTINE","FL","32095-7478","Nuseeka Business Partners, LLC is a 100% veteran-owned business with on-board certifications in Project Management Professional (PMP) and Six Sigma Process Improvement Methodologies. With more than 30 years of diverse private sector and government agency experience, Nuseeka is ideally positioned to serve its clients and ensure their success by providing insightful data driven expertise, intelligent business case solutions and SMART recommendations. Our approach may begin with a comprehensive strengths, weaknesses, opportunities, and threats (SWOT) analysis and consultation to develop a thorough project plan that includes a timeline schedule, clearly defined scope, identified deliverables and tollgate checkpoints to ensure all assignments and milestones are always in full view. We also utilize a suite of diverse quality tools and product aids to help ensure a smooth and thoughtful path from start to finish. That is how Nuseeka boldly ensures your success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#109;&#64;&#110;&#117;&#115;&#101;&#101;&#107;&#97;&#46;&#99;&#111;&#109;">ram@nuseeka.com</a>","NUSEEKA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KUG2T7R7FLG7">52</a>","COVENTRY INNOVATION ADVISORS LLC","PETER GHOBRIAL","","1127 SECRET OAKS PL","","SAINT JOHNS","FL","32259-3126","CORE COMPETENCIES •	ERP Design •	ERP Development •	Audit Readiness •	Process Re-engineering •	ERP Training •	Project Management •	System Compliance •	Management Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#118;&#101;&#110;&#116;&#114;&#121;&#97;&#100;&#118;&#105;&#115;&#111;&#114;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">coventryadvisors@gmail.com</a>","https://www.coventry-advisors.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HY4CDJPWG1T8">53</a>","BIZWISH LIMITED LIABILITY COMPANY","JOHN NOEL","","440 E KESLEY LN","","SAINT JOHNS","FL","32259-6295","BizWish is a global business development and information exchange organization. This organization seeks to create economic growth by increasing business development opportunities. BizWish fulfills these objectives by: 1) leveraging business professional collaboration and government official engagement with the community 2) assisting business owners and entrepreneurs with funding needs and financial assistance. 3) finding funding opportunities while providing financiers visibility into capital needs and financial assistance. 4) collecting new and unique business ideas from anyone around the world. 5) providing consulting for start-ups and expansions. Patent protected","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#110;&#111;&#101;&#108;&#52;&#52;&#48;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">johnnoel440@comcast.net</a>","https://www.bizwish.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FWFRKRN8CEW1">54</a>","4ECODE, LLC","MARION EVANS","","63 PINDO PALM DR","","PONTE VEDRA","FL","32081-6084","ME Squared Connects was created to meet the growing demand for the following distinguished industries: Janitorial Services & Supplies, Home Inspections, Professional, Clothing Apparel & Accessories.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#111;&#110;&#64;&#109;&#101;&#115;&#113;&#100;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">marion@mesqdconnects.com</a>","HTTPS://WWW.MESQDCONNECTS.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6BZPWUH2LK8">55</a>","TRAVEL CRUISES AND TOURS INTERNATIONAL LLC","MARIA HATCH","","649 DONALD ROSS WAY","","SAINT AUGUSTINE","FL","32092-0794","TCT International provides a full spectrum of travel services and provides world-class service to our customers. TCT International will lead the industry by providing unique and creative travel solutions through a greater understanding of our customers' needs. Therefore, we measure our success by satisfaction of our customers and the durability of those relationships.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#115;&#115;&#105;&#101;&#64;&#116;&#99;&#116;&#105;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#110;&#101;&#116;">bessie@tctinternational.net</a>","https://www.tctinternational.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HGCSCRQQ18C7">56</a>","HIGH SPEED CLEAN LLC","JUAN MALDONADO","","50 LONGTAIL DR","","SAINT AUGUSTINE","FL","32092-0105","At High Speed Clean, we specialize in providing top-notch janitorial, pressure washing, and window washing services tailored to meet the specific needs of our clients. Located at 50 Longtail Dr, our veteran-owned (VOSB) and minority-owned business, led by Juan Maldonado, is dedicated to delivering exceptional cleaning solutions with a focus on deep cleaning and housekeeping. Our team combines expertise with a commitment to excellence, ensuring that every project is completed efficiently, on time, and within budget. With past performance highlighting our reliability and quality, High Speed Clean stands out by offering superior, cost-effective services that exceed customer expectations. Contact us at highspeedcleanllc@gmail.com or 540-525-1340 to experience the difference in cleanliness and professionalism.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#103;&#104;&#115;&#112;&#101;&#101;&#100;&#99;&#108;&#101;&#97;&#110;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">highspeedcleanllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMUEH5UE8UL6">57</a>","GABRIEL GIANNELLI PHOTOGRAPHY, LLC","ADAM GIANNELLI","","425 TOWN PLAZA AVE","","PONTE VEDRA","FL","32081-5164","Gabriel Giannelli Photography, LLC of Northeast Florida is an award winning, veteran owned, photography studio conveniently located in St. Johns County. GGP also does business as First Coast Headshots in St. Augustine and Jacksonville, FL. GGP is committed to providing top quality images with the highest customer service. From aerial drone footage to, architectural photography, to studio headshots, GGP is your one stop for professional imagery.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#102;&#105;&#114;&#115;&#116;&#99;&#111;&#97;&#115;&#116;&#104;&#101;&#97;&#100;&#115;&#104;&#111;&#116;&#46;&#99;&#111;&#109;">info@firstcoastheadshot.com</a>","https://www.gabrielgiannelli.photography"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJZJEWJNCLQ9">58</a>","WARD MEDICAL SERVICES, INC.","CHARLES WARD","","2435 US HIGHWAY 1 S","","SAINT AUGUSTINE","FL","32086-6075","We sell, rent and provide services for many types of medical equipment and supplies. It is simply impossible to beat the face to face service that comes from a local provider.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#114;&#100;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#64;&#101;&#97;&#114;&#116;&#104;&#108;&#105;&#110;&#107;&#46;&#110;&#101;&#116;">wardmedical@earthlink.net</a>","wardmedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HN2QW381A7M3">59</a>","COASTAL CONSERVATION GROUP LLC","TARA DODSON","","3600 CRAZY HORSE TRL","","ST AUGUSTINE","FL","32086-5312","Coastal Conservation Group (CCG) are professional coastal biologists with over 17 years of experience managing beaches and environmental permits for threatened and endangered species. Specializing in population monitoring for sea turtles, shore/sea birds, piping plovers and gopher tortoises. High performance in environmental permitting compliance for federal, state, and local permit conditions that include but are not limited to escarpment surveys, coastal lighting surveys, data collection and management, onshore and nearshore biological/endangered species monitoring and gopher tortoise relocations. Project management skills include endangered species habitat restoration & assessments, management & recovery plans, as well as environmental mitigation and restoration. Lastly, our experience in upholding high levels of accountability gives us the ability to coordinate effectively with federal, state and local agencies and contractors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#114;&#97;&#64;&#99;&#111;&#97;&#115;&#116;&#97;&#108;&#99;&#111;&#110;&#115;&#101;&#114;&#118;&#97;&#116;&#105;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">tara@coastalconservationgroup.com</a>","https://coastalconservationgroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RG2HUJKCRBQ6">60</a>","LEAP TECHNOLOGY SOLUTIONS, LLC","SERGIO HORTA","","1511 REMINI CT","","ST AUGUSTINE","FL","32092-3456","Leap Technology Solutions, LLC, a minority-owned, small disadvantaged business based in St. Augustine, Florida, specializes in providing cutting-edge technology solutions for federal and commercial clients. With expertise in areas such as advanced sensing, artificial intelligence, autonomous systems, and energy solutions, Leap delivers integrated, innovative services tailored to the needs of industries including oil and gas, utilities, and defense. The company excels in deploying custom AI algorithms for digital image processing, anomaly detection, and non-destructive testing, helping clients reduce operational costs and improve asset management efficiency. Leap is registered under NAICS 541990 and actively supports the U.S. federal government's disaster response initiatives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#114;&#103;&#105;&#111;&#64;&#108;&#101;&#97;&#112;&#116;&#115;&#46;&#117;&#115;">sergio@leapts.us</a>","www.leapts.us"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.872&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

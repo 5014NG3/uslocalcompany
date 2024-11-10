@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: West Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.04 seconds and 1.05 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 68 
+(of 68 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8XKPWUDB8A3">1</a>","MICHEL INC","THOMAS MICHEL","PRESIDENT","2313 PHILIPPI PIKE","","CLARKSBURG","WV","26301-6114","GENERAL CONTRACTING; ELECTRICAL CONTRACTING; MECHANICAL CONTRACTING; STEEL FABRICATION; HEATING, VENTILATION AND AIR CONDITIONING SALES AND SERVICE; CRANE SERVICE AND RIGGING; EXCAVATION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#105;&#110;&#99;&#53;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">michelinc5@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9GBQL5WYL97">2</a>","ADVANCED ASPHALT TECHNOLOGIES LLC","RAMON BONAQUIST","Chief Operating Officer","40 COMMERCE CIRCLE","","KEARNEYSVILLE","WV","25430-5100","Engineering services for the asphalt industry. Laboratory testing, pavement and materials engineering, pavement materials testing equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#116;&#116;&#64;&#101;&#114;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">aatt@erols.com</a>","www.advancedasphalt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D6NFNHH344S4">3</a>","FAMCO INC","ROBERT LAFON","executive officer","3450 16TH STREET RD","","HUNTINGTON","WV","25701-9710","heavy construction, pipelines, concrete structures,water plants, sewer plants","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#46;&#108;&#97;&#102;&#111;&#110;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">rob.lafon@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G1JVAU5BDWE4">4</a>","UNITED SOUND & ELECTRONICS, LLC","ROBERT HAROLD","Manager","525 E MAIN ST","","BRIDGEPORT","WV","26330-1824","Installation and service of: Sound Systems, CCTV, Fire Alarms, Card Access, Intercom, CAT6 Data, Fiber-optic, and networking Event Production: portable stage and roof system, sound systems, mixing consoles, stage lighting, and personel","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#117;&#110;&#105;&#116;&#101;&#100;&#115;&#111;&#117;&#110;&#100;&#46;&#110;&#101;&#116;">rob@unitedsound.net</a>","http://www.Unitedsound.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8VKMCYXEYK9">5</a>","UTTS CONTRACTING AND RECREATIONAL SERVICES LLC","KINDRA UTT","OWNERS","266 VICTORY ROAD","","SUTTON","WV","26601-3946","RECREATIONAL SERVICES: GROUNDS MAINTENANCE, LANDSCAPING, CLEANING GROUNDS OR BUILDINGS, MOWING, TREE TRIMMING, OFFICE WORK, WORK MAY DEAL WITH PUBLIC, AND MUCH MORE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#68;&#65;&#87;&#78;&#75;&#85;&#84;&#84;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">BDAWNKUTT@GMAIL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SM1LKXHM2M41">6</a>","EMAR CORPORATION","KENNETH GILCHRIST","","919 COLLEGE HILL RD","","WASHINGTON","WV","26181-5289","Total elevator installation, modernization,alteration and maintenance company.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#97;&#114;&#107;&#99;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#46;&#99;&#111;&#109;">emarkc@frontier.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D5BNQYMHEGP5">7</a>","PROGRESSIVE ELECTRIC, INC.","DUANE SHUROW","","4961 WASHINGTON ST W","","CHARLESTON","WV","25313-2017","Progressive Electric, Inc. is the premier electrical services contractor in the Charleston, WV area. Founded in 1978, we have provided quality electrical services for over 40 years. Our mission is to be the area's best electrical services firm, providing our customers with quality service, performing our responsibilities to the highest expectations, and continuing to meet the ever changing technology of our industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#104;&#117;&#114;&#111;&#119;&#64;&#119;&#101;&#119;&#105;&#114;&#101;&#117;&#46;&#99;&#111;&#109;">dshurow@wewireu.com</a>","http://www.wewireu.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3MGSUNNK9E8">8</a>","RICH'S REFRIGERATION, AIR CONDITIONING, HEATING, PLUMBING AND WELDING SERVICE, INC","CHASE ONEY","V.P.","2285 AIRPORT RD","","SUTTON","WV","26601-9280","Industrial, Commercial, Residential, HVAC Fabrication, DDC Controls, GeoThermal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#115;&#64;&#114;&#105;&#99;&#104;&#115;&#97;&#99;&#46;&#99;&#111;&#109;">richs@richsac.com</a>","richsac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XTM5QVNLQXR5">9</a>","EASTERN GROUP, LLC","TERESA STEPHENSON","Member","330 RIVIERA RD","","MOUNT NEBO","WV","26679-8296","Electrical Automation, Construction and Design Thermography Computer Networking","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#101;&#97;&#115;&#116;&#101;&#114;&#110;&#103;&#112;&#46;&#99;&#111;&#109;">accounting@easterngp.com</a>","http://www.easterngp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAMFZGTJKL23">10</a>","LYNCH CONSTRUCTION COMPANY, INC.","ERIKA VANBUREN","Asst. Sect. Tre.","2740 POCAHONTAS TRL","","WHITE SULPHUR SPRINGS","WV","24986-7140","Excavation, site utilites, roads, septic installation, hauling","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#107;&#97;&#64;&#108;&#121;&#110;&#99;&#104;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">erika@lynchconstruction.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q8XEVCP4KKN3">11</a>","CONTRACTOR SERVICES INC OF WEST VIRGINIA","JACOB FRESHWATER","Operations Manager","929 CHARLESTON RD","","SPENCER","WV","25276-9264","Specilaizing in concrete remediation. PCB, nuclear, and mixed waste contaminated surfaces can be removed using spwcialized equipment. Also provide waste removal services, structural decontamination, and earthwork.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#102;&#114;&#101;&#115;&#104;&#119;&#97;&#116;&#101;&#114;&#64;&#99;&#115;&#105;&#111;&#102;&#119;&#118;&#46;&#99;&#111;&#109;">sfreshwater@csiofwv.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HAJJBDNLNM33">12</a>","TRI-STATE COMPANY, INC.","JOHN GIBSON","","87 RIVERVIEW MANOR DR","","LESAGE","WV","25537-2301","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#103;&#52;&#50;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">johng42@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KH9FMXS1KNK5">13</a>","CHILDER'S HVAC SALES AND SERVICE, INC","KEEGAN MUELLER","","501 RAGLAND RD","","BECKLEY","WV","25801-9751","SALES, INSTALLATION, AND SERVICE OF ALL TYPES OF HVAC-R","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#109;&#117;&#101;&#108;&#108;&#101;&#114;&#64;&#99;&#104;&#105;&#108;&#100;&#101;&#114;&#115;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#99;&#111;&#109;">kmueller@childersenterprises.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EDM5CVGEWMJ4">14</a>","A-ZONE ENVIRONMENTAL SERVICES, LLC","ADRIENNE MORGAN","","2181 BERRYVILLE PIKE","","CHARLES TOWN","WV","25414-5594","Envt Construction, Remediation, O&M Groundwater Systems, Phase I&II Investigations, site assessments, Demolition, Erosion and Sediment controls, brownflds assessmnts, Corrective APs, site monitoring, UST Removal, industrial hygiene, envtl construction, direct push, in-situ remediation, decommissioning, dredging, wastewater treatmt ops","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#111;&#114;&#103;&#97;&#110;&#64;&#97;&#45;&#122;&#111;&#110;&#101;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">amorgan@a-zoneenvironmental.com</a>","http://www.a-zoneenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FPP7KNKTMPN5">15</a>","ELECTRONIC SPECIALTY CO","OWEN HIGGINS II","","1325 DUNBAR AVE","","DUNBAR","WV","25064-2920","Life Safety, Security, Critical Communication Systems Integrator and Technical Services. Parking Traffic and Revenue Controls, Theatrical Lighting, Engineered Sound Systems, Board room Audio Video, Mass Notification, Fire Alarm Testing and Certification, Access Control and CCTV Systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#64;&#101;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#121;&#46;&#99;&#111;&#109;">shane@electronicspecialty.com</a>","http://www.electronicspecialty.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQH7HK2Z6QY2">16</a>","HUNTINGTON STEEL & SUPPLY CO","ANDREW CHILDERS","","100 3RD AVE","","HUNTINGTON","WV","25701-1214","Huntington Steel operates as a steel service center offering a wide range of steel products as well as processing to customize and suit our customers needs for projects small or large.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#67;&#104;&#105;&#108;&#100;&#101;&#114;&#115;&#64;&#104;&#117;&#110;&#116;&#105;&#110;&#103;&#116;&#111;&#110;&#115;&#116;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">DChilders@huntingtonsteel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZEVWLHMU83C6">17</a>","HOOTEN EQUIPMENT CO LLC","ARDEN CASTO","","961 VIRGINIA ST W","","CHARLESTON","WV","25302-1821","SUPPLY, SERVICE AND INSTALL FOOD STORE AND FOOD SERVICE EQUIPMENT INCLUDING WALKINS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#110;&#100;&#121;&#64;&#104;&#111;&#111;&#116;&#101;&#110;&#101;&#113;&#117;&#105;&#112;&#109;&#101;&#110;&#116;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">mandy@hootenequipmentcompany.com</a>","www.hootenequipmentcompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENG7X1ENYQ97">18</a>","S & S ELECTRIC, INC","ARTHUR STRIETBECK","","2252 FRANKFORT HWY","","RIDGELEY","WV","26753-7025","Ekectrical construction firm. Capable of all aspects of electrical construction. High voltage, telecom,solar PV installs,and maintenance. Regional work area in Mid-atlantic USA. IBEW/NECA member","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#64;&#115;&#115;&#101;&#119;&#118;&#46;&#99;&#111;&#109;">sean@ssewv.com</a>","http://www.sselectricwv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CEW1WAJZPLR7">19</a>","ACCAD CORP","CARRIE DUNMIRE","","3211 BIG OTTER HWY","","IVYDALE","WV","25113-8362","Bridge and concrete structures, approaches, sidewalks, curbs and gutters, drainage structures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#114;&#105;&#101;&#64;&#97;&#99;&#99;&#97;&#100;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">carrie@accadcorp.com</a>","www.accadcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPGCDLPQQKN8">20</a>","BURDETTE REALTY IMPROVEMENT INC","MARK CLARTK","","5148 WASHINGTON ST W","","CHARLESTON","WV","25313-1579","Custom Designed Metal Buildings, Backflow, Preventer’s Installed, Renovations, Climate Controlled Storage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#98;&#114;&#105;&#119;&#118;&#46;&#99;&#111;&#109;">mark@briwv.com</a>","briwv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLRTE8M225B8">21</a>","ALPHA TECHNOLOGIES INC","ANGELA ADKINS","","4003 OUT LOOK DR","","HURRICANE","WV","25526-9468","Cloud Services, Datacenter consolidation, Colocation, NOC, SOC, HaaS, Saas, Iaas, DRaas, IoT, and Data Analytics, Helpdesk","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#100;&#107;&#105;&#110;&#115;&#64;&#97;&#108;&#112;&#104;&#97;&#45;&#116;&#101;&#99;&#104;&#46;&#117;&#115;">aadkins@alpha-tech.us</a>","http://www.alpha-tech.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z3EUFFTTENR6">22</a>","LAURITA EXCAVATING INC","OTT MEALE","","3748 DENTS RUN BLVD","","MORGANTOWN","WV","26501-2510","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#116;&#116;&#64;&#108;&#97;&#117;&#114;&#105;&#116;&#97;&#46;&#99;&#111;&#109;">ott@laurita.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N5B9NGRYAQ83">23</a>","PARAMOUNTS LLC","NANCEY VELDRAN","","219 S CHURCH ST","","CHARLES TOWN","WV","25414-1307","Specializing in the design, fabrication and installation of custome, conservation-quality artifact mounts for museums, traveling exhibits, exhibit fabricators and private collectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#114;&#97;&#95;&#109;&#111;&#117;&#110;&#116;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">para_mounts@yahoo.com</a>","http://www.para-mounts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LLZ2MKJLXB63">24</a>","FRAME DRILLING COMPANY INC","SUSAN FRAME","","157 WELL DRILLER LN","","ELKINS","WV","26241-5119","Drilling water wells, geothermal holes, blast holes. Installing domestic & commercial pumping systems & geothermal systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#109;&#101;&#100;&#114;&#105;&#108;&#108;&#105;&#110;&#103;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#46;&#99;&#111;&#109;">framedrilling@frontier.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L382DLBEMMJ9">25</a>","WHITTEN CONSTRUCTION LLC","BRET WHITTEN","","524 MARVIN DEEDS RD","","JUMPING BRANCH","WV","25969-6038","Demolition & Hauling; Landscape & Janitorial Services; Residential & Commercial Construction; Mowing & Landscape; Sewage Systems Installer; RV Park Operator (35 Spots, 50/30Amp)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#104;&#105;&#99;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">whicon@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJGZGJ4VV2L1">26</a>","ASPHALT CONTRACTORS & SITE WORK INC","TERESA RAY","","20 DICKSON DAM RD","","LAVALETTE","WV","25535-8722","Complete site work: demolition, excavation, site utilities, concrete, asphalt paving, sealing and stripping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#110;&#110;&#64;&#97;&#115;&#112;&#104;&#97;&#108;&#116;&#115;&#105;&#116;&#101;&#119;&#111;&#114;&#107;&#46;&#99;&#111;&#109;">lynn@asphaltsitework.com</a>","asphaltsitework.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYFYVHBYPL77">27</a>","AJ-ALLEGHENY SYSTEMS LLC","CHARLES SAUL","","5036A WASHINGTON ST W","","CHARLESTON","WV","25313-1552","Installation of shelving, high density shelving, office/systems furniture, installation and repair of of fixtures and equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#106;&#119;&#118;&#64;&#97;&#106;&#119;&#118;&#46;&#110;&#101;&#116;">ajwv@ajwv.net</a>","www.ajwv.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RAMEDLJSP6Q8">28</a>","FLOOR SOLUTIONS INC","TROY HOUCHIN","","4964 SUNSET DR","","HUNTINGTON","WV","25704-1031","We provide floor contracting services including carpet, tile, concrete and VCT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#108;&#111;&#111;&#114;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#105;&#110;&#99;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">floorsolutionsinc@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7QZD3K7G8H4">29</a>","BEST BUSINESS STRATEGIES LLC","SHIRLEY BYARD","","1712 WHEELING AVE","","GLEN DALE","WV","26038-1735","We offer tools to help grow your business. Accounting and Customer Relation Management software sales, support & training, Business Checks & Forms, cloud hosting, email marketing services, Backup services, Credit card services, gift and loyalty cards,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#66;&#101;&#115;&#116;&#66;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#83;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">solutions@BestBusinessStrategies.com</a>","BestBusinessStrategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5ZMJYHBNJ61">30</a>","KAR CONTRACTING LLC","KENNETH REYNOLDS","","2340 LITTLE HURRICANE CREEK RD","","PRICHARD","WV","25555-7625","General Construction, Electrical, Plumbing, HVAC, Site work and Site Utilities, Painting and Drywall, Landscaping, Hydraulic Repair, Welding","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#101;&#121;&#110;&#111;&#64;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#46;&#110;&#101;&#116;">kreyno@mountain.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYW8PNAQDYQ1">31</a>","SERVICE PUMP & SUPPLY CO INC","PATRICK FARRELL","","1111 VERNON ST","","HUNTINGTON","WV","25704-2050","Since 1980, Service Pump and Supply (SPS) has provided expert support and client-focused solutions for customers in the Ohio River Basin and Appalachian region. SPS’s core business rests on solving customers’ water-related problems. This includes sales and service for pumps, motors, and controls and often requires custom fabrication and rehabilitation efforts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#107;&#102;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">patrickfarrell@servicepump.com</a>","http://www.servicepump.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8YTKKNENCT9">32</a>","COLE TRUCK PARTS, INC","JERRY MCVEY","","1015 BLUEFIELD AVE","","BLUEFIELD","WV","24701-2745","We provide parts for all make of vehicles. From light to Medium Heavy trucks. Have worked with the federal prison in the past.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#99;&#118;&#101;&#121;&#64;&#99;&#111;&#108;&#101;&#116;&#114;&#117;&#99;&#107;&#112;&#97;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">gmcvey@coletruckparts.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZGBQ7W1GRC5">33</a>","OCEANETICS, INC.","CHRISTOPHER PFAFF","","8446 WELCH PINEVILLE RD","","WELCH","WV","24801-9832","INNOVATION AT ANY DEPTH. Oceanetics delivers unique solutions that serve the breadth of all maritime domains -- from the surface of the ocean, to the depths of the uncharted seafloor. Oceanetics provides turnkey solutions to deliver your unique projects; we specialize in marine requirements, harsh environments, and remote locations. Our specialized services include: Mooring Solutions, Subsea & Seabed Warfare (SSW), Critical Infrastructure Protection (to include Waterside security barriers and harbor security), Renewable Ocean Energy, Engineering & Design, and Custom Fabrication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#112;&#102;&#97;&#102;&#102;&#64;&#111;&#99;&#101;&#97;&#110;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">cpfaff@oceanetics.com</a>","http://www.Oceanetics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3CBKU9TAK55">34</a>","FASTENERS & SUPPLY, INC","TIM HOPKINS","","387 ELIZABETH PIKE","","MINERAL WELLS","WV","26150-8440","We provide hardware, fasteners, abrasives, safety and protective equipment, metal roofing and siding, anchor bolts and wide range of construction and industrial supplies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#115;&#116;&#101;&#110;&#101;&#114;&#115;&#115;&#117;&#112;&#112;&#108;&#121;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">fastenerssupply@aol.com</a>","www.fastenersandsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KSRJWM6WL9W5">35</a>","INSIGHT AUDIO/VISUAL SERVICES, L.L.C.","CHRISTOPHER BURNS","","83 VERONICA LN","","CHARLES TOWN","WV","25414-4150","Selling and Installing Audiovisual equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#117;&#114;&#110;&#115;&#64;&#97;&#118;&#105;&#110;&#115;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">cburns@avinsight.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLPHJ4NZE7F1">36</a>","G & TRIPLE T LLC","JAMES TABLER II","","100 PIT LN","","MARTINSBURG","WV","25404-0496","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#116;&#97;&#98;&#108;&#101;&#114;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">bobtabler@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZGVEEE3BND1">37</a>","SISTERSVILLE TANK WORKS INC","JASON MORGAN","","1942 MCCOY AVE","","SISTERSVILLE","WV","26175-1019","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#116;&#119;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sales@stwinc.com</a>","http://www.stwinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJ1XNPPWLQ59">38</a>","MOUNTAINEER POWER AND FIBER OPTICS, L.L.C","RENA CRAFT","","506 31ST ST","","VIENNA","WV","26105-1524","COMMERCIAL ELECTRIC, COMPLETE SINGLEMODE AND MULTIMODE FIBER OPTIC CABLING, SPLICING, TERMINATING, AND REPAIR. NETWORK DATA, AND COAX CABLING. INSURED. HELD A NATIONAL AGENCIES CHECK AND INQUIRIES CLEARENCE TO PERFORM WORK FOR THE US TREASURY DEPARTMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#112;&#45;&#102;&#111;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mp-fo@hotmail.com</a>","http://www.mountaineerpowerandfiberoptics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YH2DQAKTU5D4">39</a>","CHRIS ROSES EXCAVATING LLC","CHRISTOPHER ROSE","","89 ELM ST","","HILLSBORO","WV","24946-1118","excavation, landscaping, haul gravel, footers, basements, driveways, septic systems installed","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#115;&#101;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#56;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rosesexcavating83@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M2N5C8LQXMD5">40</a>","DANHILL CONSTRUCTION COMPANY","DAN HILL","","9033 MIDLAND TRL","","GLEN FERRIS","WV","25090-","Been in business for 30 years, providing general, commercial, and industrial contracting services. We are also a Veteran Owned business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#110;&#46;&#72;&#105;&#108;&#108;&#64;&#100;&#97;&#110;&#104;&#105;&#108;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Dan.Hill@danhillconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVWNKFXN9LQ3">41</a>","GANTT'S EXCAVATING AND CONTRACTING, INC","JANESA SMITH","","2754 TABLER STATION RD","","MARTINSBURG","WV","25403-6162","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#110;&#101;&#115;&#97;&#64;&#103;&#97;&#110;&#116;&#116;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">janesa@ganttsexcavating.com</a>","www.ganttsexcavating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4B8LG65XJ56">42</a>","COOK'S EXCAVATING LLC","JAKE COOK","","268 COOK COOPER HOLLOW RD","","ROCK VIEW","WV","24880-","Cook's Excavating, LLC. has an expertise working experience in the following: Excavation, Environmental Earthwork, Sitework, Grading, Building Pads, Road Construction, Underground Utilities, Stormwater Drainage, Hydroseeding, Horizontal Boring, Gunite/Shotcrete, Land Clearing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#107;&#101;&#64;&#99;&#111;&#111;&#107;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jake@cooksexcavating.com</a>","www.cooksexcavating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMY7H78PSQT4">43</a>","CASEY CONSTRUCTION LLC","JOHN CASEY","","1100 WASHINGTON ST","","RAVENSWOOD","WV","26164-1021","Casey Construction Company is a full service builder and material provider who specializes in general contracting, design build, commercial construction and construction management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#46;&#99;&#97;&#115;&#101;&#121;&#64;&#99;&#97;&#115;&#101;&#121;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">j.casey@casey-construction.net</a>","https://www.casey-construction.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FMVDWNNRWAJ6">44</a>","SUSTAINABLE SOLUTIONS, LLC","JAMES REMUZZI","","4419 KEARNEYSVILLE PIKE","","SHEPHERDSTOWN","WV","25443-4668","Sustainable Solutions is a Natural Resource Management company that provides consulting and land management services to a range of clients. Our specialties include GPS and GIS mapping, prescribed fire, inventory and monitoring and forest restoration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#64;&#115;&#117;&#115;&#116;&#97;&#105;&#110;&#97;&#98;&#108;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#110;&#101;&#116;">james@sustainablesolutionsllc.net</a>","www.natureworksllc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HD3PESNF8LW6">45</a>","DAMRON TRUCKING LLC","TOMMY DAMRON","","4002 5TH STREET RD","","HUNTINGTON","WV","25701-9545","Locally owned and operated, Huntington Gravel & Sand of Huntington, WV provides quality gravel and sand, and other similar building materials. We offer fast and reliable service, and delivery is also available. Call 304-525-5095 email: huntingtongravel@yahoo.com http://www.huntingtongravel.com/","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#110;&#116;&#105;&#110;&#103;&#116;&#111;&#110;&#103;&#114;&#97;&#118;&#101;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">huntingtongravel@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYKVXUNBCEU4">46</a>","GLOBAL ENVIRONMENTAL & REMEDIATION, LLC","SUSAN JOHNSON","","2632 SOUTH CHILDS ROAD","","KEARNEYSVILLE","WV","25430-5827","Global Environmental specializes in Demolition, excavation, asbestos testing and abatement, Mold testing and remediation, lead testing, radon contractor, environmental hazards. General contractor and specialty trades plumbing, electrical, heating and air conditioning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#106;&#103;&#108;&#111;&#98;&#97;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sejglobal@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SJCCMUNDADN1">47</a>","ALLPRO LLC","CLIFF JACKSON","","201 FAIRMONT AVE","","FAIRMONT","WV","26554-2710","We are a specialty contractor providing doors, railing, awnings, canopies, etc. About 80% residential and 20% commercial work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#102;&#102;&#64;&#97;&#108;&#108;&#112;&#114;&#111;&#119;&#118;&#46;&#99;&#111;&#109;">cliff@allprowv.com</a>","www.allprowv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RPTQCTH9FJ93">48</a>","NEHEMIAH CONSTRUCTION LLC","MATT RYDER","","3186 BOOTEN CREEK RD","","BARBOURSVILLE","WV","25504-9441","Nehemiah Construction, LLC is located in West Virginia but will service all 50 states. We strive to be the contractor of choice. Our vision is to create and maintain a company of highly skilled construction professionals that serve our clients needs with honesty and integrity. We specialize in commercial construction and maintenance and also do other heavy civil engineering federal jobs. We do commercial construction – restoring and revamping different types of commercial buildings. We also provide maintenance services to commercial buildings as well. Core Competencies Team Work Commitment Communication Responsibility Leadership Problem Solving Trustworthiness and Ethics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#121;&#100;&#101;&#114;&#64;&#110;&#99;&#45;&#119;&#118;&#46;&#99;&#111;&#109;">mryder@nc-wv.com</a>","http://nehemiahgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UJHTFJ6T2DR6">49</a>","UNIVERSAL ENGINEERING & CONTRACTING LLC","PATRICK SMITH","","400 AIRPORT RD","STE 6C","ELKINS","WV","26241-8702","Specializing in backup electrical power systems. Design, turn-key installations, maintenance, & repair. Switchgear installations, Low, medium, and high voltage systems, underground power distribution systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#64;&#117;&#101;&#99;&#46;&#103;&#108;&#111;&#98;&#97;&#108;">pat@uec.global</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FK3LYFN9ZCK1">50</a>","MASTER SERVICE CORP","KATHRYN TOTTEN","","2553 HARRISON AVE","","ELKINS","WV","26241-5793","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#121;&#64;&#109;&#97;&#115;&#116;&#101;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">katy@masterservicecorp.com</a>","www.masterservicecorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM9HVGBXLYV3">51</a>","AFFORDABLE SIGNS UNLIMITED, LLC","BETH STONE","","233 N ROBERT STONE WAY","","REEDSVILLE","WV","26547-7511","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#64;&#97;&#102;&#102;&#111;&#114;&#100;&#97;&#98;&#108;&#101;&#115;&#105;&#103;&#110;&#115;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">beth@affordablesignsunlimited.com</a>","www.affordablesignsunlimited.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VSN1TLVEWDR7">52</a>","MAKA ENERGY SOLUTIONS LLC","DUANE PELLEN","","619 N FRONT ST","","WHEELING","WV","26003-2319","Licensed General Contractor and Engineering Contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#107;&#97;&#101;&#110;&#101;&#114;&#103;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">makaenergy@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TXG7J3KSH591">53</a>","CORESIVITY INC.","DAVID HAN","","35 CLIFFORD CT","","HARPERS FERRY","WV","25425-3102","Proven contractor with federal, state, and local government contracts providing management consulting, IT service management, as well as Governance, Risk, and Compliance (GRC) consulting. We operationalize excellence facilitating client's compliance with government regulations, alignment to industry standards, and adoption of best practices. Our core capabilities are management consulting, information security, IT consulting, risk management, quality management, purchasing, translation, interpretation, and real estate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#99;&#111;&#114;&#101;&#115;&#105;&#118;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">dave@coresivity.com</a>","www.coresivity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1FNMBSGKC26">54</a>","KBR CONTRACTING LLC","KRISTOPHER DUARTE","","917 GAWTHROP RD","","GRAFTON","WV","26354-7519","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#114;&#105;&#115;&#68;&#117;&#97;&#114;&#116;&#101;&#64;&#75;&#66;&#82;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">KrisDuarte@KBRcontracting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8MUK2HDCKN3">55</a>","NORTH WIND SITE SERVICES, LLC","ALLISON WALKER","","1262 SUNCREST TOWN CENTRE DR","","MORGANTOWN","WV","26505-1828","North Wind Site Services provides full-service environmental remediation and investigation, decontamination, and disinfection. North Wind Site Services is an SBA certified 8(a) firm and is part of a family of companies with common ownership under Cook Inlet Region, Inc. (CIRI), an Alaska Native Corporation (ANC). Under North Wind Group, North Wind Site Services operates under a proven corporate infrastructure that has been in place for over 18 years, a low EMR of 0.76, and a DCAA-approved accounting system to successfully execute Government contracts. North Wind Site Services offers clients a low risk small business concern that is backed by a mature, financially strong parent organization and an excellent past performance history. Occupational Health (Industrial Hygiene, Health Physics, and Respiratory Protection) and facility disinfection and cleansing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#110;&#111;&#114;&#116;&#104;&#119;&#105;&#110;&#100;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">awalker@northwindgrp.com</a>","www.northwindgrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VN76MSVXZCG1">56</a>","GLOBAL CONSTRUCTION PARTNERS LLC","SUSAN JOHNSON","","2632 S CHILDS RD","","KEARNEYSVILLE","WV","25430-5827","The joint venture is General Building Contractor, with Asbestos project contractor also able to inspect for lead and do demolition and excavation, building maintenance, HVAC, perform unlimited work in the areas of Highway, Public Utilities and building. company is licensed in NC, WV MD, VA, and District of Columbia.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#106;&#103;&#108;&#111;&#98;&#97;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sejglobal@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G86AS1ZXBJM1">57</a>","IT IS WHAT IT IS ALL IN ONE CONSTRUCTION & EQUIPMENT REPAIR LLC","JOHN MAYNARD","","1201 3RD ST","","MARTINSBURG","WV","25404-4774","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#105;&#111;&#99;&#46;&#106;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">aioc.jm@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ21RJ15DJ89">58</a>","TEMPO CONSTRUCTION LLC","MARY NEENAN","","5401 MACCORKLE AVE SE","","CHARLESTON","WV","25304-2223","Helical pile and anchor installation, general site work, road and utility construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#46;&#110;&#101;&#101;&#110;&#97;&#110;&#64;&#116;&#101;&#109;&#112;&#111;&#119;&#118;&#46;&#99;&#111;&#109;">mary.neenan@tempowv.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6H9JL8NHAC9">59</a>","BUILT ON THE ROCK INC","SHANNON HONAKER","","116 HANKWOODS DR","","BECKLEY","WV","25801-3662","We provide all trades construction services to Government and Commercial related projects. Self performs most aspects of work. We offer value engineering and construction planning services. Excellent at meeting timelines and quality control completion.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#111;&#110;&#97;&#107;&#101;&#114;&#64;&#98;&#111;&#116;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">shonaker@botrinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WMVNDN9126W8">60</a>","BLUE GOLD DEVELOPMENT LLC","STEPHEN TOTH","","551 PANTHER LICK RUN RD","","RIVESVILLE","WV","26588-8790","All excavation and demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#111;&#116;&#104;&#64;&#98;&#108;&#117;&#101;&#103;&#111;&#108;&#100;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#110;&#116;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">stoth@bluegolddevelopmentllc.com</a>","www.bluegolddevelopmentllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC74MHPNN9L6">61</a>","VIVET, LLC","OLUFUNKE SYLVESTER","","610 1/2 RUSSELL ST","","BECKLEY","WV","25801-5740","Provide various medical services including telemedicine/telehealth with the implementation of artificial intelligence (AI) for analyzing individual baseline and implement more advance technology into healthcare.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#108;&#117;&#102;&#117;&#110;&#107;&#101;&#46;&#115;&#121;&#108;&#118;&#101;&#115;&#116;&#101;&#114;&#64;&#118;&#105;&#118;&#101;&#116;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">olufunke.sylvester@vivetglobal.com</a>","www.vivetglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLLGRL46YAB3">62</a>","LEEMAX SAFETY SOLUTIONS LLC","BRIAN ANDERSON","","1310 GREENMONT HILLS DR","","VIENNA","WV","26105-3274","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#46;&#97;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#64;&#108;&#101;&#101;&#109;&#97;&#120;&#115;&#115;&#46;&#99;&#111;&#109;">brian.anderson@leemaxss.com</a>","www.leemaxss.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K4ACNL2BNLP9">63</a>","ALL CONCRETE INC","JASON KITZMILLER","","1240 POWER STATION HWY","","MOUNT STORM","WV","26739-8756","We do highway, road and bridge construction. We do curb and gutters, concrete paving and concrete structure.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#116;&#122;&#109;&#105;&#108;&#108;&#101;&#114;&#106;&#97;&#115;&#111;&#110;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">kitzmillerjason@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YLHLB7644SJ8">64</a>","BCE SOLUTIONS LLC","NGOSONG FONKEM","","340 HOG LICK HOLLOW RD","","FAIRMONT","WV","26554-8128","PROJECT MANAGEMENT Our project management team oversees all aspects of the construction process, working closely with engineers and architects to develop plans, establish timetables, and determine labor and material costs. Our team is responsible for ensuring your project is completed on budget and within scope. WEB APPLICATION AND DATABASE DEVELOPMENT, MOBILE APPS, CROSS-PLATFORM Our team of experts bring together a portfolio of skill sets and experience to most web app frameworks and languages used in any modern development. (.NET, REACT, REACT-NATIVE, IONIC, FLUTTER, XAMARIN). We have extensive experience with Microsoft technologies such as .Net development, the Microsoft Business Intelligence stack, SharePoint, Dynamics, Microsoft’s cloud technologies, and much more. We can build amazing hybrid / cross-platform mobile apps using Flutter, Ionic, Xamarin and React Native. Web App Design and Development | Mobile App Design and Development | Web3 Development | AI","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#46;&#102;&#111;&#110;&#107;&#101;&#109;&#64;&#98;&#99;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">n.fonkem@bcesolutionsllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GSLTEZG7A3N6">65</a>","GOLDBELT OPERATIONS SUPPORT SERVICES LLC","SEAN GOLDSMITH","","3606 COLLINS FERRY RD STE 102","","MORGANTOWN","WV","26505-2361","Established in 2015, Goldbelt Operations Support Services, LLC (GbOSS) offers general contracting and construction management services to Federal clients and is capable of performing work in classified areas. GbOSS’ construction efforts are focused on new construction, exterior and interior renovation, alteration and modernization. We provide industry-leading excellence in construction safety, quality, and compliance, with a track record of recent, relevant, and successful past performance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#46;&#103;&#111;&#108;&#100;&#115;&#109;&#105;&#116;&#104;&#64;&#103;&#111;&#108;&#100;&#98;&#101;&#108;&#116;&#46;&#99;&#111;&#109;">sean.goldsmith@goldbelt.com</a>","www.gboss.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P1CQKGN9SFC5">66</a>","H2 CONSTRUCTION INC","JOSHUA HOUGHTON","","149 LYNN HAVEN DR SUITE B","","MARTINSBURG","WV","25404-6569","H2 Construction Inc is a small business based out of Martinsburg, West Virginia. Our team of professionals specializes in a variety of services from commercial construction to structural steel fabrication and installation. H2 prioritizes high quality control and provides warranties that exceed the industry standard. We utilize local subcontractors. From start to finish our team provides customers with detailed updates and communicates along the entire process. Please reach out for more information about our services and federal contracting abilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#111;&#117;&#103;&#104;&#116;&#111;&#110;&#64;&#104;&#50;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jhoughton@h2constructioninc.com</a>","www.h2constructioninc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHFFQKU4AXG3">67</a>","APPLIED INTEGRATED SERVICES LLC","GERALD WELLS","","188 LAUREL HEIGHTS DR","","SUTTON","WV","26601-3229","AIS can provide all your Construction and facility maintenance needs. AIS provides Security camera installations as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#101;&#108;&#108;&#115;&#64;&#97;&#105;&#115;&#119;&#118;&#46;&#111;&#114;&#103;">jwells@aiswv.org</a>","www.aiswv.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WG63MJLJH4T4">68</a>","DRILLING SOLUTIONS LLC","CHRIS HARSH","","2700 LITTLE SANDY RD","","BRUCETON MILLS","WV","26525-5280","We are a specialty geotechnical subcontractor. We have experience and knowledge with design, pile load testing as well as permanent/temporary all-thread reinforcement bar/strand anchors installed/tested. We are a hands on company that strives to exceed industry standards to assure that the Client/Owner always receives the highest quality of workmanship. We believe in being professional and work efficiently while keeping a safe workplace. Our experience includes Caisson Installation up to 150 feet depth as well as large diameter shaft drilling. We have extensive experience with shafts 52 inches in diameter and depths of 550 feet with maximum capabilities of 96 inches in diameter and depths of 2000 feet.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#100;&#64;&#100;&#114;&#105;&#108;&#108;&#105;&#110;&#103;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#111;&#114;&#103;">bid@drillingsolutions.org</a>","drillingsolutions.org"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.117&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

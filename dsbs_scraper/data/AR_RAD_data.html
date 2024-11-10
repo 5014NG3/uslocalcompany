@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Arkansas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.15 seconds and 1.15 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 68 
+(of 68 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPL8KD5ELH91">1</a>","UNITED SYSTEMS OF ARKANSAS, INC.","ROBERT BLUEJACKET","Project Manager","4949 W BETHANY RD","","NORTH LITTLE ROCK","AR","72117-3414","United Systems of Arkansas is a Eastern Shawnee, Veteran Owned, and a Hub-Zone Certified Small Business. USA is recognized across the country for technical expertise and innovations in scanning, HIPAA-compliant print and mailing production, and 508 document conversion; converting\ corrects digital information for output. Were industry leader in CERTIFIED MAIL SERVICES; MAILER FORMS; BARCODE READERS, LASER PRINTING,and ELECTRONIC IMAGING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#117;&#101;&#106;&#97;&#99;&#107;&#101;&#116;&#64;&#117;&#110;&#105;&#116;&#101;&#100;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#110;&#101;&#116;">bluejacket@unitedsystems.net</a>","http://unitedsystems.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TN72MM4ENMQ5">2</a>","ALPHA PACKAGING INC","MICHAEL STEC","PRESIDENT","2020 E CENTER ST","","GREENWOOD","AR","72936-5927","CORRUGATED BOXES,DIE CUTTING, FABRICATING POLYETHYLENE, POLYPROPYLENE, POLYURETHANE FOAM, 3M PRODUCTS, TAPE, GLUE, STRETCHFILM, ANGLEBOARD, CORNER PADS, SLIP SHEETS, SKID SHEETS,P.E. PLANK,ROLLS FOLDING CARTONS,CHIPBOARD,CORRUGATED PARTITIONS,KRAFT PAPER","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#116;&#101;&#99;&#64;&#97;&#108;&#112;&#107;&#103;&#46;&#99;&#111;&#109;">mstec@alpkg.com</a>","www.alphapackaging.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LW5EEYNLPHV7">3</a>","BLUELINE TECHNOLOGY INC","WESLEY CRENSHAW","President/C.E.O.","401 WOOD ST","","TEXARKANA","AR","71854-5938","Service Disabled Veteran Owned Business. Blueline Technology is a Security and broadcast TV Automation, company products includes: a quality solution to TV automation, Media Server, video on demand, asset management, DVD archiving, Digital Signage,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#99;&#114;&#101;&#110;&#115;&#104;&#97;&#119;&#64;&#98;&#108;&#117;&#101;&#108;&#105;&#110;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">wcrenshaw@bluelinetech.com</a>","www.bluelinetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LGPCSM3KGTW6">4</a>","SKYLINE ULTD INC","BOBBY MCKINNON","","106 N BLOOMINGTON ST","","LOWELL","AR","72745-9657","Staff Augmentation and IT for Dept of Veterans Affairs; Personnel Ser Delivery Redesign for US Army; Transition Assistance Advisor Program & Medical Case Management Support Services for NGB and Operational Support Services for the US Dept of Agriculture, Psychological Health Services to Army & Air National Guard","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#98;&#121;&#46;&#109;&#99;&#107;&#105;&#110;&#110;&#111;&#110;&#64;&#116;&#101;&#97;&#109;&#99;&#114;&#105;&#46;&#99;&#111;&#109;">bobby.mckinnon@teamcri.com</a>","http://www.skyline-ultd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UHJLM5973Z77">5</a>","AMERICAN SAFE AIR INC","ZEDA STOUT","CEO/President","351 E 9TH ST","","MOUNTAIN HOME","AR","72653-4747","American Safe Air manufactures Nuclear Biological and Chemical SafeRooms and Negative Pressure MailRooms(NPMR). The SafeRooms can be used for home or office. The NPMR was designed for use in mail rooms to restrict a contaminant to a defined area.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#111;&#117;&#116;&#95;&#112;&#97;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">stout_pa@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJ84BA7B5S65">6</a>","OMNI DISTRIBUTION, INC.","DANIELLE NIXON","VP","5141 STATE HWY 218","","CRAWFORDSVILLE","AR","72327-1900","Manufacture / Distribute a wide range of explosives and explosive products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#69;&#82;&#69;&#83;&#65;&#64;&#79;&#77;&#78;&#73;&#69;&#88;&#80;&#76;&#79;&#83;&#73;&#86;&#69;&#83;&#46;&#67;&#79;&#77;">TERESA@OMNIEXPLOSIVES.COM</a>","http://www.omniexplosives.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEX8NA8ZKSH3">7</a>","ABERNATHY CO","BRANDON BURNETT","Manager","3820 E 19TH ST","","TEXARKANA","AR","71854-4852","Janitorial Supplies, Soaps and Detergents, Corrugated Supplies, HAZMAT Drums, Metal Drums, Plastic Drums","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#97;&#110;&#100;&#111;&#110;&#64;&#97;&#98;&#101;&#114;&#110;&#97;&#116;&#104;&#121;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">Brandon@abernathycompany.com</a>","http://www.abernathycompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MUPGNLNN8J87">8</a>","POWER TECHNOLOGY INC","WALTER BURGESS","","16302 ALEXANDER RD","","ALEXANDER","AR","72002-1527","Lasers for demanding applications including military, semiconductor inspection, medical, Life Sciences, and industrial applications. PTI also manufactures laser light sources for cinema projectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#98;&#117;&#114;&#103;&#101;&#115;&#115;&#64;&#112;&#111;&#119;&#101;&#114;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">waburgess@powertechnology.com</a>","www.powertechnology.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFE7CWNKK1X3">9</a>","NEPHROPATHOLOGY ASSOCIATES, PLC","AARON NICHOLS","","10810 EXECUTIVE CENTER DR STE 100","","LITTLE ROCK","AR","72211-4386","Nephropathology Associates (dba Arkana Laboratories) is a leader in providing pathology services in renal, nerve, muscle and transplantation pathology as well as in specialized diagnostic testing involving electron microscopy, immunofluorescence, immunohistochemistry, biomarker testing, histology and whole-slide imaging, serologic testing, laser capture microdissection, mass spectrometry, in situ hybridization and molecular diagnostics. Our zebrafish laboratory constructs custom genetically modified lines, drug testing and toxicity screening. Our biorepository collects tissue, blood and urine samples for a range of renal diseases. Our laboratory is certified by CLIA (Clinical Laboratory Improvement Amendments of 1988) and accredited by the College of American Pathologists (CAP).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#114;&#111;&#110;&#46;&#110;&#105;&#99;&#104;&#111;&#108;&#115;&#64;&#97;&#114;&#107;&#97;&#110;&#97;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">aaron.nichols@arkanalabs.com</a>","www.arkanalabs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6FCLD1WE1E7">10</a>","ACE SIGNS OF ARKANSAS L.L.C.","JASON OFFUTT","","11935 INTERSTATE 30","","LITTLE ROCK","AR","72209-7052","30,000 sq ft manufacturing facility, Fabrication, Installation, Service, Design, Project Management, Large printing, Nationwide services, GSA contract holder, TIPS/TAPS contract holder.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#64;&#97;&#99;&#101;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">jason@acecompany.com</a>","http://www.acesigncompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7SNCRZ8KJ34">11</a>","AMERICAN DEFENSE COMPONENTS, LLC","MATT BARAGA","","807 THOMAS STREET","","STAMPS","AR","71860-2545","Rings, Shims, Spacers, clips, brackets, bus bars, assemblies, aircraft and vehicle components, plating, coating, painting, chemical milling. Ability to bond metal to rubber and other polymers. Research and development of new items. Engineering services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#116;&#116;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#99;&#111;&#109;&#112;&#111;&#110;&#101;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">Matt@americandefensecomponents.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W1SFM4QYMTV5">12</a>","3D IMAGING DRUG DESIGN & DEVELOPMENT LLC","ARLENE HUGHES","","9015 CARTI WAY","","LITTLE ROCK","AR","72205-6544","Custom radiolabeling of drug candidates and imaging probes for PET and SPECT. Imaging for drug evaluation. PET studies of: inhaled drugs, receptor status, drug distribution. Clinical imaging studies through collaboration with academic partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#104;&#117;&#103;&#104;&#101;&#115;&#64;&#109;&#97;&#104;&#99;&#46;&#110;&#101;&#116;">ahughes@mahc.net</a>","http://3DImagingllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K96GEE5NKLG3">13</a>","MAINSTREAM TECHNOLOGIES INC","HOLT MCCONNELL","","325 W CAPITOL AVE","STE 200","LITTLE ROCK","AR","72201-3552","Mainstream Technologiesa is a premier company providing tactical and strategic solutions to meet client needs in the areas of Systems Engineering, Information Technology, and Program/Project Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#111;&#108;&#116;&#46;&#109;&#99;&#99;&#111;&#110;&#110;&#101;&#108;&#108;&#64;&#109;&#97;&#105;&#110;&#115;&#116;&#114;&#101;&#97;&#109;&#45;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">holt.mcconnell@mainstream-tech.com</a>","www.mainstream-tech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFXMS452M9K3">14</a>","R & R PACKAGING INC","AMY RAMBADT","","601 1ST AVE NW","","GRAVETTE","AR","72736-9779","Logistics, Wholeseller of Boxes, Tape, Packaging Materials, Electronic Refurbishing, Electronic Installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#97;&#109;&#98;&#97;&#100;&#116;&#64;&#114;&#114;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#117;&#115;">arambadt@rr-solutions.us</a>","rr-solutions.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JA7PVQRAP694">15</a>","MUNDO TECH INC","JOSEPH HARBAUGH","","1745 S 1ST ST","","ROGERS","AR","72756-5922","Tube Bending for Aerospace and Military. Titanium, Aluminum, Stainless, Steel, Welding, Internal Swaging, External Swaging, End Forming, Precision Cleaning (ARP1176), Sheet Metal Fabrication, CNC milling, ISO9001, AS9100 REV C","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#101;&#112;&#104;&#64;&#109;&#117;&#110;&#100;&#111;&#45;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">joseph@mundo-tech.com</a>","http://www.mundo-tech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FMKHL6AFCJY9">16</a>","SOUTHERN DESIGN AND MECHANICAL, INC.","DANNY MOTT","","304A KENOVA RD","","SMACKOVER","AR","71762-9753","Southern Design continues to be a choice supplier for a wide variety of industries including chemical, pharmaceutical, pulp & paper, power generation, water, waste water, steel manufacturing and bio-energy. We take pride in our partnerships with premier manufacturers to deliver mechanical reliability, value and innovation to our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#116;&#116;&#64;&#109;&#121;&#115;&#111;&#117;&#116;&#104;&#101;&#114;&#110;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">dmott@mysoutherndesign.com</a>","http://www.mysoutherndesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ML8ALY6CAH15">17</a>","MOBILITY LIFT SYSTEMS LLC","MIKE HOOVER","","5702 KRUEGER DR","","JONESBORO","AR","72401-6817","Manufacturer of patient lift systems for traditional home, apartment, condominums, mobile homes and all medical care facilities applications serving the mobility needs of the injured/disabled.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#102;&#104;&#116;&#103;&#104;&#48;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mfhtgh08@gmail.com</a>","http://www.mobilityliftsystems.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K525J13SYDZ1">18</a>","CITY 2 CITY MARKETING & DISTRIBUTION LLC","NAPOLEON SANDEFORD","","3123 W 28TH AVE","","PINE BLUFF","AR","71603-4804","City 2 City is a dynamic company with innovative solutions tailored around information technology project management. Our white glove approach to providing IT solutions has garnered us clients such as the US Air Force, the US Treasury, and the USDA. City 2 City provides an array of different services nationwide including network management, staffing and recruitment, hardware maintenance, and staff training. We can even set up and train your staff on your business's mobile devices. We highly recommend our expert consultation services where we can assist you with telecommunication budgeting, change management, and organizational behavior. At City 2 City, we have established a culture of customer focus, which creates lasting relationships for years to come. Visit us at www.city2city.solutions and contact us today.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#115;&#97;&#110;&#100;&#101;&#102;&#111;&#114;&#100;&#64;&#99;&#105;&#116;&#121;&#50;&#99;&#105;&#116;&#121;&#46;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;">nsandeford@city2city.solutions</a>","http://www.city2city.solutions"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJKBW669N6Z7">19</a>","AXIS ELECTRIC LLC","JASON KUNCL","","1020 S SCHOOL AVE","","FAYETTEVILLE","AR","72701-6432","Electrical contractor specializing in industrial such as treatment plants, plc programming and integration, design- build, food processing and manufacturing; specializing in commercial areas such as education, religious, government, healthcare, retail, restaurant, and office. Commonly installing: automation, lighting, power generators, solar, power distribution, transformers, switchgear, panels, motor control centers, lighting controls, surge suppression.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#107;&#117;&#110;&#99;&#108;&#64;&#97;&#120;&#105;&#115;&#45;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jkuncl@axis-electric.com</a>","http://www.axis-electric.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKBFDECXNMD1">20</a>","RESPIROMETER SYSTEMS & APPLICATIONS LLC","JAMES YOUNG","","700 W RESEARCH CENTER BLVD STE 3203","","FAYETTEVILLE","AR","72701-7174","Respirometer Systems and Applications manufactures a line of respirometers that measure oxygen uptake for aerobic biological reactions and gas production for anaerobic biological reactions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#121;&#101;&#110;&#118;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">jcyenv@msn.com</a>","www.respirometer-sys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VENVZ59KJDR8">21</a>","ENVIROSCAPES ECOLOGICAL CONSULTING LLC","SUSAN RUPP","","13117 BLUEBIRD RD","","GRAVETTE","AR","72736-8012","Enviroscapes Ecological Consulting provides scientific-based research, information, and assessments to stakeholders for making ecologically sound decisions under the current state of political, social, and economic affairs while also providing the greatest likelihood for long-term sustainability of wildlife and other natural resources. Coupled with our extensive experience in custom programming & data manipulation, we fill a unique niche in today’s market that requires efficient, dependable analysis of large, complex data sets in space and time. Enviroscapes uses the best available biological information, science, and technology so our clients feel confident in the product we provide and can defend its use to a wider audience should the need arise. We are an affiliated member of Lee Enterprises Consulting - the world's premiere bioeconomy consulting firm - and have specialized expertise in sustainable bioenergy development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#114;&#117;&#112;&#112;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#115;&#99;&#97;&#112;&#101;&#115;&#46;&#111;&#114;&#103;">srupp@enviroscapes.org</a>","www.enviroscapes.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNBCG4D7DG56">22</a>","POLLUTION CONTROL INC","WILLIAM BURGEIS","","14700 ROCKBRIDGE RD","","LITTLE ROCK","AR","72206-5956","We provide the most convenient, affordable, and environmentally sound solution to your waste management needs. We are a GSA approved contractor providing services all over the United States and Canada. We also provide explosive ordinance and munitions disposal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#117;&#114;&#103;&#101;&#105;&#115;&#64;&#112;&#111;&#108;&#108;&#117;&#116;&#105;&#111;&#110;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">bburgeis@pollutioncontrolinc.com</a>","http://www.pollutioncontrolinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HB21MGY2WGA7">23</a>","CSP MGT LLC","VANHUNG PORTER","","5901 MURRAY ST","","LITTLE ROCK","AR","72209-2544","CSP MGT LLC is a Certified Service Disabled Veteran Owned, Minority, Small Disadvantaged business, made up by a team of veterans and formal federal industry professionals dedicated to ensuring that the facility operates at peak efficiency every day of every year. With a combination of over 80 years of experience in the federal government acquisition procurement, CSP MGT LLC is your single source provider with the knowledge and expertise in providing acquisition procurement for Services, Products and training to your agency and the war fighter. We are the leader in Facility Management Services. We deliver actionable acquisition insight from the factory floor to the front line. We are your contract manager, responsible for ensuring Federal Acquisition Programs, Supplies, and Services are delivered on time, within cost and meet performance requirements!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#46;&#112;&#111;&#114;&#116;&#101;&#114;&#64;&#99;&#115;&#112;&#109;&#103;&#116;&#46;&#99;&#111;&#109;">van.porter@cspmgt.com</a>","www.cspmgt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TT4PZSXZZGT5">24</a>","VISION DATA SPACES LLC","CHERYL MATTHEWS","","18425 KANIS RD","STE B","LITTLE ROCK","AR","72223-9553","Design Build and Manage critical Data Environments. Procure IT infrastructure equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#114;&#121;&#108;&#64;&#118;&#105;&#115;&#105;&#111;&#110;&#100;&#97;&#116;&#97;&#115;&#112;&#97;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">cheryl@visiondataspaces.com</a>","www.visiondataspaces.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WYPWX7EDG4J1">25</a>","JOBCO INCORPORATED","KIM TIERNEY","","1913 TOWSON AVE","","FORT SMITH","AR","72901-5901","Supplier of custom temperature sensors, process heaters and controllers used on aerospace applications along with packaging, paper and plastics molding machines","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#106;&#111;&#98;&#99;&#111;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">sales@jobcosupply.com</a>","www.jobcosupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LSAQAGUKWHP4">26</a>","BEE POZITIVE, LLC","NOSAKHERE HOLCOMB","","1509 W 12TH ST","","NORTH LITTLE ROCK","AR","72114-4005","Installation and integration of software and computer systems Installation of telecommunications infrastructure, Wi-Fi access points; Installation and certification of copper and fiber optic cable,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#78;&#76;&#82;&#84;&#69;&#67;&#72;&#83;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">NLRTECHS@GMAIL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HYMHB7M77GL3">27</a>","LINDSEY & OSBORNE PINE BLUFF, LLC","REBECCA LINDSEY","","216 E 3RD ST","","TEXARKANA","AR","71854-5937","We provide rail car storage, rail road maintenance, and transportation of rail road materials and equipment for customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#100;&#115;&#101;&#121;&#111;&#115;&#98;&#111;&#114;&#110;&#101;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">lindseyosborne@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K446SDNWGD19">28</a>","GADDIS CINDY L","CINDY GADDIS","","119 W THOMPSON RD","","PERRY","AR","72125-7635","Business development life-cycle, contract, project, capture and proposal development, scope of services, requirements analysis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#103;&#64;&#99;&#103;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#115;&#46;&#99;&#111;&#109;">cg@cgconsults.com</a>","www.cgconsults.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNCBTH99U8K3">29</a>","SHELWES LLC","SHELLEY HAYNES","","817 HIGHWAY 49","","WEST HELENA","AR","72390-9609","manufacture and sell automatic contour sander using parts cut from e-machine shop","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#108;&#108;&#104;&#97;&#121;&#110;&#101;&#115;&#64;&#115;&#104;&#101;&#108;&#119;&#101;&#115;&#46;&#99;&#111;&#109;">shellhaynes@shelwes.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NK86BNESLKQ8">30</a>","EUCHAY NGOZI HORSMAN","EUCHAY HORSMAN","","3304 MOONLIGHTING PLACE DR","","BRYANT","AR","72022-8007","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#117;&#99;&#104;&#97;&#121;&#110;&#103;&#111;&#122;&#105;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">euchayngozih@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPNKHQD1Q3K5">31</a>","ADVANCED MONITORING SERVICES, LLC","BRAD VINSON","","3497 WAGON WHEEL RD","","SPRINGDALE","AR","72762-0115","Advanced Monitoring Services (AMS) provides surgeons and healthcare facilities with a complete outsourced Intra-Operative Neurophysiological Monitoring (IONM) solution for spine and brain-related surgeries, among other procedures. Through the use of IONM, the electrical potentials of the body’s nervous system are monitored and recorded to provide early detection of possible nervous system complications that may arise during and after surgery. By providing real-time alerts and critical information to the surgeon, the potential for harm to neural structures and the spinal cord can be reduced. IONM is gradually becoming a standard of care in the realm of neurosurgery and orthopedic spine surgery, amplifying the ability of surgeons and health care facilities to provide quality care to its patients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#118;&#105;&#110;&#115;&#111;&#110;&#64;&#97;&#109;&#115;&#110;&#101;&#117;&#114;&#111;&#46;&#99;&#111;&#109;">bvinson@amsneuro.com</a>","http://www.amsneuro.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CTM9XHD5N3D6">32</a>","INNOVATOR HEALTH LLC","DENNIS KOPP","","1200 BUSINESS PARK DR STE 2","","LITTLE ROCK","AR","72204-2698","At Innovator Health LLC, we've created a digital telemedicine platform that allows patients and their caregivers to feel as if they are in the same room. The reason is simple: we want to improve access to high quality medical care for rural and underserved populations. We are focused on supporting the more than 1,800 rural hospitals across the United States by providing a technology platform so engaging that their local patient populations will choose to access their care locally, rather than commuting to urban communities for medical services. Visit us at http://www.innovatorhealth.com for more information on the services and products that can help your medical practice today.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#69;&#78;&#78;&#73;&#83;&#64;&#73;&#78;&#78;&#79;&#86;&#65;&#84;&#79;&#82;&#72;&#69;&#65;&#76;&#84;&#72;&#46;&#67;&#79;&#77;">DENNIS@INNOVATORHEALTH.COM</a>","http://innovatorhealth.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJUATB1JE7M4">33</a>","DC SPARKS CONSTRUCTION, LLC","DANIEL SPARKS","","8871 LOLA JEANE LN","","ROGERS","AR","72756-4002","DC Sparks Construction, LLC is a general contracting company, specializing in Construction Project Management, all phases of Commercial Construction and Remodels, Steel Buildings and Facility Maintenance. The company has self-performance capabilities covering many different trades. DC Sparks is a growing company currently headquartered in Fayetteville, Arkansas with performance capabilities throughout the Midwest and Southern United States. Successfully completed projects include industrial office remodels, warehouses, freezer storage, retail stores, medical facilities, educational facilities and churches. Full government contracting profile can be reviewed at www.fedbizdirectory.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#65;&#78;&#73;&#69;&#76;&#46;&#83;&#80;&#65;&#82;&#75;&#83;&#64;&#68;&#67;&#83;&#80;&#65;&#82;&#75;&#83;&#67;&#79;&#78;&#83;&#84;&#46;&#67;&#79;&#77;">DANIEL.SPARKS@DCSPARKSCONST.COM</a>","https://www.dcsparksconstruction.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QRXEM5DEYWQ9">34</a>","CHILDREN & FAMILY EVALUATION SERVICES LLC","ALECIA HAMILTON","","1501 N UNIVERSITY AVE","STE 250","LITTLE ROCK","AR","72207-5400","We provide early childhood assessments of the home and parenting environment. The company is developing a trauma assessment for young children ages 5-8 years old. Additionally, the company distributes a nutrition education curriculum","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#99;&#105;&#97;&#64;&#116;&#104;&#101;&#102;&#97;&#109;&#105;&#108;&#121;&#109;&#97;&#112;&#46;&#111;&#114;&#103;">alecia@thefamilymap.org</a>","www.thefamilymap.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDEWH7FD4GW6">35</a>","VERDANT STUDIO LLC","JESSICA HESTER","","216 W BIRCH ST","STE 101","ROGERS","AR","72756-5476","Verdant Studio is an architecture and design firm specializing in highly efficient layouts and creative solutions. Architectural work includes residential, commercial, education, warehouse and high-piled storage, industrial, and healthcare projects. Owned by a licensed Realtor, Verdant Studio is highly equipped to consult on all aspects of a project. From the purchase, project programming, and site planning, to the design, modeling, and construction, Verdant Studio can make your project a seamless experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#105;&#99;&#97;&#64;&#118;&#101;&#114;&#100;&#97;&#110;&#116;&#45;&#115;&#116;&#117;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">jessica@verdant-studio.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QL4RUCYJNRB7">36</a>","WAGGONER COLOR VISION TESTING, LLC","TERRACE WAGGONER","","1401 NE DYSART WOODS LN","","BENTONVILLE","AR","72712-8592","Development, manufacturing, and distribution of color vision tests.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#118;&#64;&#119;&#97;&#103;&#103;&#111;&#110;&#101;&#114;&#100;&#105;&#97;&#103;&#110;&#111;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">gov@waggonerdiagnostics.com</a>","www.WaggonerDiagnostics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXKMM1DKUPQ1">37</a>","AG ELECTRIC SERVICES LLC","PRESTON CLARK","","211 WOODRUFF 752","","AUGUSTA","AR","72006-5155","Founded in 2014 AGES is a Commercial Electrical Contracting Company specializing in Electrical Wiring & Service of Structures and Buildings, Underground Electrical Wiring, Conduit and Cabling, Motors, Motor Controls and Switch Gear. AGES Serves the Agriculture Community with Electrical Installation and Services of Grain & Fertilize Storage Facilities & Handling, Grain Elevators as well as all types of Irrigation Needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#99;&#108;&#97;&#114;&#107;&#64;&#97;&#103;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">pclark@agelectricservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RK7LEABM1KS8">38</a>","QUALITY ANALYTICS ASSOCIATES, INC.","JAMAE ALLRED","","511 COUNTY ROAD 127","","BONO","AR","72416-8059","QAA's team has over twenty years’ experience specializing in instructional design, training support, learning and workforce analytics, and DHS certified 508 specialists.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#97;&#101;&#97;&#108;&#108;&#114;&#101;&#100;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#45;&#97;&#110;&#97;&#108;&#121;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">jamaeallred@quality-analytics.com</a>","www.quality-analytics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWZNQEP88KZ6">39</a>","MODTHINK LLC","BRENT ROBINSON","","217 E DICKSON ST","STE 103","FAYETTEVILLE","AR","72701-4629","Modthink is a full-service digital marketing agency located in the heartland of the USA. We specialize in crafting marketing strategies for organizations with a complex messages and design campaigns that will find, engage, and amaze their audiences.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#110;&#116;&#64;&#109;&#111;&#100;&#116;&#104;&#105;&#110;&#107;&#46;&#99;&#111;&#109;">brent@modthink.com</a>","http://www.modthink.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELMQAJNHXYJ1">40</a>","JLG CONSULTING FIRM LLC","JAMESIA GIVAN","","2112 S IZARD ST","","LITTLE ROCK","AR","72206-1165","Brand management and marketing consulting firm specializing in social media, online training and business strategy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#105;&#118;&#97;&#110;&#64;&#106;&#108;&#103;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#102;&#105;&#114;&#109;&#46;&#99;&#111;&#109;">jgivan@jlgconsultingfirm.com</a>","www.jlgconsultinfirm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KG9CYNJRQ5W7">41</a>","SERVICE SOLUTIONS PLUMBING LLC","RONALD RUSSELL","","7508 HIGHWAY 167 N","","SHERIDAN","AR","72150-8230","Service Solutions Plumbing (SSP) LLC, is a commercial heating and air service and repair company. That specializes in the installation of state-of-the-art, high-end heating and cooling ventilation systems. With well over 30 years of experience in our field SSP; has provided fast reliable service to all of Arkansas and surrounding states. Whether you need new or old building installations, repairs or preventative maintenance, full service on paint booth or HVAC systems, and even commercial plumbing assistance; we have the experienced staff to complete any job, any size. In addition, in case of emergency situations here at SSP we offer the only fleet of commercial chiller rentals in the region; on site and ready at a moment’s notice. And with our 24 hour help desk you will always have access to the professionals you need, for more information visit www.servicesolutionsusa.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#114;&#117;&#115;&#115;&#101;&#108;&#108;&#46;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">ronrussell.servicesolutions@yahoo.com</a>","WWW.SERVICESOLUTIONSUSA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L14TJFF1JBL4">42</a>","SUNLIGHT SERVICES L.L.C","ANDREA WHITE","","13427 HIGHWAY 49","","MARVELL","AR","72366-8050","Dumpster Rental Commercial/ Residential Dumpsters Long/ short term Dumpsters","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#110;&#100;&#114;&#101;&#97;&#46;&#109;&#99;&#115;&#104;&#97;&#110;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">Andrea.mcshane@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NPLQSW36KKT4">43</a>","DB SCIENCE LLC","VAYLE HOPE BENEDICT","","3481 N HIGHWAY 112","","FAYETTEVILLE","AR","72704-7437","An independent ISO17025:2017 accredited testing laboratory offering services to companies in dietary supplement and industrial hemp industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#79;&#80;&#69;&#64;&#68;&#66;&#83;&#67;&#73;&#69;&#78;&#67;&#69;&#45;&#78;&#87;&#65;&#46;&#67;&#79;&#77;">HOPE@DBSCIENCE-NWA.COM</a>","www.dbscience-nwa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WQ6YV1PZ2NT2">44</a>","TORRE SPACE & POWER SYSTEMS LLC","CHRISTOPHER TORRE","","6732 AUSTIN BAY CT","","NORTH LITTLE ROCK","AR","72120-4062","Design and analysis of spacecraft electrical systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#116;&#111;&#114;&#114;&#101;&#56;&#48;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">chris.torre805@gmail.com</a>","https://www.tsps.space"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRCGE5CBNSH1">45</a>","JPM STEEL FABRICATION LLC","ERIN MCGARY","","5 GOLDSBY DR","","BELLA VISTA","AR","72714-2118","Fabrication, Steel, Steel Fabrication, Welding, Installation, Industrial buildings, Commercial Building, Alterations, management, construction, repairs, Industrial, Commercial, agriculture, USDA, Tension Fabric Building, Hoop Building, Grain, Grain Bin, Grain Storage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#110;&#64;&#106;&#112;&#109;&#115;&#116;&#101;&#101;&#108;&#102;&#97;&#98;&#114;&#105;&#99;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">erin@jpmsteelfabrication.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NWTJZ4L5MMW9">46</a>","URA RESOURCE CENTER LLC","LATONYA BYNUM","","25 NORTHWOOD DR","","CONWAY","AR","72034-3410","URA Resource Center, LLC is an Arkansas based Woman-Owned and Minority-Owned Small Business with a reputation of providing some of the top public health consultants in the industry. URA Resource Center, LLC has extensive experience conducting Project Management support for creative/technical writing, research / data analysis, training / meeting facilitation. Support to state regulated facilities who acknowledge the Public Health Accreditation standards. URA Resource Center, LLC has developed long term relationships with our clients through our outstanding technical support staff and our commitment to client satisfaction. It is our outstanding technical staff and our unwavering commitment to our clients that sets us apart from other vendors / suppliers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#108;&#97;&#116;&#111;&#110;&#121;&#97;&#98;&#121;&#110;&#117;&#109;&#46;&#99;&#111;&#109;">info@latonyabynum.com</a>","www.latonyabynum.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W7KVDMD48TL4">47</a>","TYLER FARMS AND RANCH, LLC","MICHAEL TYLER","","355 OUACHITA 380","","CAMDEN","AR","71701-9682","Tyler Farms and Ranch, LLC is a fully operational and functioning farm and ranch that has a diverse line of products that include: produce, livestock, timber, cottage goods, honey, and nuts. We also provide livestock support to local farms, educational trips for school aged children, and provide mentorship to beginning farms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#102;&#97;&#114;&#109;&#115;&#97;&#110;&#100;&#114;&#97;&#110;&#99;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tylerfarmsandranch@gmail.com</a>","www.tylerfarmsandranch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XJR2HKB1RMF3">48</a>","INFINITY THERAPY LLC","PORTIA CARR","","7327 WORTH AVE E","","BENTON","AR","72019-6895","Infinity Therapy (I.T.) is on a mission to transcend all boundaries by providing quality patient centered services from pediatrics to geriatrics. We are dedicated to improving the quality of life and accessibility of therapy services for everyone. The company is owned speech-language pathologist with 13 years experience. We deliver services onsite and via telehealth. Experts in providing speech therapy services in the following areas: life participation, patient-centered approach, cognitive communication, aphasia, dementia, childhood language delay, articulation, caregiver training, consulting, and seminars.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#111;&#114;&#116;&#105;&#97;&#64;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#121;&#116;&#104;&#101;&#114;&#97;&#112;&#121;&#46;&#111;&#114;&#103;">portia@infinitytherapy.org</a>","www.infinitytherapy.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GAUTQCSPWKF8">49</a>","THOMAS SWANHAUS","THOMAS SWANHAUS","","2805 FOXCROFT RD","UNIT 802","LITTLE ROCK","AR","72227-2488","Swanhaus, Thomas (dba Tommy Swanhaus Co) is one of the top marketing, digital marketing, social media, and publicity agencies in the world. It has won 'Top 10 Smartest Of Companies of 2019' and '50 Leading Companies of 2018.' Founded by the creative genius, Tommy Swanhaus; the firm amplifies its clients brand, content, and press through its proven successful strategy. Tommy Swanhaus is an 8X Best Selling Author. The agency is able to out innovate and produce better results than any other firm in a short period of time and providing the best ROI.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#109;&#121;&#64;&#116;&#111;&#109;&#109;&#121;&#115;&#119;&#97;&#110;&#104;&#97;&#117;&#115;&#46;&#99;&#111;&#109;">tommy@tommyswanhaus.com</a>","https://tommyswanhaus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE5TQ4PWNKQ3">50</a>","CONNECT DYNAMICS, INC.","AAYUSH THAKUR","","900 SE 5TH ST STE 22F","","BENTONVILLE","AR","72712-6090","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#121;&#117;&#115;&#104;&#64;&#102;&#114;&#56;&#114;&#101;&#108;&#97;&#121;&#46;&#99;&#111;&#109;">aayush@fr8relay.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELYNJ2JK22M3">51</a>","WHALEN AUTOMATION & INTEGRATION LLC","BRAYDEN WHALEN","","2101 BRECKENRIDGE TER","","GREENWOOD","AR","72936-6402","control system upgrades, machine integration, machine troubleshooting, PLC programming, HMI programming, control panel building, make electrical schematics, robotic programming, vision systems, safety and compliance systems, automated conveyor systems, industrial programming.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#121;&#100;&#101;&#110;&#64;&#119;&#104;&#97;&#108;&#101;&#110;&#45;&#97;&#105;&#46;&#99;&#111;&#109;">brayden@whalen-ai.com</a>","www.whalen-ai.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H14RHNB5QHR5">52</a>","INTEGRITECH LLC","JASON ROBINSON","","107 S LINCOLN ST","STE C","LOWELL","AR","72745-9039","IntegriTech, LLC provides managed services and consulting technology services to commercial, nonprofit and government organizations. With over 30 years of Fortune 100 IT experience we engage right people, skills and technologies to help organizations streamline, perform and scale. What sets IntegriTech apart from the competition? Our People Our Pedigree Relationships with our Clients Seek First to Understand Core Capabilities Our technology experts and business professionals analyze research, design and implement solutions in the areas of: Consulting Technology Managed Services  North American Industry Classification System (NAICS) 541512 – Computer Systems Design Services 541519 – Other Computer Related Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#103;&#111;&#118;&#64;&#105;&#110;&#116;&#101;&#103;&#114;&#105;&#116;&#101;&#99;&#104;&#46;&#105;&#111;">samgov@integritech.io</a>","https://integritech.io"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P25LWE5987B3">53</a>","ALMSTRAVEL LLC","KARI WATSON","","2429 CANTERBURY LN","","CABOT","AR","72023-3689","Almstravel is an inclusive and diverse business that strives to provide innovative and flexible solutions for State and Federal clients, businesses, and consumers. Besides our main focus on travel and accommodation, we are also federal contractors operating our subsidiary company Alms Logistics Materials and Supplies to resale general consumer products to governments, businesses, and consumers. We're a one-stop shop for all the supplies a consumer needs, whether it's for government organizations, businesses, and consumers. We provide solutions based on consumer needs by showing prices and specs side by side. Whether the consumer is procuring for school or business purposes, AlmsTravel/A.L.M.S. can accommodate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#105;&#119;&#97;&#116;&#115;&#111;&#110;&#64;&#97;&#108;&#109;&#115;&#116;&#114;&#97;&#118;&#101;&#108;&#46;&#99;&#111;&#109;">kariwatson@almstravel.com</a>","https://almsmarketplace.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5GLNB6NGDL3">54</a>","SLD GROUP LLC","STACY DANTZLER","","255 WILD ROSE CV","","AUSTIN","AR","72007-9150","We provide Business Development, Medical Supplies, Personal Protective Equipment (PPE), lodging accommodation services, Portable Modular Homes, Renewable Solar Energy, Motivational speaking services for Design Thinking, Diversity and Inclusion, Master Resilience (MRT) and Sexual Harassment and Response Program (SHARP).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#115;&#108;&#100;&#103;&#114;&#111;&#117;&#112;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">support@sldgroupllc.com</a>","www.sldgroupllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DT8YE9V1NNB5">55</a>","FORESIGHT ENGINEERING, LLC","COLIN SHAW","","413 W CEDAR ST","","ROGERS","AR","72756-3745","Foresight Engineering designs smart optical sighting systems for simple target acquisition. We also offer software engineering, optical design, machine learning, electronics development and user research services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#105;&#110;&#64;&#102;&#111;&#114;&#101;&#115;&#105;&#103;&#104;&#116;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">colin@foresightengineers.com</a>","https://www.foresightengineers.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TPSQMM9YR744">56</a>","COAKE LLC","JEFFERY VANDERPOOL","","4907 OLD BOWMAN RD","","RUDY","AR","72952-9390","Coake LLC is a full-service logistics provider that offers customized solutions for transportation, warehousing, distribution, and supply chain management. With over 20 years of experience in the industry, Coake LLC has the expertise, resources, and technology to handle any logistics challenge. Whether you need local or international delivery, expedited or consolidated shipping, or specialized handling of fragile or hazardous goods, Coake LLC can meet your needs and exceed your expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#118;&#97;&#110;&#100;&#101;&#114;&#112;&#111;&#111;&#108;&#64;&#99;&#111;&#97;&#107;&#101;&#45;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Jvanderpool@coake-logistics.com</a>","https://www.coakecorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZVYGRCEEKSC7">57</a>","METOVA STRATEGIES LLC","JOSH SMITH","","240 S MAIN ST","STE 261","BENTONVILLE","AR","72712-5963","Metova is a dynamic small business specializing in Custom Computer Programming Services (NAICS 541511), offering innovative, scalable, and secure software solutions tailored to client needs. Our capabilities include Computer Systems Design (NAICS 541512), delivering optimized IT solutions; Computing Infrastructure, Data Processing, and Web Hosting (NAICS 518210) for secure, reliable digital asset management; and Graphic Design (NAICS 541430) for impactful branding. We also provide strategic Marketing Consulting (NAICS 541613) and comprehensive Professional Services (NAICS 541990). As a trusted partner, we combine technical expertise, creative talent, and business acumen to drive client success. Metova is committed to quality, compliance, and delivering results that exceed expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#46;&#115;&#109;&#105;&#116;&#104;&#64;&#109;&#101;&#116;&#111;&#118;&#97;&#46;&#99;&#111;&#109;">josh.smith@metova.com</a>","https://metova.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGMVKFE9EUM3">58</a>","GILBERT MOLD & DIE, INC.","GUY GILBERT JR.","","6424 HIGHWAY 43 S","","HARRISON","AR","72601-8645","Established in 1992. GMD has been serving the Tooling and Custom Machining industry for over 30 years. We design and build custom plastic injection and die cast tools. We also provide high speed production machining, fixturing and CNC EDM services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#64;&#103;&#105;&#108;&#98;&#101;&#114;&#116;&#109;&#111;&#108;&#100;&#46;&#99;&#111;&#109;">bo@gilbertmold.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K8ZWV3GUX2T3">59</a>","VETERAN GUARD PARTNERS LLC","MARCUS WOODS","","1706 RAINES ST","","JONESBORO","AR","72401-5042","VGP customizes IT solutions based on customer requirements. We handle the procurement and implementation of hardware and software, as well as provide support for hardware, software, compliance, and licensing. Our focus is on delivering tailored IT solutions to meet our customers’ needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#117;&#115;&#64;&#118;&#101;&#116;&#101;&#114;&#97;&#110;&#103;&#117;&#97;&#114;&#100;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">marcus@veteranguardpartners.com</a>","https://www.veteranguardpartners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R8Z8GNY4HTP9">60</a>","KAYDEE ENTERPRISES, INCORPORATED","DAVID TODD","","1801 FOREST HILLS BLVD STE 203","","BELLA VISTA","AR","72715-3071","Sales, Parts and Service for liquid chromatography Pickering Labs PCX Post column derivatizers. GE / Cytiva aftermarket maintenance and service parts for the Akta series FPLC systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#46;&#116;&#111;&#100;&#100;&#64;&#107;&#97;&#121;&#100;&#101;&#101;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">david.todd@kaydeetek.com</a>","www.kaydeetek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PVHKANCPSRB1">61</a>","LAKEISHA D. PALMER","LAKEISHA PALMER","","9718 MERLOT LN","","NORTH LITTLE ROCK","AR","72118-1160","Small Business Consulting Firm specializing in Operations Management, Restructure Services, Virtual Assistant Services, Audit Services, Notary Services, Business Tax Consultations, Bids For Contracts, Primary Contracts, Subcontracts, Some Bookkeeping Services, Organization and Tracking of Expenses, Income, Accounts payable/receivables.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#100;&#112;&#97;&#108;&#109;&#101;&#114;&#52;&#52;&#52;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ldpalmer4448@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XLDGB94R2123">62</a>","PWD LLC","STEPHANIE PLAFCAN","","8411 US HIGHWAY 64 W","","RUSSELLVILLE","AR","72802-0986","PWD Manufacturing is a dedicated machine shop focused on repairing, replacing, and/or manufacturing tooling and equipment. Through the use of CNC mills, CNC laths, and manual equipment, we guarantee quality products with +/- 0.001 tolerance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#97;&#110;&#105;&#101;&#64;&#112;&#119;&#100;&#109;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">stephanie@pwdmanufacturing.com</a>","www.pwdmanufacturing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X914GHBE2485">63</a>","CENTERROCK ADVERTISING INC","VICTOR JACUZZI","","6301 RANCH DR","","LITTLE ROCK","AR","72223-4623","CenterRock Advertising is a full service very experienced agency that provides personal hands-on service centered around the goals and needs of our clients. The agency has a record of innovative and successful multi channel campaigns resulting in long lasting partnerships.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#99;&#101;&#110;&#116;&#101;&#114;&#114;&#111;&#99;&#107;&#97;&#100;&#118;&#101;&#114;&#116;&#105;&#115;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">steve@centerrockadvertising.com</a>","centerrockadvertising.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TEN8SS2H6NZ4">64</a>","HUMIMIC BIOSYSTEMS LLC","ALEXIS APPLEQUIST","","14 E MARTIN LUTHER KING JR BLVD","","FAYETTEVILLE","AR","72701-6501","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#120;&#105;&#97;&#112;&#112;&#108;&#101;&#113;&#117;&#105;&#115;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">lexiapplequist@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CKVBXMNHPDA9">65</a>","LEONARD SYSTEMS LLC","STUART LEONARD","","7525 LEONARD CT","","FORT SMITH","AR","72916-8131","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#117;&#97;&#114;&#116;&#64;&#109;&#97;&#103;&#110;&#97;&#102;&#111;&#114;&#109;&#46;&#99;&#111;&#109;">stuart@magnaform.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YY64SJNZ1CT8">66</a>","TV MOUNTING PRO LLC","JERALD MITCHELL","","1501 MAIN ST STE 600","","LITTLE ROCK","AR","72202-5037","With over 20 years of experience, TV Mounting Pro specializes in professional media installation services. As a fully insured, minority-owned business, we serve both residential and commercial clients with a focus on quality, reliability, and customer satisfaction. With a commitment to quality and a broad range of capabilities, we are a trusted partner for federal contracts requiring professional TV mounting, home theater installation, and custom display solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#104;&#101;&#116;&#118;&#109;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">info@thetvmountingpro.com</a>","www.thetvmountingpro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S2RJTTEGB7W6">67</a>","NEW SOFTWARE AUTHOR AGENCY 17 OPERATIONS CORPORATION","TIMOTHY JOHNSON","","605 N MOBILE AVE","","RUSSELLVILLE","AR","72801-4437","I make software products using a compiler.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#99;&#106;&#46;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#97;&#117;&#116;&#104;&#111;&#114;&#64;&#108;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">tcj.software.author@live.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C41LZQCCZG71">68</a>","C & D CONSTRUCTION, INC.","CARL COONEY","PRESIDENT","2100 MCDONALD RD","","LITTLE ROCK","AR","72206-7020","Design-Build,Solar,Environmental,Utility, Roads,Roofing,Lightning Protection, Parking Lots, Estimating, Hauling, Metal Buildings,Clear and Grubb, Painting, Drywall, Framing, Flooring, ACT, Layout,Fencing,Concrete,Finishes,Acoustic,Septic Tank,Demolition,Asphalt,Lead-Lined,Electrical, Signal and Street Lighting,Parking Lots,Tank Demolition,Hospital,Dorms, Housing, ADA, Sidewalk, Church,BRAC,Unistruct","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#97;&#108;&#105;&#106;&#114;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">Kalijr@sbcglobal.net</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.337&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

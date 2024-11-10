@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 683 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.63 seconds and 1.72 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 46 
+(of 46 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBKVAKNRXYG9">1</a>","NEW ERA MOVING SERVICES INC","LARRY WEBB","VICE-PRESIDENT","10680 WAKEMAN CT","","MANASSAS","VA","20110-2026","NEW ERA IS UNIQULEY POSITIONED TO OFFER SUSTAINED CUSTOMER SERVICE THROUGH, INNOVATION,COMMUNICATION AND DEDICATION.NEW ERA IS STAFFED BY SKILLED PROFFESIONALS WHOSE GOAL IS TO IMPROVE THE QUALITY OF OUR CLIENTS OPERATIONS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#64;&#110;&#101;&#119;&#101;&#114;&#97;&#109;&#111;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">larry@neweramoving.com</a>","www.neweramoving.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NE8ZQKUEDQL5">2</a>","WRT CORP","DAVID JUDD","GEN MGR","9050 EUCLID AVE","","MANASSAS","VA","20110-5346","REPLACEMENT AIR CONDITIONING COMPRESSORS AND PARTS; CONDENSER AND CHILLER TUBES & VESSELS; CONDENSER AND BOILER TUBE CLEANING AND RETUBING TOOLS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#106;&#64;&#114;&#112;&#99;&#99;&#111;&#109;&#112;&#114;&#101;&#115;&#115;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">davidj@rpccompressors.com</a>","http://www.rpccompressors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQFMAKCKMAF7">3</a>","LOGIS-TECH, LLC","BRIAN DOSHIER","Vice President, Business Development","9474 INNOVATION DR","","MANASSAS","VA","20110-2214","Logistics engineering and professional services specializing in corrosion prevention, logistic studies, and asset visibility and tracking. Involved in controlled humidity preservation, RFID tags, dehumidification, CPC coatings, and controls technology","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#100;&#111;&#115;&#104;&#105;&#101;&#114;&#64;&#108;&#111;&#103;&#105;&#115;&#45;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">bdoshier@logis-tech.com</a>","www.logis-tech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HM7JM8VY2GD4">4</a>","BENTEN TECHNOLOGIES, INC.","TONY MA","President","9408 GRANT AVE","STE 206","MANASSAS","VA","20110-1816","Benten Technologies is a professional services provider specializing in four business areas including Management Consulting; Mobile Development; Information Technology Services; and Research and Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#109;&#97;&#64;&#98;&#101;&#110;&#116;&#101;&#110;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">tonyma@bententech.com</a>","http://www.bententech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P47UM23KX3N5">5</a>","EVIGILANT.COM, LLC","BILLY CONNER","President","8807 SUDLEY RD STE 202","","MANASSAS","VA","20110-4719","IT and Electronic security integration, Access Control, Intrusion Detection, CCTV, intercom","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#86;&#67;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#101;&#118;&#105;&#103;&#105;&#108;&#97;&#110;&#116;&#46;&#99;&#111;&#109;">eVContracts@evigilant.com</a>","http://www.evigilant.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQDSN41LRN37">6</a>","VIEWSOFT INC","ISRAT HAQUE","President","9411 MAIN ST STE 201","","MANASSAS","VA","20110-5447","ViewSoft, Inc provides highly experienced teams of Data Scientists, Big Data Professionals, and Software Developers. We've been serving our clients for over 20 years by offering a variety of solutions through multiple venues that fit specific needs of our clients and we operate our business at the most effective levels for our customers by leveraging industry best practices and tools. Viewsoft uses highly skilled professionals who have many years of experience with cutting edge technologies. We help organizations to reach their goals of big data solutions either on premise or on the cloud and effectively manage the relational databases.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#83;&#82;&#65;&#84;&#64;&#86;&#73;&#69;&#87;&#83;&#79;&#70;&#84;&#73;&#78;&#67;&#46;&#67;&#79;&#77;">ISRAT@VIEWSOFTINC.COM</a>","http://viewsoftinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQJAD34Q1LK7">7</a>","TRACEN TECHNOLOGIES INC","DEANNA DAVIDSON","President","9720 CAPITAL CT","STE 401","MANASSAS","VA","20110-2052","Tracen Techologies is a technology products and services company specializing in IT program management support, integrated mobile and web solutions, full life cycle software development, enterprise architecture, business process reengineering, systems modernization, and systems integration services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#116;&#114;&#97;&#99;&#101;&#110;&#46;&#99;&#111;&#109;">contracts@tracen.com</a>","http://www.tracen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YEVNXAN1J441">8</a>","SARRATT ACQUISITION MANAGEMENT INC","ROBERT SARRATT","","8916 SWEETBRIAR ST","","MANASSAS","VA","20110-3818","Research, design, patterning, sizing, development, engineering, testing, transistion to production, production, fitting, issue, and alteration of military clothing and individual equipment. Specialists in Defense contracting and proposals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#115;&#97;&#114;&#114;&#97;&#116;&#116;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">bsarratt@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QZRGC923ZD99">9</a>","HIGH PURITY SYSTEMS, INC","DEBBIE SORENSEN","President","8620 QUARRY RD","","MANASSAS","VA","20110-5315","Process Piping Specialist","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#111;&#114;&#101;&#110;&#115;&#101;&#110;&#64;&#104;&#105;&#103;&#104;&#112;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">dsorensen@highpurity.com</a>","http://www.highpurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z5JRUCEQJNH8">10</a>","CROSSROADS MEDIATION SERVICES, INC","FABIENNE WILSON","","9250 MOSBY ST STE 100","","MANASSAS","VA","20110-5038","Equal Employment Opportunity services, including mediation, counseling, investigations, and final agency decisions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#98;&#105;&#101;&#110;&#110;&#101;&#46;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#99;&#114;&#111;&#115;&#115;&#114;&#111;&#97;&#100;&#115;&#101;&#101;&#111;&#46;&#99;&#111;&#109;">fabienne.wilson@crossroadseeo.com</a>","www.crossroadseeo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U4XSQTM8LN36">11</a>","REED & ASSOCIATES, CPAS, INC.","DEIRDRE REED","","8700 CENTREVILLE RD STE 203","","MANASSAS","VA","20110-8411","Reed & Associates is a small, woman-owned company started in 2000. Reed performs financial, compliance, performance & internal control audits, financial management accounting & consulting services for federal agencies & their contractors nationwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#101;&#101;&#100;&#64;&#114;&#101;&#101;&#100;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#111;&#114;&#103;">dreed@reedassociates.org</a>","www.reedassociatescpas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYQCML54AKL5">12</a>","ENVIRONMENTAL WASTE SPECIALISTS INC","DAWN WALKER","C.E.O.","9625 SURVEYOR CT","STE 210","MANASSAS","VA","20110-4408","Transportation & disposal of asbestos, lead, contaminated soil, sludge, PCB's non-hazardous waste. Lab pack, bulk quantities, soil remediation/disposal and special waste/medical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#119;&#110;&#64;&#101;&#119;&#115;&#105;&#104;&#97;&#122;&#109;&#97;&#116;&#46;&#99;&#111;&#109;">dawn@ewsihazmat.com</a>","http://www.ewsihazmat.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LSAWR8QNEA44">13</a>","POTOMAC ANALYSIS CORPORATION","ROBERT BROOKS","President","9302 PRESCOTT AVE","","MANASSAS","VA","20110-5305","Specializing in Modeling & Simulation for the Department of Defense in Logisitcs and warfight analyses. Conducts general program support to include in depth analyses and meeting support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#98;&#114;&#111;&#111;&#107;&#115;&#64;&#112;&#111;&#116;&#111;&#109;&#97;&#99;&#97;&#110;&#97;&#108;&#121;&#115;&#105;&#115;&#46;&#99;&#111;&#109;">joshbrooks@potomacanalysis.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F757FPK9RFN5">14</a>","SYSUSA, INC.","SUMARA BAIG","Treasurer/Secretary","8565 SUDLEY RD","STE C","MANASSAS","VA","20110-3864","Consulting services include: Cyber Security, Information Assurance, Vulnerability Scanning, Penetration Testing, IT Compliance, Certification and Accreditation Security Assessments, Gap Analysis, Cyber Security, Network & Infrastructure Design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#97;&#114;&#97;&#46;&#98;&#97;&#105;&#103;&#64;&#115;&#121;&#115;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">sumara.baig@sysusa.com</a>","http://www.sysusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TBSYN5HETPN5">15</a>","BUSINESS MANAGEMENT RESEARCH ASSOCIATES, INC.","GRAY COYNER","","9817 GODWIN DR","# 202","MANASSAS","VA","20110-4359","A service-disabled, veteran-owned small business with a dedicated, responsive professional staff. Our goal is the success of acquisition programs and other processes. We are small enough to personalize our services to an organization's needs, with big-business reliability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#99;&#111;&#121;&#110;&#101;&#114;&#64;&#98;&#109;&#114;&#97;&#46;&#99;&#111;&#109;">gcoyner@bmra.com</a>","http://www.bmra.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLJ7HPLXKNG1">16</a>","WDP & ASSOCIATES CONSULTING ENGINEERS, INC.","REX CYPHERS","","10621 GATEWAY BLVD STE 200","","MANASSAS","VA","20110-2055","Categories of services provided: Structural Evaluations Facade Investigations Geotechnical Analysis & Design Nondestructive Testing Materials Testing & Inspection Construction Management Lab Testing & Analysis Expert Witness","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#99;&#121;&#112;&#104;&#101;&#114;&#115;&#64;&#119;&#100;&#112;&#97;&#46;&#99;&#111;&#109;">rcyphers@wdpa.com</a>","http://www.wdpa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRHNJ5AZWAN4">17</a>","ECU COMMUNICATIONS LLC","JACQUELINE KRICK","","9073 CENTER ST","","MANASSAS","VA","20110-5430","ECU offers strategic approaches and solutions to communications needs such as strategic planning, development of local, regional and national advertising campaigns, graphic and web design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#105;&#101;&#46;&#107;&#114;&#105;&#99;&#107;&#64;&#101;&#99;&#117;&#99;&#111;&#109;&#109;&#46;&#99;&#111;&#109;">jackie.krick@ecucomm.com</a>","http://www.ecucomm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UBGGH9KA1YC1">18</a>","JOINT TECHNOLOGY SOLUTION, INC.","TANIA GARAVITO","","9255 CENTER ST STE 300","","MANASSAS","VA","20110-5076","JTS offers service in Developmental Test and Evaluation, Operational Test and Evaluation, Independent Verification and Validation, Quality Assurance,Business Process Engineering, Business Process Improvements, and fielding of Computer Systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#110;&#105;&#97;&#46;&#103;&#97;&#114;&#97;&#118;&#105;&#116;&#111;&#64;&#106;&#116;&#115;&#105;&#46;&#110;&#101;&#116;">tania.garavito@jtsi.net</a>","http://www.jtsi.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBFEFU94YZN3">19</a>","APPLE 1 ENTERPRISES, INC.","REBECCA NEISS","","9621 CLOVER HILL RD","","MANASSAS","VA","20110-2753","Experience in commercial/residential construction consisting of: Tenant build-outs, restaurant, demolitions, foundations, building exteriors exterior,additions, bath/kitchen remodeling, basement finishing, int/ext painting, water damage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#98;&#101;&#99;&#99;&#97;&#46;&#97;&#112;&#112;&#108;&#101;&#49;&#101;&#110;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rebecca.apple1ent@gmail.com</a>","www.apple1ent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMCKBBLLUBQ7">20</a>","SHIELD ANALYSIS TECHNOLOGY LLC","DENISE BAKEN","","9244 CHURCH ST","","MANASSAS","VA","20110-5543","Research and consulting firm that addresses Chemical, Biological, Radiological, Nuclear (CBRN) public health threats with analysis tools that drive policy, strategy, and preparedness. Modeling and gap analysis. Integrate multiple intelligence sources to solve emerging threat problems.  Strategic planning and implementation support of client STEM long-range workforce needs.  Program and project management to include administrative support. Plans, Programs, Budget, and Execution (PPBE) system support to include: force costing, program element data analysis, long range strategic planning, and justification development for funding level defense.  Risk and threat assessments of terrorism networks particularly in Northern Africa and Middle East, Analysis of terrorist organization business activities and management. Develop threat analysis of a terrorism network. Expertise in terrorism bioweapons/biodefense assessment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#97;&#107;&#101;&#110;&#64;&#115;&#104;&#105;&#101;&#108;&#100;&#97;&#110;&#97;&#108;&#121;&#115;&#105;&#115;&#46;&#99;&#111;&#109;">dbaken@shieldanalysis.com</a>","http://www.shieldanalysis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D3RBSJ5BB845">21</a>","FULL SERVICE GLASS, INC.","NICHOLAS KRAMER","","9077 LIBERIA AVE","","MANASSAS","VA","20110-5312","We offer many services; including Storefront & Commercial Glazing, Herculite Entries, Replacement Glass (Insulated, Single Pane, & Specialty), Replacement Windows, Window Parts, Skylights, Mirrors, Shower Enclosures (Framed & Frameless), and Screens.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#107;&#64;&#102;&#115;&#103;&#108;&#97;&#115;&#115;&#100;&#99;&#46;&#99;&#111;&#109;">nk@fsglassdc.com</a>","www.fsglassdc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RJJWRZTMKHE1">22</a>","DOUBLE EAGLE VOICE & DATA SYSTEMS LLC","JAMES RUSNOCK","","9852 BUSINESS WAY","","MANASSAS","VA","20110-4151","Telecommunications Reseller Telecommunications Repair/Maintenance Voice, Data and Fiber Cabling","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#114;&#117;&#115;&#110;&#111;&#99;&#107;&#64;&#100;&#98;&#108;&#45;&#101;&#97;&#103;&#108;&#101;&#46;&#99;&#111;&#109;">jrusnock@dbl-eagle.com</a>","https://www.dbl-eagle.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PK59JVQEPPL9">23</a>","GMC TEK LLC","KOMAL DHARIA","","8569 SUDLEY RD STE C","","MANASSAS","VA","20110-3863","GMC TEK LLC is value added reseller for IT related hardware, software, professional services for State, Local, federal government, and commercial areas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#111;&#109;&#97;&#108;&#95;&#100;&#104;&#97;&#114;&#105;&#97;&#64;&#103;&#109;&#99;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">komal_dharia@gmctek.com</a>","www.gmctek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXT4E7UEXX11">24</a>","MCDEMUS & CO LLC","UME ONWUKA","","8711 PLANTATION LN","STE 302","MANASSAS","VA","20110-8322","McDemus & Co. is a full service CPA firm. Our core service include, but is not limited to management consulting, tax services, auditing, accounting, bookkeeping, risk assurance, internal control assessment and documentation, and employee training and development. We also provide Audit Support Services, Audit Readiness, A-123 support and implementation, A-133 audits, Financial Statement preparation and support, Due Diligent review and examinations, Financial and Construction Audits, Contract Closeout Audits, Grants & Financial award audits, Accounts Reconciliation & Budgeting and Recapture audits and Duplicate Payment audits.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#117;&#109;&#101;&#110;&#107;&#97;&#64;&#109;&#99;&#100;&#101;&#109;&#117;&#115;&#99;&#112;&#97;&#46;&#99;&#111;&#109;">umenka@mcdemuscpa.com</a>","https://www.mcdemuscpa.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TLLAP6FKHA99">25</a>","HEPBURN AND SONS LLC","ERIC HEPBURN","","9200 CHURCH ST STE 302","","MANASSAS","VA","20110-5561","Our technical expertise in a variety of engineering disciplines including mechanical, electrical, nuclear, systems, information technology and cybersecurity, missile defense, material science, naval architecture, and naval engineering. Our strengths include program management, electromagnetic pulse, warfare and combat systems, to customers including DTRA, NAVSEA, ONR, Airforce, and firms with technical analysis, quality, life cycle cost estimating, proposal preparation, marketing, and capture management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#46;&#104;&#101;&#112;&#98;&#117;&#114;&#110;&#64;&#104;&#101;&#112;&#98;&#117;&#114;&#110;&#97;&#110;&#100;&#115;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">eric.hepburn@hepburnandsons.com</a>","http://www.hepbunandsons.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U6MGYRN9KRC5">26</a>","MDR STRATEGIES, LLC","MICHAEL ROCHELLE","","9104 STONEWALL RD","","MANASSAS","VA","20110-2556","MDR Strategies’ primary line of business is the rationalization of corporate strategy and the acquisition and retention of intellectual and human capital strategy required to achieve organizational goals. The short “handle” for this corporate client need is Strategic Human Capital Strategy Development'. MDR Strategies, LLC currently boasts private, corporate, as well as public sector (institutional) clients in the area of Executive Coaching. Executive Coaching represents the fastest growing line of business in MDR Strategies portfolio. Expertise in linking Mission, Vision, Goals and desired organizational outcomes via a comprehensive organizational strategy has been successfully demonstrated in multiple, large, complex organizations. We can do it in yours!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#100;&#114;&#49;&#64;&#109;&#100;&#114;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">mdr1@mdrstrategies.com</a>","https://www.mdrstrategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SQLMTME24MQ3">27</a>","KIM AND STANTON TRADING CO, LLC","ANDREW KIM","","8785 COMMERCE CT STE 102","","MANASSAS","VA","20110-5278","Provide resourceful information and guidance to our clients in order to provide a cost-effective strategy that fits with specific budget plans and business models.?","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#115;&#116;&#99;&#111;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kastcollc@gmail.com</a>","www.kastcollc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZQDV4ZV4ML3">28</a>","VANGUARD MEDICAL LLC","RICARDO GONZALEZ","","8577 SUDLEY RD","","MANASSAS","VA","20110-3810","Vanguard Medical was established in May 2012; The medical service industry has benefited from increased investment in healthcare and cost cutting efforts among healthcare providers. We started as a surgical instrument repair company and have evolved to cover other services. •	Surgical instruments repair -	Flexile Scope -	Rigid Scope -	Phaco hand pieces -	Camera heads -	Drill - Power •	Container Repair •	Caster’s replacement •	Detail cleaning •	ETO Sterilization •	General Instruments: -	On-site Sharpening -	Offsite Sharpening •	Patient Monitoring •	Biomedical Engineering Services •	Biomedical onsite sourcing •	Temporary Staffing Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#103;&#117;&#97;&#114;&#100;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#64;&#121;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">vanguardmedical@ymail.com</a>","www.vanguard-medical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z1ZDQ9VG1KD5">29</a>","ASPC SOLUTIONS, LLC","ALONZO NIXON","","8629 MATHIS AVE","","MANASSAS","VA","20110-5270","ASPC Solutions also can support your cost-saving efforts by offering a full range of materials management outsourcing options, including complete departmental outsourcing or targeted positions up to the director level.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#105;&#120;&#111;&#110;&#64;&#97;&#115;&#112;&#99;&#115;&#111;&#108;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">anixon@aspcsoltions.com</a>","www.aspcsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKX6Q2EQN8F3">30</a>","TLI ENTERPRISES, LLC","MARGARET JARRETT","","9071 CENTER ST","","MANASSAS","VA","20110-5430","TLI Enterprises provides professional services to Federal, State and Local clients. TLI's scope of services for IT engineering services span, project and program management, system and software engineering, IT/computer services, quality assurance, and logistics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#106;&#97;&#114;&#114;&#101;&#116;&#116;&#64;&#116;&#108;&#105;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#99;&#111;&#109;">mjarrett@tlienterprises.com</a>","www.tlienterprises.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H7V5MKNFU1P8">31</a>","OLDE TOWNE AUTO REPAIR, INC.","JOHN JOHNSON JR","","9278 PRINCE WILLIAM ST","","MANASSAS","VA","20110-5617","Service and maintain all makes trucks and cars. ASE certified technicians.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#106;&#111;&#108;&#100;&#116;&#119;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jjoldtwn@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTKWECN9LFB7">32</a>","MBH NATIONAL INC","BERLETNEY HOUSE","","10653 MCCORMICK FARM DR","","MANASSAS","VA","20110-6934","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#104;&#111;&#117;&#115;&#101;&#64;&#109;&#98;&#104;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">Bhouse@mbhnational.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N51QMFHRQXW7">33</a>","GILL ENGINEERING GROUP PLC","HIRDAYPAL GILL","","9161 LIBERIA AVE STE 204B","","MANASSAS","VA","20110-1725","Gill Engineering Group Plc (GEG) was established to provide excellent mechanical, electrical and plumbing (MEP) engineering design & consulting services with a goal to create healthy, comfortable and affordable living or working environment for you. GEG staff of professional engineers, experienced designers and LEED accredited professionals provides you with services that are up to date with current applicable building codes, relies on latest proven technology and tools helping you conceive your next building project efficiently and economically. GEG staff is focused and goal oriented to meet the deadlines. Principal’s involvement and project management from start to finish ensures smooth and lean operation, thus, avoiding overhead costs that help us to provide you engineering consulting services at an affordable cost. GEG has a diversified MEP design experience in office, retail, restaurants, institutional and government establishments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#103;&#105;&#108;&#108;&#64;&#103;&#105;&#108;&#108;&#101;&#110;&#103;&#103;&#46;&#99;&#111;&#109;">hgill@gillengg.com</a>","www.gillengg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLGTZHDFLML9">34</a>","ROXEN INCORPORATED","MICHAEL RODZIANKO","","9766 CENTER ST","","MANASSAS","VA","20110-4128","Print products. Digital printing, Finishing, binding, blueprints","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#111;&#100;&#122;&#105;&#97;&#110;&#107;&#111;&#64;&#109;&#105;&#110;&#117;&#116;&#101;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">mrodzianko@minuteman.com</a>","https://minuteman.com/us/locations/va/manassas/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDXJGC6RLHB1">35</a>","C&J SECURITY SERVICES, INC.","CLYDE ASHLEY","","9283 CORPORATE CIR","","MANASSAS","VA","20110-4154","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#100;&#97;&#115;&#104;&#108;&#101;&#121;&#64;&#99;&#106;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">cdashley@cjsecurityservicesinc.com</a>","www.cjsecurityservicesinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M47VDJE3KET5">36</a>","SOPHINEA CORP","BRIAN THAMM","","10811 HEAVEN SCENT LN","","MANASSAS","VA","20110-2802","Sophinea has two primary Service Lines, Technology Consulting Services and Business Consulting Services. Technology Consulting Services focus on data systems solution design and implementation, and also Data Science. Business Consulting Services focus on the necessary organizational change management and training/enablement activities required to ensure maximum Return on Investment (ROI) on investments made in technical services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#116;&#104;&#97;&#109;&#109;&#64;&#115;&#111;&#112;&#104;&#105;&#110;&#101;&#97;&#46;&#99;&#111;&#109;">bthamm@sophinea.com</a>","www.sophinea.io"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KHF3MXKU3JK4">37</a>","SOIL CONSULTANTS ENGINEERING, LLC","JENNIFER SMITH","","9303 CENTER ST","","MANASSAS","VA","20110-1800","Founded in 1960, Soil Consultants Engineering, LLC (SCE) is a Woman and Small Business (WOSB), specializing in full-service geotechnical engineering, construction observations, material testing, and construction code inspections. SCE has an in-house nationally certified soil and concrete laboratory equipped to provide all soil and concrete testing services required for project completion. SCE has provided consulting services on more than 50,000 projects for public and private clients by exceeding expectations and the ability to meet the client’s needs in a timely and cost-effective manner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#46;&#115;&#109;&#105;&#116;&#104;&#64;&#115;&#111;&#105;&#108;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#46;&#110;&#101;&#116;">jenn.smith@soilconsultants.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YSYCMYJQ7WK6">38</a>","STRATEGIC SIGHT CONSULTING LLC","RAMON MAYFIELD","","8657 BELLE GROVE WAY","","MANASSAS","VA","20110-6938","Strategic Sight Consulting is a minority-owned small business and technology consulting agency focused on providing strategic global operations execution for federal organizations with program management and technical expertise requirements. We bring experience in technical analysis of improvised threats, piloting and technical assessment of Small Unmanned Aircraft Systems (sUAS) capabilities, and in-depth understanding of Capabilities- Based Assessments (CBAs) – for test and evaluation of custom and commercial-based technologies. Our diverse engineering skills, all source intelligence subject matter expertise, and familiarity with emerging commercial technologies; uniquely positions us to work with a variety of customers, whether private, public or general consulting clients. We are capable of providing consulting and engineering services to the Department of Defense, Intelligence Community Professionals, Department of Justice, Other Government Agencies and Start-ups.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#100;&#109;&#105;&#110;&#64;&#83;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#99;&#83;&#105;&#103;&#104;&#116;&#76;&#76;&#67;&#46;&#99;&#111;&#109;">Admin@StrategicSightLLC.com</a>","StrategicSightLLC.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SXNWG6M4EFU7">39</a>","STAR LIGHT CONSULTING LLC","DR. JOEL CHAGADAMA","","9300 FOREST POINT CIR","STE 150","MANASSAS","VA","20110-4765","Star Light Consulting (SLC), LLC is a Minority-Owned Accounting Business Enterprise, based out of Virginia, that specializes in Budget Analysis and Consulting. Here we combine 15+ years of industry experience and unwavering dedication to client success, to provide Financial Management and Planning services – nationwide. At SLC, our high ethical values and specialized staff make the difference between our outstanding performance and other companies. We improve industry stability by offering in-house services like Bookkeeping, Payroll, Tax Filing, Portfolio Management, Cost Assessment & Mitigation, Auditing, Investment Advice and more. In addition, at SLC we provide Program Development and Management services. With the ability to implement procedures needed to keep operations running smooth, SLC ensures your team will be fully equipped to handle any financial challenges in the future. We are your Accounting Team ready to serve you! For more information visit www.gobrightstar.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#99;&#104;&#97;&#103;&#97;&#100;&#97;&#109;&#97;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Jchagadama@hotmail.com</a>","www.gobrightstar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNBJFZMQ7117">40</a>","ECHELON PARTNERS, LLC","TOM ONGIES","","9720 CAPITAL CT STE 201","","MANASSAS","VA","20110-2050","Echelon Partners, LLC specializes in the delivery and deployment of information technology, cloud, cybersecurity, and systems engineering in the delivery of mission, and mission support solutions across the Federal government. As a Small Business Administration (SBA) Certified 8(a) Native Hawaiian Owned (NHO) small business, Echelon Partners, LLC affords the government simplified acquisition execution with industry leading information technology products and capabilities. Echelon Partners, LLC combines professional program and project planning services, from analysis and requirements identification, through delivery and sustainment activities with a focus on systems engineering, integration, governance, and processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#46;&#111;&#110;&#103;&#105;&#101;&#115;&#64;&#101;&#99;&#104;&#101;&#108;&#111;&#110;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">thomas.ongies@echelongov.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETCKS23DL429">41</a>","MAESTRO SOLUTIONS, LLC","MARRION ADELODUN","","10518 S GRANT AVE","","MANASSAS","VA","20110-6912","Providing consulting, operating and administrative advice to businesses and other organizations to include planning and management among others.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#101;&#108;&#111;&#100;&#117;&#110;&#109;&#97;&#114;&#114;&#105;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">adelodunmarrion@gmail.com</a>","maestrolimited.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBB7N4NETX79">42</a>","PURPLE URCHIN INC","JENNIFER WILLIAMSON","","9403 GRANT AVE STE 100","","MANASSAS","VA","20110-5552","Purple Urchin is a self-certified WOSB based in that specializes in purple team security to customize and secure Linux-based operating systems (OS) using DevSecOps. We provide high-quality engineering services at all levels of the Linux software stack from power on to application running, a pre-hardened OS that comes with default scores and documentation, which can be used as-is or customized according to client requirements, software package management including FOSS, COTS, and GOTS software, and a system security wrapper that automates tasks such as system information gathering, security scans, package updates, and configuration hardening. We have over 17 years of Linux and cyber security experience with multiple DoD programs including obtaining multiple Authorities to Operate (ATOs) and implementation of Risk Management Framework (RMF). Our engineers are both Linux and cyber security experts. We are Red Hat Certified Professionals and Security+ certified with Secret clearances.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#64;&#112;&#117;&#114;&#112;&#108;&#101;&#117;&#114;&#99;&#104;&#105;&#110;&#46;&#99;&#111;&#109;">jen@purpleurchin.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFJLTMCBEME6">43</a>","ASCENDANT AND PARTNERS LLC","KAYLA PHAM","","8349 FELSTED LN","","MANASSAS","VA","20110-4557","We are an IT management company. We offer project management, business analyst services, product management, and admin management for the IT industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#121;&#108;&#97;&#112;&#104;&#64;&#97;&#115;&#99;&#101;&#110;&#100;&#97;&#110;&#116;&#97;&#110;&#100;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">kaylaph@ascendantandpartners.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YTCKJGLHUEC5">44</a>","SAMSON GLOBAL SOLUTIONS LLC","CHRISTOPHER KNEBEL","","10347 BUTTERNUT CIR","","MANASSAS","VA","20110-7991","We specialize in program management, leadership consulting, data analysis. We also specialize in strategic planning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#110;&#101;&#98;&#101;&#108;&#99;&#109;&#49;&#57;&#56;&#54;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">knebelcm1986@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VT5YVDKXCK85">45</a>","JDI CONSULTING LLC","JOSHUA GAGNON","","9071 CENTER ST","","MANASSAS","VA","20110-5430","We specialize in cyber security assessments, testing and validation services, and incident response services. We also specialize in strategic advisory services, data mining and review services, and third party risk management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#106;&#102;&#100;&#105;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">josh@jfdistrategies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLSQCRCZU2M5">46</a>","THE BO EMPIRE LLC","AARON BOGANS","","9431 WATERFORD DR","","MANASSAS","VA","20110-6025","We offer a wide range of government procurement services, including property inspections, security services, landscaping, transportation and hauling and more. Our services are tailored to meet the unique needs of each client, and we pride ourselves on delivering high-quality results. Our solution at The Bo Empire is to identify the needs of the client, address concerns, coordinate and fulfill the solutions. We strive to achieve this by continually improving our services, investing in our team, and fostering long-term relationships with our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#104;&#101;&#98;&#111;&#101;&#109;&#112;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">info@theboempire.com</a>","https://www.theboempire.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.365&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

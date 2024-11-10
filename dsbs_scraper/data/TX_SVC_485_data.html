@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 485 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.04 seconds and 2.11 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 19 
+(of 19 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YMBTNKKM57D3">1</a>","COMMERCIAL & INDUSTRIAL ELECTRONICS, INC.","MICHAEL HORN","President","5019 BONNY DR","","WICHITA FALLS","TX","76302-5201","Sell, Service, & Install Fire Alarm, Electronic Security, Video, card access, Nurse Call, General Sound, and Life Safety Systems. Strategic Partner with EST","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#99;&#105;&#101;&#116;&#101;&#120;&#97;&#115;&#46;&#99;&#111;&#109;">mike@cietexas.com</a>","http://www.cietexas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJRYXBDNVB35">2</a>","R.L. POND LAUNDRY, INC.","ROBERT POND","President","214 SCOTT AVE","","WICHITA FALLS","TX","76301-1503","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#80;&#111;&#110;&#100;&#51;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">RPond3@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRNDJBUHPJL9">3</a>","BARNETT PAVING & SEALING, LLC","LE-AN BARNETT","Vice-President","1016 HARLAN AVE","","WICHITA FALLS","TX","76306-6158","Construction of streets, parking lots, demolition, sitework for building pad, asphalt, concrete paving, curb, gutter, paving stabilization, aggregate base course, bituminous surface treatment, airfield maintenance, sealing, striping, rubber removal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#99;&#111;&#46;&#49;&#57;&#55;&#53;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">barco.1975@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CYT4NLMQKMD8">4</a>","B. W. STRAYHORN CO, INC","SHANA GROVE","Managing Owner","1046 FELL LN","","WICHITA FALLS","TX","76305-5133","Design Build,Heavy Demo(Commerical Bldgs),Site Development,Concrete Work, Storm Drainage Installation, Embankment repair. Mechanical Dredge, Fencing, Remodel&Construct Bldgs,Truck Service, Install Metal Canopy/Roof, Electrical Work, Utility work","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#119;&#115;&#116;&#114;&#97;&#121;&#104;&#111;&#114;&#110;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">bwstrayhorn@sbcglobal.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P4LMHGAJ7HX6">5</a>","MARVIN GROVES ELECTRIC CO., INC.","MARVIN GROVES","president","506 7TH ST","","WICHITA FALLS","TX","76301-6501","MGE has been in business for 37 years. we also perform general construction and electrical, solar, wind, security, fire alarm, controls, camera, engineering, energy management,remodels, new construction, utilities infrastructure. demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#46;&#103;&#114;&#111;&#118;&#101;&#115;&#64;&#109;&#97;&#114;&#118;&#105;&#110;&#103;&#114;&#111;&#118;&#101;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">m.groves@marvingroveselectric.com</a>","http://www.marvingroveselectric.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YMKCQTNLQTQ7">6</a>","AOC ENVIRONMENTAL, INC.","JENNIFER BIRKHEAD","Vice President","2741 WRANGLERS RETREAT","","WICHITA FALLS","TX","76310-7217","General Contracting. Asbestos fire proofing removal, asbestos abatement, Lead paint removal, Firing range clean up, Water Wells and Building demolition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#46;&#98;&#105;&#114;&#107;&#104;&#101;&#97;&#100;&#64;&#97;&#111;&#99;&#101;&#110;&#118;&#105;&#114;&#111;&#46;&#110;&#101;&#116;">jennifer.birkhead@aocenviro.net</a>","www.aocenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PGDYJG2RC7J5">7</a>","ASPEN ELEVATOR, INC","RICHARD REDFORD","PRESIDENT","1515 MLK JR BLVD","","WICHITA FALLS","TX","76301-7614","ELEVATOR SERVICES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#112;&#101;&#110;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">aspenelevator@sbcglobal.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y9JVE2LCBNN5">8</a>","JAMES LANE AIR CONDITIONING COMPANY, LLC","ROBB HAVENS","","5024 OLD JACKSBORO HWY","","WICHITA FALLS","TX","76302-3520","Company has extensive capabilities in fields of professional engineering and design of plumbing, air conditioning, DDC Controls, piping and ventilation systems. Capabilities extend to the installation and project management of fields listed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#98;&#104;&#64;&#106;&#97;&#109;&#101;&#115;&#108;&#97;&#110;&#101;&#46;&#99;&#111;&#109;">robbh@jameslane.com</a>","www.jameslane.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GU6EAYAAFTS4">9</a>","SAGAMORE OFFICIALS ASSOCIATION LLC","JOSEPH KOSZAREK","","2316 ROCKHILL RD","","WICHITA FALLS","TX","76306-1130","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#111;&#122;&#114;&#101;&#102;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">kozrefs@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DCK5M7MKK6D6">10</a>","SECORD & LEBOW ARCHITECTS LLP","TROY SECORD","","2004 QUAIL CREEK DR","","WICHITA FALLS","TX","76308-3115","SLA Architects is a versatile and talented architectural and interior design firm located in Wichita Falls, Texas. We primarily focus on public and institutional architecture which includes federal, state, and municipal agencies. SLA is proud to be a general practice firm having worked on a wide range of small and large scale projects including dormitories/barracks, admin/offices facilities, highway rest areas, training facilities, firing ranges, hangars, tank trails, Federal Government Secure Facilities, K-12 schools, athletic complexes and churches. Our projects for federal government agencies range from $150K to $150M and include new and renovation across all project delivery types, such as Design/Build, Design/Bid/Build RFP Development, Design/Build RFP Development, Planning Studies, Charrette Reports, Project Definition Reports, and Schematic Plans. SLA: DCK5M7MKK6D6 SLA+Cyntergy JV: M6BMT2V794J4 Ballard-SLA JV: DRZHMJAEN4J8 CSG/SLA JV: ME4FW9GKXB66","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#115;&#101;&#99;&#111;&#114;&#100;&#64;&#115;&#108;&#97;&#116;&#120;&#46;&#117;&#115;">tsecord@slatx.us</a>","http://www.slatx.us/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YEBNTJJUZKN8">11</a>","FLINT RIVER LOGISTICS LLC","HECTOR FINO","","1637 KEELER AVE","","WICHITA FALLS","TX","76301-6214","Professional services in medical and construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#108;&#64;&#102;&#108;&#105;&#110;&#116;&#114;&#105;&#118;&#101;&#114;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">frl@flintriverlogistics.com</a>","flintriverlogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GQ9MYKZSHMP1">12</a>","WATERS AG. STORAGE CONTAINERS, INC","PAULA ALLEN","","809 FM 369 N","","IOWA PARK","TX","76367-7130","Waters AG Works hard to provide secure portable storage to contractors or individuals needing extra storage or space. We can get you a container or job office, when and where you need it. We strive on quality and customer service. Our most common sizes are 20’ AND 40’, We also carry some 10’, 45’, and 53’.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#112;&#101;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#64;&#119;&#97;&#116;&#101;&#114;&#115;&#97;&#103;&#115;&#116;&#111;&#114;&#97;&#103;&#101;&#46;&#99;&#111;&#109;">operations@watersagstorage.com</a>","http://watersagstorage.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RL9CNMG96XF3">13</a>","PRODUCTION MACHINE & TOOL, LP","ROCCO WADE","","2450 BURKBURNETT RD","","WICHITA FALLS","TX","76306-5305","We are a Veteran Owned shop offering CNC machining services utilizing CNC Mills and CNC Lathes along with manual options. We offer 4 G&L RT1250 CNC Boring Mills – 2 with U-Axis capabilities as well as a Trevisan with U-Axis options. We offer 11 other CNC Mills and 8 Lathes. We can turn parts as long as 130” and 34” in diameter and mill up to 141” wide. We can also offer 5th Axis machining. Quality is our watchword which is why we utilize 4 FARO inspection arms as well as a Zeiss CMM. We offer Welding, Fabrication, Magnetic Particle Testing, Pressure Testing up to 90,000psi, Broaching, Autofrettage services, as well as Assembly and any other needs the customer may require. We are ISO 9001:2015 and in process for AS 9100.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#119;&#97;&#100;&#101;&#64;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#105;&#111;&#110;&#45;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">rwade@production-machine.com</a>","www.production-machine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E3RMJJP7GLA1">14</a>","UP-SIDE MANAGEMENT CO","VICTOR LETOURNEAUT","","209 S WIGHAM ST","","BURKBURNETT","TX","76354-2363","GC with new, repair and renovation vertical and horizontal construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#116;&#111;&#114;&#46;&#108;&#101;&#116;&#111;&#117;&#114;&#110;&#101;&#97;&#117;&#116;&#64;&#117;&#112;&#45;&#115;&#105;&#100;&#101;&#109;&#97;&#110;&#97;&#103;&#101;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">victor.letourneaut@up-sidemanagement.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UGLMH775KCR3">15</a>","WICHITA FALLS CONSTRUCTION MATERIALS TESTING LLC","BOYD BRANCH","","5016 OLD JACKSBORO HWY STE A","","WICHITA FALLS","TX","76302-3520","We test the PSI of concrete, soils, Geotech","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#99;&#104;&#105;&#116;&#97;&#102;&#97;&#108;&#108;&#115;&#99;&#109;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">wichitafallscmt@gmail.com</a>","https://www.wfcmt.tech/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RY49ZM9W1181">16</a>","RUBEN'S HOUSE OF CLASSICS L.L.C.","RUBEN RODRIGUEZ","","417 INDIANA AVE","","WICHITA FALLS","TX","76301-1018","Automotive restoration, sheet metal fabrication, vinyl car wraps.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#98;&#101;&#110;&#115;&#104;&#111;&#117;&#115;&#101;&#111;&#102;&#99;&#108;&#97;&#115;&#115;&#105;&#99;&#115;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rubenshouseofclassics@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HW6VZFQJ1P64">17</a>","CALEB ANTHONY RODRIGUEZ RESOURCES, LLC","CALEB RODRIGUEZ","","1607 HAMLIN AVE","","WICHITA FALLS","TX","76301-7910","Serves a prime contractor for local and federal agencies offering services such as general contracting and products like clothing and apparel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#108;&#101;&#98;&#64;&#99;&#97;&#114;&#114;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">caleb@carrcontractors.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YW8WK8Z8FXZ1">18</a>","DUNCAN'S COMMERCIAL LOCK LLC","BOBBY DUNCAN","","313 WINDJAMMER WAY","","WICHITA FALLS","TX","76308-5825","I provide lock and door hardware material and installation, including keying/rekeying services. Hardware includes locks, panic hardware, door closers, and other various commercial door hardware.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#117;&#110;&#99;&#97;&#110;&#115;&#99;&#111;&#109;&#109;&#101;&#114;&#99;&#105;&#97;&#108;&#108;&#111;&#99;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">duncanscommerciallock@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XZCJQTG2TMP7">19</a>","REMIROSE CORPORATION (FREEDOM MISSION LEADERSHIP DEVELOPMENT)","REMI NTUI","","7 SAINT ANDREWS CT","","WICHITA FALLS","TX","76309-4750","Specialized in IT services consulting, Hardware and software Supplies IT Training Retirement and Insurance Advising.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#109;&#105;&#64;&#114;&#101;&#109;&#105;&#114;&#111;&#115;&#101;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">remi@remirosecorp.com</a>","remirosecorp.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.167&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

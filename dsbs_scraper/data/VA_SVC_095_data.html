@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 095 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.70 seconds and 1.77 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 40 
+(of 40 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9SLLSVNMYF8">1</a>","HOLLINGSWORTH-PACK CORPORATION","J. SCOTT HOLLINGSWORTH","Secretary/Treasurer","201 PENNIMAN RD","STE G","WILLIAMSBURG","VA","23185-4500","Arch/Eng/Planning/Int. Design/Construction Mgt. Specialities-educational facilities, federal drug interdiction facilities, US Embassies. Offices-Denmark, Virginia, Texas, Argentina","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#104;&#64;&#104;&#111;&#108;&#108;&#45;&#112;&#97;&#99;&#107;&#46;&#99;&#111;&#109;">scott.h@holl-pack.com</a>","hollingsworthpack.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HUGEAL1K5GM3">2</a>","PRISM CONTRACTORS & ENGINEERS, INC.","AMANDA IRELAND","VICE PRESIDENT","1568 MANUFACTURE DR","","WILLIAMSBURG","VA","23185-6274","We are a small, woman-owned business, specializing in engineering, inspection and construction services to include design, surveying, consulting, studies, land development, telecommunications, inspection services and geographic information systems (GIS).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#105;&#114;&#101;&#108;&#97;&#110;&#100;&#64;&#112;&#114;&#105;&#115;&#109;&#99;&#101;&#46;&#99;&#111;&#109;">aireland@prismce.com</a>","http://www.prismce.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GG5QNWAY2NN9">3</a>","LLH & ASSOCIATES, LLC","JOHN BALLENTINE","Director of Operations","300 TURNERS NECK RD","","TOANO","VA","23168-8603","Program management & IT consulting to the Government & Private Sector. Consulting Services include: off-site administration, financial planning & budgeting, resource advising, records management, IT strategic and organizational planning assistance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#98;&#97;&#108;&#108;&#101;&#110;&#116;&#105;&#110;&#101;&#64;&#108;&#108;&#104;&#45;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">john.ballentine@llh-associates.com</a>","http://www.llh-associates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P4BBRBNDY3R3">4</a>","TECHNICAL SYSTEMS INTEGRATION, INC.","CARY ELLIS","President","263 MCLAWS CIR","STE 202","WILLIAMSBURG","VA","23185-5674","TSI provides services in DoD programs, logistics,CBRNE program support and acquisition management. Our company provides a wide variety of program, acquisition, logistic and administrative support services to both DoD and commercial customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#108;&#108;&#105;&#115;&#67;&#64;&#116;&#101;&#99;&#115;&#121;&#115;&#105;&#110;&#116;&#46;&#99;&#111;&#109;">EllisC@tecsysint.com</a>","http://www.tecsysint.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CVSMCBLD8NJ7">5</a>","S & A ENVIRONMENTAL CONSULTANTS, LLC","WILLIAM STUTZ","President","3516 MALLARD CV","","WILLIAMSBURG","VA","23185-8406","Environmental compliance, pollution prevention, restoration, and conservation services to federal clients, particularly DoD. Includes management plans, permit applications, compliance audits, technical services, IT, natural/cultural resources.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#95;&#115;&#116;&#117;&#116;&#122;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">bill_stutz@msn.com</a>","https://www.sandaenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QZCNJHVCA6M4">6</a>","D J G INC","DONALD BOOTH JR","Marketing Director","449 MCLAWS CIR","","WILLIAMSBURG","VA","23185-5645","Architecture; interior design, civil, structural, mechanical and electrical engineering; as well as landscape architecture for federal, state and local government as well as private commercial and industrial clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#111;&#111;&#116;&#104;&#64;&#100;&#106;&#103;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dbooth@djginc.com</a>","http://www.djginc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMJND1ZF6TB4">7</a>","WINDWARD PARTNERS INC.","JACK DOOLEY","","165 W QUEENS DR","","WILLIAMSBURG","VA","23185-4953","Anchor Modular Offices is a dealer of prefabricated, modular office trailers, buildings and classrooms in the Mid-Atlantic region.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#100;&#64;&#97;&#110;&#99;&#104;&#111;&#114;&#109;&#111;&#100;&#117;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">jackd@anchormodular.com</a>","http://www.anchormodular.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZD7ZTDMLKWR1">8</a>","HRWORX, LLC","CORINNE KOSHUTA","President","112 MACHRIE","","WILLIAMSBURG","VA","23188-7427","Intelliworx specializes in automating business processes using our multi-tenet workflow automation platform. We can take complex forms and business processes, allow agencies to create detailed workflows for capturing required information. We provide for external client facing data collection workflows and internal staff review and approval workflows. We provide case management, reviews and approvals, dashboards, enterprise roles and permissions, SSO/PIV/CAC, and system integration. Each Cloud-based SaaS solution is hosted in the AWS GovCloud and are FedRAMP authorized.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#105;&#110;&#110;&#101;&#46;&#107;&#111;&#115;&#104;&#117;&#116;&#97;&#64;&#105;&#110;&#116;&#101;&#108;&#108;&#105;&#119;&#111;&#114;&#120;&#105;&#116;&#46;&#99;&#111;&#109;">corinne.koshuta@intelliworxit.com</a>","https://www.itwx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C29JST1JEGX7">9</a>","PENINSULA CUSTOM COATERS, INC.","ARTHUR SPARKS","President","1598 PENNIMAN RD","STE D","WILLIAMSBURG","VA","23185-5851","Powder coating. Powder coating is the enviromentally friendly process to put a protective coating on metal parts. No chemicals or waste to deal with.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#112;&#97;&#114;&#107;&#115;&#109;&#101;&#108;&#118;&#105;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Sparksmelvis@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U1LWQ6BLNF87">10</a>","EAST COAST UTILITY CONTRACTORS, LTD.","NANCY MCLAIN","","161-A JOHN JEFFERSON ROAD","SUITE 120A","WILLIAMSBURG","VA","23185-5640","Utility construction with emphasis on water and wastewater treatment plants and accessories","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#109;&#99;&#108;&#97;&#105;&#110;&#64;&#101;&#99;&#117;&#116;&#105;&#108;&#105;&#116;&#121;&#46;&#104;&#114;&#99;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">nmclain@ecutility.hrcoxmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W72ARVBJMEM6">11</a>","JAMES RIVER INSTITUTE FOR ARCHAEOLOGY, INC.","NICHOLAS LUCCKETTI","Partner","300 MCLAWS CIR STE 100A","","WILLIAMSBURG","VA","23185-5676","JRIA provides competitive and responsive proposals for all levels and types of cultural resource management projects: archaeology; architectural history; historical research; education and exhibits; and historic preservation planning and law.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#108;&#117;&#99;&#99;&#107;&#101;&#116;&#116;&#105;&#64;&#106;&#114;&#105;&#97;&#114;&#99;&#104;&#97;&#101;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">nluccketti@jriarchaeology.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFDBFVMKAT37">12</a>","CENTURION DEVELOPMENT GROUP, L.L.C.","JOHN ARTHUR","Owner","4 CAPTAINS CT","","WILLIAMSBURG","VA","23185-8605","DEPARTMENT OF DEFENSE CONSULTING AND MANAGEMENT SERVICES; ADVANCED CONCEPTS, JOINT CAPABILITY AND TECHNOLOGY DEVELOPMENT; FUTURE CONCEPT DEVELOPMENT; DOD MARKET ASSESSMENTS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#97;&#114;&#116;&#104;&#117;&#114;&#64;&#99;&#100;&#103;&#45;&#49;&#46;&#99;&#111;&#109;">john.arthur@cdg-1.com</a>","http://www.centuriondevelopmentgroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1KJE7JADLR4">13</a>","VAN BERGEN PETER J","PETER VAN BERGEN","","402 W DUKE OF GLOUCESTER ST","","WILLIAMSBURG","VA","23185-3660","Patent searching, patent application preparation and prosecution, patent amendments and responses, trademark searches, trademark application, and trademark responses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#118;&#97;&#110;&#98;&#101;&#114;&#103;&#101;&#110;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">petervanbergen@verizon.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C6JDQKWMLQQ5">14</a>","CIRCA-CULTURAL RESOURCE MANAGEMENT, L.L.C","CAROL TYRER","","453 MCLAWS CIR STE 3","","WILLIAMSBURG","VA","23185-5621","Circa~ is a small, woman-owned cultural resoruce managment firm that specializes in archaeology, historic architectural, and consulting services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#105;&#114;&#99;&#97;&#99;&#114;&#109;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">circacrm@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCNUQF9SZTL3">15</a>","OFFICE/PRO TECHNOLOGIES INC","ADAM THEIS","","144 STAFFORD CT","","WILLIAMSBURG","VA","23185-5767","OPTECH provides system design/consulting, integration, sales, installation and service/support for data communication networks, telecommunications, Audio-Video and security/surveillance solutions to schools, state, local and federal government agencies and private business. With over 25 years of experience, OPTECH offers the full-service capabilities required in a technology partner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#109;&#64;&#111;&#112;&#116;&#101;&#99;&#104;&#46;&#110;&#101;&#116;">adam@optech.net</a>","https://www.optech.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VMF3FFRACLG6">16</a>","FIVE NINES COMPANY LLC","JEAN RUSHBY","","1166 JAMESTOWN RD STE C","","WILLIAMSBURG","VA","23185-3413","Five Nines Company, LLC provides full scope commissioning and other professional services, including: Project management, controls consulting, maintenance program development, critical power system testing, and O&M training and support work, in mission critical environments and beyond.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#97;&#110;&#64;&#102;&#105;&#118;&#101;&#57;&#115;&#99;&#111;&#46;&#99;&#111;&#109;">jean@five9sco.com</a>","www.five9sco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJTBUQFU5HW6">17</a>","ABUNDANT STAFFING AGENCY LLC","RAMONA TAYLOR","","8405 ADDISON TER","","TOANO","VA","23168-9647","Recruiting & administrative services, human resources consulting, On-site management, temporary & direct hire, professional development, career coaching & training, customer service and professional development training, success workshops & seminars, Veteran career support, Employment readiness & management training, Military Transition Training, Speaker, Human Resources Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#97;&#98;&#117;&#110;&#100;&#97;&#110;&#116;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#97;&#103;&#101;&#110;&#99;&#121;&#46;&#99;&#111;&#109;">rtaylor@abundantstaffingagency.com</a>","http://www.abundantpdtraining.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UHXBKGNN9KW1">18</a>","PROJECTIONS CONSULTING INC","CLARISSA CORBIN","","110 MONTAGUE CIR","","WILLIAMSBURG","VA","23185-5010","We specialize in providing onsite technical, business skills, computer applications and project management training as well as onsite or virtual project management consulting to organizations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#111;&#114;&#98;&#105;&#110;&#64;&#112;&#114;&#111;&#106;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ccorbin@projectionsconsulting.com</a>","http://www.projectionsconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXCNAUAEG9L5">19</a>","THOMAS H PROESCHEL CONSULTING","THOMAS PROESCHEL","","3021 NATHANIELS GRN","","WILLIAMSBURG","VA","23185-7505","Program management of government research and development projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#112;&#114;&#111;&#101;&#115;&#99;&#104;&#101;&#108;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">tproeschel@cox.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NW2PJ7J2HGN5">20</a>","CHESAPEAKE SCIENTIFIC, LLC","CHRISTIAN HAGER","","100 SIXPENCE CT","","WILLIAMSBURG","VA","23185-4923","We conduct marine ecology research primarily on protected and endangered species for federal, state, and private agencies to ensure compliance with the ESA, MMA, and other laws.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#97;&#110;&#46;&#104;&#97;&#103;&#101;&#114;&#64;&#99;&#104;&#101;&#115;&#97;&#112;&#101;&#97;&#107;&#101;&#115;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#46;&#111;&#114;&#103;">christian.hager@chesapeakescientific.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJMFP5JXSAJ6">21</a>","IT NOBLE, INC.","MARK MOORE","","3323 HILLCREST TRAIL","","TOANO","VA","23168-9632","IT Noble is a Service Disabled Veteran Owned Small Business who specializes in IT Services. We staff professionals with proven experience in Green Datacenters, Cloud Computing, Storage, Virtualization, Infrastructure, Data Security, Business Intelligence.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#111;&#111;&#114;&#101;&#64;&#105;&#116;&#110;&#111;&#98;&#108;&#101;&#46;&#99;&#111;&#109;">mmoore@itnoble.com</a>","http://www.itnoble.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC5MVD1YT4E7">22</a>","TEK FUSION GLOBAL INC.","DAVE WOLONS","","5425 DISCOVERY PARK BLVD","STE 100","WILLIAMSBURG","VA","23188-2951","TFG is a mission-focused, rapid solutions and capabilities provider comprised of a diverse team of experts in hardware engineering, software development, systems integration, management and testing (Flight testing and Airworthiness Qualification/Certification).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#118;&#101;&#46;&#119;&#111;&#108;&#111;&#110;&#115;&#64;&#116;&#101;&#107;&#102;&#117;&#115;&#105;&#111;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Dave.wolons@tekfusioninc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKJTUFSBMLF3">23</a>","BERT'S INC","JOEY AGEE","","200 ROYAL GRANT DR","","WILLIAMSBURG","VA","23185-4964","We provide commercial refrigeration repairs, replacements and parts, heating and air conditioning repairs, replacements and parts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#101;&#114;&#116;&#115;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Bertsinc@gmail.com</a>","http://bertsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKSNN5D954J5">24</a>","AALIM, L.L.C.","DRISS CHERKAOUI","","212 SIR THOMAS LUNSFORD DR","","WILLIAMSBURG","VA","23185-3387","Standard Arabic, Moroccan dialect, Moroccan cultural context training for American students, programs conducted during intensive study abroad modules, in Meknes, Morocco or online","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#108;&#105;&#109;&#111;&#114;&#111;&#99;&#99;&#111;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">aalimorocco@yahoo.com</a>","www.aalimorocco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAJ8NALZNMK8">25</a>","SHAFFER EVALUATION GROUP LLC","PATRICIA SHAFFER","","1311 JAMESTOWN RD STE 101","","WILLIAMSBURG","VA","23185-3302","SHAFFER Evaluation Group provide services throughout the educational program life-cycle, ranging from research, planning, and consultation during the program design phase through the assessment of program outcomes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#105;&#97;&#46;&#115;&#104;&#97;&#102;&#102;&#101;&#114;&#64;&#115;&#104;&#97;&#102;&#102;&#101;&#114;&#101;&#118;&#97;&#108;&#117;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">patricia.shaffer@shafferevaluation.com</a>","www.shafferevaluation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NTB8XJMVLHZ3">26</a>","DECISION INTEGRATION LLC","DOUGLAS BROWN","","134 THE GRN","","WILLIAMSBURG","VA","23185-8252","20+ years experience in support of Federal and commercial business processes and decisions; program, portfolio and project management, cost analysis and estimation, enterprise architecture, governance board operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#114;&#111;&#119;&#110;&#64;&#100;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">dbrown@decisionintegration.com</a>","https://decisionintegration.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WM2KD45LK1K7">27</a>","YUILL STRATEGIC SOLUTIONS, LLC","ROBERT YUILL","","257 SIR THOMAS LUNSFORD DR","","WILLIAMSBURG","VA","23185-3387","Provide services only to Defense and Federal Agencies in the areas of Acquisition, Meteorology, Logistics, IT, Intelligence, Security and Training with focus on Special Operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#64;&#121;&#117;&#105;&#108;&#108;&#115;&#116;&#114;&#97;&#116;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">bob@yuillstratsol.com</a>","http://yuillstratsol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCFKNA7NAE41">28</a>","BLOSSOM CONSULTING INC","SCOTT BLOSSOM","","1101 PROFESSIONAL DR","","WILLIAMSBURG","VA","23185-3301","Blossom Consulting and Engineering Inc. (BCE) is a small business licensed to practice engineering in the Commonwealth of Virginia (SWaM Certification # 723564) and North Carolina. We are civil, environmental and water resource engineers who understand the current regulatory climate, design standards and cutting-edge technologies associated with Civil Works design, Storm water Management, Floodplain Management, environmental and eco system restoration design, Utility Infrastructure Improvements and Design, Bank and Shoreline Stabilization, Dams, and benefit cost analysis. BCE is versed in applicable state and local laws, regulations, policies, and standards.  Our team is specifically built and tailored to analyze sites, deliver informed studies, prepare construction documents, and coordinate with selected contractors to assist in proper installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#98;&#108;&#111;&#115;&#115;&#111;&#109;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">scott@blossomconsulting.net</a>","www.blossomconsulting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W7QVJARXEA81">29</a>","KOTERA LLC","JIBRI WILLIAMS","","7431 RICHMOND RD","","WILLIAMSBURG","VA","23188-7225","IT Consulting with specialization in data center modernization and Cloud Computing migrations. Engineering and consulting to produce Cloud architectures and integrate designs on a multi Cloud Service Provider Platform.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#98;&#114;&#105;&#46;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#107;&#111;&#116;&#101;&#114;&#97;&#46;&#99;&#111;&#109;">jibri.williams@kotera.com</a>","https://kotera.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3SLSMKRP8T5">30</a>","AZT GLOBAL LLC","JOHN RICHARDSON","","157 JOHN ROLFE LN","","WILLIAMSBURG","VA","23185-1451","Our technology experts and business professionals analyze research, design and implement solutions in the areas of: Chemical Supplies, Test Kits, Water Treatment Consulting Technology Managed Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#97;&#122;&#116;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">contact@aztglobal.com</a>","http://www.aztglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELB7YKJ7C2Y5">31</a>","TIDEWATER SCRAPING LLC","MELISSA MURPHY","","114 LANDS END DR","","WILLIAMSBURG","VA","23185-3158","Provides the universal restoration of industrial machine metal-to-metal joint mating surfaces. Which is a restoration of pressure boundary components on non-operable machine equipment. These metal-to-metal surfaces typically involve horizontal & vertical casing halves that are bolted together and designed to contain high pressure steam, oil, liquid, and gas from escaping into the atmosphere. Typical machinery would include industrial steam turbines, large pumps, and compressors of various shapes and sizes. Typical installation would be found on ships and power plants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#100;&#101;&#119;&#97;&#116;&#101;&#114;&#115;&#99;&#114;&#97;&#112;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tidewaterscraping@gmail.com</a>","https://tidewaterscraping.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PL1JZ9ATNBK5">32</a>","JAMESTOWN GOVERNMENT SERVICES LLC","DONALD KESTER","","3317 VENTURE LN","STE 3","WILLIAMSBURG","VA","23188-2462","We are a subsistence contractor supplying a full line of food and beverages to schools, hospitals, prisons and other institutions. We have supply relationships with Sysco Foods, US Foods and Performance Foods. We also are a registered Dell Federal Partner giving us the ability to sell laptops, desktops, printers, servers and computer services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#107;&#101;&#115;&#116;&#101;&#114;&#64;&#106;&#97;&#109;&#101;&#115;&#116;&#111;&#119;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">dkester@jamestowngs.com</a>","www.jamestowngs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S6G8SS8SMWF4">33</a>","ASHFORD LEEBCOR ENTERPRISES III, LLC","SUSAN SCHMIDT","","430 MCLAWS CIR STE 201","","WILLIAMSBURG","VA","23185-5655","Ashford Leebcor Enterprises III provides project management and design build capabilities to Department of Defense and other federal agencies. The JV has bonding capacity of $40mil single project / $100 mil aggregate and has successfully completed multiple projects together under an SBA approved Mentor Protege Agreement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#64;&#97;&#115;&#104;&#102;&#111;&#114;&#100;&#105;&#110;&#116;&#108;&#46;&#99;&#111;&#109;">susan@ashfordintl.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ET6MAVCR9FL1">34</a>","RAPID OFFSET TECHNOLOGIES, LLC","PATRICIA KENDALL","","9920 PERCH TREE LN","","TOANO","VA","23168-9642","Rapid Offset Technologies LLC provides analytical services tailored to the government customer. We have over 25 years of experience of providing decision-quality, professionally presented metrics which enable informed requirements, procurement, and sustainment activity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#107;&#64;&#114;&#97;&#112;&#105;&#100;&#111;&#102;&#102;&#115;&#101;&#116;&#101;&#99;&#104;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">pak@rapidoffsetechllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXXLTNRP5KZ4">35</a>","WILLIAM F WILBERN, JR. LLC","WILLIAM WILBERN JR","","7 JONATHAN CT","","TOANO","VA","23168-9013","Plumbing and gas piping installation, plumbing and gas fixture installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#112;&#115;&#119;&#105;&#108;&#98;&#101;&#114;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ppswilbern@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MZEAPNYA1VT3">36</a>","ASHFORD LEEBCOR ENTERPRISES IV LLC","SUSAN SCHMIDT","","1769 JAMESTOWN RD STE 112","","WILLIAMSBURG","VA","23185-2310","Ashford Leebcor Enterprises combines the resources of two leaders in the federal design-build construction marketplace with the experience, manpower, skill and bonding capacity to complete projects with minimal risk and maximized success. The companies have worked together as a team for over 3 years and successfully completed multiple projects with exemplary past performance ratings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#64;&#97;&#115;&#104;&#102;&#111;&#114;&#100;&#105;&#110;&#116;&#108;&#46;&#99;&#111;&#109;">susan@ashfordintl.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLNBVV4WF224">37</a>","ATLANTIC SEPTIC SYSTEMS, INC.","DANIEL JONES","","8020 HANKINS INDUSTRIAL PARK","","TOANO","VA","23168-9259","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#108;&#97;&#110;&#116;&#105;&#99;&#95;&#115;&#101;&#112;&#116;&#105;&#99;&#105;&#110;&#99;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">atlantic_septicinc@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MKCVM1JHPKE5">38</a>","DLS MANAGEMENT SERVICES LLC","DAWN SIMMONS","","285 MERRIMAC TRL","UNIT 50","WILLIAMSBURG","VA","23185-4664","With an established global presence, we are dedicated to providing our robust portfolio of services to the federal, state, and local government agencies, financial institutions, department of defense, healthcare, real estate, non-profit, and commercial clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#83;&#105;&#109;&#109;&#111;&#110;&#115;&#64;&#100;&#108;&#115;&#109;&#103;&#110;&#116;&#46;&#99;&#111;&#109;">DSimmons@dlsmgnt.com</a>","www.dlsmgnt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N2J5XUZ2YL77">39</a>","DENTE PAINTING LLC","NANCY DENTE","","103 NICE DR","","WILLIAMSBURG","VA","23188-7060","Dente Painting LLC excels in the painting industry by prioritizing quality, client relationships, and efficient service delivery. We offer a comprehensive range of painting services for both residential and commercial projects, emphasizing the use of high-quality materials and customized solutions to exceed client expectations. Our commitment to professionalism, timely completion, and competitive pricing makes us a preferred partner for diverse painting needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#122;&#105;&#101;&#46;&#100;&#101;&#110;&#116;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">linzie.dente@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EA5HX8Y8LCZ8">40</a>","NICK'S RE-SOURCING, LLC","NICK NGUYEN","","110 STEGG ST","","WILLIAMSBURG","VA","23185-2515","We specialize in Roofing Repair, Gutters Cleaning, Janitorial Services, Construction materials, Construction Equipment, Electrical Harness, Dry Cleaning, Laundry Services, and landscaping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#107;&#46;&#110;&#103;&#117;&#121;&#101;&#110;&#64;&#110;&#105;&#99;&#107;&#115;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#105;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">nick.nguyen@nicksresourcingllc.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.489&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

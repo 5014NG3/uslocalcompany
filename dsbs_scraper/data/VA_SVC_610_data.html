@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 610 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.66 seconds and 1.74 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 31 
+(of 31 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RGEBUZNUW2S7">1</a>","M. RAINA ASSOCIATES, INC.","MAHARAJ RAINA","","200 LITTLE FALLS STREET","SUITE 203","FALLS CHURCH","VA","22046-4302","Company is General contractor with design built capacity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#97;&#105;&#110;&#97;&#49;&#52;&#53;&#51;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">mraina1453@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PHV8CYF3CNS3">2</a>","M POWERED STRATEGIES, INC.","KENDALL LOTT","CEO & PRESIDENT","712 W BROAD ST STE 3","","FALLS CHURCH","VA","22046-3222","M Powered Strategies is an SBA-certified Small Business delivering organizational effectiveness and professional management services to the Federal government.  Our clients are IT and mission support leaders across sectors as broad as healthcare, public lands, and Federal finances. We empower leaders to adapt their organizations to changes in their external environment—new technology, strategy, regulations—or map out change they want to initiate themselves. We empower managers to maximize the value their teams provide to their stakeholders—agency leaders, internal partners, or citizen customers—by aligning operations and improving how teams deliver returns to their mission. We empower individuals and teams, as the enablers of technology, processes, and relationships, to foster cohesion, build skills, and share information. Serve. Change. Empower.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#100;&#97;&#108;&#108;&#46;&#108;&#111;&#116;&#116;&#64;&#109;&#112;&#111;&#119;&#101;&#114;&#101;&#100;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">kendall.lott@mpoweredstrategies.com</a>","http://www.mpoweredstrategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCUMH4FV7CS3">3</a>","POLU KAI SERVICES LLC","SEAN JENSEN","President","137 N WASHINGTON ST STE 301","","FALLS CHURCH","VA","22046-4576","Envir Remediation Services, Renovations, Bank Stabilization, HVAC, Shoreline Protection, Haz waste mgmnt, Contaminated soil disposal, UST AST services, Soil & groundwater remediation & sampling, Construction, alterations, construction & project management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#106;&#101;&#110;&#115;&#101;&#110;&#64;&#112;&#111;&#108;&#117;&#107;&#97;&#105;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">sjensen@polukaiservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9AYXJHNM185">4</a>","NEW EDITIONS, INC.","SHELIA NEWMAN","","103 W BROAD ST","STE 400","FALLS CHURCH","VA","22046-4237","New Editions provides high-quality evaluation and research support, specializing in the health and disability arenas. We have ten years of successful experience in program evaluation, research and policy analysis, and program planning and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#110;&#101;&#119;&#109;&#97;&#110;&#64;&#110;&#101;&#119;&#101;&#100;&#105;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;">snewman@neweditions.net</a>","http://www.neweditions.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FSBSWNPMJZN5">5</a>","LAW OFFICES OF JOHN L. LASTER","JOHN LASTER","","103 ROWELL CT","","FALLS CHURCH","VA","22046-3126","Wills, trusts, planning for special needs, wealth transfer planning, estate administration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#108;&#64;&#116;&#114;&#117;&#115;&#116;&#116;&#111;&#108;&#97;&#115;&#116;&#46;&#99;&#111;&#109;">jll@trusttolast.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C2DNSLAHQML5">6</a>","G & H INTERNATIONAL SERVICES INC","SARA SHOWS","","303 N VIRGINIA AVE","","FALLS CHURCH","VA","22046-3315","GHIS provides strategic consulting and support services to government, commercial, and international clients in the homeland security, law enforcement, defense, and commercial marketplaces.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#104;&#111;&#119;&#115;&#64;&#103;&#104;&#105;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">sshows@ghinternational.com</a>","www.ghinternational.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PSE2NS5HAF94">7</a>","GLOBAL TUNNELS LTD CO","JAMES FU","","2321 GROVE AVE","","FALLS CHURCH","VA","22046-2204","Data Management for Financial Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#103;&#108;&#111;&#98;&#97;&#108;&#116;&#117;&#110;&#110;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">contact@globaltunnels.com</a>","http://www.globaltunnels.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPVDQ68T59K5">8</a>","CARLYN DAVIS CASTING & PRODUCTION SERVICES, INC.","CARLYN DAVIS DAVIS","","124 E BROAD ST","STE C2","FALLS CHURCH","VA","22046-4530","We provide Talent Casting Services with Auditions for Video, TV, Radio, Print, Film and Web projects. Nice studio audition facility.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#121;&#110;&#64;&#99;&#97;&#114;&#108;&#121;&#110;&#100;&#97;&#118;&#105;&#115;&#99;&#97;&#115;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">carlyn@carlyndaviscasting.com</a>","http://www.carlyndavis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DCNEBT4MRFN9">9</a>","VIGET LABS LLC","BRIAN WILLIAMS","","105 W BROAD ST FL 4","","FALLS CHURCH","VA","22046-4291","We are a digital agency based in Falls Church, VA. We provide application and web systems strategy, design and development, mobile development, data analytics, brand strategy, and search engine optimization services to firms worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#82;&#73;&#65;&#78;&#46;&#87;&#73;&#76;&#76;&#73;&#65;&#77;&#83;&#64;&#86;&#73;&#71;&#69;&#84;&#46;&#67;&#79;&#77;">BRIAN.WILLIAMS@VIGET.COM</a>","http://www.viget.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLY2ZHUEPEH8">10</a>","BAHR ASSOCIATES, INC.","H. MCGUIRE RILEY","","200 LITTLE FALLS ST","STE 400","FALLS CHURCH","VA","22046-4302","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#105;&#108;&#101;&#121;&#64;&#98;&#97;&#104;&#114;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">mriley@bahrassociates.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FS3SE8K8NKK8">11</a>","KOLODZY CONSULTING, LLC","PAUL KOLODZY","","601 HIGHLAND AVE","","FALLS CHURCH","VA","22046-2522","Provide telecommunications and technology","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#107;&#111;&#108;&#111;&#100;&#122;&#121;&#64;&#107;&#111;&#108;&#111;&#100;&#122;&#121;&#46;&#99;&#111;&#109;">pkolodzy@kolodzy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SMG1HZHVGEU8">12</a>","T AND T CONSULTING SERVICES INC.","SOPHIA TONG","","431 PARK AVE STE 201","","FALLS CHURCH","VA","22046-3305","-Customized Solutions, Virtualization, Automated Processes, Open-source Solutions -Full Application/System Life Cycle Development -Web Design and Development -Help Desk -Security -Network Management -Data Conversion/Upgrades, Database","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#116;&#97;&#116;&#99;&#115;&#46;&#99;&#111;&#109;">contracts@tatcs.com</a>","http://www.tatcs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZUWLA1HGU4Z5">13</a>","PIVOTAL POINT, LLC","DOKMAI WEBSTER","","135 N FAIRFAX ST","","FALLS CHURCH","VA","22046-3528","Pivotal Point, LLC (Pivotal Point) is an SBA Certified Service Disabled Veteran Owned Small Business (SDVOSB), an SBA Certified 8(a), Economically Disadvantaged Woman-Owned Small Business (EDWOSB) founded in 2008. We provide professional support services to Federal Government & Commercial Businesses. Core Services: Program/Project Mgmt and Mgmt Consulting; IT and Telecommunication Infrastructure Construction, Planning & Engineering Services; Operational Support in IT/Telecomm Infrastructure; Cable Installation/Deinstallation; Network Engineering; Cloud & SharePoint Migration; Asset & Inventory Management; and IT/Data Center Inventory Mgmt (ITIM/DCIM). Pivotal Point is compliant with the National Institute of Standards and Technology (NIST) Cybersecurity Framework (CSF) – NIST 800-171. Our Accounting System has been audited and approved by DCAA. We are a corporate member of BICSI, a professional association in the ICT community. Pivotal Point is ISO 9001:2015 registered.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#112;&#105;&#118;&#111;&#116;&#97;&#108;&#112;&#111;&#105;&#110;&#116;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">info@pivotalpointllc.com</a>","http://www.pivotalpointllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X72ARBHVM5G3">14</a>","SERRY SYSTEMS INC.","SUMEET ERRY","","6603 33RD ST","","FALLS CHURCH","VA","22046-1807","Serry Systems exists to solve complex problems that make substantial positive impact on our world by serving the Federal Government. Our wholistic approach to Application Modernization, rooted in our technical expertise combined with process improvement and stakeholder management allows us to successfully navigate and create efficient and effective path to successful outcomes. From IT Strategy, to RoadMap, that begins buy documenting the Enterprise Architecture, gathering Business Requirements and performing Business Process Engineering. To defining the Solution Architecture to Software Development which includes Cloud Native Services, Lift & Shift, DevSecOps Automation with CI/CD Pipelines. Which lead to Data Migration, data cleanup, data engineering, Data Lake implementation. Additionally providing PMO Support services, to execute Change Management, User Onboarding and training. Key Business areas support Federal Grant Management and Personnel Security systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#101;&#101;&#116;&#46;&#101;&#114;&#114;&#121;&#64;&#115;&#101;&#114;&#114;&#121;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">sumeet.erry@serrysystems.com</a>","https://www.serrysystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NU9LMK6EJDN8">15</a>","KAPS SOLUTIONS, LLC","POOJA BAHETI","","905 LINCOLN AVE","","FALLS CHURCH","VA","22046-2512","KAPS Solutions assists customers in transforming their organizations and achieving their mission goals by providing strategic and technical services to deliver innovative solutions. We specialize in interacting with stakeholders to understand root causes to increase productivity and improve performance. Our highly qualified professionals have decades of experience developing tailored solutions to meet specific customer needs. Our capabilities include: Change Management, Business Process Re-engineering & Automation, Data Mining & Business Analytics, Program & Project Management, Customer Relationship Management, Training & Certification, and Cyber & Network Security. As a minority woman-owned small business, our size and depth of expertise allows us to deliver the right people, skill sets, and technologies to support our unique customers. We are committed to excellence in our solutions and customer service as well as diverse career opportunities and experiences for employees.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#111;&#111;&#106;&#97;&#46;&#98;&#97;&#104;&#101;&#116;&#105;&#64;&#107;&#97;&#112;&#115;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">pooja.baheti@kapssolutions.com</a>","http://www.kapssolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CPTLUVP9R2C4">16</a>","RAILROAD TREE CORP","JIM KERNAN","","150 S WASHINGTON ST STE 500","","FALLS CHURCH","VA","22046-2921","The Premier Companies currently manage and own office, medical, multifamily, flex, and retail properties in Maryland, Virginia, Florida, and Delaware. Manage and rental of these properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#107;&#101;&#114;&#110;&#97;&#110;&#64;&#112;&#114;&#101;&#109;&#105;&#101;&#114;&#105;&#110;&#118;&#101;&#115;&#116;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">jkernan@premierinvestment.com</a>","http://www.premierinvestment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBXDLLVGWXL3">17</a>","KSAPEX, LLC","SONAL SCINDIA","","7232 TOD ST","","FALLS CHURCH","VA","22046-2005","OUR project made it to the US CONGRESS due to unique execution, agile, DevSecOps, & best practices -Custom Application Development by implementing Agile, DevOps, & Best Practices -Digital Transformation & Application Modernization with O&M Support -Business Intelligence, Big Data, Data Analytics, & Data Visualization -DevSecOps & Enterprise Agile implementation and Adoption SVs -Cloud Solutions & Infrastructure Svs -Cybersecurity -Blockchain -Artificial Intelligence (AI)-Machine Learning (ML) -Risk Management and Mitigation -Requirements Gathering & Management-Functional/ Non–Functional (IT) -Program Governance and Assurance -Leader in implementation of innovative technologies in the projects -Unique processes and execution strategies with proven history of delivering all projects ON TIME and ON/UNDER budget -Highly satisfied customers with Excellent federal & private sector past performances -Recognizes its employees as the foundation of its success","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#111;&#110;&#97;&#108;&#46;&#115;&#99;&#105;&#110;&#100;&#105;&#97;&#64;&#75;&#83;&#65;&#112;&#101;&#120;&#46;&#99;&#111;&#109;">Sonal.scindia@KSApex.com</a>","www.ksapex.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FZ4NTBRD1KG1">18</a>","ANDWORX, LLC","PETER BALAZY","","450 W BROAD ST, STE 421","","FALLS CHURCH","VA","22046-3340","Services provided: business strategy, IT strategy, Agile development, IT transition roadmaps, IT governance, enterprise architecture (assessment, program setup, tools), bus. process reengineering, business architecture, data architecture, PMO support, PM management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#46;&#98;&#97;&#108;&#97;&#122;&#121;&#64;&#97;&#110;&#100;&#119;&#111;&#114;&#120;&#46;&#99;&#111;&#109;">peter.balazy@andworx.com</a>","www.andworx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QHL7PKNVGH25">19</a>","CRESPIN ENTERPRISES, INC.","RICHARD CRESPIN","","208 NOLAND ST","","FALLS CHURCH","VA","22046-3513","At CollaborateUp, an innovative international consulting firm and SAM and SBA certified 8(a) American small business, we accelerate cooperation among governments, companies, and nonprofits as they tackle some of our world’s toughest challenges. We bring decades of experience advising organizations across more than 30 countries as strategic planners, communicators, innovators, facilitators, and as performance managers and evaluators. Current and past clients and co-creators have included dozens of corporations (3M, Bayer, IBM, Target), NGOs (Comic Relief USA, PSI, WWF), and multiple U.S. government agencies (DoD, DoL, USAID, USDA). We support entire programs from conception and launch through full implementation and ongoing program management/secretariat operations. Collaborate is in our name, so we specialize in working with multi-disciplinary teams, across multiple cultures, and at multiple levels of economic development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#64;&#99;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#101;&#117;&#112;&#46;&#99;&#111;&#109;">richard@collaborateup.com</a>","www.collaborateup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKLKJ4UC1HK7">20</a>","BRS CONTRACTING LLC","DIONNE SPRIGGENS","","103 CHANEL TERRACE","#T2","FALLS CHURCH","VA","22046-4103","BRS Contracting provides personnel security in the form of background investigations and polygraph examinations. BRS Contracting has the following certifications: HUBZone, VOSB, WOSB.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#112;&#114;&#105;&#103;&#103;&#101;&#110;&#115;&#64;&#98;&#114;&#115;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">dspriggens@brscontracting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5T1AMLL1DV4">21</a>","ALLGREEN SOLUTIONS, INC.","CAROLYN DE LA TORRE","","313 PARK AVE","STE G3","FALLS CHURCH","VA","22046-3303","landscaping and hardscaping services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#121;&#110;&#64;&#97;&#108;&#108;&#103;&#114;&#101;&#101;&#110;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">carolyn@allgreenlandscaping.com</a>","www.goallgreen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VD4PJQM6B7C6">22</a>","REED CHARTERS, LLC","JENNIFER REED","","6618 GORDON AVE","","FALLS CHURCH","VA","22046-1822","Our most valuable resource is leadership; charting courses in a cooperative teamwork environment, to navigate through needed change and arrive efficiently at the strategic destination. We offer Strategic Planning Consultation to identify goals, objectives, measurable metrics & actions for services and production. We offer Executive Leadership Development, Infrastructure Management, Change Management, Training Development, & Cooperative Partnership Agreements. We plan infrastructure strategies that maximize utilization, balance sustainment and recapitalization, & apply business case analyses for best return on investment at lowest total lifecycle cost. We lead organizations through difficult change that often requires unbiased assessment & innovative pathways to initiate change, maintain communication, and improve workforce climate. We offer team building workshops & scalable training program development services that are capability & mission-based to task, condition & standard.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#46;&#114;&#101;&#101;&#100;&#64;&#114;&#101;&#101;&#100;&#99;&#104;&#97;&#114;&#116;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">jennifer.reed@reedcharters.net</a>","www.reedcharters.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F5G5AUD3VVX8">23</a>","OFFSET3, LLC","JOHN BLACK","","1103 LINCOLN AVE","","FALLS CHURCH","VA","22046-2530","OFFSET3 is a Service-Disabled Veteran-Owned Small Business (SDVOSB) engaged in software development and IT consulting. The company focuses on the development, sourcing and integration of advanced technology for the defense warfighting and business domains, including Internet of Things (IoT), data fusion, artificial intelligence (AI), and big data. OFFSET3 brings to the table decades of experience and deep expertise, including Knowledge Management, Military Operations, Intelligence, Logistics, Security Cooperation and International Partnerships, WMD Counter-Proliferation, Special Operations, and Interagency Collaboration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#98;&#108;&#97;&#99;&#107;&#64;&#111;&#102;&#102;&#115;&#101;&#116;&#51;&#46;&#99;&#111;&#109;">john.black@offset3.com</a>","http://www.offset3.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KR5DALNNCGU5">24</a>","LYNK GLOBAL INC","MARGO DECKARD","","510 N WASHINGTON ST","STE 200","FALLS CHURCH","VA","22046-3537","Our mission is to provide cellular connectivity to all 7.7 Billion people everywhere on the Earth. To deliver ubiquitous connectivity, we are developing a cellular satellite communications network; the network will function as 'cell towers in orbit.' Existing smartphones, and other mobile devices capable of 3GPP communications, including feature phones, and cellular Machine-to-Machine/Internet of Things(M2M/IoT) devices will be able to connect to our orbiting cell towers with no modification to the devices' hardware or software and no additional user terminals. Our cellular small-satellite communications network provides affordable global connectivity, anonymity/stealth features using low power and commercial frequencies in remote areas, precision positioning, and tracking of cellular devices on ground.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#100;&#101;&#99;&#107;&#97;&#114;&#100;&#64;&#108;&#121;&#110;&#107;&#46;&#119;&#111;&#114;&#108;&#100;">mdeckard@lynk.world</a>","https://www.lynk.world"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X313A8V5EZJ1">25</a>","OFFICEWORKS DC INC","BETHANY NARO","","101 W BROAD ST","FL 2","FALLS CHURCH","VA","22046-4229","Commercial Furniture and demountable walls provider","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#110;&#97;&#114;&#111;&#64;&#111;&#102;&#102;&#105;&#99;&#101;&#119;&#111;&#114;&#107;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">bnaro@officeworksinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WLQJBGWZPLC4">26</a>","VYBE ENERGY, LLC","NISHA THIRUMURTHY","","252 N WASHINGTON ST STE 200","","FALLS CHURCH","VA","22046-4535","Vybe Energy acts as our client's advisor providing financial optimization, engineering design services and energy software and hardware solutions for maximizing the effectiveness and efficiency of small commercial to utility-scale energy projects. Based on the needs of our clients, we utilize techno-economic modeling to identify the fulcrum point between energy needs and sources to maximize returns. After determining project feasibility and developing a preliminary engineering design, Vybe provides dedicated technical support to install the controller and/or monitoring system and to ensure flawless implementation of the system. Vybe has rapidly gained traction in the industry due to our outstanding commitment to customer service. We consider ourselves a part of our clients’ team and encourage constant communication and coordination to understand our clients’ needs and expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#115;&#104;&#97;&#64;&#118;&#121;&#98;&#101;&#101;&#110;&#101;&#114;&#103;&#121;&#46;&#99;&#111;&#109;">nisha@vybeenergy.com</a>","www.vybeenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WCBTLVYFN9D5">27</a>","COLLABORATION HOUSE, LLC","BETH SKOROCHOD","","208 NOLAND ST","","FALLS CHURCH","VA","22046-3513","Collaboration House is a joint venture between The Wheelhouse Group and CollaborateUp as part of their participation in the SBA Mentor-Protege Program. Together we solve our clients' most pressing and complex problems using a comprehensive set of organizational change management, stakeholder engagement, and collaboration methods and tools.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#64;&#99;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#101;&#117;&#112;&#46;&#99;&#111;&#109;">beth@collaborateup.com</a>","www.collaborateup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RSL3JFNMSVL4">28</a>","TITLE 50 SOLUTIONS LLC","DOUGLASS STEVENS","","612 PARK AVE","","FALLS CHURCH","VA","22046-3209","Analytic Expertise and Mission Management for U.S. National Security Challenges Analytic Expertise: Our data-driven analytic approach creates a customized data collection strategy, extracts meaning from the data, and produces deep insight into your mission challenges. We craft actionable, technically sound steps to achieve your goal. Mission Management: Our technical experts and effective managers take ownership of your hardest mission challenges. We analyze your organizational and mission constraints, create a roadmap to success, and drive issues to closure. Our founders have more than 45 years of analytic, technical, and project management work in U.S. intelligence and defense agencies, bringing a deep understanding of mission needs and organizational realities in the U.S. national security space. Our real-world leadership experience bridges the gap between technicians, analysts, and senior management. We devise and execute technically sound mission solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#108;&#97;&#115;&#115;&#46;&#115;&#116;&#101;&#118;&#101;&#110;&#115;&#64;&#116;&#53;&#48;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">douglass.stevens@t50solutions.com</a>","www.t50solutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SWHUCRTLDT94">29</a>","BESKAR INC","DANIEL CHAPPLE","","6715 OSBORN ST","","FALLS CHURCH","VA","22046-1804","Beskar provides on-demand CMMC and remote-access solutions so you can focus on your business. Core Capabilities • CMMC compliance instantly, at a competitive price • On-demand remote work solutions and management • Protect your intellectual property everywhere it goes • Prevent insider threat and industrial espionage • Manage complex product environments and supply chains • Mathematically-proven ransomware-resistant data storage • Cleared personnel for secure system integration • Unrivaled combination of researchers and programmers Differentiators • Cybersecurity Maturity Model Certification (CMMC) certified • Meets NIST 800-217, 800-208, and 800-207 requirements • FIPS 140-2, FIPS 203, and FIPS 204 compliant • Patents on distributed systems • Secure, authenticate, and process 1 million+ elements/second • Low bandwidth and power requirements • Interoperable with existing systems • Geo-redundant by design • US based and developed","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#46;&#99;&#104;&#97;&#112;&#112;&#108;&#101;&#64;&#98;&#101;&#115;&#107;&#97;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">daniel.chapple@beskarinc.com</a>","www.beskarinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GYLWCZSW2KZ7">30</a>","EED SYSTEMS LLC","EMERSON DENNY","","7368 LEE HWY","UNIT 103","FALLS CHURCH","VA","22046-4758","We specialize in procuring wholesale goods for local, state and federal Government clients. We are well versed in the current regulatory and compliance environment, and are committed to the ethical and efficient delivery of needed goods, on time, at the best value. Our goal is to provide our clients the highest quality goods and services at the best possible prices. We look forward to partnering with you on all your procurement needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#101;&#114;&#115;&#111;&#110;&#64;&#101;&#101;&#100;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">emerson@eedsystems.com</a>","eedsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RQ9KT2QDQPV5">31</a>","SANDSTONE CLOUD SOLUTIONS LLC","JEMELL SANDERS","","301 W BROAD ST 537","","FALLS CHURCH","VA","22046-3371","Sandstone Cloud Solutions specializes in delivering exceptional cloud services to government clients. Our cloud management expertise, encompassing migrations, robust security, and streamlined automation, ensures cost-effective solutions. Our dedication to simplicity and automation significantly reduces the time, money, and resources required for cloud operations. We design tailored and personal cloud architectures that empower you to achieve your goals efficiently and economically while allowing you to allocate your budgets wisely, enhance operational efficiency, and meet your objectives with confidence.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#109;&#101;&#108;&#108;&#46;&#115;&#97;&#110;&#100;&#101;&#114;&#115;&#64;&#115;&#97;&#110;&#100;&#115;&#116;&#111;&#110;&#101;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">jemell.sanders@sandstonecloud.com</a>","www.sandstonecloud.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.426&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

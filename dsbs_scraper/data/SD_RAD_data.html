@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: South Dakota;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.02 seconds and 1.03 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 39 
+(of 39 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QAZKX9MKPNN2">1</a>","TRAIL-EZE, INC.","VALERIE ANDERSON","SALES MGR","323 QUINCE ST","","MITCHELL","SD","57301-4810","WE MANUFACTURE EQUIPMENT HAULING HYDRAULIC TRAILERS, TAG TRAILERS 6 TON TO 20 TON AND CABLE REEL TRAILERS, AND MANUFACTURE ASME CODE VACUUM TRUCKS & TRAILERS, OIL FIELD VACUUM TRUCKS, TRUCK RIGS, AND CUSTOM TANK TRUCKS, AND TRAILERS.EQUIP TRAILERS SLIDE AXLES, BUS HAULERS, HYDRAULIC TAILS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#97;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#64;&#116;&#114;&#97;&#105;&#108;&#101;&#122;&#101;&#46;&#99;&#111;&#109;">valanderson@traileze.com</a>","www.traileze.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQKTCJ49B3Q4">2</a>","SCOTCHMAN INDUSTRIES, INC.","BRAD HAYNES","Customer Service","180 E US HIGHWAY 14","","PHILIP","SD","57567-2104","SCOTCHMAN HYDRAULIC IRONWORKERS. PUNCHING AND SHEARING FOR METAL MODELS WITH 40,50,65,90,120 TONS PUNCH PRESSURE. MIL-P450420. SCOTCHMAN & BEWO CIRCULAR COLD SAWS, LOW RPM STEEL CUTTING MODELS WITH 10, 12-1/2 & 14 INCH DIAMETER BLADES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#104;&#64;&#115;&#99;&#111;&#116;&#99;&#104;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">bradh@scotchman.com</a>","http://www.scotchman.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJV7GECFD291">3</a>","JAMES A SCHAEFFER","JAMES SCHAEFFER","Owner/President","680 MONTANA AVE SW APT 101","","HURON","SD","57350-2300","Construction and Engineering for Electrical Light and Power Projects Design Build developer for alternative energy projects. Distributed generation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#99;&#111;&#64;&#115;&#97;&#110;&#116;&#101;&#108;&#46;&#110;&#101;&#116;">jasco@santel.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8UANMMVQDJ8">4</a>","RE/SPEC INC.","TODD KENNER","Manager, Business Development","3824 JET DRIVE","","RAPID CITY","SD","57703-4757","Information Technologies, Engineering, Water and Natural Resources","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#46;&#107;&#101;&#110;&#110;&#101;&#114;&#64;&#114;&#101;&#115;&#112;&#101;&#99;&#46;&#99;&#111;&#109;">todd.kenner@respec.com</a>","http://www.respec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L2WDBWMJTXK9">5</a>","MEMSENSE, LLC","JAMES BRUNSCH","President","2046 SAMCO RD","","RAPID CITY","SD","57702-6269","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#114;&#117;&#110;&#115;&#99;&#104;&#64;&#109;&#101;&#109;&#115;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">jbrunsch@memsense.com</a>","http://www.memsense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q1E9R4B9E8S9">6</a>","LNS, LLC","LUKE STEINMETZ","Owner","12654 W CASCADE MOUNTAIN RD","","HOT SPRINGS","SD","57747-7350","Competency based welding programs providing meaningful classroom instruction along with practical application of skills as they relate to maintenance, repair and fabrication welding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#110;&#115;&#64;&#103;&#111;&#108;&#100;&#101;&#110;&#119;&#101;&#115;&#116;&#46;&#110;&#101;&#116;">lns@goldenwest.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ND9FVENL3CK8">7</a>","D & H HANSEN INC","DOUG HANSEN","","40979 245TH ST","","LETCHER","SD","57359-5204","Custom manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#119;&#104;&#97;&#110;&#115;&#101;&#110;&#64;&#104;&#97;&#110;&#115;&#101;&#110;&#119;&#104;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">dwhansen@hansenwheel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJ6QRJL9BVP3">8</a>","MASTEL PRECISION SURGICAL INSTRUMENTS, INC.","ELIZABETH MATHEWS","","2843 SAMCO RD","UNIT A","RAPID CITY","SD","57702-9366","Design, manufacture (Class I), and sell ophthalmic surgical instruments. Refurbish and repair same instruments as well as brands other than Mastel Precision. Our engineering provides design solutions (procedural and mechanical).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#97;&#116;&#104;&#101;&#119;&#115;&#64;&#109;&#97;&#115;&#116;&#101;&#108;&#46;&#99;&#111;&#109;">lmathews@mastel.com</a>","www.mastel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KL3UKDN86QJ8">9</a>","ABERDEEN FLYING SERVICE","MARK CAVEN","","4430 HIGHWAY 12 E","","ABERDEEN","SD","57401-9511","Aberdeen Flying Service was originally established in 1946 by James L. Caven. Now, this second generation company is proudly managed by Mark A. Caven. Aberdeen Flying Service is a full service FBO, providing services ranging from refueling aircraft, catering, arranging rental cars, air taxi service with its part 135 charter operation, through maintenance under Aberdeen Flying Service’s FAA certified FAA 145 repair station.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#115;&#98;&#99;&#64;&#110;&#118;&#99;&#46;&#110;&#101;&#116;">afsbc@nvc.net</a>","http://www.aberdeenflyingservice.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DXMPN7E61EF4">10</a>","AVID4 ENGINEERING, INC.","JOHN VAN BEEK","","1805 SAMCO RD","","RAPID CITY","SD","57702-9372","Avid4 Engineering was founded as Ferber Engineering Company, Inc. (FEC) in 1991 as a full-service civil engineering consulting firm in Rapid City, SD. In 2023 FEC was renamed Avid4 Engineering Inc. (Avid4). For over thirty years we have provided quality professional engineering and land surveying services to local, state and federal government entities, as well as private clients. Offering comprehensive solutions for designing civil engineering infrastructure projects, conducting water resources and environmental studies, surveying the land, developing geographic information systems, performing construction related services and carrying out planning studies. Our highly skilled staff strive to provide innovative solutions specific to each client's individual needs. We are dedicated to providing personalized service and take pride in making the region in which we live, work and play safe and sustainable.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#118;&#97;&#110;&#98;&#101;&#101;&#107;&#64;&#97;&#118;&#105;&#100;&#52;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">johnvanbeek@avid4eng.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C1JHWKX12BC4">11</a>","MISSOURI BREAKS INDUSTRIES RESEARCH, INC","MARCIA OLEARY","","505 S WILLOW ST","","EAGLE BUTTE","SD","57625-8009","Research Durable Medical equip","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#105;&#97;&#46;&#111;&#108;&#101;&#97;&#114;&#121;&#64;&#109;&#98;&#105;&#114;&#105;&#46;&#99;&#111;&#109;">marcia.oleary@mbiri.com</a>","https://www.missouri-breaks.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KECNJB8J5879">12</a>","CSI, L.L.C.","MICHAEL CURRY","","338 STREETER DRIVE","","NORTH SIOUX CITY","SD","57049-0001","Provider of Medical products; (HIS) Hospital Information System, (EHR) Electronic Medical Records, (RIS PACS) Radiology Imaging System, Picture Archiving and Communication System. Complete IT 24/7 Helpdesk, Managed Services, IT support agreements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#117;&#114;&#114;&#121;&#64;&#99;&#115;&#105;&#110;&#111;&#118;&#46;&#99;&#111;&#109;">mcurry@csinov.com</a>","http://www.csinov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMTCFN7QLTQ6">13</a>","AT ANALYTICAL, LLC","ANGELA LEE","","101 ST OLAF AVE","","BALTIC","SD","57003-3005","We provide maintenance and repair service of scientific laboratory instruments and equipment for research facilities and hospitals. We are also the exclusive manufacturer and distributor of the PAWS portable automated wash station.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#105;&#101;&#64;&#97;&#116;&#97;&#105;&#110;&#99;&#46;&#98;&#122;">angie@atainc.bz</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N7GZWULMKL73">14</a>","HENDERSON JEFFREY A","JEFFREY HENDERSON","","701 SAINT JOSEPH ST","STE 204","RAPID CITY","SD","57701-2776","Trained as both an internist and epidemiologist, skilled in health research design, methodology, implementation and dissemination. Independent NIH investigator in a community-based setting. Skilled at community engagement, highly participatory methods. Exceptional written and verbal communication skills.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#101;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#64;&#98;&#104;&#99;&#97;&#105;&#104;&#46;&#111;&#114;&#103;">jhenderson@bhcaih.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JBE5YHKQGBB5">15</a>","NASCENTECHNOLOGY MANUFACTURING INC","DARYL SCHOFIELD","","1404 9TH AVE SW","","WATERTOWN","SD","57201-5091","Research,development and manufacture of inductors and transformers for high reliability applications using both traditional wire-wound and multi-layer ceramic manufacturing processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#99;&#104;&#111;&#102;&#105;&#101;&#108;&#100;&#64;&#110;&#97;&#115;&#99;&#101;&#110;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">dschofield@nascentechnology.com</a>","http://www.nascentechnology.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R3M6DRJWMJN9">16</a>","H. F. WEBSTER ENGINEERING SERVICES, INC.","ROSE GERANI","","600 N ELLSWORTH RD","","BOX ELDER","SD","57719-2012","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#104;&#102;&#119;&#101;&#98;&#115;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">contracts@hfwebster.com</a>","www.hfwebster.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GBW8KML8WPB3">17</a>","THE RUSHMORE GROUP, L.L.C.","STEPHEN TRACY","","431 S PIERRE ST","","PIERRE","SD","57501-4507","Management Consulting (Primary focus is in areas of Social and Human Services as well as Developmental Disabilities)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#101;&#110;&#46;&#116;&#114;&#97;&#99;&#121;&#64;&#114;&#117;&#115;&#104;&#109;&#111;&#114;&#101;&#45;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">stephen.tracy@rushmore-group.com</a>","www.rushmore-group.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6MPX57TMG77">18</a>","CHILDRENS THERAPY SERVICES INC","JUSTIN CASEY","","110 N CAMBELL ST STE A","","RAPID CITY","SD","57701-1726","We are a locally owned pediatric therapy company that provides Occupational, Speech, and Physical Therapies and Special Education in the clinic, to local school systems, and Birth to Three Programs. Our therapists are highly skilled and have years of experience in pediatric therapy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#99;&#97;&#115;&#101;&#121;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">justincasey3@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VK14GN5KQ1L5">19</a>","QUALITY WOOD DESIGNS INC.","DANIELLE DEKRUIF","","1100 W SPRUCE ST","","MITCHELL","SD","57301-4838","Since 1961 we have specialized in custom design and fabrication of wood and metal products. We have worked in numerous industries and are confident we have a solution for your need. We handle everything from design to finished product and shipping services to meet your unique needs. We encourage you to browse through our past products to see our depth and quality. Our design team paired with our state-of-the-art equipment and qualified staff provide a complete 'end-to-end' experience for our customers. Our vast in-house capabilities allow for shorter lead times and cost savings we pass on to our customers. Our promise to you, our customer, is to use our 100 + years of experience and quality materials, products and services in each project we build, and we stand behind them.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#108;&#101;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#119;&#111;&#111;&#100;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">danielle@qualitywooddesigns.com</a>","www.qualitywooddesigns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CNKBM8U3W5N9">20</a>","HABECK TRUCKING, INC","MIKE HABECK","","10689 SD HIGHWAY 34","","BELLE FOURCHE","SD","57717-6103","Our transportation services include full truckload, LTL, dry warehousing, logistics, and a brokerage division. We are licensed and pro rated for 48 states. Our main lanes are from the Midwest to the northwest and back. Our main terminal is located in western South Dakota.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#104;&#97;&#98;&#101;&#99;&#107;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mike@habecktrucking.com</a>","http://habecktrucking.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJBUT7HUJNV6">21</a>","SUNFLOWER MEDICAL PHYSICS LLC","RICHARD MASSOTH","","4312 S TEAKWOOD AVE","","SIOUX FALLS","SD","57103-5236","Diagnostic Medical Physics Services, Testing and Consultation; Medical Health Physics Services and Consultation; Radiation Safety Training and Consultation; Radiation Shielding Design (Medical)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#97;&#115;&#115;&#111;&#116;&#104;&#64;&#97;&#99;&#109;&#46;&#111;&#114;&#103;">rmassoth@acm.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WQ2HXNQV1CA6">22</a>","XCEL RESEARCH CONSULTING INC","MAURINE LILLESKOV","","2050 HARNEY DR","","RAPID CITY","SD","57702-5113","Xcel Research Consulting, Inc., a female-owned, small business that provides consultative, research and management services to different organizations including local public health agencies, professional associations, tribal organizations and non-profit, community-based organizations. Areas of experience and expertise include both qualitative and quantitative research services utilizing focus groups, key informant interviews, and survey design; strategic planning and management; needs assessments; feasibility studies; development, implementation, and evaluation of community-based projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#117;&#114;&#105;&#110;&#101;&#46;&#108;&#105;&#108;&#108;&#101;&#115;&#107;&#111;&#118;&#64;&#120;&#99;&#101;&#108;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#111;&#114;&#103;">maurine.lilleskov@xcelresearch.org</a>","www.xcelresearch.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTN1DN4YZJ76">23</a>","SAB SCIENCES INC","EDDIE SULLIVAN","","2100 E 54TH ST N","","SIOUX FALLS","SD","57104-5509","Genetic engineering, biopharmaceutical reserach, development and manufacturing, quality control, quality assurnace, regulatory compliance, human polyclonal antibody manufacturing, vaccines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#100;&#105;&#101;&#64;&#115;&#97;&#98;&#46;&#98;&#105;&#111;">eddie@sab.bio</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KUARZT1JA8Q9">24</a>","TOTAL RELIANT CONSULTING, LLC","RONALD DRYBURGH","","6910 MUIRFIELD DR","","RAPID CITY","SD","57702-9561","TRC provides daily support and solutions to our customers in the following areas: Nuclear & Conventional Weapons/Systems Sustainment, Maintenance and Logistics; Aircraft Armament; Contracting, Logistics and Acquisition Support; and Cyber Assurance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#121;&#98;&#117;&#114;&#103;&#104;&#114;&#64;&#116;&#111;&#116;&#97;&#108;&#114;&#101;&#108;&#105;&#97;&#110;&#116;&#46;&#99;&#111;&#109;">dryburghr@totalreliant.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQK7KKS54Y33">25</a>","GANT GROUP, INC.","JASON GANT","","28597 381ST AVE","","GEDDES","SD","57342-6701","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#64;&#103;&#97;&#110;&#116;&#103;&#114;&#111;&#117;&#112;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jason@gantgroupinc.com</a>","WWW.GANTGROUPINC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7M4HEL41RG8">26</a>","HALME, INC.","JANELLE KANGAS","","44769 SD HIGHWAY 28","","LAKE NORDEN","SD","57248-5922","Halme Inc. is a family owned business serving eastern South Dakota. We specialize in infrastructure projects for local government agencies and private developers. Our work includes heavy excavation, fine grading, road construction, sewer/water/storm utility installation and general contracting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#110;&#101;&#108;&#108;&#101;&#64;&#104;&#97;&#108;&#109;&#101;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Janelle@halme-inc.com</a>","https://www.halme-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7PKPP985DH3">27</a>","K & S TRAILER SALES LLC","SHILOH EISENBRAUN","","3602 CAMBELL ST","","RAPID CITY","SD","57701-0123","K & S Trailer Sales LLC provides sales of new used and used trailers. We provide all types of trailers ranging from: livestock trailers, horse trailers, living quarters, utility, cargo trailers, and more. We also provide repair and maintenance/servicing for all trailers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#105;&#108;&#111;&#104;&#64;&#98;&#108;&#97;&#107;&#101;&#115;&#116;&#114;&#97;&#105;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">shiloh@blakestrailer.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=URXHT86VMMB9">28</a>","AMERICAN WARRIOR ENTERPRISES INC","TERENCE GRAVES","","27135 S PARKLANE DR","BLDG A","SIOUX FALLS","SD","57106-8000","American Warrior Enterprises is a Service Disabled Veteran Owned Small Business and one of the most capable metal fabrication firms that you’ll find. Our roots in metal fabrication and tooling are deep. Our experience is broad, encompassing projects for applications that are as varied as they are demanding. And our flexibility and responsiveness are legendary.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#114;&#97;&#118;&#101;&#115;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tgraves1@gmail.com</a>","https://americanwarriorenterprises.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GH5AJC6LKJ43">29</a>","CARDINAL INDUSTRIES, INC.","DARREN BEYER","","724 COMMERCE ST","","ABERDEEN","SD","57401-3312","Cardinal Industries, Inc. is a custom plastics manufacturer located out of Aberdeen, SD. We specialize in the production and distribution of custom plastic and rubber products. Our services include; injection mold plastics and rubber products, precision custom molds, parts, and assemblies. Our business has over 50 years of experience dealing with many unique industries while providing the highest quality productions and customer service. To view more on our Federal Contracting, please visit <a href='https://www.fedlinks.com/cardinal-industries-inc'>Fedlinks Cardinal Industries Inc</a>.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#105;&#113;&#117;&#111;&#116;&#105;&#110;&#103;&#64;&#110;&#118;&#99;&#46;&#110;&#101;&#116;">ciquoting@nvc.net</a>","http://www.cardinalcustomproducts.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MWC5AQ6THH19">30</a>","BLEND INTERACTIVE, INC.","KARLA SANTI","","231 S PHILLIPS AVE","STE 200","SIOUX FALLS","SD","57104-6326","We help institutions and agencies tackle complicated web and content problems. Long story short, we build complex websites. Blend specializes in website design and development, along with web based application consulting and development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#108;&#97;&#64;&#98;&#108;&#101;&#110;&#100;&#105;&#110;&#116;&#101;&#114;&#97;&#99;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">karla@blendinteractive.com</a>","www.blendinteractive.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNQ6XL6N31J7">31</a>","NOVUM NANO, LLC","ROSE GERANI","","600 N ELLSWORTH RD","","BOX ELDER","SD","57719-2012","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#110;&#111;&#118;&#117;&#109;&#110;&#97;&#110;&#111;&#46;&#99;&#111;&#109;">contracts@novumnano.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QC9EMUJMNLG3">32</a>","GALUSHA TECHNOLOGIES LLC","ABIGAIL BURNETT","","919A LAWRENCE ST","","BELLE FOURCHE","SD","57717-1969","Capable of designing and installing solar power equipment and solar power electrical systems. Partner with a variety of businesses to deliver industrial gases and bottled water. Also partner with a small business to provide IT equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#108;&#117;&#115;&#104;&#97;&#116;&#101;&#99;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">galushatech@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBBHH17HM5Z6">33</a>","CODEHOF LLC","DAVID PIFKE","","402 SAINT JOSEPH ST STE 12","","RAPID CITY","SD","57701-3081","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#99;&#111;&#100;&#101;&#104;&#111;&#102;&#46;&#99;&#111;&#109;">dave@codehof.com</a>","https://codehof.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C2GAAUMK25Z1">34</a>","TRIGGER INTERACTIVE, LLC","TYLER BROCKEL","","2301 RESEARCH PARK WAY, SUITE 130","","BROOKINGS","SD","57006-1724","Trigger Interactive is the developer of A.I.M.S.S. (the Attachable Interactive Modular Shooting System). A.I.M.S.S. is a portable system of wireless smart target attachments that mount to any type of steel firearm targets and allows the targets to interact with a shooter. Controlled by a smartphone app, A.I.M.S.S. delivers complex and dynamic shooting scenarios while shooting real weapons, with live ammunition, at real targets. By separating the electronics from proprietary targets, our patent pending system delivers a superior portable, realistic, informative, and cost efficient method for live-fire weapons training compared to current market options.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#64;&#116;&#114;&#105;&#103;&#103;&#101;&#114;&#105;&#110;&#116;&#101;&#114;&#97;&#99;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">tyler@triggerinteractive.com</a>","https://www.triggerinteractive.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GEDENPJF1GJ7">35</a>","ENERGY ENGINEERING INC","RON REBENITSCH","","4510 S GLENVIEW PL","","RAPID CITY","SD","57702-6804","Project Development, Renewable Energy, Project Management, Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#46;&#114;&#101;&#98;&#101;&#110;&#105;&#116;&#115;&#99;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ron.rebenitsch@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DDN6BL7ELKT4">36</a>","VA-TRAK, LLC","NATALIE BERTSCH","","210 NORTH BROADWAY AVE, SUITE B","","MILLER","SD","57362-1414","VA-Trak LLC is a leader in IT solutions and healthcare services for the federal government. Offering a wide range of services, including IT and medical supplies, healthcare and IT staffing, and revenue cycle management, VA-Trak specializes in certified coding, medical billing, compliance auditing, credentialing, and enrollment. With over two decades of experience, VA-Trak has established a strong presence in the SDVOSB communities and federal agencies, delivering innovative solutions and technology-driven services. VA-Trak’s dedication to excellence is evident in its comprehensive and integrated approach to healthcare consulting and IT solutions, making it a trusted partner in the industry. For more information or to request our Capabilities Statement, please contact Natalie Bertsch at natalie.bertsch@va-trak.com or call (866) 482-8725.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#97;&#108;&#105;&#101;&#46;&#98;&#101;&#114;&#116;&#115;&#99;&#104;&#64;&#118;&#97;&#45;&#116;&#114;&#97;&#107;&#46;&#99;&#111;&#109;">natalie.bertsch@va-trak.com</a>","https://www.va-trak.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ECKQFZ9X1G64">37</a>","DEVELOPING TODAY LLC","JORDAN BLOCK","","508 W 5TH ST","","CANTON","SD","57013-1626","Developing Today is a veteran-owned small business dedicated to providing innovative and valued services at economical costs. From a small business website, design and hosting to large enterprise system rewrites Developing Today is here to provide the solutions for tomorrow. An example of one of our largest systems is the South Dakota Legislature's Codification and Bill Drafting System. North Dakota Legislature suggested they take three years for the project based on their experience with an industry leader. Developing Today completed the original scope of the project in one year. Then when COVID-19 hit Developing Today enabled South Dakota to be the first state providing remote voting for their legislature.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#114;&#100;&#97;&#110;&#46;&#84;&#46;&#66;&#108;&#111;&#99;&#107;&#64;&#68;&#101;&#118;&#101;&#108;&#111;&#112;&#105;&#110;&#103;&#84;&#111;&#100;&#97;&#121;&#46;&#110;&#101;&#116;">Jordan.T.Block@DevelopingToday.net</a>","https://www.DevelopingToday.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCP4SM7FACA7">38</a>","TIME TO PLAN LLC","DAVID RIDL","","6108 GRAND TETON CT","","RAPID CITY","SD","57702-8538","Time to Plan LLC excels in delivering innovative, tailored solutions across various sectors, including Agriculture, IoT, AI, and Automation. With a decade of experience in project management and financial strategy, our team of experts ensures top-notch service and operational excellence. We integrate cutting-edge technologies with traditional processes to offer comprehensive services that enhance efficiency and exceed client expectations. Our commitment to exceptional customer service and quality sets us apart as the ideal partner for your business needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#114;&#105;&#100;&#108;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">davidridl8@gmail.com</a>","ttpdr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PMU3JT5ENUK6">39</a>","SUSTAINABLE GROUNDING SYSTEMS LLC","SCOTT FISHER","","550 N 5TH ST","","RAPID CITY","SD","57701-1375","We do electrical grounding and safety systems for Government and Military facilities, Oil and Gas industry, and Power Generation Utilities, Services include electrical grounding, cathodic protection, lightening protection, shaft grounding corrosion testing and structural and mechanical inspections.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#115;&#103;&#115;&#50;&#48;&#49;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">scottsgs2015@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.071&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

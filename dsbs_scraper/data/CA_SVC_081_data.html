@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 081 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.31 seconds and 2.49 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 73 
+(of 73 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDJWU54M3737">1</a>","PCG ENTERPRISES, INC.","YVONNE NOMIZU","PRESIDENT","76 MAPLE AVE","","ATHERTON","CA","94027-3815","Customer Research & Service Innovation: surveys & analysis, focus groups, product/program evaluation, customer satisfaction improvement; customer experience design and strategic optimization of complex service systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#110;&#111;&#109;&#105;&#122;&#117;&#64;&#112;&#99;&#103;&#102;&#105;&#114;&#109;&#46;&#99;&#111;&#109;">ynomizu@pcgfirm.com</a>","http://www.pcgfirm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJGSB6TH8JH4">2</a>","SYCOMP A TECHNOLOGY COMPANY, INC.","JEAN SYMONS","Director of Sales","950 TOWER LN","STE 1785","FOSTER CITY","CA","94404-4257","As an Enterprise IT Solutions provider, Sycomp specializes in adding value in availability, scalability, engineering expertise, performance, and flexibility with expertise in various operating systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#121;&#109;&#111;&#110;&#115;&#64;&#115;&#121;&#99;&#111;&#109;&#112;&#46;&#99;&#111;&#109;">jsymons@sycomp.com</a>","http://www.SYCOMP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCQUYM6GHNJ5">3</a>","TECHNICAL COMMUNITIES, INC.","MATTHEW MCMAHON","Program Manager","1840 GATEWAY DR","STE 150","SAN MATEO","CA","94404-4028","Online Test Equipment Marketplace for military and government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#99;&#109;&#97;&#104;&#111;&#110;&#64;&#116;&#101;&#115;&#116;&#109;&#97;&#114;&#116;&#46;&#99;&#111;&#109;">mmcmahon@testmart.com</a>","http://www.technicalcommunities.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G15ANE8PZDR4">4</a>","THE MOVE MANAGEMENT CENTER","CAROLYN OLEARY","Vp","1650 BOREL PL STE 204","","SAN MATEO","CA","94402-3508","We provide Relocation services. This includes household goods (moving company) management, home sale, home purchase, temporary housing, audit and payment, etc. We can also work to contain our client's costs and provide innovative solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#121;&#110;&#64;&#109;&#111;&#118;&#101;&#99;&#101;&#110;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">carolyn@movecenter.com</a>","https://www.movecenter.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FQEMU2LVP443">5</a>","CONCEPTS & METHODS CO., INC.","TONY BARULICH","President","1017 BRANSTEN RD","","SAN CARLOS","CA","94070-4020","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#98;&#97;&#114;&#117;&#108;&#105;&#99;&#104;&#64;&#99;&#97;&#109;&#99;&#111;&#102;&#117;&#114;&#110;&#97;&#99;&#101;&#46;&#99;&#111;&#109;">tbarulich@camcofurnace.com</a>","http://www.camcofurnace.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7HEWRX3QHA5">6</a>","METAL FUSION, INC.","XIAOWEN CHEN","President","425 HURLINGAME AVE","","REDWOOD CITY","CA","94063-3407","FAA Repair Station # CG3R422L Turbine engine component repair, including complete machine shop facilities, Plasma, dual wire arc, combustion wire and powder thermal spray coating capabilities. Welding, MIG, TIG etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#64;&#77;&#101;&#116;&#97;&#108;&#70;&#117;&#115;&#105;&#111;&#110;&#73;&#110;&#99;&#46;&#99;&#111;&#109;">wen@MetalFusionInc.com</a>","http://www.metalfusioninc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MTQEHWLYFXQ5">7</a>","ARGON OFFICE SUPPLIES","TINA MARK","Owner","60 CHADWICK CT","","MILLBRAE","CA","94030-2818","Argon Office Supplies Inc. offer a full line of products to fit your everyday office need. Including office chairs, printers, printer cartridges, pen and pencils to janitorial supplies here at the lowest price.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#78;&#70;&#79;&#64;&#97;&#114;&#103;&#111;&#110;&#111;&#102;&#102;&#105;&#99;&#101;&#115;&#117;&#112;&#112;&#108;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">INFO@argonofficesupplies.com</a>","HTTP://www.ArgonOfficeSupplies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1DNACX2KXU6">8</a>","SOUTHWEST CONSTRUCTION & PROPERTY MANAGEMENT","YVETTE GARDNER","President","1213 SAN MATEO AVE","","SAN BRUNO","CA","94066-1528","Southwest Construction & Property Management is able to provide building requirements specializing in siesmic upgrades to wood frame buildings and exterior repairs such as dry rot and pest repair to wood buildings, re roofing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#103;&#101;&#110;&#99;&#111;&#110;&#64;&#102;&#108;&#97;&#115;&#104;&#46;&#110;&#101;&#116;">jtgencon@flash.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFBNWNFBBKS9">9</a>","*SOFTWARE PURSUITS INC","JEFF KRASKY","Director of Marketing","140 CHESTNUT LN","","SAN MATEO","CA","94403-3317","Software Pursuits creates and markets system software products for IBM VSE and Windows networks.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#107;&#64;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#112;&#117;&#114;&#115;&#117;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">jeffk@softwarepursuits.com</a>","http://www.softwarepursuits.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C5BMZBK3DG67">10</a>","BLACKSTONE TECHNOLOGY GROUP","CASEY COURNEEN","President","1850 RALSTON AVE","","HILLSBOROUGH","CA","94010-6455","Blackstones expertise lies in process and data integration. Blackstone provides a full-range of Enterprise Integration, Enterprise Architecture, Project Management and Strategic Support solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#111;&#117;&#114;&#110;&#101;&#101;&#110;&#64;&#98;&#115;&#116;&#111;&#110;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">ccourneen@bstonetech.com</a>","http://www.bstonetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WBPWL3V37LY8">11</a>","NORTH STATE ENVIRONMENTAL","MAXINE BALISTRERI","General Manager","220 S SPRUCE AVE STE 200","","SOUTH SAN FRANCISCO","CA","94080-4560","Environmental Services, Hazourdous Waste Transport and Disposal, Medical Waste Transport, Testing Lab, Analytical, Emergency Response, Bin rental, Waste Package, Records Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#115;&#101;&#104;&#111;&#109;&#101;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">nsehome@aol.com</a>","north-state.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SA6AP4DNLGG6">12</a>","GARRATT-CALLAHAN COMPANY","LIA MAAFU","","50 INGOLD RD","","BURLINGAME","CA","94010-2206","Garratt-Callahan Company provides custom water treatment solutions based on a century of experience. We help you protect your investments in equipment and facilities while controlling your energy and maintenance costs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#97;&#97;&#102;&#117;&#64;&#103;&#45;&#99;&#46;&#99;&#111;&#109;">lmaafu@g-c.com</a>","http://www.garrattcallahan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMEZHNKKDNM3">13</a>","POINTCROSS, INC.","SURESH MADHAVAN","","1291 E HILLSDALE BLVD STE 304","","FOSTER CITY","CA","94404-1292","Enterprise software platform for knowledge intensive processes for decision making. Tool kits for rapidly modeling and building complex processes and portfolio analysis. Search, security, and compliance to FIPS standards. Universal Data services layer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#114;&#101;&#115;&#104;&#64;&#112;&#111;&#105;&#110;&#116;&#99;&#114;&#111;&#115;&#115;&#46;&#99;&#111;&#109;">suresh@pointcross.com</a>","http://www.pointcross.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KX5WNSK87VL6">14</a>","SCHORR DAVID","DAVID SCHORR","owner","321 WOODLAND VIS","","LA HONDA","CA","94020-","Assistive technology/adaptive computer equipment for disabled individuals, Dragon NaturallySpeaking voice recognition software, computer hardware, installation, sales, training, consulting and customization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#105;&#108;&#64;&#49;&#115;&#116;&#118;&#111;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">mail@1stvoice.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J18XN6PQ3J21">15</a>","MCM ENGINEERING, INC","PAUL BADE","","845 HINCKLEY RD","","BURLINGAME","CA","94010-1502","MCM is a designer and manuf of numerous 400 Hz and 28VDC aviation related ground power equip. MCM has performed military and commercial projects up to $2 million. Strong engineering experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#109;&#99;&#109;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">sales@mcmeng.com</a>","http://www.mcmeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDC7QKGNUTX7">16</a>","GRAPHSTREAM INC","JOHN DUNWOODY","CFO","16 RALSTON RANCH ROAD","","BELMONT","CA","94002-1238","GraphStream is a supplier of advanced scalable computing systems for the most demanding applications in high-performance technical computing and visualization. We offer both scalability and accelerated processing in Graphics, Networking/IO, and Storage.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#103;&#114;&#97;&#112;&#104;&#115;&#116;&#114;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">info@graphstream.com</a>","www.graphstream.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XJ4SLHEF7F84">17</a>","SIMONDS MACHINERY CO.","STEPHEN HIPP","","259 HARBOR WAY","","SOUTH SAN FRANCISCO","CA","94080-6811","Pump distributor and service company for all types of pumps and related equipment. Field service for confined space work, lift station retrofit. California licensed contractor C61/D21 719795","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#115;&#105;&#109;&#111;&#110;&#100;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#114;&#121;&#46;&#99;&#111;&#109;">steve@simondsmachinery.com</a>","www.simondsmachinery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3V8DMHCMLB6">18</a>","CREEKSIDE CENTER FOR EARTH OBSERVATION LLC","CHRISTAL NIEDERER","","51 WILLOW RD","","MENLO PARK","CA","94025-3658","Provide specialized scientific services in environmental sciences, including microclimate assessment, statistical design, modeling, and quantitative analysis","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#97;&#108;&#64;&#99;&#114;&#101;&#101;&#107;&#115;&#105;&#100;&#101;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">christal@creeksidescience.com</a>","http://www.creeksidescience.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VH1DMENQK1B3">19</a>","THE CROSBY GROUP-ENGINEERS/ARCHITECTS","KRISTEN BOUMA","President","155 BOVET RD","STE 550","SAN MATEO","CA","94402-3149","Crosby Group provides Structural Engineering, Architecture, Construction Management services. We are experienced with, structural, retrofit, design, peer-review, assessment, foundation, earthquake, and building safety standards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#101;&#110;&#64;&#99;&#114;&#111;&#115;&#98;&#121;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">kristen@crosbygroup.com</a>","http://www.crosbygroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FANKT6VLFWH2">20</a>","C. H. BULL CO","ANDY BULL","vice president","229 UTAH AVE","","SOUTH SAN FRANCISCO","CA","94080-6802","Specialized Industrial & Constrution Tool distributor for Hydraulic Jacks, cranes, winches, hoists, pipe threading and bending, heat exchangers, mechanical accuators, hand & power tools. Family owned since 1930.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#66;&#85;&#76;&#76;&#64;&#99;&#104;&#98;&#117;&#108;&#108;&#99;&#111;&#46;&#99;&#111;&#109;">ABULL@chbullco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S9NBQ3WUYAM1">21</a>","ACCURATE ALWAYS, INC.","KATE HALEY","","127 OCEAN BLVD","","HALF MOON BAY","CA","94019-4042","Manufactures call recording and communications monitoring systems. The digital voice recording systems for monitoring of radio, telephone, PBX, VoIP, mission data, multiple agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#97;&#108;&#101;&#121;&#64;&#97;&#99;&#99;&#117;&#114;&#97;&#116;&#101;&#97;&#108;&#119;&#97;&#121;&#115;&#46;&#99;&#111;&#109;">khaley@accuratealways.com</a>","https://www.accuratealways.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QYLAKHA3SH61">22</a>","DS-INTERPRETATION, INC.","NAOMI BOWMAN","","52 S LINDEN AVE STE 2","","SOUTH SAN FRANCISCO","CA","94080-6432","Interpretation Services including Remote, Hybrid and On-site Interpreting Technology, Remote and On-site Conference Interpreters, Translation, subtitles and captioning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#119;&#98;&#64;&#100;&#115;&#45;&#105;&#110;&#116;&#101;&#114;&#112;&#114;&#101;&#116;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">nwb@ds-interpretation.com</a>","https://www.ds-interpretation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N56XUJKKJND6">23</a>","ACO PACIFIC INC","NOLAND LEWIS","","2604 READ AVE","","BELMONT","CA","94002-1520","Manufacturer of Community and Industrial Sound Level Alarms and Mitigation Monitors,Measurement Microphones and Systems- Indoor and Outdoor Microphone Assemblies, White/Pink Noise Generators","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#99;&#111;&#112;&#97;&#99;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">sales@acopacific.com</a>","http://www.acopacific.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LNW6WCKVLNH4">24</a>","MORROW SERVICE INC","SCOTT GORDON","","313 COREY WAY","","SOUTH SAN FRANCISCO","CA","94080-6706","Calibration and Repair of Laboratory Instruments","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#109;&#111;&#114;&#114;&#111;&#119;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">scott@morrowservice.com</a>","http://www.morrowservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G67MZGCL88F5">25</a>","EKI ENVIRONMENT & WATER, INC.","MICHELLE KING","","2001 JUNIPERO SERRA BLVD","STE 300","DALY CITY","CA","94014-3887","A wide range of environmental consulting services, including, site investigations & assessments, site remediation; salinity studies, water resource studies & design, and civil/environmental program management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#107;&#105;&#110;&#103;&#64;&#101;&#107;&#105;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#46;&#99;&#111;&#109;">mkking@ekiconsult.com</a>","http://www.ekiconsult.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDFJKEN1A488">26</a>","JOHN M CARNES","JOHN CARNES","","1755 LA HONDA RD","","WOODSIDE","CA","94062-3745","Supplier of geographic coordinate plotting tools for UTM/MGRS and lat/lon coordinates. We supply Map Rulers, Grid Overlays, Corner Rulers and Roamers or many diferent map and chart scales. Coordinate Scale and Protractor, GTA 5-2-12.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#109;&#97;&#112;&#116;&#111;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">john@maptools.com</a>","http://www.maptools.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MWXGNBMD5NH8">27</a>","SCBA SAFETY CHECK, INC","CHAD READE","","1807 BARTON ST","","REDWOOD CITY","CA","94061-4107","SCBA Safety Check Inc services, sells and rents self-contained breathing apparatus (scba).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#98;&#97;&#99;&#104;&#97;&#100;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">scbachad@aol.com</a>","http://www.scbasafety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RB78DZR7SKM5">28</a>","ENABLE ENGINEERING CO INC","JOSEPH PENNESE","","1442 ROLLINS RD","","BURLINGAME","CA","94010-2304","Large stock of brand named component test sockets and test adapters kept in stock. We manufacture a broad spectrum of electronic test adapters for R&D and testing applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#101;&#101;&#99;&#111;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">joe@eecosales.com</a>","http://www.aprilog.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SF3NELLU8RA3">29</a>","GRI TECHNOLOGY SOLUTIONS LLC","CHARLOTTA GIGLIOTTI-CARTER","","3 E 3RD AVE STE 200","","SAN MATEO","CA","94401-4280","IT Consulting -- AML (Anti-Money Laundering) Application Custom Software Application Development cyber security Program/Project Management Executive and Temp Staffing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#97;&#114;&#116;&#101;&#114;&#64;&#103;&#114;&#105;&#116;&#101;&#99;&#104;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">ccarter@gritechsol.com</a>","http://www.gritechsol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC1DAXHM8424">30</a>","COLLABORATIVE DRUG DISCOVERY, INC.","BARRY BUNIN","","1633 BAYSHORE HWY","STE 342","BURLINGAME","CA","94010-1515","Scientific Software for Collaborative Drug Discovery","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#117;&#110;&#105;&#110;&#64;&#99;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#105;&#118;&#101;&#100;&#114;&#117;&#103;&#46;&#99;&#111;&#109;">bbunin@collaborativedrug.com</a>","http://www.collaborativedrug.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XBNYKN1B6NL7">31</a>","INSIGNIA ENVIRONMENTAL","ANNE MARIE MCGRAW","","545 MIDDLEFIELD RD STE 210","","MENLO PARK","CA","94025-3400","Insignia was founded in 2004 to provide premier service to clients facing environmental challenges. Our employees combine foundations in engineering and science with real-world construction experience to develop feasible and effective environmental solutions. Insignia holds performance and responsiveness paramount while working with clients to meet their needs in the most cost-effective way possible. We pride ourselves on knowing the latest environmental regulations, understanding the perspectives of jurisdictional agencies, employing experienced personnel, and producing high-quality deliverables.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#99;&#103;&#114;&#97;&#119;&#64;&#105;&#110;&#115;&#105;&#103;&#110;&#105;&#97;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">amcgraw@insigniaenv.com</a>","http://www.insigniaenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D1HAYK7S7YZ6">32</a>","CG MOVING COMPANY, INC","GRISELDA GONZALEZ","","1755 MISSION RD","","SOUTH SAN FRANCISCO","CA","94080-1220","CG Moving Company provides a full range of services including assistance planning your move, moving office furniture and equipment, providing packing materials, transporting/placing items to new location, as well as storage facilities. We can assist you with an online inventory of your stored items which contains pictures so that you always know what you have in storage. We have a California Contractor State License Board lic#987530C61/D34 for the installation of modular/cubicle systems. A California PUC License for household goods Lic#190922, and a California DMV Motor Carrier number 0426662. We are able to assist you with office, corporate, residential relocation within then state of California.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#105;&#115;&#101;&#108;&#100;&#97;&#64;&#99;&#103;&#109;&#111;&#118;&#105;&#110;&#103;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">griselda@cgmovingcompany.com</a>","http://www.cgmovingcompany.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K3S9RUCWFXN8">33</a>","TANGENT COMPUTER INC.","TROY LOGAN","","191 AIRPORT BLVD","","BURLINGAME","CA","94010-2006","We offer medical grade computing products, rugged computers and servers, all in one computers, small fanless computers, and email data storage. These products have low power consumption. Tangent also services products globally.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#111;&#121;&#108;&#64;&#116;&#97;&#110;&#103;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">troyl@tangent.com</a>","http://www.tangent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KG67MXSQN6H3">34</a>","PATRIOT CONSTRUCTION INC","CHRISTOPHER COTTA","","324 LANG RD","","BURLINGAME","CA","94010-2003","construction, renovations, upgrades, electrical, painting, roofing, waterproofing, plumbing, design-builds, HVAC and controls","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#112;&#97;&#116;&#114;&#105;&#111;&#116;&#98;&#117;&#105;&#108;&#100;&#115;&#46;&#99;&#111;&#109;">chris@patriotbuilds.com</a>","http://www.patriotbuilds.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MUJLG28PK897">35</a>","FLUID GAUGE CO, INC","SCOTT PETERSON","","485 CABOT RD","","SOUTH SAN FRANCISCO","CA","94080-4819","Wholesale Stocking Distributor of Boiler, Control & Process Piping Products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#99;&#111;&#116;&#116;&#64;&#102;&#108;&#117;&#105;&#100;&#103;&#97;&#117;&#103;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">Scott@fluidgaugeco.com</a>","www.fluidgaugeco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CVBKCM8EBDZ7">36</a>","ALLBAY LANDSCAPING, INC.","EVELYN AYALA","","1204 LINDA MAR BLVD","","PACIFICA","CA","94044-4245","ALLBAY Landscaping Inc. Specializing in Tree and Shrub Pruning,Plant Bed Maintenance,Mowing Turf Care,Brush Removal,Irrigation Repairs,Draining Solutions,Tree Care,Tree Removal,Outdoor Lighting Mulch,Thatching,Aerating,Fertilization,Landscape Construction,Hardscape Installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#118;&#101;&#108;&#121;&#110;&#64;&#97;&#108;&#108;&#98;&#97;&#121;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#101;&#46;&#99;&#111;&#109;">Evelyn@allbaylandscape.com</a>","http://www.allbaylandscape.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBV8DAM3HHP1">37</a>","M-TEK ENGINEERING, INC","JULIA MOSEMAN","","76 FAY AVE","","SAN CARLOS","CA","94070-2865","M-Tek provides Capital and Facilities Project Management and Detailed Design services to various industrial sectors (i.e., biotech, semiconductor, power, mining and metals, laboratory, etc.) thru the entire project life cycle.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#64;&#109;&#45;&#116;&#101;&#107;&#101;&#110;&#103;&#114;&#46;&#99;&#111;&#109;">julie@m-tekengr.com</a>","N/A"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5ZWJLAVNWL8">38</a>","JAMES ELECTRONICS LTD","SUE SIEGMAN","","1355 SHOREWAY RD","","BELMONT","CA","94002-4105","Electronics, Electronic Parts, Manufacturing, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#105;&#101;&#103;&#109;&#97;&#110;&#64;&#106;&#97;&#109;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">ssiegman@jameco.com</a>","https://www.jameco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V3L5RLZW6BZ5">39</a>","KASHIWA FUDOSAN AMERICA INC","ASHLEY STERLEKAR","","400 OYSTER POINT BLVD","STE 117","SOUTH SAN FRANCISCO","CA","94080-1917","Lease Rental Of Property","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#116;&#101;&#114;&#108;&#101;&#107;&#97;&#114;&#64;&#108;&#112;&#99;&#46;&#99;&#111;&#109;">asterlekar@lpc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFH4SUCVA379">40</a>","ENVIRONMENTAL CHEMICAL CORPORATION","TONY NOLEN","Director of Federal Programs","700 AIRPORT BLVD STE 250","","BURLINGAME","CA","94010-1937","ECC provides full-service environmental remediation and waste management organization. Since 1985, ECC's Environmental and Explosive Ordnance Divisions have successfully provided quality services to the federal government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#110;&#111;&#108;&#101;&#110;&#64;&#101;&#99;&#99;&#46;&#110;&#101;&#116;">tnolen@ecc.net</a>","http://www.ecc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZCJVLGUTCNB7">41</a>","AGBAYANI CONSTRUCTION CORPORATION","VINCENT AGBAYANI","","88 DIXON CT","","DALY CITY","CA","94014-2225","CONSTRUCTION, REMODELING OF SINGLE & MULTI FAMILY DWELLINGS, COMML AND INDT'L BLDGS EG: HOSP, ARPRTS, ELECL, PLMBNG, HOUSING MAINT, MIL FAMILY HSNG MAINT & MGMT, BASE MAINT, BOS-JOC/SABER, GRNDS MAINT & LNDSCPNG SRVCS, FACILITIES MAINT, HVAC & MECH MAINT. For more information please visit: http://www.agbayani.com or call: (650) 994-9380","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#110;&#99;&#101;&#46;&#97;&#103;&#98;&#97;&#121;&#97;&#110;&#105;&#64;&#97;&#103;&#98;&#97;&#121;&#97;&#110;&#105;&#46;&#99;&#111;&#109;">vince.agbayani@agbayani.com</a>","http://www.agbayani.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NXJNJJ8MYML7">42</a>","VINTAGE ELEVATOR SERVICES, INC.","GERALD RODRIGUEZ","","21 WILLOW LN","","BELMONT","CA","94002-1916","Elevator, dumbwaiter, escalator maintenance, repair, modernization/upgrades 2 owners have over 60 years combined elevator industry field experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#114;&#114;&#121;&#64;&#118;&#105;&#110;&#116;&#97;&#103;&#101;&#45;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">gerry@vintage-elevator.com</a>","http://www.vintage-elevator.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PKCEM2EEWLS8">43</a>","HOME SAFETY SERVICES, INC.","MARTIN SIMENC","","890 COWAN RD","STE G","BURLINGAME","CA","94010-1208","Home modifications experts. Licensed, accredited, certified and GSA contract holder. Professional assessments and installations of safety and accessibility modifications including grab bars, bathroom modifications, shower conversions, stair railings, wheelchair ramps, stair lifts and porch lifts. 20 years experience serving Northern California.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#64;&#104;&#111;&#109;&#101;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#110;&#101;&#116;">ms@homesafety.net</a>","http://www.homesafety.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYYCFJYSL4A5">44</a>","SERPLUS TECHNOLOGY, LLC","PHILIP PEMBERTON","","111 INDUSTRIAL WAY STE 9","","BELMONT","CA","94002-8206","Recombinant protein production in yeast Protein purification and analytical services Fermentation development services Drug development consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#112;&#101;&#109;&#98;&#101;&#114;&#116;&#111;&#110;&#64;&#115;&#101;&#114;&#112;&#108;&#117;&#115;&#98;&#105;&#111;&#46;&#99;&#111;&#109;">ppemberton@serplusbio.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNXDGEMR4Z55">45</a>","EMAGINED SECURITY, INC.","MARK DONOVAN","","2816 SAN SIMEON WAY","","SAN CARLOS","CA","94070-3611","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#101;&#109;&#97;&#103;&#105;&#110;&#101;&#100;&#46;&#99;&#111;&#109;">accounting@emagined.com</a>","http://www.emagined.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLFYC1HC7LU4">46</a>","NISY E. IPE","NISY IPE","","3117 LA MESA DR","","SAN CARLOS","CA","94070-4242","With over 38 years of experience, providing radiation protection, shielding design, activation dosimetry, calculations (analytical and Monte Carlo), radiation surveys, consulting services and expert witness for radiation producing machines and radioactive sources in medicine, industry and research. Facilities include therapy (linear accelerators, brachytherapy, proton and particle therapy, boron neutron capture therapy, diagnostic facilities, radiographic, fluoroscopic, CT, PET-CT, nuclear medicine, medical isotope production and cyclotrons); industrial (radiographic, cargo screening, non-destructive testing, X-ray imaging, neutron generators, radiation sterilization and processing, E-beam curing and cross-linking), research (high-energy particle accelerators, synchrotrons/beamlines, cyclotrons, storage rings, light sources and free electron lasers).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#115;&#121;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">nisy@comcast.net</a>","https://www.shieldingconsultant.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3C3QLJQRS69">47</a>","SAN FRANCISCO CIRCUITS, INC.","ALEXANDER DANOVICH","","1660 S AMPHLETT BLVD","STE 200","SAN MATEO","CA","94402-2525","Printed Circuit Board Fabrication and Assembly Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#110;&#111;&#118;&#105;&#99;&#104;&#64;&#115;&#102;&#99;&#105;&#114;&#99;&#117;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">adanovich@sfcircuits.com</a>","http://www.sfcircuits.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLH1DXKCAGZ3">48</a>","LENACO CORP","CAROLYN DILENA","","451 E JAMIE CT","","S SAN FRAN","CA","94080-6204","We supply everything a hotel would use, from janitorial/housekeeping supplies, to laundry, linen, in-room amenities, swimming pool supplies, vending products, vacuums and maintenance equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#121;&#110;&#64;&#98;&#108;&#117;&#101;&#114;&#105;&#98;&#98;&#111;&#110;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">carolyn@blueribbonsupply.com</a>","www.blueribbonsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G9EKENWQ5F59">49</a>","S M CONSTRUCTION AND ASSOCIATES, INC","DEMAN MYVETT","","48 CHESTER ST","","DALY CITY","CA","94014-3009","CONSTRUCTION, REMODEL, RENNOVATION, RESIDENTIAL, COMMERCIAL, DEMO, FINISH WORK, CARPINTRY","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#121;&#118;&#101;&#116;&#116;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">myvett@outlook.com</a>","smconstructionsf.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G57FMW7RH4M4">50</a>","INNOVATION LEADERSHIP GROUP LLC","TAMARA CARLETON","","347 ELM ST","","SAN CARLOS","CA","94070-2214","Innovation Leadership Group is an innovation firm based in Silicon Valley specializing in bridging from strategic foresight to innovation. We help companies build a capability for continuous innovation through a shared mindset, methods, and metrics. Our client list includes the Global 1000, as well as leading universities and governmental groups worldwide. We also work with a network of partners, coaches, and facilitators who have been trained in our approach and tools. Methods from our Foresight Framework have been taught at Stanford University at the undergraduate, graduate, and professional levels for more than a decade.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#46;&#105;&#111;">hello@innovation.io</a>","www.innovation.io"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KV95SMKGKDC8">51</a>","IKASO CONSULTING, LLC","REIKO OSAKI","","533 AIRPORT BLVD STE 400","","BURLINGAME","CA","94010-2013","Ikaso Consulting provides support for public sector end-to-end acquisitions lifecycle services, negotiations, contract compliance, and procurement organization transformation. Additionally, Ikaso also supports organizational analysis, business process assessments, and workload assessments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#115;&#97;&#107;&#105;&#64;&#105;&#107;&#97;&#115;&#111;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">rosaki@ikasoconsulting.com</a>","www.ikasoconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D82RA1JMEBA8">52</a>","ENABLE BIOSCIENCES INC","DAVID SEFTEL","","510 MYRTLE AVE STE 101","","SOUTH SAN FRANCISCO","CA","94080-4562","Research, design and development of ultra-sensitive and ultra-specific antibody detection assays for research and and clinical use in infectious, autoimmune and neoplastic diseases","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#101;&#102;&#116;&#101;&#108;&#64;&#101;&#110;&#97;&#98;&#108;&#101;&#98;&#105;&#111;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dseftel@enablebiosciences.com</a>","www.enablebiosciences.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NK3NR4UVAKN6">53</a>","PSM ASSOCIATES INC.","PETER TZIFAS","","1326 HOWARD AVE","","SAN CARLOS","CA","94070-4926","Public Works Construction Managers, Resident Engineers, Construction Inspectors for: Rail, Rapid Transit, Bridges, Roads, Highways, Tunnels, Airports","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#64;&#112;&#115;&#109;&#45;&#97;&#115;&#115;&#111;&#99;&#46;&#99;&#111;&#109;">peter@psm-assoc.com</a>","www.psm-assoc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FH1HSNKG6PL9">54</a>","HEALTHY HORIZONS BREASTFEEDING CENTERS, INC","CASSANDRA JANAKOS","","720 HOWARD AVE","","BURLINGAME","CA","94010-3005","The expert in workplace lactation programs with 30 years of experience. We enable organizations to be breastfeeding friendly by setting up mother's rooms, perform lactation room and breastpump maintenance, sell and rent breastpumps, provide one-on-one education, and classes to a wide range of organizations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#97;&#115;&#115;&#105;&#64;&#104;&#104;&#45;&#98;&#99;&#46;&#99;&#111;&#109;">Cassi@hh-bc.com</a>","https://www.healthyhorizons.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQ69L7SGLSV3">55</a>","TRANSIRIS CORPORATION","SIMONA NAN","","530 SYCAMORE ST","","SAN CARLOS","CA","94070-2047","We combine mastery of industry best practices, partnerships with top vendors, leading marketing technologies, and involvement in leading academic research in order to ensure continuous innovation and your competitive advantage in sales and marketing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#109;&#111;&#110;&#97;&#64;&#116;&#114;&#97;&#110;&#115;&#105;&#114;&#105;&#115;&#46;&#99;&#111;&#109;">simona@transiris.com</a>","http://www.transiris.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GFZ9CBAZCLP8">56</a>","LAMDAGEN CORPORATION","ALICE HUANG","","555 LAUREL AVE APT 505","","SAN MATEO","CA","94401-4179","LamdaGen is a developer of nano-based biosensors that enable testing systems for highly sensitive and quantitative rapid diagnostics. The Company has harnessed discoveries of Localized Surface Plasmon Resonance (LSPR) the principles of which involve advanced physics, material science and light – and made simple its application in providing precise digital detection of biological and environmental targets for human diagnostic, companion animal, animal food stock and food & water safety.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#72;&#117;&#97;&#110;&#103;&#64;&#76;&#97;&#109;&#100;&#97;&#103;&#101;&#110;&#46;&#99;&#111;&#109;">AHuang@Lamdagen.com</a>","Lamdagen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F8ARE9DV2AP5">57</a>","CERES ROBOTICS, INC.","MICHAEL SIMS","","916 IRVING ST","","MONTARA","CA","94037-9812","Ceres Robotics builds robots and associated software systems for the Moon, Mars, and asteroids.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#83;&#105;&#109;&#115;&#64;&#99;&#101;&#114;&#101;&#115;&#114;&#111;&#98;&#111;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Michael.Sims@ceresrobotics.com</a>","https://www.ceresrobotics.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TJNDVPS535L9">58</a>","UCCELLI & ASSOCIATES, INC.","SUSAN UCCELLI","","1243 MISSION ROAD","","SOUTH SAN FRANCISCO","CA","94080-1397","Court reporters, audio & video transcription, interpreters, videographers, video conferencing, document reproduction, complimentary secure online repository, remote proceedings via Microsoft Teams, BlueJeans, Webex, Zoom and others. Our complimentary conference room has a window for fresh air, two air purifiers, and is located at street level with no atrium or lobby. We follow all COVID-19 protocols. Only one employee is present in the office during proceedings and acrylic partitions, disposable face shields, masks and hand sanitizers are available; conference room, bathrooms and high-contact surface areas are freshly sanitized prior to visitor arrivals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#117;&#99;&#99;&#101;&#108;&#108;&#105;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">info@uccelliassociates.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G8SBGMDRMG94">59</a>","ENGINEERED SOLUTIONS LLC","PETER SMITH","","2411 CABRILLO HWY S","","HALF MOON BAY","CA","94019-2254","Engineered Solutions LLC specializes in personal Materials Science consultancy in areas of advanced engineered ceramics. Experience base includes extensive experience with alumina, silicon carbide, silicon nitride, and aluminum nitride. Services include assistance in body formulation, ceramic to metal joining, ceramic metallization and coating, as well as component fabrication methods and processes. Extensive knowledge base includes inventive research, product and process development, new product launch, as well as supplier and customer development. Experience includes production line layout, multilayer Al2O3 and AlN fabrication, medical device development and launch, deep submergence ceramic pressure hulls, and vacuum devices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#99;&#115;&#109;&#105;&#116;&#104;&#49;&#48;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">pcsmith10@comcast.net</a>","www.caesllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KCSNGXRKL276">60</a>","GENNEXT TECHNOLOGIES INC","SCOT WEINBERGER","","248 MAIN ST STE 100","","HALF MOON BAY","CA","94019-7120","Hydroxyl Radical Protein Footprinting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#119;&#101;&#105;&#110;&#98;&#101;&#114;&#103;&#101;&#114;&#64;&#103;&#110;&#120;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">sweinberger@gnxtech.com</a>","www.gnxtech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GBNNBFTP81T2">61</a>","REDWOOD COMPLIANCE LLC","MOHAMMAD INAMULLAH","","1900 S NORFOLK ST STE 350","","SAN MATEO","CA","94403-1171","Redwood Compliance specializes in Oracle software license management. We enable our clients to optimize their Oracle licensing, maintain license compliance, and take full control of their relationship with Oracle. Based in Palo Alto, California, Redwood Compliance consists of subject matter experts experienced in software licensing, contracting, and sales. Our team consists of former Oracle license auditors, and delivers Oracle audit defense, license optimization and contract negotiation, and advisory services around Oracle licensing. Redwood Compliance is independent of Oracle - it is neither an Oracle partner nor reseller.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#104;&#97;&#109;&#109;&#97;&#100;&#64;&#114;&#101;&#100;&#119;&#111;&#111;&#100;&#99;&#111;&#109;&#112;&#108;&#105;&#97;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">mohammad@redwoodcompliance.com</a>","www.redwoodcompliance.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C5ZCCVY95UX7">62</a>","GEMINI ENERGY SOLUTIONS, INC","ANTHONY KINSLOW II","","24 E 25TH AVE","","SAN MATEO","CA","94403-2334","Gemini Energy Solutions (Gemini) is an energy efficiency company that provides relevant and accurate information so that our clients can make intelligent business decisions. We specialize in facilitating the implementation of energy efficiency measures in commercial spaces 25,000 sq.ft. or less. Our comprehensive energy assessment identifies cost-efficient energy saving opportunities, and our energy assessors support our clients throughout the implementation process. Our innovative and internally designed platform expedites the calculations for our energy assessments, which enables Gemini to combine industry-best practices and technology to more accurately predict energy savings. The unique nature of Gemini's platform also allows us to hire and train locally.  Gemini excels in 1) community engagement and education, 2) data collection and analysis, and 3) stakeholder engagement to develop program recommendations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#107;&#105;&#110;&#115;&#108;&#111;&#119;&#50;&#64;&#103;&#101;&#109;&#105;&#110;&#105;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">akinslow2@geminiesolutions.com</a>","www.geminiesolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LF4QMHVTGUW1">63</a>","STRATEGIC LEADERSHIP PARTNERS, LLC","WILLIAM WIGLEY","","215 WILLOWBROOK DR","","PORTOLA VALLEY","CA","94028-7839","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#114;&#107;&#46;&#119;&#105;&#103;&#108;&#101;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">clark.wigley@gmail.com</a>","www.strategicleadership.partners"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CB3MN8796DJ8">64</a>","SUBSET CREATIVE LLC","CAROLYN GERIN","","600 KELMORE ST","","MOSS BEACH","CA","94038-9709","Subset Creative LLC dba Sigla Creative is a woman-owned/certified creative marketing agency focused on social impact. We build resonant communications solutions for government/non-profit agencies and businesses. We are expert, multi-hyphenate changemakers who amplify an organization’s unique brand signifiers across the cultural and digital landscape. We build brand ecosystems to help organizations — large and small — level up. Crew with us and capture the wind.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#121;&#110;&#64;&#115;&#105;&#103;&#108;&#97;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">carolyn@siglacreative.com</a>","http://www.siglacreative.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KM41QPCZR5N7">65</a>","MVMNT-X, INC.","SARAH YOUNG","","563 ENCINA AVE","","MENLO PARK","CA","94025-1822","Agriculture and mechanical engineering are the core competencies of this organization. The business owner holds a B.S. Mechanical Engineering from Rutgers University (summa cum laude, 2001), an M.S. Mechanical Engineering from Stanford University (2004), a Stanford Ignite professional certificate from Stanford University Graduate School of Business (2005), and Master of Professional Studies Agriculture and Life Sciences, primary field International Agriculture & Rural Development from Cornell University in December 2020 (3.85/4.00, 2019-2020)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#104;&#64;&#109;&#118;&#109;&#110;&#116;&#45;&#120;&#46;&#99;&#111;&#109;">sarah@mvmnt-x.com</a>","https://www.mvmnt-x.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WG7MDFQ1HER6">66</a>","TRIDENT K9 CONSULTING, INCORPORATED","MARTY MAHON","","2611 HAMPTON AVE","","REDWOOD CITY","CA","94061-2541","Trident K9 Consulting offers police service dogs for both patrol and detection. We are not breed specific, rather we select the best suited for each agency and handler. We offer Belgian Malinois, German Shepherds, Dutch Shepherds, German Shorthaired Pointers, Springer Spaniels and Cocker Spaniels. Trident K9 Consulting hand selects and/or imports most of our dogs from Holland, and have a United States K9 vendor, Houston K9 Academy. Upon purchase of the K9, we offer a 1 Year Health and Work Ability Guarantee.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#116;&#121;&#46;&#116;&#114;&#105;&#100;&#101;&#110;&#116;&#107;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Marty.tridentk9@gmail.com</a>","https://tridentk9consulting.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QD3NGZQEW6Z1">67</a>","BERTSON TRANSPORT LLC","AL ROBERTSON","","170 NEWBRIDGE ST","","MENLO PARK","CA","94025-1262","We provide freight shipping for loads of various sizes. Solutions such as food products, home goods, beverages and wire and cable (electrical) products for domestic transport.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#101;&#114;&#116;&#115;&#111;&#110;&#84;&#114;&#97;&#110;&#115;&#112;&#111;&#114;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">BertsonTransport@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YYXJBJN7HEE7">68</a>","AUTO EXPRESS TOWING & RECOVERY LLC","VLADIMIR MIKSHANSKY","","154 E HILLSDALE BLVD","","SAN MATEO","CA","94403-2817","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#108;&#97;&#100;&#105;&#109;&#105;&#114;&#64;&#97;&#117;&#116;&#111;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#116;&#111;&#119;&#46;&#99;&#111;&#109;">vladimir@autoexpresstow.com</a>","Autoexpresstow.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WVKLMDEMZJR8">69</a>","SOMNOLOGY, INC.","MELISSA LIM","","626 JEFFERSON AVE STE 10","","REDWOOD CITY","CA","94063-1726","Somnology is a forward-thinking, digital healthcare company whose platform of integrated sleep services and monitoring data is designed to inform patients, providers, and payors alike with actionable information to improve health outcomes. Our core value is to keep the patient at the center of our priorities, and our shared purpose is to proactively guide patients through their sleep care journey.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#108;&#105;&#109;&#64;&#115;&#111;&#109;&#110;&#111;&#108;&#111;&#103;&#121;&#109;&#100;&#46;&#99;&#111;&#109;">mslim@somnologymd.com</a>","www.somnologymd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ESUKVEJ68XQ3">70</a>","POINTERZ INC","NEETU RAZDAN","","696 GULL AVE","","FOSTER CITY","CA","94404-1328","Pointerz is a forward-thinking technology firm specializing in innovative SaaS product development featuring AI driven solutions that focus on business optimization tools such as HR compliance, talent management, company performance analytics, intuitive enterprise business dashboards and a variety of AI backed tools that connect users with all the pertinent information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#101;&#116;&#117;&#64;&#112;&#111;&#105;&#110;&#116;&#101;&#114;&#115;&#46;&#109;&#101;">neetu@pointers.me</a>","https://pointerz.me"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SACSUXK388U6">71</a>","JEAN BARONAS","JEAN BARONAS","","675 SHARON PARK DRIVE, APT. 208","","MENLO PARK","CA","94025-6908","Patturns advises clients about public funding opportunities, standards and regulatory programs. Since 2022 Patturns completed subcontracts for U.S. Department of Energy contractors. Topics: energy auditors, energy efficiency, supply chain, electric vehicle battery recycling, manufacturing automation, and hydrogen production for industrial decarbonization and transportation. Product and Services [CODES]: [AG12] Energy R&D, Supply; and Applied Research; [B543] Special Studies/Analyses-Energy; [B542] Special Studies/Analysis-Education; [R408] Support Professional Program Management; and [R410] Support Professional Program Evaluation/Review/Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#97;&#110;&#98;&#97;&#114;&#111;&#110;&#97;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jeanbaronas@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NHEBAD8LXY19">72</a>","SATURN EVENTS, LLC","KEVIN SOLON","","1140 HILLVIEW DR","","MENLO PARK","CA","94025-5509","Saturn Events features a team of experts highly experienced in delivering complex events across the globe. We have delivered events in China, Japan, the USA, the UK, Mexico, Puerto Rico and the UAE. From the initial planning stages through to post event reporting, we ensure every aspect of your project is managed in an efficient, professional and first class manner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#46;&#115;&#111;&#108;&#111;&#110;&#64;&#115;&#97;&#116;&#117;&#114;&#110;&#45;&#101;&#118;&#101;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">kevin.solon@saturn-events.com</a>","http://saturn-events.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P8S9N6JHZRZ7">73</a>","CUTTING EDGE TECH TALENT LLC","TANIA DAS","","230 BONITA LN","","FOSTER CITY","CA","94404-1900","Applications Architect, Computer Programmer, Cloud technology, User Interface, User Experience, Business Analyst, ERP Analyst, ERP Database, ERP Developer, Graphic Designer, Visual Designer, Product Designer, UI/UX, UI Developer, Web Developer, Mobile Developer, App Design, Website Design, Software Testing, System Analyst, Technical Writer, Cloud Architect, Cloud Engineer, Cloud Admin, Cloud Developer, Data Management, Data Warehouse, Database Admin, Database Architect, Data Analyst, Data Scientist, IT Governance Analyst, IT Management Services, Business Process, Enterprise Architect, IT Auditor, IT Strategist, IT Trainer, IT Sourcing, IT Security, IT Security Architect, Cybersecurity Engineer, IT Security Auditor, Project Management, Program Manager, Artificial Intelligence, Robotics, AI Engineer, Infrastructure, Help Desk Analyst, Technical Support, System Admin, Network Admin, Network Engineer, Network Architect, Infrastructure Solutions Architect, Cybersecurity Specialist","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#109;&#64;&#99;&#101;&#116;&#116;&#106;&#111;&#98;&#115;&#46;&#99;&#111;&#109;">hrm@cettjobs.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.829&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

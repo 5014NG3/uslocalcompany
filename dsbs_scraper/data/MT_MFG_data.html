@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Montana;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.17 seconds and 1.17 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 105 
+(of 105 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KAFGMT1GTAL6">1</a>","LYNCH FLYING SERVICE, INC.","ROBERT BERGESON","VP of Marketing","1691 AVIATION PL","","BILLINGS","MT","59105-1981","CHARTER, AIRCRAFT MAINTENANCE, FUELING, PARTS SUPPLY, AIRCRAFT AND SALES, FLIGHT SCHOOL.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#101;&#114;&#103;&#101;&#115;&#111;&#110;&#64;&#101;&#100;&#119;&#97;&#114;&#100;&#115;&#106;&#101;&#116;&#99;&#101;&#110;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">rbergeson@edwardsjetcenter.com</a>","www.edwardsjetcenter.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GW3LQCH56WN6">2</a>","CORPORATE AIR","ROBERT MCIVER","PRESIDENT","1001 S 24TH ST W","STE 111","BILLINGS","MT","59102-7419","ALL AVIATION RELATED SERVICES, AIR TAXI, CHARTER, COURIER, FREIGHT & CARGO, AIRCRAFT & FUEL SALES, AIRCRAFT MAINTENANCE & HANGAR STORAGE, GROUND DELIVERY, AIRCRAFT ENGINE & AIRFRAME OVERHAUL, AVIONICS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#105;&#118;&#101;&#114;&#114;&#64;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#101;&#97;&#105;&#114;&#46;&#110;&#101;&#116;">mciverr@corporateair.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PCCJAD1K3LY4">3</a>","DOCTOR DOWN, INC.","ROBERT RICKETTS","Director of Sales","48841 US HIGHWAY 93","","POLSON","MT","59860-7471","Doctor Down produces quality weather-proof medical transport bedding. The equipment and disposable liners are used by air and ground ambulances, search and rescue teams, Natl. Parks etc. It provides patient warmth and easy access by the care provider.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#100;&#111;&#99;&#116;&#111;&#114;&#100;&#111;&#119;&#110;&#46;&#99;&#111;&#109;">info@doctordown.com</a>","http://www.doctordown.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XK5CEKBQPGR8">4</a>","IDEAL MANUFACTURING INC","LISA TURLEY","PRESIDENT","2011 HARNISH BLVD","","BILLINGS","MT","59101-6249","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#116;&#64;&#105;&#100;&#101;&#97;&#108;&#109;&#102;&#103;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">lisat@idealmfginc.com</a>","http://www.idealmfginc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K7Y9R8JA8AQ3">5</a>","S BAR S SUPPLY CO.","DEBBIE SILJESTROM","Vice President","2032 OLD HARDIN RD","","BILLINGS","MT","59101-6553","COMPANY IS A BUILDING SUPPLY/HARDWARE CENTER THAT ALSO SPECIALIZES IN CONSTRUCTION OF POLE BUILDINGS, OUT BUILDINGS, SHEDS & WAREHOUSES/OFFICES. COMPANY SUPPLIES TREATED LUMBER, STEEL POSTS, METAL SIDING/ROOFING, FENCE MATERIALS AND MORE. PLEASE VISIT WWW.S-BAR-S.COM","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#98;&#105;&#101;&#115;&#64;&#115;&#45;&#98;&#97;&#114;&#45;&#115;&#46;&#99;&#111;&#109;">debbies@s-bar-s.com</a>","www.s-bar-s.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3REK8GLDBN7">6</a>","PJ & J INC","DEBRA DEVOSE","PRES","226 2ND AVE S","","GREAT FALLS","MT","59405-1849","FENCING MATERIALS, ALL TYPES, CHAIN LINK, BARB WIRE, POSTS, ACCESSORIES, SNOW FENCE, BARBED TAPE, ELECT GATE OPENERS, GATES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#110;&#119;&#102;&#101;&#110;&#99;&#101;&#46;&#110;&#101;&#116;">office@nwfence.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDYXN33B3516">7</a>","LUMIBIRD PHOTONICS USA, INC.","CORDELL MAINES","Director, Sales and Marketing","49 WILLOW PEAK DR","","BOZEMAN","MT","59718-9811","MANUFACTURE LASERS & LASER SUBASSEMBLIES, LASER CONSULTING SERVICE; LASER DAMAGE TEST SERVICES, RESEARCH AND DEVELOPMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#97;&#105;&#110;&#101;&#115;&#64;&#113;&#117;&#97;&#110;&#116;&#101;&#108;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">cmaines@quantelusa.com</a>","http://www.quantel-laser.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N9B8LCJLZZM5">8</a>","DUPREE BUILDING SPECIALTIES OF MONTANA, INC.","MATTHEW ROSE","OWNER","1728 LAMPMAN DR","STE H","BILLINGS","MT","59102-6493","DUPREE SUPPLIES BUILDING SPECIALTY PRODUCTS & MATERIALS. TOILET PARTITIONS & ACCESSORIES, OPERABLE WALLS, ACCORDIAN PARTITIONS, ACCESS DOORS & PANELS, FIRE EXT. CABINETS, MAILBOX SYSTEMS, CUBICLE TRACK & CURTAINS, FLOOR MATS, PLAYGROUND EQUIP., SIGNAGE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#100;&#117;&#112;&#114;&#101;&#101;&#98;&#108;&#100;&#103;&#115;&#112;&#101;&#99;&#46;&#99;&#111;&#109;">matt@dupreebldgspec.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DZGBK33GGGJ7">9</a>","TIMBER EDGE MACHINE INC.","SUSAN TURNER","President, V.P.","843 NORTH BURNT FORK RD","","STEVENSVILLE","MT","59870-6653","5110, 5120 series small nonpowered hand tools, hand and edge tools, tool kits, fabricated metal products, screwdrivers, open end wrenches, box wrenches, tube wrenches, mechanical pullers. If a drawing can be provided we can build the item(s).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#117;&#114;&#110;&#101;&#114;&#64;&#116;&#105;&#109;&#98;&#101;&#114;&#101;&#100;&#103;&#101;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">sturner@timberedgemachine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C1HSBU7J2UK3">10</a>","SONJU INDUSTRIAL COATINGS, INC.","MELINDA SONJU","MANAGER","2902 US HIGHWAY 93 N","","KALISPELL","MT","59901-6859","High speed CNC machining and turning. Assemblies and kits,Parts: wing,fuselage,and landing gear structural components,also tank,guns,and weapon systems components. Major aerospace approvals, AS 9100 and ISO 9000 certified.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#115;&#111;&#110;&#106;&#117;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">accounting@sonjuind.com</a>","http://www.sonjuind.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X3NNS57VSLQ5">11</a>","HARDWEAR MANUFACTURING INC","ROSEMARY MCCAULEY","Owner/Sec. Treasurer","36 S BARBER RD","","RYEGATE","MT","59074-9732","Our mission is to provide support in all aspects of metal fabrication or machine components in all types of metals. We work with aluminum, copper, brass, titanium, cast iron, heat-treatable and low-alloy steels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#100;&#119;&#101;&#97;&#114;&#64;&#109;&#105;&#100;&#114;&#105;&#118;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">hardwear@midrivers.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMNYNUE95H85">12</a>","COMPATIBLE MANUFACTURING, INC","TIM MILLER","sales","11600 US HIGHWAY 2 W","","MARION","MT","59925-9775","We at Compatible,specialize in producing time-critical complex machined prototypes from various metals and plastics.We work from Solid Works,Auto Inventor and Surfcam.We are the fastest machine shop around.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#64;&#99;&#111;&#109;&#112;&#97;&#116;&#105;&#98;&#108;&#101;&#109;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">tim@compatiblemanufacturing.com</a>","www.compatiblemanufacturing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYPTSFEM9RK1">13</a>","WAVELENGTH ELECTRONICS INC","MARY JOHNSON","Executive Management","51 EVERGREEN DR","STE B","BOZEMAN","MT","59715-2421","Design & manufacture of laser diode drive and thermoelectric temperature controller components, standard & custom engineering and production available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#64;&#116;&#101;&#97;&#109;&#119;&#97;&#118;&#101;&#108;&#101;&#110;&#103;&#116;&#104;&#46;&#99;&#111;&#109;">mary@teamwavelength.com</a>","http://www.teamwavelength.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3M7E2PN5X44">14</a>","MIDWEST WELDING & MACHINE INC","VAL LINT","Fabrication Manager","2320 N 7TH AVE","","BOZEMAN","MT","59715-2531","Custom metal fabrication, steel, stainless steel, aluminum, bronze, CNC milling, CNC turning, manual machining, CNC shape cutting, ferrous and non-ferrous fabrication and welding. Prototype & production manufacturing. Powder Coating","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#64;&#109;&#105;&#100;&#119;&#101;&#115;&#116;&#45;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">val@midwest-welding.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KN13SCPE2LT3">15</a>","BC CONCRETE, INC.","ADAM BAUER","","8012 DESCHAMPS LN","","MISSOULA","MT","59808-9467","Missoula Concrete Construction is a PCI Certified plant, which fabricates precast and prestressed concrete for projects such as commercial buildings, bridges, parking structures, vault concrete outhouses, and EverLogs™ precast concrete log homes. Our products are cast-on-site at our facility and shipped throughout the United States and Canada.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#98;&#97;&#117;&#101;&#114;&#64;&#109;&#105;&#115;&#115;&#111;&#117;&#108;&#97;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#99;&#111;&#109;">abauer@missoulaconcrete.com</a>","https://www.missoulaconcrete.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSPNXNNAVQW4">16</a>","CM MANUFACTURING INC","KEN JOHNSON","","6333 BUTLER CREEK RD","","MISSOULA","MT","59808-8612","CM Manufacturing Inc. has been in business since 1984, Missoula since 1997. Owners, Richard Johnson and Ken Johnson have been in the Aerospace industry for over 20 years. CM Manufacturing, Inc. works on a daily basis with extensive non-destructive testing requirements, chrome plated, cadmium plated and painted parts, and we are accustomed to working with all the major aircraft manufactures specifications. You can count on CM Manufacturing for all of your precision machining needs.  CM is proud of the team of hard working employees and managers who are dedicated to manufacturing critical landing gear parts to our customers on time.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#64;&#99;&#109;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">ken@cmman.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYAYVTMUSUL3">17</a>","NORPAC SHEET METAL, INC.","HAYDEN MCCLURG","","2041 HARNISH BLVD","","BILLINGS","MT","59101-6249","HVAC CONTRACTING, SPECIALTY FABRICATIONS LIGHT GAUGES THRU 10 GAUGE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#110;&#111;&#114;&#112;&#97;&#99;&#115;&#104;&#101;&#101;&#116;&#109;&#101;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">accounting@norpacsheetmetal.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNGRZ8MAUFX4">18</a>","LIFTING TECHNOLOGIES, LLC","JODY SKINNER","","7406 RACETRACK DR","","MISSOULA","MT","59808-5407","fabrication of crane-suspended and forklift mounted material and personnel platforms and baskets to customer specifications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#100;&#121;&#115;&#64;&#108;&#105;&#102;&#116;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">jodys@lifttech.com</a>","http://www.lifttech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TFJAKE4D4CH9">19</a>","LHC INC","BOBBI WOLSTEIN","","1179 STILLWATER RD","","KALISPELL","MT","59901-0804","All phases of heavy and civil construction including road construction, site preparation, excavating, underground utilities, paving, ready-mix concrete, asphalt, sand and gravel products,gravel crushing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#98;&#105;&#64;&#108;&#104;&#99;&#109;&#116;&#46;&#99;&#111;&#109;">bobbi@lhcmt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z1S4HKGLTL65">20</a>","RESONON, INC.","RAND SWANSON","","123 COMMERCIAL DR","","BOZEMAN","MT","59715-2217","Manufacturing hyperspectral cameras Government contracting Machine Vision for assembly line type applications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#119;&#97;&#110;&#115;&#111;&#110;&#64;&#114;&#101;&#115;&#111;&#110;&#111;&#110;&#46;&#99;&#111;&#109;">swanson@resonon.com</a>","https://www.resonon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MRAMXHLS1LL3">21</a>","GENERAL DISTRIBUTING CO","MONTE RUUD","Owner","430 17TH AVE NE","","GREAT FALLS","MT","59404-1936","welding equipment, industrial gas, production of industrial fixtures and repair of motors, generators, and other equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#117;&#117;&#100;&#64;&#103;&#101;&#110;&#100;&#99;&#111;&#46;&#99;&#111;&#109;">mruud@gendco.com</a>","www.gendco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFWMU27ZMLG8">22</a>","TIMBERWOLF CORP","KEN GREEN","","90 CONESTOGA CT","","KALISPELL","MT","59901-6519","Timberline tool manufactures PE pipe squeeze-off tools and fire hose shut-off clamps for the natural gas, water & firefighting industries. Develop specialty tools for the utility companies and firefighters, both urban and wildland.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#103;&#64;&#116;&#105;&#109;&#98;&#101;&#114;&#108;&#105;&#110;&#101;&#116;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">khg@timberlinetool.com</a>","www.timberlinetool.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W73PYG9ZUM47">23</a>","LATTICE MATERIALS LLC","ALONSO BUSTAMANTE","Sales & Marketing Manager","516 E TAMARACK ST","","BOZEMAN","MT","59715-3050","Manufacturer of silicon and germanium for infrared optics and sputtering targets. We supply disks, squares, and many other shapes including complex machined parts. We have curve generating and polishing capability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#111;&#110;&#115;&#111;&#46;&#98;&#117;&#115;&#116;&#97;&#109;&#97;&#110;&#116;&#101;&#64;&#108;&#97;&#116;&#116;&#105;&#99;&#101;&#109;&#97;&#116;&#101;&#114;&#105;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">alonso.bustamante@latticematerials.com</a>","http://www.latticematerials.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJ3MNM41PX53">24</a>","GTD INC","PEGGY DOLCE","","3961 US HIGHWAY 93 N","","STEVENSVILLE","MT","59870-6474","High precision manufacturing specializing in multiple weapon systems included, but not limited to: M240, 249, M16.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#103;&#108;&#97;&#99;&#105;&#101;&#114;&#116;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">sales@glaciertool.com</a>","http://www.glaciertool.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CCQBUWNDNAG9">25</a>","R. E. MILLER AND SONS","JEANETTE ROBERTSON","","225 STOLTZE LN","","DILLON","MT","59725-8050","Water is a critical resource in the West, and we specialize in helping you make the most of it, whether that involves irrigation structures and ditches, stock water systems, stream restoration, improved trout habitat, or a waterfall. Working in and around water requires ingenuity, adaptability, and experience, all of which R.E. Miller has developed over the nearly five decades since we started out building irrigation systems. Dirt is the foundation of the landscape, and we shape it to your vision, from landscaping to subdivision infrastructure to highway construction. We have equipment to handle any job, and experienced operators to give you exactly the results you want.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#114;&#111;&#98;&#101;&#114;&#116;&#115;&#111;&#110;&#64;&#114;&#101;&#109;&#105;&#108;&#108;&#101;&#114;&#97;&#110;&#100;&#115;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">jrobertson@remillerandsons.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M4VJYL9JA8A9">26</a>","MYSTERY RANCH LTD","KENT ORMS","SECRETARY/VPO","1750 EVERGREEN DR","","BOZEMAN","MT","59715-2459","DESIGN, manufacture, contracting, sourcing, and selling of knapsacs, daypacks, backpacks, and other carrying systems and carrying devices including special needs industrial frames.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#116;&#64;&#109;&#121;&#115;&#116;&#101;&#114;&#121;&#114;&#97;&#110;&#99;&#104;&#46;&#99;&#111;&#109;">kent@mysteryranch.com</a>","www.mysteryranch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N15RK5VLNB96">27</a>","ELK RIVER SYSTEMS INC","TERRY FREESER","","22 CENTRAL AVE S","","HARLOWTON","MT","59036-5071","All digital printing, event based products, merchandise and promotional materials. Also, blank perforated office paper, customized.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#102;&#114;&#101;&#101;&#115;&#101;&#114;&#64;&#101;&#108;&#107;&#114;&#105;&#118;&#101;&#114;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">tfreeser@elkriversystems.com</a>","http://www.products.eventgroove.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMNVD5U3CH45">28</a>","FORESTORATION INC","ANDREW BELTZ","","5605 US HIGHWAY 93 S","","WHITEFISH","MT","59937-8523","Forestoration is a multi-disciplinary firm specializing in the planning, design, and management of outdoor spaces, from backcountry natural areas to urban parks and residential landscapes. Our services include: forest management, trails and parks, artisan landscapes, and restoration and revegetation. We also operate a native plant nursery, Center for Native Plants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#119;&#64;&#102;&#111;&#114;&#101;&#115;&#116;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">andrew@forestoration.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CTNLKBFW5MS5">29</a>","SRS CRISAFULLI INC","VANCE VICKERS","","1610 CRISAFULLI DR","","GLENDIVE","MT","59330-3202","We build pumps and dredges for agriculture, mining, wastewater. We remove water, sludge and worries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#99;&#101;&#118;&#64;&#99;&#114;&#105;&#115;&#97;&#102;&#117;&#108;&#108;&#105;&#46;&#99;&#111;&#109;">vancev@crisafulli.com</a>","http://www.crisafullipumps.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R6CCJTNJQFJ5">30</a>","HUNT'S TIMBERS INC","RUSSELL HUNT","","72682 US HIGHWAY 93","","SAINT IGNATIUS","MT","59865-9486","ROOFING & SIDING MATERIALS FENCING, FENCES & GATES, FENCE POSTS, FENCING, SPLIT RAILS, WOOD FLOORING, FLOORING, DOUGLAS FIR, DECKING, BARN POLES, TIMBERS BEAMS, ROUGH LUMBER, FINISH LUMBER, WOOD PRODUCTS, WOOD PANELING, PANELING, SAWMILL, LUMBER MILL","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#110;&#116;&#115;&#116;&#105;&#109;&#98;&#101;&#114;&#115;&#64;&#98;&#108;&#97;&#99;&#107;&#102;&#111;&#111;&#116;&#46;&#110;&#101;&#116;">huntstimbers@blackfoot.net</a>","huntstimbers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDSVD5JKK4B9">31</a>","LILJA PRECISION RIFLE BARREL INC","DANIEL LILJA","","81 LOWER LYNCH CREEK RD","","PLAINS","MT","59859-9546","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#108;&#106;&#97;&#64;&#114;&#105;&#102;&#108;&#101;&#98;&#97;&#114;&#114;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">lilja@riflebarrels.com</a>","http://www.riflebarrels.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D3EJFSSTLLM4">32</a>","ALTOS PHOTONICS INC","MARIA STASZCUK","","201 S WALLACE AVE","STE B2C","BOZEMAN","MT","59715-4891","Altos Photonics offers femtosecond, mode locked, and Q-switched lasers and tunable systems for research and industrial customers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#105;&#97;&#64;&#97;&#108;&#116;&#111;&#115;&#112;&#104;&#111;&#116;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Maria@altosphotonics.com</a>","http://www.altosphotonics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RE4BLG4W9FL4">33</a>","SPIKA DESIGN & MANUFACTURING, INC.","KATHRYN SPIKA","","254 COTTONWOOD CREEK RD","","LEWISTOWN","MT","59457-4936","Design, development, and manufacture of work platforms, maintenance stands, and ground support equipment. OSHA-compliant equipment promotes process efficiency and upper-level access for maintainers and technicians. Serve aerospace, defense, auto, and manufacturing industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#105;&#101;&#46;&#115;&#112;&#105;&#107;&#97;&#64;&#115;&#112;&#105;&#107;&#97;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">katie.spika@spikamfg.com</a>","http://www.spikamfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GXG3Y16SL5V4">34</a>","ADVANCED PRODUCTS, LLC","ANN THETONIA","","120 INDUSTRIAL CT","","KALISPELL","MT","59901-7991","self defense pepper spray manufactured for police and military personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#104;&#101;&#116;&#111;&#110;&#105;&#97;&#64;&#97;&#100;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#114;&#101;&#97;&#100;&#121;&#98;&#114;&#97;&#110;&#100;&#115;&#46;&#99;&#111;&#109;">athetonia@adventurereadybrands.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RDHFJLPB1M33">35</a>","S2 CORP","KRISTIAN MERKEL","","2054 STADIUM DR","","BOZEMAN","MT","59715-0695","Extreme wideband spectrum monitoring, high dynamic range, accurate direction finding and geolocation of RF emitters, high data rate signal processing, arbitrary waveform generation, true time delay","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#46;&#109;&#101;&#114;&#107;&#101;&#108;&#64;&#115;&#50;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">kris.merkel@s2corporation.com</a>","www.s2corporation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X759H3XP1JK1">36</a>","TREASURE STATE ORTHOTIC & PROSTHETIC CLINIC, INC.","MATHEW BAUER","","1648 ELLIS ST","STE 102","BOZEMAN","MT","59715-8811","Orthotic and Prosthetic Care/Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#64;&#116;&#115;&#111;&#112;&#109;&#116;&#46;&#99;&#111;&#109;">mat@tsopmt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFVPVM21BYC5">37</a>","2101 LLC","SEAN JOYCE","","78 GOLD ST","","ANACONDA","MT","59711-9017","Truck body manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#106;&#64;&#105;&#116;&#98;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">seanj@itbusa.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBHMRSSK9WP9">38</a>","MORTAN INC.","JUDY DEVINE","","329 E PINE ST","","MISSOULA","MT","59802-4623","The Morgan Lens is the most effective, hands free, comfortable, and easy to use emergency eye irrigation system available, quickly treating ocular chemical burns, thermal burns, removing non-embedded foreign bodies, or delivering medication to the eye.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#100;&#121;&#64;&#109;&#111;&#114;&#103;&#97;&#110;&#108;&#101;&#110;&#115;&#46;&#99;&#111;&#109;">judy@morganlens.com</a>","http://www.morganlens.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQH9N6K4BEB6">39</a>","THATCHER COMPANY OF MONTANA, INC.","CRAIG THATCHER","","3200 RASER DR","","MISSOULA","MT","59808-1543","Chemical Manufacturer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#46;&#116;&#104;&#97;&#116;&#99;&#104;&#101;&#114;&#64;&#116;&#99;&#104;&#101;&#109;&#46;&#99;&#111;&#109;">craig.thatcher@tchem.com</a>","www.tchem.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WV9BJFANRN63">40</a>","BURGI ENGINEERS LLC","ROBERT BURGI","","11 ROHRBACH LN","","COLUMBIA FALLS","MT","59912-8971","Mechanical and electrical engineering. Design and build industrial equipment, AC electric motors, test stands, dynamometers, renewable energy systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#98;&#117;&#114;&#103;&#105;&#64;&#98;&#117;&#114;&#103;&#105;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">robert.burgi@burgiengineers.com</a>","www.burgiengineers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TLJEX1SKJY61">41</a>","BRIDGER PHOTONICS INC","PETER ROOS","","2310 UNIVERSITY WAY","BLDG 4-4","BOZEMAN","MT","59715-6504","Please see website for additional information","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#111;&#115;&#64;&#98;&#114;&#105;&#100;&#103;&#101;&#114;&#112;&#104;&#111;&#116;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">roos@bridgerphotonics.com</a>","http://www.bridgerphotonics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VEQDKC71QNJ6">42</a>","KENETREK LLC","ZACHARY THELEN","","96 NORTHSTAR LN","","BOZEMAN","MT","59718-5802","Kenetrek Boots is a team that is dedicated to providing the highest quality products. We strive to stand out in the categories of support, light weight, and comfort. Our goal is to make your purchasing experience at Kenetrek so good that you will return again. We currently offer Italian made orthopedic boots, mountain boots, hiking boots, safety boots, tactical boots, and duty boots.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#99;&#104;&#46;&#116;&#64;&#107;&#101;&#110;&#101;&#116;&#114;&#101;&#107;&#46;&#99;&#111;&#109;">zach.t@kenetrek.com</a>","http://www.kenetrek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZYNHBEFLQBP6">43</a>","A2Z SUPPLY CORP","EDWARD SMITH","","1097 EASTSIDE HWY","","CORVALLIS","MT","59828-9452","We provide sourcing of hard to find products and have extensive background providing equipment and supplies. Excellent Past Performance and references. Accepts Government Purchasing Card","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#109;&#105;&#116;&#104;&#64;&#97;&#50;&#122;&#103;&#111;&#118;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">esmith@a2zgovsupply.com</a>","http://www.a2zgovsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V2DVYNCB4KU9">44</a>","AUTOPILOT, INC.","MATTHEW LINDSAY","","2175 INDUSTRIAL DR","","BOZEMAN","MT","59715-2243","Autopilot is a full service product design and manufacturing company. In addition to precision CNC milling and turning, Autopilot offers Type 2 anodizing and partial or full assembly of products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#105;&#110;&#100;&#115;&#97;&#121;&#64;&#97;&#117;&#116;&#111;&#112;&#105;&#108;&#111;&#116;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">mlindsay@autopilotdesign.com</a>","http://www.autopilotdesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLTWE4LVPDM9">45</a>","WEST ELECTRONICS INC","LORRI SCHAFER","GEN MGR","100 INDUSTRIAL PARK RD","","POPLAR","MT","59255-9999","MANUFACTURE OF FUEL SYSTEMS AND SUB-COMPONENT ITEMS INCLUDING VALVES, TEES, HOSES. INTEGRATOR OF FUEL SYSTEMS AND OTHER MILITARY SYSTEMS. LIGHT MANUFACTURING OF CABLE ASSEMBLIES, HARNESSES, ELECTRICAL AND ELECTRONIC COMPONENTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#111;&#114;&#114;&#105;&#83;&#99;&#104;&#97;&#102;&#101;&#114;&#64;&#87;&#101;&#115;&#116;&#69;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">LorriSchafer@WestElectronics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DUAYW5R6MXY5">46</a>","S & K ELECTRONICS INC","TOM KENNEY","Business Development Manager","56301 US HIGHWAY 93","","RONAN","MT","59864-9240","Electronic Mfg Services; SMT; Thru-Hole; Circuit Card Assy; Mixed Technology; CCA; PCA; PWA; Cable Assy; Wire Harnesses; Mechanical/Electromechanical Assy.; Research and Dev, Engineering Services; Full Design Capabilities; Machining; Machine Shop","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#95;&#107;&#101;&#110;&#110;&#101;&#121;&#64;&#115;&#107;&#101;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">tom_kenney@skecorp.com</a>","http://www.skecorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQXLPPNKZHW7">47</a>","RESODYN ACOUSTIC MIXERS, INCORPORATED","LAWRENCE FARRAR","","130 N MAIN ST STE 630","","BUTTE","MT","59701-9314","Our state-of-the-art Mixing Applications Service Center is available for your mixing trials and/or toll processing needs. For in-house development projects, we can provide you with a mixer on a rental basis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#119;&#114;&#101;&#110;&#99;&#101;&#46;&#102;&#97;&#114;&#114;&#97;&#114;&#64;&#114;&#101;&#115;&#111;&#100;&#121;&#110;&#46;&#99;&#111;&#109;">lawrence.farrar@resodyn.com</a>","http://www.resodynmixers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NW49GQ2NCAB5">48</a>","LAUNDRY LOOPS INC","MIKE DURNEY","","211 S WALLACE AVE","","BOZEMAN","MT","59715-4872","Product is an efficient, economical improvement over mesh laundry bags used for group laundry. Clothing is more sanitary, less wrinkled and COMPLETELY DRY IN 1/2 THE TIME. Clothing stays sorted but washes & dries like it's loose. www.laundryloops.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#108;&#97;&#117;&#110;&#100;&#114;&#121;&#108;&#111;&#111;&#112;&#115;&#46;&#99;&#111;&#109;">info@laundryloops.com</a>","www.laundryloops.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WHCHMNH4WMU7">49</a>","COLD AVENGER LLC","JOHN SULLIVAN","","806 W SPRUCE ST","","MISSOULA","MT","59802-3958","We specialize in designing, testing and manufacturing recreational health and performance products. We operate in textiles cut and sew, retail packaging and sales and medical grade plastic injection.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#99;&#111;&#108;&#100;&#97;&#118;&#101;&#110;&#103;&#101;&#114;&#46;&#99;&#111;&#109;">john@coldavenger.com</a>","www.coldavenger.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VT4LALEKTHN9">50</a>","ADVANCED INNOVATION INC","CLAY ELLIG","","312 ANDREA DR","STE A","BELGRADE","MT","59714-9133","R&D, design, machining, integration, assembly","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#101;&#64;&#114;&#117;&#103;&#103;&#101;&#100;&#98;&#111;&#120;&#46;&#99;&#111;&#109;">ce@ruggedbox.com</a>","www.AdvancedInnovationInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKV5F9XWXQP5">51</a>","NWB SENSORS INC","AUSTIN BEARD","","80555 GALLATIN RD","","BOZEMAN","MT","59718-9153","NWB Sensors researches and builds new unique remote sensing products. We offer Infrared Cloud Imagers (ICI) and professional weather stations. NWB is currently developing new automated Snow Water Equivalency (SWE) measurement technology, and Machine Vision technology to detect weeds and more on the farm. NWB offers LWIR camera calibration services. We are experienced in optical designs, and other electronic systems. NWB has built environmental sensing systems for both indoor and outdoor environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#117;&#115;&#116;&#105;&#110;&#46;&#98;&#101;&#97;&#114;&#100;&#64;&#110;&#119;&#98;&#115;&#101;&#110;&#115;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">austin.beard@nwbsensors.com</a>","https://www.nwbsensors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SNS2M5YSPHB5">52</a>","IMPERIUM TOOL & INSTRUMENT, INC.","SAMUEL PARK","","118 S PARKMONT","BLDG A","BUTTE","MT","59701-7225","Design and manufacturing of precision instruments and components for the research and design community. Services include: CAD Modeling, Drafting, Design review, Tolerance Design, Precision Machining, Instrument Design, Manufacture and Repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#97;&#114;&#107;&#64;&#105;&#109;&#112;&#101;&#114;&#105;&#117;&#109;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">spark@imperiumengineering.com</a>","http://www.imperiumengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLM3UE3DGVE9">53</a>","PROOF RESEARCH INC.","JACOB FIMREITE","","10 WESTERN VILLAGE LN","","COLUMBIA FALLS","MT","59912-9090","Proof Research began as a custom rifle company with a simple goal—to create world-class precision rifle systems that set a new standard within the industry. Building on that foundation we then brought together the finest minds and innovations in the industry to create rifle systems that are lighter, stronger and more accurate than anything else available. By combining our next-generation carbon fiber barrels with our hand-laid carbon/Kevlar composite stocks, custom actions and the best components available, we’re building rifle systems that impress even the most veteran shooter. Our Montana facility produces the world’s finest composite barrels, stocks, and complete rifles. Our technology is scalable to medium and large calibur as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#105;&#109;&#114;&#101;&#105;&#116;&#101;&#64;&#112;&#114;&#111;&#111;&#102;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">jfimreite@proofresearch.com</a>","http://www.proofresearch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KM3CUY212JH9">54</a>","INFLATABLE PACKERS INTERNATIONAL, LLC","JOEL ADAMS","","18 PEPSI DR","","RED LODGE","MT","59068-9104","IPI designs and manufactures packers & tools for well tests, grouting, well repair, CO2 sequestration, waste site depiction, hydro-fracking & block caving","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#100;&#97;&#109;&#115;&#64;&#105;&#112;&#105;&#112;&#97;&#99;&#107;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">jadams@ipipackers.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FXKHY8XX3EX9">55</a>","DIVERSIFIED MATERIALS & CONSTRUCTION, LLC","MARK THOMAS","","1600 RIVER RD","","MISSOULA","MT","59801-1447","Certified Redi-Rock Retaining wall block Manufacturer and Installer. MSHA certified Sand and Gravel producer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#114;&#105;&#118;&#101;&#114;&#114;&#111;&#99;&#107;&#115;&#46;&#99;&#111;&#109;">mark@riverrocks.com</a>","www.riverrocks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SKTLF3YZUTJ6">56</a>","ANVIL FIRE PLLC","PHIL GOUVEIA","","4431 E GRAF ST","","BOZEMAN","MT","59715-0657","Anvil Fire is a group of fire protection and life safety experts capable of providing comprehensive services worldwide. We are also Tigerflow, Fairbanks Morse, AC Fire, and Franklin electric fire pump distributors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#64;&#97;&#110;&#118;&#105;&#108;&#45;&#102;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">phil@anvil-fire.com</a>","http://www.anvil-fire.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVTMPSQM1ES1">57</a>","ADVANCED ELECTRONIC DESIGNS INC","MARK HENRY","","2928 TECHNOLOGY BLVD W","STE 100","BOZEMAN","MT","59718-4197","Welcome to our One Stop Electrical Engineering Shop. From conception to manufacturing, we'll complete one project phase or entire programs. Whether we supply EMI testing for FCC pre-certification or help you manage subcontractors, you'll find no holes in our service menu because it continues to grow with every new need we meet. If you don't see something you want, just ask. Just about anything's possible.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#97;&#64;&#97;&#101;&#100;&#46;&#112;&#114;&#111;">gsa@aed.pro</a>","http://aed.pro"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FC74FPNJVMZ1">58</a>","MONTANA PRECISION PRODUCTS LLC","WARREN WARTHEN","","119800 RICK JONES WAY","","BUTTE","MT","59750-9751","Here at Montana Precision Products, we manufacture tubes and ducts for aircraft and other commercial engines. Montana Precision Products also manufactures investment castings from steel, titanium, and nickel based alloys and we have the ability to machine and finish parts. You have seen the rest, now call the best at (406)496-3326, and let Montana Precision Products show you the difference!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#114;&#114;&#101;&#110;&#119;&#64;&#109;&#116;&#112;&#112;&#46;&#99;&#111;&#109;">warrenw@mtpp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NP4ZSN6KYWC1">59</a>","THOMPSON PRECISION INC","STEVEN THOMPSON","","1885 WHITEFISH STAGE","","KALISPELL","MT","59901-6754","Our goal is to be the Galactic leader in precision machining of conventional and additive manufactured metal and plastic parts for the aerospace, defense and medical industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#64;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#112;&#114;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">sthompson@thompsonprecision.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMTAJFF298T9">60</a>","RESPONSE EQUIPMENT SPECIALISTS LLC","KYLE NACE","","467 BIRCH GROVE RD","","KALISPELL","MT","59901-6550","I Kyle Nace am afirefighter /Paramedic and also own Response Equipment Specialists llc. As a company we provide mobile service, repair & fabrication for Fire, EMS and law enforcement vehicles as well as build truck bodies, fire units.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#64;&#114;&#101;&#115;&#57;&#49;&#49;&#46;&#99;&#111;&#109;">kyle@res911.com</a>","www.res911.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GEM1PHYP1KK6">61</a>","SHROOMBOB LLC","ROBERT KOLESAR","","506 N BOZEMAN AVE","","BOZEMAN","MT","59715-3665","iSkibike® Agility 1.3 - Adaptive Sit-Ski/Skibike 1) Chairlifts load & unload the Agility 1.3, with the skibiker standing or fully seated. 2) Progressive rear suspension with 8 inches of seat travel, using adjustable air shocks, and a front suspension fork. Skiboards with downhill bindings quickly and easily attach onto ski boot mounts on the fork and rear swing arm. 4) Using the wide seat for leverage, centrifugal forces power the Agility 1.3’s ski edges into the snow surface, for instant skiing, even with some disabilities. 5) On slope runaway prevention is incorporated into the Agility 1.3’s suspension system for added safety. 6) Heel edge foot skis provide for balancing, and braking simply by digging in the heel edge of the foot ski while seated on the Agility 1.3. 7) Seat height and angulation is adjustable, and optional foot pegs can be mounted on the front fork, or on the swingarm axle. 8) For transport or storage, the Agility 1.3 skibike can be easily folded.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#105;&#115;&#107;&#105;&#98;&#105;&#107;&#101;&#46;&#99;&#111;&#109;">info@iskibike.com</a>","www.iskibike.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XR8CMQ2FDRF6">62</a>","TRACER TECHNOLOGY SYSTEMS INC.","ALLAN OVERCAST","","350 S BILLINGS BLVD","SUITE #2B2","BILLINGS","MT","59101-4765","Gunshot detection and alarming technology for school, churches and offices when used indoor, and police, military and security when used outdoor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#97;&#110;&#64;&#116;&#114;&#97;&#99;&#101;&#114;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#46;&#110;&#101;&#116;">allan@tracertechnology.net</a>","http://www.tracertechnology.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKDQP91FAK93">63</a>","NORTHWEST FLATTANKS, LLC","STEVE WIPF","","200 18TH RD NW","","CHOTAEU","MT","59422-9107","We provide residential and commercial portable facilities as well as pumping services and rental equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#110;&#111;&#114;&#116;&#104;&#119;&#101;&#115;&#116;&#102;&#108;&#97;&#116;&#116;&#97;&#110;&#107;&#115;&#46;&#99;&#111;&#109;">steve@northwestflattanks.com</a>","www.northwestflattanks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHSNN3LNFD73">64</a>","RED ANTS PANTS LLC","BRIANNE ROGERS","","206 E MAIN ST","","WHITE SULPHUR SPRINGS","MT","59645-9280","Company specializes in the design and manufacture of workwear for women, children and men. All of our products are designed to fit, function, and flatter AND they are all made in the USA. Pants are made from 12 ounce cotton canvas duck. PPE cloth face masks and level 1 & 2 medical gowns now being manufactured for private and public partners like the Montana Highway Patrol, Montana State University, and others. www.redantspants.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#110;&#101;&#64;&#114;&#101;&#100;&#97;&#110;&#116;&#115;&#112;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">brianne@redantspants.com</a>","https://redantspants.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J5REHF6MVB36">65</a>","BUFFALO HORSE INC","DARCY HADLEY","","353 OLD HAYS RD","","HAYS","MT","59527-7737","General Construction contracting capabilities. Administrative services for government contracts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#99;&#121;&#46;&#104;&#97;&#100;&#108;&#101;&#121;&#64;&#98;&#117;&#102;&#102;&#97;&#108;&#111;&#104;&#111;&#114;&#115;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">darcy.hadley@buffalohorseinc.com</a>","http://www.buffalohorseinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HANDF4Z4G6L5">66</a>","FALKOR SID INC","JACOB HUTCHENS","","2902 US HIGHWAY 93 N","","KALISPELL","MT","59901-6859","FALKOR SID, INC. doing business as Falkor Defense offers weapons and firearms that withstand the toughest conditions and are designed, manufactured, and process finished in house. We specialize in manufacturing AR platform weapons that meet the stringent criteria demanded by the United States Military, S.W.A.T. and other Agencies requiring the highest quality in tactical arms. Our focus on precision machining, intensive quality control through all stages of production, and rigorous product testing produce weapons and parts that our nation’s public servants and defenders can rely on. Whether it’s for a small police force or an entire battalion, Falkor Defense has the capabilities to provide the expertise and weaponry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#117;&#116;&#99;&#104;&#101;&#110;&#115;&#64;&#102;&#97;&#108;&#107;&#111;&#114;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">jhutchens@falkordefense.com</a>","http://falkordefense.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XGJXSE9BJKN7">67</a>","637 LLC","JENTRY PAINTER","","2800 N MONTANA AVE","","HELENA","MT","59601-0547","FASTSIGNS® of Helena, MT is more than ready to help you solve your visual communications challenges — large and small. With our marketing and sign knowledge, state-of-the-art technology and project management processes, we craft the right message and deliver the right mix of signs and graphics that will help raise your business visibility while making you look great. Whether you need a single building sign or a thousand banners, our marketing-savvy experts are more than ready for the challenge.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#116;&#114;&#121;&#46;&#112;&#97;&#105;&#110;&#116;&#101;&#114;&#64;&#102;&#97;&#115;&#116;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">jentry.painter@fastsigns.com</a>","www.fastsigns.com/637"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PHSFMLMNMJ24">68</a>","BLACK HOOP ENTERPRISES LLC","JULIE SCHWENKE","","995 FEED LOT RD","","HARLEM","MT","59526-9438","Manufacture of metal road guards and fencing. Customized metal fabricated and fencing. Specialized in heavy duty production used for Bison herd and cattle management for agricultural and commercial uses. Native women owned DBE Certified in Montana","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#99;&#107;&#104;&#111;&#111;&#112;&#49;&#54;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">blackhoop16@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLG8A7ASN9R5">69</a>","POCKET NC COMPANY","BOB JOHNSON","","119 GOLD MINER LN STE A","","BELGRADE","MT","59714-7917","Pocket NC manufactures compact 5-axis CNC milling machines. These milling machines are used for for rapid prototyping small parts or for training personnel on 5-axis or multi-axis CNC techniques. Pocket NC machines are designed, manufactured, and supported in the US. www.pocketnc.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#112;&#101;&#110;&#116;&#97;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">bjohnson@pentamachine.com</a>","www.pentamachine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G2KFK4FXUB15">70</a>","ACELA, INC","DAVID RONSEN","","80 SHIRE TRL","","BOZEMAN","MT","59718-8204","Specialty/Custom truck and trailer manufacturer, specialized refrigeration and cryogenic equipment manufaccturer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#111;&#110;&#115;&#101;&#110;&#64;&#97;&#99;&#101;&#108;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dronsen@acelainc.com</a>","www.acelainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PZMDN7GDH5P6">71</a>","BROWN SHARON","SHARON BROWN","","209 N WHITEHALL ST","","WHITEHALL","MT","59759-7751","For the past 31 years we have provided reproduction historical garments for the National Park Service, living history sites and museums. We provide conservation and preservation services and workshops on historical garments for men, both civilian and military, women and children.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#100;&#118;&#98;&#114;&#111;&#119;&#110;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cdvbrown@hotmail.com</a>","https://www.facebook.com/CDVBrown/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LXBJLRKCP4L4">72</a>","LAWLOR MONTANA GRASS FED BEEF, LLC","JOHN WAGNER","","14 MINNESOTA AVE","","WHITEFISH","MT","59937-2345","100% primal cut Montana grown grass fed beef burger.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#109;&#119;&#97;&#103;&#110;&#101;&#114;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">johnmwagner@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L229XXVVF9H3">73</a>","MARS INC.","MICHAEL NOYCE MERINO","","56 FIELDCROSS LN","","HELENA","MT","59602-8111","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#109;&#101;&#114;&#105;&#110;&#111;&#115;&#101;&#109;&#97;&#105;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mikemerinosemail@gmail.com</a>","www.marsrifle.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HEAJF3X9F2A5">74</a>","GREAT BEAR NATIVE PLANTS LLC","AIMEE KELLEY-DICKINSON","","165A BLUE HERON DR","","HAMILTON","MT","59840-9119","Native Plants and Trees Seed Gathering and Cleaning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#105;&#109;&#101;&#101;&#64;&#103;&#114;&#101;&#97;&#116;&#98;&#101;&#97;&#114;&#110;&#97;&#116;&#105;&#118;&#101;&#112;&#108;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">Aimee@greatbearnativeplants.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNGFMULDWHK8">75</a>","APEX MANUFACTURING SERVICES, LTD.","BILL BLAQUIERE","","520 CHARLES ST","","BILLINGS","MT","59101-3236","Apex Manufacturing Services Ltd. is a made to order manufacturer focused primarily on CNC (computer numerical control) machining using turning centers (lathe) and vertical machining centers (millings machines). We do have capacity for welding of welded assemblies as well. Made to order means we make machine parts and welded assemblies to customer specifications. We do not offer in house engineering services for product design. Run size: One-off parts, small quantity runs, large quantity runs in a wide variety of materials. Materials include but not limited to: aluminum, carbon steels, stainless steels, plastics, polymers, and some composites.  We provide parts for many industries: semiconductor, energy production, agriculture and more. www.apex-manufacturing.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#98;&#64;&#97;&#112;&#101;&#120;&#45;&#109;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">billb@apex-manufacturing.com</a>","http://www.apex-manufacturing.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKEUMD7LELK1">76</a>","MONTANA TERRAZZO CO.","CRYSTAL WALLETTE","","345 LOMOND LN","","BILLINGS","MT","59101-7349","Montana Terrazzo Co. has over 50 years of experience in the precast concrete industry. Company specializes in pre-cast concrete products. Products include but are not limited to: architectural pre-cast, window wells, feed bunks, stockwater tanks, stair treads, picnic tables, septic tanks, benches, planters, vault toilets, water meter vaults, parking blocks, and splash blocks. Company has ability to do custom forming with provided plans and specs. Company also has the ability to deliver locally and outside the local area.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#116;&#99;&#64;&#108;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">mtc@live.com</a>","https://www.montanaterrazzo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PSLBRX9ASSR5">77</a>","WATERJET CUTTING TECHNOLOGY LLC","JOHN KRAMARICH","","710 KEOGH CT","","GREAT FALLS","MT","59404-3205","Precision Turned Product Manufacturing. Cutting of all medians of material. Fabricator for all aspects of Aerospace, construction, mining, architectural, farming, signage.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#116;&#119;&#101;&#116;&#64;&#98;&#114;&#101;&#115;&#110;&#97;&#110;&#46;&#110;&#101;&#116;">getwet@bresnan.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E2MTE56AFBJ6">78</a>","AP INDUSTRIES, INC","TONY SEESING","","550 1ST AVE N","","BILLINGS","MT","59101-2696","Company manufactures the 'Fence Buddy.' This tool assists in tying wire fencing material to steel posts in a time saving fashion. There is no longer a need to manually tie wire to steel posts. Products not only saves time but saves on manual dexterity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#115;&#98;&#105;&#108;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tonysbilt@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CNEALXMKUPX5">79</a>","MONTANA CONTROLS L.L.C.","SHAUNA BAENZIGER","","1295 PUMORI CIR","","BILLINGS","MT","59101-7068","The company serves the Industrial community. We offer a wide range of automation services to help you reach your goals, including, but not limited to: * Process Automation through PLC or DCS systems * High Performance Interface systems * Multi-Platform Integration * Full system replacement for obsolete systems * Custom Database Applications * Database Integration * Machine Design and Manufacturing * Robotics * Control Panel Design and Manufacturing * SCADA Systems * Instrument Installation and Maintenance * System Integration with Maintenance, Inventory, Sales and Accounting systems For more information visit www.montanacontrols.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#117;&#110;&#97;&#64;&#109;&#111;&#110;&#116;&#97;&#110;&#97;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">shauna@montanacontrols.com</a>","www.montanacontrols.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RY93CRHL8GM4">80</a>","AMERICAN INDUSTRIES, INC.","PAUL NEUTGENS","","336 TABRIZ DR","","BILLINGS","MT","59105-2861","Company specializes in steel fabrication and installation which includes prefabricated metal buildings, supply and install. Company also provides design services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#110;&#101;&#117;&#116;&#103;&#101;&#110;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">pneutgens@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SG8MBCJM4MB7">81</a>","SIELER ALLEN","ALLEN SIELER","","20 TREASURE LN","","KALISPELL","MT","59901-5116","Fabrication of seed transport container mounted on truck.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#115;&#105;&#101;&#108;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">chucksieler@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V8LNMBHC2QA5">82</a>","FORLOH, INC.","MARK TECHMANSKI","","109 CANYON VW","","COLUMBIA FALLS","MT","59912-9019","US manufactured high-performance outdoor wear and equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#102;&#111;&#114;&#108;&#111;&#104;&#46;&#99;&#111;&#109;">mark@forloh.com</a>","forloh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EVD9PV9WQN96">83</a>","FAMILY TREE WOODWORKING LLC","PATRICIA TIFT","","133 PORCUPINE RDG","","FORTINE","MT","59918-7704","TFTWood is a Veteran Owned small business based in Albuquerque, New Mexico engaging in the wholesale distribution of products to various distributors. Our leadership brings together over 18 years of military service to provide seamless, professional service to our customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#102;&#116;&#119;&#111;&#111;&#100;&#46;&#99;&#111;&#109;">info@tftwood.com</a>","https://www.tftwood.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HRH8M9QRMUL4">84</a>","EVERGREEN BIO SOLUTIONS, LLC","KENNON PERRY","","30 AMBER WAY","","THREE FORKS","MT","59752-9237","We offer customized wastewater treatment programs that utilize naturally occurring bacteria to reduce fats, oils, grease (FOG), solids, odors, and hydrogen sulfide (H2S). The benefits are reduced cost and reduced odors, improved nutrient removal and increased system capacity. Our treatment programs are designed for use in the following: Lagoons, aeration basins, activated sludge systems, force mains, lift stations, grease traps, drain lines, and holding tanks. Can benefit: Ships, military bases, federal buildings, kitchens, housing, hospitals, treatment plants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#105;&#110;&#101;&#64;&#101;&#118;&#101;&#114;&#103;&#114;&#101;&#101;&#110;&#98;&#105;&#111;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">shaine@evergreenbiosolutions.com</a>","https://www.evergreenbiosolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QHQMD4DBSPQ4">85</a>","NEODYMIA INC","BRADLEY LAYTON","","1500 CLARK FORK LN STE 1","","MISSOULA","MT","59808-5167","refining","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#121;&#64;&#97;&#108;&#117;&#109;&#46;&#109;&#105;&#116;&#46;&#101;&#100;&#117;">blay@alum.mit.edu</a>","www.neodymiallc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLT5U5DWM3G7">86</a>","DELTA INTERNATIONAL SERVICES & LOGISTICS USA, INC","RICHARD ERICKSON","","2320 HOUSTON POINT DR","","WHITEFISH","MT","59937-3382","Scrambler therapy MC-5A pain technology (formerly known as 'Calmare' in the US)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#108;&#116;&#97;&#105;&#110;&#116;&#108;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">deltaintl3@gmail.com</a>","scramblertherapy-us.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S8PQXJKFTEN7">87</a>","HUMAN POWERED FUTURE PLLC","BRADLEY LAYTON","","2206 MISSOULA AVE","","MISSOULA","MT","59802-3538","Human Powered Future provides engineering services in mechanical, chemical, environmental, electrical, computer and biomedical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#108;&#101;&#121;&#46;&#108;&#97;&#121;&#116;&#111;&#110;&#64;&#104;&#117;&#109;&#97;&#110;&#112;&#111;&#119;&#101;&#114;&#101;&#100;&#102;&#117;&#116;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">bradley.layton@humanpoweredfuture.com</a>","https://www.humanpoweredfuture.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HEEPDCRKY6W5">88</a>","STOLTZE TIMBER SYSTEMS, INC.","MATT BROWN","","600 HALFMOON RD","","COLUMBIA FALLS","MT","59912-8920","-Mass timber manufacturers -CLT manufacturers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#115;&#116;&#111;&#108;&#116;&#122;&#101;&#116;&#105;&#109;&#98;&#101;&#114;&#46;&#99;&#111;&#109;">matt@stoltzetimber.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HJ2FFRNVBXM7">89</a>","METAL SOLUTIONS LLC","TITUS TAKES GUN","","131 BRICKYARD LN STE 17","","BILLINGS","MT","59101-7338","Small American Indian Owned Business located in Billings, MT. We provide metal welding and metal fabrication services, such as metal erection, repair, restoration, reinforcement or Design-&-Build metal-based structures, via shop fabrication or mobile on-site welding & construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#101;&#116;&#97;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#109;&#116;&#46;&#99;&#111;&#109;">info@metalsolutionsmt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EAPUH6KNWYE3">90</a>","1978 LLC","MIKEL OCHS","","1857 US HIGHWAY 93 S","","HAMILTON","MT","59840-9761","We manufacture fully finished on the exterior residential and commercial buildings many with log or timber accents such as posts, trusses, beams, and stairs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#99;&#104;&#115;&#64;&#119;&#99;&#108;&#104;&#46;&#99;&#111;&#109;">mochs@wclh.com</a>","www.wclh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RSYFNJETHMU7">91</a>","CJZ CUSTOM LLC","JACOB JANTZ","","2428 W CENTRAL AVE","","MISSOULA","MT","59801-6464","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#99;&#111;&#98;&#64;&#104;&#111;&#116;&#115;&#121;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#109;&#116;&#46;&#99;&#111;&#109;">Jacob@hotsywesternmt.com</a>","hotsywesternmt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VF3BWAUL9MV4">92</a>","TRAVIS D KLEIN LLC","TRAVIS KLEIN","","205 HOWIE RD","","BIG TIMBER","MT","59011-7802","Company is a custom machine shop that specializes in custom fencing and many types of agricultural equipment and repair. This includes fencing, barns, welding fabrication and custom designs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#118;&#105;&#115;&#100;&#107;&#108;&#101;&#105;&#110;&#108;&#108;&#99;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">travisdkleinllc@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G6L8GJNG6QK5">93</a>","TRI-COUNTY MECHANICAL AND ELECTRICAL, LLC","CALEB STAUB","","3139 BOZEMAN AVE","","HELENA","MT","59601-6457","Tri-County is one of the leading mechanical and electrical construction management firms throughout Montana and the surrounding states. Founded in 1972, Tri-County Mechanical and Electrical provides premier technical construction management and exceptional workmanship across every phase of a project from preconstruction through project closeout. Please see more at tcmemt.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#108;&#101;&#98;&#64;&#116;&#99;&#109;&#101;&#109;&#116;&#46;&#99;&#111;&#109;">caleb@tcmemt.com</a>","https://www.tcmemt.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NL3LQQ1FZSE4">94</a>","BEAVERHEAD BIOPLASTICS, LLC","ANTHONY JABAR","","243 TOLMAN LN","","DILLON","MT","59725-7436","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#64;&#97;&#110;&#117;&#100;&#114;&#105;&#110;&#107;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">anthony@anudrinkware.com</a>","www.anudrinkware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLTPJUGBPFK5">95</a>","PERFORMANCE SPECIALISTS LLC","GARY GAVIN","","1600 N MONTANA AVE","","HELENA","MT","59601-0801","Since 2011, Montana Custom Sheds has built, displayed, and delivered thousands of prebuilt structures including cabins, garages, animal shelters, sheds, barns, and greenhouses. Our buildings are constructed in Amish communities and showcase the highest quality materials & craftsmanship in portable buildings. See more at www.montanacustomsheds.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#110;&#116;&#97;&#110;&#97;&#115;&#104;&#101;&#100;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">montanasheds@gmail.com</a>","https://montanacustomsheds.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKZWJQNA1BW5">96</a>","MISSION DESIGN SOLUTIONS, LLC","THOMAS HIGGINS","","51 PICKWICK COURT","","KALISPELL","MT","59901-2774","Mission Design Solutions is a full-service mechanical engineering design consulting firm. We work with organizations and individuals to bring products and systems into reality. Utilizing the latest computer software applications, we employ innovative and sound design principles to meet your project and business objectives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#106;&#104;&#105;&#103;&#103;&#105;&#110;&#115;&#64;&#109;&#105;&#115;&#115;&#105;&#111;&#110;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">tjhiggins@missiondesignsolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TW51QGLEHCM3">97</a>","R LAZY B ENTERPRISES LLC","ROBYN BARKLEY","","5810 SPOKANE RANCH RD","","EAST HELENA","MT","59635-9401","R Lazy B Enterprises is a custom woodworking, sign manufacturing and installation company. We specialize in commercial/personal signage. Our company is flexible and nimble. We can accommodate any project needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#97;&#122;&#121;&#98;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rlazybllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWWDESZ7FQ34">98</a>","BRIXTEL DEFENSE, LLC","ANDREW MANSOOR","","112 W OREGON LN","","GLENDIVE","MT","59330-2064","Brixtel Defense is a company specializing in ammunition manufacturing for defense purposes. Our focus is on producing high-quality, small, medium, and large caliber ammunition, primarily for the U.S. Armed Forces and its allies. Dedicated to innovation and quality, Brixtel Defense is committed to empowering the United States Armed Forces and its allies through readiness and innovation. We strive to protect the warfighter and are dedicated to continuous improvement in their products and processes. https://www.brixteldefense.com/","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#46;&#109;&#97;&#110;&#115;&#111;&#111;&#114;&#64;&#98;&#114;&#105;&#120;&#116;&#101;&#108;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">andy.mansoor@brixteldefense.com</a>","https://www.brixteldefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KVHRR374DFL6">99</a>","OUTDOOR WORLD LLLP","GARY NESSE","","502 N 7TH ST","","HAMILTON","MT","59840-2226","Gary Nesse’s Outdoor World is a business with over 40 years of providing innovative, functional and versatile apparel to private and public sector customers. We are committed to excellence and aim to give our customers a product that meets or exceeds their most rigorous demands.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#114;&#121;&#46;&#110;&#101;&#115;&#115;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">gary.nesse@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JML3SKBAAEJ5">100</a>","CROSS DIAMOND BOOM SERVICE, INC.","GARY COTE","","51227 HILLSIDE RD","","CHARLO","MT","59824-9780","We can provide a 100-ton truck crane with operator. We also have two 33-ton boom trucks with operator. We do metal fabrication and welding services which includes on-site and field welding in addition to shop work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#111;&#115;&#115;&#100;&#105;&#97;&#109;&#111;&#110;&#100;&#64;&#98;&#108;&#97;&#99;&#107;&#102;&#111;&#111;&#116;&#46;&#110;&#101;&#116;">crossdiamond@blackfoot.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SQMWRNRW4HB6">101</a>","BEARTOOTH AUTOMATION, LLC","DEREK HOERNER","","120 MADISON ST","","JOLIET","MT","59041-8023","Beartooth Automation is a cETLus authorized panel shop with the authority to mark. We specialize in Manufacturing Industrial Control Panels, Process Automation, Instrumentation System Setup Calibration and Maintenance, Control System Programming and Networking, SCADA Control System Architecture. With over 20 years of experience in industries ranging from: oil fields, power generation, water treatment, mining, smelting and refining, agriculture: traditional and hydroponic, and more. With a passion for what we do we recognize the ever increasing need for technically skilled individuals in a now technology based world and are here to help fill the gaps. beartoothautomation.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#114;&#101;&#107;&#46;&#104;&#111;&#101;&#114;&#110;&#101;&#114;&#64;&#98;&#101;&#97;&#114;&#116;&#111;&#111;&#116;&#104;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">derek.hoerner@beartoothautomation.com</a>","https://www.beartoothautomation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z4M1AQE74NG3">102</a>","AIZY TECH, LLC","EMILY ADAMS","","113 BOGART DR","","BOZEMAN","MT","59718-9307","Aizy Tech specializes in the design and fabrication of advanced unmanned aerial vehicles (UAVs) and aircraft components. Our focus is on using prepreg carbon fiber and monocoque carbon fiber shells to create high-performance, durable products. We employ comprehensive structural analysis using finite element analysis (FEA) and conduct rigorous static load testing to ensure the reliability and safety of our components. Our capabilities include precision manufacturing and assembly of critical aircraft components, as well as ground and flight testing to validate performance. We offer tailored consultation and advisory services, leveraging our extensive expertise in aircraft and UAV design to meet the specific needs of our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#109;&#105;&#108;&#121;&#46;&#97;&#100;&#97;&#109;&#115;&#64;&#97;&#105;&#122;&#121;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">Emily.adams@aizytech.com</a>","https://www.aizytech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TD6UY1YVH936">103</a>","CAT'S CLAW FASTENERS LLC","TOBY-JEANNE ALMY","","28 N MONTANA AVE","","MILES CITY","MT","59301-3509","These revolutionary fence fasteners allow for fast, easy installation and repositioning of wires and panels on one or more posts. Unlike traditional fencing screws, Cat’s Claw fasteners can be reused and can accommodate endless tension variations and easy adjustments during severe temperature changes, even on older posts. Having advanced fence post screws provides you with more flexibility when building an enclosure for your livestock or garden, including the ability to secure fencing no matter the material or age of your posts. www.catsclawfasteners.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#97;&#116;&#115;&#99;&#108;&#97;&#119;&#102;&#97;&#115;&#116;&#101;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">info@catsclawfasteners.com</a>","https://fencingstaples.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NUKQR16PPXK3">104</a>","DEER MOUNTAIN CONSTRUCTION, LLC","RYAN HAFFEMANN","","119920 RICK JONES WAY UNIT 3","","BUTTE","MT","59750-9746","We produce superior cabinets and closets using the precision tools in our own workshop. Only top-quality materials are used so that your cabinets will hold up for years to come. We are a partially automated cabinet shop located west of Butte in the Montana Connections Industrial Park (by the Port of Montana). We will work with you from design to install to be sure your cabinets meet our expectations and yours.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#110;&#64;&#100;&#101;&#101;&#114;&#109;&#116;&#46;&#99;&#111;&#109;">ryan@deermt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KSTSFQEFDGF4">105</a>","D & H PROPERTIES, L.L.C.","STEVE DITULLIO","","105 SOLAR RANCH RD","","GALLATIN GATEWAY","MT","59730-8009","D & H Properties LLC provides services in two different areas. The first service is using stock (horse & mules) to pack materials, gear and supplies into remote areas or the backcountry. The second service is using heavy equipment to perform excavation services, metal fabrication and construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#114;&#101;&#103;&#101;&#110;&#109;&#97;&#114;&#107;&#101;&#116;&#46;&#99;&#111;&#109;">steve@regenmarket.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.4&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 003 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.67 seconds and 1.73 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 27 
+(of 27 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XHHNE8FGMCN5">1</a>","EIDEN SYSTEMS CONSULTING, LLC","MICHAEL EIDEN","President","615 WOODBROOK DR STE B","","CHARLOTTESVILLE","VA","22901-1149","An Information Technology services company providing Software Design and Development; Database Modeling and Engineering; Business Intelligence and Data Warehousing; ERP Implementation and Support; Networking and Communications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#105;&#100;&#101;&#110;&#64;&#101;&#105;&#100;&#101;&#110;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">meiden@eidensys.com</a>","https://www.eidensys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L2RPXU27MY57">2</a>","I3 PARTNERS, LLC","KEVIN WALKER","Principal","4635 MOCKERNUT LN","","EARLYSVILLE","VA","22936-9699","General Management Consulting, Strategic Planning, Customer and Employee Assessment, Change Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#105;&#99;&#117;&#98;&#101;&#100;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">kwalker@icubedpartners.com</a>","http://www.icubedpartners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C8FUKQKC9JB4">3</a>","BARRON ASSOCIATES, INC.","CONNIE HOOVER","Contracts Administrator","1410 SACHEM PL","","CHARLOTTESVILLE","VA","22901-2496","Barron Associates is a R&D company focused on providing their clients with solutions to aerospace and health care challenges. These solutions employ intelligent and adaptive technologies to measure, model, predict and control complex systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#114;&#111;&#110;&#64;&#98;&#97;&#105;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">barron@bainet.com</a>","http://www.barron-associates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3QHFMGMV6C4">4</a>","HADDON C ALEXANDER III","HADDON ALEXANDER, III","","1206 PARTRIDGE LN","","CHARLOTTESVILLE","VA","22901-1787","Physician, Medical Doctor Specialties: Rheumatology and Internal Medicine","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#97;&#105;&#105;&#105;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">chrisaiii@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CK7PRLYKH8G3">5</a>","KAPUR ENERGY ENVIRONMENT ECONOMICS, LLC","KAJAL KAPUR","Principal","1 STEUBIN LN","","CHARLOTTESVILLE","VA","22911-8424","We provide economic, policy, regulatory support and environmental services to our clients. We have expertise in data analysis & modeling, conducting research, developing reports, providing docket, public comment, training & communications support. We conduct Strategic Sustainability Planning and help clients develop sustainability programs to effectively and efficiently implement policies and guidance related to energy and environmental performance. We provide energy/water conservation support by conducting energy/water audits of buildings, performing life-cycle cost analyses, developing energy/water conservation recommendations & calculating GHG emissions reductions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#98;&#107;&#64;&#107;&#107;&#97;&#112;&#117;&#114;&#46;&#99;&#111;&#109;">kbk@kkapur.com</a>","https://keeeconsult.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M9APBJ97B2P9">6</a>","KEY-LOG ECONOMICS, LLC","SPENCER PHILLIPS","","974 SUTTON CT","","CHARLOTTESVILLE","VA","22901-3757","Key-Log Economics works with our clients to develop the facts and the arguments that make for a competent understanding of today’s conservation, environmental, and sustainability challenges. We do research into the benefits and costs associated with changes in the natural environment. Tools include ecosystem services valuation, regional economic analysis, statistical/econometric analysis, and policy evaluation. We also assist clients in developing program/campaign strategy using economic information and tools, and in creating agile, effective program and organizational strategic plans.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#101;&#110;&#99;&#101;&#114;&#64;&#107;&#101;&#121;&#108;&#111;&#103;&#101;&#99;&#111;&#110;&#111;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">spencer@keylogeconomics.com</a>","http://www.keylogeconomics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C4KYJMR4KUE1">7</a>","LOUIS GARRICK","GARRICK LOUIS","","2075 WHIPPOORWILL RD","","CHARLOTTESVILLE","VA","22901-8801","Analysis of water and sanitation infrastructure, and sustainable development. Small water systems in rural areas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#108;&#55;&#102;&#64;&#118;&#105;&#114;&#103;&#105;&#110;&#105;&#97;&#46;&#101;&#100;&#117;">gel7f@virginia.edu</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y7L4YU3DWC97">8</a>","DBS PRODUCTIONS LLC","ROBERT KOESTER","","401 KEY WEST DR","","CHARLOTTESVILLE","VA","22911-8423","The source for search & rescue (SAR) research, publications, and training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#64;&#100;&#98;&#115;&#45;&#115;&#97;&#114;&#46;&#99;&#111;&#109;">robert@dbs-sar.com</a>","http://www.dbs-sar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LQECEEN2M1B8">9</a>","VIBRATESS, LLC","TATIANA GLOBUS","","104 CHAUCER RD","","CHARLOTTESVILLE","VA","22901-2213","We build spectroscopic instrumentation for spectroscopic measurements in the sub-THz frequency range. We do molecular dynamic simulations to determine molecular absorption of radiation in the sub-THZ frequency range. We build customized THz biosensors for specific applications, We provide customized dry and fluidic sample chips for THz spectroscopic measurements. We build microdetectors with microprobes and microcircuits in customized waveguide housings for THz measurements. We provide THz spectroscopic characterization of biological and organic materials including biological macromolecules and microorganisms. We create experimental databases of THz spectroscopic signatures from customer samples, and provide computer modeling of customer selected molecules and materials.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#111;&#98;&#117;&#115;&#64;&#118;&#105;&#98;&#114;&#97;&#116;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">globus@vibratess.com</a>","http://www.vibratess.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ER1BEY2VZAM1">10</a>","JUNCTURE CONSULTING, LLC","MICHELLE DE STEFANO","","930 BEAVER DAM RD","","KESWICK","VA","22947-2147","Juncture provides physical disability claims and benefits analysis and medical case review for disability and insurance purposes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#115;&#116;&#101;&#102;&#97;&#110;&#111;&#64;&#106;&#99;&#106;&#118;&#110;&#46;&#99;&#111;&#109;">destefano@jcjvn.com</a>","http://www.jcjvn.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMTSJTG4Z233">11</a>","SHINE SYSTEMS, LLC","STEVE JENNINGS","","3046 BERKMAR DR","STE A","CHARLOTTESVILLE","VA","22901-3403","SHINE provides analytical and technical services to the federal, state, and local government, as well as to educational institutions and private industry. We combine people, processes, and technologies to solve problems and enhance our customers’ mission success.  In addition to supporting DHS and DoD customers across the U.S., our employees support DoD and commercial customers in Germany, Korea, Japan, Turkey, Bahrain, Djibouti, Jordan, Afghanistan, and Iraq. Our core competencies include Intelligence Community systems and operations, Military Intelligence Technical and Analytical Support, Identity Intelligence, Security, Training, Information Technology (systems and software engineering), Workflow/Business Process Engineering, Program Management, Software Product Engineering, and Intellectual Property (IP) Assessment and Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#106;&#101;&#110;&#110;&#105;&#110;&#103;&#115;&#64;&#115;&#104;&#105;&#110;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">sjennings@shinesystems.com</a>","http://www.shinesystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S1DYEWHL6PC3">12</a>","RIVANNA MEDICAL, INC.","FRANK MAULDIN","","2400 HUNTERS WAY","","CHARLOTTESVILLE","VA","22911-7930","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#109;&#97;&#117;&#108;&#100;&#105;&#110;&#64;&#114;&#105;&#118;&#97;&#110;&#110;&#97;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">wmauldin@rivannamedical.com</a>","http://www.rivannamedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z384A3PQDJA5">13</a>","SOLIS APPLIED SCIENCE LLC","RICHARD BURCH","","995 RESEARCH PARK BLVD","STE 118","CHARLOTTESVILLE","VA","22911-5851","Provide applied science services including but not limited to: Image Science/Image analysis/hyperspectral processing and exploitation/data calibration and atmospheric correction/algorithm and tool development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#46;&#98;&#117;&#114;&#99;&#104;&#64;&#115;&#111;&#108;&#105;&#115;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">rich.burch@solisscience.com</a>","www.solisappliedscience.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C99NU813C658">14</a>","XEFATURA CONSULTING LLC","STEVEN HARDESTY","","3496 CARROLL CREEK RD","","KESWICK","VA","22947-9206","Xefatura Consulting, LLC is a full service leadership development and talent management firm staffed by PhD level psychologists.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#104;&#97;&#114;&#100;&#101;&#115;&#116;&#121;&#64;&#120;&#101;&#102;&#97;&#116;&#117;&#114;&#97;&#46;&#99;&#111;&#109;">stevehardesty@xefatura.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QRB7FJ2B3QH5">15</a>","MONROE HEALTH & REHAB CENTER, LLC","JENNIFER HELON","","1150 NORTHWEST DR","","CHARLOTTESVILLE","VA","22901-2309","We offer skilled nursing and senior rehabilitation, we also offer personalized memory care programs for seniors struggling with Alzheimer’s and dementia. Ou rehabilitation goal is to help you heal from an injury or surgery in a safe and comforting environment. We also offer assisted living.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#46;&#104;&#101;&#108;&#111;&#110;&#64;&#115;&#97;&#98;&#101;&#114;&#104;&#101;&#97;&#108;&#116;&#104;&#46;&#99;&#111;&#109;">jennifer.helon@saberhealth.com</a>","https://www.saberhealth.com/locations/monroe"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDHCXGHWMLM9">16</a>","EARTH & SKY SOLUTIONS INC.","CHARLES HOUSE","","6384 BLACKWELLS HOLLOW RD","","CROZET","VA","22932-1517","we offer specialized flame weeding equipment and custom kits to build your own flame weeding unit. Complete units and kits are available for Row crops, tobacco & hemp, vegetable beds, alfalfa, vineyard & orchard, poultry and dairy barn sanitation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#101;&#97;&#114;&#116;&#104;&#97;&#110;&#100;&#115;&#107;&#121;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@earthandskysolutions.com</a>","www.earthandskysolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLQVMEYDL818">17</a>","ELJUN LLC","BENJAMIN LEDFORD","","2777 PEPPERVINE CT","","CHARLOTTESVILLE","VA","22911-7541","Eljun helps businesses of all sizes optimize every aspect of their HR functions through three integration and analytics SOLUTIONS: HR Data and Automation Streamline Recruiting Diversity, Equity, and Inclusion through data integrations Automate Onboarding and Offboarding Level-Up Employee Engagement","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#101;&#100;&#102;&#111;&#114;&#100;&#64;&#101;&#108;&#106;&#117;&#110;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bledford@eljunllc.com</a>","www.eljunllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CU43R6BCSL64">18</a>","COEUS COGNOSCENTI INC","PRASHANTH GOPAL","","4096 CYPRESS POINTE DR","","CHARLOTTESVILLE","VA","22901-9018","Coeus Cognoscenti Inc is a minority owned IT Infrastructure Development company, specializing in application development and cloud services. Our leadership team has over 30 years’ experience, delivering the right people, techniques, and technologies to drive agency business strategies and projects forward. Coeus Cognoscenti offers a large range of services, including Cloud Architecture and Migration, Cyber Security, Custom Programming, Network and Database Administration services, System Infrastructure and Architecture, Web Application Development, IT Training and Consulting, and more. We supply you with all the tools needed to evaluate your priorities and optimize your services. Our management team is easily accessible by our clients and we provide on-time and in budget solutions which ensures your mission success. Visit us online at WWW.COEUSCOGNOSCENTI.COM.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#103;&#111;&#112;&#97;&#108;&#64;&#99;&#111;&#101;&#117;&#115;&#99;&#111;&#103;&#110;&#111;&#115;&#99;&#101;&#110;&#116;&#105;&#46;&#99;&#111;&#109;">pgopal@coeuscognoscenti.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F2DBP6WRJ718">19</a>","I&C OPERATIVE, LLC","ROMAN SHAFFER","","105 COMMONWEALTH CIR","","CHARLOTTESVILLE","VA","22901-1605","Nuclear safety and SIS software design and development, including system integration, testing, and installation/commissioning, and the support to obtain regulatory approval.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#102;&#102;&#101;&#114;&#64;&#105;&#99;&#111;&#112;&#101;&#114;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">shaffer@icoperative.com</a>","www.icoperative.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M333QK12CFF6">20</a>","AERIAL RESUPPLY LLC","MICHAEL KLEMMER","","3340 TURNBERRY CIR","","CHARLOTTESVILLE","VA","22911-7485","Coffee, Drinkware, General Clothing Merchandise","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#97;&#101;&#114;&#105;&#97;&#108;&#114;&#101;&#115;&#117;&#112;&#112;&#108;&#121;&#99;&#111;&#102;&#102;&#101;&#101;&#46;&#99;&#111;&#109;">info@aerialresupplycoffee.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RJC9DB4VK5V1">21</a>","MUNYAO CONSULTING LLC","NZIOKI MUNYAO","","1456 DELPHI LANE","","CHARLOTTESVLE","VA","22911-3657","Over 14 years of Program Management for Software Development Projects. Agile Software development, Global Teams and knowledge of working in East Africa.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#105;&#107;&#107;&#105;&#64;&#109;&#117;&#110;&#121;&#97;&#111;&#46;&#99;&#111;&#109;">zikki@munyao.com</a>","HTTPS://WWW.MUNYAO.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKZ9XBSTM8V9">22</a>","ABD TECH SOLUTIONS, LLC","OSSAMA ABDEL RAHMAN","","2235 WALNUT RIDGE LN","","CHARLOTTESVILLE","VA","22911-2203","A small business, providing Foreign Military Sales (FMS), Case Development, Letter of Acceptance (LOA), Program Management, Logistics, Contract Development, Systems Engineering, Financial Reconciliation, Defense Acquisition, Services and Technology Transfer support. Services also include In-Person Case Development and DSAMS Training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#98;&#100;&#101;&#108;&#64;&#97;&#98;&#100;&#45;&#116;&#101;&#99;&#104;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#49;&#46;&#99;&#111;&#109;">sabdel@abd-techsolutions1.com</a>","https://www.abd-techsolutions.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RGF2WZJLL5C5">23</a>","ETHOS, LLC","SYLVIA GARVEY","","2517 INDIAN LAUREL RD","","CHARLOTTESVILLE","VA","22911-8247","Ethos, LLC specializes in improving organizational performance by providing health, administration, and program operations services. We provide professional services in business process improvement and engineering, acquisitions and procurement lifecycle management, and congressional reporting support. We also perform grants management, program implementation, education, and training. We also speak and write fluently in three languages: Tagalong, Pampango and English.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#97;&#114;&#118;&#101;&#121;&#64;&#101;&#116;&#104;&#111;&#115;&#108;&#108;&#99;&#46;&#99;&#111;">sgarvey@ethosllc.co</a>","www.ethosllc.co"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGXDJE9BHL27">24</a>","JEFFERSON TECHNOLOGY SERVICES, LLC","LIBBIE HARRISON","","6430 INDIAN RIDGE DR","","EARLYSVILLE","VA","22936-1647","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#115;&#109;&#105;&#116;&#104;&#49;&#50;&#50;&#49;&#64;&#99;&#111;&#109;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">lsmith1221@comast.net</a>","www.jeffersontechnology.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U3SVJGUNB534">25</a>","F. RIVAS CONTRACTOR AND CLEANING SERVICES, LLC","CESAR RIVAS","","340 GREENBRIER DR STE C","","CHARLOTTESVILLE","VA","22901-1694","We are a home improvement contractor and cleaning and janitorial company. We offer remodeling and renovation services including, flooring, drywall, framing, painting, and decks. We offer residential cleaning services including post Construction cleanup, pressure washing, window cleaning, and road sweeping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#101;&#115;&#97;&#114;&#114;&#105;&#118;&#97;&#115;&#64;&#102;&#114;&#105;&#118;&#97;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">cesarrivas@frivasllc.com</a>","https://frivasllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HVDMTFB4QF79">26</a>","YANARA K. CONSULTING LLC","NYSHAE CARTER","","2075 COMMONWEALTH DR","","CHARLOTTESVILLE","VA","22901-2361","At Yanara K. Consulting, our mission is to empower small businesses to thrive by providing comprehensive and personalized solutions tailored to their unique needs. We are committed to delivering exceptional service, fostering long-term partnerships, and driving tangible results that fuel growth and success. Through our expertise in marketing, web design, advertisement, grant writing, administrative assistance, and branding; we strive to be the trusted partner that small businesses rely on to achieve their goals and realize their full potential. By serving as a single point of contact for most of your needs, we provide efficient and cost-effective solutions, allowing small businesses to focus on what they do best – running their operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#97;&#110;&#97;&#114;&#97;&#107;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">yanarakconsulting@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZTMZNARQ5X67">27</a>","PRIORITY ONE INNOVATIVE SOLUTIONS, LLC","PATRICK WATSON","","1819 MINT SPRINGS RD","","CROZET","VA","22932-2504","Medical / Healthcare Consultants that specialize in Community Paramedicine / Mobile Integrated Health / Population Health Programs and Event Medical Planning. With over 35 years of combined Emergency Medical Services experience, we can help your organization decrease Emergency Room utilization with development of Population Health programs to help with value based care.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#107;&#64;&#112;&#111;&#45;&#105;&#115;&#46;&#99;&#111;&#109;">patrick@po-is.com</a>","www.priorityonoeinnovativesolutions.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.416&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

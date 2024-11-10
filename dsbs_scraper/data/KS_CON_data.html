@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Kansas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.10 seconds and 1.13 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 114 
+(of 114 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBCLS83FD3H5">1</a>","DAVIDSON & ASSOCIATES INC","PAUL BIERSMITH","PRESIDENT","12701 EL MONTE ST","","LEAWOOD","KS","66209-2312","CONSULTING CORPORATION SPECIALIZING IN ARCHITECTURAL, ENGINEERING, CONSTRUCTION MANAGEMENT, PLANNING AND REAL ESTATE SERVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#98;&#105;&#101;&#114;&#115;&#109;&#105;&#116;&#104;&#64;&#100;&#97;&#118;&#105;&#100;&#115;&#111;&#110;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">paulbiersmith@davidsonassociatesinc.com</a>","https://www.davidsonassociatesinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGFPCHMGPLS3">2</a>","JULIUS KAAZ CONSTRUCTION CO INC","JODY KAAZ","PRESIDENT","716 CHEROKEE ST","","LEAVENWORTH","KS","66048-2467","COMMERCIAL CONSTRUCTION AND REMODEL; URBAN STREET DEVELOPMENT, SANITARY SWEWER, STORM SEWER, WATER LINE, STRUCRURAL CONCRETE, CIP RCB'S,, FLATWORK, DEMOLITION, SOIL REMEDIATION. STREET RESTRORATION, HISTORICAL RESORATION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#100;&#121;&#64;&#106;&#107;&#97;&#97;&#122;&#46;&#99;&#111;&#109;">jody@jkaaz.com</a>","www.jkaaz.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J13LAKML2LE5">3</a>","BAYER CONSTRUCTION COMPANY, INC.","PETER CLARK","V.P. / CEO","120 DEEP CREEK RD","","MANHATTAN","KS","66502-9305","SEWER AND WATERLINE WORK, EXCAVATION, SITE GRADING AND PREPARATION, BASE ROCK INSTALLATION, BUILDING DEMOLITION, EQUIPMENT RENTAL, CRUSHED ROCK.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#99;&#64;&#98;&#97;&#121;&#101;&#114;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">peterc@bayerconst.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UQ8TSAPSNU89">4</a>","BRC BEARING CO INC","CHRISSY WILLIAMS","VICE PRES","720 N WASHINGTON AVE","","WICHITA","KS","67214-3469","BEARINGS, SPEED REDUCERS, ROLLER CHAIN, OIL SEALS, ELECTRIC MOTORS, LOCTITE, DEVCON, SHEAVES, PULLEYS, BELTS, BELTING, CONVEYOR PARTS, PILLOW BLOCKS, FLANGE BLOCKS, SPROCKETS, MOTOR STARTERS, CLUTCHES, BRAKES, ADJUSTABLE SPEED DRIVES AND ACTUATORS, FREQUE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#99;&#119;&#105;&#99;&#64;&#98;&#114;&#99;&#98;&#101;&#97;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">brcwic@brcbearing.com</a>","www.brcbearing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJU1J8WRZMS1">5</a>","GORDON CONSTRUCTION, LLC","STEVEN GORDON","OWNER","1206 E 1ST ST N","","WICHITA","KS","67214-3907","GENERAL CONTRACTORS INVOLVED IN NEW CONSTRUCTION AND REMODELING. CABINET AND CASEWORK DISTRIBUTOR AND MANUFACTURER. CABINET AND CASEWORK INSTALLATION, METAL BUILDING ERECTORS, STANDING SEAM, METAL ROOFING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#71;&#111;&#114;&#100;&#111;&#110;&#67;&#110;&#115;&#116;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">GordonCnst@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFMXL1D1LLR4">6</a>","K & K INDUSTRIES INC","KEITH KLATY","President","9170 CLARKS CREEK RD","","JUNCTION CITY","KS","66441-7466","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#103;&#107;&#108;&#97;&#116;&#121;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">kgklaty@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HT25N1GZM6D3">7</a>","DESIGN, ANALYSIS AND RESEARCH CORPORATION","WILLEM ANEMAAT","Vice President","910 E 29TH ST","","LAWRENCE","KS","66046-4926","Airplane Design and Analysis software and consulting services. Wind Tunnel Testing, prototype construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#101;&#109;&#97;&#97;&#116;&#64;&#100;&#97;&#114;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">anemaat@darcorp.com</a>","HTTPS://WWW.DARCORP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JBMBNSZEJBK7">8</a>","MID-AMERICAN WATER & PLUMBING INC","DANE BOYD","President","5009 MURRAY RD","","MANHATTAN","KS","66503-9782","Mechanical Contractor - New and Renovation Construction. Plumbing, Boiler work, Instantaneous Water Heaters, Commercial and Residential Water Softener Systems, HVAC Systems and Equipment, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#101;&#64;&#109;&#97;&#119;&#112;&#46;&#117;&#115;">dane@mawp.us</a>","https://www.mawp.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UJAMDG86BPA4">9</a>","CUT N EDGE INC","JESSON ROSS","President","3530 SE 21ST ST","","TOPEKA","KS","66607-2371","GreenTouch Lawn Service is a full service lawn and landscape company. We handle properties for mowing and fertilization/weed control up to 300 acres and greater, and can also handle any noxious weed control and industrial vegetation and weed control.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#111;&#110;&#64;&#103;&#114;&#101;&#101;&#110;&#116;&#111;&#117;&#99;&#104;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">jesson@greentouchservice.com</a>","http://www.greentouchservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8C4YJUH39U7">10</a>","EXHIBIT ARTS. LLC","VERNON HARSHFIELD","President","326 N ATHENIAN AVE","","WICHITA","KS","67203-5737","Conference and Trade show services: Conference and Event Planning/Management Convention exhibits and Services Custom exhibits Prefabricated displays Portable convention booths Display cases Signage Warehousing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#101;&#114;&#110;&#111;&#110;&#64;&#101;&#120;&#104;&#105;&#98;&#105;&#116;&#97;&#114;&#116;&#115;&#46;&#110;&#101;&#116;">Vernon@exhibitarts.net</a>","http://www.exhibitarts.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SMBFFG4D4LM5">11</a>","SNODGRASS AND SONS CONSTRUCTION CO., INC.","AARON SNODGRASS","","2700 S GEORGE WASHINGTON BLVD","","WICHITA","KS","67210-1520","Snodgrass & Sons Construction Co Inc, has been performing commercial and industrial construction projects in the Wichita area since the late 1940’s. Our firm is a family owned business with its third generation in management. The firm is owned by David Snodgrass and Aaron Snodgrass as principals. We primarily focus on industrial, commercial, and government projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#114;&#111;&#110;&#64;&#115;&#110;&#111;&#100;&#103;&#114;&#97;&#115;&#115;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">aaron@snodgrassconstruction.com</a>","www.snodgrassconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DH67KKTJBB43">12</a>","LEAVCON II INC","ANDREW HOFFMAN","","108 AMERICAN AVE","","LANSING","KS","66043-1350","Commercial Construction Contractor who specializes in sitework, foundations, flatwork, and site concrete","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#104;&#111;&#102;&#102;&#109;&#97;&#110;&#64;&#108;&#101;&#97;&#118;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">ahoffman@leavcon.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GX12ZBNQBLZ9">13</a>","L & S ELECTRIC, L.L.C.","JANELLE LITTLE","","1051 W DIAMOND DR","","SALINA","KS","67401-9543","All electrical work. High voltage overhead and underground work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#110;&#108;&#108;&#108;&#105;&#116;&#116;&#108;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jnlllittle@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UF3ZXH52AV62">14</a>","EPOXY COATING SPECIALISTS, LLC","DAVID SCHLOEGEL","","3940 S FERREE ST","","KANSAS CITY","KS","66103-1717","Epoxy Coating Specialists (ECS) provides a seamless epoxy flooring solution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#101;&#112;&#111;&#120;&#121;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#105;&#115;&#116;&#115;&#46;&#99;&#111;&#109;">accounting@epoxyspecialists.com</a>","http://www.epoxyspecialists.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XKBXUDAD8WN9">15</a>","DAVIS CONTRACTING LP","LATRISHA BRADLEY","","4775B E US HIGHWAY 160","","INDEPENDENCE","KS","67301-7533","We have done road construction and repairs.We do maintenance services of all kinds in maintaining Federal Lakes.Fence Bldg.,Mowing,Cleaning,Herbicide,Construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#100;&#97;&#118;&#105;&#115;&#45;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">service@davis-contracting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PRBKCK4GXMJ3">16</a>","FRONTIER SERVICES, INC.","GREG WALLACE","President","5817 W 90TH ST","","OVERLAND PARK","KS","66207-2038","Full range of general, civil, and environmental construction services, e.g. levees, excavation and fill, concrete, utilities, erosion control, pre-engineered buildings, demolition, groundwater pump and treat, water treatment, landfill, waste T&D.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#119;&#97;&#108;&#108;&#97;&#99;&#101;&#49;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#110;&#101;&#116;">gwallace1@frontierservices.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQSYA8Z3JBG1">17</a>","BKM CONSTRUCTION LLC","BRENT MOTLEY","","501 S 5TH ST","","LEAVENWORTH","KS","66048-2610","Construction Services – We perform architectural and civil works with our own forces and turnkey projects as a general contractor. We are experienced in ground up construction, complete gut and remodel projects, civil, commercial, industrial, retail and restaurant construction.  Our contract management team has over one hundred years of combined construction experience to manage your Federal, municipal, public and private projects. Our client list includes the Corps of Engineers, Veteran’s Administration, US Army and Air Force, Bureau of Indians Affairs, Bureau of Prisons, college universities, many municipalities and private businesses. We will provide professional oversight that will ensure compliance with current codes, provide quality control, maintain and promote safety protocols and a safe work environment for tradesmen and efficient schedule development and execution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#116;&#108;&#101;&#121;&#64;&#98;&#107;&#109;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bmotley@bkmconstructionllc.com</a>","www.bkmconstructionllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZJGMUC81P2D9">18</a>","MY COMPANY, INC.","RENITA HARRIS","President","729 SE WEAR AVE","","TOPEKA","KS","66607-1769","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#116;&#97;&#104;&#97;&#114;&#114;&#105;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">nitaharris@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D46CCMQ3ET17">19</a>","CROMWELL ENVIRONMENTAL INC","ARON CROMWELL","","615 VERMONT ST","","LAWRENCE","KS","66044-2251","Cromwell Environmental, through our Environmental Testing & Remediation and our Solar Energy divisions, works to provide safe and healthy indoor environments for our clients, and a better outdoor environment for everyone.  Cromwell Environmental has over 40 years of experience working with homeowners, commercial businesses, and the government to assess and remediate environmental hazards such as mold, lead, and asbestos as well as to design and install solar energy systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#114;&#111;&#109;&#119;&#101;&#108;&#108;&#64;&#99;&#114;&#111;&#109;&#119;&#101;&#108;&#108;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">acromwell@cromwellenv.com</a>","http://www.cromwellenv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QM9HCNMA92H6">20</a>","SMOKY HILL LLC","KIM BROWN","","645 E CRAWFORD ST","UNIT E8","SALINA","KS","67401-5117","Heavy construction, infrastucture projects, grading, paving, water and sewer piping, water and sewer treatment plants, treatment plant maintenance, sitework, dam repairs, concrete structures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#98;&#114;&#111;&#119;&#110;&#64;&#115;&#109;&#111;&#107;&#121;&#104;&#105;&#108;&#108;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">kimbrown@smokyhillconst.com</a>","www.smokyhillconst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L21KFGQD7WM8">21</a>","PBP MANAGEMENT GROUP, INC.","CHRISTOPHER LEE","","250 N ROCK RD","SUITE 360","WICHITA","KS","67206-2243","PBP has significant experience in providing administrative, technical, logistical, human resources, construction and maintenance service solutions. We currently provide Administrative, clerical and logistics support services for the Department of Navy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#114;&#105;&#115;&#64;&#112;&#98;&#112;&#46;&#110;&#101;&#116;">Chris@pbp.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JD39QJKEYMD6">22</a>","ALLTECH COMMUNICATIONS INC","MIKE ROTHFUSS","","430 SW 1ST ST","","TOPEKA","KS","66603-3002","Low Voltage Contractor and Designer. Cat 5e, Cat 6, Coax Video, Fiber Premise and OSP cabling. RCDD on staff and BICSI Installers on staff.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#97;&#108;&#108;&#116;&#101;&#99;&#104;&#107;&#115;&#46;&#99;&#111;&#109;">mike@alltechks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKKJY6NUM575">23</a>","BLUEVILLE NURSERY, INC.","TIM SHARP","","4539 ANDERSON AVE","","MANHATTAN","KS","66503-9799","Design, install, and maintain Landscapes, to include Water Features, Brick Patios, Plantings, Lawns, and Irrigation. We also install and maintain erosion control systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#115;&#104;&#97;&#114;&#112;&#64;&#98;&#108;&#117;&#101;&#118;&#105;&#108;&#108;&#101;&#110;&#117;&#114;&#115;&#101;&#114;&#121;&#46;&#99;&#111;&#109;">tsharp@bluevillenursery.com</a>","http://www.bluevillenursery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLY4K33ELVG1">24</a>","CONLEY SPRINKLER, INC.","TINA WIEBELHAUS","","822 MAIN ST","","PLEASANTON","KS","66075-4077","Fire Protection System Installation, Service, Repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#108;&#119;&#99;&#115;&#105;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tlwcsi@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJN3MXD1DJT7">25</a>","B & R INSULATION INC","RICHARD HALL","","15001 W 101ST TER","","LENEXA","KS","66215-1162","B&R is a full service remediation and interior demolition company serving both commercial and residential properties. We perform comprehensive asbestos removal, and mold and lead paint remediation services. B&R Insulation, Inc. utilizes only state of the art equipment, making sure asbestos is removed thoroughly by strictly adhering to all local, state and federal regulations. We are a comprehensive environmental services company dedicated to making your home or business a healthier environment. We are a dedicated company to making your home or business a healthier environment. Please visit us at http://bandrenvironmental.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#110;&#115;&#117;&#108;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">brinsul@sbcglobal.net</a>","http://www.bandrenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NUE7GA82JWQ1">26</a>","ROYAL MECHANICAL SERVICES INC","NATHAN SHYVER","","19175 METCALF AVE","","STILWELL","KS","66085-8523","Project & facilities management on a nationwide scale. Procurement services materials for government entities. Services provided - HVAC, Locks, Gates, remodeling, electrical, data/phone cabling, CCTV design and installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#115;&#104;&#121;&#118;&#101;&#114;&#64;&#114;&#111;&#121;&#97;&#108;&#115;&#111;&#108;&#118;&#101;&#115;&#46;&#99;&#111;&#109;">nshyver@royalsolves.com</a>","http://royalsolves.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJBSB9ZNV9F8">27</a>","KANSAS CITY MECHANICAL INC","BRIAN EIKENBARY","","6822 KANSAS AVE","","EDWARDSVILLE","KS","66111-2407","New construction and renovations, specializing in major plumbing and HVAC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#105;&#97;&#110;&#64;&#107;&#99;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#110;&#101;&#116;">Brian@kcmechanical.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMDFL75N8Z27">28</a>","MAY ELECTRIC, INC.","JEANNE CRONISTER","","4923 SE 53RD ST","","BERRYTON","KS","66409-9777","Master Electrician able to serve all Commercial, Residential, Industrial, New Construction, Remodel and Repair Needs. Master Electricain with Federal Clearance. 24 Hour Service, All Holidays, 7 Days a Week.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#121;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#105;&#110;&#99;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">mayelectricinc@aol.com</a>","www.mayelectricinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WFKEM3VF38L6">29</a>","RA KNAPP CONSTRUCTION INC","RONDA THOMPSON","","12209 W 88TH ST","STE 200","LENEXA","KS","66215-4608","Civil Engineering, bridges, concrete structures, pipe work, pump stations, treatment plants, highway work, concrete pavement repair, concrete patching","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#100;&#97;&#64;&#114;&#97;&#107;&#110;&#97;&#112;&#112;&#46;&#99;&#111;&#109;">ronda@raknapp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDH2CFPE5U77">30</a>","PARS CONSULTING ENGINEERS, INC","RAFIE HAMIDPOUR","","14109 CAMBRIDGE","","LEAWOOD","KS","66224-7500","Pars Consulting Engineers, Inc. is organized and equipped to provide, multi-disciplinary approaches and qualified technical expertise to the solution of wide variety of problems which may arise in business, industry, and government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#102;&#105;&#101;&#64;&#112;&#97;&#114;&#115;&#45;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">rafie@pars-engineers.com</a>","http://www.pars-engineers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LYNJTXQNB783">31</a>","CONTRACTS UNLIMITED","IRMA MARTINEZ-POLAMARES","","15210 W 154TH TER","","OLATHE","KS","66062-3393","Provide services in Logistics, Transporation, Dinning Facilities, Janitorial, Security, Construction, and Facility Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#98;&#121;&#48;&#55;&#56;&#48;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">baby0780@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKM2U7JSRRL6">32</a>","AMERICAN MECHANICAL INC","JOE CLARK","","5801 HUFFMAN DR","","KECHI","KS","67067-9101","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#97;&#109;&#105;&#107;&#97;&#110;&#115;&#97;&#115;&#46;&#99;&#111;&#109;">joe@amikansas.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZMZDLBNF8S1">33</a>","SENNE AND COMPANY, INC.","MATTHEW MCGIVERN","","2001 NW US HIGHWAY 24","","TOPEKA","KS","66618-1445","Commercial and Industrial Construction. New Construction, renovation, remodel, millwright, carpentry, fabrication shop","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#104;&#101;&#119;&#46;&#109;&#99;&#103;&#105;&#118;&#101;&#114;&#110;&#64;&#115;&#101;&#110;&#110;&#101;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">matthew.mcgivern@sennecompany.com</a>","www.sennecompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3JMQDRNMKT8">34</a>","CHEROKEE CONSTRUCTION INC","LESLIE HENTZEN","","1200 N DENENE ST","","WICHITA","KS","67212-4351","COMMERCIAL AND RESIDENTIAL REMODEL AND NEW CONSTRUCTION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#72;&#69;&#82;&#79;&#75;&#69;&#69;&#67;&#79;&#78;&#73;&#78;&#67;&#64;&#67;&#79;&#88;&#46;&#78;&#69;&#84;">CHEROKEECONINC@COX.NET</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FK6HJA3YFMX6">35</a>","SORELLA GROUP INC","SHEILA OHRENBERG","","1030 PAWNEE AVE","","KANSAS CITY","KS","66105-1743","Commercial carpentry services and supply/installation of Division 10 specialty materials.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#105;&#108;&#97;&#46;&#111;&#104;&#114;&#101;&#110;&#98;&#101;&#114;&#103;&#64;&#115;&#111;&#114;&#101;&#108;&#108;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">sheila.ohrenberg@sorellagroup.com</a>","http://www.sorellagroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EUUSBA7CBC53">36</a>","L & M CONTRACTORS INC","CURTIS MAULER","","1405 STATE ROAD 96","","GREAT BEND","KS","67530-3335","Bridge Construction, Pile Driving and Other Heavy Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#117;&#114;&#116;&#64;&#108;&#97;&#110;&#100;&#109;&#46;&#107;&#115;&#99;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">curt@landm.kscoxmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X6KSF9913AV7">37</a>","HEARTSTONE INC","CHAD JANTZ","","1651 S EISENHOWER ST","","WICHITA","KS","67209-2807","Heartstone Inc is a 3rd generation family owned specialty contracting company. We got our start in the field of site preparation along with brick & stone masonry installation and restoration. Over the years we have become leaders in brick, block and stone hardscape services. And along the way we added rock, asphalt and concrete recycling to our list of capabilites. Our team will work diligently to exceed the expectations set before us. We see the importance of running a well organized and dependable operation as we seek to earn the respect of our industry partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#100;&#64;&#104;&#101;&#97;&#114;&#116;&#115;&#116;&#111;&#110;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">chad@heartstoneinc.com</a>","http://www.HeartstoneInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CX69JD4HELB1">38</a>","BRB CONTRACTORS, INC","KENDALL JOHNSON","","4646 NW FIELDING RD","","TOPEKA","KS","66618-2534","Water Treatment and Water Distribution","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#46;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#98;&#114;&#98;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">ken.johnson@brbcontractors.com</a>","http://www.brbcontractors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ML4MAF4TK123">39</a>","FLOYD CONSTRUCTION CORP","TARRANCE FLOYD","","12000 E 53RD ST N","","WICHITA","KS","67226-8721","We provide full service construction including plumbing, HVAC, flooring, painting, concrete, paving and roofing. We have previously worked with the VA, Department of Veteran Affairs National Cemetery Division, National Guard, Marine Reserves and McConnell Air force base.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#102;&#108;&#111;&#121;&#100;&#49;&#64;&#102;&#108;&#111;&#121;&#100;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">tfloyd1@floydconst.com</a>","www.floydconst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WNQGUCV5JJ75">40</a>","WILLIAMS DIVERSIFIED MATERIALS, INC.","KYLE ROBLYER","","2903 MILITARY AVE","","BAXTER SPRINGS","KS","66713-2356","Environmental Yard Remediation, Heavy Equipment Contractors, Construction Engineering, Site Prep Water, Sewer & Road Construction, Demolition Contractors, Commercial Building Contractor, Custom Aggregate Blending, Custom Blended Materials made from Rock, Gravel & Sand Sources, Materials Transportation, Paving and Asphalt Materials, Warehousing Facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#111;&#98;&#108;&#121;&#101;&#114;&#64;&#119;&#100;&#109;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">kroblyer@wdminc.net</a>","http://www.wdminc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TF5JYCWXLCR4">41</a>","FSC INC","SONIA GARAPATY","PRESIDENT","8675 W 96TH ST","","OVERLAND PARK","KS","66212-3316","ENGINEERING & CONSULTING IN MECHANICAL,ELECTRICAL,PLUMBING, FIRE PROTECTION.ENERGY ANALYSIS; MASTER PLAN OF MECH/ELEC/FIRE PROTECT.SYSTEMS; LIFE SAFETY ANALYSIS; CODE CONSULTING. SOFTWARE. COMPUTER/DATA MANAGEMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#97;&#114;&#97;&#112;&#97;&#116;&#121;&#64;&#102;&#115;&#99;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sgarapaty@fsc-inc.com</a>","www.fsc-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZZ3BHM7KUYC4">42</a>","RODRIGUEZ MECHANICAL CONTRACTORS INC","PAUL RODRIGUEZ","PRESIDENT","541 S 11TH ST","","KANSAS CITY","KS","66105-1254","PLUMBING CONTRACTOR, UTILITY (SEWER & WATER & GAS) & SERVICE LINES. GENERAL CONTRACTING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#114;&#109;&#99;&#107;&#99;&#46;&#99;&#111;&#109;">paul@rmckc.com</a>","www.rodriguezmechanical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBB3NK4CBXB5">43</a>","ARROWHEAD CONTRACTING, LLC","STEVE ENGLEY","PRESIDENT","8900 INDIAN CREEK PKWY STE 415","","OVERLAND PARK","KS","66210-1513","Environmental Engineering, Construction, Remediation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#110;&#103;&#108;&#101;&#121;&#64;&#97;&#114;&#114;&#111;&#119;&#104;&#101;&#97;&#100;&#45;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">sengley@arrowhead-usa.com</a>","http://www.arrowhead-usa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZLLZHGNYF59">44</a>","QUALITY TRUST INC","LAWRENCE RUIZ","PRESIDENT/CEO","1906 MCFARLAND RD","","JUNCTION CITY","KS","66441-8847","GENERAL CONTRACTORS, COMMERCIAL; UNDERGROUND STORAGE TANK REMOVAL; HEAVY CONSTRUCTION; HIGHWAY CONSTRUCTION; POWERLINE CONSTRUCTION. Information technology, Janitorial Services, Warehosuing, Security, Adminstrative, Facility Managemen","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#116;&#114;&#117;&#115;&#116;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">larry@qualitytrustinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G39VJBRYBLL3">45</a>","REMEDIATION SERVICES, LLC","WAYNE HOLUM","","3798 CR 3875","","INDEPENDENCE","KS","67301-7889","Environmental remediation services, hazardous and non-hazardous waste materials. Excavation, transportation and disposal services. Installation of ground water treatment systems. Stabalization of Metals impacted soils.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#111;&#108;&#117;&#109;&#64;&#114;&#115;&#105;&#45;&#107;&#115;&#46;&#99;&#111;&#109;">bholum@rsi-ks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WVB6DLKZN3Q7">46</a>","PISHNY REAL ESTATE SERVICES","COREY THOMAS","","12202 W 88TH ST","","LENEXA","KS","66215-4607","We are a historic restoration contractor performing work nationwide. Specific areas of expertise include: window restoration, masonry restoration, plaster and stucco restoration, foundation stabilization, structural stabilization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#116;&#104;&#111;&#109;&#97;&#115;&#64;&#112;&#105;&#115;&#104;&#110;&#121;&#46;&#99;&#111;&#109;">cthomas@pishny.com</a>","http://www.pishny.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GN3LN32ND7Z4">47</a>","LAVEN ELECTRIC LLC","LUKE LAVEN","","836 SPRUCE ST","","LEAVENWORTH","KS","66048-2581","ELECTRICAL","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#108;&#97;&#118;&#101;&#110;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">office@lavenelectric.com</a>","www.lavenelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L9H2PK5A7EF6">48</a>","KANTEX INDUSTRIES, INC.","MIKE HUBBELL","","1320 S HAMILTON CIR","","OLATHE","KS","66061-7241","Since 1991, KANTEX Industries has provided professional vacuum and Hydro excavation services to a wide range of clients. Utilizing the finest vacuum excavation equipment and remote tools available, our crews have completed projects throughout the U.S. and parts of Canada. KANTEX Industries offers many vacuum excavation services and is recognized as an industry leader in cathodic protection installation, gas leak repairs, and valve maintenance. Our most basic service offered is the exposure of buried utilities for positive depth identification. This work is primarily completed on subsurface utility engineering (SUE) projects for state and municipal roadway projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#104;&#117;&#98;&#98;&#101;&#108;&#108;&#64;&#112;&#114;&#111;&#45;&#118;&#97;&#99;&#46;&#99;&#111;&#109;">mike.hubbell@pro-vac.com</a>","kantex.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LS8EXVYNPAY1">49</a>","GUNTER CONSTRUCTION CO","CHRISTINA GUNTER","","520 DIVISION ST","","KANSAS CITY","KS","66103-1904","We provide turnkey construction services as a General Contractor, and self-perform civil work. Our company has over 29 years of experience in civil and commercial projects with municipal, public, and private entities. Our client list includes MODOT, KDOT, college universities, school districts, many municipalities and private businesses. Through our professional oversight of compliance, quality control, efficient scheduling, and safety, we focus on your needs and provide you with the quality outcome you desire.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#97;&#64;&#71;&#117;&#110;&#116;&#101;&#114;&#107;&#99;&#46;&#99;&#111;&#109;">Christina@Gunterkc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WWGFNS8VGMR1">50</a>","TURF DESIGN, INC.","RICHARD BAZEMORE","","23770 W 81ST TER","","LENEXA","KS","66227-2701","Landscaping, seeding, sodding, raingarden, bio retention ponds, native prairie restoration, drainage, hardscape, irrigation, erosion control","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#97;&#122;&#101;&#109;&#111;&#114;&#101;&#64;&#116;&#117;&#114;&#102;&#100;&#101;&#115;&#105;&#103;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">rbazemore@turfdesigninc.com</a>","www.turfdesigninc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6NXJ9YDZAY7">51</a>","TINDLE CONSTRUCTION, INC.","BARRY TINDLE","","933 FILLMORE ST","","FREDONIA","KS","66736-2170","Grain storage and processing plants conveyor systems, milling equipment, hydro, pneumatic applications, dust control system, and extraction equipment. Industrial steel erection, pre-cast erection, machinery installation and repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#114;&#121;&#116;&#105;&#110;&#100;&#108;&#101;&#64;&#116;&#105;&#110;&#100;&#108;&#101;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">barrytindle@tindleconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GMYQXJUABMQ3">52</a>","TS CONSTRUCTION GENERAL CONTRACTORS INC","TIM SPLECHTER","","1586 HIGHWAY 54","","YATES CENTER","KS","66783-5201","General Contractor capable of almost any construction project or parts of. Supplier of pipe and fitting supplies and erosion control products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#115;&#112;&#108;&#101;&#99;&#104;&#116;&#101;&#114;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">tasplechter@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PE4DA4P61R48">53</a>","UNIVERSAL CONSTRUCTION COMPANY, INC.","CYNTHIA SMITH","","1615 ARGENTINE BLVD","","KANSAS CITY","KS","66105-1511","Specializing in Education, Detention, Medical, and Worship Facilities. Offer a on-site no obligation consultation for your project. Small Business & WBE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#121;&#110;&#116;&#104;&#105;&#97;&#64;&#117;&#110;&#105;&#118;&#101;&#114;&#115;&#97;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">cynthia@universalconstruction.net</a>","www.universalconstruction.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7UTWJ6MF685">54</a>","TRINITY EXCAVATING & CONSTRUCTION INC","SCOTT WILLIAMS","","313 W ELM ST","","OLATHE","KS","66061-4023","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#116;&#114;&#105;&#110;&#105;&#116;&#121;&#99;&#111;&#46;&#98;&#105;&#122;">swilliams@trinityco.biz</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YW9NCCFAC7S1">55</a>","HEDLUND ELECTRIC INC","JAKE HEDLUND","","1201 S MAIN ST","","MCPHERSON","KS","67460-5739","Electrical Contractor providing low, medium, high voltage wiring. Specializing refineries, pipelines, gas facilities including communication systems and manufacturing plants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#107;&#101;&#64;&#104;&#101;&#100;&#108;&#117;&#110;&#100;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jake@hedlundelectric.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DN9VH9YLYSG3">56</a>","MIDWEST ELECTRICAL CONSTRUCTION INC","DEAN LACKEY","","4601 SE ADAMS ST","","TOPEKA","KS","66609-9421","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#97;&#110;&#64;&#109;&#101;&#99;&#105;&#110;&#99;&#46;&#98;&#105;&#122;">dean@mecinc.biz</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q5JLEH5MBCJ3">57</a>","ROOFMASTERS ROOFING & SHEET METAL CO., INC.","LUCAS HAINES","","2070 E 8TH ST","","HAYS","KS","67601-4527","Roofmasters Specializes in all roof types. TPO, EPDM, Metal, Shingles, Single ply, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#104;&#97;&#105;&#110;&#101;&#115;&#64;&#114;&#111;&#111;&#102;&#109;&#97;&#115;&#116;&#101;&#114;&#115;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">lhaines@roofmastersroofing.net</a>","https://www.roofmastersroofing.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJYKQ3G4K9M9">58</a>","JCOR INC","KIM ANGELO","","10510 W 142ND TERRACE","","OVERLAND PARK","KS","66221-8500","Interior Commercial General Contractors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#97;&#64;&#106;&#99;&#111;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">kima@jcorinc.com</a>","http://www.jcorinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QWKBR9XUKRB9">59</a>","HARRIS & SONS ENTERPRISES INC","RON HARRIS","","300 SE SWYGART ST","","TOPEKA","KS","66607-2067","General Contractor concrete asphalt paving and residential remodeling. Experience in painting, carpentry, tile work, sheetrock, plumbing, electrical. oncrete Removal & Installation Asphalt Commercial Drives Curbs & Gutters Sanitary Sewer Storm Sewer Inlets Manholes Foundations Snow Removal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#114;&#105;&#115;&#97;&#110;&#100;&#115;&#111;&#110;&#115;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">harrisandsons@cox.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJW7N2XZMMJ6">60</a>","PRAIRIE BAND CONSTRUCTION, INC.","WILL CAMPBELL","","19035 US HIGHWAY 75","","HOLTON","KS","66436-8101","Tribally owned, commercial general contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#46;&#99;&#97;&#109;&#112;&#98;&#101;&#108;&#108;&#64;&#112;&#98;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">will.campbell@pbconst.com</a>","https://www.pbconst.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPNCS2MUJMR9">61</a>","FOY CONSULTING & ENGINEERING LLC","BRUCE ROBERSON","","6900 COLLEGE BLVD STE 600","","LEAWOOD","KS","66211-1841","Provide structural/civil engineering and detailing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#117;&#99;&#101;&#64;&#102;&#111;&#121;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bruce@foyconsulting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MKKVMKQF83Q9">62</a>","OIC INC","TODD VANPELT","","804 E 8TH ST N","","WICHITA","KS","67214-3816","OIC Inc, is a service only commercial furniture company. Our primary services are receipt, storage, delivery and installation of all types of commercial furniture.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#118;&#97;&#110;&#112;&#101;&#108;&#116;&#64;&#111;&#105;&#99;&#105;&#110;&#115;&#116;&#97;&#108;&#108;&#46;&#99;&#111;&#109;">tvanpelt@oicinstall.com</a>","https://www.oicinstall.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VNKJEMRCA424">63</a>","FIRELAKE CONSTRUCTION INC","JACKIE FOLEY","","1011 E 31ST ST","","LAWRENCE","KS","66046-5103","Firelake is a diversified contracting company providing nationwide, turn-key general construction, civil construction, and environmental services. Firelake's range of services encompasses: Construction Management, Design Build/Bid-Bui8ld New Construction, Renovation/Demolition, Preventive Maintenance, HVAC Systems/Building Automation (BAS,FMS,EMS), Electronic and Physical Security Systems, Voice, Data and Telecommunication Systems, Access Control/Entry Control Systems; Closed Circuit Television, Anti-Terrorism/Force Protection, Earthwork and Site Restoration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#111;&#108;&#101;&#121;&#64;&#102;&#105;&#114;&#101;&#108;&#97;&#107;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">jfoley@firelakeco.com</a>","HTTPS://WWW.FIRELAKECO.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WEKWKR7HGFG7">64</a>","DOYLE FIELD SERVICES, INC","DENNIS DOYLE","","8900 STATE LINE RD STE 420","","LEAWOOD","KS","66206-1936","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#111;&#109;&#64;&#100;&#102;&#115;&#116;&#101;&#115;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Tom@dfstesting.com</a>","www.dfstesting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNRCH3NMMS54">65</a>","MCON, LLC","LINDSEY MILLER","","1004 VERNON RD","","WATHENA","KS","66090-1258","M CON, LLC is an underground utility contractor experienced in any and all earthwork, water, sewer, trenching, boring, dozers, extractors, trucking, dumptrucks and rock directional drilling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#73;&#78;&#68;&#83;&#69;&#89;&#64;&#77;&#67;&#79;&#78;&#85;&#78;&#68;&#69;&#82;&#71;&#82;&#79;&#85;&#78;&#68;&#46;&#67;&#79;&#77;">LINDSEY@MCONUNDERGROUND.COM</a>","http://www.mconllcgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E31PGJ39DKL1">66</a>","MOBILITYWORKS LLC","ANNMARIE BUCKINGHAM","","11220 E KELLOGG DR","","WICHITA","KS","67207-1925","With Jay Hatfield Mobility, LLC, you can stay Mobile with Automotive Lifts, Amerivan Conversions, and Power Wheelchairs in our Kansas City, Wichita, Columbus and Salina locations. Illness, injury, and age all have a dramatic impact on your ability to move. However, this doesn't mean you have to let life slow you down. Visit us online at http://www.jayhatfieldmobility.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#109;&#97;&#114;&#105;&#101;&#46;&#98;&#117;&#99;&#107;&#105;&#110;&#103;&#104;&#97;&#109;&#64;&#109;&#111;&#98;&#105;&#108;&#105;&#116;&#121;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">annmarie.buckingham@mobilityworks.com</a>","http://www.mobilityworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPXRCB7YRK93">67</a>","HOSS & BROWN ENGINEERS INC","MATT MURRELL","","15902 MIDLAND DR","","SHAWNEE","KS","66217-9610","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#117;&#114;&#114;&#101;&#108;&#108;&#64;&#104;&#45;&#98;&#101;&#46;&#99;&#111;&#109;">mmurrell@h-be.com</a>","www.h-be.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SNJ3XFQMNAN9">68</a>","MBV MASONRY LLC","WILLIAM HAM","","1539 18TH RD","","CLAY CENTER","KS","67432-7600","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#66;&#86;&#77;&#65;&#83;&#79;&#78;&#82;&#89;&#64;&#89;&#65;&#72;&#79;&#79;&#46;&#67;&#79;&#77;">MBVMASONRY@YAHOO.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D3VFKFQX4K17">69</a>","LEACHROD, L.L.C","LINDA LEACH","","3759 N MERIDIAN AVE","","WICHITA","KS","67204-3726","We invented and patented a cutting edge installation tool, for installing edges on road graders, snow plows, v plows, swing arms, and some mining equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#108;&#101;&#97;&#99;&#104;&#114;&#111;&#100;&#46;&#99;&#111;&#109;">sales@leachrod.com</a>","https://www.leachrod.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TTQZF3VXHLC8">70</a>","SALTER COREY","COREY SALTER","","11320 W 239TH ST","","BUCYRUS","KS","66013-9218","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#111;&#114;&#101;&#121;&#115;&#97;&#108;&#116;&#101;&#114;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Coreysalter@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KK59P425Q2H3">71</a>","PREMIER MECHANICAL PRODUCTS LLC","ASHLEY TUMBERGER","","6601 KANSAS AVE","","KANSAS CITY","KS","66111-2314","PMP Companies are in the business of manufacturing and construction. PMP manufacturing fabricates precision machined parts. PMP Construction is in the business of construction project management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#108;&#101;&#121;&#64;&#112;&#109;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#46;&#110;&#101;&#116;">ashley@pmproduct.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FHGZDTLADL96">72</a>","BIOSTAR SOLAR LLC","WILLIAM LOVE","","9400 REEDS RD","STE 150","OVERLAND PARK","KS","66207-2523","BioStar Solar is a solar developer and Native American business. We provide the complete range of services for a solar installation. Our group has extensive experience in renewables with project, exceeding 400 MW. Our services include PPA, EPC, O&M.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#111;&#118;&#101;&#64;&#98;&#105;&#111;&#115;&#116;&#97;&#114;&#114;&#101;&#110;&#101;&#119;&#97;&#98;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">blove@biostarrenewables.com</a>","www.biostarrenewables.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FA9RPHFMRYG4">73</a>","BLACKSTONE ENVIRONMENTAL, INC.","KYLE KUKUK","","16200 FOSTER ST","","STILWELL","KS","66085-8418","Blackstone Environmental specializes in the following environmental and engineering fields: Solid Waste, Environmental Assessment and Design, Civil Engineering, Energy Sector, Natural Resources Planning and Permitting, and Regulatory Compliance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#107;&#117;&#107;&#117;&#107;&#64;&#98;&#108;&#97;&#99;&#107;&#115;&#116;&#111;&#110;&#101;&#45;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">kkukuk@blackstone-env.com</a>","http://www.blackstone-env.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FD6CHCWNP6F5">74</a>","WILKERSON CRANE RENTAL, INC.","DIANA HOLT","","14101 GIBBS RD","","BONNER SPRINGS","KS","66012-9411","Operated Mobile Crane services, Heavy Hauling and Equipment servicing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#105;&#97;&#110;&#97;&#64;&#119;&#105;&#108;&#107;&#101;&#114;&#115;&#111;&#110;&#99;&#114;&#97;&#110;&#101;&#114;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">diana@wilkersoncranerental.com</a>","www.wilkersoncranerental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQMNRJ99N117">75</a>","OPTIONS UNLIMITED L.L.C.","KEVIN BLANDIN","","1135 113TH DR","","HORTON","KS","66439-9539","New construction/Remodel of Residential/Commercial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#112;&#116;&#105;&#111;&#110;&#115;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#50;&#50;&#49;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">optionsunlimited2213@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MG4PCELBTJL6">76</a>","SPECIAL-T-INNOVATIONS LLC","TAMMY WATSON","","1804 BROADWAY ST","","WINFIELD","KS","67156-5123","Adaptive grips and other adaptive cycling products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#109;&#109;&#121;&#64;&#113;&#117;&#97;&#100;&#103;&#114;&#105;&#112;&#115;&#46;&#99;&#111;&#109;">tammy@quadgrips.com</a>","www.quadgrips.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSJWR28BHUE5">77</a>","JIM JAM, INC.","JAMES GALLET","","11003 W 59TH TER","","SHAWNEE","KS","66203-2956","Envirotech Heating, Cooling and Building Solutions is a women-led company based out of Shawnee, Kansas. We have been in business since 2001 and provide preventative maintenance programs, service, installation , repairs and energy saving solutions for federal, state, local, and commercial clients and well as residential homeowners. As an SBA 8(a) certified Women Owned Small Business we pride ourselves on being trustworthy and reliable as well as delivering quality service to all clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#103;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#116;&#101;&#99;&#104;&#107;&#115;&#46;&#99;&#111;&#109;">jamesg@envirotechks.com</a>","www.envirotechks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YEAKCY8JU7T5">78</a>","LEISER EXCAVATING LLC","CHRISTINA LEISER","","2075 ROAD 20","","HARTFORD","KS","66854-9323","We have built water sheds, building pads, lagoons, demolition mainly for local cities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#105;&#115;&#101;&#114;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">leiserexcavating@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L7SYNBMYLHZ8">79</a>","ARTISUN SOLAR, LLC","KIRK KREISEL","","5750 W 95TH ST STE 340","","OVERLAND PARK","KS","66207-2959","We provide design, repair, maintenance, consulting, sales, and Installation services for Solar Photovoltaic Systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#114;&#107;&#64;&#97;&#114;&#116;&#105;&#115;&#117;&#110;&#115;&#111;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">kirk@artisunsolar.com</a>","www.artisunsolar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KN6KD21VBQL3">80</a>","BLACK OAK CONSTRUCTION LLC","SCOTT BALENTINE","","16123 FOSTER ST","","STILWELL","KS","66085-8417","Full service general contractor offering commercial and residential construction services and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#98;&#108;&#97;&#99;&#107;&#111;&#97;&#107;&#107;&#99;&#46;&#99;&#111;&#109;">scott@blackoakkc.com</a>","www.blackoakkc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q43LC6HLYTF3">81</a>","DB FLOORING, LLC","JULIE FARRELL","","9555 ALDEN ST","","LENEXA","KS","66215-1164","Regents Flooring is a Commercial Flooring Materials Provider and Installation Company. Services include design, budgeting, removal, floor prep, moisture mitigation, material supplier and installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#64;&#114;&#101;&#103;&#101;&#110;&#116;&#115;&#102;&#108;&#111;&#111;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">julie@regentsflooring.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UUP8LHA7M4M4">82</a>","BETTIS CONTRACTORS, INC","WAYNE HIEGERT","","1800 NW BRICKYARD RD","","TOPEKA","KS","66618-2807","We are general contractor with a state of the art metal fabrication shop.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#104;&#105;&#101;&#103;&#101;&#114;&#116;&#64;&#98;&#101;&#116;&#116;&#105;&#115;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">whiegert@bettiscontractors.com</a>","http://bettiscontractors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWCTBE5LMLE4">83</a>","SAUNDRA MCINTOSH HARRIS LLC","SAUNDRA HARRIS","","1965 N 33RD ST","","KANSAS CITY","KS","66104-4337","Certified Industrial Hygienist (CIH) and Certified Safety Professional (CSP) providing comprehensive industrial hygiene services, industrial safety hazard evaluations, training programs, and environmental monitoring for employers. Specialize in OSHA compliance and training. Consultation for safety and health management system development in companies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#118;&#97;&#104;&#97;&#114;&#114;&#64;&#115;&#119;&#98;&#101;&#108;&#108;&#46;&#110;&#101;&#116;">svaharr@swbell.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GTBMQKJCUUK7">84</a>","FIRELAKE-ARROWHEAD NASA SERVICES","JACKIE FOLEY","","1011 E 31ST ST","","LAWRENCE","KS","66046-5103","Headquartered in Lenexa, KS, Firelake-Arrowhead NASA Services (FANS) provides turn-key construction management, general contracting, and specialized security services to the federal government. FANS experience covers a wide range of markets and facility types, including but not limited to military installations, government administrative offices, commercial facilities, industrial/manufacturing facilities, water and wastewater treatment plants, hospitals, prisons, schools, data centers, and Sensitive Compartmented Information Facilities. FANS success in these diverse settings results from having a staff of over 100 professionals who not only know how to manage the processes of construction, but also possess the necessary technical knowledge of construction methods. FANS relationships with local subcontractors, coupled with our in-house technical trades expertise, ensures the government that FANS can successfully manage multiple projects on time and on budget.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#111;&#108;&#101;&#121;&#64;&#102;&#105;&#114;&#101;&#108;&#97;&#107;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">jfoley@firelakeco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDN3VCN5BV53">85</a>","KANSAS SPRAY FOAM INSULATION LLC","DIANA BRAUER","","17522 37TH ST","","MC LOUTH","KS","66054-4143","KSFI, LLC offers building envelope evaluations, installation of Spray Polyurethane Foam (SPF) Insulation and coating services for residential, commercial and industrial properties in both existing structures and new construction. Coatings: Intumescent Coating (Ignition & Thermal Barrier) and Reflective Coating (latex & acrylic paint), Elastomeric Coatings (polyurea), Corrosion Resistant Coating (silicone).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#105;&#97;&#110;&#97;&#64;&#107;&#115;&#115;&#112;&#114;&#97;&#121;&#102;&#111;&#97;&#109;&#105;&#110;&#115;&#117;&#108;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">diana@kssprayfoaminsulation.com</a>","http://www.kssprayfoaminsulation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKKYDHKNXZQ5">86</a>","PLAYSCAPE RECREATION LLC","KATHARINE SHEPARD","","101 S PRATT ST","","YATES CENTER","KS","66783-1663","Total recreation solutions company - we offer just about everything in relation to outdoor recreation: playgrounds, splash parks, sports equipment, restroom facilities, shade, shelters, and surfacing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#65;&#84;&#69;&#64;&#80;&#76;&#65;&#89;&#83;&#67;&#65;&#80;&#69;&#82;&#69;&#67;&#82;&#69;&#65;&#84;&#73;&#79;&#78;&#46;&#67;&#79;&#77;">KATE@PLAYSCAPERECREATION.COM</a>","www.playscaperecreation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSCELB1DFBA9">87</a>","RL JUENEMAN CONSTRUCTION INC","DENAE JUENEMAN","","2099 XAVIER RD","","HANOVER","KS","66945-8818","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#97;&#101;&#64;&#106;&#117;&#101;&#110;&#101;&#109;&#97;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">denae@juenemanconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RE6LT92X4DL5">88</a>","ALIST LLC","LEVI HUNTER","","15221 W 153RD TER","","OLATHE","KS","66062-3743","AList,LLC - IT Hardware and Software Re-Seller, IT Contractors, PC Techs, Developers, Data Entry Specialist, Desktop Techs, System Administrators, Database Administrators, Application Developers ETL Developers, Web Developers UI Developers, System Engineers Data Architects, Solution Architects IOS Developers, Android Developers Project Managers, Program Managers, Medical Record Coders, Support Techs, Tech Writers, Trainers, Programmers, General Clerical, Administration Support, Accounts Payable, Accounts Receivable, Controllers, Auditors, Analyst, Marketing Specialist, Graphic Designers, Data Entry, Inpatient Coders, Outpatient Coders, Emergency Room Coders, Clinical Documentation Improvement Specialist, Coding Quality Auditors, Scanning Support, Remote Support, Help Desk Techs, Network Design, Implementation and Administration, Security, System Administrators, System Architects, Business Systems Analysis, Change Management, Program and Project Management, Quality Assurance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#118;&#105;&#64;&#97;&#108;&#105;&#115;&#116;&#112;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">levi@alistpros.com</a>","http://www.alistpros.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DE52DFB9LLV1">89</a>","JTM ENTERPRISE LLC","JOHN WALLACE","","9406 E STAFFORD ST","","WICHITA","KS","67207-6651","Full-service facility support service provider, including but not limited to: landscaping; pest control; janitorial/custodial; window washing/cleaning; hvac/utilities; security; mail & courier services; laundry & dry cleaning; pavement clearing; painting; roofing; clerical/administrative support; administrative management and general management support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#104;&#110;&#64;&#106;&#116;&#109;&#45;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#46;&#99;&#111;&#109;">John@jtm-enterprise.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKVASHXWN6N6">90</a>","FALK ARCHITECTS INC","BRYAN FALK","","1225 SW WARREN AVE","","TOPEKA","KS","66604-1647","Architectural Firm offering full architectural services. We keep projects moving forward. Success based on referral and Repeat Customers. We work to meet your project budget without sacrificing quality.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#121;&#97;&#110;&#64;&#102;&#97;&#108;&#107;&#45;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">Bryan@falk-architects.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FCNTXGHEHL45">91</a>","SUTTON REMODELING LLC","JASON SUTTON","","635 S 16TH ST","","LEAVENWORTH","KS","66048-6404","Demolition, Construction, Renovation, Remodeling, Mold, Lead, and Asbestos Remediation, Weatherization","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#115;&#111;&#110;&#46;&#83;&#117;&#116;&#116;&#111;&#110;&#64;&#112;&#109;&#46;&#109;&#101;">Jason.Sutton@pm.me</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XWL4ZUDPXZZ5">92</a>","SELCHERT PRECISION WELDING LLC","KYLE SELCHERT","","7141 S BROADWAY AVE","","HAYSVILLE","KS","67060-1402","Selchert Precision Welding LLC designs, fabricates, builds, and repairs metal products to customer requirements","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#121;&#108;&#101;&#46;&#115;&#101;&#108;&#99;&#104;&#101;&#114;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Kyle.selchert@gmail.com</a>","Spweldingservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZX7EJD8HC8C1">93</a>","MILLER ELECTRIC COMPANY INC","ANNABELLE MILLER","","2730 SW 57TH ST STE C","","TOPEKA","KS","66609-9417","Design-Build Services, Building Construction, Facility Support Services, Electrical Wiring, Lines to Transmit Electricity, Highways and Streets, Water and Sewer Lines, Site Preparation, Fire Detection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#108;&#108;&#101;&#64;&#112;&#101;&#99;&#110;&#101;&#118;&#97;&#100;&#97;&#46;&#99;&#111;&#109;">belle@pecnevada.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H6HPFGV8B5Y4">94</a>","GI HANDYGUY LLC","BRIAN KUDER","","1184 N HYDRAULIC RD","","BELLE PLAINE","KS","67013-8505","INSTALL GRAB BARS, HAND RAILS, INSIDE PAINTING, TRASH REMOVAL, DEBRIS CLEAN UP,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#46;&#105;&#46;&#104;&#97;&#110;&#100;&#121;&#103;&#117;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">g.i.handyguy@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WTNCWH5WFQJ4">95</a>","CENCON OF KANSAS LLC","TIFFANY RIETZKE","","1335 E RIDGE RD","","KENSINGTON","KS","66951-6032","Rip rap, rock, dirt work, underground utility construction, excavation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#101;&#110;&#99;&#111;&#110;&#111;&#102;&#107;&#97;&#110;&#115;&#97;&#115;&#46;&#99;&#111;&#109;">info@cenconofkansas.com</a>","www.cenconofkansas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MR4TNUVKXK77">96</a>","NASH CONSTRUCTION LLC","NATHAN LAWRENZ","","1050 UNION RD","","HERINGTON","KS","67449-8606","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#104;&#97;&#110;&#64;&#110;&#97;&#115;&#104;&#46;&#98;&#117;&#105;&#108;&#100;">nathan@nash.build</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QCKBJXFSMH73">97</a>","CUSTOM METAL SUPPLY LLC","ERIC FIGGE","","3475 CROWN C CIR","","MANHATTAN","KS","66502-8131","Welding, fabrication, metal supply","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#102;&#105;&#103;&#103;&#101;&#64;&#99;&#117;&#115;&#116;&#111;&#109;&#109;&#101;&#116;&#97;&#108;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">erfigge@custommetalsupply.com</a>","www.custommetalsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TL29K6MNNU71">98</a>","T10 FEDERAL LLC","AARON ALT","","1600 SHADOW DR","","LEAVENWORTH","KS","66048-7204","T10 Federal provides products and services from Industry to Government. T10 Federal partners with local contractors to provide our customers with a one stop shop for all their facility’s needs. Those products and services include IT, Audio Video, CCTV, Access Control, Wireless, Construction Services and Electrical Services. T10 Federal has extensive experience in government procurement and contracting to provide turn key business solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#97;&#114;&#111;&#110;&#64;&#116;&#49;&#48;&#102;&#101;&#100;&#101;&#114;&#97;&#108;&#46;&#99;&#111;&#109;">Aaron@t10federal.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1WWNPPF3ZM7">99</a>","ABI CONSTRUCTION LLC","NORMA MARTINEZ","","3502 W 19TH ST N","","WICHITA","KS","67203-1011","Provide remodeling, industrial building services, Administration building services, apply stucco, install drywall,perform commercial carpentry and commercial framing, perform residential carpentry and residential framing, painting, tiling, brick, and concrete for driveways and sidewalk.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#111;&#114;&#109;&#97;&#64;&#97;&#98;&#105;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">norma@abiconst.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TWFZH418V8Z2">100</a>","STREAM, LAKE AND WETLAND SOLUTIONS, LLC","COURTNEY HANNAH","","16 S BROADWAY UNIT 16B","","LOUISBURG","KS","64734-","Able to remove muck, sediment, silt and sludge by hydraulic dredging from bodies of water, transport by pumping and treat for specialized de-watering in geotextile tubes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#117;&#114;&#116;&#110;&#101;&#121;&#64;&#105;&#100;&#114;&#101;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">courtney@idredge.com</a>","www.iDredge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJ19N8QDT477">101</a>","DI BUILD, LLC","ALLISON SCHMITT","","7055 CLARE RD","","SHAWNEE","KS","66226-3353","DI Build is a WBE/DBE full-service construction firm offering preconstruction services, construction management at-risk, construction management agency services, design + build and general contracting services licensed in 48 States.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#99;&#104;&#109;&#105;&#116;&#116;&#64;&#100;&#105;&#98;&#117;&#105;&#108;&#100;&#46;&#99;&#111;&#109;">aschmitt@dibuild.com</a>","www.dibuild.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YVP5GRDJSRT3">102</a>","PESTINGER HEATING, AIR & ELECTRICAL, INC","DUSTIN PESTINGER","","125 E AVENUE A","","SALINA","KS","67401-8920","Commercial & Residential projects in both HVAC & Electrical areas","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#117;&#115;&#116;&#105;&#110;&#64;&#112;&#101;&#115;&#116;&#105;&#110;&#103;&#101;&#114;&#104;&#101;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">dustin@pestingerheating.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RTUETJ28FV43">103</a>","J OLIVER CONSTRUCTION LLC","JASON OLIVER","","12510 POLFER RD","","KANSAS CITY","KS","66109-2725","J. Oliver Construction LLC was incorporated in 2013 and is based out of Kansas City, Kansas. We specialize in the design, sales and installation of unique playground equipment and park site amenities. We also offer commercial concrete services. We are dedicated to tailoring each project to meet the specific needs of our customers and offer customized design services to make sure that our customers are 100% satisfied with each and every project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#64;&#106;&#111;&#108;&#105;&#118;&#101;&#114;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">beth@joliverconstruction.com</a>","www.joliverconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7VYS8NKEXX4">104</a>","ELITE MAINTENANCE & CONSTRUCTION LLC","JENNIFER BOOS","","412 WESTVIEW DR","","MANHATTAN","KS","66502-3747","We are a licensed residential general contractor with over 20 years experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#105;&#116;&#101;&#109;&#99;&#50;&#48;&#49;&#52;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">elitemc2014@gmail.com</a>","www.elitemcks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNMBNPE1LFL4">105</a>","SES ENERGY SERVICES LLC","JOHN MORRISON","","7804 E FUNSTON ST STE 206","","WICHITA","KS","67207-3107","SES Energy provides fueling systems D-B construction and repair, particularly DoD military base fueling facilities. The company has diversified, now providing wildlife/natural resource management, environmental investigation, remediation services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#98;&#98;&#99;&#104;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmorrison@bbch-llc.com</a>","https://www.bbch-llc.com/company/sen/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLX3QRU3CNN1">106</a>","SPLICE CORP","ELIZABETH STEVENSON","","524 S COMMERCE ST","","WICHITA","KS","67202-4610","I have extensive experience in architectural design, and a keen interest in urban planning as well. I work as a public art administrator/art consultant, in integrating art into architectural and engineering projects. I'm LEED-certified, and also a practicing public artist and placemaker. I'm proficient in BIM modeling and 3-d rendering, on both SketchUp and all relevant Autodesk software. My specific area of architectural interest and skill is in the repurposing of existing buildings, but I am comfortable in both residential and commercial design, as well as interior design. I am the director of a not-for-profit art organization, and have done a great deal of web design (in Drupal) as well as graphic design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#105;&#122;&#97;&#98;&#101;&#116;&#104;&#106;&#97;&#110;&#101;&#115;&#116;&#101;&#118;&#101;&#110;&#115;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">elizabethjanestevenson@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PXLUVCCG91A6">107</a>","SES ELECTRICAL LLC","JOHN MORRISON","","7804 E FUNSTON ST","STE 206A","WICHITA","KS","67207-3107","SES Electrical LLC delivers full-service design-build construction services to commercial and government clients that are tailored to address customer needs, incorporate lean building practices, and provide maximum value sustainable solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#98;&#98;&#99;&#104;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmorrison@bbch-llc.com</a>","https://www.ses-grp.com/companies/ses-electrical-llc/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNFRD3796RS1">108</a>","SCHUETZ CONST LLC","TONY SCHUETZ","","14833 142ND ST","","BONNER SPRINGS","KS","66012-7748","At Schuetz Const., LLC, we have been specializing in underground utility construction since 1984, proudly serving the greater Kansas City area. For over 40 years, we have been at the forefront of the directional drilling field, consistently leading the way as technological advancements emerge. Our commitment to innovation ensures that we remain industry leaders, adeptly updating our methods and equipment to stay ahead. Our diverse fleet of advanced drilling equipment and highly skilled personnel can manage a wide variety of soil conditions, from dirt to sand to rock. We are dedicated to delivering superior solutions that meet the highest standards of quality and reliability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#79;&#78;&#89;&#64;&#83;&#67;&#72;&#85;&#69;&#84;&#90;&#67;&#79;&#78;&#83;&#84;&#46;&#67;&#79;&#77;">TONY@SCHUETZCONST.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QC1YBQ3R3DS5">109</a>","FIRELAKE-DIVERSIFIED JV2 LLC","SCOTT SIEGWALD","","1011 E 31ST STREET","","LAWRENCE","KS","66046-5103","FDJV2 is an 8(a) and WOSB joint venture comprised of Firelake Construction, Inc., managing member, and Diversified Construction of Oklahoma. As a General Contractor, FDJV2 serves the federal government on Design Build and Bid Build construction, renovation, repair and maintenance projects. Examples include: pre-engineered metal buildings, recreational facilities, storage facilities, fire alarm / mass notification systems, concrete flatwork, earthwork, utilities, parking structures, landscaping, demolition, interior remodels, office space reconfiguration, architectural finishes, mechanical renovations, electrical & lighting systems, plumbing, door & window replacement, AV systems, telecommunication systems, roof replacements, boilers & chillers, UPS & battery plants, HVAC systems, building automation systems, power distribution, water treatment plants, wastewater treatment plants, structural repairs, concrete & foundation repairs, elevator systems, road repairs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#105;&#101;&#103;&#119;&#97;&#108;&#100;&#64;&#102;&#105;&#114;&#101;&#108;&#97;&#107;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">ssiegwald@firelakeco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GZJLES2UR2Y7">110</a>","R & R CONCRETE KC INC","ROGELIO AVALOS BAILON","","1211 MINNESOTA AVE STE 200","","KANSAS CITY","KS","66102-4456","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#103;&#101;&#114;&#64;&#114;&#114;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#107;&#99;&#46;&#99;&#111;&#109;">roger@rrconcretekc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KYQDZ3JLJXG8">111</a>","GREY SNOW PROFESSIONAL SERVICES LLC","FLETCHER BURTON","","3345 B THRASHER ROAD","","WHITE CLOUD","KS","66094-4028","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#98;&#117;&#114;&#116;&#111;&#110;&#64;&#103;&#114;&#101;&#121;&#115;&#110;&#111;&#119;&#46;&#99;&#111;&#109;">fburton@greysnow.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DTF9B77N2EN6">112</a>","PMP/GBAB JV, LLC","ASHLEY TUMBERGER","","6601 KANSAS AVE","","KANSAS CITY","KS","66111-2314","The PMP/GBAB JV LLC, is a general construction firm, and SBA Approved Mentor/Protégé’ Participant. We are a General Contractor that specializes in new construction and renovation for Federal clients to include the VA, USACE , USDA, USAF, GSA, and the Navy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#108;&#101;&#121;&#64;&#112;&#109;&#112;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">ashley@pmp-construction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XT6FFZAHGD71">113</a>","AMBER WILLIAMS CAPITAL LLC","AMBER WILLIAMS","","102 E 5TH AVE","","AUGUSTA","KS","67010-1010","Circa81 Design is a Native American Woman owned Design, Engineering & Operation management firm .We provide innovative solutions, advisory and consulting services to Native American tribes, Public and Private sectors . Our end -to end scope of services helps our clients uncover continuous improvement and operational excellence in every project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#98;&#101;&#114;&#64;&#99;&#105;&#114;&#99;&#97;&#56;&#49;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">amber@circa81design.com</a>","www.circa81design.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWX3GGWCPD95">114</a>","ERYKADO LLC","ERIC OKONKWO","","1407 E GENESIS DR APT 8","","MCPHERSON","KS","67460-3685","Erykado is a dynamic energy consulting company that delivers comprehensive energy solutions across various sectors. Our mission is to empower industries, commercial enterprises, and residential clients to achieve optimal energy efficiency and sustainability. Services: Energy Audits: We conduct thorough energy audits to identify inefficiencies and recommend cost-effective measures to reduce energy consumption and costs. Retrofits: Our team specializes in implementing energy-saving retrofits that enhance the performance of existing systems and infrastructure. Energy Systems Design: We design innovative energy systems tailored to meet the needs of our clients, ensuring reliability and sustainability. Energy Management: We provide expert energy management services to help clients monitor, control, and optimize their energy usage. Professional Development Training: We offer specialized training programs in the energy sector and related technical fields, to equip professionals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#46;&#111;&#107;&#111;&#110;&#107;&#119;&#111;&#64;&#101;&#114;&#121;&#107;&#97;&#100;&#111;&#46;&#99;&#111;&#109;">eric.okonkwo@erykado.com</a>","www.erykado.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.279&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

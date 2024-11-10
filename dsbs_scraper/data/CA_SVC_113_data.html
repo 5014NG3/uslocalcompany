@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 113 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.32 seconds and 2.44 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 37 
+(of 37 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCDDHQ9NKE88">1</a>","AVANTPAGE, INC.","VERA HOOIJDONK","CEO","523 G ST","","DAVIS","CA","95616-3820","Language translation, interpretation, localization and multilingual desktop publishing (DTP). Websites, software, manuals, medical, health care, marcom, scientific, government, information systems. Nationwide service in over 50 languages.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#101;&#114;&#97;&#64;&#97;&#118;&#97;&#110;&#116;&#112;&#97;&#103;&#101;&#46;&#99;&#111;&#109;">vera@avantpage.com</a>","http://www.avantpage.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JHANE5MRU4K3">2</a>","BLANKINSHIP & ASSOCIATES, INC","MICHAEL BLANKINSHIP","President","1615 5TH ST","","DAVIS","CA","95616-3965","Civil/Environmental Engineering, Env. chemistry & toxicology; risk assessment; water & sediment quality, stormwater, pesticides & fertilizers; permitting; litigation support; public outreach; CEQA IS/ND, BMP design, SWPPPs, SPCCs, & Erosion Ctrl.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#104;&#50;&#111;&#115;&#99;&#105;&#46;&#99;&#111;&#109;">mike@h2osci.com</a>","http://www.h2osci.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJUBXKL8F9V7">3</a>","AHTNA GOVERNMENT SERVICES CORP","CRAIG O'ROURKE","PRESIDENT/CEO","3100 BEACON BLVD","STE 100G","WEST SACRAMENTO","CA","95691-3483","Established in 1999, Ahtna Government Services Corporation (Ahtna) is a wholly-owned subsidiary of Ahtna, Incorporated, an Alaska Native Corporation. Ahtna is certified as a Minority Business Enterprise (MBE) through the CPUC. Ahtna Government Services Corporation self performs, remediation services, heavy construction, structural, civil, environmental, professional services and international construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#111;&#117;&#114;&#107;&#101;&#64;&#97;&#104;&#116;&#110;&#97;&#46;&#110;&#101;&#116;">corourke@ahtna.net</a>","http://www.ahtnagov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HMCRRC7F1FP8">4</a>","FAR WESTERN ANTHROPOLOGICAL RESEARCH GROUP, INC.","KELLY MCGUIRE","President","2727 DEL RIO PL","STE A","DAVIS","CA","95618-7729","Far Western specializes in prehistoric archaeology and the management of these cultural resources. The firm has been contracting with State, Federal and private businesses since 1979. Calif. and the Great Basin are our areas of expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#64;&#102;&#97;&#114;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#46;&#99;&#111;&#109;">kelly@farwestern.com</a>","http://www.farwestern.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULN1KEYRZ8H7">5</a>","RAMOS OIL CO., INC.","CHRISTIAN ANDERSON","sales manager","1515 S RIVER RD","","WEST SACRAMENTO","CA","95691-2810","We provide distribution of petroleum products including bulk fuel deliveries, lubricant sales and delivery and CFN cardlock facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#97;&#64;&#114;&#97;&#109;&#111;&#115;&#111;&#105;&#108;&#46;&#99;&#111;&#109;">chrisa@ramosoil.com</a>","https://ramosoil.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PES7VJN9HZ55">6</a>","SP CRAMER & ASSOCIATES INC","KIRSTEN SELLLHEIM","","3300 INDUSTRIAL BLVD","STE 100","WEST SACRAMENTO","CA","95691-5036","Provider of fisheries and ecological consulting services, including population modeling, habitat surveys, mand analysis, subbasin planning, population recovery planning, ecological risk assessments, and Endangered Species Act implementation processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#114;&#115;&#116;&#101;&#110;&#46;&#115;&#101;&#108;&#108;&#104;&#101;&#105;&#109;&#64;&#102;&#105;&#115;&#104;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#115;&#46;&#110;&#101;&#116;">kirsten.sellheim@fishsciences.net</a>","www.fishsciences.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELJZWPDLKED4">7</a>","SIERRA CONE, LLC","ROBERT BEAUCHAMP","","1234 CRESTA CT","","DAVIS","CA","95618-7114","Collection of seed cones from all species of forest conifers, specializing in blister rust resisent (BRR) sugar pine spurless climbing. 11 years experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#109;&#98;&#115;&#105;&#101;&#114;&#114;&#97;&#99;&#111;&#110;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">climbsierracone@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAGHUCAZ9EQ3">8</a>","WATERCOURSE ENGINEERING, INC.","MICHAEL DEAS","","424 2ND ST","STE B","DAVIS","CA","95616-4675","Water quantity and quality analyses. Numerical modeling for hydrodynamic, hydrologic, hydraulic and water quality assessment. Water quality monitoring. Water resources planning and management. Reservoir, lake, and river study/studies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#100;&#101;&#97;&#115;&#64;&#119;&#97;&#116;&#101;&#114;&#99;&#111;&#117;&#114;&#115;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mike.deas@watercourseinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MS3CDJHE1V74">9</a>","HYDROFOCUS, INC","STEVEN DEVEREL","","2827 SPAFFORD ST","","DAVIS","CA","95618-6801","Hydrofocus,Inc. helps manage and restore water and land resources through investigation and research using state-of-the science methodologies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#100;&#101;&#118;&#101;&#114;&#101;&#108;&#64;&#104;&#121;&#100;&#114;&#111;&#102;&#111;&#99;&#117;&#115;&#46;&#99;&#111;&#109;">sdeverel@hydrofocus.com</a>","http://www.hydrofocus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JMYAHNWJ6ZC8">10</a>","TEPA EC LLC","JEFF WILSON","","2945 RAMCO ST STE 145D","","WEST SACRAMENTO","CA","95691-5992","Provides A&E, construction demo and construction, design/build, elect, envtal remed, LEED, low volt power, fire alarm sys, mass not. sys, mechanical, MILCON, plumbing, UST/AST removal, util, water/wasetwater and pipe bursting, waste disposal/recyc svc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#116;&#101;&#112;&#97;&#46;&#99;&#111;&#109;">jeff.wilson@tepa.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELM8UNCSFZW5">11</a>","WEST COAST FRAME & COLLISION REPAIR INC","SARAH VILLA","","3203 W CAPITOL AVE","STE D","WEST SACRAMENTO","CA","95691-2181","West Coast Frame and Collision Repair is a ONE STOP SOLUTION for ALL your MEDIUM and HEAVY DUTY MAINTENANCE and REPAIR needs.From ANNUAL SERVICES to MAJOR WRECK REPAIRS, FRAME WORK to SUSPENSION REPAIRS, our shop is equipped and ready to be your solution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#82;&#65;&#72;&#64;&#87;&#69;&#83;&#84;&#67;&#79;&#65;&#83;&#84;&#70;&#82;&#65;&#77;&#69;&#46;&#67;&#79;&#77;">SARAH@WESTCOASTFRAME.COM</a>","http://www.westcoastframe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMKQBLMD4AM3">12</a>","CBEC, INC.","ALEXIS WESSELS","","2544 INDUSTRIAL BLVD","","WEST SACRAMENTO","CA","95691-3435","cbec specializes in eco engineering, which describes water resources engineering services including providing environmentally sustainable solutions in the fields of hydrology, hydraulics, geomorphology and restoration and rehabilitation design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#46;&#119;&#101;&#115;&#115;&#101;&#108;&#115;&#64;&#99;&#98;&#101;&#99;&#111;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">a.wessels@cbecoeng.com</a>","http://www.cbecoeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UFCJEKBF1CL4">13</a>","ANTIBODIES INCORPORATED","WILL FRY","","25242 COUNTY ROAD 95","","DAVIS","CA","95616-9405","We are capable of monoclonal and polyclonal antibody development, recombinant nanobody development and production, purification,assay development and assay kit production in semi-automated mode. OEM of diagnostic reagents We operate under cGMP with QA/QC under a Quality System certified to ISO 13485-2016 standards. Our animal facilities are registered and under control of IACUC to comply with USDA/NIH OLAW.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#102;&#114;&#121;&#64;&#97;&#110;&#116;&#105;&#98;&#111;&#100;&#105;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">wfry@antibodiesinc.com</a>","http://www.antibodiesinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FA4ARRRHTKN7">14</a>","AEROSPACE FACILITIES GROUP, INC.","DENNIS ROBINSON","","1590 RALEYS CT","STE 30","WEST SACRAMENTO","CA","95691-3488","Paint Booth design, manufacturing, installation. Abrasive Blast Rooms, design, manufacturing, installation. Compressed Air Systems (Tool/Breathing) Paint Booth/Abrasive Blast Maintenance/Parts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#110;&#105;&#115;&#46;&#114;&#111;&#98;&#105;&#110;&#115;&#111;&#110;&#64;&#97;&#102;&#103;&#45;&#109;&#105;&#108;&#46;&#99;&#111;&#109;">dennis.robinson@afg-mil.com</a>","https://www.aerospacefacilitiesgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKLSR8XDD437">15</a>","GOLD STANDARD DIAGNOSTICS CORP","LISA PRESTON","","2795 2ND ST","STE 300","DAVIS","CA","95618-6505","A sales, marketing, distribution and automation manafacturing company that provides medical devices/diagnostic assays to major laboratories and hospitals throughout the U.S.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#112;&#114;&#101;&#115;&#116;&#111;&#110;&#64;&#117;&#115;&#46;&#103;&#111;&#108;&#100;&#115;&#116;&#97;&#110;&#100;&#97;&#114;&#100;&#100;&#105;&#97;&#103;&#110;&#111;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">lisa.preston@us.goldstandarddiagnostics.com</a>","www.gsdx.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PLS5F161PW65">16</a>","DFC, INC.","SPARROW TANG","","17986 COUNTY ROAD 94B","HANGAR A-1","WOODLAND","CA","95695-9238","Full service FAA & EASA 145 repair station, providing 24 hour world wide helicopter service and support; highly skilled and factory trained facility technicians perform minor and major repair and overhaul","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#97;&#114;&#114;&#111;&#119;&#64;&#97;&#100;&#118;&#104;&#101;&#108;&#105;&#46;&#99;&#111;&#109;">sparrow@advheli.com</a>","http://www.advancedhelicopterservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVN5BFNM6TX4">17</a>","WOODLAND WELDING WORKS","FELIX FRANCO","","1955 E MAIN ST","","WOODLAND","CA","95776-6202","decorative handrails and guardrails made of steel, stainless steel, brass, bronze, and aluminum. stairs ng custom finishes and architecturally distressed stainless steel and aluminum panels. structual steel","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#102;&#114;&#97;&#110;&#99;&#111;&#64;&#119;&#111;&#111;&#100;&#108;&#97;&#110;&#100;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ffranco@woodlandwelding.com</a>","http://www.woodlandwelding.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VUEWNKCDSZA6">18</a>","ENVIRONMENTAL COST MANAGEMENT, INC","WALLID KAZI","","3680 INDUSTRIAL BLVD STE 200","","WEST SACRAMENTO","CA","95691-6502","Environmental consulting for CERCLA, RCRA, and UST sites: assessments, groundwater monitoring, soil and groundwater remediation,negotiations with regulatory agencies, planning, design, oversight, operations and maintenance, permitting, and compliance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#107;&#97;&#122;&#105;&#64;&#101;&#99;&#111;&#115;&#116;&#109;&#97;&#110;&#97;&#103;&#101;&#46;&#99;&#111;&#109;">wkazi@ecostmanage.com</a>","http://www.ecmconsults.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G1RZGJLWNUJ9">19</a>","NORCAL VALUATION, INC.","JACK YOUNG","","902 HEMENWAY ST","","WINTERS","CA","95694-1628","At NorCal Valuation Inc., all equipment appraisal services are provided by an accredited Senior Appraiser (ASA) in Machinery & Technical Specialties: educated, experienced & qualified appraisals in the specialized equipment appraisal industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#64;&#110;&#111;&#114;&#99;&#97;&#108;&#118;&#97;&#108;&#117;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">jack@norcalvaluation.com</a>","www.norcalvaluation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LGJZXGX7VZK5">20</a>","LARRY WALKER ASSOCIATES, INCORPORATED","SUSAN WALKER","","1480 DREW AVE STE 100","","DAVIS","CA","95618-6158","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#117;&#115;&#97;&#110;&#87;&#64;&#108;&#119;&#97;&#46;&#99;&#111;&#109;">SusanW@lwa.com</a>","www.lwa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R41PNWKGJFN8">21</a>","RIVER CITY GEOPROFESSIONALS, INC","JEANNIE CONDRY","","3050 INDUSTRIAL BLVD","","WEST SACRAMENTO","CA","95691-3470","Wallace-Kuhl and Associates is a full-service geotechnical and geologic engineering, environmental consulting, and earthwork and construction materials testing and inspection firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#110;&#100;&#114;&#121;&#64;&#116;&#101;&#97;&#109;&#117;&#101;&#115;&#46;&#99;&#111;&#109;">jcondry@teamues.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GHA7XMNGMVJ9">22</a>","ENOVEN INDUSTRIES LLC","SAM ENOCHIAN","","2904 DULUTH ST","","WEST SACRAMENTO","CA","95691-2243","Hydraulic lifts, dump body, truck body, truck modifications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#64;&#101;&#110;&#111;&#118;&#101;&#110;&#46;&#99;&#111;&#109;">sam@enoven.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLKDY8VVZQ45">23</a>","CUSTOM AG SOLUTION LLC","NICK ABOOSH","","2787 DEL MONTE ST STE A","","WEST SACRAMENTO","CA","95691-3811","Weed control through herbicide spraying. post and pre-emergent treatment to keep noxious weeds control. Tree pest and turf renovation. Fertilization and broadleaf weed control","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#107;&#64;&#99;&#117;&#115;&#116;&#111;&#109;&#97;&#103;&#115;&#46;&#99;&#111;&#109;">nick@customags.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7SAA7523957">24</a>","AHTNA DESIGN-BUILD INC","CRAIG OROURKE","","3100 BEACON BLVD","","WEST SACRAMENTO","CA","95691-3483","Highly experienced self-performing federal contractor with significant nationwide construction and environmental contracts with multiple federal agencies, including NAVFAC, USACE, GSA and DoE. Staff includes PMs, Scientists, engineers, Site Superintendents, SSHOs, QC Specialists, and operators.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#111;&#117;&#114;&#107;&#101;&#64;&#97;&#104;&#116;&#110;&#97;&#46;&#110;&#101;&#116;">corourke@ahtna.net</a>","www.ahtnadb.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KAL1DYKMSSJ4">25</a>","CHIAPAS EDI TECHNOLOGIES, INC.","ALDEN TEMPS","","1405 BIRCH LN","","DAVIS","CA","95618-1447","Our Electronic Data Interchange software is focused on HIPAA-compliant 5010 EDI healthcare transactions. Natively integrating with Microsoft SQL Server, our EDI software enables data analysts to work directly with healthcare business information without the steep learning curve of complex ANSI X12 protocols. We offer a complete end-to-end solution that is in production with some of the largest Managed Care Organizations in the United States.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#73;&#67;&#72;&#65;&#82;&#68;&#64;&#67;&#72;&#73;&#65;&#80;&#65;&#83;&#45;&#69;&#68;&#73;&#46;&#79;&#82;&#71;">RICHARD@CHIAPAS-EDI.ORG</a>","WWW.CHIAPAS-EDI.ORG"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SN42UJCKL2K8">26</a>","NEER & VEETHI CONSULTANTS LLC","KUMARASWAMY SIVAKUMARAN","","2486 ALTURAS CT","","WEST SACRAMENTO","CA","95691-4917","DBE 45264, Water resources, Hydrology, Hydraulics, Water Quality, Environment, Potable Water, Waste Water, Water Treatment, Modeling flows, Sediment, Wetland mitigation, Flood Control, Climate study, River flows, River protection, river sedimentation, Estuarine studies, CA PE C 88953, engineering consultant","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#115;&#105;&#118;&#97;&#107;&#117;&#109;&#97;&#114;&#97;&#110;&#64;&#101;&#110;&#118;&#101;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">ksivakumaran@enveeconsultants.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QV9NZBZNKAK4">27</a>","CHALLENGE WORKS INC","PAUL HANCOCK","","19380 COUNTY ROAD 98","","WOODLAND","CA","95695-9364","Construction Specialty - Challenge Course, climbing tower, aerial adventure course, Zip Line Inspection & Training specialty - Challenge Course, climbing tower, aerial adventure course, Zip Line","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#99;&#104;&#97;&#108;&#108;&#101;&#110;&#103;&#101;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">paul@challengeworks.com</a>","www.challengeworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJ37F4VL99Z9">28</a>","THINKRIDGE LLC","ZHAOYANG WANG","","412 E 14TH ST","","DAVIS","CA","95616-2031","IT, information technology, Consulting, computer systems, network systems, voice over IP, Internet of things, IOT, Database systems, security, design, cloud computing, wireless networks, servers, Data center, Call Center, Contact Center","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#110;&#110;&#121;&#108;&#105;&#117;&#50;&#49;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sunnyliu218@gmail.com</a>","https://thinkridges.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FV16H4JTJUE8">29</a>","AMPLE ELECTRIC INC","JOSE DIAZ","","1000 RAILROAD AVE","","WINTERS","CA","95694-2011","Electrician, lighting, street lighting, residential electrical, commercial electrical, industrial electrical, electrical maintenance, wiring, junction box, electrical panel, underground electrical, warehouse electrical","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#105;&#97;&#122;&#64;&#97;&#109;&#112;&#108;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jdiaz@ampleelectric.com</a>","http://www.ampleelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M1TJNJXKAU33">30</a>","INTEGRITY INSPECTIONS LLC","JAY LOCATELLI","","33520 CANVAS BACK ST","","WOODLAND","CA","95695-6017","Integrity Inspections is a full service twenty-four hour, Quality Assurance & Quality Control, NDT Training and consulting company. We have the ability to provide field inspections in all locations to meet our client’s needs. We strive to provide the highest level of Quality Inspection Services in the Industry every day of the year. Helping our clients meet deadlines while helping them understand the condition of their assets. Some of our services include; On steam Inspections Services, Preventive Maintenance Inspections, Fabrication Code compliance Inspections, Radiography (conventional and computed), Ultrasonic & Phased Array, Field Magnetic Particle and Penetrant Inspection. We are built on well-rounded inspectors certified to the client’s requirements and trained to provide detailed thorough reporting and inspections assuring the quality of our client’s assets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#121;&#46;&#76;&#111;&#99;&#97;&#116;&#101;&#108;&#108;&#105;&#64;&#73;&#110;&#116;&#101;&#103;&#114;&#105;&#116;&#121;&#73;&#110;&#115;&#112;&#46;&#99;&#111;&#109;">Jay.Locatelli@IntegrityInsp.com</a>","www.integrityinsp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NP2LDJ8RM5A7">31</a>","AHTNA-GREAT LAKES E&I JV","CRAIG O'ROURKE","","3100 BEACON BLVD","","WEST SACRAMENTO","CA","95691-3483","Provide civil construction and environmental remediation with specialty in levee construction, repair, renovation and deep excavation, cut-off walls and flood walls","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#111;&#117;&#114;&#107;&#101;&#64;&#97;&#104;&#116;&#110;&#97;&#46;&#110;&#101;&#116;">corourke@ahtna.net</a>","www.ahtnagov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GG8ZFR2BG8X9">32</a>","AURA WOODLAND LLC","RITESH PATEL","","1564 E MAIN ST","","WOODLAND","CA","95776-6217","Hotel/Motel providing clean, comfortable, and affordable renovated hotel rooms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#54;&#119;&#111;&#111;&#100;&#108;&#97;&#110;&#100;&#99;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">m6woodlandca@gmail.com</a>","https://www.motel6.com/content/g6/en/home/motels.ca.woodland.9189.html"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZGC7EQC8KF76">33</a>","TEMAM ENTERPRISES LLC","ESMEILE OMER","","3481 KAUAI RD","","W SACRAMENTO","CA","95691-5863","Delivery services, Trucking, moving, General Freight","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#109;&#97;&#109;&#115;&#50;&#48;&#48;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">temams2003@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C5FTXSRKGZN1">34</a>","ADROIT GOVERNMENT, INC","AZADEH MOHANDESSI-FARES","","1501 ESTUARY CT","","WEST SACRAMENTO","CA","95691-5069","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#122;&#97;&#100;&#101;&#104;&#57;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">azadeh95@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CPVBWBVAWB15">35</a>","EMILIO A LACA","EMILIO LACA","","2619 SYRACUSE CT","","DAVIS","CA","95618-2575","Statistical analysis and modeling, data mining, experimental design, scientific research and survey design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#105;&#108;&#105;&#111;&#97;&#110;&#100;&#114;&#101;&#115;&#108;&#97;&#99;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">emilioandreslaca@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WTYAXTBPT9J9">36</a>","LUX MED TRANSIT LLC","DANIEL HILL","","820 ADAMS TERRACE","APT A","DAVIS","CA","95616-3268","Non emergency medical transportation : Our vehicles are secure, up-to-date, spotless, and designed with senior passengers in mind. They have easy entry and exit, plush seats, lots of windows, and climate control. Every day, we carry 10 clients on average throughout California. In addition, our drivers are trained in CPR and first aid. Customers who require transportation to non-emergency medical appointments such as dialysis, optometry/Lasik surgery, physical therapy, dental appointments, outpatient/day surgery, and prescription medicine pick-up can use Lux Med Transit services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#120;&#109;&#101;&#100;&#116;&#114;&#97;&#110;&#115;&#105;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">luxmedtransit@gmail.com</a>","www.luxmedtransit.live"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGWLV9WGDEV6">37</a>","PREMIER VETERAN HOME CARE LLC","MARIAM DAWOOD","","3080 JEFFERSON BLVD","","WEST SACRAMENTO","CA","95691-5320","Premier Veteran Home Care’s mission is to maximize our clients’ quality of life with a commitment to delivering exceptional quality of care and service to our clients. We specialize in all aspects of non-medical in-home care, offering tailored solutions to meet the unique needs of each client.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#100;&#97;&#119;&#50;&#48;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">maridaw209@gmail.com</a>","https://www.premierveterancare.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.788&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

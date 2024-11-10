@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 005 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.93 seconds and 2.02 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 54 
+(of 54 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKKYANNFBLC6">1</a>","ECOLOGICAL RESOURCE CONSULTANTS, INC.","JOSEPH SCHUSTER","PRESIDENT","100 AMAR PL","","PANAMA CITY BEACH","FL","32413-5000","ENVIRONMENTAL ASSESSMENTS, WETLAND DELINEATION, AIRPORT SOIL/TURF,EIS, ENDG/THREATENED SPECIES, HABITAT ANALYSIS, ENVIRONMENTAL PERMITTING, WETLAND RESTORATION/MITIGATION,SOIL INVESTIGATIONS/MAPPING,MARINA PLANNING,MINE RECLAMATION,BOTANICAL SERVICES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#99;&#104;&#117;&#115;&#116;&#101;&#114;&#64;&#101;&#99;&#111;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#46;&#99;&#111;&#109;">jschuster@ecoresource.com</a>","www.ecoresource.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HX6PP597DG69">2</a>","DMR CONSULTING, INC.","MARY CARMICHAEL","President","100 N RICHARD JACKSON BLVD STE 140B","","PANAMA CITY BEACH","FL","32407-2516","DMR Consulting, (DMR) is a certified WOSB that provides acquisition management, systems engineering, logistics support, test and evaluation support, life cycle analysis, and program management support to primarily US Navy and Special Operations Programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#99;&#97;&#114;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#100;&#109;&#114;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mlcarmichael@dmrcinc.com</a>","https://www.dmrcinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RCL2J7ELMCN5">3</a>","PTR AUTOMATION, INC","P. THOMAS RYDESKI","President","3632 OAKBROOK LN","","PANAMA CITY","FL","32408-3941","We provide software engineering design and installation, and network architecture and implementation for custom built and third party solutions. We install and maintain projects that encompass small business offices and large industrial automation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#84;&#82;&#64;&#80;&#84;&#82;&#65;&#85;&#84;&#79;&#77;&#65;&#84;&#73;&#79;&#78;&#46;&#67;&#79;&#77;">PTR@PTRAUTOMATION.COM</a>","www.ptrautomation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E86CCJM6NSN7">4</a>","REGISTER'S ENTERPRISES OF BAY COUNTY, LLC","WILLIAM REGISTER","","9323 N HIGHWAY 231","","PANAMA CITY","FL","32404-5687","REGISTER'S ENTERPRISES OF BAY COUNTY, LLC specialized in large site preps, demolition, site clearing, site preparation and land clearing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#103;&#105;&#115;&#116;&#101;&#114;&#64;&#114;&#101;&#103;&#105;&#115;&#116;&#101;&#114;&#115;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">bregister@registersent.com</a>","http://www.registersent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCAKQLA3PUP5">5</a>","INNOVATIVE PROFESSIONAL SOLUTIONS, INC.","DANIEL MCGINNIS","","8317 FRONT BEACH RD STE 17D","","PANAMA CITY BEACH","FL","32407-4804","Provide engineering services specializing in Sea Mines, MCM, UUV Testing, Environmental Testing, Weapon Systems Eng, EOD. Provide ILS support to US Navy systems, including In-Service Mines, MCM, & SPECWAR Systems. Develop tech manuals for DoD systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#103;&#105;&#110;&#110;&#105;&#115;&#100;&#64;&#105;&#112;&#115;&#105;&#110;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">mcginnisd@ipsincorporated.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CMGNUD917V75">6</a>","U D T, INC.","BECKY SCOFIELD","","2304 GRANT AVE","","PANAMA CITY","FL","32405-1359","CNC Machining, Mills, Lathe work, Precision, R&D, Prototyping, Welding, Water Jet, Painting, Assembly... one stop shop.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#99;&#107;&#121;&#64;&#117;&#100;&#116;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">becky@udtmachine.com</a>","http://www.udtmachine.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YK4TAP9BEME3">7</a>","AVESI INC","MICHELE LYERLA","","13800 PANAMA CITY BEACH PKWY","","PANAMA CITY BEACH","FL","32407-2865","AVESI, Inc. is 100% Woman-Owned Small Business (WOSB) specializing in radiological support services for over 15 years. We specialize in Comprehensive Radiation Protection Programs and have Premier USACE FUSRAP Experience. We offer Gamma Walkover Surveys/Excavation Guidance, MARSSIM/MARSAME Final Status Survey support, ArcView GIS mapping, Professional Safety Consulting and Auditing, Dose Reconstruction and Risk Assessments, Field Laboratory Set Up and Support, Data Validation Expertise, Site characterization, as well as Procurement and Staff Augmentation Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#101;&#108;&#121;&#101;&#114;&#108;&#97;&#64;&#97;&#118;&#101;&#115;&#105;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">michelelyerla@avesiusa.com</a>","https://www.avesi-usa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FA4KGJGVFGL5">8</a>","COASTAL AIR SERVICE INC","GREG CLUBBS","","7424 COASTAL DR","","PANAMA CITY","FL","32404-4015","Helicopter air charter services, Helicopter Aerial Application of chemicals and pesticides, Helicopter external load / air crane services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#99;&#108;&#117;&#98;&#98;&#115;&#64;&#99;&#111;&#97;&#115;&#116;&#97;&#108;&#104;&#101;&#108;&#105;&#99;&#111;&#112;&#116;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">gclubbs@coastalhelicopters.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9MNQLD5G2J5">9</a>","TOMMY'S GLASS AND MIRROR CO., INC.","KEVIN JOHNSON","","7435 HIGHWAY 77","","PANAMA CITY","FL","32409-1689","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#116;&#111;&#109;&#109;&#121;&#115;&#103;&#108;&#97;&#115;&#115;&#46;&#110;&#101;&#116;">kjohnson@tommysglass.net</a>","http://tommysglass.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VRCRVAJZJ8S5">10</a>","814 SAND, INC.","BILLIE PITTS","","12030 HIGHWAY 77","","PANAMA CITY","FL","32409-2226","Underground Utility Contractor, Water, Sewer, Storm Drain Lines, Complete Site Prep Contractor, Excavation, Fill, Grade, Mowing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#106;&#112;&#105;&#116;&#116;&#115;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">Bjpitts@comcast.net</a>","http://www.814sand.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKJEXKMNX1K3">11</a>","DETECT INC","GARY ANDREWS","","2817 HWY 77","","PANAMA CITY","FL","32405-4409","DeTect, Inc. specializes in applied, intelligent radar and related remote sensing technologies and systems for aviation safety, security and surveillance, drone defense, environmental protection, and renewable energy with over 280 radar systems installed and operating to date worldwide. DeTect Sensor Technologies: AHAS (Avian Hazard Advisory System) MERLIN Aircraft Birdstrike Avoidance Radars HARRIER Drone Surveillance Radars DRONEWATCHER drone & small UAV detection & defense systems MERLIN Avian Radar Systems HARRIER Airspace & Marine Surveillance Radars MERLIN Bird Control Radar Systems HARRIER Aircraft Detection Lighting Systems HARRIER Ground-based Sense-and-Avoid radars","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#114;&#121;&#46;&#97;&#110;&#100;&#114;&#101;&#119;&#115;&#64;&#100;&#101;&#116;&#101;&#99;&#116;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">gary.andrews@detect-inc.com</a>","https://detect-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFB1J95GKPK8">12</a>","DAUB, TROYDANIEL S","TROYDANIEL DAUB","","15217 RACETRACK ROAD","","YOUNGSTOWN","FL","32466-2501","Certified by the Motorcycle Safety Foundation to teach the Basic, Experienced, and Military Sportbike Riders Courses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#110;&#111;&#110;&#64;&#114;&#105;&#100;&#101;&#50;&#119;&#104;&#101;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">shannon@ride2wheels.com</a>","www.ride2wheels.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EERXQPG9J2W7">13</a>","ACRO CONSTRUCTION, LLC","BILLY TOLSON","","1700 W 11TH ST","","PANAMA CITY","FL","32401-1816","Acro Contruction provides construction services including civil engineering, mechanical, electrical, and all general construction. Acro Construction holds a professional engineering, general contractor licenses. .","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#121;&#64;&#97;&#99;&#114;&#111;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">billy@acroconstructionllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VXTJL3NME1S8">14</a>","CLASSIC CARPET CLEANERS OF BAY COUNTY, INCORPORATED","BOBBY BOOBYER","","414A THOMAS DR","","PANAMA CITY","FL","32408-7610","Classic Restoration technicians are trained and experienced to successfully get your property back to its original condition. We offer services such as mold remediation, water, smoke and fire restoration, flood clean up, wind and storm restoration, emergency board up services, plus much more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#98;&#121;&#64;&#99;&#108;&#97;&#115;&#115;&#105;&#99;&#114;&#101;&#115;&#116;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">bobby@classicrestoration.net</a>","https://classiccarpetspcb.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZMVKMDDKDJW4">15</a>","CLASSIC FLOORS, INC.","PAT SALLINGER","","414A THOMAS DR","","PANAMA CITY","FL","32408-7610","We are a full service flooring store that is able to professionally complete any job that you might have. All of our installers are experienced and courteous.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#64;&#99;&#108;&#97;&#115;&#115;&#105;&#99;&#99;&#97;&#114;&#112;&#101;&#116;&#115;&#112;&#99;&#98;&#46;&#99;&#111;&#109;">pat@classiccarpetspcb.com</a>","http://www.classiccarpetspcb.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T4TNWX12G5P7">16</a>","NANNY CAN LLC","RYAN ISON","","105 ESTES PL","STE B104","PANAMA CITY BEACH","FL","32413-2122","Child care services for all ages and entertainment for Strong Bond Retreats and Yellow Ribbon events","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#110;&#110;&#121;&#64;&#110;&#97;&#110;&#110;&#121;&#99;&#97;&#110;&#46;&#99;&#111;&#109;">nanny@nannycan.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GQFHCRMH4SE5">17</a>","S.T.A.R.K. SURVIVAL COMPANY","KENNETH BURTON","","6227 E HIGHWAY 98","","PANAMA CITY","FL","32404-7280","Provide aviation emergency crew member training. Provide open water and night training for crew members. Provide underwater egress training with dunker.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#97;&#114;&#107;&#105;&#110;&#99;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">starkinc@aol.com</a>","https://www.starksurvival.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXBTUQXMEDQ9">18</a>","V4 AEROSPACE, LLC","STANLEY MILLER","","5213 MELISSA DR","","PANAMA CITY","FL","32404-6751","Radar, Telemetry, Downlink, aircraft communications, aircraft modifications, test and operations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#110;&#101;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#118;&#52;&#45;&#97;&#101;&#114;&#111;&#115;&#112;&#97;&#99;&#101;&#46;&#99;&#111;&#109;">gene.miller@v4-aerospace.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WUVTD5ZNG1N5">19</a>","RSSI BARRIERS LLC","JOEY BLAIR","","6530 E HIGHWAY 22","","PANAMA CITY","FL","32404-9521","Manufacture, Install, Service High Security Vehicle Barriers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#121;&#64;&#114;&#115;&#115;&#105;&#46;&#99;&#111;&#109;">joey@rssi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TE63BDUSWGZ9">20</a>","ROBOTICS FABRICATION INC.","WILLIAM LEWIS","","5835 BAY LINE DR","","PANAMA CITY","FL","32404-5492","range maintenance and remediation, fabrication of remote systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#101;&#119;&#105;&#115;&#64;&#114;&#111;&#98;&#111;&#116;&#105;&#99;&#115;&#102;&#97;&#98;&#114;&#105;&#99;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">blewis@roboticsfabrication.com</a>","http://www.roboticsfabrication.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H732BE3YVBC1">21</a>","MACETECH SECURITY SOLUTIONS INC.","RUSSELL MACE","","1304 FORTUNE AVE","","PANAMA CITY","FL","32401-1720","MaceTech provides tailored cyber security defenses that protect your organization. Our approach is multi-faceted and applied throughout an organization to deliver defense in depth. MaceTech applies a systems engineering approach that first understands and prioritizes the critical data and systems in need of protection, then designs and implements the continuous monitoring strategy that vigilance demands. Whether your organization is government or commercial, large or small, hi-tech or lo-tech, MaceTech fits the technology, training, and processes to the risks that you face.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#115;&#115;&#101;&#108;&#108;&#46;&#109;&#97;&#99;&#101;&#64;&#109;&#97;&#99;&#101;&#116;&#101;&#99;&#104;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">russell.mace@macetechsecurity.com</a>","http://www.macetechsecurity.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UHHYAZXQEEC1">22</a>","BONDS CONSULTING GROUP LLC","JANE BONDS","","3900 WASP ST","","PANAMA CITY","FL","32408-5342","Environmental risk assessment, Pesticide application, Integrated Pest Management, Pesticide drift modeling and Environmental modeling, expert witness, development of UAV platforms for specialty uses","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#98;&#111;&#110;&#100;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jasbonds@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KHWXRT9AM555">23</a>","HULL'S ENVIRONMENTAL SERVICES, INC","KELLIE HULL","","1810 INDUSTRIAL DR","","PANAMA CITY","FL","32405-6029","Hull’s Environmental Services, Inc. is a full service self-performing environmental construction, remediation, decontamination, demolition, transportation, disposal operations and maintenance, and remediation management company, OSRO Contractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#72;&#117;&#108;&#108;&#64;&#104;&#117;&#108;&#108;&#115;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">kHull@hullsenvironmental.com</a>","www.hullsenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVS1RTTKV458">24</a>","SYSTEM SERVICE & ENGINEERING, LLC","CLIFF THORNE","","205 MOSLEY DR","","LYNN HAVEN","FL","32444-5603","HVAC and plumbing repair, replacement and maintenance for commercial and residential applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#116;&#104;&#111;&#114;&#110;&#101;&#64;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">cthorne@systemserviceeng.com</a>","http://ssandeinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLLKJLH72N36">25</a>","VBA DESIGN, INC.","VICTORIA WILLIAMS","","2424B JENKS AVE","","PANAMA CITY","FL","32405-4908","Victoria Williams, President of VBA Design, holds licenses in Florida, Alabama, Georgia, Louisiana, Texas, and Mississippi. She is a LEED AP BD+C Accredited Professional. VBA Design has offices in Panama City, Florida and Fairhope, Alabama and has performed work on residential, multi-family, retail, hospitality, educational, ecclesiastical, medical, emergency management, judicial, department of corrections, governmental, parks and recreation, and industrial projects for both the private and public sector.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#118;&#98;&#97;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#117;&#115;">vwilliams@vbadesign.us</a>","www.vbadesign.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UUMJWAZJJPZ2">26</a>","ADVENT SVCS LLC","TOMAS SANTOS-ALEJANDRO","","2211 S HWY 77 STE 102","","LYNN HAVEN","FL","32444-4641","8a, HUBZone, SDVOSB  Expertise: Systems/Software Engineering, Cybersecurity, IT, Prof. Services, Supply Chain Risk Management Customers: USDA, VA, USN, USA, Large Primes, State of FL, SMBs in defense, healthcare & construction Vision: Be best-in-class in technically-challenging areas, promote innovation & help clients accomplish mission goals, manage risk, protect information  Differentiators: Performance - experience with systems in technically-challenging areas, harsh environments & complex mission profiles Management – Lean Management + 15 yrs federal experience = reduced risk, agile responsiveness, effective customer interface  Workforce - Highly-trained, experienced, diverse backgrounds, training/certifications from NSA, DoD, Red Hat, Cisco, Microsoft, CompTIA  Financial Stability – DCAA-compliant accounting, debt free with established funding = flexibility to rapidly surge Security - Facility Clearance, NIST 800-171/CMMC compliant","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#97;&#100;&#118;&#101;&#110;&#116;&#115;&#118;&#99;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">solutions@adventsvcsllc.com</a>","https://www.adventsvcsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MXB8X8VSKZP8">27</a>","BROOKS ENVIRONMENTAL SOLUTIONS LLC","MARCO BROOKS","","104 N GULF BLVD","SUITE E","PANAMA CITY BEACH","FL","32413-2876","Janitorial, Custodial, Pest Control, Medical Waste, Waste Management Services, Moving Services, Relocations, Crates, Remediation Bio Medical Waste Disposal, Lab Packs, Mold, Universal waste Recycling, Asbestos abatement","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#111;&#64;&#98;&#114;&#111;&#111;&#107;&#115;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">marco@brooksenvironmentalsol.com</a>","www.brooksenvironmentalsol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KVFNDKUZMUL8">28</a>","GREG NELSON CONSULTING LLC","GREG NELSON","","103 JAMES ISLAND LN","","PANAMA CITY BEACH","FL","32407-3356","PROFESSIONAL CONSULTANT. STRATEGY, PLANNING, AND NEW BUSINESS DEVELOPMENT. SPECIALIZING IN AIR TRANSPORTATION, EMERGENCY AIR OPERATIONS, HUMANITARIAN ASSISTANCE/DISASTER RELIEF, INTERNATIONAL AFFAIRS, CONTINGENCY AIRFIELD OPERATIONS, AIRLIFT AND AIRDROP.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#71;&#82;&#69;&#71;&#78;&#69;&#76;&#83;&#79;&#78;&#76;&#76;&#67;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">GREGNELSONLLC@GMAIL.COM</a>","www.gregnelsonconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UN1MPZXCJ9R6">29</a>","WHO DEY PROMOTIONS INC","EMILY DAVILA","","4718 E HIGHWAY 22","","PANAMA CITY","FL","32404-6228","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#105;&#108;&#121;&#64;&#119;&#104;&#111;&#100;&#101;&#121;&#112;&#114;&#105;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">emily@whodeyprints.com</a>","whodeyprints.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J4DMMGXBXL55">30</a>","DAWSON FEDERAL, INC.","DAWNA SMITH","","243 SOUTHWOOD DR","","PANAMA CITY","FL","32405-4905","Dawson Federal is a NHO Owned 8(a) concern specializing in establishing and implementing strategic alliances to deliver high quality, cost-effective solutions to our DoD clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#109;&#105;&#116;&#104;&#64;&#100;&#97;&#119;&#115;&#111;&#110;&#111;&#104;&#97;&#110;&#97;&#46;&#99;&#111;&#109;">dsmith@dawsonohana.com</a>","https://www.dawsonohana.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HM1PLRZJM772">31</a>","RSAE LABS INC","IRA LEHRMAN","","400 E 16TH ST","","PANAMA CITY","FL","32405-5456","RSAE Labs is a Vietnam-era Veteran Owned Small Business (VOSB) based in Panama City, Florida with additional operations in Denver, Atlanta, Silicon Valley and Armenia. Since 2003, RSAE Labs has excelled in developing military-grade global tracking devices for cargo, redundant global communications, data security and advanced mesh networking protocol. Working as Impeva Labs and later, Cubic Global Tracking Solutions (CGTS), our team has advanced five generations of Global Sentinel (GS) devices. Our GS-2 was qualified by Sandia National Labs in 2005 for deployment with the US Department of Homeland Security (DHS) for Operation Safe Commerce (OSC) III. RSAE Labs is committed to continuing support for Global Sentinel services. In response to COVID 19, a comprehensive set of innovative services was developed for accurate social distance monitoring and reliable contact tracing called Six Foot Bubbles. For more information please visit our website at http://rsaelabs.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#114;&#97;&#46;&#108;&#101;&#104;&#114;&#109;&#97;&#110;&#64;&#114;&#115;&#97;&#101;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">ira.lehrman@rsaelabs.com</a>","RSAELabs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CV9ZHRPFHUA2">32</a>","ROBBINS METAL FAB LLC","BRENT ROBBINS","","5814 MERRITT BROWN RD","","PANAMA CITY","FL","32404-3042","We are a welding and metal fabrication firm. We have the capabilities to weld, metal fabricate, steel erection, and preform various types miscellaneous metal work from powder-coated railing and fencing to bear proof dumpsters.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#114;&#111;&#98;&#98;&#105;&#110;&#115;&#109;&#101;&#116;&#97;&#108;&#102;&#97;&#98;&#46;&#99;&#111;&#109;">office@robbinsmetalfab.com</a>","www.robbinsmetalfab.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDLVFT1GVSC6">33</a>","ANCHOR CONSULTING ENGINEERING AND INSPECTION, INC.","BRITTANY TRUMBULL","","450 MAGNOLIA AVE","","PANAMA CITY","FL","32401-3127","Professional Engineers with capabilities in roadway and pedestrian facility design, permitting, and inspection. Additionally, capable of utility and site design permitting, design, and inspection.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#116;&#114;&#117;&#109;&#98;&#117;&#108;&#108;&#64;&#97;&#110;&#99;&#104;&#111;&#114;&#99;&#101;&#105;&#46;&#99;&#111;&#109;">btrumbull@anchorcei.com</a>","www.anchorcei.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MURDR87GA9M6">34</a>","COMPLETE AIR CONDITIONING & REFRIGERATION INC","CONSTANCE KALATA","","2817 ORLANDO RD","","PANAMA CITY","FL","32405-6947","Air Conditioning and heating contractor, new construction, residential, commercial, government refrigeration and HVACR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#109;&#112;&#108;&#101;&#116;&#101;&#97;&#99;&#50;&#56;&#49;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">completeac2817@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSBKCCS15147">35</a>","IA AERIAL PHOTOGRAPHY, LLC","RONALD JARMON","","7543 HOLLEY CIR","","PANAMA CITY","FL","32408-4953","IA Aerial Photography provides top-tier aerial photography and imaging services that empower your projects with precision and clarity. With a fleet of advanced drones and a team of certified professionals, we capture stunning visuals that elevate your project’s value and appeal. We provide accurate, detailed, and actionable aerial insights for various governmental applications. Our dedication to reliable, high-quality aerial imagery makes us the perfect partner for government agencies seeking aerial photography.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#97;&#97;&#112;&#104;&#111;&#116;&#111;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">iaaphoto1@gmail.com</a>","www.iaphotos.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E4NNFJFZM375">36</a>","CLEANING PLUS JANITORIAL SERVICES LLC","SHEILA HOLLEY","","1909 ANNE AVE","","PANAMA CITY BEACH","FL","32407-4216","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#105;&#108;&#97;&#104;&#111;&#108;&#108;&#101;&#121;&#64;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#112;&#108;&#117;&#115;&#106;&#97;&#110;&#105;&#116;&#111;&#114;&#105;&#97;&#108;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">sheilaholley@cleaningplusjanitorialservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGV2NHNJCFF7">37</a>","TIM ALLEN & ASSOCIATES, INC.","TIM ALLEN","","1118 JENKS AVE","","PANAMA CITY","FL","32401-2439","providing photography services of all types... portraits, families, events, commercial, photo restoration, vidoe, framed art and much more!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#97;&#108;&#108;&#101;&#110;&#116;&#101;&#97;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">timallenteam@gmail.com</a>","https://www.timallenphotography.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKNRKNFYMBF9">38</a>","TRAINING MODE INC","MARIA ODEY","","121 CHRISTIE LN","","PANAMA CITY","FL","32404-7666","Training Mode Inc. is a training and development, media creation, information technology, and business solutions consulting company servicing government, military, health services, scientific programs, business, and community or non-profit organizations. We specialize in applying adult learning and human performance improvement methodologies to delivering solution based services and. Our strategic approach fine-tunes service delivery success by applying comprehensive needs analyses to determine gaps and develop most applicable solutions. Collaboration with clients, subject matter experts (SMEs), associates, and our service professionals ensures we deliver upmost quality products and services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#100;&#101;&#121;&#64;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#109;&#111;&#100;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">modey@trainingmodeinc.com</a>","trainingmodeinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DM3FGQA7Q474">39</a>","MERRICK INDUSTRIES INC","JOHN LAYMON","","10 ARTHUR DR","","LYNN HAVEN","FL","32444-1685","designing and manufacturing high quality material handling products that are reliable, provide repeatable results, and are extremely accurate. We understand how important it is to be able to trust that your continuous weighing and feeding system is delivering reliable, consistent, accurate results, and we take special care to ensure our custom engineered products will meet each customer’s expectations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#76;&#65;&#89;&#77;&#79;&#78;&#64;&#109;&#101;&#114;&#114;&#105;&#99;&#107;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">JLAYMON@merrick-inc.com</a>","https://merrick-inc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TYKGZLB4ZCS9">40</a>","TRI-COUNTY CPR & MORE, LLC","BENITA CRITTENDON","","949 JENKS AVE","STE 20","PANAMA CITY","FL","32401-2585","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#105;&#99;&#111;&#99;&#112;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tricocpr@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K13JA5UNPK25">41</a>","PATRIOT INTEGRATED SOLUTIONS LLC","MICHAEL SHAW","","9106 ABBA LN","","PANAMA CITY BEACH","FL","32407-4058","Provides wired and wireless managed internet service and equipment to include firewalls, gateways, access points, fiber optics, and all associated equipment and services. Relieves problems with slow or unresponsive systems and services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#112;&#97;&#116;&#114;&#105;&#111;&#116;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#101;&#100;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mike@patriotintegratedsolutions.com</a>","www.patriotintegratedsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1HFNG3Z7639">42</a>","DAWSON ENTERPRISES, LLC","MICHAEL FONSECA","","243 SOUTHWOOD DR","","PANAMA CITY","FL","32405-4905","Dawson Enterprises is a SBA certified NHO-Owned 8(a)federal contractor with core competencies in logistics ranging from security cooperation, and life cycle management, management of facilities, real estate management, environmental and construction services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#102;&#111;&#110;&#115;&#101;&#99;&#97;&#64;&#100;&#97;&#119;&#115;&#111;&#110;&#111;&#104;&#97;&#110;&#97;&#46;&#99;&#111;&#109;">mfonseca@dawsonohana.com</a>","www.dawsonohnana.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKUBN4F65LW7">43</a>","BRICE BUILDERS LLC","DAVID ALLEN","","55 W 5TH ST","","PANAMA CITY","FL","32401-2601","Brice Builders, LLC ANC SBA program participant vertical construction facility sustainment restoration and modernization design build and telecom infrastructure to include products such as towers and shelters. Brice Builders service government in CONUS and OCONUS using self performing model in the field with robust documentation accounting and compliance. Brice is capable of performing on large scale vertical construction and telecom infrastructure projects from cradle to grave","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#108;&#108;&#101;&#110;&#64;&#98;&#114;&#105;&#99;&#101;&#45;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">dallen@brice-builders.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4GZJAKWDUA2">44</a>","BOULDIN PRECISION CONSULTS, LLC","SAMUEL BOULDIN","","1609 PADDOCK CLUB DR","","PANAMA CITY BEACH","FL","32407-2487","Bouldin Precision Consults, LLC specializes in accurate diagnostics and rapid emergency machinery repair to minimize downtime. Our precise heavy machinery installation and relocation services ensure seamless integration and top performance. We lead in maintenance, predictive maintenance, preventive maintenance, and preventative maintenance,including hydraulics, pneumatics, compressors, utilizing advanced analytics to preempt failures. Our CNC machining and specialized fabrication services, including milling turning, grinding, abrasive water jetting, welding, painting and coatings, adhere to stringent government standards, ensuring unmatched quality. Comprehensive facilities and grounds maintenance services, including electrical diagnostics, electrical repair, HVAC diagnostics, HVAC repair, landscaping, pressure washing, and cleaning, uphold the highest safety and compliance standards. Elevate your operations with our proven expertise. Contact us today!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#117;&#101;&#108;&#98;&#111;&#117;&#108;&#100;&#105;&#110;&#64;&#98;&#111;&#117;&#108;&#100;&#105;&#110;&#112;&#114;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#115;&#46;&#99;&#111;&#109;">samuelbouldin@bouldinprecisionconsults.com</a>","https://www.bouldinprecisionconsults.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6MCRXX4TMG3">45</a>","BROADHEAD CONSULTING, LLC","BRIAN BOWINS","","4600 CARROLL WOOD LN","","PANAMA CITY","FL","32404-4249","Broadhead Consulting was founded on the notion of providing practical, efficient and effective solution to complex problems and challenges. We are guided by years of sustained military experience and a thorough knowledge of the DoD Acquisition System and DoD program management. We specialize in product innovation, research and development projects, proposal writing, Unmanned Systems, and organizational training and development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#98;&#111;&#119;&#105;&#110;&#115;&#64;&#98;&#114;&#111;&#97;&#100;&#104;&#101;&#97;&#100;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">scott.bowins@broadheadconsulting.com</a>","www.broadheadconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YVWKW7UZJL55">46</a>","ESTEVEZ SERVICES GROUP, LLC","RICARDO ESTEVEZ","","3665 OAKBROOK LN","","PANAMA CITY BEACH","FL","32408-3941","Certified General Contractor in Florida and New Mexico. Full spectrum Construction and Construction Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#105;&#101;&#64;&#101;&#115;&#103;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">rickie@esgcontractor.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R6N7FKNGNZA3">47</a>","MR. FENCE OF FLORIDA, INC.","JOSHUA GLOVER","","6804 BAYOU GEORGE DR","","PANAMA CITY","FL","32404-5044","We sell and install every type of fence availible","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#103;&#111;&#109;&#114;&#102;&#101;&#110;&#99;&#101;&#102;&#108;&#46;&#99;&#111;&#109;">josh@gomrfencefl.com</a>","www.mrfenceflorida.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FW6TQ3JEGHA8">48</a>","BROOKS-ESC JV LLC","MARCO BROOKS","","104 N GULF BLVD STE E","","PANAMA CITY BEACH","FL","32413-2876","Provides expertise in hazardous waste management (identification, storage, packaging, transportation, and off-site disposal) and field service support (ground water sampling and treatment system operation and maintenance). In addition, Brooks-ESC JV LLC provides expertise and experience in site assessments, regulatory analysis, remedial design and optimization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#111;&#64;&#98;&#114;&#111;&#111;&#107;&#115;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">marco@brooksenvironmentalsol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q2NECCD5P755">49</a>","EASTERN INDUSTRIES INC","DAVID WALL","","6824 BAY LINE DR","","PANAMA CITY","FL","32404-4810","Eastern Industries, Inc is a manufacturer and supplier of new water pumps for Automotive, Heavy Duty, Commercial, Ag, Industrial and Marine applications. We are family owned with over 70 years of experience. Our assembly and distribution headquarters are located in Panama City, FL.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#110;&#119;&#97;&#108;&#108;&#64;&#101;&#105;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">dnwall@eipump.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VHEFC4ND77R6">50</a>","TRADUCE, LLC","MARTA SALCEDO","","3911 PETERS DR","","PANAMA CITY","FL","32405-1444","Traduce LLC focuses on providing the Highest Value of Customer Service with an elite workforce of translators and interpreters. We provide certified translation of documents and technical forms and interpreting services, on-site and remote, including American Sign Language to assist each client with our commitment to Service and Integrity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#100;&#117;&#99;&#101;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">traducellc@gmail.com</a>","traduce-me.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S93TG36L3Z55">51</a>","ZERO TRUST CYBER LLC","ROBERT POPE","","1524 GAINER AVE","","PANAMA CITY","FL","32405-7407","Zero Trust Cyber (ZTC) LLC is dedicated to providing the best Cyber Security Program & Project Management services, Cyber Security Compliance consulting and information technology support services possible. Our Team of subject matter experts are well versed in the latest U.S. Government cyber security directives and mandates. Specifically, we have successful past experience in helping the Department of Education achieve OMB M-21-31 Event Level 1 (EL1) and EL2 compliance on 100% of their High Value Asset (HVAs), 50% of the rest of their systems and the remaining systems were in the M-21-31 process pipeline to achieve EL1 and EL2.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#112;&#111;&#112;&#101;&#64;&#122;&#101;&#114;&#111;&#116;&#114;&#117;&#115;&#116;&#99;&#121;&#98;&#101;&#114;&#46;&#110;&#101;&#116;">rlpope@zerotrustcyber.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S5AWQ51YJ4N7">52</a>","BOYCON LLC","RAYCE BOYD","","2624 KATIE MARIE LN","","LYNN HAVEN","FL","32444-4793","Mangrove Mechanical Services are an HVAC-R Small business that performs service, installation, repair and maintenance on all projects related to Heating, cooling, refrigeration Ice machines and ductwork of any size.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#97;&#121;&#99;&#101;&#64;&#109;&#97;&#110;&#103;&#114;&#111;&#118;&#101;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">Rayce@mangrovemechanical.com</a>","https://linktr.ee/mangrovemechanical"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W89AEFDN93E7">53</a>","EVOLUTION MATRIX LLC","ALTHEA HOWES","","105 S GAY AVE","","PANAMA CITY","FL","32404-7806","Analyze organizational business practices, processes, and procedures to identify improvement measures. Initiate, conduct, coordinate, monitor and participate in studies to determine feasibility and create solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#118;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#109;&#97;&#116;&#114;&#105;&#120;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">evolutionmatrix@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SK45S5L9VKA6">54</a>","RISE CONSULTING, LLC","ELIMENE BLACK","","475 HARRISON AVE STE 217","","PANAMA CITY","FL","32401-2752","A woman, minority, and veteran-owned small business specializing in providing comprehensive mental health services. With a dedicated team of licensed professionals and experts in cutting edge mental health treatments, we provide a range of therapeutic services, assessments, and intervention strategies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#115;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#108;&#108;&#99;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">riseconsultingllc@outlook.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.977&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

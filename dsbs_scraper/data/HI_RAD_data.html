@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Hawaii;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.09 seconds and 1.10 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 84 
+(of 84 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WGBQE9FPDBV5">1</a>","PACIFIC GEOTECHNICAL ENGINEERS INC","GLEN LAU","PRESIDENT","94-417 AKOKI ST","","WAIPAHU","HI","96797-2704","CONSULTING SERVICES IN THE AREA OF; SOIL AND FOUNDATION ENGINEERING INVESTIGATIONS, SOIL AND ROCK SLOPE STABILITY; TUNNEL INVESTIGATION; ENGINEERING GEOLOGICAL STUDIES FOR SITE SELECTION; MASTER PLANNING, FEASIBILTY STUDY AND ENVIRONMENTAL INVESTIGATION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#64;&#112;&#97;&#99;&#105;&#102;&#105;&#99;&#103;&#101;&#111;&#116;&#101;&#99;&#104;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">glen@pacificgeotechnical.com</a>","http://www.pacificgeotechnical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L9BWVDLD3G47">2</a>","PBR HAWAII & ASSOCIATES, INC.","CLAIRE YUEN","President","1001 BISHOP ST STE 650","","HONOLULU","HI","96813-3484","Planning, Landscape Architecture, Environmental Studies, Graphic Design, Land Use Entitlements","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#117;&#101;&#110;&#64;&#112;&#98;&#114;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">kyuen@pbrhawaii.com</a>","www.pbrhawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EWPBQNGRCYM3">3</a>","VIDEO WAREHOUSE, INC.","RYAN ITAMOTO","Government Sales Manager","98-810 MOANALUA RD","","AIEA","HI","96701-5234","Command and Control, Briefing rooms, Conference rooms, Training rooms, multimedia, systems integration EQUIPMENT AND SUPPLIES, AUDIO VISUAL PRODUCTS, COMPUTER PERIPHERALS, INSTALLATION AND REPAIR SERVICE. GSA DEALER FOR MANY PRODUCTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#116;&#97;&#109;&#111;&#116;&#111;&#64;&#116;&#104;&#101;&#97;&#118;&#99;&#111;&#46;&#110;&#101;&#116;">ritamoto@theavco.net</a>","http://www.theavco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UF8HH3KFBAX5">4</a>","HAWAII INTERNATIONAL ENVIRONMENTAL SERVICES INC","MAYUMI RANDALL","PRESIDENT","45-955 KAMEHAMEHA HWY","STE 302","KANEOHE","HI","96744-3292","We are a full service engineering, design, and construction management company specializing in all environmental aspects of construction projects from site assessment to remedial design, remediation, O&M of remedial systems and GIS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#121;&#117;&#109;&#105;&#64;&#104;&#105;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mayumi@hiesinc.com</a>","http://www.hiesinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T86MLL6XPM57">5</a>","REFERENTIA SYSTEMS INC","NELSON KANEMOTO","President","155 KAPALULU PL","STE 200","HONOLULU","HI","96819-1806","Referentia Systems, an award-winning provider, focuses on development of critical infrastructure solutions in cyber security and high performance time series database and IT on-site services. Cyber security solutions include use of security methodologies to assess and reduce risk of critical infrastructures and provide recommendation to achieve regulatory and government security requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#114;&#101;&#102;&#101;&#114;&#101;&#110;&#116;&#105;&#97;&#46;&#99;&#111;&#109;">contracts@referentia.com</a>","http://www.referentia.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHKFGCHMXED1">6</a>","TROPICAL J'S INC","JUSTIN BARNES","President","1052 ULUPONO ST","","HONOLULU","HI","96819-4333","Manufacturer of commercial/residential awnings, umbrellas, shade curtains, outdoor furniture, cushions, contract sewing, equipment covers and tents.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#64;&#116;&#114;&#111;&#112;&#105;&#99;&#97;&#108;&#106;&#115;&#46;&#99;&#111;&#109;">justin@tropicaljs.com</a>","www.tropicaljs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CKQHJJN8F3V8">7</a>","DATAHOUSE CONSULTING INC","SCOTT FUJIEDA","Director E-Business Development","711 KAPIOLANI BLVD","STE 500","HONOLULU","HI","96813-5255","DataHouse, Inc. is an e-business development company. In addition to the design and development of Internet applications, we provide systems integration and application development on a variety of mainframe, midrange and PC platforms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#95;&#102;&#117;&#106;&#105;&#101;&#100;&#97;&#64;&#100;&#97;&#116;&#97;&#104;&#111;&#117;&#115;&#101;&#46;&#99;&#111;&#109;">scott_fujieda@datahouse.com</a>","http://www.datahouse.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H77EMSJ7LJA1">8</a>","JAMES PETERS DESIGN, INC.","JAMES PETERS","President","99-421 PALAIALII WAY","","AIEA","HI","96701-3153","Design of brochures, flyers, stationary, packaging, posters. Design, fabrication & installation of all types of signs & banners. Design of logos, websites, audio/visual presentations, 3-D displays, digital photography, and advertising.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#64;&#106;&#112;&#101;&#116;&#101;&#114;&#115;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">james@jpetersdesign.com</a>","http://www.jpetersdesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ERBBBLNRSK87">9</a>","WATER SOLUTIONS INC","DAVID JOHNS","President and Chief Executive Officer","99-048 KOAHA WAY","STE 1","AIEA","HI","96701-3295","Provide communication services, including print and media representation. Develop curriculum and business materials for training to small business owners as well as offer individual coaching to small business owners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#73;&#72;&#50;&#48;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">DIH20@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JKC6SND7AX23">10</a>","GLOBETECK GROUP, INC","MOHAMMAD ROUF","President","2800 WOODLAWN DR STE 192","","HONOLULU","HI","96822-1865","Globeteck provides training programs in Asbestos, Lead, Hazardous Materials, Confined Spaces, Mold, DOT. We provides technical services in UST closure reports, air monitoring, construction management, environmental management and laboratory services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#104;&#97;&#109;&#109;&#97;&#100;&#64;&#103;&#108;&#111;&#98;&#101;&#116;&#101;&#99;&#107;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mohammad@globeteckgroup.com</a>","http://www.globeteckgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1GHN7NL59X9">11</a>","PACIFIC BUSINESS SERVICES INC","RUSSELL SEENEY","President","1542 YOUNG ST","STE 202","HONOLULU","HI","96826-1924","PBS is a full-spectrum provider of computer-based solutions for Pacific Region business, educational, and government markets since 1984. We supply hardware, software, and/or consulting services. We have worked in FINTECH in Federal Credit Unions, Banking, Technology Transformation either in upgrades or vendor migrations, we have been responsible for upgrading Windows desktops for up to 200 computers in one project, supporting 150 computers in migrating to multiple buildings. We provide design and implementation of organizational infrastructure. We can provide project scheduling for new facility buildouts and facility maintenance, facility upgrades, infrastructure cabling, full campus copper and fiber cabling, construction scheduling, computer, networking, systems integration. We can provide IT Audit, pentesting and vulnerability scans. Basic training for cybersecurity, disaster recovery and Business Continuity (COOP). Subcontract technical labor support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#83;&#101;&#101;&#110;&#101;&#121;&#64;&#80;&#66;&#83;&#72;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">RSeeney@PBSHawaii.com</a>","https://www.pbshawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V3LEN5FXW3N4">12</a>","SEA ENGINEERING INC","CHRIS CONGER","President","863 N NIMITZ HWY","","HONOLULU","HI","96817-4517","marine construction and diving, underwater construction, ocean/coastal engineering, marine (bathymetric, hydrographic) surveying","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#111;&#110;&#103;&#101;&#114;&#64;&#115;&#101;&#97;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">cconger@seaengineering.com</a>","www.seaengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5CLWKFJGGB9">13</a>","BEAR MACHINERY, INC.","BLAIR STULTZ","President","46-153 MALINA PL","","KANEOHE","HI","96744-3804","Precision CNC and conventional machine work. Custom fabrication, all metals, all types of welding. Waterjet cutting. Assembly work including painting, mechanical, pneumatic and hydraulic. Quality assurance: CMM Inspection, MIL-I-45208 & MIL-STD-45622.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#105;&#114;&#115;&#116;&#117;&#108;&#116;&#122;&#64;&#98;&#101;&#97;&#114;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#114;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">blairstultz@bearmachineryinc.com</a>","https://www.bearmachineryinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KAU8W2WBRN13">14</a>","JOSEPH REICH JR","JOSEPH REICH JR","CAPTAIN/OWNER","5761 KAMEHAMEHA V HWY","","KAUNAKAKAI","HI","96748-5011","SPORT FISHING SUPPORT OF USGS SCIENTISTS ON REEF SURVEYING DEPLOYING/RETRIEVING UNDERWATER DATA COLLECTION INSTRUMENTS, SUPPORT FOR SCUBA DIVERS TRACKLINE SOUNDINGS AND UNDERWATER CAMERA DATA COLLECTION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#121;&#99;&#101;&#99;&#115;&#112;&#111;&#114;&#116;&#102;&#105;&#115;&#104;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">alycecsportfishing@gmail.com</a>","http://www.alycecsportfishing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N4M1J7HLHKQ4">15</a>","CATALYST GROUP LLC","RICHARD KIM","President","3615 HARDING AVE","STE 509","HONOLULU","HI","96816-3757","Organizational consulting, research, psychological services, training, and professional staffing services company that has proven expertise in Health and Human Services, Healthcare Systems, Education, and Organizational Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#107;&#105;&#109;&#64;&#116;&#99;&#103;&#111;&#99;&#46;&#99;&#111;&#109;">rkim@tcgoc.com</a>","HTTP://WWW.TCGOC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TM4VM1BLMXF4">16</a>","MAUNA KEA INFRARED, LLC","DOUGLAS TOOMEY","","21 POOKELA ST","","HILO","HI","96720-5112","Design adn manufacture of electro-optical equipment primarily for research","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#111;&#109;&#101;&#121;&#64;&#109;&#107;&#105;&#114;&#46;&#99;&#111;&#109;">toomey@mkir.com</a>","http://mkir.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KY84JJ932TJ7">17</a>","FIRST RESPONSE PROFESSIONAL SECURITY SERVICES LLC","JIN KIM","COO","2110 LAUWILIWILI ST STE 104H","","KAPOLEI","HI","96707-1867","Full service integrated security services, CCTV, digital video recorder, burglary systems, hold up, fire, access control, bio-metric, residential systems, commercial systems, 24 hour central station monitoring services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#110;&#64;&#97;&#108;&#97;&#114;&#109;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">jin@alarmhawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJ3NGFNKCUW6">18</a>","HAWAII 5-0 TECHNOLOGY SERVICES INC","RANDY NELSEN","Treasurer","386 N VINEYARD BLVD","APT B14","HONOLULU","HI","96817-3611","We are a minority owned Native Hawaiian Organization company specializing in R&D of new technology, with the capability to perform engineering, marketing, scientific & technical consulting, professional & management development training & others.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#110;&#101;&#108;&#115;&#101;&#110;&#64;&#104;&#105;&#53;&#48;&#100;&#99;&#109;&#46;&#99;&#111;&#109;">rnelsen@hi50dcm.com</a>","http://www.hi5-0.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7J3MQBWTVF7">19</a>","SYSTEMS INTEGRATION GROUP, INC.","LULU BLESSING","Engineer","1154 FORT STREET MALL","SUITE 320","HONOLULU","HI","96813-2712","Programming of PLCs, Process control programming for embedded micro-controllers, Windows programming using Delphi. Electric panel fabrication. Generator paralleling control system design and fabrication","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#64;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#105;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">engineer@systemsintegrationgroup.com</a>","https://www.systemsintegrationgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RFEWEFJB9U76">20</a>","NORTH STAR SCIENTIFIC CORP","ROBERT SWISHER","Chief Financial Officer/ Corp Counsel","91-238 KALAELOA BLVD","","KAPOLEI","HI","96707-1820","North Star Scientific Corporation (NSS) is a diversified enterprise principally engaged in the conception, design, manufacture and integration of advanced technology products and services for the United States Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#110;&#115;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">rob@nsshawaii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VM1BLTTKKP94">21</a>","FUKUNAGA ELECTRICAL INC","DONAVAN ENANORIA","","16-219 MIKAHALA ST","","KEAAU","HI","96749-8006","We provide all phases of electrical work in relation to commercial and industrial wiring facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#97;&#118;&#97;&#110;&#64;&#102;&#117;&#107;&#117;&#110;&#97;&#103;&#97;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">donavan@fukunagaelectrical.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GVLGK73C9DM1">22</a>","MAKAI OCEAN ENGINEERING INC","GREG ROCHELEAU","","41-305 KALANIANAOLE HWY","","WAIMANALO","HI","96795-1806","Engineering & design ocean pipelines, ocean energy systems, 3D/4D visualization software, submarine cable management software","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#46;&#114;&#111;&#99;&#104;&#101;&#108;&#101;&#97;&#117;&#64;&#109;&#97;&#107;&#97;&#105;&#46;&#99;&#111;&#109;">greg.rocheleau@makai.com</a>","http://www.makai.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBKYP3MHYJM1">23</a>","MASON ARCHITECTS, INC.","JOHN FULLMER","","119 MERCHANT ST","","HONOLULU","HI","96813-4452","architecture, historic research and preservation planning, restoration and adaptive reuse of historic structures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#64;&#109;&#97;&#115;&#111;&#110;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">jf@masonarch.com</a>","www.masonarch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRL8YFVGUJM8">24</a>","WINDWARD BOATS INC","JOSEPH ADAMS","","789 KAILUA RD","","KAILUA","HI","96734-2831","we sell everything from catamarans, sail boats, inflatable rafts, kayaks, and fishing boats... to EZ Loader Trailers... to multiple brands of marine engines. Stop by for a visit at our location in Kailua or give us a call if you have any questions as you're searching for the craft that meets your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#79;&#65;&#84;&#77;&#65;&#78;&#64;&#65;&#76;&#79;&#72;&#65;&#46;&#78;&#69;&#84;">BOATMAN@ALOHA.NET</a>","windwardboats.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1WZRB6JKWJ4">25</a>","PACMAR TECHNOLOGIES LLC","JAMES OTA","","841 BISHOP ST STE 1110","","HONOLULU","HI","96813-3916","Marine Engineering and Naval Architecture, Boat Building, Boat Building and Repairing, Ship Repair, System Design & Prototyping, Autonomy & Data Science, Cyber, Power & Energy, Advanced Materials & Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#116;&#101;&#97;&#109;&#64;&#112;&#97;&#99;&#109;&#97;&#114;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">contractsteam@pacmartech.com</a>","http://www.pacmartech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VWSYBMR2S2K1">26</a>","HANA INDUSTRIES, INC.","BRADLEY COOPER","","841 BISHOP ST STE 1050","","HONOLULU","HI","96813-3916","Sole source capability of up to $20M on KO authority and an unlimited cap with higher authority. Offices located in Honolulu, HI, Alexandria, VA, Bryan, TX and Wayne, PA. Hana’s core competencies are security, grounds keeping, janitorial, facilities maintenance management, & base operations support services. We have TS facility clearance. Rules of affiliation do not apply to NHO-owned entities. We have an SBA Mentor/Protégé relationship with EMCOR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#116;&#104;&#101;&#104;&#97;&#110;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">bcooper@thehanagroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEK6ACJ7RMN7">27</a>","HBC MANAGEMENT SERVICES, INC.","TROY COOPER","","841 BISHOP ST STE 1050","","HONOLULU","HI","96813-3916","HBC is a Native Hawaiian Organization owned and operated by Native Hawaiian veterans of the Korean, Vietnam, and Gulf Wars. Continued service is the foundation of our corporate culture and is the basis upon which we strive to provide the finest services and products available to our customers. With over 10 years of providing services for Government agencies, HBC’s core competencies include Security & Access Control Services, Facilities Operations, and Missile Technologies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#116;&#104;&#101;&#104;&#97;&#110;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">tcooper@thehanagroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGL8P3GH6JW3">28</a>","ELEMENT ENVIRONMENTAL, LLC","RYAN YAMAUCHI","","98-030 HEKAHA ST","STE 9","AIEA","HI","96701-4900","Element Environmental provides the following services: Environmental Consulting, Environmental Engineering, and Water Resource Consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#109;&#97;&#117;&#99;&#104;&#105;&#64;&#101;&#50;&#104;&#105;&#46;&#99;&#111;&#109;">ryamauchi@e2hi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETZBVF818YN7">29</a>","BAKER, LEIGH MICHELLE","LEIGH MICHELLE BAKER","","263 KAIULANI AVE APT 307","","HONOLULU","HI","96815-3069","Author of Writing in the Environmental Sciences: A Seven-Step Guide (Cambridge UP, 2017). I teach environmental scientists how to write more clearly in courses such as Argument for Scientists, Writing in the Environmental Sciences, and Keys to Effective Editing. Contact me if your organization requires writing training or guidance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#98;&#97;&#107;&#101;&#114;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">lmichellebaker@yahoo.com</a>","https://conservationwritingpro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UXZFTD5JG237">30</a>","H NU PHOTONICS LLC","DANIEL OCONNELL","","350 HOOHANA ST","","KAHULUI","HI","96732-2931","Precision Optics Space Optics Bio imaging systems Micro-fluidic systems 3D imaging systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#99;&#111;&#110;&#110;&#101;&#108;&#108;&#64;&#104;&#110;&#117;&#112;&#104;&#111;&#116;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">doconnell@hnuphotonics.com</a>","http://www.hnuphotonics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FM6RC9SEFM21">31</a>","CAM SECURITY INC","ASA IKEDA","","1540 S KING ST","","HONOLULU","HI","96826-1919","ALARM CONSULTING, INSTALLATION, SERVICE CAMERA SURVEILLANCE CONSULTING, INSTALLATION, SERVICE ACCESS CONTROL CONSULTING, INSTALLATION, SERVICE SECURITY CAMERA INSTALLATION INTERACTIVE VIDEO MONITORING SERVICES SURVEILLANCE EQUIPMENT TRAINING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#99;&#97;&#109;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">sales@camsecurity.com</a>","http://www.camsecurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E44NLEWN7ZA1">32</a>","PREMIER SOLUTIONS HI LLC","AMANDA CRABTREE-LOO","","3375 KOAPAKA ST STE B217","","HONOLULU","HI","96819-1868","FACET Systems, Financial Auditing, Computer programming, admin, help desk, project mgmt, staffing, janitorial, facility mgmt, System architect, computer tech, System admin, Training, Security, construction, medical sup, Sharepoint, Document Scanning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#77;&#65;&#78;&#68;&#65;&#64;&#80;&#82;&#69;&#77;&#73;&#69;&#82;&#83;&#79;&#76;&#85;&#84;&#73;&#79;&#78;&#83;&#72;&#73;&#46;&#67;&#79;&#77;">AMANDA@PREMIERSOLUTIONSHI.COM</a>","http://www.premiersolutionshi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U8JJFJ8HMVH7">33</a>","ETHOS ARCHITECTS LLC","JANINE SHINOKI-EVANS","","55 MERCHANT ST STE 3020","","HONOLULU","HI","96813-4331","Full service Master Planning, Architecture, Interior Design and Programming Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#108;&#105;&#102;&#102;&#111;&#114;&#100;&#64;&#112;&#111;&#115;&#116;&#46;&#104;&#97;&#114;&#118;&#97;&#114;&#100;&#46;&#101;&#100;&#117;">jclifford@post.harvard.edu</a>","http://www.ethosarchitects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGW9RQ3CMKL1">34</a>","TITAN INDUSTRIES LLC","MIKE KEITH","","889 AHUA ST","","HONOLULU","HI","96819-2030","Founded in 2008 as an environmental remediation company, Titan Industries LLC has grown to become one of Honolulu?s most trusted General Contractors. Our team has many years of collective experience in the demolition, general contracting and hazardous abatement industry in Hawai’i. A locally owned and operated company, our scope of work encompasses demolition, hazardous abatement, general construction, HVAC services and renovations for commercial and residential clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#101;&#105;&#116;&#104;&#64;&#116;&#105;&#116;&#97;&#110;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">mkeith@titanhawaii.com</a>","http://www.titanhawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBBPPLTZNV18">35</a>","KAUAI BOAT ENTERPRISES LLC","JOE WALDVOGEL","","4030 HALEHAKA RD","","LIHUE","HI","96766-8852","We are a boat builder and repair shop as well as automotive repair. We also do welding, filming and research for marine support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#105;&#99;&#111;&#110;&#97;&#107;&#98;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jliconakbe@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5RWCMZMX674">36</a>","HOOKELE HEALTH INNOVATIONS LLC","DEW-ANNE LANGCAON","","820 MILILANI ST","STE 711","HONOLULU","HI","96813-2937","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#119;&#97;&#110;&#110;&#101;&#64;&#104;&#111;&#111;&#107;&#101;&#108;&#101;&#104;&#101;&#97;&#108;&#116;&#104;&#46;&#99;&#111;&#109;">dewanne@hookelehealth.com</a>","http://www.hookelehomecare.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G7MNM5LL5MQ3">37</a>","SIMONPIETRI ENTERPRISES LLC","STEPHEN BRENNAN","","519 KEOLU DR APT A","","KAILUA","HI","96734-3941","Supply chain development and technical, economic, and market analysis for alternative and renewable fuels; greenhouse gas and carbon lifecycle analyses and information technology for energy manufacturers; industrial, municipal, and commercial waste re-use and recovery; renewable fuels and chemicals production and technology development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#115;&#105;&#109;&#111;&#110;&#112;&#105;&#101;&#116;&#114;&#105;&#46;&#99;&#111;&#109;">steve@simonpietri.com</a>","http://www.simonpietri.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNB9C162J4Q7">38</a>","INTERNATIONAL UNDERWATER EXPLORATIONS, LLC","JOHN SULLIVAN","","590 LIPOA PKWY","SUITE C2","KIHEI","HI","96753-6911","IUE provides software, server solutions and web services to the renewable energy, defense, and marine sectors. We provide GIS solutions and information management tools that bring data online to provide a rich visualization environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#64;&#105;&#117;&#101;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">jd@iuetech.com</a>","http://www.iuetech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFJ3C8GTN315">39</a>","ENERGY MANAGEMENT CONSULTING & CONSTRUCTION, LLC","DANTE ARAGON","","1633 KAHAI ST","","HONOLULU","HI","96819-3913","Energy auditing and consulting, turnkey Lighting retrofits, lamp recycling, solar / PV, non chemical water treatment, project management, wind turbine, HVAC system efficiency","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#65;&#78;&#84;&#69;&#64;&#69;&#77;&#67;&#67;&#72;&#65;&#87;&#65;&#73;&#73;&#46;&#67;&#79;&#77;">DANTE@EMCCHAWAII.COM</a>","http://www.emcchawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGKQWM6UGBX7">40</a>","HONUA CONSULTING, LLC","TRISHA WATSON","","26 S MARKET ST # 1D","","WAILUKU","HI","96793-2217","Honua Consulting is a Native Hawaiian woman owned small business that provides community, environmental, cultural and educational services, including archaeology services and public relations. We are a certificated Underutilized DBE with the Hawaii DOT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#116;&#115;&#111;&#110;&#64;&#104;&#111;&#110;&#117;&#97;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">watson@honuaconsulting.com</a>","http://www.honuaconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1NTJFJ3YYR6">41</a>","MILLENNIUM EXPRESS AND TRAVEL INC","JOSE SERVIDA","","94 350 KEAOLANI STREET","","MILILANI","HI","96789-","We provide freightforwarding services for wholesalers and direct to consumers needing customs brokerage and delivery logistics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#108;&#108;&#101;&#110;&#110;&#105;&#117;&#109;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">millenniumexpress@gmail.com</a>","https://www.millenniumexpress.biz/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PGD7NHKMC215">42</a>","HAWAII PROFESSIONAL AUDIOLOGY, LLC","SHANNON CHING","","1010 S KING ST STE 802","","HONOLULU","HI","96814-1709","We offer complete hearing services for all ages including, hearing evaluations, hearing aid consultations, cleanings and adjustments, as well as hearing protection consultations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#105;&#110;&#103;&#115;&#48;&#48;&#56;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">chings008@hawaii.rr.com</a>","http://www.hpaudiology.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZXBKLB4CU96">43</a>","PACIFIC RIM DEFENSE, LLC","ROBERT BAUDRAU","","98-1256 KAAHUMANU ST STE E401","","PEARL CITY","HI","96782-3282","Program Management,Technical Services,JCTD Support,Program Support,Systems Operation,System Maintenance,Logistics Operations,Process Analysis,Joint Programs, Coalition,Exercise Planning,Field Test,Assessments","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#46;&#98;&#97;&#117;&#100;&#114;&#97;&#117;&#64;&#112;&#97;&#99;&#105;&#102;&#105;&#99;&#114;&#105;&#109;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">bob.baudrau@pacificrimdefense.com</a>","www.pacificrimdefense.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J774KUBRZDP3">44</a>","SYSTEM OPTIMIZATION & SUPPORT, LTD.","THOMAS MATTHEWS","","1188 BISHOP ST","STE 3002","HONOLULU","HI","96813-3312","SOS-Hawaii has 35 years of information technology experience & are SBA 8A Value-Added Resellers specializing in Enterprise Storage, Virtualization & Backup Solutions. We have certifications with EMC, Cisco, Citrix, AppSense, Microsoft, HP, Dell.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#64;&#115;&#111;&#115;&#45;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">thomas@sos-hawaii.com</a>","http://www.sos-hawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K97NJ926SEK7">45</a>","HAWAIIAN ISLAND TECHNOLOGIES LIMITED LIABILITY COMPANY","MEGAN CLARK","","2530 KIPUKA ST","","KOLOA","HI","96756-9740","Information Technology design and maintenance, Network Design and maintenance, Juniper Networks","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#103;&#97;&#110;&#46;&#99;&#108;&#97;&#114;&#107;&#64;&#104;&#97;&#119;&#97;&#105;&#105;&#97;&#110;&#105;&#115;&#108;&#97;&#110;&#100;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">megan.clark@hawaiianislandtechnologies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HHCJTRGP3363">46</a>","MINATOISHI PALUMBO ARCHITECTS, INC.","LORRAINE MINATOISHI","","1003 BISHOP ST STE 1975","","HONOLULU","HI","96813-6461","AEPAC is an award-winning full-service Architecture & Engineering, Project Management, and Environmental Services Firm with offices in Honolulu and Guam. Established in 2003, a certified 8(a) small business enterprise, AEPAC is a synergistic group of experts focused on the Pacific region. With 20 years of cross-cultural operating experience throughout the Pacific and with professional licenses throughout the region, AEPAC offers unparalleled professional and scientific services. AEPAC specializes in Historic Preservation and provides Civil, Environmental, Structural, Electrical, Surveying, Geotechnical, Landscaping and Traffic services. Our Engineering and Management team use industry-proven techniques such as lessons learned, risk assessment, process management, and project management to improve the project execution and provide leadership with informed decision-making tools, and quality deliverables.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#114;&#97;&#105;&#110;&#101;&#64;&#97;&#101;&#112;&#97;&#99;&#46;&#99;&#111;&#109;">lorraine@aepac.com</a>","http://aepac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCN5VPWHHKN1">47</a>","PELAGIC REASEARCH GROUP LLC","MICHAEL MUSYL","","1327 WILHELMINA RISE","APT 1","HONOLULU","HI","96816-3254","To fill a niche for an agile and flexible research consortium, Pelagic Research Group LLC was founded to design post-release mortality studies in fisheries, bycatch mitigation studies, conduct meta-analyses on mortality rates and bycatch to inform management and future research and to design and optimise electronic tagging experiments. PRG brings a blend of “hands-on” field and laboratory experiences in marine and freshwater biology with strong cross-disciplinary core competencies in analytics, research, meta-analysis, and cost-benefit. For each new project, PRG assembles and works with leading pelagic biologists and researchers with state, federal, academic institutions, NGOs, and non-profits to maximise project goals and deliverables. PRG is committed to produce novel research of high scholarly achievement to better inform management but also to save precious research funds by reducing overhead costs and designing better studies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#109;&#117;&#115;&#121;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">michael.musyl@gmail.com</a>","https://pelagicresearchgroup.com/services"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EU4LM9MN5BJ5">48</a>","CONNECTING THE DOTS LLC","ABHISHEK DUGGAL","","512 IOLANI AVE APT 501","","HONOLULU","HI","96813-1891","Connecting the Dots LLC provides reliable, courteous & quality Computer and Business Consulting Services to individuals as well as small and large companies - advising on how best to use information technology to meet their objectives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#116;&#100;&#108;&#108;&#99;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">info@ctdllconline.com</a>","http://ctdllconline.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SJ8EH5CBJJ16">49</a>","REGENERATED RESOURCE SYSTEMS LLC","RICHARD ANDRADE","","46-270 KAHUHIPA ST","APT A408","KANEOHE","HI","96744-6087","To infuse a patented process into existing waste water facilities, making it more efficient and less 'sunken cost' producing commercially saleable ORGANIC LIQUID NATURAL GAS/R1,and R2 water/ORGANIC CO2/Sterilized Dry Sludge. Producing the ability to compete on the global 'Carbon Credit' market. Lessening the carbon footprint throughout the world.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#114;&#97;&#100;&#101;&#46;&#114;&#114;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">randrade.rrsllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKU8NJAATJC5">50</a>","ADNOVIV, INC.","AMY DROITCOUR","","2800 WOODLAWN DR","STE 101J","HONOLULU","HI","96822-1863","Engineering research and development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#46;&#100;&#114;&#111;&#105;&#116;&#99;&#111;&#117;&#114;&#64;&#97;&#100;&#110;&#111;&#118;&#105;&#118;&#46;&#99;&#111;&#109;">amy.droitcour@adnoviv.com</a>","https://www.adnoviv.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LU66BKL69QJ2">51</a>","MAUI INNOVATION GROUP INC","EDWARD DAVIS","","2742 PUU HOOLAI ST","","KIHEI","HI","96753-8576","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#100;&#95;&#112;&#95;&#100;&#97;&#118;&#105;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">ned_p_davis@yahoo.com</a>","www.MauiInnovationGroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HRJLGAWJNCM7">52</a>","SHARON ZAMBO-FAN & ASSOCIATES, INC","SHARON ZAMBO-FAN","","2414 KOMO MAI DR","","PEARL CITY","HI","96782-1057","Sharon Zambo-Fan & Associates, Inc. is an established Native Hawaiian WOSB and 8(a) PR/Marketing / consulting firm specializing in award-winning, cross-cultural trade shows and conventions. We specializing in integrated brand consulting, creative direction, graphic design, and A/V production for both large and small businesses, start-ups, and Federal, State and local government agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#111;&#110;&#64;&#115;&#122;&#102;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sharon@szfinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYFVC1RKNWX8">53</a>","DRONE SERVICES HAWAII LLC","MICHAEL ELLIOTT","","98-1827 KAAHUMANU ST","STE A APT A","AIEA","HI","96701-1831","Drone Services Hawaii sells and repairs a variety of drone products for personal, professional, civil and government use. Drone Services Hawaii provides a variety of drone aerial capabilities from photo, video, aerial survey, 3D mapping, search and rescue.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#101;&#108;&#108;&#105;&#111;&#116;&#116;&#64;&#100;&#114;&#111;&#110;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">mike.elliott@droneserviceshawaii.com</a>","www.droneserviceshawaii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NDBMWM3J1EC7">54</a>","PUNA GROUP LLC","R GAISFORD","","HC 2 BOX 6864","","KEAAU","HI","96749-9320","Enterprise computer/systems design and development. Scalable distributed application design, development, deployment and management. Computer system and application security design, implementation and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#103;&#97;&#105;&#115;&#102;&#111;&#114;&#100;&#64;&#112;&#117;&#110;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">bgaisford@punagroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H8N8DVFQNKD5">55</a>","TISSUEGRAB BIOPSY SYSTEMS LLC","MICHAEL MUSYL","","1327 WILHELMINA RISE APT 1","","HONOLULU","HI","96816-3254","To meet growing demands, TissueGrab TM Biopsy Systems LLC (pelagicresearchgroup.com/biopsy-device) designed and developed a unique one-use, gamma-irradiated, minimally invasive biopsy sampling device for marine research. TG specializes in the development of innovative biopsy instruments and tag heads/systems to carry electronic tags for extended periods in marine animals and fishes. Principals of TG bring a blend of hands-on field and laboratory experiences in marine biology with strong cross-disciplinary core competencies in analytics, research, meta-analysis, cost-benefit and product/patent development. TG has familiarity with 3D printing and plastic injection moulding processes, technical drawings, various medical-grade materials and ISO sterilization standards; Patent & product development (US Patent 10,376,248). TG teamed with its sister company, Pelagic Research Group LLC (DUNS 078708073), to offer a broad range of products and services in pelagic fisheries research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#105;&#115;&#115;&#117;&#101;&#71;&#114;&#97;&#98;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">TissueGrab@gmail.com</a>","https://pelagicresearchgroup.com/biopsy-device"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSRCJN1QPKG5">56</a>","BOARS NO MORE LLC","MITCHELL TYNANES","","91 3074 MAKALEA LOOP","","EWA BEACH","HI","96706-","Locally owned and operated small business. We provide pest control services to reduce the presence of invasive species such as, but not limited to, feral pigs, feral cats, Indian mongoose, rats, mice, feral chickens, and introduced bird species. We utilize humane trapping methods, using box and pen traps. All animals are removed off-site live. We have provided services to, federal and state agencies, local utilities, as well as, private schools and organizations, community associations, and private residential properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#97;&#114;&#115;&#110;&#111;&#109;&#111;&#114;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">boarsnomore@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N3GDEB78RNF8">57</a>","GALAPAGOS FEDERAL SYSTEMS LLC","TODD LAWSON","","112 KULI PUU ST","","KIHEI","HI","96753-7158","To best serve our clients’ needs, we oer the complete ability to fully design, develop, test, prototype, and build. We support our clients’ core mission objectives with customized solutions.  Our services include: Cloud Integration and Data Center Consolidation, Cybersecurity and Information Assurance, Advisory and Assistance Services, and IT Service Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#46;&#108;&#97;&#119;&#115;&#111;&#110;&#64;&#103;&#97;&#108;&#97;&#112;&#97;&#103;&#111;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">todd.lawson@galapagosllc.com</a>","www.galapagosllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLM6KPB8K1W7">58</a>","ADVANCED SILICON CARBIDE MATERIALS LLC","BILL FISCHER","","3038 AUKELE ST","","LIHUE","HI","96766-1464","Advanced Silicon Carbide Materials (ASCM) designs and manufactures high performance mirrors and telescopes made of CVC SiC® or composites. These precision-engineered optical products are used in a wide range of civilian, military and aerospace applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#102;&#105;&#115;&#99;&#104;&#101;&#114;&#64;&#97;&#115;&#99;&#109;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">wfischer@ascmtech.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NM1PMC7C6FG5">59</a>","NSS LOGISTICS LLC","JULIUS NOFO","","170 PULU CIR UNIT 104","","WAHIAWA","HI","96786-3359","NSS Logistics LLC (NS2Log) is a veterans owned company that enthusiastically provides professional services ranging from a variety of industries. Our mission is to deliver valued customer service to all clients and to ensure superior performance is upheld at the highest level to best service our customers’ needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#117;&#115;&#110;&#111;&#102;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">juliusnofo@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFTWJFWUV2G1">60</a>","HILLS23 CONSULTING LLC","AMALIA HILLIARD","","51-446 B KEKIO RD","","KAAAWA","HI","96730-","Network Engineering Services, (Design/Implementation/Test & Evaluation/Demo) Accreditation activities, (IATT/ATO/STIGs/Policy/RMF) Subject Matter Expertise (SME) for C4ISR, SCADA and ICS Defense Advanced Technology Transition and Integration Management Support Cyber Security Strategic Planning, Coordination, and Management in addressing DOD/DoE mission gaps IOT Program and Project Management Support Hills23 Consulting deploys advanced Cyber Security and Network Defense technologies and solutions for government and industry Solutions to military and other government networks, commercial networks, Supervisory Control and Data Acquisition (SCADA) and Industrial Control Systems Previous Work Experience: Defense Information Systems Agency (DISA) Rapid Innovation Funded (RIF) study, 'Defensive Cyber Maneuver Software Defined Network' USPACOM Joint Information Environment Increment 2 (JIE2) DARPA Edge-Directed Cyber Technologies for Reliable Mission Communications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#77;&#65;&#76;&#73;&#65;&#46;&#72;&#73;&#76;&#76;&#73;&#65;&#82;&#68;&#64;&#72;&#73;&#76;&#76;&#83;&#50;&#51;&#46;&#67;&#79;&#77;">AMALIA.HILLIARD@HILLS23.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LD7WZKDLVM68">61</a>","HOME AWAY FROM HOME LAUNDRY-SERVICES LLC","JAMES LEE","","306 KUKANILOKO ST","","WAHIAWA","HI","96786-5207","HAFHLS Company Deliver quality coin/ industrial laundry and dry cleaning services, Janitorial and environmental cleaning services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#46;&#108;&#101;&#101;&#64;&#104;&#97;&#102;&#104;&#108;&#115;&#46;&#99;&#111;&#109;">james.lee@hafhls.com</a>","www.HAFHLS.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPB3NM5JNBM3">62</a>","VINCUL INDUSTRIES, L.L.C","JOAQUIN VILLARREAL","","1296 KAPIOLANI BLVD APT 906","","HONOLULU","HI","96814-2878","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#97;&#113;&#117;&#105;&#110;&#64;&#118;&#105;&#110;&#99;&#117;&#108;&#46;&#99;&#111;&#109;">joaquin@vincul.com</a>","https://www.vincul.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YVUJU7ZF6S33">63</a>","DATA ANALYTICS & IT SYSTEMS CORP","TROY COOPER","","4999 KAHALA AVE","APT 448","HONOLULU","HI","96816-5465","Competent in data analytics; professional attitude; customer focused; partnering philosophy with KO and customer; contract requirements performed with high performance standards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#116;&#104;&#101;&#104;&#97;&#110;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">tcooper@thehanagroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JDYQAGH71CJ6">64</a>","THE PIE GROUP LLC","JOHN CLARK","","91-1128 KAIKOHOLA ST","","EWA BEACH","HI","96706-6527","The PIE Group is a VA-certified service-disabled veteran-owned TS-cleared small business specializing in providing innovative workforce & leadership training to Government organizations & commercial businesses. We help organizations achieve authentic work-life balance via workplace education, cultural understanding, and a rediscovering of individual and organizational purpose. Our specialties: INNOVATIVE | LEADERSHIP| DEVELOPMENT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#99;&#108;&#97;&#114;&#107;&#64;&#116;&#104;&#101;&#112;&#105;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">johnclark@thepiegroup.com</a>","https://www.thepiegroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZU3LCW99EJB5">65</a>","DRUMS ALIVE LLC","KAREN WATANABE-SAKAMOTO","","1905 WILHELMINA RISE","","HONOLULU","HI","96816-3313","Provide evidence-based programs, curricula, and training to educators, therapists, fitness professionals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#101;&#110;&#64;&#100;&#114;&#117;&#109;&#115;&#45;&#97;&#108;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">karen@drums-alive.com</a>","www.drums-alive.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETAHNB18JHW6">66</a>","MANICODE SECURITY LLC","JAMES MANICO","","322 KANAE PL","","KAPAA","HI","96746-9417","Secure Coding and Application Security Education Information Security Research","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#109;&#97;&#110;&#105;&#99;&#111;&#100;&#101;&#46;&#99;&#111;&#109;">jim@manicode.com</a>","https://manicode.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G75DKVV79LA9">67</a>","ULU HI-TECH, INC.","SHERRY HESTER","","770 KAPIOLANI BLVD STE 402","","HONOLULU","HI","96813-5257","Ulu HI-Tech, Inc. is an 8(a) Native Hawaiian Organization (NHO)-owned small business that provides a robust suite of IT consulting and services to commercial and government agencies, including: IT management & strategy, cloud strategy & implementation, program/project management, QA/test management, cybersecurity, software development, DevSecOps, and integration & system engineering solutions. Team members hold Top Secret Information Clearance. *On-site client mentoring. *Lunch and learns, white papers and impromptu learning sessions. *Dedicated to our client's mission, partnering with them for success. *Disciplined organization – all employees are poised and empowered to succeed. *Small and agile – able to hire quickly with high quality benefits. *Great value – client mission focused while remaining price competitive. *Culture of innovation – increasing our capabilities with new technology and methodologies is a key to our success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#104;&#101;&#115;&#116;&#101;&#114;&#64;&#117;&#108;&#117;&#104;&#105;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">hhester@uluhitech.com</a>","http://www.uluhitech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SWDHDN26HY16">68</a>","PELAGX LLC","ELIZABETH TARQUIN","","615 PAOPUA LOOP","","KAILUA","HI","96734-3535","Pelagx is a private consultancy with competencies in information systems development; IT privacy and security; federal contracts management; environmental science; and coffee roasting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#122;&#46;&#116;&#97;&#114;&#113;&#117;&#105;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">liz.tarquin@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D4EWKQMRLYR7">69</a>","KOA IKE INDUSTRIES LLC","CHRISTOPHOR OLIVEIRA","","85-1431 WAIANAE VALLEY RD","","WAIANAE","HI","96792-2576","KOA IKE Industries, LLC specializes in culturally inventorying sites, evaluating them, and sometimes mitigating the adverse effects of development projects and construction around the qualifying sacred sites and burial grounds. KOA IKE Industries cultural resources study and preserve the remains and sites associated with human activities and including: prehistoric Hawaiian archaeological sites; historic archaeological sites; historic buildings; elements or/and areas of the natural landscape which have traditional cultural significance. Our deep working knowledge of state and federal regulations, coupled with solid research, have allowed us to assist multiple companies and Universities in Hawaii with preservation actions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#101;&#111;&#64;&#107;&#111;&#97;&#105;&#107;&#101;&#46;&#99;&#111;&#109;">ceo@koaike.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HT6LDD8ADFL3">70</a>","MEJE INC","EDWARD GERETY III","","45 772 APUAKEA ST","","KANEOHE","HI","96744-","Consulting services regarding operational and research dependent reviews of programming.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#116;&#106;&#103;&#64;&#109;&#121;&#109;&#101;&#106;&#101;&#46;&#99;&#111;&#109;">etjg@mymeje.com</a>","mymeje.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N81EN4HG9CC8">71</a>","GUILD CONSULTING LLC","KEVIN LYE","","3038 WOOLSEY PL","","HONOLULU","HI","96822-1566","GUILD Consulting is an innovative management consulting firm, comprised of experienced consultants with diverse specialties who have worked with clients across education, healthcare, technology, business-to-business services, non-profits, government and other sectors. Each of our partners has long-standing relationships in the business world and is individually able to address complex business challenges. However, through collaboration between partners we provide enhanced services to our clients beyond that which any individual partner could provide. Beyond this, we have access to a large ecosystem of specialized experts from across this world on whom we frequently call to address specific issues arising during our various client engagements. We craft creative, effective solutions and deliver them in an efficient, disciplined manner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#103;&#117;&#105;&#108;&#100;&#46;&#105;&#109;">kevin@guild.im</a>","https://guild.consulting/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y92KAJ95EE76">72</a>","PAUL MORGAN CONSULTING INC","PAUL MORGAN","","76-924 HUALALAI ROAD","","KAILUA KONA","HI","96740-9702","Paul Morgan Consulting Inc is a business consulting company emphasizing business development specializing in workshops, seminars, and 1 on 1 consulting. Our focus is from a business foundational perspective to help start, manage, and grow businesses. We help potential entrepreneurs who have great ideas, enthusiasm, and positive attitudes and existing entrepreneurs who need help with growth.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#112;&#97;&#117;&#108;&#109;&#111;&#114;&#103;&#97;&#110;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">paul@paulmorganconsulting.com</a>","https://paulmorganconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VNY7VA12NBA1">73</a>","RAPIDTEK SOLUTIONS LLC","MICHAEL HIGASHI","","743 AINAPO ST","","HONOLULU","HI","96825-1051","We help businesses & organizations? gain a competitive advantage with technology by offering business and technology consultancy through business process analysis and optimization, application development and system integration, data analytics, database design and modeling, data migration, DevOps, Agile process design, execution and consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#104;&#105;&#103;&#97;&#115;&#104;&#105;&#64;&#114;&#97;&#112;&#105;&#100;&#116;&#101;&#107;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">michael.higashi@rapidteksolutions.com</a>","https://rapidteksolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EMNDBXF7JSK9">74</a>","ALAKA`I SERVICES GROUP INC.","KEN BAUTISTA","","3375 KOAPAKA ST","STE B217","HONOLULU","HI","96819-1868","Technical Services, Cyber Security Support, Administration, Document Imaging and scanning, research and development, Information Technology, Logistics, Subject Matter Experts, Professional Staffing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#46;&#98;&#97;&#117;&#116;&#105;&#115;&#116;&#97;&#64;&#97;&#108;&#97;&#107;&#97;&#105;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">ken.bautista@alakaiservicesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKJGTBLHEKD9">75</a>","PRIVATEER SPACE, INC.","ALEX FIELDING","","1305 N. HOLOPONO ST","SUITE 3","KIHEI","HI","96753-6916","Orbital space debris from space launches, satellite systems, and space collisions has resulted in over 21,000 man made objects larger than 10cm primarily in low earth orbit that are causing extreme risk to national security, global communications, and human space flight. Privateer offers an artificial satellite solution with capability to deorbit and remove space debris including existing inaccessible or incommunicative satellites in low earth and medium earth orbit. Capability to remove from GEO is expected in 2024.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#64;&#112;&#114;&#105;&#118;&#97;&#116;&#101;&#101;&#114;&#46;&#99;&#111;&#109;">af@privateer.com</a>","privateer.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QCKGSSKZDW84">76</a>","R2 LOGISTICS SOLUTIONS, LLC","PATRICK ROSE","","92 820 OPALIPALI PL","","KAPOLEI","HI","96707-","Primary business is delivering Strategic and Operational Planning Services to government-funded requirements. Support program solutions include Strategic and Operational Planning, Information Security, Additive Manufacturing to include design and 3D printing, Training program development to include curriculum development and delivery. Emergency Managment Planning, and Logistics Consulting Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#114;&#50;&#108;&#111;&#103;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@r2logsolutions.com</a>","www.r2logsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TU72EE8FSJK7">77</a>","KAPU SOLUTIONS LLC","JONATHAN NARVAES","","1188 BISHOP ST STE 811","","HONOLULU","HI","96813-3303","Kapu Solutions, LLC. provides strategic cyber/IT consulting and technology services, and solutions for government and commercial organizations. With military experience spanning the last three decades, the Kapu Solutions team marries academics, technology, and theory with real-world experience to give you solutions that work. As a Service-Disabled Veteran Owned Small Business with SBA 8(a) certification (pending), Kapu Solutions is committed to excellence and creating innovative and flexible solutions for our federal and commercial customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#110;&#46;&#110;&#97;&#114;&#118;&#97;&#101;&#115;&#64;&#107;&#97;&#112;&#117;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">Jon.narvaes@kapusolutions.com</a>","www.kapusolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGYPMDU94GM3">78</a>","SHELLY T TOKUNAGA-MAY","SHELLY TOKUNAGA-MAY","","45-410 KAMEHAMEHA HWY","","KANEOHE","HI","96744-1722","As a consultant, provides Indigenous Evaluation services, facilitation, and project management. Focus on Native Hawaiian and local organizations and communities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#104;&#101;&#108;&#108;&#122;&#104;&#105;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">Shellzhi@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SS2WYSDHKTM7">79</a>","EO SOLUTIONS LLC","BILLY BEARD","","84 MALAPUA PL","","KULA","HI","96790-8263","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#121;&#46;&#98;&#101;&#97;&#114;&#100;&#64;&#101;&#45;&#111;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">billy.beard@e-osolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGDNSGD4KE43">80</a>","BAYVIEW INVESTMENT GROUP, LLC","JOSHUA HU","","44-283 KANEOHE BAY DR","","KANEOHE","HI","96744-2607","KBay Consulting (KBC) specializes in providing Taiwan focused support to U.S. government clients. Our client support includes Language, Security Cooperation, Logistics, ISR, IT/Cyber, Technology Integration, Medical, and Project Management. KBay Consulting was founded by Mr. Josh Hu, who was born in Taiwan and immigrated to the U.S. at a young age. Josh is a retired USAF officer and a native Chinese-Mandarin speaker and has extensive military engagements and operational experience in the Indo-Pacific region. Leveraging his unique cultural insights and language skills, Josh successfully planned and executed numerous military operations and activities across the strategic, operational, and tactical levels to support U.S. government objectives and interests. Additionally, our team of consultants have DECADES of private sector and government leadership experience, and ALWAYS work closely with the customers to minimize project risks and maximize mission SUCCESS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#107;&#98;&#97;&#121;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">josh@kbayconsulting.com</a>","www.kbayconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WAXQG2D92SR3">81</a>","PRIZM GLOBAL SOLUTIONS LLC","BRIAN TABAYOYONG","","1003 BISHOP ST STE 2700","","HONOLULU","HI","96813-6475","We are a National Security firm delivering Professional Support Services and Americans with Disabilities (ADA) compliant services to the U.S. Federal & State Governments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#116;&#64;&#112;&#114;&#105;&#122;&#109;&#103;&#108;&#111;&#98;&#97;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">bt@prizmglobalsolutions.com</a>","www.prizmglobalsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F7ZNSFM2ZJ62">82</a>","IDO OHAD UX LLC","IDO OHAD","","68 ALA APAPA PL","","MAKAWAO","HI","96768-8466","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#100;&#111;&#64;&#112;&#105;&#110;&#101;&#117;&#120;&#46;&#99;&#111;&#109;">ido@pineux.com</a>","pineux.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRUKZG66N9B4">83</a>","MS HOLDING LLC","MAEL STALDER","","1330 ALA MOANA BLVD APT 705","","HONOLULU","HI","96814-4201","Solved Group (by MS HOLDING LLC): The forefront of digital trends - ensuring cutting-edge solutions for federal agencies. Full-service young and dynamic marketing & digital agency empowering federal agencies with innovative technology solutions. SBA-certified, CAGE 9ZQT9, UEI CRUKZG66N9B4. Core Capabilities: Digital Advertising & Lead Generation Public Relations & Brand Awareness Web Design & Development Social Media Management Market Research & Data Analytics Content Strategy & Creation Organizational Consulting & Training Key Achievements (Commercial): 120M+ impressions generated 350,000+ emails, 210,000+ phone numbers acquired 750,000+ qualified leads produced 60,000+ clients served within a year Expertise:  Multi-platform social media strategies, data-driven marketing campaigns, advanced analytics, cross-industry experience (e-commerce, real estate, education). NAICS: 541613, 541810, 518210, 541512, 541430, 541690","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#118;&#101;&#115;&#103;&#114;&#111;&#117;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">solvesgroup@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGX4R8LP1989">84</a>","INTECH PACIFIC LLC","SAMUEL GRIDLEY","","900 FORT STREET MALL STE 1722","","HONOLULU","HI","96813-3719","INTECH PACIFIC LLC is a trusted provider of advanced cybersecurity, IT infrastructure, and compliance solutions, dedicated to supporting the Department of Defense in safeguarding critical digital assets. With over three decades of IT and cybersecurity expertise, our cleared professionals deliver tailored Security Operations Center (SOC) staffing, comprehensive incident response, and threat hunting services designed for rapid deployment. Our capabilities span CMMC compliance, vulnerability management, secure cloud migration, and the integration of artificial intelligence for proactive threat detection. From 24/7 SOC support to specialized compliance solutions, INTECH PACIFIC ensures that DoD branches, including the Navy, Air Force, and Space Force, maintain resilient cybersecurity defenses and seamless IT operations across complex, evolving environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#114;&#105;&#100;&#108;&#101;&#121;&#64;&#105;&#110;&#116;&#101;&#99;&#104;&#45;&#112;&#97;&#99;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">sgridley@intech-pacific.com</a>","https://www.intech-pacific.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.227&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Kentucky;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.16 seconds and 1.18 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 74 
+(of 74 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CC26MKL4QWH6">1</a>","MIDWEST SPRINKLER CORP","TANYA MITCHELL","PRESIDENT","1420 S JACKSON ST","","LOUISVILLE","KY","40208-2719","Midwest Sprinkler Corporation specializes in the design, fabrication, installation and maintenance of fire protection systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#105;&#116;&#99;&#104;&#101;&#108;&#108;&#64;&#109;&#105;&#100;&#119;&#101;&#115;&#116;&#115;&#112;&#114;&#105;&#110;&#107;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">tmitchell@midwestsprinkler.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBLJVJJDCV95">2</a>","MACHINED CERAMICS INC","KAYE DURRANT","PRESIDENT","629 N GRAHAM ST","","BOWLING GREEN","KY","42101-9121"," CERAMIC MACHINING COMPANY, ALUMINUM OXIDE, SILICON NITRIDE, STABILIZED ZIRCONIA, ALUMINUM NITRIDE, IRON OXIDE, DRILLING, CENTERLESS GRINDING, SURFACE GRINDING, SAWING, MILLING, THREADING (ID & OD)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#100;&#99;&#101;&#114;&#97;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">sales@machinedceramics.com</a>","http://www.machinedceramics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HEE4VN57LFB5">3</a>","T.P.M., INC.","EDDIE HANKS","PRESIDENT","1731 RIVER ST","","BOWLING GREEN","KY","42101-1732","LANDFILL REMEDIATION, EMERGENCY RESPONSE, DRILLING, ENVIRONMENTAL, EXCAVATION, TRUCKING, HYDROLOGY, DYE TRACES, RAILROAD INTERNAL SERVICES, UNDERGROUND STORAGE TANKS, AVIATION/JET FUEL, INSTALLATION SERVICE & MAINTENANCE, MONITORING WELLS, HAZARDOUS MATER","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#104;&#97;&#110;&#107;&#115;&#64;&#116;&#112;&#109;&#45;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">ehanks@tpm-group.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H7CCXGGRGHG4">4</a>","DOUGLAS W. PETERS & ASSOCIATES, INC.","DOUGLAS PETERS","President","3701 TAYLORSVILLE RD","STE 1","LOUISVILLE","KY","40220-1351","Environmental Health Management provides Industrial Hygiene, Safety, and Environmental Services. Our services include asbestos/lead/mold project design and management, indoor air quality surveys, OSHA compliance audits, and industrial hygiene surveys.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#108;&#97;&#115;&#46;&#119;&#46;&#112;&#101;&#116;&#101;&#114;&#115;&#64;&#101;&#104;&#109;&#108;&#111;&#117;&#46;&#99;&#111;&#109;">douglas.w.peters@ehmlou.com</a>","http://WWW.EHMLOU.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F8KZF1BL2XM8">5</a>","BONEAL, INCORPORATED","JOHN KARAUS","Business Development","6962 US HIGHWAY 460 W","","MEANS","KY","40346-8981","Boneal provides Manufacturing Solutions from large, multi-component products provided by our Prime Contracting Group to simple small volume components from one of our manufacturing divisions. A quality product is delivered, on-time at a competitive price.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#107;&#97;&#114;&#97;&#117;&#115;&#64;&#98;&#111;&#110;&#101;&#97;&#108;&#46;&#99;&#111;&#109;">jkaraus@boneal.com</a>","http://www.boneal.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RQXKDNNM6NB4">6</a>","B & H TOOLWORKS INC","BRENT MARCUM","Customer Service Representative","1785 LANCASTER RD","","RICHMOND","KY","40475-8755","We design and build metal stamping dies, special tooling, jigs, fixtures, and gages by utilizing the latest in CAD, CNC machining, wire EDM, and laser cutting. We also run metal stampings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#46;&#109;&#97;&#114;&#99;&#117;&#109;&#64;&#98;&#104;&#116;&#111;&#111;&#108;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">b.marcum@bhtoolworks.com</a>","http://www.bhtoolworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L6ATWETK5K47">7</a>","MIDDLETOWN INDUSTRIAL, INC","RITA HILLARD","owner","1123 MAYDE RD","","BEREA","KY","40403-8676","manufactor from print, concept, or reverse enginner for non- flight critical epoxy composite aircraft parts. in house mold making. process includes pre preg, wet lay up, vacuum bag, in house machine shop, on site development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#73;&#84;&#65;&#64;&#77;&#73;&#68;&#68;&#76;&#69;&#84;&#79;&#87;&#78;&#73;&#78;&#68;&#85;&#83;&#84;&#82;&#73;&#65;&#76;&#46;&#67;&#79;&#77;">RITA@MIDDLETOWNINDUSTRIAL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y6JRMMM34UD1">8</a>","PHOENIX PRODUCTS INC","PEGGY WILSON","Owner","106 BETHFORD RD","","MC KEE","KY","40447-9338","Mfg military aircraft hardware, non-structural metal, composite parts; interiors. High precision measurement; reverse engineering services; DMSMS, rapid prototyping; GSE, test fixtures, cables & harnesses; electronics;","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#97;&#99;&#115;&#116;&#117;&#102;&#102;&#46;&#99;&#111;&#109;">pwilson@acstuff.com</a>","http://www.acstuff.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJZRP7SE5LN4">9</a>","STRATEGIC COMMUNICATIONS LLC","STELLA MILLS","Marketing/Gov Sales","310 EVERGREEN RD","STE 100","LOUISVILLE","KY","40243-1179","Phone systems, Low voltage wire (CAt6, fiber)Paging, VTC, computers for lan and wans, software application, computer training, software application training,telecommunication services,security systems, computers, cctv, surveillance, audio video,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#109;&#105;&#108;&#108;&#115;&#64;&#121;&#111;&#117;&#114;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">kmills@yourstrategic.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U3VLRZGSWAR3">10</a>","INDUSTRIAL CONTROL SOLUTIONS INC","LUBA ZALMANOFF","CEO","2543 DATA DR","","LOUISVILLE","KY","40299-2517","Industrial electronic repair service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#64;&#105;&#99;&#115;&#45;&#114;&#101;&#112;&#97;&#105;&#114;&#46;&#99;&#111;&#109;">alex@ics-repair.com</a>","http://www.ics-repair.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P6S7XBH68VA9">11</a>","NORTHERN KENTUCKY SERVICES FOR THE DEAF, INC","TERESA MOON FLAHERTY","Owners","1130 LAURELWOOD LN","","INDEPENDENCE","KY","41051-9063","Provide Sign language and English interpretation and tranliteration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#107;&#121;&#115;&#100;&#101;&#97;&#102;&#64;&#110;&#107;&#115;&#100;&#46;&#112;&#114;&#111;">nkysdeaf@nksd.pro</a>","www.nksd.pro"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNJBTJ3XBQM6">12</a>","MURTY PHARMACEUTICALS, INC.","SYAM MURTY","","518 CODELL DR","","LEXINGTON","KY","40509-1016","Murty Pharmaceuticals, Inc. provides drug formulation development, analytical lab testing, and manufacturing scale up services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#117;&#114;&#116;&#121;&#64;&#109;&#112;&#105;&#114;&#120;&#46;&#99;&#111;&#109;">smurty@mpirx.com</a>","http://www.mpirx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZAUDYSV25H2">13</a>","EDWARD HOLMES, INC.","EDWARD HOLMES","President","815 WEST MARKET STREET SUITE 304","","LOUISVILLE","KY","40202-2641","EHI specializes in; Planning, civil engineering EIS & EA writing, socioeconomic and demographic analysis, Complete streets and trail design. Community and environmental justice statements. Public involvement/participation. Graduate of SBA 8a program.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#111;&#108;&#109;&#101;&#115;&#64;&#101;&#104;&#105;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">holmes@ehiconsultants.com</a>","http://www.ehiconsultants.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MKRWXZ61KWE4">14</a>","TECHNICAL TRAINING & CONSULTING INC","DONNIE GATTEN","","623 N MAIN ST","","STURGIS","KY","42459-1444","MSHA and KDMM certified for underground & surface mining, electrical, first-aid/CPR, mine rescue, mine emergency technician, site specific analysis and consultation, Research and development projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#103;&#97;&#116;&#116;&#101;&#110;&#64;&#116;&#116;&#99;&#107;&#121;&#46;&#99;&#111;&#109;">dmgatten@ttcky.com</a>","http://www.ttcky.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WBKKAR6MS7H5">15</a>","CONCO, INC.","KAREN PASCHAL","Vice President Administration","4000 OAKLAWN DR","","LOUISVILLE","KY","40219-2720","Manufacturer of new metal ammo containers and also refurbishment of used ammo containers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#112;&#97;&#115;&#99;&#104;&#97;&#108;&#64;&#99;&#111;&#110;&#99;&#111;&#99;&#111;&#110;&#116;&#97;&#105;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">kpaschal@concocontainers.com</a>","http://www.concocontainers.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LL5WRJA55548">16</a>","GENSCAPE, INC.","KAREN RAUNE","CEO","1140 GARVIN PL","","LOUISVILLE","KY","40203-3106","Genscape, Inc. is the originator and sole provider of real-time power plant output and transmission line utilization information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#97;&#117;&#110;&#101;&#64;&#103;&#101;&#110;&#115;&#99;&#97;&#112;&#101;&#46;&#99;&#111;&#109;">kraune@genscape.com</a>","http://www.genscape.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SQLGQDFWBJ51">17</a>","TIER 1 PERFORMANCE SOLUTIONS LLC","TERESA EVANS","Managing Partner","100 E RIVERCENTER BLVD","STE 100","COVINGTON","KY","41011-1550","We help companies activate their strategies through the performance of their people. TiER1 Performance Solutions, LLC. (TiER1) is dedicated to empowering organizations and their employees through innovative applications of knowledge, education, and technology. We believe that by improving the performance of employees we can improve the performance of organizations. Our work has spanned more than 320 government and Fortune 1000 commercial customers totaling 2,500+ learning and organizational change management projects. Through the development of significant capabilities and deliverables, our team has positively impacted the most complex learning and strategic change programs to improve organizational effectiveness and human performance. Our team includes nationally recognized experts in training, adult education, strategies for workforce improvement, organizational alignment, and creative design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#46;&#101;&#118;&#97;&#110;&#115;&#64;&#116;&#105;&#101;&#114;&#49;&#112;&#101;&#114;&#102;&#111;&#114;&#109;&#97;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">t.evans@tier1performance.com</a>","http://www.tier1performance.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XKD6B3HYGJS8">18</a>","GROVER GROUP INC","JEFF GROVER","","512 MAPLE CREST WAY","","ELIZABETHTOWN","KY","42701-5517","Provides financial analysis of firm financial strength using statistical analysis. Specifically, conducts cost saving analysis and bankruptcy prediction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#100;&#97;&#116;&#97;&#115;&#110;&#105;&#102;&#102;&#101;&#114;&#64;&#98;&#97;&#121;&#101;&#115;&#110;&#105;&#102;&#102;&#101;&#114;&#46;&#99;&#111;&#109;">thedatasniffer@bayesniffer.com</a>","https://www.bayesniffer.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X99BTLBLJSK5">19</a>","PARATECHS CORP","ANGELIKA FATH-GOODIN","","1122 OAK HILL DR","STE 100","LEXINGTON","KY","40505-3322","Products: Non-surgical embryo transfer device for mice; vankyrin-enhanced insect Sf9 cell line used with the baculovirus expression vector system; baculovirus expression vectors Service: Limited contract service in the are of recombinant protein expression and assisted reproductive techniques in rodents.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#103;&#111;&#111;&#100;&#105;&#110;&#64;&#112;&#97;&#114;&#97;&#116;&#101;&#99;&#104;&#115;&#46;&#99;&#111;&#109;">agoodin@paratechs.com</a>","www.paratechs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PV2YULK4GLF3">20</a>","ARTEMIS ELECTRONICS LLC","TAYLOR GERLACH","","13400 W HIGHWAY 42 STE 180","","PROSPECT","KY","40059-9264","Artemis Electronics specializes in the following areas: Reverse Engineering, Repair and Overhaul of legacy electronic assemblies: Our in-house diagnostics equipment allows us to functionally test all board level components. This capability allows us to take the repair process past simple board level exchange to maximize the value to the client. Build-to-Print Manufacturing: Utilizing a customer’s technical data package, or sometimes with little to no data at all, we are able to build complete electrical systems that meet or exceed all of our customer’s specifications. We have experience in manufacturing circuit card assemblies, complex wiring harnesses, instrument panels, and test equipment for a wide range of military systems. We have the flexibility to manufacture in large and small batches so that we can provide a solution that fits your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#101;&#114;&#108;&#97;&#99;&#104;&#64;&#97;&#114;&#116;&#101;&#109;&#105;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">tgerlach@artemiselectronics.com</a>","http://www.artemiselectronics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKB8LTHJK9G5">21</a>","PCM MANAGEMENT LLC","JEFFERY SWAIN","","2907 EMINENT DR","","LEXINGTON","KY","40511-6900","Specialized computer software producer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#114;&#64;&#112;&#99;&#109;&#109;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">ccr@pcmmllc.com</a>","https://www.pcmmllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EAYNDEM7VY15">22</a>","JONES JAMES V","JAMES JONES","","3010 HEATHER GREEN BLVD","","LA GRANGE","KY","40031-6724","Consulting and training services in SUpportability Engineering, Integrated Logistics Support, reliability and maintainability engineering.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#46;&#118;&#46;&#106;&#111;&#110;&#101;&#115;&#64;&#108;&#111;&#103;&#45;&#109;&#103;&#109;&#116;&#46;&#99;&#111;&#109;">james.v.jones@log-mgmt.com</a>","https://www.log-mgmt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G1BMX6FZV4L3">23</a>","METAL SOLUTIONS DESIGN & FABRICATION LLC","DAVID BERGER","","215 MAIN ST","","DAYTON","KY","41074-1240","MSDF manufactures DOT certified transportation containers, Structural Steel, ornamental iron work, & automotive specialty racks. We maintain an NQA-1 Quality assurance program and weld to AWS D1.1 & D1.3. Laser cuting, Welding and powder coating","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#98;&#64;&#109;&#115;&#100;&#102;&#49;&#46;&#99;&#111;&#109;">davidb@msdf1.com</a>","http://www.msdf1.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZR53L4FVXGD7">24</a>","ALT32, P.S.C.","MIKE SPARKMAN","","310 OLD VINE ST STE 300","","LEXINGTON","KY","40507-1582","We are a full-service architecture firm, providing design services, master planning, facilities inventories, envelope studies, contract and construction administration, and more. We have extensive experience with historic buildings on the National Register and various government agencies, especially the U.S. General Services Administration, as well as with K-12 educational facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#97;&#108;&#116;&#51;&#50;&#46;&#99;&#111;&#109;">mike@alt32.com</a>","www.alt32.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXHRM7BADVB8">25</a>","ADVANCED MULCHING TECHNOLOGIES INC","JIM HANSSEN","","239 CHINOE RD","","LEXINGTON","KY","40502-1921","EcoGro is a highly qualified, experienced design build contractor that specializes in Stream Restoration, Wetland Restoration, Dam Removal and Green Infrastructure projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#101;&#99;&#111;&#103;&#114;&#111;&#46;&#110;&#101;&#116;">jim@ecogro.net</a>","www.ecogro.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HAM1GA4PZ592">26</a>","MSC VENTURES LLC","STAN HOLMES","","130 HAYCRAFT ST","","ELIZABETHTOWN","KY","42701-1102","At MSC Ventures LLC, we have over 35 years of experience, enhancing corporate and individual performance through individual, government and corporate recruiting, staffing, training, and coaching of individuals for all levels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#99;&#46;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#115;&#46;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">msc.ventures.llc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJFRKN6AQ875">27</a>","ENOMALIES, LLC","BILL GREGORY","","1721 HEADLEY GRN","","LEXINGTON","KY","40504-4002","Engineering Design Technical Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#100;&#103;&#64;&#101;&#110;&#111;&#109;&#97;&#108;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">bdg@enomalies.com</a>","http://www.enomalies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L9G1KAJZJKK1">28</a>","AUTOMATION AUTHORITY INC","KEVIN PIPPEN","","615 S BROADWAY ST","","GEORGETOWN","KY","40324-1135","Automation Authority provides expertise in process automation, industrial control systems, and custom machine builds. Our services include consulting, design, programming, fabrication, installation, documentation, and support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#116;&#101;&#97;&#109;&#97;&#97;&#105;&#46;&#110;&#101;&#116;">kevin@teamaai.net</a>","http://www.teamaai.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JD53CA7RWRK8">29</a>","SAMITEON LLC","SUNDEEP DRONAWAT","","12015 HUNTING CREST DR","","PROSPECT","KY","40059-9176","n technology company with 10 years experience A free no-obligation discussion about your business requirements Fixed fees agreed in advance and not dependent on income level Personal account manager Same day resolution of problems Access to world wide technical expertise BPO Services Mobile, Web, App and Software Development Product and Project Management Merchant Processing Services Technical Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#110;&#110;&#121;&#64;&#115;&#97;&#109;&#105;&#116;&#101;&#111;&#110;&#46;&#99;&#111;&#109;">sunny@samiteon.com</a>","http://www.samiteon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K6LNV36CNVA5">30</a>","ICON ENGINEERING AND INSPECTION SERVICES, PLLC","CHRISTY CHILDERS","","35 PUBLIC SQ","","ELIZABETHTOWN","KY","42701-1436","Architecture, Structural Engineering, Mechanical Electrical Plumbing MEP Engineering; Commerical and Industrial. Our staff Professional Engineers are licensed in eight states. Over 35 years of experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#121;&#64;&#105;&#99;&#111;&#110;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#117;&#115;">christy@iconengineering.us</a>","http://www.iconengineering.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLTCVSA4S5E1">31</a>","ENDOSCOPY ASSIST DEVICES LLC","GERALD DRYDEN","","4 ANCHORAGE POINTE","","LOUISVILLE","KY","40223-2171","Medical device design and development. Focused on endoscopic equipment, including single use endoscopes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#97;&#100;&#46;&#100;&#114;&#121;&#100;&#101;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Tad.dryden@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y9LCQVEHJDW1">32</a>","MONARCH ENGINEERING INC","JAMES MUDD","","556 CARLTON DR","","LAWRENCEBURG","KY","40342-9788","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#117;&#100;&#100;&#64;&#109;&#111;&#110;&#97;&#114;&#99;&#104;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">lmudd@monarchengineering.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHTGJKBW5YD4">33</a>","MIDDLETOWN COMPOSITES INC","MARK MCCOWAN","","87 OLD WALLACETON RD","","BEREA","KY","40403-9558","A full service advanced composites provider, we use many products of the modern composite art and can design, engineer, prototype, tool, and manufacture a wide array of products. CNC machining, 3-D CAD, complete machine shop capabilities as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#109;&#105;&#100;&#100;&#108;&#101;&#116;&#111;&#119;&#110;&#99;&#111;&#109;&#112;&#111;&#115;&#105;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">mark@middletowncomposites.com</a>","http://www.middletowncomposites.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MW1NUM5DT771">34</a>","SPIRAL SOLUTIONS & TECHNOLOGIES, INC.","KAREN CAVERZAGIE","","5751 BRIAR HILL RD BLDG 16-F","","LEXINGTON","KY","40516-6503","Spiral Solutions provides global, tailored technology integration and support, with a core focus on DevSecOps software development, dataflow engineering, and Intelligence Surveillance and Reconnaissance (ISR) expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#101;&#110;&#46;&#99;&#97;&#118;&#101;&#114;&#122;&#97;&#103;&#105;&#101;&#64;&#115;&#115;&#97;&#110;&#100;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">karen.caverzagie@ssandtech.com</a>","http://www.ssandtech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZLCZHP5NLFJ3">35</a>","UNITED DEVELOPMENT GROUP LLC","STEVEN CANNON","","126 PRODUCTION CT","","LOUISVILLE","KY","40299-2001","United Development Group, LLC (UDG) is a mechanical engineering firm providing services in project design, development and support. UDG has worked across multiple industries, providing reliable, professional engineering services. The company has extensive experience, which includes a staff Professional Engineer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#110;&#110;&#111;&#110;&#115;&#106;&#64;&#117;&#100;&#103;&#45;&#107;&#121;&#46;&#99;&#111;&#109;">cannonsj@udg-ky.com</a>","http://www.udg-ky.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VWKMXHLTYN85">36</a>","SEALINGLIFE, INC.","DANETTE WILDER","","1141 RED MILE RD STE 201","","LEXINGTON","KY","40504-2733","SealingLife is certified as a Women's Business Enterprise and is is an AS9100D, ISO 9001:2015 and certified company that designs, manufactures and assembles devices and systems responsible for sealing, shielding, isolating and protecting living and non-living things from disagreeable conditions. Core competencies include development (R&D), compounding and fabrication of non-metallic materials (i.e., polymers, textiles & composites) into custom parts, reverse engineering of legacy and obsolete parts, sub-system development & integration and support functions (i.e., molding, forming, EMI/RFI shielding, cutting, sewing, bonding, welding, prototyping, testing, etc.).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#100;&#101;&#114;&#100;&#106;&#64;&#115;&#101;&#97;&#108;&#105;&#110;&#103;&#108;&#105;&#102;&#101;&#46;&#99;&#111;&#109;">wilderdj@sealinglife.com</a>","http://www.sealinglife.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LUL1FM5SYCV3">37</a>","HITRON TECHNOLOGIES INC","HAILIANG ZHANG","","3909 PALOMAR COVE LN","","LEXINGTON","KY","40513-1380","Hitron Technologies Inc. (HTI) was founded in 2010 for developing innovative technologies and products that offer solutions to critical engineering problems. Our team has over 50 combined years of experience in electrical engineering, physics, optics, advanced materials, and product commercialization. With the support of the US navy, we are currently developing an innovative drone platform for automatic egg-oiling operation for nuisance bird management. We have developed numerous other technologies including Robots, automatic activation system for body cameras, maskless pattern generator, transparent Displays, micro-engineered surface alignment (MESA) based bistable Liquid Crystal Display (LCD), wireless communication Based on Solar Blind UV Scattering, and photondetector based on advanced materials.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#104;&#97;&#110;&#103;&#56;&#56;&#95;&#57;&#56;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">zhang88_98@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNDEN6GX2VC6">38</a>","QUALITY MANUFACTURING CO., INC.","JEFFREY ROSE","","5855 ROCKWELL ROAD","","WINCHESTER","KY","40391-8970","Contact manufacturer in business since 1965 with vast experience in machining, fabrication, assembly, value added services, product development, automation, tooling, & prototyping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#114;&#111;&#115;&#101;&#56;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jeffrose87@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W6ZWRBMLJ1N6">39</a>","KERRY DIXON CONSTRUCTION LLC","KERRY DIXON","","331 DIXON SPARKMAN LN","","SLEMP","KY","41763-8841","My project management approach is designed to achieve the outcomes that all project stakeholders expect, while controlling costs, ensuring quality, and the completion of projects on time- every time.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#100;&#105;&#120;&#111;&#110;&#115;&#52;&#64;&#119;&#105;&#110;&#100;&#115;&#116;&#114;&#101;&#97;&#109;&#46;&#110;&#101;&#116;">thedixons4@windstream.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LLWGQ62B6264">40</a>","DREAMER TECHNOLOGY SOLUTIONS, LLC","GERALD SEWELL","","1119 INCA TRL","","GEORGETOWN","KY","40324-1141","Electrical contractor of construction and repairs for commercial/residential; power and communications contractor to install and repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#101;&#97;&#109;&#101;&#114;&#116;&#101;&#99;&#104;&#115;&#111;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dreamertechsol@gmail.com</a>","http://facebook.com/dreamertechsol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M734QFN1CED8">41</a>","SCOTT B ENTERPRISES, INC.","RON SMITH","","3332 TALLWOOD CIR","","ERLANGER","KY","41018-2829","We manufacturer and service Line Isolation Monitors (LIM) for isolated power systems and are known for our low prices, fast response, and high-quality products. Since 2009, Isolated Power Specialist has maintained an annual contract with the Cleveland Clinic to test and repair 560 LIMs and our certifications are approved by the Joint Commission and the National Fire Protection Association (NFPA) Isolated Power Specialist is a Veteran Owned Small Business located in Kentucky.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#115;&#64;&#105;&#115;&#111;&#108;&#97;&#116;&#101;&#100;&#112;&#111;&#119;&#101;&#114;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#105;&#115;&#116;&#46;&#99;&#111;&#109;">rons@isolatedpowerspecialist.com</a>","https://www.isolatedpowerspecialist.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S1USF2Q9JZ39">42</a>","WATER WARRIORS INC","JOHN GRADEK","","110 W VINE ST STE 410","","LEXINGTON","KY","40507-1768","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#114;&#97;&#100;&#101;&#107;&#64;&#119;&#97;&#116;&#101;&#114;&#119;&#97;&#114;&#114;&#105;&#111;&#114;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jgradek@waterwarriorsinc.com</a>","www.waterwarriorsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXTQFLSRMXE5">43</a>","POGUE ENTERPRISES LLC","ASHLEY POGUE","","14995 BLUFF SPRINGS RD","","HOPKINSVILLE","KY","42240-8414","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#108;&#101;&#121;&#112;&#111;&#103;&#117;&#101;&#64;&#105;&#116;&#99;&#51;&#46;&#105;&#111;">ashleypogue@itc3.io</a>","www.itc3.io"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X3LGNNW9AHA5">44</a>","SCHENAULT SOLUTIONS, LLC","STEVON EDWARDS","","1815 GARDINER LN APT K92","","LOUISVILLE","KY","40205-2884","SChenault Solutions, LLC provides strategic planning consultation, professional development/training, and program planning and evaluation services: Strategic Planning- Your vision, realized Professional Development and Training- Competency, leadership, conflict resolution Planning and Evaluation- Better outcomes and efficiency","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#78;&#70;&#79;&#64;&#83;&#67;&#72;&#69;&#78;&#65;&#85;&#76;&#84;&#46;&#83;&#79;&#76;&#85;&#84;&#73;&#79;&#78;&#83;">INFO@SCHENAULT.SOLUTIONS</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPK7KZF7WW15">45</a>","ADELPHI TECHNOLOGY, LLC","CHARLES GARY","","2413 NASHVILLE RD # B4","","BOWLING GREEN","KY","42101-4101","Experts in electronic chemical analysis of gases.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#114;&#108;&#101;&#115;&#64;&#97;&#100;&#101;&#108;&#112;&#104;&#105;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">charles@adelphitech.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNGGV1MYYGE1">46</a>","PLAYTOPIA INC","KERRY MORROW","","217 MURPHY AVE","","FERGUSON","KY","42533-9416","Playtopia Playgrounds & Dog Park Equipment products are manufactured from the absolute finest recycled materials. The employees of Playtopia bring a combined total of over 50 years manufacturing experience in the playground industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#114;&#114;&#121;&#64;&#103;&#111;&#112;&#108;&#97;&#121;&#116;&#111;&#112;&#105;&#97;&#46;&#99;&#111;&#109;">kerry@goplaytopia.com</a>","www.goplaytopia.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLCMQ36EMF11">47</a>","VICTOR ENTERPRISES INC","MIKE EDWARDS","","3900 COLEMAN RD","","PADUCAH","KY","42001-5203","CNC Equipped, General Machine work in the areas of medium and large machining. Areas of expertise include turning, horizontal and vertical boring, horizontal milling, drilling, and tapping. We engineer and manufacture in both inches and metric. We program all of our NC and CNC parts using the latest CAM (Esprit, Numeridex NICAM IV and EXPEDITES 3D SYSTEMS).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#107;&#101;&#46;&#101;&#100;&#119;&#97;&#114;&#100;&#115;&#64;&#118;&#101;&#105;&#99;&#110;&#99;&#46;&#99;&#111;&#109;">Mike.edwards@veicnc.com</a>","http://www.veicnc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBF2XH2DVUS6">48</a>","1109 BRAVO L.L.C.","CHRISTOPHER TEDESCO","","8406 MARY CT","","CRESTWOOD","KY","40014-8969","1109 Bravo’s mission is to provide innovative training and assessment applications to extract data that can be translated and applied to improving the elite individual by refining their critical skill performance through neuromuscular development. Ultimately, the 1109 Bravo System increases the outcomes on the battlefield, in the sports arena, rehabilitation center and in numerous other applications.  Traditional models of human performance rely heavily on basic strength and conditioning strategies.  While they are mildly effective, these models do not translate into real-time critical skill development.  Our customers are unique in their needs and demand a realistic approach that focuses on performance in ever-changing environments. Essentially the patent pending device lets you train like you fight/play, assess while you train, and correct in real-time.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#116;&#101;&#100;&#101;&#115;&#99;&#111;&#64;&#49;&#49;&#48;&#57;&#98;&#114;&#97;&#118;&#111;&#46;&#99;&#111;&#109;">ctedesco@1109bravo.com</a>","http://1109bravo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QY7DB8GFHCP7">49</a>","SEALINGLIFE TECHNOLOGY, LLC","DANETTE WILDER","","1141 RED MILE RD STE 201","","LEXINGTON","KY","40504-2733","SealingLife Technology is a manufacturer of sealing devices and systems,such as O-rings and gasket type products, customized components, panels, overlays and systems designed to contain, conceal, shield, protect, isolate and dampen. Using a wide variety of material types, this specialized fabrication is supported through prototyping, advance material compounding and research, reverse engineering, analysis, and quality management services. Through innovative problem solving, we are able to take on challenging projects with a vast amount of integration and unknown variables. Built on helping others be succeed and challenging the way people think, SealingLife is committed to producing new and legacy products with exceptional quality and on-time delivery.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#100;&#101;&#114;&#100;&#106;&#64;&#115;&#101;&#97;&#108;&#105;&#110;&#103;&#108;&#105;&#102;&#101;&#46;&#99;&#111;&#109;">wilderdj@sealinglife.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFGWN67TSQH3">50</a>","NATURAL RESOURCES MANAGEMENT SOLUTIONS LLC","STEPHEN JONES","","575 TUCKER SCHOOLHOUSE RD","","MADISONVILLE","KY","42431-8818","We are a full service Environmental Engineering firm specializing in the Clean Water Act. We handle all 404, 402, and 401 permitting and sequential field work. We have delineated over 20,000-ac for 404 work and created and implemented numerous mitigation plans. We have 2 Rosgen trained stream design specialists and project managers and a Kentucky, Indiana, and Tennessee registered professional engineer. We have designed and constructed over 50-miles of streams and 500-ac of wetlands. We worked on complete watershed designs and overseen the excavation work. We plant on average 30000-5000 trees and vegetate 100-200 acres a year. We are a KY certified water quality field lab. We manage farm ponds and private lands for habitat and timber cuts. We build and install 'water control devices' for individuals and commercial entities as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#106;&#111;&#110;&#101;&#115;&#64;&#110;&#97;&#116;&#117;&#114;&#97;&#108;&#114;&#109;&#115;&#46;&#99;&#111;&#109;">sjones@naturalrms.com</a>","https://www.naturalrms.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLAHQRMHS6M5">51</a>","WHITFIELD ENTERPRISES LLC","MELINDA WHITFIELD","","3621 PLANO RD","","BOWLING GREEN","KY","42104-7876","Specialists in CMMC 2.0/NIST 800-171 compliance support, network analysis, System Security Plans, Incident Response Plans, POAM, Cybersecurity Policies, Acceptable Use Policies, and all other supporting documentation. Documentation services to include 501(c)(3)s, Department of Defense cleared contractors, scientific research groups, and general manufacturing and industry. consolidating monthly project reports to producing multi-hundred page technical manuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#105;&#110;&#100;&#97;&#64;&#119;&#104;&#105;&#116;&#102;&#105;&#101;&#108;&#100;&#108;&#108;&#99;&#46;&#111;&#114;&#103;">melinda@whitfieldllc.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YGV3M69BBNG7">52</a>","WEST END CDE INC","TIMOTHY COX","","8715 CHETWOOD TRACE DR","","LOUISVILLE","KY","40291-5133","West End CDE Inc is a financial intermediary and prime contractor. We specialize in social impact funds, green building materials and renewable energy systems. Our goal is to bring products and services to low income communities that push the envelope of community economic development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#87;&#101;&#115;&#116;&#101;&#110;&#100;&#99;&#100;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Westendcde@gmail.com</a>","www.westendcde.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K58WNM62W9X1">53</a>","GOODMAPS INC","THERESA RENO-WEBER","","1741 FRANKFORT AVE","","LOUISVILLE","KY","40206-3166","The Access Explorer mission to improve the accessibility and safety of indoor spaces, enabling the independence and security of building occupants, visitors, and partners. First we create and maintain accurate and secure 2D and 3D digital maps. Then, we provide accurate positioning. Finally we provide users with a trusted wayfinding experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#104;&#101;&#114;&#101;&#115;&#97;&#64;&#103;&#111;&#111;&#100;&#109;&#97;&#112;&#115;&#46;&#99;&#111;&#109;">Theresa@goodmaps.com</a>","https://www.goodmaps.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QL9URB9FU821">54</a>","EARTHS BLUE AURA LLC","ARPAN JAIN","","7001 BLACK WILLOW CT","APT 4","LOUISVILLE","KY","40291-4629","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#48;&#50;&#49;&#49;&#106;&#97;&#105;&#110;&#97;&#114;&#112;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">0211jainarpan@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2Z5P6WNYEK1">55</a>","SWORD PERFORMANCE, INC","BETHANY DILLOW","","2156 YOUNG DR STE A","","LEXINGTON","KY","40505-4309","Full service electrolyte hydration beverage company. Specializing in all natural healthy hydration for heat stress and heat fatigue related illnesses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#97;&#110;&#121;&#64;&#100;&#114;&#105;&#110;&#107;&#115;&#119;&#111;&#114;&#100;&#46;&#99;&#111;&#109;">bethany@drinksword.com</a>","www.drinksword.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEWWBEZARKC4">56</a>","713 ARCHITECTS, PLLC","SHANE WILES","","8208 MONTERO DR","","PROSPECT","KY","40059-8702","Architectural Planning / Design Services Documentation of existing conditions Facility life safety review","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#46;&#119;&#105;&#108;&#101;&#115;&#64;&#55;&#49;&#51;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">shane.wiles@713architects.com</a>","www.713architects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVPGSR855QF7">57</a>","SOUTHERN WILDLIFE RESOURCES LLC","JONATHAN GASSETT","","226 VICTORIA WAY","","GEORGETOWN","KY","40324-9196","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#115;&#111;&#117;&#116;&#104;&#101;&#114;&#110;&#45;&#119;&#105;&#108;&#100;&#108;&#105;&#102;&#101;&#46;&#99;&#111;&#109;">jon@southern-wildlife.com</a>","www.southern-wildlife.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3NQLJDKT818">58</a>","PRIMELABS LLC","VINAYA GOGINENI","","50 E RIVERCENTER BLVD STE 450","","COVINGTON","KY","41011-1544","Research & Development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#114;&#105;&#109;&#101;&#108;&#97;&#98;&#115;&#46;&#116;&#101;&#99;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">primelabs.tech@gmail.com</a>","primelabs.tech"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=URQJLVM9UX61">59</a>","SISK RIFLES MANUFACTURING, LLC","CHARLIE SISK","","900 TRUMAN YOUNG RD","","HAWESVILLE","KY","42348-5485","Sisk Rifles Manufacturing will lead the way into the next era of firearm parts that specialize in keeping users safe. Our innovative thinking has allowed us to improve the functionality of weapons in areas where most of the industry have failed to improve in many years. The HEPR expands cover capabilities, the patented stock allows users to fire while wearing a gas mask unhindered protecting from Covid-19, and the TARS’ give users quick-swap functionality helping them to adapt to mission needs on the spot.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#114;&#108;&#105;&#101;&#64;&#115;&#105;&#115;&#107;&#114;&#105;&#102;&#108;&#101;&#115;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">charlie@siskriflesmfg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HM65Y6UK6QK3">60</a>","VISION GRANTED, L.L.C","RUTH CALDWELL","","70 HALE RD","","HAROLD","KY","41635-9022","Ruthie is the owner of Vision Granted, LLC where she serves as a facilitator, grant and technical writer, project manager, and bureaucracy navigator for organizations in Appalachia. Originally from Texas, Ruthie moved to Eastern Kentucky four years ago and fell in love with the people and place. As a certified Project Manager with a Master’s in Communication, she has led dozens of diverse teams in strategic planning, managing projects, grant writing, and developing reports. She is a graduate of the 2019 BRIGHT Kentucky leadership program through Leadership Kentucky. She serves as a Regional Partner for the grassroots network What’s Next EKY?! where she serves as Co-Chair of WNEKY’s virtual learning working group. Ruthie is also a Board Member for her local Mainstreet program in Pikeville, KY where she recently co-facilitated and developed the summary report for a virtual community meeting focused on post-COVID downtown revitalization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#116;&#104;&#105;&#101;&#64;&#118;&#105;&#115;&#105;&#111;&#110;&#103;&#114;&#97;&#110;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">ruthie@visiongranted.com</a>","www.visiongranted.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CZXAV2DZ82U4">61</a>","IRISTRAC, LLC","CHARLES BUDDEKE","","2412 BELKNAP BEACH RD","","PROSPECT","KY","40059-9050","Iristrac offers an equine EyeD Identification System composed of an iris scanner, a cloud server, a database and a training and support program.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#98;&#51;&#64;&#109;&#97;&#99;&#46;&#99;&#111;&#109;">chb3@mac.com</a>","iristrac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQW8AL85JSR7">62</a>","HAYES CONSTRUCTION LLC","DANA HAYES","","534 TOM HILL RD","","MARION","KY","42064-6553","Construction and general contracting with ore than 20 years experience. Hayes Construction LLC provides constructional quality projects for residential, commercial and public works. We provide a strong management team that will work with ensuring our clients with quality work at minimal costs. We have weekly OSHA training, lead certified and DOT approved to maximize safety. Hayes Construction specializes in all phases of construction projects. We work closely with our clients to ensure our projects are well understood, accurately budgeted and delivered on time by reducing risks that cost time and money. Woman owned business since 2009.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#95;&#104;&#97;&#121;&#101;&#115;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">randy_hayes@bellsouth.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MS3CN9W5VUU1">63</a>","JARMON MEDICAL, LLC","JEREMY JARMON","","169 E REYNOLDS RD STE 203B","","LEXINGTON","KY","40517-1272","The company was founded in 2019 by healthcare professionals. Our team has over 50 years of combined clinical, R&D, manufacturing and commercialization experience in the orthopedic device, arthroscopy, and spring markets. Our Indiana-based manufacturing facility is ISO 13485 compliant, allowing us to serve as an approved supplier for the world’s largest medical device companies. Our location, skilled workforce, cutting-edge equipment, and strategic partnerships allow us to provide innovative solutions and control our supply chain lead times.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#74;&#97;&#114;&#109;&#111;&#110;&#64;&#108;&#101;&#103;&#101;&#110;&#100;&#115;&#111;&#114;&#116;&#104;&#111;&#112;&#101;&#100;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">JJarmon@legendsorthopedics.com</a>","https://www.legendsorthopedics.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FSY8J9UMN7G9">64</a>","JAG MANUFACTURING LIMITED LIABILITY COMPANY","GREG CANNON","","9725 NASHVILLE RD","","BOWLING GREEN","KY","42101-8798","Machining, Fabrication,Metal Cutting,Casting Capabilities;overseas cast/finish Machining Domestic,Overseas capability of Electronic, casting, Stamping, Etc. with Finished Machine or Assembly in USA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#106;&#97;&#103;&#45;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">sales@jag-mfg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RWCJFJ2MPQD5">65</a>","LORI HOENE, LLC","LORI HOENE","","155 SUNNYVIEW RD","","BRANDENBURG","KY","40108-9004","As a professional and certified coach, Ms. Hoene is highly knowledgeable in the power and intricacies of the mind and how “it” impacts every thought, emotion, and behavior. With her background as a former business owner and who has worked for herself for over 30 years, Lori can completely understand and identify with the challenges that come with having employees.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#111;&#114;&#105;&#72;&#111;&#101;&#110;&#101;&#76;&#76;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">LoriHoeneLLc@gmail.com</a>","www.LoriHoene.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7YFFF7YMW36">66</a>","LESLIE JENKINS, PHD, PLLC","LESLIE JENKINS","","2302 HURSTBOURNE VILLAGE DR STE 600","","LOUISVILLE","KY","40299-1877","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#110;&#111;&#116;&#104;&#101;&#114;&#108;&#111;&#111;&#107;&#46;&#100;&#111;&#99;&#116;&#111;&#114;">admin@anotherlook.doctor</a>","www.anotherlook.doctor"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UZE6NRK5T2V6">67</a>","PR REAL ESTATE, LLC","PATRICK REYNOLDS","","777 SANDSTONE RDG","","COLD SPRING","KY","41076-7156","We are a full-service commercial real estate brokerage offers a comprehensive suite of services designed to meet the diverse needs of clients in the commercial real estate market. By leveraging their expertise, market knowledge, and industry connections, these brokerages aim to facilitate successful transactions and help clients achieve their commercial real estate goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#82;&#64;&#67;&#114;&#115;&#80;&#116;&#46;&#99;&#111;&#109;">PR@CrsPt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GN75QHRMF2F5">68</a>","ANDERSON COMMERCIAL CLEANING LLC","MELISSA MCCALL","","112 BURLEY WAY","","MOUNT STERLING","KY","40353-1642","We are considered a ONE STOP SHOP providing Custodial Services with a full line of Facilities Management Services. We pride ourselves on enduring partnerships with our clients which allows us to create a workflow to continually meet their needs. Our staff are thoroughly trained and stay OSHA compliant through ISNetworld where we hold an A rating. We also pride ourselves in getting to know our employees, utilizing their strengths by pairing them with the right task and providing training where needed. We love what we do and provide excellent customer service to all our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#105;&#115;&#115;&#97;&#109;&#99;&#99;&#97;&#108;&#108;&#64;&#97;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#99;&#111;&#109;&#109;&#101;&#114;&#99;&#105;&#97;&#108;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">melissamccall@andersoncommercialcleaning.com</a>","http://andersoncommercialcleaning.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQ6JQZMGCAB6">69</a>","GROTECH LTD. CO.","ASHANTI HALL","","3101 CAVERSHAM PARK LN","","LEXINGTON","KY","40509-8496","Professional and Technical Services Provider with Temporary and Permanent Staffing Capabilities. Services Include: Medical Billing and Coding, IT Support Services, Market Surveys and Research, Temporary and Permanent Staffing, Graphic Design and Fabrication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#97;&#110;&#116;&#105;&#64;&#103;&#114;&#111;&#116;&#101;&#99;&#104;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">ashanti@grotechltd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YDS3HEJHN6S7">70</a>","KEENE INDUSTRIES LLC","BEN KEENE","","10785 US HIGHWAY 42","","UNION","KY","41091-9662","Keene Industries provides CNC machining and Engineering services including prototyping, custom machine design and build. We have over twenty years of experience in industry designing and building custom industrial machinery for multiple industries. Previous projects have included many custom machines for companies like General Electric, Boeing and Silfex Inc. Keene Industries is based in Northern Kentucky.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#101;&#101;&#110;&#101;&#64;&#107;&#101;&#101;&#110;&#101;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">bkeene@keeneind.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBWJMG1XQDR9">71</a>","AKALEAP LLC","KEVIN GHAHARI","","135 VIRGINIA AVE APT 4","","LEXINGTON","KY","40508-3200","Akaleap provides software solutions to government organizations and businesses alike to help modernize their technology landscape. These solutions include artificial intelligence (AI), data integration, cloud security, and platform modernization capabilities.  Our proprietary solutions are customized to meet the specific needs of individual businesses, ensuring that the solutions align with their unique data requirements and workflows.  So far we have worked with 15+ customers across industries such as healthcare, edtech, energy, and construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#104;&#97;&#104;&#97;&#114;&#105;&#64;&#97;&#107;&#97;&#108;&#101;&#97;&#112;&#46;&#99;&#111;&#109;">ghahari@akaleap.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SXPMGFJNYT59">72</a>","UNCONVENTIONAL AFFINITY LLC","CURTIS COMBS","","885 E FLAT ROCK RD","","SOMERSET","KY","42501-5431","Veteran owned small business providing sales and marketing business consulting services. Provider of wireless communications equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#117;&#114;&#116;&#105;&#115;&#46;&#99;&#111;&#109;&#98;&#115;&#64;&#114;&#51;&#46;&#103;&#114;&#111;&#117;&#112;">curtis.combs@r3.group</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KCVCLBLTFE23">73</a>","AEREK, LLC","ERIC DENNISON","","3280 MAJESTIC PRINCE DR","","OWENSBORO","KY","42303-2435","Over 10 years of diverse experience in industrial facilities specializing in automation, process controls, and machine deployment.  Primary capabilities include Professionally Licensed electrical engineering design services, project management, consulting, control panel design, motor controls, machine programming, systems design & integration, industrial robot programming, machine safety systems, on-site support, & training.  Experienced in deployment of robotic palletizing, machine vision bin picking, component sorting and inspection, automatic assembly line integration, CAT 3 & 4 machine safety, product accumulation logistics, and inventory management.  We strive to develop efficient solutions while prioritizing safety and reliability in design and implementation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#68;&#101;&#110;&#110;&#105;&#115;&#111;&#110;&#64;&#97;&#101;&#114;&#101;&#107;&#46;&#99;&#111;&#109;">EDennison@aerek.com</a>","www.Aerek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z8P6MD5K35D3">74</a>","CAPITAL COURT AUTHORITY, LLC","KYLE THOMPSON","","100 E MAIN ST","","FRANKFORT","KY","40601-2314","Largest judicial drug testing, electronic monitoring and private probation company that provides cutting edge technology with onsite and laboratory drug testing; leading tech developments in GPS, transdermal alcohol monitoring, and domestic violence monitoring.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#64;&#99;&#99;&#97;&#107;&#121;&#46;&#99;&#111;&#109;">kyle@ccaky.com</a>","www.ccaky.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.369&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

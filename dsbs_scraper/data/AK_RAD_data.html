@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Alaska;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.07 seconds and 1.08 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 74 
+(of 74 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GKLMTS2N2CY9">1</a>","GEOCHEM, INC.","DAVID NEUBAUER","","310 K ST","STE 200","ANCHORAGE","AK","99501-2064","GeoCHEM, Inc. manufactures and distributes a diversified line of products for civil construction and land protection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#103;&#101;&#111;&#99;&#104;&#101;&#109;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">david@geocheminc.com</a>","http://www.geocheminc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H3FFYTMTJLL5">2</a>","NORTECH, INC","PETER BEARDSLEY","PRESIDENT","2400 COLLEGE RD","","FAIRBANKS","AK","99709-3754","NORTECH is a multi-disciplined environmental and engineering Alaskan based consulting firm. The firm is highly qualified, experienced, and capable of providing a wide variety of Environmental, Industrial Hygiene, and Engineering Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#46;&#98;&#101;&#97;&#114;&#100;&#115;&#108;&#101;&#121;&#64;&#110;&#111;&#114;&#116;&#101;&#99;&#104;&#101;&#110;&#103;&#114;&#46;&#99;&#111;&#109;">peter.beardsley@nortechengr.com</a>","http://www.nortechengr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GZSNYT9VUJV5">3</a>","ENVIRONMENTAL HEALTH SCIENCES-ALASKA INC","CALI STARIWAT","Chief Operating Officer","11901 BUSINESS BLVD STE 208","","EAGLE RIVER","AK","99577-7701","EHS-Alaska, Inc. is an industrial hygiene, safety, environmental assessment, and design engineering firm. We provide specific expertise in the identification, assessment, control, and abatement of industrial and environmental hazards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#115;&#119;&#97;&#116;&#108;&#111;&#119;&#115;&#107;&#105;&#64;&#101;&#104;&#115;&#45;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">cswatlowski@ehs-alaska.com</a>","http://www.ehs-alaska.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDKSP94QXD49">4</a>","INUIT SERVICES, INC.","RICHARD FOSTER","President/CEO","3301 C ST","STE 400","ANCHORAGE","AK","99503-3958","Inuit Services, Inc. has served both commercial and government customers with excellent performance in facilities operations and maintenance, base operating support services, logistics support services and administrative support services. Inuit offers government, environmental, and construction services; Information, environmental management; ground maintenance, and environmental remediation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#111;&#115;&#116;&#101;&#114;&#64;&#98;&#101;&#114;&#105;&#110;&#103;&#115;&#116;&#114;&#97;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">rfoster@beringstraits.com</a>","http://www.inuitservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KL3NJMMB4MH6">5</a>","AIRBORNE TECHNOLOGIES INC","TIM VEENSTRA","president","4338 N GUNFLINT TRL","","WASILLA","AK","99623-9217","Design and manufacture unmanned aerial systems. Design and manufacture satellite communication ocean buoys. Provide remote sensing airborne services including multispectral and thermal imagery, lidar and aerial survey and photography services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#118;&#101;&#101;&#110;&#115;&#116;&#114;&#97;&#64;&#97;&#116;&#105;&#97;&#107;&#46;&#99;&#111;&#109;">tveenstra@atiak.com</a>","http://www.atiak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JG2VMG3BTC45">6</a>","DATAFLOW/ALASKA, INC.","JOHN RATHJEN","Manager, Business Development","2701 FAIRBANKS ST","STE B","ANCHORAGE","AK","99503-2847","Provides all information technology support services, including systems/database/website design, analysis/programming, LAN/WAN engineering support, help desk, training/instruction, data entry and conversion services. Technology research and development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#114;&#97;&#116;&#104;&#106;&#101;&#110;&#64;&#100;&#97;&#116;&#97;&#102;&#108;&#111;&#119;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">jrathjen@dataflowalaska.com</a>","http://www.dataflowalaska.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UCZBGMWRL223">7</a>","ENVIRONMENTAL COMPLIANCE CONSULTANTS, INC.","MARK GOODWIN","Operations Manager/Owner","1500 POST ROAD","","ANCHORAGE","AK","99501-1710","Environmental Compliance Consultants is a full service environmental consulting firm that specializes in remediation, assessment, regulatory compliance, hazardous waste management, emergency response, sampling, construction, demolition and ecology.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#101;&#99;&#99;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">mark@eccalaska.com</a>","http://eccalaska.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QWL2DQD4C7B4">8</a>","THREE SAINTS BAY, LLC","JENNIFER BROUGHAM","President","2702 DENALI STREET #100","","ANCHORAGE","AK","99503-2747","Provide contracting ability to government entities within 8a, SDB, as a Tribally Owned, Native Alaskan Owned Corporation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#83;&#66;&#67;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#116;&#104;&#114;&#101;&#101;&#115;&#97;&#105;&#110;&#116;&#115;&#98;&#97;&#121;&#46;&#99;&#111;&#109;">TSBContracts@threesaintsbay.com</a>","www.threesaintsbay.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFP5BMMBL5B9">9</a>","ALASKA VETERINARY PATHOLOGY SERVICES","KATHLEEN BUREK HUNTINGTON","","23834 THE CLEARING DR","","EAGLE RIVER","AK","99577-9659","AVPS is a diagnostic and research service primarily for wildlife agencies, for determination of cause of morbidity and mortality in wildlife and studies on population health. Species include marine mammals, ruminants, carnivores, birds, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#118;&#112;&#115;&#46;&#107;&#98;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">avps.kbh@gmail.com</a>","https://veterinarypathologyservicesalaska.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L12HPNLP5J61">10</a>","ALASKA GROUNDFISH DATA BANK, INC","JULIE BONNEY","","326 CENTER STREET SUITE 90B","","KODIAK","AK","99615-7302","Alaska Groundfish Data Bank, Inc. is a consulting, lobbying, research and public relations firm specializing in fisheries and related issues.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#111;&#110;&#110;&#101;&#121;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#103;&#114;&#111;&#117;&#110;&#100;&#102;&#105;&#115;&#104;&#46;&#111;&#114;&#103;">jbonney@alaskagroundfish.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RHJVG6K73QT3">11</a>","ABS ALASKAN, INC.","JIM NORMAN","","2130 VAN HORN RD","","FAIRBANKS","AK","99701-7204","DC and remote power systems Renewable energy systems data logging and remote communication batteries and battery systems battery backup and UPS systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#97;&#98;&#115;&#97;&#107;&#46;&#99;&#111;&#109;">jim@absak.com</a>","https://www.absak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RBK8AKCABMW9">12</a>","BARLING BAY, LLC","JENNIFER BROUGHAM","President & CEO","2702 DENALI ST","STE 105","ANCHORAGE","AK","99503-2747","We are an Alaskan Native Corporation 8(a) small business, specializing in the following services: Environmental engineering, life cycle engineering, facilities engineering, geospatial information systems, reliability centered maintenance, and logistics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#83;&#66;&#67;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#116;&#104;&#114;&#101;&#101;&#115;&#97;&#105;&#110;&#116;&#115;&#98;&#97;&#121;&#46;&#99;&#111;&#109;">TSBContracts@threesaintsbay.com</a>","www.barlingbay.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CULGH8H1MK57">13</a>","TYONEK ENGINEERING & AGILE MANUFACTURING, LLC","BRAD MORIARTY","VICE PRESIDENT","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W6LALH34LNK8">14</a>","JONATHAN A HOLMGREN","JONATHAN HOLMGREN","","350 GOLDSTREAM RD","","FAIRBANKS","AK","99712-1007","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#106;&#111;&#110;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">jon@jonsmachine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LT36MYK59575">15</a>","TFAB MANUFACTURING LLC","SUSAN MASON","PRESIDENT","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#77;&#65;&#83;&#79;&#78;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">SMASON@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JHMRKAMWGM41">16</a>","JOA SURVEYS LLC","NATHAN WARDWELL","","5761 SILVERADO WAY","STE N","ANCHORAGE","AK","99518-1634","JOA Surveys, LLC collects and analyzes geospatial data, specializing in water levels, tides and geodetic surveying.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#104;&#97;&#110;&#64;&#106;&#111;&#97;&#115;&#117;&#114;&#118;&#101;&#121;&#115;&#46;&#99;&#111;&#109;">nathan@joasurveys.com</a>","http://www.joasurveys.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LECFN6KRWUM4">17</a>","BERING STRAITS INFORMATION TECHNOLOGY, LLC","ROY CRAFT","President","3301 C STREET","SUITE 400","ANCHORAGE","AK","99503-3958","Bering Straits Information Technology, LLC (BSIT) provides a diverse portfolio of services by combining versatility and experience, BSIT offers IT support services related to software and hardware development, project/inventory management and information assurance and security. BSIT provides network and system admin, computer facility, services, systems, design, software engineering, facilities, management operations, maintenance, systems, integration, data processing, comm. equip repair and maintenance, precision equip. calibration, and relocation services. BSIT offers impressive performance that has been recognized with exceptional ratings and commendations tied to installation successes. Satisfied Bering Straits family customers include the U.S. Air Force, Army, Navy, Marines and Coast Guard; the Departments of State, Justice, Transportation, Defense, Energy, Commerce, Agriculture, Interior, and Homeland Security; the GSA; the Defense Logistics Agency, and the U.S. Census Bureau.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#99;&#114;&#97;&#102;&#116;&#64;&#98;&#101;&#114;&#105;&#110;&#103;&#115;&#116;&#114;&#97;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">rcraft@beringstraits.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNEFFE29YVA3">18</a>","RAVEN ELECTRIC, INC.","CHARLES HOUSE","","8015 SCHOON ST","","ANCHORAGE","AK","99518-3045","A well-versed solutions provider bringing superior quality and professional services to satisfy any need. 40+yrs of statewide experience in Electrical, Telecomm, IT, specialized services, and General Contracting throughout all of Alaska.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#117;&#115;&#101;&#64;&#114;&#97;&#118;&#101;&#110;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">dhouse@ravenelectric.com</a>","www.ravenelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSNBJKU5ULA7">19</a>","ALASKA RUBBER GROUP, INC.","MICHAEL BISHOP BISHOP","","5811 OLD SEWARD HWY","","ANCHORAGE","AK","99518-1479","All locations are retail and wholesale distributors of hose, fittings, pumps, belts and related products. Both Anchorage and Fairbanks have Rigging Divisions and manufacture and test wire rope assemblies, and supply all other rigging associated products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#98;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#114;&#117;&#98;&#98;&#101;&#114;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mikeb@alaskarubbergroup.com</a>","HTTP://WWW.ALASKARUBBERGROUP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZCG5GNAUNJ33">20</a>","A T PUBLISHING INC","MARIE MCCONKEY","Vice President","1720 ABBOTT RD","","ANCHORAGE","AK","99507-3443","Commercial Printing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#101;&#64;&#97;&#116;&#112;&#117;&#98;&#108;&#105;&#115;&#104;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">marie@atpublishing.com</a>","http://www.atpublishing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNL4XHGBTFU5">21</a>","TYONEK SERVICES CORPORATION","PAUL STEIN","","880 H ST","STE 210","ANCHORAGE","AK","99501-3450","IT, computer systems design services & consulting, computer programing services, Inventory Services. Aircraft & Vehicle Maintenance, Logistics, Warehousing, Engineering Services, Aircraft modifications, MRO, avionics upgrades, avionics installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#116;&#101;&#105;&#110;&#64;&#84;&#89;&#79;&#78;&#69;&#75;&#46;&#67;&#79;&#77;">pstein@TYONEK.COM</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJHAN9CRZ7J8">22</a>","WESTERN BIOACOUSTICS INC","ROBERT AMBROSE","","1890 OTTER SLIDE LN","","FAIRBANKS","AK","99709-2700","Research on biological and acoustical issues, including impacts of human-caused sounds on wildlife, determining natural ambient sound levels in wildland areas, and standard acoustic studies in conjunction with wildlife inventory and monitoring studies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#105;&#112;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#115;&#111;&#117;&#110;&#100;&#115;&#46;&#99;&#111;&#109;">skip@alaskasounds.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CWGYMNX9D228">23</a>","SHANNON & WILSON INC","CHRISTOPHER DARRAH","","2355 HILL RD","","FAIRBANKS","AK","99709-5326","Geotechnical and Environmental Engineering and Construction Materials Testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#100;&#97;&#114;&#114;&#97;&#104;&#64;&#115;&#104;&#97;&#110;&#119;&#105;&#108;&#46;&#99;&#111;&#109;">chris.darrah@shanwil.com</a>","http://www.shannonwilson.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H9GXT6HCG3M6">24</a>","TRIVERUS LLC","PAULA SMITH","","661 E STEEL LOOP","","PALMER","AK","99645-6689","Triverus designs and manufactures high efficiency outdoor surface cleaning equipment. Our cleaning vehicles are used in Airfield, Municipal and Military markets. We lean heavily on a fit-for-purpose design process that applies our continually improving cleaning and waste management technologies to specific market sectors. Our Services Include the following: Cleaning: Parking facilities Cleaning: Marine & dry dock SWPP: Storm Water Pollution Prevention Core Competencies: Outdoor Surface Cleaning -Parking facilities -Airfields -Marine and dry dock -Restoration of pervious concrete Airfield Maintenance -High-efficiency closed loop recovery: supports Storm Water Pollution Prevention (SWPP) -Fine solids recovery for paint prep or crack sealing pre-cleaning -Runway rubber removal -Glycol recovery -Ramp cleaning -Paint removal -Spill response","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#109;&#105;&#116;&#104;&#64;&#116;&#114;&#105;&#118;&#101;&#114;&#117;&#115;&#46;&#99;&#111;&#109;">psmith@triverus.com</a>","http://www.triverus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EM4KH3V5SNG3">25</a>","TEKMATE, LLC","LYNN CONCEPCION-GLOVER","","3900 DENALI ST","","ANCHORAGE","AK","99503-6057","TekMate provides network and telecommunication support services. We provide Network support contracts, hardware and software sales.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#97;&#108;&#121;&#110;&#110;&#46;&#99;&#111;&#110;&#99;&#101;&#112;&#99;&#105;&#111;&#110;&#45;&#103;&#108;&#111;&#118;&#101;&#114;&#64;&#97;&#99;&#115;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">andrealynn.concepcion-glover@acsalaska.com</a>","http://www.AlaskaCommunications.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R2KQZ2UJFAK8">26</a>","SATEO INC","ALEXANDER SCHUMANN","","129 W 53RD AVE","","ANCHORAGE","AK","99518-1602","We provide IP Telephone service and solutions including hosted IP PBX service and IP origination and termination. Services are feature rich and include integrated voice mail, virtual office and presence and virtual fax.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#99;&#104;&#117;&#109;&#97;&#110;&#110;&#64;&#109;&#105;&#99;&#114;&#111;&#99;&#111;&#109;&#46;&#116;&#118;">aschumann@microcom.tv</a>","http://www.microcom.tv"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGDNXNAW3N85">27</a>","TAKU ENGINEERING, LLC","HARRY BUCHEA","","406 W FIREWEED LN STE 101","","ANCHORAGE","AK","99503-2649","Expertise includes Multi-Discipline, Electrical, Mechanical, Chemical, Civil, Materials Engineering. Project Engineering and Management. Corrosion Engineering, Cathodic Protection, Piping and Tank Inspection/Design. API 570, API 653 and STI SP001","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#114;&#121;&#98;&#117;&#99;&#104;&#101;&#97;&#64;&#116;&#97;&#107;&#117;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">harrybuchea@takuengineering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWDCD31JTFA8">28</a>","THREE STAR ENTERPRISES LLC","ANTHONY CAOLE","","3817 E BOGARD RD","","WASILLA","AK","99654-6070","e-grants,e-government,e-forms,e-workforce support,outsourcing management,e-learning,mobile computer labs,technology/training/telework centers, business process automation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#46;&#99;&#97;&#111;&#108;&#101;&#64;&#51;&#115;&#116;&#97;&#114;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">a.caole@3stargov.com</a>","www.3starak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPNLEDVG5AS4">29</a>","HAZARD PROTECTION SYSTEMS, INC","GEORGIANNA SCHAALJE","","6841 SEQUOIA CIR","","ANCHORAGE","AK","99516-3700","Manufacturing of our patent pending fire extinguishing ballistic impact system. We provide engineering analysis using proprietary information to design the proper system","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#99;&#104;&#97;&#97;&#108;&#106;&#101;&#64;&#104;&#97;&#122;&#97;&#114;&#100;&#112;&#114;&#111;&#116;&#101;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">gschaalje@hazardprotection.com</a>","http://www.hazardprotection.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M6GWCCBTYLB5">30</a>","GRAYSTAR PACIFIC INC","STEPHEN GRABACKI","","1345 WEST NINTH AVENUE","SUITE 203","ANCHORAGE","AK","99501-3236","Certified Fisheries Professional with thorough experience in development of Alaska marine resources. Mission -- Bringing Human Health From Alaska’s Ocean Waters Development of technologies and products in -- * hydration and nutrition * medical marine-based materials and compounds * marine natural products * civilian- and defense-related * pharmaceutical & cosmeceutical","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#97;&#121;&#115;&#116;&#97;&#114;&#112;&#97;&#99;&#105;&#102;&#105;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">graystarpacific@gmail.com</a>","https://www.graystarpacific.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMSRE7EPYWR9">31</a>","CORDOVA CENTRAL, LLC","QUIRINO CARDENAS","","615 E 82ND AVE","STE 300","ANCHORAGE","AK","99518-3159","Cordova Central ('CCL') has the capability to recruit and retain quality personnel. CCL has gathered an experienced and diverse management team of business and military executives; all experienced in managing programs and government contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#113;&#99;&#97;&#114;&#100;&#101;&#110;&#97;&#115;&#64;&#99;&#111;&#114;&#100;&#111;&#118;&#97;&#99;&#101;&#110;&#116;&#114;&#97;&#108;&#46;&#99;&#111;&#109;">qcardenas@cordovacentral.com</a>","http://www.cordovacentral.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPNHPWKXG455">32</a>","BOBCAT OF JUNEAU LLC","COLTER BOEHM","","5450 GLACIER HWY","","JUNEAU","AK","99801-9507","Sales, Service,Parts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#116;&#101;&#114;&#64;&#98;&#111;&#98;&#99;&#97;&#116;&#111;&#102;&#106;&#117;&#110;&#101;&#97;&#117;&#46;&#99;&#111;&#109;">colter@bobcatofjuneau.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KDGNZ5ML2E38">33</a>","INTERIOR MECHANICAL SERVICES, INC.","RANDALL BEEMAN","","1285 QUEENS WAY","","FAIRBANKS","AK","99701-7456","In business for 20 years doing business with the Govt. for at least 18 years. We provide medium-heavy duty vehicle maintenance. We service and sell plows, heaters, and arctic packages for extreme conditions of Alaska.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#64;&#103;&#99;&#105;&#46;&#110;&#101;&#116;">mechanical@gci.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LB57UH3WJLY9">34</a>","POLAR WIRE PRODUCTS, INC.","MARVIN KUENTZEL","","7941 BRAYTON DR","","ANCHORAGE","AK","99507-2777","Wire Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#118;&#105;&#110;&#64;&#112;&#111;&#108;&#97;&#114;&#119;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">Marvin@polarwire.com</a>","WWW.POLARWIRE.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TUC7LR94GJ49">35</a>","TFAB GROUND SYSTEMS LLC","TODD WHITE","","880 H ST","STE 210","ANCHORAGE","AK","99501-5131","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#119;&#104;&#105;&#116;&#101;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">twhite@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RNQSC6ZLEHC9">36</a>","UNALAKLEET INVESTMENTS LLC","MARK JOHNSON","","5430 FAIRBANKS ST STE 5","","ANCHORAGE","AK","99518-1263","Guard Services - Executive Protection, Low Visibility Protection, Talent Management, Asset Protection, Static/Mobile Security, Risk Management, All-Source Intelligence, HUMINT, SIGINT / RF Targeting, Cyber Intelligence, OSINT  Construction - 6 GSA Leases Anchorage, AK. UI was a partner with the Builder having the building built for this Tenant and contract – The original contract. Our Project Manager has over 25 years of experience including 12 years owning and managing his own construction company providing a wide range of construction projects. Logistics - MARCORSYSCOM with Supply Chain, and Logistics Support Services, Warehouse Service Contractor Support Perform all tasks required. Manages all: warehousing, inventory control, consolidation, packing, shipping materials, transportation, safe handling of medical materiel, and tracking. IT - ARMY PM Intelligence Systems & Analysis - DCGS-A, Force Point Support and Maintenance (NAICS Code: 541519)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#99;&#112;&#97;&#64;&#103;&#99;&#105;&#46;&#110;&#101;&#116;">johnsoncpa@gci.net</a>","www.unaservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLMJRKVFDQM2">37</a>","TFAB DEFENSE SYSTEMS, LLC","BRAD MORIARTY","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Full-service mechanical & electrical manufacturing with OEM capability and quality built in. Design & build test sets and software in house. Core Manufacturing Competencies include: Wire Harness, Cable Manufacture, Printed Circuit Board Assembly, Electrical Test Equipment, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Mechanical Assembly, Kitting, Sustaining Engineering, Acceptance Testing, Component Integration.Complex Systems & Subsystems, Aviation Components, Ground Defense Articles, Maritime Defense Articles, Foreign Military Sales, Modeling & Simulation, Environmental Testing Lab On Site. SDB, ANC, 8(a), with DCMA Oversight, 99.7% First Pass Quality Ratings, Fully Certified Operators, Designated Quality Representatives Approved to Conduct OEM Test & Inspection. 2017 Lockheed RMS/Sikorsky Elite Supplier, 2017 Lockheed/Sikorsky Supplier of the Year, 2017 Lockheed Excellence in Performance Award, 2017 Lockheed Outstanding Small Business","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZHK6LLN36B26">38</a>","NORTH WIND SERVICES, LLC","PAUL ADAMS","","2525 C ST STE 130","","ANCHORAGE","AK","99503-2632","North Wind Services is an engineering, construction, and consulting firm specializing in technical support services, nuclear consulting, compliance and permitting, health and safety, natural and cultural resource support, NEPA, GIS, and decontamination and decommissioning. North Wind Services is part of a family of companies with common ownership under Cook Inlet Region, Inc. (CIRI), an Alaska Native Corporation (ANC). The North Wind family is comprised of seven companies and is managed by North Wind Group, a CIRI government contract holding entity. Under North Wind Group, North Wind Services operates under a proven corporate infrastructure that has been in place for over 18 years, a low EMR of 0.76, and a DCAA-approved accounting system to successfully execute Government contracts. North Wind Services offers clients a low risk 8(a) business concern that is backed by a mature, financially strong parent organization and an excellent past performance history.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#46;&#97;&#100;&#97;&#109;&#115;&#64;&#110;&#111;&#114;&#116;&#104;&#119;&#105;&#110;&#100;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">paul.adams@northwindgrp.com</a>","www.northwindgrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GF8CK3Q7SFK8">39</a>","ALASKA ECOLOGICAL RESEARCH, LLC","JENNIFER DUSHANE","","18175 E WALLING RD","","PALMER","AK","99645-8248","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#46;&#100;&#117;&#115;&#104;&#97;&#110;&#101;&#64;&#97;&#107;&#45;&#101;&#99;&#111;&#108;&#111;&#103;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">jen.dushane@ak-ecological.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FM5UM7R7LTB7">40</a>","KWAAN WIRELESS INC.","ASHLEY PADGETT","","374 KEKU RD","","KAKE","AK","99830-0002","Kwaan Wireless, Inc. is a small business that provides internet service to Kake, Alaska. We also provide site specific telecommunications support services (SSTSS), which includes site surveys; site preparation; installations or relocation's of telephone systems and/or data systems; cable installation; and moves, additions, changes and/or repairs at new sites or existing locations within the accessioning mission footprint. Video Conferencing Maintenance & Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#108;&#101;&#121;&#46;&#112;&#97;&#100;&#103;&#101;&#116;&#116;&#64;&#107;&#97;&#107;&#101;&#116;&#114;&#105;&#98;&#97;&#108;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">ashley.padgett@kaketribalcorp.com</a>","http://kwaanwireless.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N9AVKXKJR5K7">41</a>","NORTHWEST STRATEGIES INC","TIFFANY TUTIAKOFF","","441 W 5TH AVE","STE 500","ANCHORAGE","AK","99501-2340","Northwest Strategies (NWS) is an Alaska Native, Woman-owned and operated full service consulting, communications, and professional services firm. NWS is a results-focused company with more than 20 employees and a diverse portfolio of work. With an emphasis on cultural relations, social marketing, and research NWS has worked with State and Federal Agencies to solve mission critical challenges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#102;&#102;&#97;&#110;&#121;&#64;&#110;&#119;&#115;&#116;&#114;&#97;&#116;&#46;&#99;&#111;&#109;">tiffany@nwstrat.com</a>","www.nwstrat.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBJ3NAJQFX37">42</a>","PARTNOW CONSULTING","PATRICIA PARTNOW","","2936 CAPTAIN COOK ESTATES CIR","","ANCHORAGE","AK","99517-1972","Ethnographic research, evaluation, curriculum development, museum evaluation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#105;&#97;&#112;&#97;&#114;&#116;&#110;&#111;&#119;&#64;&#109;&#97;&#99;&#46;&#99;&#111;&#109;">patriciapartnow@mac.com</a>","www.partnowconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TUNCNYXB3TS6">43</a>","TSIGONIS COMPANIES, INC.","JERRY FLEISHMAN","","1963 DONALD AVE","","FAIRBANKS","AK","99701-7387","Engineering and manufacturing specializing in wastewater treatment and plastic fabrication","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#114;&#121;&#64;&#108;&#105;&#102;&#101;&#119;&#97;&#116;&#101;&#114;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jerry@lifewaterengineering.com</a>","www.LifewaterEngineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DVALK6QYDYF3">44</a>","JW INDUSTRIES GROUP CORPORATION","TERESA JACOBSSON","","801 B ST","STE 300","ANCHORAGE","AK","99501-3657","Operating two divisions, JW Industries Group is a single-member S-Corp certified 8(a) Alaska Native woman owned company offering Construction and Logistics Services and Professional Services support. Through our JV partners, we specialize in Commercial Construction ranging from small (less than 25K)Tenant Improvement projects to full Design Build Construction projects of more than 20 million. Our Professional Services division offers a full spectrum of financial consulting and program operations support. From Accounting to Contract Management to Process Improvement to Acquisition Support, we stand ready to serve our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#101;&#115;&#97;&#64;&#106;&#119;&#105;&#103;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">teresa@jwigcorp.com</a>","https://www.jwigcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQNYKJCTWEC8">45</a>","BSET, LLC","LAURA HOEY","","3601 C ST.","STE 1000-36","ANCHORAGE","AK","99503-5923","Technical personnel, Project Management, Electronic Technicians, Computer Operators","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#104;&#64;&#116;&#100;&#120;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">laurah@tdxcorp.com</a>","www.beringseagroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SV2ZRWCZPV86">46</a>","MIDNIGHT SUN ENVIRONMENTAL, LLC","BRIAN KOVOL","","560 E 34TH AVE","SUITE 102","ANCHORAGE","AK","99503-4161","Midnight Sun Environmental, LLC provides services in Environmental Management, Wetlands Delineation, NEPA,Project Permitting and Compliance,Storm Water Compliance, Renewable Energy,Heavy Rail Mitigation Plans and Monitoring, Fisheries and Avian Surveys, Remediation Services. Commercial Drone Operations, Site Characterization, Soil Sampling and Field Screening, Environmental Due Diligence.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#64;&#109;&#105;&#100;&#110;&#105;&#103;&#104;&#116;&#115;&#117;&#110;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">brian@midnightsunenv.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBJ8NMTK66T3">47</a>","CHENEGA HEALTHCARE SERVICES LLC","GRACE CASTILLO","","3000 C ST","STE 301","ANCHORAGE","AK","99503-3975","Chenega Healthcare Services, LLC (CHS) is a wholly owned subsidiary of the Chenega Corporation, an Alaskan Native Corporation (ANC). CHS specializes in research and healthcare staffing; however, we have augmented our key personnel and capabilities to manage complex facilities and logistics support services, construction services, environmental services, document processing and scanning services, and legal and technical services. CHS is ISO 9001:2015-certified. CHS has achieved the ISSA Cleaning Industry Management Standard—Green Building (CIMS-GB) with Honors certification.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#99;&#97;&#115;&#116;&#105;&#108;&#108;&#111;&#64;&#99;&#104;&#101;&#110;&#101;&#103;&#97;&#46;&#99;&#111;&#109;">gcastillo@chenega.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PHJQEZUS4QG9">48</a>","G.SANDONE CONSULTING, LLC","GENE SANDONE","","4950 W CLAYTON ST","","WASILLA","AK","99623-9506","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#106;&#115;&#97;&#110;&#100;&#111;&#110;&#101;&#64;&#103;&#99;&#105;&#46;&#110;&#101;&#116;">gjsandone@gci.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TGFJNRMB9KS7">49</a>","ARCTIC ADVENTURES LLC","ANTHONY ONEY","","23452 CULHANE DR","","WASILLA","AK","99654-","Arctic Adventures LLC is a small pilot service in Wasilla, Alaska, opened in 2005","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#111;&#110;&#101;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">anthonyoney@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RVP6C2KHCDN7">50</a>","TYONEK TECHNICAL SERVICES, LLC","JEFF ZELENA","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Full spectrum research and development services for complex systems, sub-systems and components for aviation, ground and maritime defense articles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#122;&#101;&#108;&#101;&#110;&#97;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">jzelena@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WBN4N84LLDK1">51</a>","SMNC PROPERTIES LLC","ALEXANDRO CETINA","","100 YUPIK RD","","SAINT MARYS","AK","99658-","SMNC Properties LLC provides an array of construction and facility maintenance services to federal, local, and state government as well as commercial contractors. We offer capability and experience in General Contracting Services, construction management, project management, facilities maintenance and support, property management and maintenance services, environmental remediation, land clearing, site preparations, civil construction, LED lighting retrofitting and new installation, and equipment and property leasing, Our qualified team of experts will work with you to find innovative solutions to any project you may have. SMNC Properties, LLC is an 8(a)-certified, HubZone Certified, and Alaska Native Corporation firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#101;&#116;&#105;&#110;&#97;&#64;&#115;&#116;&#109;&#110;&#99;&#46;&#110;&#101;&#116;">acetina@stmnc.net</a>","https://smncproperties.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3ESMH57AK14">52</a>","TYONEK MACHINING AND FABRICATION, LLC","BRAD MORIARTY","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","TMF provides full spectrum mechanical and electrical fabrication for complex systems, subsystems and components for aviation, ground, and maritime defense articles. Direct experience in manufacturing complex electro-mechanical systems, hydraulics, pneudraulics, control boxes, cables and weapons system hardware for DOD ground vehicle systems. Our expertise includes parts and components design, fabrication and assembly for environmental control units I heating, ventilation, and air conditioning (HVAC), motors and generators, avionics and electronics for aviation and ground vehicles and systems. Core Manufacturing Competencies: Wire Harness, Cable Manufacture, Printed Circuit Board Assembly, Electrical Test Equipment, Precision Machining & Turning, Painting, Coating, and Marking, Welding, Sheet Metal Fabrication, Mechanical Assembly, Kitting, Sustaining Engineering, Acceptance Testing, Component Integration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UN9KJX3KVAE4">53</a>","TWO BEARS ENVIRONMENTAL CONSULTING, LLC","RONNI WILCOCK","","6132 FARPOINT DR","","ANCHORAGE","AK","99507-1261","Two Bears Environmental Consulting provides a full range of Climate, Data Collection and Analysis, Environmental, Permitting and Compliance Services.Many environmental consulting companies provide permitting and compliance support; we provide this support in the context of a changing climate and societal values. We specialize in integrating 1) Geomatics, 2) Projected Climates, 3) Geodesign, and 4) Traditional/Local Knowledge to understand the future impacts and liabilities of a changing climate, reducing potential monetary losses while increasing resilience and sustainability. Our work is innovative and proactive. We inform decision-makers of a project’s projected environmental impacts, including future monetary and environmental losses and liabilities. We identify key issues and stakeholder concerns early in the life of a project so that potential adverse impacts can be addressed and mitigated, resulting in resilient communities and sustainable development. We do Science for People.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#110;&#105;&#64;&#116;&#98;&#101;&#99;&#45;&#97;&#107;&#46;&#99;&#111;&#109;">ronni@tbec-ak.com</a>","http://www.tbec-ak.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N45UNVCVND41">54</a>","ZAPPA MONICA","MONICA ZAPPA","","18 OILWELL RD","","NINILCHIK","AK","99639-","We provide scientific consulting for hazards, disasters, and climate change to the Alaskan area. We moniter air quality in remote locations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#110;&#105;&#99;&#97;&#122;&#97;&#112;&#112;&#97;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">monicazappa1@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CQL8S13BYQM3">55</a>","ADAMS, INC","RON ADAMS","","10100 E PUFFIN DR","","PALMER","AK","99645-9111","We strive to provide the best service that meets all the needs for our clients. We do Commercial painting, Painting Restaurants, Fire restoration, Painting Condos, and more. We have been servicing Anchorage and surrounding areas with only the best service. Our attention to detail is our top priority. We provide you with service that you can always rely on and trust to get your project done in a timely fashion. We will and can go the distance to give you the best job.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#109;&#115;&#102;&#97;&#109;&#105;&#108;&#121;&#112;&#97;&#105;&#110;&#116;&#105;&#110;&#103;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">adamsfamilypainting@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S58NJBBDKRF5">56</a>","KADIAK LLC","JOSHUA VO","","3800 CENTERPOINT DR STE 700","","ANCHORAGE","AK","99503-5801","Kadiak, LLC (Kadiak) is a professional services and enterprise information technology (IT) solutions company serving both commercial and government client. Professional services include: legal and administrative services and staffing, foreclosure processing, tribal court assessments, project management office (PMO), research and development, and a range of administrative support. Kadiak provides IT help desk, training and technical assistance, enterprise solutions, SCADA, and industrial automation control solutions. Kadiak is a wholly-owned subsidiary of Koniag Government Services, LLC (KGS), an Alaska Native Corporation (ANC).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#118;&#111;&#64;&#107;&#111;&#110;&#105;&#97;&#103;&#45;&#103;&#115;&#46;&#99;&#111;&#109;">jvo@koniag-gs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F56MVJXUVMK3">57</a>","AIRCRAFT READINESS ALLIANCE, LLC","TONY FRIDELLE","","880 H ST","STE 210","ANCHORAGE","AK","99501-3450","Aircraft manufacturing; Aviation services; Aircraft maintenance, repair, and overhaul","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#102;&#114;&#105;&#100;&#101;&#108;&#108;&#101;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">tfridelle@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VKBFGDGXE2L4">58</a>","RED MOUNTAIN CONSULTING LLC","LORENE LYNN","","10366 N WOLVERINE RD","","PALMER","AK","99645-8733","RED MOUNTAIN CONSULTING (RMC) is an environmental services company that provides ecological restoration, tundra rehabilitation, wetland delineation and functional assessment, soil survey, and natural resource management and mining reclamation plans. Specializing in the soils and vegetation in Alaska, RMC offers services to industry, government, and private parties. RMC offers specialized service, backed with years of reputable experience, at a competitive price. LORENE LYNN is the owner of RMC and has over 13 years of experience specializing in soil, permafrost, and vegetation in Alaska and is dedicated to exceeding your expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#111;&#114;&#101;&#110;&#101;&#46;&#76;&#121;&#110;&#110;&#64;&#114;&#109;&#99;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">Lorene.Lynn@rmcalaska.com</a>","www.redmountainalaska.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LN3NXYK7K9U5">59</a>","LOGIC GEOPHYSICS & ANALYTICS LLC","ESTHER BABCOCK","","20702 ICEFALL DR","","EAGLE RIVER","AK","99577-8861","Logic Geophysics & Analytics LLC provides near-surface geophysical surveys and data analytics relevant to geotechnical, environmental, and engineering sites. Subsurface imaging solutions include bedrock mapping, geologic mapping, concrete imaging, metal detection, and contaminated site surveys. Logic Geophysics is a woman-owned, service-disabled veteran-owned, disadvantaged business enterprise operated by Dr. Esther Babcock, U.S. Air Force retired, a Ph.D.-level geophysicist and ground-penetrating-radar (GPR) expert. We specialize in 'extreme geophysics,' geophysical surveys in remote, harsh environments with limited resources. From mountainsides to canyons, from Africa to the Arctic to the Antarctic, from glaciers to deserts, we've been there and we know how to safely maximize productivity and results.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#98;&#97;&#98;&#99;&#111;&#99;&#107;&#64;&#108;&#111;&#103;&#105;&#99;&#103;&#101;&#111;&#112;&#104;&#121;&#115;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">ebabcock@logicgeophysics.com</a>","www.logicgeophysics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TN8URLG9SXW7">60</a>","STRATEGIC PREVENTION SOLUTIONS LTD","WENDI SIEBOLD","","110 SEWARD ST STE 4","","JUNEAU","AK","99801-1219","Strategic Prevention Solutions is a dynamic planning, development, and research firm that works with federal, state, community, and tribal entities to address and prevent social, behavioral, and public health problems by partnering on efforts to improve individual and collective wellness. We are community psychologists, researchers, empowerment evaluators, and public health practitioners well-versed in industry best practices and experienced at implementing and improving programs, systems, and policy efforts. Our team is comprised of published and experienced experts from a variety of disciplines including public health, public administration, and psychology. We partner alongside our clients, focusing on empowerment and capacity building to promote participatory and contextually relevant planning and evaluation projects. We hold our clients at the center of our work, balancing needs, resources, and methodological rigor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#100;&#105;&#64;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#99;&#112;&#114;&#101;&#118;&#101;&#110;&#116;&#105;&#111;&#110;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">wendi@strategicpreventionsolutions.com</a>","www.strategicpreventionsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MZ8QNNSC6NS1">61</a>","SUGPIAT GROUP, LLC","TIM LOWMAN","","1400 W BENSON BLVD STE 506","","ANCHORAGE","AK","99503-3796","Sugpiat Group, LLC provides ISO 20000-1/27001/9001 Certified IT services & products. We provide IoT Integration, ITSM, Service Delivery, Systems Engineering, Cyber Security, RPA, AI/ML and Autonomous Systems, agile engineering / development and provide ITSM using ITIL. In addition to these leading-edge capabilities, we offer help desk and administrative support, staff augmentation, renewable energy, construction and facilities support services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#108;&#111;&#119;&#109;&#97;&#110;&#64;&#115;&#117;&#103;&#112;&#105;&#97;&#116;&#46;&#99;&#111;&#109;">tlowman@sugpiat.com</a>","www.sugpiatgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK4XMWJ98516">62</a>","ARED LLC","BRIAN ASHTON","","730 CASE AVE","","WRANGELL","AK","99929-","20 years experience restoring wild salmon runs. Advanced composites materials fabrication techniques. Management of Aircraft modifications for advanced aviation missions capabilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#116;&#111;&#110;&#98;&#64;&#97;&#114;&#101;&#100;&#46;&#110;&#101;&#116;">ashtonb@ared.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F83ZMCMXRA83">63</a>","SUGPIAT DEFENSE, LLC","TIM LOWMAN","","1400 W BENSON BLVD","STE 504","ANCHORAGE","AK","99503-3795","Sugpiat Defense (SD) specializes in cyber policy and governance, security engineering, penetration testing, Information Assurance, and Software Development. SD provides cost-effective strategy for data confidentiality, integrity & availability, and fraud detection & supply chain risk management (SCRM). We develop, staff, and maintain virtual/logical network cyber ranges for experiments, vulnerability assessments, and cyber training. We conduct cybersecurity vulnerability investigations (CVIs), cooperative vulnerability and penetration assessments (CVPAs), cyber resiliency analyses as part of Adversarial Assessments for acquisition test and evaluation, and cyber risk assessments in support of rapid RMF events. SD assists the Government with full FCD-1 compliance to ensure resilience and preservation of National Essential Functions resilience, preservation, and continuous operation of National, Primary, and Mission Essential Functions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#76;&#111;&#119;&#109;&#97;&#110;&#64;&#115;&#117;&#103;&#112;&#105;&#97;&#116;&#46;&#99;&#111;&#109;">TLowman@sugpiat.com</a>","www.sugpiatdefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PW1DZY8M2N85">64</a>","NORTH WIND SITE SERVICES LLC","ALLISON WALKER","","2525 C ST","STE 130","ANCHORAGE","AK","99503-2632","North Wind Site Services provides full-service environmental remediation and investigation, decontamination, and disinfection. North Wind Site Services is an SBA certified 8(a) firm and is part of a family of companies with common ownership under Cook Inlet Region, Inc. (CIRI), an Alaska Native Corporation (ANC). Under North Wind Group, North Wind Site Services operates under a proven corporate infrastructure that has been in place for over 18 years, a low EMR of 0.76, and a DCAA-approved accounting system to successfully execute Government contracts. North Wind Site Services offers clients a low risk small business concern that is backed by a mature, financially strong parent organization and an excellent past performance history. Occupational Health (Industrial Hygiene, Health Physics, and Respiratory Protection) and facility disinfection and cleansing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#110;&#111;&#114;&#116;&#104;&#119;&#105;&#110;&#100;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">awalker@northwindgrp.com</a>","www.northwindgrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H1J6Q1X16W91">65</a>","JADIN TECH, LLC","MATTHEW PAVLAK","","1400 W BENSON BLVD STE 502","","ANCHORAGE","AK","99503-3798","Jadin Tech provides a spectrum of diversified services in the areas of Security Assistance, Security Cooperation, FMS, Full Lifecycle Software Development, Logistics Management, Aircraft Maintenance, Ferrying Services, Depot Level Maintenance, Training & Simulation, Unmanned Aircraft Systems, and U.S. & Foreign Weapons, and Munitions, Cyber Security Training. We offer 100 years of combined experience In Software Development and Training & Simulation support for the U.S. military and have managed multi-million-dollar contracts with no loss of training time for over 20 years. We possess over 20 years of experience and utilize best practice processes and is certified in ISO 9001:2015; ISO 27001; CMMI Service ML3; and ISO 20000-1 quality standards. We are CMMC and NIST 800-171 complaint to level 3.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#116;&#116;&#104;&#101;&#119;&#46;&#80;&#97;&#118;&#108;&#97;&#107;&#64;&#106;&#97;&#100;&#105;&#110;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">Matthew.Pavlak@jadintech.com</a>","https://www.jadintech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VD3VA3G27KK8">66</a>","T3 AEROSPACE LLC","PAUL STEIN","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#116;&#101;&#105;&#110;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">pstein@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEKBD5S3LDF8">67</a>","TEYA INFORMATION SERVICES AND SOLUTIONS, LLC","RON PERRY","","101 E 9TH AVE STE 9B","","ANCHORAGE","AK","99501-3651","System and Network Integration on an existing Software Topology with Defense Health Agency. The program is called DMHRSi and is comprise of multiple of applications and software (WebLogic, Informatica, OEM, OAM and GOTS) to a containerized architecture on a RedHat Enterprise Linux (RHEL) operating System. The end result will be a migration of DMHRSi, it’s reporting repository DDR and supporting technology to an Oracle EBS core to the latest R12.2 RUP, R12.2.X, and the upgrade of all DMHRSi components to ensure compatibility with R12.2X.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#46;&#112;&#101;&#114;&#114;&#121;&#64;&#116;&#101;&#121;&#97;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">ron.perry@teyacompany.com</a>","www.teyaiss.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=THT6B7FXLFU1">68</a>","OPTIMERA HOLDINGS INC","EMMETT FITCH","","132 LOOP RD","","UNALASKA","AK","99685-","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#118;&#116;&#46;&#115;&#97;&#108;&#101;&#115;&#64;&#111;&#112;&#116;&#105;&#109;&#101;&#114;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">govt.sales@optimerainc.com</a>","http://www.optimerainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FSQLFN2BBPB3">69</a>","AWALIX LLC","RON PHILEMONOFF","","4720 BUSINESS PARK BLVD","","ANCHORAGE","AK","99503-7175","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#112;&#97;&#117;&#108;&#64;&#97;&#119;&#97;&#108;&#105;&#120;&#46;&#99;&#111;&#109;">ronpaul@awalix.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4UAPJCFZVY4">70</a>","MICHAEL ESSLIN","MICHAEL ESSLIN","","35940 TERESA WAY","","SOLDOTNA","AK","99669-8623","Electrical contracting, electrical project management, electrician, electrical qaqc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#101;&#115;&#115;&#108;&#105;&#110;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">michaelesslin@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4MAXWWPDKZ2">71</a>","HI-Q-MILITARY ANTENNAS-AES LLC","SCOTT SNYDER","","880 N ST","STE 101","ANCHORAGE","AK","99501-3276","Manufacturer of high frequency (HF) antennas antennas for mobile military applications such as land and sea vehicles, and man-pack systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#104;&#105;&#113;&#97;&#110;&#116;&#101;&#110;&#110;&#97;&#115;&#46;&#99;&#111;&#109;">scott@hiqantennas.com</a>","https://www.hi-q-militaryantennas.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHTDLQ51NXK5">72</a>","BENJAMIN LAWRIE","BENJAMIN LAWRIE","","339 WORTMAN LOOP","APT 1","SITKA","AK","99835-9617","30 years of commercial fishing and boating experience. Operate a 44 foot vessel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#119;&#114;&#105;&#101;&#98;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">lawriebs@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WZSADY9UBM43">73</a>","KIJIK TECHNICAL SERVICES, LLC","VIVIAN TOKAR","","801 B ST STE 401B","","ANCHORAGE","AK","99501-3657","Kijik Technical Services, LLC (KTS) is an SBA small business certified subsidiary of Kijik Corporation, an Alaska Native Corporation. KTS provides a wide range of managerial and technical support for commercial, government and non-profit organizations in Alaska. KTS’s expertise span a range of disciplines including logistics, market analysis, feasibility studies, and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#116;&#111;&#107;&#97;&#114;&#64;&#107;&#105;&#106;&#105;&#107;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">Vtokar@kijikcorp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SXRHPM1FVXK7">74</a>","KARTORIUM, INC.","JAY BYAM","","2221 E NORTHERN LIGHTS BLVD STE 121","","ANCHORAGE","AK","99508-4140","Kartorium is a state-of-the-art digital twinning platform that enables quick creation of three-dimensional representations of facilities and infrastructure, overlayed with layers of pertinent data. Our robust platform is designed to revolutionize how organizations conduct work planning, training, and operational monitoring.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#121;&#46;&#98;&#121;&#97;&#109;&#64;&#107;&#97;&#114;&#116;&#111;&#114;&#105;&#117;&#109;&#46;&#99;&#111;&#109;">jay.byam@kartorium.com</a>","https://kartorium.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.198&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

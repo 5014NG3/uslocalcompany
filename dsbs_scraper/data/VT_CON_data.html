@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Vermont;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.98 seconds and 0.99 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 50 
+(of 50 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAFSZ47TUCY9">1</a>","J. P. SICARD, INC.","JASON SICARD","President","234 GLOVER RD","","BARTON","VT","05822-9377","Highways, bridges, dams, water, sewer & drainage systems, recreational paths, concrete work, retaining walls, residential & commerical sitework, land clearing enviromental protection, erosion control, flooding repair, & stream bank stabilization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#64;&#106;&#112;&#115;&#105;&#99;&#97;&#114;&#100;&#46;&#99;&#111;&#109;">jason@jpsicard.com</a>","http://www.jpsicard.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZC4XTA2CQC7">2</a>","VERMONT AWARDS AND ENGRAVING, INC.","MARGI SWETT","President/Owner","650 INDUSTRIAL PARK RD","","SAINT ALBANS","VT","05478-1877","engraving, sublimation on metal, glass and plastic. National award winners for proprietary methods. Engrave swords, rifles, shells, medals for military as well as standard stock and custom items","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#103;&#105;&#64;&#118;&#101;&#114;&#109;&#111;&#110;&#116;&#97;&#119;&#97;&#114;&#100;&#115;&#46;&#99;&#111;&#109;">margi@vermontawards.com</a>","https://www.vermontawards.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNU9NA28W374">3</a>","LAJEUNESSE INTERIORS, INC","ROBERT HUTCHINS","President","103 PLAINFIELD BROOK RD","","BARRE","VT","05641-9729","We sell and install all products listed under special equipment/materials. We work as a prime and also as a subcontractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#117;&#116;&#99;&#104;&#105;&#110;&#115;&#64;&#108;&#97;&#106;&#105;&#110;&#116;&#101;&#114;&#105;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">rhutchins@lajinteriors.com</a>","http://www.lajinteriors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TWMMQ8D9HHA3">4</a>","MILLER CONSTRUCTION INC.","PAUL HOLLOWAY","PRESIDENT","3103 US ROUTE 5 S","","WINDSOR","VT","05089-9440","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#105;&#108;&#108;&#101;&#114;&#99;&#114;&#97;&#110;&#101;&#115;&#46;&#99;&#111;&#109;">info@millercranes.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFJXMTRMPKR7">5</a>","CHAMPLAIN CONSTRUCTION COMPANY, INC.","JAMES DANYOW","","1050 ROUTE 7 S","","MIDDLEBURY","VT","05753-8990","Site, earth, water, sewer, aggregates","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#97;&#114;&#100;&#111;&#103;&#64;&#99;&#104;&#97;&#109;&#112;&#108;&#97;&#105;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">beardog@champlainconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDUJBBTU67F3">6</a>","SPATES CONSTRUCTION INC","GRANT SPATES","President","1876 BEEBE RD","","NEWPORT","VT","05855-8978","Spates Construction Inc., General contractor family owned firm. Founded 1974. Commercial & industrial construction. Services: design,permits, management, complete project. Wood framed & pre-engineered steel structures. Star Buildings System dealer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#97;&#110;&#116;&#64;&#115;&#112;&#97;&#116;&#101;&#115;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">grant@spatesconstruction.com</a>","http://www.spatesconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNQQCBA36J56">7</a>","ROUND HILL FENCE & SECURITY, INC.","JESSE INGALLS","Asst. Manager","288 TELEPHONE LN","","ORLEANS","VT","05860-9203","Sale and installation of all types of fence and gates, access control, alarm systems, CCTV systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#69;&#83;&#83;&#69;&#64;&#114;&#111;&#117;&#110;&#100;&#104;&#105;&#108;&#108;&#102;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">JESSE@roundhillfence.com</a>","http://www.roundhillfence.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HC2RZYYKLWZ2">8</a>","BLOW & COTE, INC","MARC COTE","","815 VT ROUTE 15 E","","MORRISVILLE","VT","05661-8554","Blow & Cote, Inc. provides a multitude of services that include steel and concrete bridge construction, excavation for bridges, roads, and culverts, quality crane service, material and equipment hauling, pile driving, and rehabilitation and construction of covered bridges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#64;&#98;&#108;&#111;&#119;&#97;&#110;&#100;&#99;&#111;&#116;&#101;&#46;&#99;&#111;&#109;">marc@blowandcote.com</a>","www.blowandcote.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ND98YUVCWGU4">9</a>","WRIGHT & MORRISSEY INC","STEPHEN THERIAULT","","99 SWIFT ST","STE 100","SOUTH BURLINGTON","VT","05403-7324","Industrial Building Construction; Commercial and Institutional Building Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#116;&#64;&#119;&#109;&#111;&#114;&#114;&#105;&#115;&#115;&#101;&#121;&#46;&#99;&#111;&#109;">stevet@wmorrissey.com</a>","http://www.wmorrissey.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZ9HJ9DUQXC9">10</a>","JOHN A. RUSSELL CORPORATION","TODD DAVIS","","170 S MAIN ST STE 6","","RUTLAND","VT","05701-4558","Construction Management and General Contractor capabilities","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#100;&#97;&#118;&#105;&#115;&#64;&#106;&#97;&#114;&#99;&#46;&#99;&#111;&#109;">tdavis@jarc.com</a>","http://www.jarc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXU4JFA6U2A1">11</a>","WINTERSET, INC.","MICHEAL CLARK","","128 WINTERSET DR","","LYNDONVILLE","VT","05851-","General Contractor for Street, Road and Bridge construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#110;&#116;&#101;&#114;&#115;&#101;&#116;&#109;&#109;&#99;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">wintersetmmc@yahoo.com</a>","wintersetinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SHL9T736ESK9">12</a>","DESSUREAU MACHINES, INC.","MARK DESSUREAU","","53 GRANITE ST","","BARRE","VT","05641-4139","Dessureau Machine has been a faithfull supplier to Vermont Manufacturers since 1940.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#100;&#64;&#100;&#101;&#115;&#115;&#117;&#114;&#101;&#97;&#117;&#46;&#99;&#111;&#109;">markd@dessureau.com</a>","www.dessureau.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J54CJNT64NE7">13</a>","HERITAGE LANDSCAPES, LLC","GREGORY DEVRIES","","501 LAKE RD","","CHARLOTTE","VT","05445-9640","Specializing in restoration of historic cultural landscapes, private and public properties. Scope of work includes research, documentation, plans, construction and bid documents, and construction administration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#118;&#105;&#114;&#101;&#115;&#64;&#104;&#101;&#114;&#105;&#116;&#97;&#103;&#101;&#108;&#97;&#110;&#100;&#115;&#99;&#97;&#112;&#101;&#115;&#46;&#99;&#111;&#109;">devires@heritagelandscapes.com</a>","http://www.heritagelandscapes.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLKBLUJ2B275">14</a>","CCS CONSTRUCTORS, INC.","TYLER PARKER","","138 MUNSON AVE","","MORRISVILLE","VT","05661-8529","CCS has a fleet of cranes; Rough terrains, All terrains, Hydraulics, Conventional Lattice Boom Truck Cranes & Crawlers. CCS performs quality crane service, steel and precast installation, and steel and wooden bridge construction all over New England and northern New York.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#64;&#99;&#99;&#115;&#99;&#114;&#97;&#110;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">tyler@ccscraneservice.com</a>","https://ccscraneservice.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JKXDNY5U37Y9">15</a>","WRIGHT CONSTRUCTION COMPANY, INC.","JOSEPH POSTON","","31 STATION RD","","MOUNT HOLLY","VT","05758-9703","General Contractor specializing in all aspects of construction from the ground up new construction, renovations and remodels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#111;&#115;&#116;&#111;&#110;&#64;&#119;&#114;&#105;&#103;&#104;&#116;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">jposton@wrightconstruction.com</a>","www.wrightconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TLZGN5JK2WD3">16</a>","ALL SEASONS CONSTRUCTION CORP.","DAVE DANCOSSE","","76 HARTNESS AVE","","SPRINGFIELD","VT","05156-2711","Construction management / general contracting / design-build. Commercial, residential, institutional, preservation, historical, metal buildings. Small to multi-million dollar projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#100;&#97;&#110;&#99;&#111;&#115;&#115;&#101;&#64;&#97;&#108;&#108;&#115;&#101;&#97;&#115;&#111;&#110;&#115;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">ddancosse@allseasonsconst.com</a>","http://www.allseasonsconst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPDZKA4NA575">17</a>","MIKE'S ELECTRIC, INC.","ADAM FORTIER","","1571 VT ROUTE 100","","WESTFIELD","VT","05874-4401","Electrical contractor, fire alarm contractor, systems integrator","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#109;&#46;&#102;&#111;&#114;&#116;&#105;&#101;&#114;&#64;&#109;&#101;&#105;&#45;&#118;&#116;&#46;&#99;&#111;&#109;">adam.fortier@mei-vt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DSQLL3J5WS28">18</a>","STATICWORX, INC.","KIMBERLY PETRACCARO","","372 HURRICANE LN STE 201","","WILLISTON","VT","05495-2080","ESD (anti-static/conductive) floors for computer rooms, labs, air traffic control, call centers, DOD, aerospace, clean room, health care facilities, raised flooring, telecommunication, radio, tv, elextronic handling. ESD carpet, ESD vinyl tile, Glue Free & Interlocking ESD options, ESD epoxy, ESD coatings, ESD maintenance, ESD rubber, ESD (static dissipative) seating , ESD resilient flooring. Motorola R56, FAA STD 019F, ANSI/ESD S.20.20","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#105;&#109;&#98;&#101;&#114;&#108;&#121;&#64;&#115;&#116;&#97;&#116;&#105;&#99;&#119;&#111;&#114;&#120;&#46;&#99;&#111;&#109;">Kimberly@staticworx.com</a>","http://www.StaticWorx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RXRDA594NTV9">19</a>","INTERACTIVE MAINTENANCE SERVICES, INC","CHRIS MARCELLE","","340 AVENUE D STE 40","","WILLISTON","VT","05495-7597","Concrete curb, sidewalk, flatwork & frost wall installation. Landscaping & snowplowing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#105;&#115;&#101;&#64;&#105;&#109;&#115;&#118;&#116;&#46;&#99;&#111;&#109;">denise@imsvt.com</a>","www.imsvt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTSZAXFHYNV8">20</a>","FABIAN EARTH MOVING, INC.","JOHN CENTER","","1409 PLEASANT ST","","WEST RUTLAND","VT","05777-9577","We are a 3rd generation family business that specializes in all phases of excavation and snow plowing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#114;&#105;&#115;&#64;&#102;&#97;&#98;&#105;&#97;&#110;&#101;&#97;&#114;&#116;&#104;&#109;&#111;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Chris@fabianearthmoving.com</a>","https://www.fabianearthmoving.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YFL9A3PNNN54">21</a>","E & S ELECTRIC CO LLC","ALLEN SIMARD","","50 BEARTOWN RD","","UNDERHILL","VT","05489-9364","Electrical Contractor Fire Alarm Network Cabling Fiber Optic","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#115;&#105;&#109;&#97;&#114;&#100;&#64;&#101;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">alsimard@eselectriccompany.com</a>","www.eselectriccompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T4H4VWJQQGK7">22</a>","BREAD LOAF CORPORATION","MICHAEL MCLAUGHLIN","","1293 ROUTE 7 S","","MIDDLEBURY","VT","05753-8800","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#109;&#99;&#108;&#64;&#98;&#114;&#101;&#97;&#100;&#108;&#111;&#97;&#102;&#46;&#99;&#111;&#109;">mikemcl@breadloaf.com</a>","http://www.breadloaf.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQAMF8A647C9">23</a>","R G GOSSELIN INC","MIKE GOSSELIN","","193 GOSSELIN DR","","DERBY","VT","05829-","Concrete construction, excavation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#108;&#121;&#105;&#110;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">sulyin@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7LUVCUX7HM4">24</a>","BLANCHARD CONTRACTING LTD CO.","GREGORY BLANCHARD","","1255 US ROUTE 5 N","","WINDSOR","VT","05089-9691","31 years experience in the building construction, maintenance and sitework industries including concrete.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#64;&#98;&#108;&#97;&#110;&#99;&#104;&#97;&#114;&#100;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">greg@blanchardcontractingltd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L6A9PJH97R15">25</a>","VMS CONSTRUCTION, INC.","VICTOR SHAPPY","","103 WALES ST","","RUTLAND","VT","05701-5124","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#115;&#104;&#97;&#112;&#112;&#121;&#64;&#118;&#109;&#115;&#103;&#99;&#46;&#99;&#111;&#109;">vshappy@vmsgc.com</a>","vmsgc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HVLHKLNXLRN3">26</a>","BARKUS EXCAVATING, LLC","CRAIG BARTOSEWCZ","","1549 KING HILL RD","","READSBORO","VT","05350-9615","Rural Trail/Road construction/maintenance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#97;&#114;&#116;&#111;&#115;&#64;&#109;&#121;&#102;&#97;&#105;&#114;&#112;&#111;&#105;&#110;&#116;&#46;&#110;&#101;&#116;">cbartos@myfairpoint.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UCMTNMGEYG28">27</a>","KORE SOLUTIONS, INC","SUZANNE SWINK","","150 PILGRIM PARK RD","","WATERBURY","VT","05676-1748","Northern Reliability specializes in energy storage systems on a commercial or industrial scale using renewable energy (Solar Photovoltaic)as the prime power source.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#119;&#105;&#110;&#107;&#64;&#107;&#111;&#114;&#101;&#112;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">sswink@korepower.com</a>","www.korepower.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MBT6ERC43MQ5">28</a>","CUT-RIGHT CONCRETE AND DEMOLITION, INC","JULIE GIGUERE","","72 MORRILL DR","","BURLINGTON","VT","05408-1112","Concrete cutting, removal, concrete replacement, interior site preparation, exterior site preparation, excavation, sidewalk replacement, general carpentry","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#103;&#105;&#103;&#117;&#101;&#114;&#101;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">jagiguere@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F1VJW6NS1KG1">29</a>","RIPLEY HOLDINGS OF VERMONT, INC.","DAVID RIPLEY","","63 PLAIN ST","","RUTLAND","VT","05701-4411","Overhead Door Company of Rutland, Vermont is a service disabled veteran owned small business offering a full line of commercial, industrial and residential products related to Overhead Doors including Sectional, Rolling Steel, High Speed and Sheet doors with both Trolley and Side Mounts. We also offer Security Grills and Gates. Our line includes services related to loading docks including both mechanical and hydraulic levelers, dock shelters and dock bumpers. Our OSHA 10 certified techs provide installation, repair, preventative maintenance and troubleshooting. We are lead certified, fire door certified and service all major brands.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#97;&#108;&#98;&#97;&#110;&#121;&#111;&#104;&#100;&#46;&#99;&#111;&#109;">dave@albanyohd.com</a>","https://www.rutlandohd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G1TGK6421BG3">30</a>","TETREAULT'S MAPLE FARM, LLC","MARYANN TETREAULT","","214 BATES HILL RD","","DERBY","VT","05829-4413","This is a business that performs excavating, logging, interstate roadside mowing, plowing, sitework and sugaring.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#116;&#114;&#101;&#97;&#117;&#108;&#116;&#115;&#109;&#97;&#112;&#108;&#101;&#102;&#97;&#114;&#109;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">tetreaultsmaplefarm@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G4VTT9JY6VZ7">31</a>","DEWS ENTERPRISES, INC","JANET PENFIELD","","123 RYAN RD","","DUMMERSTON","VT","05301-9401","Champion Overhead Door offers sales and services of a full line of products including the finest garage doors from C.H.I. Overhead Door, New England Door LLC and Amarr, as well as automatic garage door openers from Chamberlain and Liftmaster.  Our garage door product line includes: Solid wood doors Wood faced steel doors Steel doors Masonite, plywood, and fiberglass Aluminum doors  Our garage, utility and overhead doors come in a wide variety of styles to match any architectural aesthetic.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#110;&#101;&#116;&#64;&#99;&#104;&#97;&#109;&#112;&#105;&#111;&#110;&#111;&#118;&#101;&#114;&#104;&#101;&#97;&#100;&#100;&#111;&#111;&#114;&#46;&#99;&#111;&#109;">janet@championoverheaddoor.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DPJWPM4ALMS5">32</a>","VERMONT ROADWORKS LLC WBE","TARA CHENEY","","11 GREEN ST","","BRATTLEBORO","VT","05301-6065","Asphalt Paving ? Crack Sealing ? Pothole Repair with Infrared ? Seal Coating ? Driveway Aprons ? Plug Joints ? Shouldering ? Site Preparation ? Trucking ? Winter Snow Removal ? Seasonal Property Maintenance OSHA 10 Certified Hubzone Certified Civil and Environmental Technician VT Work Zone Advisory Counsel Certified Flaggers/ ATSSA CPR/AED and EMT on site CDL Class A Tanker and Hazmat Air Break and Heldex Class Hoisters License Fireman 1&2","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#118;&#105;&#110;&#103;&#64;&#118;&#101;&#114;&#109;&#111;&#110;&#116;&#114;&#111;&#97;&#100;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">paving@vermontroadworks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LF4BAL6XJNK5">33</a>","DARRELL MATHEWS","DARRELL MATHEWS","","2043 HALE RD","","SAINT JOHNSBURY","VT","05819-9626","Road development, bridges, box culvert installation, parking lots, retention ponds, land clearing, sewer and water lines, demolition, foundations, driveways, septic systems, slope repair and stabilization and snow plowing and removal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#114;&#101;&#108;&#108;&#109;&#97;&#116;&#104;&#101;&#119;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">darrellmathewsexcavating@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PR9BK284NJX7">34</a>","ARTS MANAGEMENT SERVICES LLC","ROBERT HANNUM","","9 FECTEAU CIR APT 5","","BARRE","VT","05641-8316","Celebrating over 40 years serving artists, museums, corporations, private collectors and the Office of Cultural Heritage of the US State Dept in the installation, restoration and maintenance of contemporary sculpture and hanging artwork.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#119;&#104;&#97;&#110;&#110;&#117;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rwhannum@gmail.com</a>","https://www.artsmanagementservices.org/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGJTFXMPJPK4">35</a>","SUMMIT CONTRACTING LTD CO.","KYLE O'SUILEABHAIN","","311 HILL ST","","LYNDONVILLE","VT","05851-8797","We provide a variety of services to municipalities and state agencies. Following services not being limited to road side mowing, land clearing, guardrail vegetation management spraying, pesticide control, snow removal, culvert replacement, road sweeping, site preparation and excavation work. Carpentry work such as framing work and finished carpentry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#109;&#105;&#116;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#118;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">summitcontractingvt@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWEKRCZC2GK8">36</a>","DALE E. PERCY, INC.","MATTHEW PERCY","","269 WEEKS HILL RD","","STOWE","VT","05672-5245","Dale E. Percy, Inc. is a family-owned excavation company, proudly located in the heart of the Green Mountains. Reliable and dependable since 1949.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#100;&#97;&#108;&#101;&#112;&#101;&#114;&#99;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">matt@dalepercyinc.com</a>","https://dalepercyinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VQXDFS33A3F8">37</a>","KIRK FENOFF AND SON EXCAVATING, LLC","DAWN CALL","","1632 ROUTE 2 E","","DANVILLE","VT","05828-9833","Family owned business for over 30 years. Performing a variety of excavating work for towns, State, commercial and residential. Including bridge, culverts, right of way, site preparation, driveways and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#102;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#49;&#64;&#109;&#121;&#102;&#97;&#105;&#114;&#112;&#111;&#105;&#110;&#116;&#46;&#110;&#101;&#116;">kfexcavating1@myfairpoint.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JN83L5GM7WB7">38</a>","WATERMAN SITEWORKS, LLC","BENJAMIN WATERMAN","","42 DIRT DR","","NORTH FERRISBURGH","VT","05473-6301","We are a small business with a full line of services and equipment with experienced operators, qualified to handle any commercial project but small enough to offer on-time and reliable services to our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#110;&#64;&#119;&#97;&#116;&#101;&#114;&#109;&#97;&#110;&#115;&#105;&#116;&#101;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">ben@watermansiteworks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GVK2H1MFEK15">39</a>","FARRINGTON CONSTRUCTION COMPANY","MARK FARRINGTON","","4724 SPEAR ST","","SHELBURNE","VT","05482-6560","General Contracting, Carpentry, General Conditions, Framing, Drywall, Interior Finishes, Hardware, Doors, Windows, Millwork","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#102;&#97;&#114;&#114;&#99;&#111;&#118;&#116;&#46;&#99;&#111;&#109;">mark@farrcovt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GA23EJBFL5J1">40</a>","COMPLETE DEMOLITION SERVICE LLC","DAVID SHEA","","408 SAM WEBB RD","","FAIRFAX","VT","05454-9654","Our company specializes in the demolition of buildings. Asbestos abatement. Select demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#104;&#101;&#97;&#64;&#99;&#111;&#109;&#112;&#108;&#101;&#116;&#101;&#100;&#101;&#109;&#111;&#108;&#105;&#116;&#105;&#111;&#110;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">dshea@completedemolitionservice.com</a>","www.completedemolitionservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PBMKZPL9NSF7">41</a>","GRAYBEARD, LLC","LEANNE JEWETT","","76 HARTNESS AVE STE 2","","SPRINGFIELD","VT","05156-2711","Certified Aging-In-Place Specialist installing wheelchair ramps and stairlifts for rent or purchase.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#97;&#110;&#110;&#101;&#46;&#106;&#101;&#119;&#101;&#116;&#116;&#64;&#97;&#109;&#114;&#97;&#109;&#112;&#46;&#99;&#111;&#109;">leanne.jewett@amramp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HNDWGQA5N4V1">42</a>","CCI FACILITY CONTRACTORS LLC","JOHN MORRISON","","3202 E WARREN RD # A","","WAITSFIELD","VT","05673-7137","CCI Facility Contractors, LLC is a small, disadvantaged, 8(a) company and subsidiary of Bristol Bay Construction Holdings LLC, a holding company of Bristol Bay Native Corporation. All BBCH subsidiaries have full access to numerous resources including common executive leadership, administrative support systems, and institutional knowledge based on industry experience, supporting our team in providing clients with a best-value approach to cost-effective, innovative, and sustainable solutions. Current and past work is primarily in construction projects for the federal government. Our construction work focuses on facility sustainment, restoration, and modernization and new construction projects in the $1M to $30M range.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#98;&#98;&#99;&#104;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmorrison@bbch-llc.com</a>","https://www.cci-alliance.com/home/cci-facility-contractors-llc-4/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EDWGD6EJLNK9">43</a>","BERNIE LAROCK & SON, INC.","BRENDA LAROCK","","1266 COOLIDGE HWY","","GUILFORD","VT","05301-8025","WE are a family owed excavation business for 50 plus years, we own two gravel pits, we do commercial and residential work. Large and small jobs, we work along side engineers, bidding from blue prints or helping to design excavation project. We do all types of excavation jobs, gravel new and old roadwork, stabilization work-work in brooks or steep banks. Water & sewer, mound systems or inground, percolation test, water tests, manhole testing, basement excavation, drainage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#110;&#100;&#97;&#108;&#97;&#114;&#111;&#99;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">brendalarock@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGB2H6H7SAT3">44</a>","JA MCDONALD INC","JUDYTHE DESROCHERS","","46 THREE MILE BRIDGE RD","","MIDDLESEX","VT","05602-8610","JAM has the capacity to handle all facets of a project & the resources to manage & execute complex projects. We consistently complete projects safely, on schedule & on or under budget. We excel in Highway and Bridge Construction. JAM has the resources to manage a project from the design, multiphase traffic control plan, to storm water management, excavation, drainage, water, sewer, underground utility crews. Turn-key, Design/ Build, Value Engineering Proposals to realize cost savings & project acceleration. Airport construction experience. New Landfill Cells & landfill closure services. Street Construction Projects with consideration of not being able to disrupt 'business as usual'. Experience & expertise in developing & implementing plans to maximize traffic flow, minimize disruption & accelerate schedule. JAM has completed major projects designed as multi-year projects in a single construction season, utilizing expertise designing & implementing efficient traffic control plans.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#100;&#121;&#100;&#64;&#106;&#97;&#109;&#99;&#100;&#111;&#110;&#97;&#108;&#100;&#46;&#99;&#111;&#109;">judyd@jamcdonald.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H6PTK8W8FXA5">45</a>","WILK PAVING, INC.","STEPHEN WILK","","738 RUTLAND RD","","WEST RUTLAND","VT","05777-4421","Wilk Paving, Inc. specializes in serving a broad range of asphalt paving and asphalt related markets including government customers including airport paving and railway paving. We work with everyone from Vermont Agency of Transportation engineers, to counties, municipalities, schools and colleges, commercial businesses, utilities, developers, general contractors, and residential property owners and homeowners. We are committed to providing the highest quality asphalt and workmanship to all of our customers. Our team of professionals is well versed in all aspects of road design and construction from initial planning, to design, to Vermont’s permitting process through construction. Whether your project is industrial, commercial, residential or municipal in nature, Wilk Paving, Inc. has the knowledge and expertise to get your job done right. Please contact us to discuss your asphalt paving project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#119;&#105;&#108;&#107;&#112;&#97;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">steve@wilkpaving.com</a>","https://www.wilkpaving.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D6JWULJYCMD3">46</a>","MOSHER EXCAVATING, INC.","ANN BUETTNER","","225 JOHNSON ROAD","","KILLINGTON","VT","05751-","Whether you reside in Vermont or New Hampshire, Mosher Excavating Inc. is your reliable choice for a wide range of services. From foundations and utility preparation to roads, driveways, drainage, and land contouring, we have got you covered. Our services extends to retaining walls, forest management (including land clearing), sewer and septic installation, demolition, winter maintenance, commercial services, and parking lots. Call us to complete your project flawlessly from start to finish.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#115;&#104;&#101;&#114;&#64;&#109;&#111;&#115;&#104;&#101;&#114;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mosher@mosherexcavating.com</a>","https://www.mosherexcavating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W5C9W81KN694">47</a>","LINCOLN AGRISOURCE, LLC","SAMUEL LINCOLN","","4884 E BETHEL RD","","RANDOLPH CENTER","VT","05061-9569","Lincoln AgriSource, LLC is a Master Logger certified logging contractor with equipment that can harvest timber, clear land and rights-of-way, and perform light excavation (culvert replacement, temporary bridge installations, ditch cleaning, erosion stone and rip rap installation, temporary road rehabilitation). Available for 24-hour storm response to clear and repair roads, ditches, streams, and other services, on or off-road, as needed by municipalities, state, and federal agencies. The company processes and delivers split green firewood to homes and businesses in central Vermont. Our subcontractor network provides us with the capability to transport forest products and vegetation offsite, mobilization of heavy equipment, and whole tree chipping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#99;&#111;&#108;&#110;&#102;&#97;&#114;&#109;&#116;&#105;&#109;&#98;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">lincolnfarmtimber@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U8HVMMG44EH8">48</a>","GALFETTI GRADING INC","AJ GALFETTI","","2361 W CORINTH RD","","WASHINGTON","VT","05675-4413","Galfetti Grading INC brings more than a decade of experience to the heavy civil and construction industry. We are a General Contractor specializing in residential, commercial, industrial, municipal & government construction, including roads, bridges, culverts, right-of-way clearing, site preparation, driveways, snow removal and more. We do all types of excavation jobs, grading, site work, highway construction, river bank and slope stabilization, water and sewer (mound systems or inground), test pits, interior excavation, drainage, foundation installations, and underground utility infrastructure. We are also experienced in responding to natural disasters, removing debris, and rebuilding roads quickly in the aftermath of extreme weather events. Galfetti Grading INC is experienced as a prime contractor and subcontractor. Professional, precision sitework, preparation, and excavating for every need.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#106;&#103;&#97;&#108;&#102;&#101;&#116;&#116;&#105;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">ajgalfetti@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F58RWEKF6NN5">49</a>","MANGAN EXCAVATION LLC","GIDEON MANGAN","","116 MCCRILLIS RD","","MARSHFIELD","VT","05658-8005","At Mangan Excavation LLC, we pride ourselves on providing professional service and quality work. As each project is different, we formulate solutions for unique situations to meet the project goal. As responsible and reliable excavation contractors, we are fully licensed and insured. The end goal with all our excavation services, from complicated site work to temporary bridges, is to offer our clients an exemplary experience. We are emergency responsive, including road work, slope stabilization, erosion control and debris cleanup. From new construction to site restoration, we communicate with our clients to ensure their project needs are met.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#110;&#103;&#97;&#110;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">manganexcavation@gmail.com</a>","https://www.manganexcavationllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F2HRH356RQJ3">50</a>","MSI TRUCKING AND SITEWORK LLC","ROBERT COOKSON","","153 STAFFORD AVE.","","MORRISVILLE","VT","05661-","Specializing in commercial, industrial, institutional, municipal & government construction/renovations, including bridges, culverts, right-of-way clearing, site preparation, driveways, snow removal and more. We do all types of excavation jobs, grading, roadwork, river, and slope stabilization, water & sewer (mound systems or inground), test pits, interior excavation, drainage, foundation installations, and underground utility infrastructure. We are available for rapid response during a disaster.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#98;&#101;&#114;&#116;&#46;&#99;&#111;&#111;&#107;&#115;&#111;&#110;&#64;&#109;&#115;&#105;&#118;&#116;&#46;&#99;&#111;&#109;">Robert.cookson@msivt.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 1.993&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 355 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.00 seconds and 2.08 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 54 
+(of 54 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YE4AJD2NERB8">1</a>","RICHTER ASSOCIATES ARCHITECTS INC","ELIZABETH RICHTER","CEO","201 S UPPER BROADWAY ST","","CORPUS CHRISTI","TX","78401-3025","Richter Architects is a national award-winning full service architectural firm providing services for architectural design, programming, site analysis, master planning, space planning, construction documents and construction admin.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#104;&#116;&#101;&#114;&#64;&#114;&#105;&#99;&#104;&#116;&#101;&#114;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">erichter@richterarchitects.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MRRJFDVSN1C6">2</a>","GIGNAC & ASSOCIATES LLP","RAYMOND GIGNAC","Principal","416 STARR ST","","CORPUS CHRISTI","TX","78401-2343","Gignac & Associates provides complete architectural design, interior design, and construction administration services for governmental, institutional, educational, and private clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#103;&#105;&#103;&#110;&#97;&#99;&#64;&#103;&#105;&#103;&#110;&#97;&#99;&#45;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">rgignac@gignac-associates.com</a>","https://www.gignacarchitects.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLCYCLKC5X68">3</a>","BATH GROUP, LLC","MICAELA PENA","","5656 S STAPLES ST","STE 110","CORPUS CHRISTI","TX","78411-4655","Design engineers specializing in mechanical, electrical, instrument, controls, CNG, commissioning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#112;&#101;&#110;&#97;&#64;&#98;&#97;&#116;&#104;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mpena@bathgroup.com</a>","HTTP://WWW.BATHGROUP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SDK5HHAFWH63">4</a>","IVY ROD INC","RAMIRO ALEJOS","Vice President - Texas RPLS","710 BUFFALO ST STE 700","","CORPUS CHRISTI","TX","78401-1910","In business since 1979 formerly focused on O&G Industry utilizing the latest of technologies company-wide. Services include Construction Stakeout, Topographic Mapping for Elevations & Volumes, Corridor & Utility Mapping, Aerial Surveys, Wind & Solar Farm Boundary & Layout.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#108;&#101;&#106;&#111;&#115;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#115;&#117;&#114;&#118;&#101;&#121;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ralejos@frontiersurveying.com</a>","http://www.frontiersurveying.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L8MDBXN8WMY4">5</a>","ACE COMMUNICATIONS LTD. CO.","YVONNE VALENT","President","5151 FLYNN PKWY STE 102","","CORPUS CHRISTI","TX","78411-4318","Ace Communications LTD Co DBA ACE Global is dedicated to providing our customers with friendly service. We value your business and have made it our mission to provide reliable products and services in our customer-driven approach. Our specialized team of experts will deliver on time solutions to your janitorial needs. Our janitorial services include COVID-19 disinfecting, building and landscape maintenance at affordable rates. Blood pathogen certification effective June 2020. We are also your all-in-one solution for business phone systems, IP phone choices and software features for whatever your company requires.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#46;&#118;&#97;&#108;&#101;&#110;&#116;&#64;&#97;&#99;&#101;&#45;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">y.valent@ace-com.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QAF1BDBR6JX7">6</a>","RUBENS FLEET SERVICE, INC.","RUBEN CASAS","President","4730 LEOPARD ST","","CORPUS CHRISTI","TX","78408-2620","Heavy Truck Repair, Automotive Repair, Motor Vehicle Steering, Brakes, Calipers, Universal Joints, Drive Shafts, Struts, Rack & Pinion, Suspension Parts, Springs, and Shocks","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#115;&#97;&#115;&#114;&#102;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">casasrfs@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UYVYNJNLJ3N7">7</a>","UES PROFESSIONAL SOLUTIONS 45, LLC","LOREN ROCK","","6817 LEOPARD ST","","CORPUS CHRISTI","TX","78409-1703","Provide Geotechnical and Construction Materials Testing Services. Soil, Asphalt and Concrete","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#101;&#110;&#64;&#114;&#111;&#99;&#107;&#116;&#101;&#115;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">loren@rocktesting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LNW7LW9L1DY8">8</a>","AGCM INC","LORENZO MARTINEZ","Marketing","1101 OCEAN DR","","CORPUS CHRISTI","TX","78404-2331","AG|CM, Inc. is a full service construction, project, & program management firm. Other services include: cost estimating/control, scheduling, value engineering, constructability review, & inspection services as a Client's onsite representative.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#97;&#114;&#116;&#105;&#110;&#101;&#122;&#64;&#97;&#103;&#99;&#109;&#46;&#99;&#111;&#109;">lmartinez@agcm.com</a>","https://www.agcm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8FLW8UKN765">9</a>","MAC TRANSFER & STORAGE COMPANY","SUZIE STEVENS","","3117 CABANISS RD","","CORPUS CHRISTI","TX","78415-5907","McComb Relocation Services is a locally owned company that is responsible for moving people, offices and equipment all over the United States and the World for the past 75 years. We have grown into a professional service that is second to none with a high priority for on-time delivery. We are best known for handling the relocation of goods out of the South Texas area which covers from Corpus Christi to Laredo and everything south to Mexico. We offer a quality service at a reasonable price.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#122;&#105;&#101;&#64;&#109;&#99;&#99;&#111;&#109;&#98;&#114;&#101;&#108;&#111;&#99;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">suzie@mccombrelocation.com</a>","http://www.mccombrelocationgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNZBXA3X6KU7">10</a>","SEC-OPS, INC.","ROBERT LOTT","","1721 S BROWNLEE BLVD","","CORPUS CHRISTI","TX","78404-3018","Complete Facility and Security Service provider. Provide Emergency Management and transportation services. Facility Services include: Janitorial, Painting, Food Service, Maintenance Services, Business Development, and Systems Integration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#64;&#115;&#101;&#99;&#111;&#112;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">robert@secopsinc.com</a>","https://secopsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RJMQBFZSLLF8">11</a>","WHEATON ENGINEERING AND ENVIRONMENTAL SCIENCE, LLC","RONALD WHEATON, P.E.","","410 S ENTERPRIZE PKWY","","CORPUS CHRISTI","TX","78405-3913","Mechanical, Electrical, and plumbing design of commercial facilities, Environmental assessements","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#119;&#104;&#101;&#97;&#116;&#111;&#110;&#64;&#119;&#104;&#101;&#97;&#116;&#111;&#110;&#45;&#101;&#101;&#115;&#46;&#99;&#111;&#109;">rwheaton@wheaton-ees.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DM6RBJXBJUM3">12</a>","HOSE OF SOUTH TEXAS INC","ED PERSALL","","4515 AGNES ST","","CORPUS CHRISTI","TX","78405-3323","Assembly of hydraulic and industrial hose to meet the needs of each end user. Hydraulic and pneumatic repair, hose testing and hose assembly safety program. We service business throughout Texas and the United States.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#112;&#101;&#114;&#115;&#97;&#108;&#108;&#64;&#104;&#111;&#115;&#101;&#45;&#101;&#116;&#99;&#46;&#99;&#111;&#109;">epersall@hose-etc.com</a>","http://www.hose-etc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CH8QAK75MQZ4">13</a>","AIR SPECIALTY & EQUIPMENT COMPANY","ETHAN GROSSTICK","","406 S NAVIGATION BLVD","","CORPUS CHRISTI","TX","78405-4001","Sales, rental, repair and parts for air compressors, pumps, air tools, pneumatic tools. After coolers, air dryers, filters, lubricants, regulators, air operated diaphram pumps, hydrostatic test pumps. Delivery and pick service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#116;&#104;&#97;&#110;&#64;&#97;&#105;&#114;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#121;&#46;&#99;&#111;&#109;">ethan@airspecialty.com</a>","airspecialty.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KK86YJHT6HA4">14</a>","EMOTIONAL INTELLIGENCE LEARNING SYSTEMS, INC.","RICHARD HAMMETT","","8039 CALGARY DR","","CORPUS CHRISTI","TX","78414-4009","Our mis­sion is to build healthy and effec­tive indi­vid­u­als and orga­ni­za­tions. To assist in this mission, our products and services are based on over 80 doctoral dissertations and published research articles related to our work, positive assessment products related to affective (emotional intelligence) skills development, and learning materials.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#101;&#105;&#108;&#101;&#97;&#114;&#110;&#105;&#110;&#103;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">support@eilearningsys.com</a>","www.eilearningsys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MK1FBNRMQME5">15</a>","TURNER, RAMIREZ AND ASSOCIATES, INC.","MARY LUPE ARANA","","3751 S ALAMEDA ST","","CORPUS CHRISTI","TX","78411-1629","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#108;&#117;&#112;&#101;&#64;&#116;&#114;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">marylupe@trarch.com</a>","http://www.trarch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBBVAQS9NBJ1">16</a>","KOCUREK LAND IMPROVEMENT INC","AMANDA KOCUREK","","4528 CR 81","","ROBSTOWN","TX","78380-4357","We are capable of any type of dirt work, ponds, Lakes, dams, erosion control, leveling and building pads. We also install and sell pond liners, and can help with your fish needs stocking, surveying, and pond management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#110;&#100;&#97;&#64;&#107;&#108;&#105;&#101;&#97;&#114;&#116;&#104;&#109;&#111;&#118;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">amanda@kliearthmovers.com</a>","WWW.KLIEARTHMOVERS.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VCX7GNKGZKQ6">17</a>","EMPLOYEE RISK MANAGEMENT CO., LLC.","LAURA ESCOBAR","","321 TEXAN TRL STE 100","","CORPUS CHRISTI","TX","78411-1825","Founded in 1994, Employee Risk Management Company, LLC delivers staff augmentation services to the federal government, state, and local municipalities. We bring fast, reliable, immediately productive, and experienced resources from multiple disciplines ranging from construction to professional services to reduce risk and ensure customer satisfaction. Utilizing customer focused demand management processes, we continuously prepare and develop talent tailored towards your specific needs. Among our strongest competencies is our ability to build partnerships with our clients and employees to support their successes in a diverse range of professions. We conduct business with the highest standards of honesty, fairness, and integrity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#115;&#99;&#111;&#98;&#97;&#114;&#64;&#97;&#108;&#108;&#116;&#101;&#109;&#112;&#115;&#112;&#101;&#114;&#115;&#111;&#110;&#110;&#101;&#108;&#46;&#99;&#111;&#109;">lescobar@alltempspersonnel.com</a>","https://www.alltempspersonnel.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PFTVJBBB5MC5">18</a>","HIGHWAY BARRICADES AND SERVICES, LLC","STEVE FEENEY","","7775 LEOPARD ST","","CORPUS CHRISTI","TX","78409-2020","Traffic Controls and Equipment, signs,barricades,pavement markers,buttons,edge lines,striping,etc. Fencing - wire,chain link or metalbeam guard fence,metal bridge railing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#102;&#101;&#101;&#110;&#101;&#121;&#64;&#104;&#98;&#115;&#116;&#101;&#120;&#97;&#115;&#46;&#99;&#111;&#109;">sfeeney@hbstexas.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VE9BYDMKLPR8">19</a>","COTTEN/LANDRETH ARCHITECTS, INC.","ATILANO HUERTA","","615 N UPPER BROADWAY ST STE 1250","","CORPUS CHRISTI","TX","78401-0750","CLK Architects & Associates remains dedicated to providing clients with personalized architectural services of the highest caliber, while designing buildings which are functionally, economically, and environmentally sound.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#64;&#99;&#108;&#107;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">architects@clkarch.com</a>","http://www.clkarch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCMBZ16V3QK8">20</a>","PROFESSIONAL SAFETY ASSOCIATES, INC.","JOSE BUSTAMANTE","","2209 N PADRE ISLAND DR","SUITE A","CORPUS CHRISTI","TX","78408-2432","Safety, Training, Consulting, Auditing, Policy Creation, Manual Creation, Accident Investigation, HSE Tech, HS&E Tech, HSSE Tech, Safety Tech, Safety Personnel, PSM, Process Safety Management, ISO 45001, Safety Management Systems, First Aid, Operator Qualification Training, OQ Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#117;&#115;&#116;&#97;&#109;&#97;&#110;&#116;&#101;&#64;&#112;&#115;&#97;&#105;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">jbustamante@psaisafety.com</a>","http://www.psaisafety.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UVVHBEN1V1P3">21</a>","ADRIAN ENTERPRISES INC","ANNA ADRIAN","","825 CANTWELL LN","","CORPUS CHRISTI","TX","78408-2605","Texas licensed Master Electrician. Elec & genrl contractor: industrial, commercial, govt & residential. Architectural, engineering,construction, wiring, parking lot & athletic fields lighting, LEED,daylight harvesting,security,alarms,photo sensors,timers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#97;&#64;&#97;&#100;&#114;&#105;&#97;&#110;&#46;&#112;&#114;&#111;">anna@adrian.pro</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WNCMJLQZZWU4">22</a>","APOGEE CFS, LLC","RENOIR KNOX","","1910 STILLMAN AVE","","CORPUS CHRISTI","TX","78407-2342","Security Systems,Fire Alarms, Fire Extinguishers,Access Controls, High Security Fencing,Gates,Gate Motors,Auto Lifts,Commercial Structural Painting,Structural Coating,Paving Asphalt Concrete, Site Work,Petroleum/Gasoline Wholesale","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#107;&#110;&#111;&#120;&#64;&#97;&#112;&#111;&#103;&#101;&#101;&#99;&#102;&#115;&#46;&#99;&#111;&#109;">lknox@apogeecfs.com</a>","www.apogeecfs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MX2GRLVXF1J9">23</a>","BFI WASTE SERVICES OF TEXAS, LP","JENNIFER DUNNIVAN-CAMPBELL","","4414 AGNES ST","","CORPUS CHRISTI","TX","78405-3322","One of the founding companies of the solid waste management industry, BFI's customer base spans 48 states and Canada. Customers include 940 commercial and industrial accounts and seven million households. With a presence in 130 markets in North America, the company's operating facilities include 275 collection operations, 100 landfills, 100 transfer stations, approximately 100 material recovery facilities and 28 medical waste treatment centers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#97;&#109;&#112;&#98;&#101;&#108;&#108;&#55;&#64;&#114;&#101;&#112;&#117;&#98;&#108;&#105;&#99;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">jcampbell7@republicservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XTR7JWQCF8Y6">24</a>","SMITH, CHARLES C","CHARLES SMITH","","615 N UPPER BROADWAY ST STE 1710","","CORPUS CHRISTI","TX","78401-0798","Legal Services, Evaluation of complex regulatory requirements, Consultation & advice on legal strategies, Recommendations on regulatory compliance, Legal disputes.For more information you can reach me at 361-883-1055.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#67;&#83;&#77;&#73;&#84;&#72;&#76;&#65;&#87;&#64;&#65;&#79;&#76;&#46;&#67;&#79;&#77;">CCSMITHLAW@AOL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P96UCZM67BP6">25</a>","GREENEFFICIENT INC","VICTORIA HUEBEL","","4602 DEEPDALE DR","","CORPUS CHRISTI","TX","78413-3108","GreenEfficient is commercial real estate facility maintenance and management company.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#116;&#111;&#114;&#105;&#97;&#46;&#104;&#117;&#101;&#98;&#101;&#108;&#64;&#103;&#114;&#101;&#101;&#110;&#101;&#102;&#102;&#105;&#99;&#105;&#101;&#110;&#116;&#46;&#110;&#101;&#116;">victoria.huebel@greenefficient.net</a>","https://greenefficient.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GQ2NR4FFNJ31">26</a>","OLIVO HYDRO-EX, L.L.C.","DANIEL OLIVO","","802 NAVIGATION BLVD","STE 102","CORPUS CHRISTI","TX","78408-2634","We are surveyors for all types of building, land constrution and acquisitiion. Locating, digging and sub-surface underground utilities and cabling. General and Commercial Construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#110;&#105;&#101;&#108;&#64;&#104;&#121;&#100;&#114;&#111;&#101;&#120;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">Daniel@hydroexllc.com</a>","hydroexllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKLSQ2ZZ6H93">27</a>","JIMENEZ ENGINEERING SOLUTIONS, LLC","HUGO GONZALEZ","","261 SARATOGA BLVD","","CORPUS CHRISTI","TX","78417-3509","ICE is a multi-disciplined engineering firm that specializes in civil and structural engineering and offers project management and construction management services including utilities and civil site work, flood protection, design, data analysis, and construction management of various infrastructure and transportation construction projects, pedestrian enhancements to meet ADA standards, field inspections, cost estimates, needs assessments, new drainage infrastructure, roads, utility relocation, gravity lines, wastewater treatment plants, and lift stations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#103;&#111;&#64;&#105;&#99;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">hugo@icengineers.net</a>","http://icengineers.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QWFXNJDKKA26">28</a>","PREMIER TENTS & EVENTS","ANGELA WOLF","","3729 SARATOGA BLVD","","CORPUS CHRISTI","TX","78415-5812","Rental World is a family owned and operated general equipment rental, sales, and service company with locations across the Texas Rio Grande Valley. We have been in business for over 20 years and we are the largest tent vendor in South Texas, We have a proven record having worked with FEMA during Hurricane Harvey at TX Coastal Bend areas such as: Rockport, Ingleside, Aransas Pass, & Beeville Texas. We have also worked with Base Logistics during Hurricane Dolly in 2008.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#111;&#108;&#102;&#64;&#82;&#101;&#110;&#116;&#97;&#108;&#87;&#111;&#114;&#108;&#100;&#46;&#99;&#111;&#109;">awolf@RentalWorld.com</a>","www.rentalworld.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGKJRRUXP744">29</a>","C MATH IS EASY, LLC","ANDREA JOHNSON","","1133 FLORIDA AVE","","CORPUS CHRISTI","TX","78404-3719","Math tutoring and training for adults, youth, and children. Customized curriculum for special groups and corporations. Specialized job readiness programs industry specific to construction, oil-field, medical, engineering, military, and education. job certifications and licences.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#97;&#116;&#104;&#105;&#115;&#101;&#97;&#115;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cmathiseasy@gmail.com</a>","www.cmathiseasy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJXCBA8L3KK5">30</a>","PEPSI-COLA BOTTLING COMPANY OF CORPUS CHRISTI AND VICTORIA, TEXAS, LLC","ROBERT HARLEY","","1401 S PADRE ISLAND DR","","CORPUS CHRISTI","TX","78416-1322","We are an independent Pepsi Cola bottler. We provide Pepsi products to stores,restaurants and entertainment venues. We provide equipment such as coolers,vending machines and fountain units to dispense products. We have a fully staffed repair department available to fix any soft drink equipment that should happen to break.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#98;&#101;&#114;&#116;&#46;&#72;&#97;&#114;&#108;&#101;&#121;&#64;&#111;&#110;&#101;&#116;&#97;&#99;&#99;&#46;&#99;&#111;&#109;">Robert.Harley@onetacc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y1RMUE9TXHU3">31</a>","AJ COMMERCIAL SERVICES, INC.","RAFALITA AVALOS","","6429 CROSSTOWN EXPY STE D","","CORPUS CHRISTI","TX","78417-3448","AJ Commercial Services Inc., dba ASC Paving is a small 8(a) certified woman-owned General Contractor. The company focus is on Federal, State and Local government contracts. Our company has specialized in heavy civil site work, highway, street construction, utilities, vertical/horizontal building, new construction, renovation, seal coating, striping, concrete curbs, sidewalks, concrete pads/aprons, airfield paving, pavement markings, (D/B) Design/Build, construction management and (IDIQ) Indefinite Delivery Indefinite Quantity multiyear projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#118;&#97;&#108;&#111;&#115;&#64;&#97;&#106;&#99;&#111;&#109;&#109;&#115;&#101;&#114;&#118;&#46;&#99;&#111;&#109;">ravalos@ajcommserv.com</a>","www.ajcommserv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z166PW2W9FX3">32</a>","CORERECON LLC","JOHN MARTINEZ","","500 N SHORELINE BLVD STE 111","","CORPUS CHRISTI","TX","78401-0303","CoreRecon is a Service Disabled Veteran Owned Small Business (SDVOSB) dedicated to providing IT Products and Professional Services to the Public/Private/Government sectors. CoreRecon offers solutions that support a wide variety of business initiatives. Working with CoreRecon not only ensures that our clients can fulfill their technology needs, but as a Small Business and SDVOSB, purchasing goals are easily met, as mandated by the Federal Government. Our experienced management team is always accessible and will make sure clients receives world class customer service. CoreRecon management team has over 30 years of IT experience providing technical and business solutions. By leveraging our well-established relationships with major vendors, suppliers and partners, CoreRecon provides customers with custom solutions to meet their unique needs. CoreRecon is committed to providing timely delivery and implementation of all solutions with exceptional customer service and support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#99;&#111;&#114;&#101;&#114;&#101;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">john@corerecon.com</a>","https://www.CoreRecon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N87KQCE9D7A9">33</a>","RGON CORP","ROGER GONZALES","","6225 NORCHESTER DR","","CORPUS CHRISTI","TX","78415-3926","R.G.O.N Corporation,8(A)certify,Service include design work, remodeling and alteration, permitting, site preparation, painting/ Government facilities, electrical, plumbing and utilities installation. Ground Maintenance Services,Airfield Rubber Removal, Road Construction, Epoxy/Urethane flooring, Specialized Tank painting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#103;&#111;&#110;&#48;&#54;&#50;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rgon0622@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ESRLR4RC1G29">34</a>","ICE & DANNENBAUM JV","HUGO GONZALEZ","","261 SARATOGA BLVD","","CORPUS CHRISTI","TX","78417-3509","ICE & Dannenbaum JV Team’s core Professional Engineering Competence includes: Program/ Project Management Expertise o Initial & Final Engineering and Design Expertise, Bid & Award Support, Contract Management and Construction Oversight, Water Resources (Hydrology & Hydraulics) Expertise, Structural Engineering and Conditions Assessment Expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#103;&#111;&#64;&#105;&#99;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">hugo@icengineers.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFJWJ1AGGKQ6">35</a>","RANDLES AND ASSOCIATES, LLC","SHERMAL RANDLE","","14493 S PADRE ISLAND DR","STE A5002","CORPUS CHRISTI","TX","78418-5939","Professional Management Consultant company that specialize in Temporary help, staffing, marketing, help desk, call center, information technology, medical, facilities maintenance, Project Manager, Construction, administration and consulting, Acquisition Support, Professional Scientific & Technical Services, Logistical Support, Repair & Alteration, Project Management, Program Management, document shredding, leadership Development Training, Notary, Payroll, Painting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#114;&#109;&#97;&#108;&#64;&#114;&#97;&#110;&#100;&#108;&#101;&#115;&#97;&#110;&#100;&#97;&#115;&#115;&#111;&#99;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">shermal@randlesandassocllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SFCYHGXJXQM9">36</a>","CC FILEPRO LTD","JOHN ALLEN","","2106 LIPAN ST","","CORPUS CHRISTI","TX","78408-3934","Founded in 1995, File Pro Records Management Facility provides a complete range of services to help secure the entire life cycle of your sensitive business documents. We offer custom, comprehensive and cost effective document management solutions to meet the needs and requirements in all industries large or small: such as healthcare, financial, banking, legal, oil field, architectural, and more. With our focus on flexible service, security, and upheld integrity, we have developed strong working partnerships with countless companies throughout the Coastal Bend, Rio Grande Valley, Victoria and now San Antonio.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#108;&#108;&#101;&#110;&#64;&#102;&#105;&#108;&#101;&#112;&#114;&#111;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">kallen@fileproservices.com</a>","www.fileproservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSE7MTR3J7S8">37</a>","FARADAY ELECTRIC MOTORS, LLC","RAUL LOPEZ","","102 S NAVIGATION BLVD","","CORPUS CHRISTI","TX","78405-3611","Electric Motor Repair up to 2000HP. Pump repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#117;&#108;&#108;&#111;&#112;&#101;&#122;&#64;&#102;&#97;&#114;&#97;&#100;&#97;&#121;&#116;&#101;&#120;&#97;&#115;&#46;&#99;&#111;&#109;">raullopez@faradaytexas.com</a>","www.faradaytexas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HG2DZCUQPTN1">38</a>","LOUISE NANOINNOVATION NORTH AMERICAN LLC","SAJID LIU","","7534 BEAU TERRE","","CORPUS CHRISTI","TX","78414-6290","Louise Nanoinnovation North American LLC (Louise Nano) Capability Statement Core Competencies in Science, Technology, Mathematics and Engineering consultancy in the following areas: Consultancy Services: • STEM Education focused on Chemistry• STEM Policy • Home Stay Implementation Solutions in Chemistry and graduate school Competencies • Documentation & Training in Chemical Education • Environmental Solutions using Chemical Tools • Healthcare Solutions related to Weight Loss","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#117;&#105;&#115;&#101;&#64;&#110;&#97;&#110;&#111;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#110;&#97;&#46;&#99;&#111;&#109;">louise@nanoinnovationna.com</a>","https://www.nanoinnovationna.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L6J8KALVYKK6">39</a>","COASTAL BEND DEMOLITION INC","VERNON CARR","","5001 ALLEN PL","","CORPUS CHRISTI","TX","78411-4451","Structural Demolition, Select Interior Demolition, Civil /Site Demolition, Asbestos Abatement/Environmental Services, Site Prep/ Clearing/ Dirtwork, Commercial, Industrial, Governmental Emergency Response.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#101;&#114;&#110;&#111;&#110;&#64;&#99;&#111;&#97;&#115;&#116;&#97;&#108;&#98;&#101;&#110;&#100;&#100;&#101;&#109;&#111;&#108;&#105;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Vernon@coastalbenddemolition.com</a>","www.coastalbenddemolition.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DM4NEXJXVKH7">40</a>","UEL SOLUTIONS LLC","ANIEMI UMANA","","6857 S STAPLES ST","# 201","CORPUS CHRISTI","TX","78413-4535","Sqooasha is a minority-owned, TX-HUB certified business, which provides educational services to students in kindergarten through college levels. We have been in business for over 3 years and have delivered learning solutions, which have helped students to: • Gain access to on-demand tutoring services. • Learn and quickly master math facts through tutorials, practice and timed tests. • Develop self-confidence through various verbal affirmations • Engage in friendly competitions while learning with friends • Create spelling lists to practice for spelling tests • Gain access to over 70 math worksheets, which are generated on a daily basis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#117;&#109;&#97;&#110;&#97;&#64;&#115;&#113;&#111;&#111;&#97;&#115;&#104;&#97;&#46;&#99;&#111;&#109;">aumana@sqooasha.com</a>","https://www.sqooasha.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LREXWETGUK13">41</a>","HEIDELBERG RESOURCES, LLC","RONALD BERGER","","1609 ANTOINETTE DR","","CORPUS CHRISTI","TX","78418-5404","Hospital Maintenance and Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#64;&#104;&#101;&#105;&#100;&#101;&#108;&#98;&#101;&#114;&#103;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">ron@heidelbergresources.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QV5VLJL537P3">42</a>","ENGINEERING DESIGN SERVICES LLC","MICHAEL HALL","","711 N CARANCAHUA ST","STE 110","CORPUS CHRISTI","TX","78401-0506","Engineering and Design Services relating to heavy industry and technology. Computational Fluid Dynamics, Finite Element Analysis, Fitness for Service (API-579), Pressure Vessel Design, Municipal Services Design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#104;&#97;&#108;&#108;&#64;&#101;&#110;&#103;&#100;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">michael.hall@engdess.com</a>","www.engdess.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA9KL97J4BH6">43</a>","EDR ARCHITECTS PLLC","EMILY ROZYPAL","","4633 BETHLEHEM DR","","CORPUS CHRISTI","TX","78413-6006","EDR Architects, PLLC Providing service in Architect, Architecture, Accessibility, ADA, Interior Design, Consulting, Engineering, Planning, Drawing, Structural Engineering,, and Landscaping Design,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#111;&#122;&#121;&#112;&#97;&#108;&#64;&#101;&#100;&#114;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">erozypal@edrarchitects.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA8TSANB2NB6">44</a>","BONCO LLC","TONY ARREDONDO","","600 W AUSTIN ST","","DRISCOLL","TX","78351-","New construction and rehabilitation of commercial buildings and utilities. The Right-of-Way (ROW) Pipeline Maintenance Division has been established since 2010. Specializes in ROW maintenance providing comprehensive services consisting of ROW & substation mowing, herbicide spraying, mulching, weed?eating, painting fence posts, trimming overhang, installing signs, and re? pairing ‘H’ braces on fence lines. Backhoe level?up. Differentiators: •	Experienced Operators & Ground hands •	Background & Drug?tested (randomly) •	Knowledge of ROW territory •	3 years with no incidents or accidents •	Daily Safety Meetings Core Competencies •	Quality?Conscious •	Attention to ROW Details •	Good Communication between Pipeline Reps & Landowners •	Goal is Zero Go Backs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#101;&#110;&#116;&#54;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tonyent62@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JMSFJAX8W9R5">45</a>","TASADOR INC","CARL HELLUMS","","5022 HOLLY RD","","CORPUS CHRISTI","TX","78411-4761","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#64;&#116;&#97;&#115;&#97;&#100;&#111;&#114;&#97;&#112;&#112;&#114;&#97;&#105;&#115;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">carl@tasadorappraisals.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LGVZZ75GNTJ5">46</a>","PIPER PROPERTY MANAGEMENT & CONTRACTING, LLC","DAVID GERLACH","","581 YORKTOWN BLVD","","CORPUS CHRISTI","TX","78418-4119","Full service general contractor, commercial and residential. Development, facilities maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#105;&#112;&#101;&#114;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#121;&#109;&#103;&#116;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">piperpropertymgt@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WZ11AJ15AFL8">47</a>","ROCKIN' A CONSTRUCTION LLC","SEAN HINTON","","5926 S STAPLES ST STE C1-B","","CORPUS CHRISTI","TX","78413-3860","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#104;&#64;&#114;&#111;&#99;&#107;&#105;&#110;&#97;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">seanh@rockinaconstruction.com</a>","http://www.rockinaconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENCQDYB9SFM6">48</a>","ZINAVOLT LLC","ANIEMI UMANA","","6857 S STAPLES ST # 201","","CORPUS CHRISTI","TX","78413-4535","ZinaVolt is a minority-owned business, which provides power systems protection, studies and design services to electric utilities, industrial and commercial clients. We have over 15 years of experience in the power systems field, and our specialties include: •	System modeling •	Arc-flash studies •	Load flow analysis •	Short circuit analysis •	Equipment specifications •	Detailed electrical system design •	Water / Waste water •	Equipment installation •	Substation physical design •	Relay protection and control •	Relay coordination and programming •	System testing and commissioning •	System automation •	Instrumentation and control •	Technical training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#105;&#101;&#109;&#105;&#64;&#122;&#105;&#110;&#97;&#118;&#111;&#108;&#116;&#46;&#99;&#111;&#109;">aniemi@zinavolt.com</a>","www.zinavolt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SF5KUCBLGWP9">49</a>","STBP INC","MATTHEW EZELL","","601 EVERHART RD","","CORPUS CHRISTI","TX","78411-1903","STBP, Inc. is a commercial and light industrial general contractor/design-builder/facility maintenance provider headquartered in Corpus Christi and serving clients across South Texas. We pursue everything from multi-million dollar new construction projects to additions/remodels to the smallest maintenance call-outs, in order to help our clients achieve their facility goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#101;&#64;&#115;&#116;&#98;&#112;&#46;&#99;&#111;&#109;">mce@stbp.com</a>","https://www.stbp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PQPWFGFQMHD3">50</a>","TCX SYNERGY, LLC","KIMI ESQUIVEL","","10822 ATLANTA ST","","CORPUS CHRISTI","TX","78410-2403","Certified Testing, Adjusting, & Balancing of HVAC systems. HVAC, Lighting, & Plumbing Commissioning. Medical Facility Ventilation Assessments. Diagnosis of Comfort/Humidity Issues","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#116;&#99;&#120;&#115;&#121;&#110;&#101;&#114;&#103;&#121;&#46;&#99;&#111;&#109;">admin@tcxsynergy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KB31AHF7ZKH2">51</a>","FRANCIS & FRANCIS ENGINEERING, PLLC","LARIJAI FRANCIS","","93 LAKE SHORE DR","","CORPUS CHRISTI","TX","78413-2634","public benefit project management firm; providing program/project management services from planning through construction and implementation phases.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#106;&#102;&#114;&#97;&#110;&#99;&#105;&#115;&#116;&#101;&#120;&#97;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ljfrancistexas@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HRSWEL56DKC6">52</a>","ELITE PROMO LLC","LAURA LERMA","","15829 CUTTYSARK ST","","CORPUS CHRISTI","TX","78418-6466","Elite Promo’s mission is to provide our valued customers with quality personal services and unique opportunities by providing promotional solutions and office supplies while maintaining the highest standards of quality, customer service. We help our clients by: - Making an impact on our clients’ goals and have the most impact with your targeted audiences by elevating your brand - Growing your business by going beyond the logo and assist in building clients’ brands - Finding a cost-effective way to market and promote your agency, business or organization - Understand varying budgets/needs and work to provide our customers with a wide range of options that fit the budget - Accept credit cards, purchase cards, ACH payments and purchase orders","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#64;&#101;&#108;&#105;&#116;&#101;&#112;&#114;&#111;&#109;&#111;&#46;&#111;&#114;&#103;">laura@elitepromo.org</a>","https://www.elitepromo.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RE3GBS3VA365">53</a>","EQUAL ELECTRIC COMPANY, LLC","JESSICA BUTLER","","2205 SHORELINE VISTA DR","","CORPUS CHRISTI","TX","78418-5496","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#113;&#117;&#97;&#108;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#99;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">equalelectricco@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HMJ4CBSCDNY4">54</a>","ASSET PROTECTION & SECURITY SERVICES, L.P.","CHARLES MANDEL","President","5502 BURNHAM DR","","CORPUS CHRISTI","TX","78413-3855","ARMED & UNARMED SECURITY GUARD AND K9 SERVICES, BURGLAR & FIRE ALARM SALES & SERVICE, ACCESS CONTROL, CCTV, POLYGRAPH SERVICES, INVESTIGATION SERVICE, SECURITY ANALYSIS & CONSULTATIONS; AUTOMATED EXTERNAL DEFIBRULATORS SALES/TRAINING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#97;&#110;&#100;&#101;&#108;&#64;&#97;&#115;&#115;&#101;&#116;&#45;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#45;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">smandel@asset-security-pro.com</a>","http://www.asset-security-pro.com/index.htm"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.107&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

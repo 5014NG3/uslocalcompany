@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 215 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.99 seconds and 2.09 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 44 
+(of 44 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U2TLR35M2J68">1</a>","ESPARZA PEST CONTROL AND ECO-LOGIC SYSTEMS, INC.","ELMA ESPARZA","","5602 S SUGAR RD","","EDINBURG","TX","78539-9645","Eco-Logic Systems, Inc. Doing Business As Esparza Pest Control and Esparza Enterprises is recognized as a registered and approved as a HUB or Historically Underutilized Business by The State of Texas. Esparza Enterprises stands ready to serve Federal, State, and Local contracts with a hard-charging management team, a robust customer care/call center, highly trained field personnel, and a modern fleet of service vehicles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#109;&#97;&#64;&#101;&#115;&#112;&#97;&#114;&#122;&#97;&#112;&#99;&#46;&#99;&#111;&#109;">elma@esparzapc.com</a>","www.esparzapc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EACPS5ALQDF4">2</a>","RENTAL WORLD LLC","ANGELA WOLF","","1020 E BUSINESS HIGHWAY 83","","MCALLEN","TX","78501-8840","Rental World, is a family owned and operated chain of general equipment rental stores in South Texas. 'Rental World started in 1980 as a United Rentals franchise and expanded to six locations across South Texas before selling during the consolidations of the mid-1990s. In 2000, Rental World started anew as a second-generation rental company. After 12 years, Rental World has grown to six retail locations across South Texas with a corporate office and central warehouse located in Harlingen, TX.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#111;&#108;&#102;&#64;&#82;&#101;&#110;&#116;&#97;&#108;&#87;&#111;&#114;&#108;&#100;&#46;&#99;&#111;&#109;">awolf@RentalWorld.com</a>","www.rentalworld.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F66ZCBLM4GS4">3</a>","ALWAYS HERE SEPTIC, LTD. CO.","PAMELA MAHKOVIC","","2706 W 66TH ST","","MISSION","TX","78574-5417","Provide spetic tank cleaning and repairs. In addition, we also offer grease trap pump outs and hydrojet pipe cleaning. Lift Station","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#119;&#97;&#121;&#115;&#104;&#101;&#114;&#101;&#115;&#101;&#112;&#116;&#105;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">alwayshereseptic@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CD92D839L327">4</a>","TEXAS TOPS OF MCALLEN, INC","JAYMEE HANSHAW","","810 E US HIGHWAY 83","","MCALLEN","TX","78501-8836","TEXAS TOPS offers a complete line of CENTURY truck caps. tonneau covers, bed liners, and a complete inventory of truck accessories. We have a service department that is second to none, ready to meet your accessory installation needs. We invite you to browse our site or drop by the store and check out what TEXAS TOPS has to offer!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#121;&#109;&#109;&#64;&#116;&#101;&#97;&#115;&#116;&#101;&#120;&#97;&#115;&#116;&#111;&#112;&#115;&#46;&#99;&#111;&#109;">jaymm@teastexastops.com</a>","http://texastopsofmcallen.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GRG3WXADB8S6">5</a>","ZEPOL, INC","PATRICIA PENA","","3204 S SUGAR RD","","EDINBURG","TX","78539-3693","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#90;&#101;&#112;&#111;&#108;&#114;&#100;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">Zepolrd@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SFE9H368F315">6</a>","DAVILA & ASSOCIATES INC","MARIO DAVILA","","4132 N 23RD ST","","MCALLEN","TX","78504-4105","We are multifaceted translation, interpretation, and transcription company.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#114;&#97;&#110;&#115;&#108;&#97;&#116;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">info@translateservices.com</a>","https://www.translateservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRKMUNJQTCN6">7</a>","GUZMAN & MUNOZ ENGINEERING AND SURVEYING, INC","JOSE MUNOZ","","2020 E EXPRESSWAY 83","","MERCEDES","TX","78570-9423","Professional Engineering Services - Civil, H&H and Structural Engineering and Surveying. Professional staff members with over 30-years experience in: (1) Construction Management; (2) Program Management; (3) Project Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#117;&#110;&#111;&#122;&#64;&#103;&#109;&#101;&#115;&#46;&#98;&#105;&#122;">jmunoz@gmes.biz</a>","www.gmes.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA4ED7T6TDM8">8</a>","AIRCOOL TECH ACT CORP","SAMUEL CANTU","","1432 N ALAMO RD","","ALAMO","TX","78516-6807","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#117;&#101;&#108;&#64;&#97;&#105;&#114;&#99;&#111;&#111;&#108;&#116;&#101;&#99;&#104;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">samuel@aircooltechcorp.com</a>","www.aircooltechcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZKRQFFSMLZP4">9</a>","LOZZ QUATEZZ LLC","RUBEN CEPEDA","","105 E INTERSTATE 2","STE F","PHARR","TX","78577-6560","LARGE FORMAT SIGN MANUFACTURERS/PRINTERS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#98;&#101;&#110;&#64;&#116;&#104;&#101;&#115;&#105;&#103;&#110;&#100;&#101;&#112;&#111;&#116;&#46;&#99;&#111;&#109;">ruben@thesigndepot.com</a>","http://www.thesigndepot.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z2HLWG5MURY8">10</a>","COPY PLUS, LLC","EDER GALLEGOS","","4500 N 10TH ST STE 240","","MCALLEN","TX","78504-2963","At Copy Plus, full color short runs are our specialty. We specialize in helping you understand and implement your creative design needs. Whether it’s a new business needing logo design, identity design, custom presentation or printed materials, we can help. We design stationary, brochures, mailers, posters, or any document that needs to be printed. We also provide office supplies & Reprographic Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#101;&#114;&#64;&#99;&#111;&#112;&#121;&#112;&#108;&#117;&#115;&#114;&#103;&#118;&#46;&#99;&#111;&#109;">eder@copyplusrgv.com</a>","http://www.copyplusonline.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y27ABTAT3MX8">11</a>","SIXTO GARZA JR ENTERPRISES LLC","SIXTO GARZA","","208 E EMORY AVE","","MCALLEN","TX","78504-5669","We Clean Roofs, Exterior Buildings, Sidewalks, Driveways that have Algae, Mold and Mildew without using a pressure washer. We also remove gum, oil stains.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#120;&#116;&#111;&#64;&#115;&#105;&#120;&#115;&#104;&#111;&#111;&#116;&#101;&#114;&#115;&#111;&#102;&#116;&#119;&#97;&#115;&#104;&#46;&#99;&#111;&#109;">sixto@sixshootersoftwash.com</a>","http://www.sixshootersoftwash.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBT3NND3Q8H1">12</a>","MCALLEN SECURITY SERVICE SYSTEMS INC","COLIN ASHBURN","","500 E BEAUMONT AVE","","MCALLEN","TX","78501-8911","Electronic Systems Design of Texas (ESD) is a Women Owned HUB consulting firm located in McAllen, Texas. ESD was established to assist Architectural and Engineering firms with Special Systems requirements for projects. These systems require specialized training as the technology and codes concerning them are rapidly changing. Keeping current in the latest developments requires specialized, focused professionals. For Life Safety systems, our resources include NICET III, IV SET and Fire Protection Engineers (FPE) for the fire alarm/sprinkler design, plan review and code compliance. Our Security/Loss Prevention professionals have many years in Systems Integration and are American Society of Industrial Security (ASIS) members. Certified Protection Professional (CPP) and Certified Security Consultant (CSC) team members are available for plan review and implementation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#105;&#110;&#64;&#101;&#115;&#100;&#116;&#120;&#46;&#99;&#111;&#109;">colin@esdtx.com</a>","http://www.esdtx.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DP31KANLHAT1">13</a>","SAMES, INC.","SAUL MALDONADO","","200 S 10TH ST","STE 1500","MCALLEN","TX","78501-4860","SAMES, Inc., is an SBA 8(a)/HUBZone Certified General Contractor with a wide array of capabilities and experience with Federal, State and Local Governments. We are a fully licensed and highly experienced Engineering Design firm delivering proficiency to multifaceted disciplines aimed at vertical and horizontal design. Additionally, we capitalize client’s satisfaction by providing a comprehensive range of surveying and mapping services. Our team of dedicated professionals share extensive experience in servicing government/military contracting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#117;&#108;&#64;&#115;&#97;&#109;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#45;&#115;&#117;&#114;&#118;&#101;&#121;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">saul@samengineering-surveying.com</a>","https://www.samengineering-surveying.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MMYEU7G8T8A5">14</a>","SDI ENGINEERING LLC","ISAEL POSADS","","2327 W RHIN DR","","EDINBURG","TX","78539-4343","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#112;&#111;&#115;&#97;&#100;&#97;&#115;&#64;&#115;&#100;&#105;&#45;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">iposadas@sdi-engineering.com</a>","https://www.sdi-engineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V4MCQLZWFA49">15</a>","NASSRI-WARREN GROUP ARCHITECTS INC","LAURA WARREN","","804 S MAIN ST","","MCALLEN","TX","78501-5028","Our firm is a service oriented architectural, planning, interior design, and project management firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#119;&#97;&#114;&#114;&#101;&#110;&#64;&#116;&#119;&#103;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">lwarren@twgarch.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJ9PQUC2MKJ7">16</a>","ECO BRIGHT SOLUTIONS LLC","ADOLFO HELLMUND","","3206 SAN SEBASTIAN ST","","MISSION","TX","78572-0537","115310	SUPPORT ACTIVITIES FOR FORESTRY 115310	FUELS MANAGEMENT SERVICES 213112	SUPPORT ACTIVITIES FOR OIL AND GAS OPERATIONS 236210	INDUSTRIAL BUILDING CONSTRUCTION 236220	COMMERCIAL AND INSTITUTIONAL BUILDING CONSTRUCTION 237110	WATER AND SEWER LINE AND RELATED STRUCTURES CONSTRUCTION 237120	OIL AND GAS PIPELINE AND RELATED STRUCTURES CONSTRUCTION 237310	HIGHWAY, STREET, AND BRIDGE CONSTRUCTION 237990	OTHER HEAVY AND CIVIL ENGINEERING CONSTRUCTION 238160	ROOFING CONTRACTORS 238190	OTHER FOUNDATION, STRUCTURE, AND BUILDING EXTERIOR CONTRACTORS 238320	PAINTING AND WALL COVERING CONTRACTORS 238990	ALL OTHER SPECIALTY TRADE CONTRACTORS 238990	BUILDING AND PROPERTY SPECIALTY TRADE SERVICES 561612	SECURITY GUARDS AND PATROL SERVICES 561720	JANITORIAL SERVICES 561730	LANDSCAPING SERVICES 561790	OTHER SERVICES TO BUILDINGS AND DWELLINGS 562991	SEPTIC TANK AND RELATED SERVICES 811192	CAR WASHES 812331	LINEN SUPPLY","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#104;&#64;&#101;&#99;&#111;&#98;&#114;&#105;&#103;&#104;&#116;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">ah@ecobright-solutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RKEXMLGAC8B9">17</a>","TABEZA HOLDINGS, LLC","FRANCISCO MEZA","","10604 N 24TH ST","","MCALLEN","TX","78504-6313","Tabeza Holdings, LLC, is a cohesive, efficient, and cost-effective team that combines the expertise and multiple generations of project management experience into a dynamic flexible organization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#107;&#109;&#64;&#116;&#97;&#98;&#101;&#122;&#97;&#104;&#111;&#108;&#100;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">frankm@tabezaholdings.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HWU9LVE1X865">18</a>","FREEDOM HEALTHCARE INC","MELISSA VAN DORN","","4405 N 22ND ST","","MCALLEN","TX","78504-4145","Nurse's are IV therapy certified. We serve pediatrics to geriatrics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#118;&#97;&#110;&#100;&#111;&#114;&#110;&#64;&#102;&#114;&#101;&#101;&#100;&#111;&#109;&#104;&#101;&#97;&#108;&#116;&#104;&#99;&#46;&#99;&#111;&#109;">lisa.vandorn@freedomhealthc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNE2HERNZNB3">19</a>","LEXINE, INC","FRANK MARTINEZ","","322 N 3RD ST","","MCALLEN","TX","78501-2506","Lexine, Inc., operating as LexineGroup, is a minority-owned, HUB-certified, and Federal HUBZone-certified MBE based in McAllen, Texas. Our fundamental commitment to client and employee satisfaction has made us a trusted integrator in the fields of electrical services and technology. Our company is divided into three key divisions: Electrical, Communications, and Security Technology. Each division is designed to meet a comprehensive range of construction and facility needs. Communications Division: We provide a wide array of services including structured cabling, data cabling, fiber cabling, certification, network equipment installation and maintenance, wireless network, and network security management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#46;&#109;&#97;&#114;&#116;&#105;&#110;&#101;&#122;&#64;&#108;&#101;&#120;&#105;&#110;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">f.martinez@lexinegroup.com</a>","https://www.lexinegroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPLWPKY9YK23">20</a>","TRS FACILITY SERVICES LLC","LUIS TORRES","","1503 W POLK AVE REAR","","PHARR","TX","78577-2116","We provide a wide range of facility support services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#115;&#102;&#97;&#99;&#105;&#108;&#105;&#116;&#121;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">trsfacilityservices@gmail.com</a>","www.trsfacilityservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MRKKN8LFD8C9">21</a>","GENERATIONS GROWING TOGETHER, INC","MARTHA VARELA-RIOS","","1114 N ALTON BLVD","","ALTON","TX","78573-1030","MENTAL HEALTH AND SUBSTANCE ABUSE COUNSELING SERVICES, SUPERVISED VISITATION SERVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#111;&#119;&#105;&#110;&#103;&#101;&#110;&#101;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">growingenerations@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DZK2ZFJGB729">22</a>","B2Z ENGINEERING LLC","NICHOLUS MUNOZ","","900 S STEWART RD STE 4","","MISSION","TX","78572-6461","B2Z Engineering, LLC is a civil engineering consulting firm based out of the Rio Grande Valley in Deep South Texas. B2Z is a multi-disciplined firm recognized in the State of Texas as being: Small Business Administration (SBA) 8(a), Historically Underutilized Business (HUB), Disadvantaged Business Enterprise (DBE), Registered with the Texas Board of Professional Engineers (F-11187), Administratively Qualified with Texas Department of Transportation, Minority Business Enterprise (MBE), Women's Business Enterprise (WBE), Small Business Enterprise (SBE). Since our inception in 2009, B2Z Engineering, LLC has completed projects throughout the State of Texas. From project planning through final design, program and project management, and finally construction inspection and material testing, we offer a true “Turn Key” delivery method to our clients. Through the years, B2Z has played a vital role in the design and construction of numerous private and public projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#104;&#111;&#108;&#117;&#115;&#64;&#98;&#50;&#122;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">nicholus@b2zeng.com</a>","www.b2zeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HNMFNH682J41">23</a>","R.O.W. SURVEYING SERVICES, LLC","JULIO CERDA","","900 S STEWART RD","STE 13","MISSION","TX","78572-6461","Boundary, Topographic, As-Built, elevation certificates, flood certificates.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#111;&#64;&#115;&#111;&#117;&#116;&#104;&#116;&#101;&#120;&#97;&#115;&#105;&#103;&#46;&#99;&#111;&#109;">julio@southtexasig.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHMUBEM7YX48">24</a>","L & G CONSULTING ENGINEERS, INC.","JACINTO GARZA","","2100 W EXPRESSWAY 83","","MERCEDES","TX","78570-9764","Consulting Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#105;&#110;&#116;&#111;&#64;&#108;&#103;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">jacinto@lgengineers.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TTUSRUFJDZU8">25</a>","JULCAR, L.L.C.","YVONNE SALINAS","","910 S CLOSNER BLVD","","EDINBURG","TX","78539-5658","JULCAR, LLC is an real estate services company located in Edinburg, Texas. Services include strategic advice and execution for property sales, leasing and finance; property, facility and project management. For further information please call us at (956)342-7803.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#115;&#97;&#108;&#105;&#110;&#97;&#115;&#64;&#119;&#99;&#115;&#116;&#114;&#103;&#118;&#46;&#99;&#111;&#109;">ysalinas@wcstrgv.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCAPN3YVCAH3">26</a>","SYNLAR, LLC","SANTIAGO LARREA","","315 N SHARY RD STE 1019","","MISSION","TX","78572-8235","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#110;&#116;&#105;&#97;&#103;&#111;&#64;&#115;&#105;&#110;&#108;&#97;&#114;&#98;&#114;&#111;&#97;&#100;&#98;&#97;&#110;&#100;&#46;&#99;&#111;&#109;">santiago@sinlarbroadband.com</a>","www.sinlarbroadband.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UY4HXZFAT2K9">27</a>","EQUITY ASSETS REAL ESTATE GROUP, L.L.C.","EUGENIA MORALES","","5111 N MCCOLL RD","","MCALLEN","TX","78504-2331","Real Estate Brokerage, Selling and Leasing Real Estate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#117;&#103;&#101;&#110;&#105;&#97;&#64;&#101;&#113;&#117;&#105;&#116;&#121;&#97;&#115;&#115;&#101;&#116;&#115;&#114;&#101;&#97;&#108;&#116;&#121;&#46;&#99;&#111;&#109;">eugenia@equityassetsrealty.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLBTDDXFXR57">28</a>","LEADERSHIP EMPOWERMENT GROUP, LLC","BARBARA BAGGERLY-HINOJOSA","","1404 S MISSOURI AVE","","MERCEDES","TX","78570-4108","Training, Resources, and Services in the areas of leadership development, strategic planning, conflict management, customer service, communications, and organization skills.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#98;&#97;&#114;&#97;&#64;&#108;&#101;&#97;&#100;&#101;&#114;&#115;&#104;&#105;&#112;&#101;&#109;&#112;&#111;&#119;&#101;&#114;&#109;&#101;&#110;&#116;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">barbara@leadershipempowermentgroup.com</a>","www.leadershipempowermentgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDP8KYB6USG3">29</a>","MOR- WIL LLC","ALBERT GARZA III","","1813 PECOS ST","","MISSION","TX","78572-2008","Established in 2007, Mor-Wil, LLC specializes in civil construction, general construction, and utilities. In that time we have grown our staff to 15 employees all focused on exceeding our client’s expectations. We offer a 1 year warranty with all of our projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#98;&#101;&#114;&#116;&#46;&#103;&#97;&#114;&#122;&#97;&#48;&#51;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">albert.garza03@yahoo.com</a>","www.mor-wil.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HAJJR843W8M9">30</a>","GONZALEZ ENGINEERING & MANAGEMENT, LLC","VIVIAN GONZALEZ","","4612 ESTANCIA PKWY","","MCALLEN","TX","78504-9710","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#105;&#118;&#105;&#97;&#110;&#64;&#105;&#99;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">Vivian@icengineers.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3KHF6METM49">31</a>","TEXAS HIGHWAY SYSTEMS, INC.","BRITTANY OZUNA","","405 W NOLANA LOOP","","PHARR","TX","78577-8346","Full Service Traffic Control","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#116;&#101;&#120;&#97;&#115;&#104;&#105;&#103;&#104;&#119;&#97;&#121;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">office@texashighwaysystems.com</a>","www.texashighwaysystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YZEDDH4CKZK4">32</a>","V&L ENTERPRISES, LLC","VICTOR CANTU","","7400 N 10TH ST STE L","","MCALLEN","TX","78504-7707","We are a building supply company. We specialize in flooring, cabinets, countertops, kitchen/bath accessories & window coverings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#100;&#99;&#114;&#103;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">hdcrgv@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFYZPFAKEJJ5">33</a>","CASO LAW FIRM, PLLC","JOSE CASO","","112 E CANO ST","","EDINBURG","TX","78539-4508","Caso Law Firm, PLLC is a multiple-discipline, professional support services firm offering proven leadership, and expertise in the realm of Legal Service, Administrative Support, Technical Support, and Project Management. Our objective is to provide high-quality professional support services that ensure the timely and efficient compliance with all program objectives and the composition of a high-quality administrative system. We pride ourselves in the results of the projects we undertake. Our firm is experienced in overseeing and completing both simple and complex projects with single and multiple project partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#97;&#115;&#111;&#64;&#99;&#108;&#102;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#46;&#99;&#111;&#109;">jcaso@clfenterprise.com</a>","www.clfenterprise.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XN6NRQ297659">34</a>","8/A BUILDERS LLC","ARNOLDO OCHOA","","7708 W. EXPRESSWAY 83","","MISSION","TX","78572-2064","8/A Builders is a General Contractor specializing in finishing work, including but not limited to painting, sheetrock, tile, cabinetry, site preparation, framing, and all remodeling work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#120;&#56;&#97;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#115;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tx8abuilders@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZRTH58KW9J3">35</a>","RADIO UNITED, LLC","DEBBIE BARRERA","","2520 E BUSINESS HIGHWAY 83","","MISSION","TX","78572-9102","advertising, radio and/or digital spanish and/or english advertising","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#97;&#114;&#114;&#101;&#114;&#97;&#64;&#114;&#97;&#100;&#105;&#111;&#117;&#110;&#105;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">dbarrera@radiounited.com</a>","WWW.RADIOUNITED.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RF2SFQ5DP7G3">36</a>","R & L PHARMACY, LLC","VICTORIA AJAYI","","900 W SAM HOUSTON BLVD STE 3","","PHARR","TX","78577-5215","We offer excellent pharmacy services, quality medical supplies, and affordable quality medication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#110;&#100;&#95;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">wand_e@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WCWKUSHQHMC9">37</a>","AZUL ROOFING & CONSTRUCTION LLC","PAMELA GARZA","","4217 COLBATH AVE","","MCALLEN","TX","78503-8442","Specializing in Disaster in regards to hail , wind, flood, tornado. Free inspections available and estimates. Emergency repair services available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#109;&#101;&#108;&#97;&#64;&#97;&#122;&#117;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">pamela@azulconstruction.com</a>","www.azulconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z4CQAQDM6V33">38</a>","LANDHAWK CONSULTING LLC","JORGE CORTEZ","","804 S RICHMOND DR","","PHARR","TX","78577-5928","Landhawk Consulting LLC (Landhawk) was founded in 2012 and is made up of 17 expert biologists and scientists dedicated to the environmental profession and to exceeding our client's expectations. Landhawk provides environmental consulting services including but not limited to avian surveys, bird nest surveys, endangered species surveys, wetland delineations, SWPPP compliance, environmental assessments, biological monitoring and state and federal permitting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#114;&#116;&#101;&#122;&#64;&#108;&#97;&#110;&#100;&#104;&#97;&#119;&#107;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jcortez@landhawkconsulting.com</a>","landhawkconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VF65HXSAGB28">39</a>","STUDENT-LED INNOVATIONS, LLC","JOSE ELOY GARZA","","2613 CHARLOTTE CIR","","PHARR","TX","78577-6835","Student-Led Innovations serves as an educational consulting firm specializing in supporting educators with developing innovative work-based learning programs. As part of this effort, we created the Career Bridge app as a powerful tool to facilitate high level work-based learning projects by empowering teachers, students, and business entities with a safe and secure space to collaborate and work together.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#103;&#97;&#114;&#122;&#97;&#64;&#115;&#116;&#117;&#100;&#101;&#110;&#116;&#45;&#108;&#101;&#100;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">egarza@student-ledinnovations.com</a>","www.career-bridge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CPTVZ4Y9UKG3">40</a>","RESIDOLOGY, INC.","SIENA WIMBERLY","","2900 N SUGAR RD STE B","","PHARR","TX","78577-7456","Residology offers furnished apartments, perfect for families or traveling professionals in need of temporary housing. You can relax and enjoy your time in Texas in our stylish, sustainable, and fully furnished apartments. Our goal is to create a “home away from home” for anyone looking for short term rentals or temporary housing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#101;&#110;&#97;&#64;&#114;&#101;&#115;&#105;&#100;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">siena@residology.com</a>","http://residology.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFNJYXR6KT54">41</a>","BLUE PARROT SOFTWARE LLC","JOE SILVA-RODRIGUEZ","","1601 W MONTE CRISTO RD","STE A","EDINBURG","TX","78541-0794","Blue Parrot Software LLC delivers information technology and staff software development services to the federal government, state, and municipalities. We bring to bare fast, immediately productive, and experienced resources from multiple disciplines to reduce risk and ensure customer satisfaction. Utilizing customer focused demand management processes, we continuously prepare and develop talent tailored towards your specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#115;&#108;&#108;&#99;&#64;&#98;&#108;&#117;&#101;&#112;&#97;&#114;&#114;&#111;&#116;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bpsllc@blueparrotsoftwarellc.com</a>","https://bpsllc.io/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSKWFJZC6N85">42</a>","SWIFTFOOT LOGISTICS LLC","GILBERTO GARCIA JR","","804 SHASTA AVE","","MCALLEN","TX","78504-2588","SWIFTFOOT LOGISTICS LLC PROVIDES TURNKEY, SPECIALIZED, TRANSPORTATION SERVICES, THAT ARE STAFFED, MANAGED, SECURE AND AVAILABLE 24 HOURS/7 DAYS/WEEK 365 DAYS/YEAR. WE SPECIALIZE IN BORDER AND IMMIGRATION TRANSPORTATION SERVICES WITH DETENTION READY VEHICLES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#111;&#64;&#115;&#119;&#105;&#102;&#116;&#102;&#111;&#111;&#116;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">beto@swiftfootlogistics.com</a>","www.swiftfootlogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HPAKL4USBJ91">43</a>","CHAIN REACTIONS GROUP, LLC","SARAH CORTEZ","","425 CHULA VISTA ST","","MCALLEN","TX","78501-1121","Chain Reactions is a digital marketing agency specialized in micro-marketing through social and digital ads. We deliver hyper-targeted campaigns and impactful content, optimizing ROI to help government agencies achieve mission-critical goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#105;&#64;&#99;&#104;&#97;&#105;&#110;&#114;&#101;&#97;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;">alexi@chainreactions.co</a>","www.chainreactions.co"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WW7VR9XRXU14">44</a>","TEXAS HEAVY TOW RECOVERY AND SERVICES LLC","OMAR RODRIGUEZ","","3404 W MILE 7 RD STE F","","MISSION","TX","78574-3002","Texas Heavy Tow Recovery And Services LLC, minority-owned business a specialized logistics, towing, and asset management company. We serve commercial and government clients, ensuring seamless operations, reducing legal liabilities, and offering cost-effective solutions. Our expertise guarantees 100% adherence to regulations, particularly in high-traffic border areas, supporting a variety of critical public sector needs. Our comprehensive services include vehicle recovery, warehouse and storage, auctioning, forensic vehicle inspections, evidence management, and emergency disaster response. We ensure to accomplish the mission with utmost professionalism and expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#48;&#49;&#64;&#116;&#101;&#120;&#97;&#115;&#104;&#101;&#97;&#118;&#121;&#116;&#111;&#119;&#114;&#99;&#46;&#99;&#111;&#109;">01@texasheavytowrc.com</a>","https://texasheavytow.net"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.101&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

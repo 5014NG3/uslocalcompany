@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: North Dakota;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.02 seconds and 1.03 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 41 
+(of 41 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGJVFEKF3M23">1</a>","IDEAL AEROSMITH INC","JASON EDER","Vice President -  Operations","3001 S WASHINGTON ST","","GRAND FORKS","ND","58201-6716","Rate Table, tilt and turn table,automatic rate & positioning tables , centrifuges, PRECISION METERING VALVES, TACHOMETER TESTERS, PRESSURE CHAMBERS, ENGINEERING SERVICES, electrical assembly services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#100;&#101;&#114;&#64;&#105;&#100;&#101;&#97;&#108;&#97;&#101;&#114;&#111;&#46;&#99;&#111;&#109;">jeder@idealaero.com</a>","http://www.ideal-aerosmith.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFSSZNFWLZB6">2</a>","DAKOTA FENCE CO","JONATHAN HOWARD","PRESIDENT","1110 25TH AVE N","","FARGO","ND","58102-1889","FENCING, GUARDRAIL, HIGHWAY SIGNING, PLAYGROUND EQUIPMENT, PARK EQUIPMENT AND INSTALLATION OF ALL OF THESE. MANUFACTURER OF MISCELLANEOUS METAL RAILINGS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#100;&#97;&#107;&#111;&#116;&#97;&#102;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">jon@dakotafence.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XCDKKZVLGSB6">3</a>","CITY AIR MECHANICAL, INC.","HEATHER JONES","PRESIDENT","3505 E ROSSER AVE","","BISMARCK","ND","58501-3377","HEATING, AIR CONDITIONING, VENTILATION AND SHEET METAL, TEMPERATURE CONTROL, PLUMBING, SERVICE AND MAINTENANCE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#97;&#116;&#104;&#101;&#114;&#64;&#99;&#105;&#116;&#121;&#97;&#105;&#114;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">heather@cityairmechanical.com</a>","http://www.cityairmechanical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMZYLLUKSME1">4</a>","METAL ENGINEERING COMPANY LLC","JACQUELINE WEIDNER","OWNER","1225 20TH ST W","","DICKINSON","ND","58601-2800","Manufacture of heavy-duty Windsocks and ball-bearing Frames. Aviation, Industrial, General types,(Custom). Including approved Government NSN's, Airport, Heliport, and Commerical Applications. Both on-shore and off-shore Oilfield Safetey requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#116;&#97;&#108;&#101;&#110;&#103;&#99;&#111;&#46;&#108;&#108;&#99;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">metalengco.llc@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNDDPJPYMNM5">5</a>","DAKOTA OUTERWEAR CO","MARY ARLINGHAUS","operations manager","203 72ND AVE NE","","MINOT","ND","58703-0238","BOOTS,SOCKS,PARKA,COVERALL,GLOVES,BIBS,MILITARY clothing,gortex,you dream it we seam it.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#64;&#100;&#97;&#107;&#111;&#116;&#97;&#111;&#117;&#116;&#101;&#114;&#119;&#101;&#97;&#114;&#46;&#99;&#111;&#109;">mary@dakotaouterwear.com</a>","http://www.dakotaouterwear.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YGJPLD3C4PL1">6</a>","ARROW-TECH, INC","PERRY LAFOUNTAIN","Sales/RSO/Engineer","417 MAIN AVE W","","ROLLA","ND","58367-7605","Dosimeter,Radiation detection,Emergency Response Equip,Emergency Resp.Training,Homeland Security,Chemical Detection,Biological Detection, NDT Equipment,Dosimeter Chargers,Engineering, Consulting,remote monitoring equip,wireless transmitters/receivers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#114;&#114;&#121;&#46;&#108;&#97;&#102;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#64;&#100;&#111;&#115;&#105;&#109;&#101;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">perry.lafountain@dosimeter.com</a>","http://www.dosimeter.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GV6WMAJUK1R9">7</a>","SIOUX MANUFACTURING CORPORATION","MARNIE LAWRENCE","Marketing Director","1115 DAKOTAH DR","","FORT TOTTEN","ND","58335-5500","Compression & Autoclave Molding Composites, Oven/Vacuum Molding, Machining & Cutting Composites/Metals, Weaving, Water Repellant Treating, Water Jet Cutting, Labor Intensive Assemblies, Composite Armor, Preforming","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#97;&#119;&#114;&#101;&#110;&#99;&#101;&#64;&#115;&#105;&#111;&#117;&#120;&#109;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mlawrence@siouxmanufacturing.com</a>","http://www.siouxmanufacturing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DF42BEPC2ZE9">8</a>","MICROLAP TECHNOLOGIES, INC.","TOM NEAMEYER","","213 1ST ST NW","","ROLLA","ND","58367-7139","Manufacturer of custom components produced in extremely hard materials; such as synthetic ruby/sapphire, zirconia, alumina, silicon nitride, carbide and other hard materials. Custom products can be of nearly any size or configuration, used in instruments, waterjet, air/space craft, communication, medical device components & other industries. Capabilities: design/prototype, lapping, polishing, cutting, inspection, grinding, cleaning & drilling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#46;&#110;&#101;&#97;&#109;&#101;&#121;&#101;&#114;&#64;&#109;&#105;&#99;&#114;&#111;&#108;&#97;&#112;&#46;&#99;&#111;&#109;">tom.neameyer@microlap.com</a>","https://www.microlap.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YK7UPELMNEM3">9</a>","AGRI INDUSTRIES INC","MARSHA KITTLESON","Project Manager","3105 2ND ST W","","WILLISTON","ND","58801-6907","Water Well Drilling, Irrigation Construction, Utility Construction, Pump Installation & Service, Floating Pump Design and Manufacture","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#105;&#116;&#116;&#108;&#101;&#115;&#111;&#110;&#64;&#104;&#50;&#111;&#97;&#103;&#114;&#105;&#46;&#99;&#111;&#109;">mkittleson@h2oagri.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGJLDUL5QU79">10</a>","MATTSON CONSTRUCTION CO","TERRY MATTSON","","4321 BURDICK EXPY E","","MINOT","ND","58701-5503","General Construction, Construction Management, Concrete Structures, Butler Buildings, Crane work,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#77;&#64;&#80;&#82;&#79;&#74;&#69;&#67;&#84;&#68;&#69;&#76;&#73;&#86;&#69;&#82;&#89;&#46;&#67;&#79;&#77;">TM@PROJECTDELIVERY.COM</a>","http://projectdelivery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RNXAJM7V25J5">11</a>","MCCODY CONCRETE PRODUCTS INC","DENISE HORAB","","14021 HIGHWAY 2","","WILLISTON","ND","58801-9005","McCody is a manufacturing, retail and service company with an interest base in concrete and construction. McCody is a family and locally owned business dedicated to providing quality products and excellence in customer service while exploring potential growth and diversification. Our products and services include, but are not limited to, precast concrete products, ready mix, construction (concrete and steel), aggregates, trucking and hauling, road and lot maintenance, overhead and walk door sales and service, and conference and event venue rental. We are proud to be a company providing services 'from the dirt up!'","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#114;&#97;&#98;&#64;&#109;&#99;&#99;&#111;&#100;&#121;&#46;&#99;&#111;&#109;">dhorab@mccody.com</a>","www.mccody.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K6BGEGCW3J55">12</a>","D T & J INC","TIMOTHY CAPOUCH","","1816 4TH AVE NW","UNIT C","WEST FARGO","ND","58078-1345","Manufacture lightweight, strong, portable air-craft quality aluminum ramps. Any length necessary. Can store in bi-fold or 'rolled up' mode, like sleeping bag. 8'x 30' weighs only 45lbs, supports 1,000lbs. 8'x12' pair weigh 25lbs each, support 2,000lbs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#76;&#69;&#83;&#64;&#82;&#79;&#76;&#76;&#65;&#82;&#65;&#77;&#80;&#46;&#67;&#79;&#77;">SALES@ROLLARAMP.COM</a>","http://www.rollaramp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QW2BEMRW81A3">13</a>","KILLDEER MOUNTAIN MANUFACTURING INC","ERIKA BAUER","Contract Manager","233 RODEO DR","","KILLDEER","ND","58640-4028","Cables/Harnesses, Circuit Cards (through hole and SMT), Fiber Optics, Ground Support Equipment/Test Sets AS9100D with ISO 9001:2015 Registered","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#107;&#97;&#46;&#98;&#97;&#117;&#101;&#114;&#64;&#107;&#109;&#109;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">erika.bauer@kmmnet.com</a>","http://www.kmmnet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QXJPHGJK96J3">14</a>","DAKOTA DRY BEAN INC","TONY UHLIR","President","3301 30TH AVE S STE 104","","GRAND FORKS","ND","58201-6009","dry pea splitting, three railcars a day","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#64;&#100;&#97;&#107;&#111;&#116;&#97;&#100;&#114;&#121;&#98;&#101;&#97;&#110;&#46;&#99;&#111;&#109;">tony@dakotadrybean.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UQ7KNHJTD999">15</a>","FARGO JET CENTER LLC","JAMES SWEENEY","","3802 20TH ST N","","FARGO","ND","58102-0908","full service aviation services,maintenance, avionics, aicraft modification, air taxi charter,jet a and 100LL avgas,aicraft sales,flight instruction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#102;&#97;&#114;&#103;&#111;&#106;&#101;&#116;&#46;&#99;&#111;&#109;">jim@fargojet.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YF4NRZ7U2XG8">16</a>","ICD BUILDERS, INCORPORATED","CANDACE JOHNSON","","202 12TH ST S APT 3","","FARGO","ND","58103-1797","General Contractor for Construction Trades, General Contractor for Service Contracts, Manufacturer of Wall Units","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#99;&#100;&#98;&#117;&#105;&#108;&#100;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">icdbuildinc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JL2ZPCQ3NZ13">17</a>","MIDLAND DIESEL SERVICE & ENGINE CO","BRET LASKEY","","120 28TH ST S","","FARGO","ND","58103-6803","Specialists in Diesel repair of light to medium duty trucks, full rebuilding service of diesel injection pumps and injectors, distribution and retail of diesel parts and turbos.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#116;&#64;&#109;&#105;&#100;&#108;&#97;&#110;&#100;&#100;&#105;&#101;&#115;&#101;&#108;&#46;&#99;&#111;&#109;">bret@midlanddiesel.com</a>","https://midlanddiesel.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SSJNB8SE62Z8">18</a>","PRECISION DENTAL LAB INC","IAN JOHNSON","","6 BROADWAY N","","FARGO","ND","58102-5228","Manufacture Fixed and removable prothesis","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#112;&#100;&#108;&#102;&#97;&#114;&#103;&#111;&#46;&#99;&#111;&#109;">ijohnson@pdlfargo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H6CFLTNHHS86">19</a>","OFFICE SIGN COMPANY LLC","RYAN FRITZ","","310 NP AVE N","","FARGO","ND","58102-4836","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#110;&#64;&#111;&#102;&#102;&#105;&#99;&#101;&#115;&#105;&#103;&#110;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">ryan@officesigncompany.com</a>","http://www.officesigncompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J518K3M88KH5">20</a>","ELINOR COATINGS, LLC","HOLLY ANDERSON","","1805 NDSU RESEARCH PARK DR N","","FARGO","ND","58102-5706","Elinor Coatings is a Woman-Owned and HUBZone research, development, and manufacturing coatings company with capabilities to develop coatings solutions for specialty markets in new materials with particular expertise in corrosion protection of aluminum, steel, magnesium and bronze.  We are currently conducting coatings research for the Department of Defense.  We can supply and manufacture small sample sizes or industrial quantities of protective coatings. We are also wholesale, retail, b2g and b2b paint suppliers. We have more than 20 years of experience in corrosion consulting and protective coatings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#111;&#108;&#108;&#121;&#64;&#101;&#108;&#105;&#110;&#111;&#114;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">holly@elinorcoatings.com</a>","https://elinorcoatings.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XLJWXG68MHB7">21</a>","PRIDE DAIRY INC","KRISS ALLARD","","517 THOMPSON ST","","BOTTINEAU","ND","58318-1205","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#115;&#64;&#111;&#104;&#105;&#99;&#101;&#99;&#114;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">kriss@ohicecream.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LRA7F5RLP6P3">22</a>","AUDIO RESOURCE GROUP, INC.","RICK ALLERDINGS","","405 MAIN AVE W","","WEST FARGO","ND","58078-1659","Audio Resource Group, Inc. has over 25 years of experience manufacturing custom wireless audio solutions to companies. Our vast expertise makes us a leader as an audio/video equipment manufacturer, wholesaler, and retailer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#97;&#64;&#97;&#114;&#103;&#97;&#117;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">ricka@argaudio.com</a>","http://www.argaudio.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNKLQ3D6QB67">23</a>","DIVERSIFIED CONTRACTORS, INC.","JESSE MORROW","","635 10TH ST NE","","WEST FARGO","ND","58078-2240","Commercial, Institutional Building Construction, Poured Concrete Foundation, Structure Contractors, Framing Contractors, Drywall, Insulation Contractors, Finish Carpentry Contractors, Building Finishing Contractors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#100;&#105;&#118;&#101;&#114;&#115;&#105;&#102;&#105;&#101;&#100;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">info@diversifiedcontractorsinc.net</a>","www.diversifiedcontractorsinc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TH5VMNWYS467">24</a>","HARRIS MACHINE CO","JAY HARRIS","","1400 N 14TH ST","","OAKES","ND","58474-2306","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#97;&#114;&#114;&#105;&#115;&#64;&#104;&#97;&#114;&#114;&#105;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">jharris@harrismachineco.com</a>","http://www.harrismachineco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJV5JKLDJ8Y8">25</a>","MARO & ASSOCIATES INC","SHAWN MARO","","110 4TH AVE SE","","GWINNER","ND","58040-4346","SDB, WOSB, EDWOSB, Sheet Metal Manufacturing Welding - STEEL, SST, ALUM","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#119;&#110;&#64;&#115;&#106;&#109;&#97;&#114;&#111;&#46;&#99;&#111;&#109;">shawn@sjmaro.com</a>","http://www.sjmaro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q4V7GF9NUXX5">26</a>","PS INDUSTRIES INCORPORATED","DYLAN HALEY","","1150 S 48TH ST","","GRAND FORKS","ND","58201-3846","Simply put, our safety products are built to ensure that users get to go home each and every night after their work is done. These gates provide barriers against the everyday workplace dangers that can injure good people and hinder productivity. A safe worker is a better worker, and our products prove it. PS Industries is a leading OEM manufacturer of industrial doors (PS Access Solutions™), safety/fall-protection products (PS Safety Access™), flood protection barriers (PS Flood Barriers™) and sneeze guards/protective shields (PS Public Protection™). Additionally, PS Industries is a fully capable contract manufacturer qualified to perform a wide variety of manufacturing operations, in-house, for external customers. Our 180,000-square-foot facility is located in Grand Forks, North Dakota.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#97;&#108;&#101;&#121;&#64;&#112;&#115;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">dhaley@psindustries.com</a>","https://www.psindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N65DVZWLBJA3">27</a>","AGASSIZ DRAIN TILE LLC","ROSS JOHNSON","","16234 13TH ST NE","STE 1","BUXTON","ND","58218-9322","Wholesale company that sells and services equipment such as tractors and mowers. We install water removal devices such as dewatering wells and drain tile. We weld any kind of metal along with fabrication shop.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#115;&#115;&#64;&#97;&#103;&#97;&#115;&#115;&#105;&#122;&#100;&#114;&#97;&#105;&#110;&#116;&#105;&#108;&#101;&#46;&#99;&#111;&#109;">Ross@agassizdraintile.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FWHJPHDMJBL8">28</a>","3PH, LLC","RICK WOODWARD","","216 N 23RD ST","","BISMARCK","ND","58501-4933","Commercial Construction Contractor including General Contracting and Construction Management of all CSI Divisions. Owners have decades of past performance with government contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#119;&#111;&#111;&#100;&#119;&#97;&#114;&#100;&#64;&#51;&#112;&#104;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">rwoodward@3phllc.com</a>","www.3phllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UC16AADCHA17">29</a>","ROLOGARD GLOBAL CO LLC","JAMES PAGE","","10341 18TH AVE NE","","BOTTINEAU","ND","58318-6108","Rologard Global Company, LLC, is an American manufacturer of high impact, highly portable vehicle security barrier equipment. Our equipment has been crash tested at Federally approved test centers to assure our customers-public and private sector-of optimal performance and on a variety of surface conditions; Hard, Ice, Turf. Portability is a hallmark of Rologard equipment. We produce the only personally portable barrier system that is both redeployable by one person, but also towable in gangs of multiple units. Manufactured to the highest standards using state of the art laser based metal fabrication techniques, our major barrier components are hot dipped galvanized for incredible durability. And, because pedestrian safety is a priority, our units comply with ISO exposed edge hazard standards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#114;&#111;&#108;&#111;&#103;&#97;&#114;&#100;&#46;&#99;&#111;&#109;">info@rologard.com</a>","https://www.rologard.com/capability-statement"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M6C6ELJ9MD37">30</a>","ARC METAL FORMING INC","RYAN BARSTAD","","6801 27TH AVE N","","GRAND FORKS","ND","58203-1314","We offer CNC Plasma Pipe / Tube Cutting. Our CNC Pipe Cutting Rotator can cut Slots, Holes, Bevels, and Miters in Pipe up to 24' in Diameter. We also can accommodate tight tolerances, with this machine. We also have High Definition CNC Plasma Cutting, up to 2' thick material and a large 20' cutting bed. We can bend flat material on our CNC Hydraulic Press Brake - 320 ton Capacity and a 12' bed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#97;&#114;&#115;&#116;&#97;&#100;&#64;&#97;&#114;&#99;&#109;&#101;&#116;&#97;&#108;&#102;&#111;&#114;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">rbarstad@arcmetalforming.com</a>","www.arcmetalforming.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRM2LDYWE5V1">31</a>","STRAY CREEK SERVICES, INC.","DENNIS ANDERSON","","320 LEGACY CT","","DUNN CENTER","ND","58626-2608","Certified Service Disabled Veteran Owned and Operated Business. We provide versatile services ranging from complex large projects to small scale jobs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#110;&#105;&#115;&#64;&#115;&#116;&#114;&#97;&#121;&#99;&#114;&#101;&#101;&#107;&#46;&#99;&#111;&#109;">dennis@straycreek.com</a>","https://www.straycreek.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y1FFGG7U47R1">32</a>","KRAMPADE LLC","CAMERON MURPHY","","675 S 48TH ST","STE E","GRAND FORKS","ND","58201-3826","Krampade is a quantum leap forward in electrolyte replacement giving the body the potassium it needs and is the only sports drink with complete electrolyte replacement, based on science, not sweat. The flagship 2K line is a drop-in replacement for a typical sports drink and delivers 2000 mg of potassium and 200 mg of sodium. The 4K line stops active cramps generally in under 1 minute and keeps cramps at bay during activity. The 2.0 line provides 50 mg of sodium, 50 mg of magnesium, and 2000 mg of potassium and the fiber line has an additional 9 g of soluble fiber. The average person needs 4.7 g of potassium daily and another 200 mg for each hour of exercise, but the average man only consumes 3.2 g per day and women 2.4 g per day. Krampade is a family total small business based on the core values of applying the integrity and ethics of science to our business, US-sourced materials, transparency, overt honesty, and philanthropy driven.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#65;&#77;&#69;&#82;&#79;&#78;&#46;&#77;&#85;&#82;&#80;&#72;&#89;&#64;&#75;&#82;&#65;&#77;&#80;&#65;&#68;&#69;&#46;&#67;&#79;&#77;">CAMERON.MURPHY@KRAMPADE.COM</a>","https://krampade.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXDUJVV26U28">33</a>","DELORENCO L JACKSON","DE LORENCO JACKSON","","2012 49TH ST S","","FARGO","ND","58103-7792","To fully realize Damajha's Systems purpose – Breakthroughs that change patients’ lives – we have established a clear set of expectations regarding “what” we need to achieve for patients and the betterment of mankind “how” we will go about achieving those goals. The “how” is represented by four simple, powerful values – courage, excellence, equity and joy – that define our company and our culture.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#109;&#97;&#106;&#104;&#97;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">damajhasystems@gmail.com</a>","DamajhaSystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M2SEGKAA6J85">34</a>","DOOR STUD, LLC","JAMES NEWENHOUSE","","4141 31ST AVE S STE 100A","","FARGO","ND","58104-8778","Veteran owned, The Door Stud is a tool that revolutionizes how doors are handled, installed and re-installed by the trades, builders, flooring and painting professionals. If you install doors, it’s time to get a pair. 1-3/8, 1-3/4, 2-1/4 size options, we service doors in all markets, government, residential and commercial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#105;&#109;&#64;&#116;&#104;&#101;&#100;&#111;&#111;&#114;&#115;&#116;&#117;&#100;&#46;&#99;&#111;&#109;">Jim@thedoorstud.com</a>","https://thedoorstud.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G9KZJVV2LEW1">35</a>","WARRIOR ENERGY LLC","DARIN HULTBERG","","609 4TH AVE NE","","DEVILS LAKE","ND","58301-2421","General contracting program management services, design build, electrical installations, instrumentation & controls, plc programming, mechanical hvac controls, excavating, site work and related services for applications in the industrial, government, oil & gas, green energy, institutional, commercial, and municipal facility industry. From new construction to upgrades, commissioning and renovations, we provide a full range of services. We provide quality design, responsive delivery, exceptional client service, and we put our experience to work for you to maximize your value.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#114;&#105;&#110;&#46;&#72;&#117;&#108;&#116;&#98;&#101;&#114;&#103;&#64;&#119;&#97;&#114;&#114;&#105;&#111;&#114;&#101;&#110;&#101;&#114;&#103;&#121;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">Darin.Hultberg@warriorenergyllc.com</a>","https://warriorenergyllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NC7WD9NVGA17">36</a>","LASER FOCUS CREATIONS LLC","BRADLEY EDWARDSON","","7580 COUNTRY CREEK RD","","WAHPETON","ND","58075-9650","Self certified service disabled veteran owned and operated small business. Laser cutting, engraving, and marking of metal, wood, plastic, glass, leather, paper, cloth, acrylic. Signs and id tags available 1'x1' up to 18'x24'","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#64;&#108;&#97;&#115;&#101;&#114;&#102;&#111;&#99;&#117;&#115;&#99;&#114;&#101;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">brad@laserfocuscreations.com</a>","https://laserfocuscreations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKFDWKN1DDM7">37</a>","BUECHE, LLC","SHANNON RADCLIFFE BUECHE","","3355 156TH AVE SE","","CASSELTON","ND","58012-9704","Bueche LLC is a woman-owned company with DBA's of: Massage Alchemy Botanicals - producer of health and wellness products such as: herbal massage/body oils, butters, lotions, salves, balms and travel soap/sanitizers, using botanicals grown on our own organic farmsite; Turkey Road Farm Products – producer of organic herbal jellies, syrups, and flavorings made with fruits, berries and botanicals either grown on our land or purchased/foraged locally, and sweetened with local honey; and Massage Alchemy – a licensed massage therapy office.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#110;&#98;&#117;&#101;&#99;&#104;&#101;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">shannbueche@aol.com</a>","https://www.massage-alchemy.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJCENFYKE7G6">38</a>","FARGO ADDITIVE MANUFACTURING EQUIPMENT 3D LLC","JOHN OLHOFT","","1001 25TH ST N","","FARGO","ND","58102-3116","-Core Competencies Fargo Additive Manufacturing Equipment 3D, LLC (FAME 3D) is the parent company of the LulzBot 3D printer product line. LulzBot was founded in 2011 with the launch of the AO100 3D printer. The LulzBot TAZ 1 printer was first launched in 2013 and our printers have been evolving ever since. LulzBot printers are manufactured in the USA utilizing some of the best quality parts available and offer US based customer support and replacement parts availability! The products we offer include:","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#108;&#104;&#111;&#102;&#116;&#64;&#108;&#117;&#108;&#122;&#98;&#111;&#116;&#46;&#99;&#111;&#109;">jolhoft@lulzbot.com</a>","https://www.lulzbot.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G76FQCDCKV77">39</a>","PERITIACON LLC","JOSH LOOSMORE","","5601 GOLD DR","","BISMARCK","ND","58503-8113","We specialize in a wide range of services including Environmental Policy & Compliance, Energy Sector Regulatory Policy & Compliance, Water Resource Management & Controls. Our teams have the skills and experience to tackle projects at all levels of complexity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#115;&#104;&#46;&#76;&#111;&#111;&#115;&#109;&#111;&#114;&#101;&#64;&#112;&#101;&#114;&#105;&#116;&#105;&#97;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">Josh.Loosmore@peritiacon.com</a>","www.peritiacon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SAC2XB59V3F4">40</a>","KIDCO FARMS PROCESSING, INC","JON RAMSEY","","219 5TH AVE SW","","STEELE","ND","58482-7241","Process fresh, never frozen vegetables for extended shelf life. SQF Certified","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#107;&#105;&#100;&#99;&#111;&#102;&#97;&#114;&#109;&#115;&#46;&#99;&#111;&#109;">jon@kidcofarms.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CY83XN6DBE16">41</a>","MJC-MANUFACTURING LLC","RICHARD CHAVIS","","2449 W COUNTRY CLUB DR S APT 7","","FARGO","ND","58103-5750","I am committed to precision, safety, and efficiency in all my work. My extensive knowledge and hands-on experience enable me to tackle complex welding tasks with confidence and deliver exceptional results. Whether working on structural steel, mild and cold rolled steel, or other materials, I consistently strive for excellence and customer satisfaction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#46;&#99;&#104;&#97;&#118;&#105;&#115;&#64;&#109;&#106;&#99;&#45;&#109;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">r.chavis@mjc-manufacturing.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.081&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

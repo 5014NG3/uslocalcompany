@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Iowa;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.10 seconds and 1.10 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 101 
+(of 101 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFFTVZGUJAS4">1</a>","JACKSON D SUMMERS","JACKSON SUMMERS","OWNER","2438 315TH ST","","MISSOURI VALLEY","IA","51555-8059","ENVIRONMENTAL: WETLANDS: DELINEATION, RESTORATION, MITIGATION, CONSTRUCTION; HABITAT RESTORATION; ENDANGERED SPECIES; REMEDIATION, EIS; ENVIRONMENTAL ASSESSMENTS; CONSTRUCTION; ENGINEERING; DESIGN; DREDGING; HYDROSEEDING; HYDROAXE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#49;&#48;&#53;&#51;&#52;&#54;&#56;&#64;&#111;&#110;&#101;&#109;&#97;&#105;&#110;&#46;&#99;&#111;&#109;">js1053468@onemain.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RWE2F44JYBV8">2</a>","TAYLOR CONSTRUCTION INC","KRISTA TAYLOR-THIER","PRESIDENT","7314 COLUMBUS ST","","NEW VIENNA","IA","52065-7717","CONCRETE STRUCTURES (BRIDGES, CULVERTS, RETAINING WALLS), RIPRAP, MASONRY, EARTHWORK AND LEVEES, STEEL ERECTION, ROCK EXCAVATION, CLEARING AND GRUBBING, DREDGING, LANDSCAPING, AND WE HAVE THE ABILITY TO RESPO","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#116;&#97;&#121;&#108;&#111;&#114;&#99;&#111;&#110;&#115;&#116;&#114;&#46;&#99;&#111;&#109;">ktaylor@taylorconstr.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RZECSM5ADNX3">3</a>","T&M CONSOLIDATED COMPANY","TONY SCHMALZ","PRES/SE/TR","4175 NE 43RD CT","","DES MOINES","IA","50317-4625","OFFICE FURNITURE PANEL SYSTEMS, INSTALLATION, NEW PRODUCT; TEARDOWN & RECONFIGURATION OF EXISTING SYSTEMS. fREESTANDING FURNITURE; MOVING, DESIGN, WAREHOUSING, ALL BRANDS FURNITURE: HERMAN MILLER, STEELCASE, HAWORTH, HON AND MORE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#115;&#64;&#116;&#109;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#110;&#101;&#116;">tonys@tmservices.net</a>","http://www.tmservices.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y3LYJJL46BF1">4</a>","TRIVIEW COMMUNICATIONS, INC.","DARCY CHRISTENSON","VICE PRES","203 SERGEANT SQUARE DR","","SERGEANT BLUFF","IA","51054-8539","AUTHORIZED DEALER OF AVAYA (FORMERLY LUCENT) TELEPHONE SYSTEMS. SALES AND SERVICE OF PARTNER, MERLIN LEGEND, MAGIX, IP OFFICE AND DEFINITY PHONE SYSTEMS. INSTALL WIRING FOR PHONE & COMPUTER EQUIPMENT. CERTIFIED TECHNICAL STAFF.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#99;&#121;&#64;&#116;&#114;&#105;&#118;&#105;&#101;&#119;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">darcy@triviewquality.com</a>","HTTP://WWW.TRIVIEWQUALITY.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XY9EGEMTPPP1">5</a>","MPS ENGINEERS, P.C.","UMESH SHETYE","President","1444 ILLINOIS ST","","DES MOINES","IA","50314-3510","Construction: Site Preparation. Building renovation, HVAC, Sewer and water, Flood Control Structures; Environmental: USTs, Remediations, landfill, Asbestos; Construction Testing, & Proj.Mgmt.; Civil: Secondary Containment, Lagoon, ,Surveying","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#117;&#109;&#101;&#115;&#104;&#46;&#115;&#104;&#101;&#116;&#121;&#101;&#64;&#109;&#112;&#115;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">umesh.shetye@mpsengineers.com</a>","http://www.mpsengineers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4VKCKEHMHP9">6</a>","RACOM CORPORATION","MIKE MILLER","President","201 W STATE ST","","MARSHALLTOWN","IA","50158-5841","Wireless voice & data communications service, equipment,repair, rental,sales,consult, fiber Distribution Center wireless communications, RF Global Positioning ISP Tower leasing Critical Communications, 911 Center, Comm Center","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#114;&#97;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">mike.miller@racom.net</a>","http://www.racom.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQJ5XFV6LFV1">7</a>","SUNSHINE KIDS SERVICES INC.","TERRI SULZNER","owner","1237 FONTANA BLVD","","HAZLETON","IA","50641-9783","Facilities Maintenance, Janitorial, Carpet Cleaning, Window Cleaning, Hard Floor Care, Waxing, Stripping","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#107;&#105;&#100;&#115;&#51;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">sskids3@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GVJVTFRYA4Y1">8</a>","COMMUNICATION INNOVATORS, INC.","CHRIS BARR","","1301 NE 56TH ST","","PLEASANT HILL","IA","50327-8830","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#97;&#114;&#114;&#64;&#103;&#111;&#116;&#111;&#99;&#105;&#46;&#99;&#111;&#109;">cbarr@gotoci.com</a>","https://www.gotoci.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YGGGPLVSU8Q5">9</a>","AMI PIPE & SUPPLY CO","JOHN ROTHGEB","president","410 JOHNSON ST","","KEOKUK","IA","52632-5442","supplier of industrial and commercial piping products ie. pipe, valves, and fittings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#97;&#109;&#105;&#112;&#105;&#112;&#101;&#46;&#99;&#111;&#109;">john@amipipe.com</a>","http://www.amipipe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNPNL1DGBQY4">10</a>","HAMMITT MERNE","MERNE HAMMITT","","1002 LINCOLNWAY ST","","WOODBINE","IA","51579-1049","Asphalt Paving, Rock Grinding, and widely diverse construction services for various agencies of the U.S. Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#114;&#110;&#101;&#64;&#105;&#111;&#119;&#97;&#116;&#101;&#108;&#101;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">merne@iowatelecom.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FYF7G31YJVS9">11</a>","BERGSTROM CONSTRUCTION, INC.","TOM GORGAS","President","1719 HULL AVE","","DES MOINES","IA","50313-4736","Commercial General Contractor with 35 years experience in new construction and remodeling/historic renovations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#114;&#103;&#97;&#115;&#46;&#116;&#111;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">gorgas.tom@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L9NNGHXPV7N6">12</a>","DUBUQUE BARGE AND FLEETING SERVICE CO","CARTER NEWT","","5 JONES ST STE 2","","DUBUQUE","IA","52001-7674","diverse marine construction, leasing. dredging, levy repair, rock placement, pile driving, dock construction, dry dock, harbor service, specialty towing, inland waterway tug service, deck barge rental, sectional barge, spud barge, tug boat","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#101;&#119;&#116;&#64;&#110;&#101;&#119;&#116;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">cnewt@newtmarine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLWDJQUDCH54">13</a>","AIR CONTROL, INC.","SEAN CONNELL","","80 14TH AVE N","","CLINTON","IA","52732-2928","Products and Services: *API 650 certified tanks *DSM screen boxes *Blow pipe *Cyclones *Spouting *Structural support systems *Hoppers *Custom fabrication *Cut line work stations *Conveyor lines *Line process tables, chutes *Dust collection systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#110;&#110;&#101;&#108;&#108;&#64;&#97;&#99;&#105;&#102;&#97;&#98;&#114;&#105;&#99;&#97;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">sconnell@acifabricators.com</a>","www.acifabricators.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SX5KK9K4MKL4">14</a>","STEAM SERVICES LTD","CARMEN WAGNER","","2830 FAIRMOUNT ST","","SIOUX CITY","IA","51105-2132","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#97;&#109;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">steamservices99@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZMB9ENJNBDC7">15</a>","MAUER SUPPLY, INC","TODD HALVERSON","","407 N L ST","","OSKALOOSA","IA","52577-1958","Hot Water High Pressure Cleaning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#104;&#64;&#109;&#97;&#117;&#101;&#114;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">toddh@mauersupply.com</a>","mauersupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M9JUHUM43JC5">16</a>","IOWA FIRE EQUIPMENT CO","DODIE CAUDLE","","2800 DELAWARE AVE","","DES MOINES","IA","50317-3543","We sell and service sprinkler systems and fire extinguishers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#97;&#117;&#100;&#108;&#101;&#64;&#105;&#97;&#102;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">dcaudle@iafire.com</a>","www.iafire.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LZL3J61WVEY5">17</a>","SHEKAR ENGINEERING, P.L.C","CHANDRA SHEKAR","President/Owner","2600 ML KING JR PKWY STE 200","","DES MOINES","IA","50310-6230","Environmental, Remediation, Engineering Services, Consulting, Construction, Abatement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#110;&#100;&#114;&#97;&#64;&#115;&#104;&#101;&#107;&#97;&#114;&#46;&#117;&#115;">chandra@shekar.us</a>","www.shekar.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MMN8M9R3JSU5">18</a>","NYSTROM ELECTRIC COMPANY","MATT HANSEN","","1504 W 3RD ST","","SIOUX CITY","IA","51103-4210","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#116;&#116;&#72;&#97;&#110;&#115;&#101;&#110;&#64;&#110;&#121;&#115;&#116;&#114;&#111;&#109;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#110;&#101;&#116;">MattHansen@nystromelectric.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK56M5QNMU65">19</a>","K C PETERSEN CONSTRUCTION CO","NICK PETERSEN","","19344 PORTLAND ST","","COUNCIL BLUFFS","IA","51503-6806","We are a company of vast talents. We do anything from design build to a tenant finish out. We keep our projects on time and on budget.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#107;&#64;&#107;&#99;&#112;&#101;&#116;&#101;&#114;&#115;&#101;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">nick@kcpetersenconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EHXZD98J5Z23">20</a>","ANDERSON COMMERCIAL CONCRETE, INC.","BRET CHUMBLEY","","21254 N BRADY ST","","DAVENPORT","IA","52806-9393","Foundations, floors and outside paving Machine foundations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#82;&#69;&#84;&#67;&#64;&#65;&#67;&#67;&#73;&#78;&#67;&#46;&#66;&#73;&#90;">BRETC@ACCINC.BIZ</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DDNEANGPJZN3">21</a>","NAGLE SIGNS INC","THOMAS NAGLE","","1020 WILBUR AVE","","WATERLOO","IA","50701-3358","design, manufacture, install and maintain any type of signage. vinyl graphics, digital printing, crane service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#110;&#101;&#108;&#115;&#111;&#110;&#64;&#110;&#97;&#103;&#108;&#101;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">bnelson@naglesigns.com</a>","http://www.naglesigns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UYRQXLA3S747">22</a>","SOUND CONCEPTS INC","MARVIN SMEJKAL","","1001 3RD AVE SW","","CEDAR RAPIDS","IA","52404-1813","We are a professional / commercial audio video installation, production and rental company that has been in operation for over 35 years. Rental Dept: Audio, Lighting, Video, Staging, Temporary Roof Structures, Truss, Drape, Power distribution, Air Conditioning, Technical Services and Consultation for all event and production needs. Installation Dept: Audio, Lighting, Video, Staging, Roof Structures, Drape, Design Consultation, Custom Fabrication, Technical Services, Repair and Maintenance. Round Concepts gives you the opportunity to make your event a memorable one with a Big Eli Ferris wheel. Our Ferris wheels have created smiles all over the U.S. for many types of events including festivals, and corporate events.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#65;&#82;&#86;&#73;&#78;&#64;&#83;&#79;&#85;&#78;&#68;&#67;&#79;&#78;&#67;&#69;&#80;&#84;&#83;&#73;&#78;&#67;&#46;&#78;&#69;&#84;">MARVIN@SOUNDCONCEPTSINC.NET</a>","http://www.soundconceptsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M65ECMFB3GA7">23</a>","SUNFLOWER ENTERPRISES, INC","CARTER NEWT","President","5 JONES ST STE 2","","DUBUQUE","IA","52001-7674","Marine Construction, General Contracting, Marine Equipment, and Barge Rental","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#101;&#119;&#116;&#64;&#110;&#101;&#119;&#116;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">cnewt@newtmarine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WD8BDNAZP3L5">24</a>","MMC CONTRACTORS IOWA INC","ROBERT BLASKOVICH","","5000 PARK AVE","","DES MOINES","IA","50321-1245","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#108;&#97;&#115;&#107;&#111;&#118;&#105;&#99;&#104;&#64;&#109;&#109;&#99;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">bblaskovich@mmccontractors.com</a>","www.mmccontractors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P71NLM9BD4K3">25</a>","DAVENPORT ELECTRIC CONTRACT COMPANY","BARRY VAN BLARICOM","","529 PERSHING AVE","","DAVENPORT","IA","52803-5516","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#114;&#121;&#64;&#100;&#97;&#118;&#101;&#110;&#112;&#111;&#114;&#116;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">barry@davenportelectric.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEK8K59L1M47">26</a>","REPUBLIC ELECTRIC COMPANY, LLC","DAN ARENHOLZ","","737 CHARLOTTE ST","","DAVENPORT","IA","52803-5724","Republic is a full line distributor of Electrical and Mechanical products representing 3,500 customers with over 40,000 SKU's. We staff in-house specialists covering Controls, Automation, Power Distribution, and Lighting to name a few.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#114;&#101;&#110;&#104;&#111;&#108;&#122;&#68;&#64;&#114;&#101;&#112;&#117;&#98;&#108;&#105;&#99;&#99;&#111;&#46;&#99;&#111;&#109;">ArenholzD@republicco.com</a>","http://www.republicco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDH2BZLCLVU5">27</a>","MIDWEST AUTOMATIC FIRE SPRINKLER CO.","JERRY BERNHOLTZ","","2001 DE WOLF ST","","DES MOINES","IA","50316-2761","DESIGN, FABRICATE, REPAIR, SERVICE, INSPECTION AND INSTALLATION OF AUTOMATIC FIRE SPRINKLER SYSTEMS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#114;&#121;&#98;&#101;&#114;&#110;&#104;&#111;&#108;&#116;&#122;&#64;&#109;&#105;&#100;&#119;&#101;&#115;&#116;&#102;&#105;&#114;&#101;&#115;&#112;&#114;&#105;&#110;&#107;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">jerrybernholtz@midwestfiresprinkler.com</a>","http://www.midwestfiresprinkler.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XNSNBZN675H4">28</a>","CORN STATES METAL FABRICATORS, INC","MITCH GOLAY","","1323 MAPLE ST","","WEST DES MOINES","IA","50265-4304","We perform HVAC work as well as custom fabrication of conveyors, tanks, stainless steel materials, aluminum materials, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#116;&#99;&#104;&#103;&#64;&#99;&#111;&#114;&#110;&#115;&#116;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">mitchg@cornstates.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PVNSE29H3T16">29</a>","CENTRAL STATES ROOFING CO.","MARK HANSON","","1811 E LINCOLN WAY","","AMES","IA","50010-6543","We install roofing, insulation, and sheet metal on buildings with low slope roofs. We also perform all related functions for all types of work that can be done on low slope roofs such as: skyklights hatches, maintenance, repair, roof replacement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#99;&#115;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mark@csroofing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FWEQFZE3NUG1">30</a>","MID STATES ELECTRIC CO.","BRIAN HENSCHEN","","1658 HIGHWAY 20","","LAWTON","IA","51030-8167","The company specializes in industrial & electrical design/build. The company is experienced in powerplant construction, water treatment plant construction, high voltage installations, & installation and maintenance of refrigeration systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#64;&#109;&#105;&#100;&#115;&#116;&#97;&#116;&#101;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">brian@midstateselectric.com</a>","http://www.midstateselectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZCF2TK4RCS14">31</a>","KEOKUK CONTRACTORS INC","CHRISTY MELLER","","853 JOHNSON STREET RD","","KEOKUK","IA","52632-2213","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#121;&#64;&#107;&#101;&#111;&#107;&#117;&#107;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">christy@keokukcontractors.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R6NVGDMM8LE7">32</a>","LATIMER ASSOCIATES, INC.","BRETT MCGRIFF","","1219 ZIMMERMAN DR","","GRINNELL","IA","50112-9736","design, manufacture and install interior and exterior signage solutions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#116;&#116;&#46;&#109;&#99;&#103;&#114;&#105;&#102;&#102;&#64;&#108;&#97;&#116;&#105;&#116;&#117;&#100;&#101;&#115;&#105;&#103;&#110;&#97;&#103;&#101;&#46;&#99;&#111;&#109;">brett.mcgriff@latitudesignage.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JVBAQP8AMMC5">33</a>","SYSTEMWORKS LLC","ANDREW BENNETT","","409 5TH ST","","WEST DES MOINES","IA","50265-4635","Certified test and balance, commissioning, retro-commissioning, LEED commissioning, envelope commissioning, energy modeling, facility analysis, indoor air quality testing, HVAC function testing of air and water systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#119;&#46;&#98;&#101;&#110;&#110;&#101;&#116;&#116;&#64;&#115;&#121;&#115;&#116;&#101;&#109;&#119;&#111;&#114;&#107;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">andrew.bennett@systemworksllc.com</a>","http://www.systemworksllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGZ1AT7Q76L5">34</a>","RASCH CONSTRUCTION, INC.","JOEL RASCH","","1828 JOHNSON AVE","","FORT DODGE","IA","50501-8572","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#108;&#114;&#97;&#115;&#99;&#104;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#110;&#101;&#116;&#46;&#110;&#101;&#116;">joelrasch@frontiernet.net</a>","www.raschconstinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXLKRKPJGKA3">35</a>","PROCTOR CORP","THOMAS PROCTOR","","1100 HOAK DR","","WEST DES MOINES","IA","50265-2631","Proctor Mechanical takes pride in their design/build concept. We have the ability to design the projects as well as build them. We have the capability to do this in the following areas: Heating Air Conditioning Ventilation Plumbing Process and Specialty Piping Med Gas Heating Piping Plumbing Piping Pipefitting Welding Sheetmetal Systems Monitoring Underground Utilities Mechanical Design Engineered Drawings Project Commissioning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#112;&#114;&#111;&#99;&#116;&#111;&#114;&#64;&#112;&#114;&#111;&#99;&#116;&#111;&#114;&#45;&#109;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">tproctor@proctor-mech.com</a>","http://www.proctor-mech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NEYFK5AKKV15">36</a>","JIM GIESE COMMERCIAL ROOFING INC","CHRIS MUELLER","","10410 SILVERWOOD DR","STE A","DUBUQUE","IA","52003-9445","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#106;&#105;&#109;&#103;&#105;&#101;&#115;&#101;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">chris@jimgieseroofing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WXHDBPU4W5V6">37</a>","STA-BILT CONSTRUCTION COMPANY","DAVID POPE","","1339 NISHNA AVE","","HARLAN","IA","51537-4813","We provide asphalt maintenance of State, Federal, County, Municipal, and private streets, roads, and highways in Iowa and Nebraska.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#115;&#116;&#97;&#45;&#98;&#105;&#108;&#116;&#46;&#99;&#111;&#109;">dave@sta-bilt.com</a>","http://www.stabilt.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FK9RX7W9UPA3">38</a>","EZ WAY, INC.","RICK FINCH","","701 E WASHINGTON ST","","CLARINDA","IA","51632-1852","EZ Way is a US manufacturer and distributor of patient lifting products including floor lifts, sit to stands, baratric products, ceiling lifts (we install), repositioning devices, laterial transfer devices, and slings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#105;&#110;&#99;&#104;&#64;&#101;&#122;&#108;&#105;&#102;&#116;&#115;&#46;&#99;&#111;&#109;">rfinch@ezlifts.com</a>","http://www.ezlifts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8P5AL1KNV93">39</a>","MOBILIS, INC.","COLLEEN BRABEC","","2701 W BROADWAY","","COUNCIL BLUFFS","IA","51501-3524","Sales and repair of home medical equipment. Wheelchairs, power chairs, scooters, stair lifts, patient lifts, walkers, home modifications accessibility, vehicle lifts & ramps, Home ramps, lift chairs, bathroom items, diabetic shoes,compression socks","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#108;&#101;&#101;&#110;&#64;&#109;&#111;&#98;&#105;&#108;&#105;&#115;&#109;&#101;&#100;&#46;&#99;&#111;&#109;">colleen@mobilismed.com</a>","http://www.mobilismed.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J44ZBP6L6KQ7">40</a>","ADVANCED ELECTRICAL SERVICES, INC.","JASON MOORE","","1233 GILBERT CT","","IOWA CITY","IA","52240-4510","electrical contractor, full service, new construction, remodel, design build, data installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#109;&#111;&#111;&#114;&#101;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">Jmoore@advancedelectrical.com</a>","www.advancedelectrical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z71TDDPFLFG4">41</a>","ACTIVE THERMAL CONCEPTS, INC.","AMY NELSON","","2805 STONEGATE CT","","HIAWATHA","IA","52233-4714","Active Thermal Concepts is an expert in asbestos removal, asbestos remediation, asbestos abatement and asbestos inspections. Our staff is highly trained in the removal and remediation of asbestos materials. Asbestos materials were used to fireproof roofing and flooring and heat insulation and was not outlawed in the late 1980’s, so if your building was built prior to this, make sure to call us if you are remodeling or demolishing your older building. For information call us at (319)393-8088","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#101;&#108;&#115;&#111;&#110;&#64;&#97;&#99;&#116;&#105;&#118;&#101;&#116;&#104;&#101;&#114;&#109;&#97;&#108;&#46;&#110;&#101;&#116;">anelson@activethermal.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJX8XRLTAYT9">42</a>","ACTERRA GROUP INC","BRYAN KOHLER","","220 35TH ST","","MARION","IA","52302-3812","Petroleum Equipment Renewable Energy Tank & Silo Manufacturing Electrical Contracting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#111;&#104;&#108;&#101;&#114;&#64;&#97;&#99;&#116;&#101;&#114;&#114;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#110;&#101;&#116;">bkohler@acterragroup.net</a>","https://www.acterragroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W4WCUB21EFY1">43</a>","AWG SERVICES, L.L.C.","ALAN GERARD","","1807 STEVENS DR","","IOWA CITY","IA","52240-4361","Full service general contractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#97;&#110;&#119;&#103;&#101;&#114;&#97;&#114;&#100;&#64;&#113;&#119;&#101;&#115;&#116;&#111;&#102;&#102;&#105;&#99;&#101;&#46;&#110;&#101;&#116;">alanwgerard@qwestoffice.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VKF5LBAPNF62">44</a>","SOUTHEAST CONSTRUCTORS INC","PERLLA ESTURILHO","","3018 FOX RUN","","DES MOINES","IA","50321-1426","HEAVY CONSTRUCTION, LEVEE REPAIRS, FLOOD REPAIRS, BRIDGE AND CONCRETE WORK, PAVING, SITE WORK, ADA RENOVATIONS, PIPE AND DRAINAGE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#69;&#82;&#76;&#76;&#65;&#64;&#76;&#73;&#86;&#69;&#46;&#67;&#79;&#77;">PERLLA@LIVE.COM</a>","www.sec-gc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EFCMM8LCWNF4">45</a>","SCHRAMM ELECTRIC LLC","SETH SCHRAMM","","3104 LINE DR","","SIOUX CITY","IA","51106-5151","Schramm Electric is a full service electrical contractor serving Iowa, Nebraska, & South Dakota. We are licensed, bonded, & insured. Our services include   Wiring repair and upgrades  Lighting upgrades  Service upgrades and replacements  Data network and telephone installations  Appliance and lighting installations  Electrical circuit installations  Power meter and electrical panel service  Surge protection  Generator installations  Security and fire alarms  Exterior lighting and power supply  Underground electrical circuits and  concealed sensors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#116;&#104;&#64;&#115;&#99;&#104;&#114;&#97;&#109;&#109;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">seth@schrammelectric.com</a>","www.schrammelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q5ZGKXWZQJM5">46</a>","COLLINS CONCRETE, LIMITED","SHANE HAUMAN","","1129 W 3RD ST","","DAVENPORT","IA","52802-3537","General Contracting, Excavation, Grading, Infrastructure Construction, Crushing of aggregates, Recyucle Products, concrete construction, Trucking Materials, Demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#104;&#64;&#99;&#111;&#108;&#108;&#105;&#110;&#115;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#110;&#101;&#116;">shaneh@collinsconcrete.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ57FM2RQEE1">47</a>","ALLEN BLASTING AND COATING, INC.","BRAD CALLISON","","1668 HIGHWAY 61","","WEVER","IA","52658-9500","Tank Linings Floor Toppings Secondary Containments Maintenance Painting Water Blasting Industrial Cleaning Fire Proofing Equipment Rental Ceramic Insulation Roofing NACE Inspector on Staff Excellent Safety Record 0.77 EMR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#97;&#108;&#108;&#101;&#110;&#98;&#108;&#97;&#115;&#116;&#105;&#110;&#103;&#97;&#110;&#100;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">accounting@allenblastingandcoating.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C5TMAMJ5QQ77">48</a>","CLIMATE SOLUTIONS, INC.","CHRISTOPHER BOELL","","1217 E ANTHONY ST","","CARROLL","IA","51401-3800","30+ years experience; Heating, A/C, Commercial Refrig., Electrical, Plumbing, Temp. Controls; Master licensing in all fields; troubleshooting expert; specialize in commercial work; installation or repair; 24 hour emergency service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#46;&#99;&#108;&#105;&#109;&#97;&#116;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">office.climatesolutions@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JARGBLM4NM54">49</a>","CHENHALLS STAFFING SERVICES, INC.","ROBERT HICKMAN","","2119 E 12TH ST","","DAVENPORT","IA","52803-3706","Chenhall's Staffing Services, is Native Owned and offers Premier Human Resources facility providing complete staff augmentation, Computer Facilities Management Project Management, Commercial Construction Services, Distribution services, Inventory management Services and Call Center Management. Chenhall's is an Indian Economic Enterprise and an Indian Small Business Economic Enterprise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#105;&#99;&#107;&#109;&#97;&#110;&#64;&#99;&#104;&#101;&#110;&#104;&#97;&#108;&#108;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bhickman@chenhallstaffing.com</a>","https://www.chenhallstaffing.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RUQSGHM2BM89">50</a>","OEL CONSTRUCTION SERVICES, INC.","JENNY INGLEDUE","","1306 RIVER RD S","","STEAMBOAT ROCK","IA","50672-9775","Concrete foundations, walls, flatwork, decorative concrete, retaining walls, incidentals to paving including baskets and joint sealing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#121;&#64;&#111;&#101;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">jenny@oelconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T7J6RM3WA3L9">51</a>","LOCAL INTERNET SERVICE COMPANY","DAVID MAGILL","","58 E BURLINGTON AVE","","FAIRFIELD","IA","52556-3210","10G Internet Service Provider Provides cable TV in Fairfield, IA and surrounding Provides local and LD wireline telephone service Installs fiber local and inter-city","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#97;&#103;&#105;&#108;&#108;&#64;&#108;&#105;&#115;&#99;&#111;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">dmagill@liscocorp.com</a>","http://www.lisco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3LSQTJJU985">52</a>","GTG CONSTRUCTION, L.L.C.","JESSICA REYNOLDS","","2717 MARTIN LUTHER KING JR PKWY","","DES MOINES","IA","50310-6200","General Contracting, Construction Management, Design/Build","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#105;&#99;&#97;&#114;&#64;&#103;&#116;&#103;&#99;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">jessicar@gtgcompanies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QANTL3JJ2G26">53</a>","J & J ENDEAVORS, L.L.C","JESSICA LEDGER-KALEN","","302 1/2 E BROADWAY AVE","","FAIRFIELD","IA","52556-2905","Women owned small business. CPAA certified. Areas of service include, decorative (colored,overlays,stained), concrete polishing, grinding, concrete repair, surface preparation, mastic removal, coating & glue removal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#107;&#64;&#114;&#111;&#121;&#97;&#108;&#101;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#99;&#111;&#109;">jlk@royaleconcrete.com</a>","http://www.royaleconcrete.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2QBA2HJKN87">54</a>","COX CONTRACTING CO. INC.","JOHN COX","","16419 FRANKLIN AVE","","COUNCIL BLUFFS","IA","51503-5391","We do demolition of all size and types of buildings. Concrete, interior, and bridge demolition also. We do concrete saw cutting, all excavation work, tree removal, snow removal, trucking, hauling, train derailments, and salvage scrap metals of all types.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#120;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">coxcontracting@cox.net</a>","http://www.coxcontractingco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QQN3MEMJ8E47">55</a>","ARR ROOFING OF IOWA LLC","RODNEY HUGHES","","1432 LEECH AVE","","SIOUX CITY","IA","51101-2316","Commercial and Industrial Roofing Contractor. We do roof designs, roof repairs and maintenance, complete re-roofing, sheet metal, custom sheet metal, sheet metal roofing, and preventative roof maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#100;&#110;&#101;&#121;&#46;&#104;&#117;&#103;&#104;&#101;&#115;&#64;&#98;&#111;&#111;&#110;&#101;&#98;&#114;&#111;&#116;&#104;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">rodney.hughes@boonebrothers.com</a>","www.boonebrothers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAHKCFSJZMN3">56</a>","TNT TUCKPOINTING & BUILDING RESTORATION, LLC","JOSH SMYSER","","202 IOWA ST","","STOCKTON","IA","52769-1203","new masonry and masonry restoration services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#116;&#110;&#116;&#116;&#117;&#99;&#107;&#112;&#111;&#105;&#110;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">josh@tnttuckpointing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFSNK4NC7196">57</a>","STRONG ROCK & GRAVEL LLC","PHYLLIS WARING","","721 S FRONT ST","","LANSING","IA","52151-9770","stone quarry, crushed rock, rip rap, rock quarry, strong rock, screened rock, 1/2 in. gravel, 3/4 in. road gravel, screenings, 1 1/4 in. screened rock up to 3 in. screened, boulders, flatrock","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#119;&#97;&#114;&#105;&#110;&#103;&#57;&#50;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">pwaring929@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDUUGNWN4MU7">58</a>","DICKERSON MECHANICAL, INC.","GEORGE DICKERSON","","129 N WEST ST","","COLFAX","IA","50054-1236","HVAC, Plumbing, Electrical, Septic Systems, Onsite Waste Water, Heating, Air-Conditioning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#111;&#114;&#103;&#101;&#97;&#100;&#105;&#99;&#107;&#101;&#114;&#115;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">georgeadickerson@gmail.com</a>","http://www.dickersonmechanical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JY1TLNKEBDN9">59</a>","MURPHY TOWER SERVICE LLC","TODD COOK","","20220 HIGHWAY 5","","CARLISLE","IA","50047-4210","RF/Microwave, Certified Fiber Optics Installers, Outside Plant Telecommunications, In-building Wireless including DAS, Small Cell, Wireless Internet, AM/FM/TV, Radar/Radome/Weather Cameras, Andrew/Commscope,Eupen/RFS, COW/COLT/TOW Deployments, Met Tower Equip Install, Monopoles, Self-support Lattice Towers, Guyed Towers, Rooftop Locates, Tenant Improvement, Stealth Sites, Water Tower/Grain Elevator, Technology Maintenance Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#113;&#64;&#109;&#117;&#114;&#112;&#104;&#121;&#116;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">rfq@murphytower.com</a>","https://www.murphytower.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N4MVN9HBXND6">60</a>","BRUNOW CONTRACTING, LLC","TAMARA BRUNOW","","1851 MADISON AVE STE 490","","COUNCIL BLUFFS","IA","51503-3607","Full Service Construction Management and General Contractor. Brunow Contracting LLC is an SBA 8(a) Certified, EDWOSB, SDB HubZone firm, founded in 2008 in Council Bluffs, IA by Tamara Brunow. We specialize in government contracting throughout the US. We provide expertise in Construction Service, Waste Management, Government Small Business Project Management and Small Business Consulting Services. Brunow finds solutions to your problems, within budget and with the highest quality.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#98;&#114;&#117;&#110;&#111;&#119;&#64;&#98;&#114;&#117;&#110;&#111;&#119;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">tbrunow@brunowcontracting.com</a>","www.brunowcontracting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XWP8BXFF81C3">61</a>","J.B. ROBERTSON CONSTRUCTION, INC.","KIRT ROBERTSON","","8845 NORTHWEST BLVD","","DAVENPORT","IA","52806-6422","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#64;&#106;&#98;&#114;&#111;&#98;&#101;&#114;&#116;&#115;&#111;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">bo@jbrobertsoninc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UFYERYWRN1X8">62</a>","KNIGHT EAGLE CONTRACTING GROUP, INC.","STEVEN MARSHALL","","5311 OAKCREST HILL RD SE UNIT 3","","HILLS","IA","52235-7793","Knight Eagle is an 8(a) certified, DSB, VOSB, EDWOSB, WOSB, Indian Owned Economic Enterprise, and Minority owned (Native American and Hispanic) company currently specializing in commercial roofing and general construction. Knight Eagle has a customer base that ranges from government entities such as USAF, GSA, USDA, and IARNG, to private sector companies such as Mid-American energy and DuPont Bioscience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#97;&#114;&#115;&#104;&#97;&#108;&#108;&#64;&#107;&#110;&#105;&#103;&#104;&#116;&#101;&#97;&#103;&#108;&#101;&#46;&#110;&#101;&#116;">smarshall@knighteagle.net</a>","www.knighteagle.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R66TJD7F2PW9">63</a>","BEVANS STEEL CO","BOB BEVANS","","1028 S DITTMER ST","","DAVENPORT","IA","52802-2703","Structural steel erection, steel fabrication, machinery moving, equipment installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#118;&#97;&#110;&#115;&#115;&#116;&#101;&#101;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">bevanssteel@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUV1VJTKGE46">64</a>","LEICK CONSTRUCTION INC.","ADAM MILLER","","22027 221ST ST","","GLENWOOD","IA","51534-5389","Leick Construction has been an industry leader for over 20 years in the field of civil site construction and retaining wall systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#97;&#109;&#64;&#108;&#101;&#105;&#99;&#107;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">adam@leickconstruction.com</a>","www.leickconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQ4LBVBNZK93">65</a>","HENDRICKSON TRANSPORTATION LLC","TUESDAY LESEBERG","","2762 310TH ST","","HAMBURG","IA","51640-5069","Hendrickson Transportation has the capability to prime heavy civil engineering work, but also works well as a subcontractor. We began in 2001 as a transportation business and formed Hendrickson Construction in 2011. We continued government and private work for the next 8 years. In 2019, we began disaster related emergency work operations and managed 29 local flood-affected farmer subcontractors. We simultaneously self-performed on eight USACE RDI contracts and multiple private contracts by performing earthwork operations, aggregate placement, area restoration, certified payroll training, and contracting regulations. We utilize our vast knowledge in both construction and transportation to build an unstoppable team available 24/7/365. The HT team has consisted of 250+ employees, 200+ pieces of heavy construction equipment and 300+ highway trucks. We have the capability to expand operations quickly with low mobilization costs and look forward to helping you accomplish the impossible.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#117;&#101;&#115;&#100;&#97;&#121;&#119;&#64;&#104;&#101;&#110;&#100;&#114;&#105;&#99;&#107;&#115;&#111;&#110;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">tuesdayw@hendricksonent.com</a>","www.hendricksonent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYTNA2MJMEQ4">66</a>","OASIS ELECTRIC, L.L.C.","DANIEL HAUB","","21 300TH ST","","WEST BRANCH","IA","52358-8665","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#111;&#97;&#115;&#105;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">danoasiselectric@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YHA1V1XKG8R4">67</a>","LANG CONSTRUCTION GROUP INC","STEVEN LANG","","1915 SE 41ST ST","","GRIMES","IA","50111-4934","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#108;&#97;&#110;&#103;&#64;&#108;&#97;&#110;&#103;&#45;&#99;&#103;&#46;&#99;&#111;&#109;">slang@lang-cg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EUF9KE87M5Y4">68</a>","HEARTLAND AERIAL, LLC","ANDREW WILLENBORG","","6924 COLUMBUS ST","","NEW VIENNA","IA","52065-9000","Distributor of Enduraplas brand poly tanks, nurse trailers and sprayers. Distributor of The Andersons Nutra-Flo PureGrade line of liquid starter fertilizers. Many different blends of N P K solutions to meet your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#101;&#119;&#48;&#51;&#55;&#52;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">drew0374@yahoo.com</a>","willenborgagservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1NCEJJCVMM3">69</a>","SUELZER OPERATIONS SERVICE LLC","MICHAEL SUELZER","","15 CHERRY LN NE","","IOWA CITY","IA","52240-9110","SOSLLC is a professional services and consulting firm devoted to optimizing operations with the scientific process of transforming data into insight for making better decisions 20-years experience in Biomedical & Healthcare Research, Operations Research, Medical Device and Telecom Quality & Reliability. Certified skills and experience with human and technical process of transforming data into insights:  Analytics Data Analyses, Engineering, and Graphics Optimized Decision Trees and Value Streams Prediction Models, Probability Management, and Simulations Operations Research Quality-Reliability-Risk Management Systems Lean Six Sigma Systems Engineering and Functional Flow Visualizations Compliance with Government Regulations (e.g., 21 CFR Part 830) and International Standards (e.g., ISO 9001, 13485, 14972, 15288, 17025, 24748, & 31000)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#115;&#117;&#101;&#108;&#122;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">michael.suelzer@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J4BNZTJ34741">70</a>","TAYLOR GLASS INC","JONATHAN TAYLOR","","122 LAFAYETTE ST","","IOWA CITY","IA","52240-4210","NEW INSTALLATION AND REPAIR OF ALUMINUM STOREFRONT, ENTRANCES, CURTAIN WALL, WINDOWS, GLASS, GLAZING, DOOR HARDWARE, AND JOINT SEALANTS. FIRE RATED GLASS, BALLISTIC GLASS, X-RAY AND CT GLASS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#46;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#109;&#103;&#115;&#105;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;">jon.taylor@mgsiglass.com</a>","www.mgsiglass.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V6GRLWCML9M3">71</a>","RIVER CITIES ENGINEERING INC","THOMAS LOUSSAERT","","323 RESEARCH PKWY","","DAVENPORT","IA","52806-7343","Provide exceptional engineering & design services to fulfill the needs of our clients. We are committed to providing the highest level of professionalism, service, project turn-around, quality workmanship all incorporated into industry competitive rates.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#46;&#108;&#111;&#117;&#115;&#115;&#97;&#101;&#114;&#116;&#64;&#114;&#105;&#118;&#101;&#114;&#99;&#105;&#116;&#105;&#101;&#115;&#46;&#117;&#115;">tom.loussaert@rivercities.us</a>","www.rivercities.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENE9BBHR6LP9">72</a>","WILCOX PROPERTY MANAGEMENT INC","WILLIAM WILCOX","","300 N 3RD ST","","CARLISLE","IA","50047-7704","Company specializes in parking lot maintenance, pavement maintenance, GSB-88 Gilsonite, rejuvenator seal coating, crack sealing, traffic lines, sweeping and parking lines. Servicing 60 mile radius around Des Moines, IA.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#97;&#115;&#105;&#46;&#99;&#111;&#109;">bill@advancedasi.com</a>","www.advancedasi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YD5ZA31DM6J5">73</a>","LAURA L ROACH","LAURA ROACH","","405 SYCAMORE ST","","SABULA","IA","52070-8066","Clients rely on a direct relationship with our team, as DES typically self performs 100% of the delivery to each site. DES has the team, experience, and qualifications to supply high quality material from start to finish. Our experience supplying the government, industrial, and commercial industries, and our strict adherence to quality and safety makes us the right partner for your project","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#112;&#111;&#116;&#46;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">depot.electric@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CD8FCZ7VH1F8">74</a>","D & B AGRO-SYSTEMS, LIMITED","KASIE DOERING","","27845 HIGHWAY 65","","HUBBARD","IA","50122-7799","We design and construct grain conditioning and grain storage facilities. We are turnkey, offering concrete, construction, custom fabrication, and electrical service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#115;&#105;&#101;&#64;&#100;&#97;&#110;&#100;&#98;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">kasie@dandbsystems.com</a>","dandbsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HL6USKLXAZY5">75</a>","KR HOME IMPROVEMENT, INC","KEVIN RASMUSSEN","","3500 W 5TH ST","","SIOUX CITY","IA","51103-3215","KR Home Improvement, LLC provides your one stop shop for all your home remodeling and refinishing needs. We think there is something beautiful in the process of taking your Sioux City home and recreating your personal space. We take your vision and turn it into reality with quality work, great customer service, and affordable prices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#104;&#111;&#109;&#101;&#114;&#101;&#109;&#111;&#100;&#101;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">krhomeremodel@yahoo.com</a>","http://krhomeimprovementia.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CAWEYRJ5RKN5">76</a>","316 CONSTRUCTION GROUP, LLC","MATTHEW RANDALL","","420 S 17TH ST","","AMES","IA","50010-8105","We provide professional management of roofing and waterproofing projects, with a special focus on liquid applied systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#46;&#114;&#97;&#110;&#100;&#97;&#108;&#108;&#64;&#51;&#49;&#54;&#99;&#103;&#46;&#99;&#111;&#109;">m.randall@316cg.com</a>","www.316cg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LAMSC7U5Z3J6">77</a>","I & A CONSTRUCTION, L.L.P.","MARACELINA COCKBURN","","1416 PIERCE ST","","SIOUX CITY","IA","51105-1244","Concrete work. Sidewalks, driveways, retaining walls, intakes, and general flat work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#97;&#110;&#100;&#97;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#50;&#48;&#49;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">iandaconstruction2013@gmail.com</a>","www.iandaconstructionllp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMJHRKZV2X43">78</a>","COLLINS-RUSSELL 8(A), LLC.","SHANE HAUMAN","","111 OAK ST","","BUFFALO","IA","52728-7789","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#104;&#64;&#99;&#111;&#108;&#108;&#105;&#110;&#115;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#110;&#101;&#116;">shaneh@collinsconcrete.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LCHSKN2JVMP7">79</a>","K & S LLC","KIM NELSON","","2805 W 4TH ST","","SIOUX CITY","IA","51103-5111","Renovations and new construction of buildings. Educational, health care, industrial, storage, residential, commercial, parking structures,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#64;&#110;&#101;&#108;&#115;&#111;&#110;&#99;&#99;&#46;&#110;&#101;&#116;">kim@nelsoncc.net</a>","nelsoncc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V2J9JH6YNEC7">80</a>","TRINITY CONST. GROUP, LTD.","JACQUELINE GOODE","","1720 FULLER RD STE 200","","WEST DES MOINES","IA","50265-5541","We specialize in commercial construction and contracting services including: new construction, remodels and renovations, finish carpentry and maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#105;&#101;&#103;&#64;&#116;&#114;&#105;&#110;&#105;&#116;&#121;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">jackieg@trinity-construction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJD1RVWKAUJ1">81</a>","TINY MAMMOTH GRAPHICS LLC","PHIL WHITING","","175 S 9TH ST","STE 450","WEST DES MOINES","IA","50265-5824","Graphic Design Architectural Interiors Wide Format Printing Environmental Graphic Design Digital Wallcoverings + Murals Privacy & Decorative Window Films Window Graphics Donor + History Walls LED Backlit Signage Fabric + SEG Signage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#64;&#116;&#105;&#110;&#121;&#109;&#97;&#109;&#109;&#111;&#116;&#104;&#103;&#114;&#97;&#112;&#104;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">phil@tinymammothgraphics.com</a>","www.tinymammothgraphics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CV4WM7Z7HN49">82</a>","MCMAHAN INDUSTRIAL SERVICES, LLC","ASHLEY KIGER","","7269 HIGHWAY 28","","NORWALK","IA","50211-9255","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#107;&#105;&#103;&#101;&#114;&#64;&#109;&#99;&#109;&#97;&#104;&#97;&#110;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">akiger@mcmahanindustrial.com</a>","www.mcmahanindustrialservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J78DZLLVGNG4">83</a>","LAM SUPPORT SERVICES LLC","MIKALA TOMES","","302 E ORCHARD AVE","","COUNCIL BLUFFS","IA","51503-0438","Commercial Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#97;&#109;&#64;&#108;&#115;&#115;&#116;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">rlam@lssteam.com</a>","www.lamsupportservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJW5YUEH3JE1">84</a>","CONCORD CONSTRUCTION, LLC","PAUL HUTTON","","3324 340TH ST","","STUART","IA","50250-8541","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#99;&#111;&#110;&#99;&#111;&#114;&#100;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">paul@concordconst.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWDMQN8J8EV8">85</a>","ESB CLARK HEAVY CONSTRUCTION INC","JEREMY CLARK","","2016 COMMERCE DR","","RED OAK","IA","51566-1010","Grading, rip rap, repair surfaces, land conservation dirt work, building demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#121;&#99;&#108;&#97;&#114;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jmyclark@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WNA6FQDSWBM5">86</a>","PRO COMMERCIAL LLC","ASHLEE THIE","","405 S MAIN AVE","","HUXLEY","IA","50124-2400","General Contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#108;&#101;&#101;&#64;&#112;&#114;&#111;&#45;&#99;&#111;&#109;&#109;&#101;&#114;&#99;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">ashlee@pro-commercial.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q3M2SPS19LV4">87</a>","HADAR MFG., INC.","JOE HADAR","","1515 11TH ST N","","HUMBOLDT","IA","50548-8894","Domestic manufacturer of team sporting goods, primarily covered foam padding and related products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#101;&#64;&#104;&#97;&#100;&#97;&#114;&#97;&#116;&#104;&#108;&#101;&#116;&#105;&#99;&#46;&#99;&#111;&#109;">Joe@hadarathletic.com</a>","hadarathletic.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RLQNTMFFJWL8">88</a>","HALBERD, LLC","JENO BERTA","","2435 KIMBERLY RD STE 310S","","BETTENDORF","IA","52722-3566","Provide commercial construction services and security equipment installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#111;&#64;&#104;&#97;&#108;&#98;&#101;&#114;&#100;&#46;&#117;&#115;">jeno@halberd.us</a>","halberd.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JE8QH2NKZ6Y3">89</a>","QUICK ENTERPRISE, LLC","SAMUEL YODER","","3701 6TH AVE","","DES MOINES","IA","50313-4156","Site prep, grading, concrete flatwork, parking lots, sidewalks, service walks, stairs, flumes, curbs, ada ramps, driveways, setting/adjusting intakes, installing/moving pallet racking, cantilever racking, shelving, dock levelers, dock pads and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#64;&#113;&#117;&#105;&#99;&#107;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">sam@quickconcretesolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RXUSKNGH5L19">90</a>","PREMIER EDGE WINDOW TREATMENT LLC","MATT SPAULDING","","3400 SE MIEHE DR","STE 6","GRIMES","IA","50111-6660","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#101;&#64;&#112;&#101;&#105;&#45;&#119;&#116;&#46;&#99;&#111;&#109;">corporate@pei-wt.com</a>","www.pei-wt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MGTSSP9QHKB5">91</a>","C.L. IRONSITE, INC.","AMY WARDLOW","","2310 JERSEY RIDGE RD, #301","","DAVENPORT","IA","52803-2371","Mobile crushing, site clearing, excavation and material hauling, site preparation contractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#114;&#111;&#110;&#115;&#105;&#116;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">clironsite@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HXGEM6DE9BG9">92</a>","AARON CRANE CONSTRUCTION, LLC","AARON CRANE","","1833 120TH AVE","","MANCHESTER","IA","52057-8820","We are a construction and land improvement company. We specialize in site preparation, wetland construction, deep trenching, and underground utilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#99;&#114;&#97;&#110;&#101;&#49;&#50;&#53;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">arcrane1250@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G356MX8K3FZ8">93</a>","LINKON LOGS PORTABLES, LLC","CLAY LINCOLN","","21957 HAMBSCH LN","","GLENWOOD","IA","51534-5349","Provide fast, clean personalized restroom services to disaster, construction and events. Portable restroom, restroom trailer, hand wash stations and hand sanitizer stations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#105;&#110;&#107;&#111;&#110;&#108;&#111;&#103;&#115;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Linkonlogs@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V6X1HKJWB3W5">94</a>","DIVERSE CONTROLS, INC.","THOMAS SWYERS","","222 3RD AVE SE","STE 501","CEDAR RAPIDS","IA","52401-1542","Diverse Controls, Inc. embraces evidence-based and established best practices in all aspects of our install related to building controls and IT security. We achieve this by staying passionate about and well-informed on new technologies that maintain our guiding principles while continuously improving the equipment we offer, the processes we follow, and the design of your building. Diverse Controls, Inc. responds to a demand for more efficient controls construction practices in Iowa. We have experience with many small-medium businesses ranging from hotels and schools to medical facilities and office buildings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#121;&#109;&#101;&#110;&#116;&#115;&#64;&#100;&#105;&#118;&#101;&#114;&#115;&#101;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">payments@diversecontrols.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J74BHYLM69Y6">95</a>","INTERNATIONAL TECHNOLOGY & SECURITY, LTD.","JON SAWYER","","1304 W 4TH ST","","DAVENPORT","IA","52802-1305","Full-service security company offering locksmithing services, alarm systems and monitoring, Safe and Vault sales, service, and openings, GSA Safe and Container Techs, CCTV Surveillance Systems, Access Control Systems, Fire Door Inspectors, Cloud Security Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#110;&#46;&#115;&#97;&#119;&#121;&#101;&#114;&#64;&#106;&#106;&#108;&#111;&#99;&#107;&#115;&#46;&#99;&#111;&#109;">Jon.sawyer@jjlocks.com</a>","jjlocks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXJQA231Y6J3">96</a>","AGT TECHNOLOGIES, LLC","TERRY VAN GELDER","","2705 HIGHWAY 25","","LENOX","IA","50851-8567","See Capabilities Statement Link - https://www.adctech.us/bagt-capability-statement","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#114;&#121;&#64;&#97;&#100;&#99;&#116;&#101;&#99;&#104;&#46;&#117;&#115;">terry@adctech.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V2YAFJK26V93">97</a>","EURO DESIGNS, LLC","JOSE RIVERA","","2640 1ST AVE S APT 312","","ALTOONA","IA","50009-2165","We are your one-stop-shop for all your general contracting construction needs. We deliver high-quality construction and remodeling services to both residential and commercial clients. From start to finish, we ensure that every detail is taken care of, and your project is completed on time and within budget. Our services include new construction, renovations, remodeling, and design-build services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#101;&#110;&#116;&#101;&#46;&#106;&#103;&#54;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">vicente.jg62@gmail.com</a>","https://eurodesignsllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H37ZKTKNL4U5">98</a>","RICHMOND RENOVATIONS LLC","ELIYAHU RICHMOND","","15291 OAK ST","","GARDEN CITY","IA","50102-","Our specialties include home renovation and remodeling, energy-efficient window installations, comprehensive cleaning and janitorial services, professional lawn care, and a range of construction projects. With certification in lead abatement, we ensure safe and compliant work. Our customer-focused approach, combined with a passionate and skilled team, drives us to deliver high-quality results at competitive prices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#109;&#111;&#110;&#100;&#46;&#101;&#108;&#105;&#121;&#97;&#104;&#117;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">richmond.eliyahu@gmail.com</a>","https://richmondrenovationsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PSZQDAU4N2K8">99</a>","RICHMOND GLOBAL CONSTRUCTION LLC","JEREMIYAH RICHMOND","","15291 OAK STREET","","GARDEN CITY","IA","50102-","Richmond Global Constructions LLC, proudly serving the Hardin County area, offers a comprehensive suite of services, including cleaning, painting, window replacement, lawn care, snow removal, and material transportation. Our team is dedicated to delivering exceptional quality and ensuring customer satisfaction with every project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#109;&#111;&#110;&#100;&#106;&#101;&#114;&#101;&#109;&#105;&#121;&#97;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">richmondjeremiyah@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZFKECJ7N1UN9">100</a>","RODAN CLEANING LLC","ZACH VANDER PLOEG","","2730 49TH ST","","DES MOINES","IA","50310-2545","With 25 years of dedicated service, RODAN Cleaning has established itself as a premier, locally owned and operated commercial cleaning company. Our commitment to excellence and deep community roots have made us a trusted partner for a variety of cleaning needs across Iowa.  Our primary expertise lies in delivering top-tier, consistent janitorial services for commercial spaces, coupled with specialized post-construction clean-up. We excel in maintaining clean, hygienic environments and adeptly managing the unique challenges of construction site cleaning, ensuring efficiency and thoroughness.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#90;&#97;&#99;&#104;&#64;&#82;&#111;&#100;&#97;&#110;&#67;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Zach@RodanCleaning.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KAZ9UKMKGNE4">101</a>","T.M. ALTENA CONSTRUCTION SERVICES LLC","TRACI ALTENA","","1216 2ND AVE SE","","SIOUX CENTER","IA","51250-1206","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#105;&#97;&#108;&#116;&#101;&#110;&#97;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tracialtena@hotmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.274&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

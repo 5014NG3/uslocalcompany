@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Nebraska;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.10 seconds and 1.11 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 70 
+(of 70 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TNQ4QNEELMJ8">1</a>","REGAL AWARDS, INC.","JEFFREY NEARY","PRESIDENT","11540 W DODGE RD","","OMAHA","NE","68154-2537","TROPHIES, PLAQUES, AWARDS, EMBROIDERED EMBLEMS, CLOISONNE EMBLEMS, ENGRAVING, BADGES AND SIGNS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#110;&#101;&#97;&#114;&#121;&#64;&#114;&#101;&#103;&#97;&#108;&#97;&#119;&#97;&#114;&#100;&#115;&#46;&#99;&#111;&#109;">jneary@regalawards.com</a>","http://www.regalawards.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMVEB2DPPAH5">2</a>","MEDIBADGE, INC.","ERIKA TEUTSCH","PRESIDENT","7250 REYNOLDS ST","","OMAHA","NE","68122-1530","MEDICAL AND DENTAL STICKERS FOR REWARDS AND RECOGNITION AFTER APPOINTMENTS. TOYS AND NOVELTIES ALSO AVAILABLE AS AWARDS FOR A JOB WELL DONE ***TOLL FREE 1-800-228-0040***","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#116;&#101;&#117;&#116;&#115;&#99;&#104;&#64;&#109;&#101;&#100;&#105;&#98;&#97;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">eteutsch@medibadge.com</a>","http://www.medibadge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KDM6E1AWNNC8">3</a>","GENERAL FIRE & SAFETY EQUIPMENT CO OF OMAHA, INC","JASON MCDONALD","PRESIDENT","13002 I ST","","OMAHA","NE","68137-1317","FIRE EQUIPMENT, SAFETY EQUIPMENT, SPECIAL HAZARD SYSTEMS, HALON CO2 DRY CHEMICAL, FIRE ALARM EQUIPMENT. FM-200 SYSTEMS, PORTABLE FIRE EXTINGUISHERS SALES & SERVICE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#109;&#64;&#103;&#102;&#115;&#111;&#109;&#97;&#104;&#97;&#46;&#99;&#111;&#109;">jasonm@gfsomaha.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JHDSLB8YK4D7">4</a>","ROYAL ENGINEERED COMPOSITES, INC.","REQUEST FOR QUOTE","Sales Manager","1046 E 9TH ST","","MINDEN","NE","68959-2439","Manufacture contoured composites for secondary structure(AIRCRAFT), ducting, and radomes. Filament wind telescoping masts and other tubes. Flexible ducts, boots and seals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#70;&#81;&#64;&#114;&#111;&#121;&#97;&#108;&#99;&#111;&#109;&#112;&#111;&#115;&#105;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">RFQ@royalcomposites.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCCNE3QLP1L6">5</a>","KELLY SUPPLY CO","DON MEYER","Sales","1004 W OKLAHOMA AVE","","GRAND ISLAND","NE","68801-6649","STOCKING DISTRIBUTOR OF PIPE, FITTINGS, VALVES, GAUGES, V-BELTS, PUMPS, HOSE, CHAIN, LUBRICANTS, BEARINGS, TOOLS, PACKING, ELECTRIC MOTORS, HYDRAULIC HOSE AND ACCESSORIES, WIRE ROPE. ** CALL TOLL FREE 800-918-8939 **","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#101;&#121;&#101;&#114;&#64;&#107;&#100;&#115;&#105;&#46;&#110;&#101;&#116;">dmeyer@kdsi.net</a>","https://www.kscdirect.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N4JDKJRL2RK8">6</a>","PAUL REED CONSTRUCTION & SUPPLY INC","MARSHA GAUTNEY","PRESIDENT","2970 10TH ST","","GERING","NE","69341-1763","GENERAL AND HEAVY HIGHWAY CONSTRUCTION , CONCRETE, METAL FABRICATION, STEEL, ALUMINUM, STAINLESS STEEL; CRANES AND EARTH WORK. STEEL BUILDINGS, REMODEL AND RENOVATION CONSTRUCTION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#115;&#104;&#97;&#103;&#64;&#112;&#97;&#117;&#108;&#114;&#101;&#101;&#100;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">marshag@paulreedconstruction.com</a>","www.paulreedconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GTDVYFYXCFF7">7</a>","LI-COR, INC.","SCOTT WEEKLEY","Applications Analyst","4647 SUPERIOR ST","","LINCOLN","NE","68504-1357","AUTOMATED DNA SEQUENCERS, DATALOGGERS, SPECTRADIOMETERS, INSTRUMENTATION TO MEASURE PHOTOSYNTHESIS, C02, LEAF AREA, LIGHT, SOLAR ENERGY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#119;&#101;&#101;&#107;&#108;&#101;&#121;&#64;&#108;&#105;&#99;&#111;&#114;&#46;&#99;&#111;&#109;">scott.weekley@licor.com</a>","www.licor.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LYMSDKD5CE13">8</a>","RADIO ENGINEERING INDUSTRIES INC","KEVIN HERRMANN","V.P. Marketing","6534 L ST","","OMAHA","NE","68117-1112","INTEGRATED AUDIO/VIDEO SYSTEMS, PUBLIC ADDRESS SYSTEMS; MANUFACTURE SINGLE AND DOUBLE SIDED CIRCUIT BOARDS; METAL FABRICATION, SUPPLY SPEAKERS, ANTENNAS, MICROPHONES AND ETC. DESIGN ENGINEERING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#101;&#114;&#114;&#109;&#97;&#110;&#110;&#64;&#114;&#97;&#100;&#105;&#111;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">kherrmann@radioeng.com</a>","http://www.radioeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7KJCQR4XJ34">9</a>","EILERS MACHINE & WELDING INC","BRENDA STOMBAUGH","PRESIDENT","600 E COMMERCE RD","","LEXINGTON","NE","68850-5668","machining welding assembley painting packageing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#115;&#116;&#111;&#109;&#98;&#97;&#117;&#103;&#104;&#64;&#101;&#105;&#108;&#101;&#114;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">bstombaugh@eilersmachine.com</a>","http://www.eilersmachine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QHEECXDESSL9">10</a>","DATA SECURITY, INC","RENEE SCHAFER","SALES MGR","300 S 7TH ST","","LINCOLN","NE","68508-2401","MANUFACTURER OF DEGAUSSERS and DESTRUCTION DEVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#115;&#99;&#104;&#97;&#102;&#101;&#114;&#64;&#116;&#101;&#108;&#101;&#115;&#105;&#115;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">rschafer@telesis-inc.com</a>","http://www.datasecurityinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HJ7ETDW89PU7">11</a>","SERVICE EXPRESS COMPANY, INC","JOSEPH CUNNINGHAM","TREAS/SLS","8909 H ST","STE 1","OMAHA","NE","68127-1480","LUBRICATION FITTINGS, LUBRICATION EQUIPMENT, LUBRICATION SUPPLIES, SPEEDOMETERS, TACHOMETERS, GAUGES, SENDERS, SWITCHES. SPEEDOMETER CABLES, TACHOMETER CABLES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#99;&#111;&#46;&#99;&#111;&#109;">joe@serviceexpressco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VA7YBSM173H1">12</a>","NEW AGE MANUFACTURING, INC.","RUSSELL DANNER","Accounts Manager","2317 WARREN DR","","PLATTSMOUTH","NE","68048-2672","CNC Millwork, CNC Lathe work, Molds, Tool Dies Awarded government contracts through Procurement Gateway","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#100;&#97;&#110;&#110;&#101;&#114;&#64;&#110;&#101;&#119;&#97;&#103;&#101;&#109;&#102;&#103;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">rdanner@newagemfg-inc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZJKUKNE58LF7">13</a>","ELON GRAFFICS & PUBLISHING INC","MARY GRAFF","President","2101 S 40TH ST","","OMAHA","NE","68105-2920","Publishing company, publishes business calendar, including writing, editing, design and production. Graphic design of brochures and other collateral marketing materials. Marketing and management research and consulting, and event planning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#64;&#101;&#108;&#111;&#110;&#103;&#114;&#97;&#102;&#102;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">mary@elongraffics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QCFTSFWPLY95">14</a>","WILSON CASE INC","KIM WATSON","SALES MANAGER","113 ROAD 3168","","HASTINGS","NE","68901-9418","Shipping case and container manufacturer. Wilson Case offers custom shipping case design and COTS cases and containers. Mobility cases, field cases, computer cases, weapons cases, training cases and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#64;&#119;&#105;&#108;&#115;&#111;&#110;&#99;&#97;&#115;&#101;&#46;&#99;&#111;&#109;">kim@wilsoncase.com</a>","http://www.wilsoncase.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2UYRW5FCWY3">15</a>","BIG RED PRINTING INC","GENE WALTER","","129 N 3RD ST","","NORFOLK","NE","68701-4107","Quick printing, small commercial printing, digital & offset printing, variable data printing, desktop publishing & design, color copying, bindery services, mailing services including pre-sort bulk, marketing services, ad specialties","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#110;&#101;&#64;&#98;&#105;&#103;&#114;&#101;&#100;&#112;&#114;&#105;&#110;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">gene@bigredprinting.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFNGNTZBJZL7">16</a>","INTERNATIONAL SENSOR SYSTEMS, INC.","GARY BALES","President","103 GRANT ST","","AURORA","NE","68818-3200","Manufactures thick film hybrid microcircuits, printed circuit board assemblies, surface mount circuit board assemblies, chip on board assemblies,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#114;&#121;&#46;&#98;&#97;&#108;&#101;&#115;&#64;&#97;&#117;&#114;&#111;&#114;&#97;&#98;&#111;&#97;&#114;&#100;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">gary.bales@auroraboardworks.com</a>","https://auroraboardworks.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJLQNZDBBSR4">17</a>","AFP CORP","JAMES BLASZAK","President","4905 S 97TH ST","","OMAHA","NE","68127-2202","Fire Protection Engineering, Special Hazard Fire Suppression Systems, Automatic Fire Sprinklers, Fire Equipment Supplier, Engineering and System Design, Installer, Inspection and Maintenance Services, Start-up Services, Domestic and International Service Capabilities, Service and Aftermarket Support, Custom Assembly and Packaging","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#108;&#97;&#115;&#122;&#97;&#107;&#64;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#100;&#102;&#105;&#114;&#101;&#46;&#110;&#101;&#116;">jblaszak@associatedfire.net</a>","http://www.associatedfire.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MTMKVGSJM267">18</a>","RIVERS METAL PRODUCTS, INC.","MIKE LANGENBERG","","3100 N 38TH ST","","LINCOLN","NE","68504-1902","For 50 years, Rivers Metal Products has been an established leader in the metal fabrication industry. We take your orders, ideas, designs, and dreams, and provide expert consultation about how to fabricate it in metal. Our strength is unique and our experience diverse across products and industries. As the pioneer and innovator of rotational molds, we bring that same expertise to your unique metal fabrication needs. Rivers Metal Products - Shaping Innovation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#108;&#64;&#114;&#105;&#118;&#101;&#114;&#115;&#109;&#101;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">mikel@riversmetal.com</a>","http://www.riversmetal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFVAPS3R7WL1">19</a>","ADVANCED PRODUCT TECHNOLOGY LLC","LARRY VAN BOGAERT","Vice President","14520 GROVER ST","","OMAHA","NE","68144-3242","Manufacturer / distributor of miniature data loggers, wireless RF transmitters, small pumps, and portable instruments-flow, refractive index, temperature, pH, DO, conductivity, relative humidity, sound level and solar powered signs and lighting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#64;&#97;&#112;&#116;&#105;&#110;&#115;&#116;&#114;&#117;&#109;&#101;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">larry@aptinstruments.com</a>","www.aptinstruments.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T24NHHQQKFF3">20</a>","HEARTLAND AWNING & DESIGN, INC.","STEVE MOYER","Accounts Manager","14550 GROVER ST","","OMAHA","NE","68144-3242","Manufacture and installation of awnings and canopies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#116;&#101;&#118;&#101;&#64;&#104;&#101;&#97;&#114;&#116;&#108;&#97;&#110;&#100;&#97;&#119;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Steve@heartlandawning.com</a>","www.heartlandawning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q9AKJAQLT5B7">21</a>","TMCO INC","DIANE TEMME STINTON","Manager","701 S 6TH ST","","LINCOLN","NE","68508-3037","Metal parts manufacturer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#116;&#101;&#109;&#109;&#101;&#64;&#116;&#109;&#99;&#111;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dstemme@tmcoinc.com</a>","TMCOINC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YK11EARRJJH4">22</a>","MIXAN HEATING & AIR CONDITIONING, INC.","LAURI LERUM","","6222 S 23RD ST","","OMAHA","NE","68107-4241","Heating & airconditioning, sheetmetal fabrication and installation, commercial/industrial/residential.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#120;&#110;&#104;&#116;&#103;&#64;&#109;&#104;&#97;&#99;&#46;&#111;&#109;&#104;&#99;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mxnhtg@mhac.omhcoxmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LSH4NBFGF451">23</a>","ROTELLAS ITALIAN BAKERY INC","DEAN JACOBSEN","","6949 S 108TH ST","","LA VISTA","NE","68128-5703","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#97;&#110;&#64;&#114;&#111;&#116;&#101;&#108;&#108;&#97;&#115;&#98;&#97;&#107;&#101;&#114;&#121;&#46;&#99;&#111;&#109;">dean@rotellasbakery.com</a>","www.rotellasbakery.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFSGMVKPJN71">24</a>","GARNER INDUSTRIES LLC","SCOTT MCLAIN","President","7201 N 98TH ST","","LINCOLN","NE","68507-9711","Precision tooling, CNC machining, custom molds Plastic Injection Molding Level controls for mfg and processors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#99;&#108;&#97;&#105;&#110;&#64;&#103;&#97;&#114;&#110;&#101;&#114;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">smclain@garnerindustries.com</a>","http://www.garnerindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UZ5ZYCNC51L6">25</a>","METAL LOGOS AND MORE INC","DEB GORAT","PRESIDENT","5853 S 77TH ST","","OMAHA","NE","68127-4203","Manufacturer of standard and customized signs and wall displays, including logos, crests, emblems, and and other signage.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#64;&#109;&#101;&#116;&#97;&#108;&#108;&#111;&#103;&#111;&#115;&#46;&#99;&#111;&#109;">deb@metallogos.com</a>","https://metallogos.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LL8MH5N4BEM5">26</a>","DATAFLO CORPORATION","CARMEN CAMPISI","","2722 S 87TH AVE","","OMAHA","NE","68124-3045","Our core competencies are barcode and RFID technologies and process engineering. We provide custom applications delivered as software as a service from our Birdplatform.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#109;&#101;&#110;&#46;&#99;&#97;&#109;&#112;&#105;&#115;&#105;&#64;&#100;&#97;&#116;&#97;&#102;&#108;&#111;&#46;&#99;&#111;&#109;">carmen.campisi@dataflo.com</a>","www.dataflo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FAU1MKSEZE44">27</a>","HORNADY MANUFACTURING COMPANY","SCOTT JAVINS","","3625 W OLD POTASH HWY","","GRAND ISLAND","NE","68803-4905","Hornady Manufacturing has been in business for over 70 years, providing high quality production and manufacturing of various ammunition and bullets, custom R&D.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#106;&#97;&#118;&#105;&#110;&#115;&#64;&#104;&#111;&#114;&#110;&#97;&#100;&#121;&#46;&#99;&#111;&#109;">sjavins@hornady.com</a>","https://www.hornady.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FSELN41XDFM3">28</a>","CASH-WA DISTRIBUTING CO. OF KEARNEY, INC.","HEIDI WIETJES","","401 W 4TH ST","","KEARNEY","NE","68845-7825","Cash-Wa is the 18th largest Broadline Foodservice Distributor in the nation. Cash-Wa is proud to provide you with a wide variety of products, services, and expertise to help better establish you as a profitable foodservice operation. We provide a wide variaty of products from food industry equipment, cleaning equipment & supplies to food/grocery products. Some of those products are: Our cleaning product lines include: Warewashing, Laundry, Janitorial, Floor Care, and Water Treatment. The grocery products range from: poultry, meats, cereals, condiments, frozen foods, etc. We also supply kitchen appliances such as: Ovens, Coolers, and Freezers. We have 2 complete distribution centers, multiple shuttle locations, and several sales offices with representatives serving all or part of 11 Great Plains States.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#105;&#100;&#105;&#46;&#119;&#105;&#101;&#116;&#106;&#101;&#115;&#64;&#99;&#97;&#115;&#104;&#119;&#97;&#46;&#99;&#111;&#109;">heidi.wietjes@cashwa.com</a>","http://www.cashwa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JG1NWEQVEUF4">29</a>","NATIONAL PAPER CO INC","WILLIAM OCHSNER","","2511 S 156TH CIR","","OMAHA","NE","68130-2507","Where Unsung Heroes Make It Happen . . . You. A Veteran + Family Company Since 1979, National is the only VOSB online wholesaler with FREE EXPRESS delivery of day-to-day items to maintain your building and grounds through North America.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#64;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#101;&#119;&#46;&#99;&#111;&#109;">bo@nationalew.com</a>","https://www.nationalew.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GHRKRTHNXKJ1">30</a>","GOLIGHT, INC","JAY JOHNSON","","37146 OLD HIGHWAY 17","","CULBERTSON","NE","69024-8226","Golight, Inc. is the leading manufacturer of remote-controlled spotlights. When it comes to auxiliary lighting needs, there are thousands of possible applications. Each application requires the same rigor in durability, versatility and power. We have designed, engineered and manufactured searchlights and spotlights to meet extreme conditions, Golight manufactures the most intense and long-lasting remote-control spotlights on the market. Golight offers both remote controlled spotlights and fixed work lights, using LED and halogen light technology. Golight a trusted name in the marine, law enforcement, fire and rescue, industrial, utility, recreational vehicle, AG production, automotive, and military markets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#121;&#64;&#103;&#111;&#108;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">Jay@golight.com</a>","https://golight.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWCRTPDTCKW5">31</a>","SLOAN CORPORATION","JEFFREY REISCHL","","13316 A ST","","OMAHA","NE","68144-3641","We offer an array of medical fluid protective products including patient transfer sheets, medical boot covers, impermeable mattress covers, protective pedal covers, medical jumpsuits and surgical shoe-covers that are comfortable, lightweight and durable. Most products ship within 24 hours and your satisfaction is always guaranteed. Stay protected with Sloan Medical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#114;&#64;&#115;&#108;&#111;&#97;&#110;&#99;&#111;&#46;&#99;&#111;&#109;">jeffr@sloanco.com</a>","http://www.sloanmedical.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8NDBCTN8K83">32</a>","SNA SPORTS GROUP LLC","JULIE GORTER","","603 L ST","","LINCOLN","NE","68508-2432","Gymnasium Equipment,Wall-Mount Basketball, Basketball Portables, Volleyball Portables, In-Ground Volleyball, Badminton Systems,Graphic Wall Padding & Scorer's Tables, Tennis Systems, Badminton and Pickleball Systems, Strength Training, Benches, Bleachers, Portable & In-Ground Soccer Goals","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#83;&#78;&#65;&#115;&#112;&#111;&#114;&#116;&#115;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">info@SNAsportsgroup.com</a>","www.SNAsportsgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NATSNACE4ML7">33</a>","HOLLAND SCIENTIFIC, INC.","KYLE HOLLAND","","6001 S 58TH ST STE D","","LINCOLN","NE","68516-3644","Holland Scientific produces electro-optic remote sensing equipment for vegetation measurement utilizing ground-based and UAS vehicle platforms. Additionally, we also conduct contract research and develop of electronic instruments and sensor. Last, we also perform small run surface mount circuit board assembly.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#111;&#108;&#108;&#97;&#110;&#100;&#64;&#104;&#111;&#108;&#108;&#97;&#110;&#100;&#115;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">kholland@hollandscientific.com</a>","www.hollandscientific.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAW9K5B9LJ28">34</a>","D & K TRAILERS INC","BRAD PENLERICK","","102 E CEDAR ST","","COLERIDGE","NE","68727-2008","Sales of utility, equipment, and dump trailers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#107;&#116;&#114;&#97;&#105;&#108;&#101;&#114;&#115;&#64;&#110;&#110;&#116;&#99;&#46;&#110;&#101;&#116;">dktrailers@nntc.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C8GHA13W6135">35</a>","KELLY GROUP INC","STEVE KNEIFL","","220 N H ST","","FREMONT","NE","68025-4982","Manufacturer of a panelized, semi-permanent and permanent steel building and enclosure System","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#110;&#101;&#105;&#102;&#108;&#64;&#107;&#101;&#108;&#108;&#121;&#107;&#108;&#111;&#115;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">skneifl@kellyklosure.com</a>","www.kellyklosure.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DA19W3LEP5D6">36</a>","SHOP-PRO EQUIPMENT, INC.","DAN CARRIG","","10706 S 147TH ST","","OMAHA","NE","68138-3850","Manufacturer of portable air filtration equipment and mobile booths","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#104;&#111;&#112;&#45;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">sales@shop-pro.com</a>","http://www.shop-pro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETS9T8DDCH73">37</a>","RIXSTINE TROPHY COMPANY, INC.","TIM HOFFMAN","","2350 O ST STE 100","","LINCOLN","NE","68510-1134","Manufacturing of awards and other personalized items. Hand Engraving services offered in-house. UV Printing done in-house. Ability to etch large items. Distributor of promotional products. Embroidery and screen print services in-house. Provide custom and unique items, all finished in our facility. Full-service graphics department for creative product design. Located in Lincoln, Nebraska, this gives us a central location maximizing our ability to ship throughout the United States.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#104;&#64;&#114;&#105;&#120;&#115;&#116;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">timh@rixstine.com</a>","http://www.rixstine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJJ6UNPARL95">38</a>","WE-DESIGN MANUFACTURING & CONSTRUCTION, LLC","STACEY PAXTON","","1301 SANDPIPER DR","","BEATRICE","NE","68310-5328","Plymouth Industries is a medium-sized manufacturing company that specializes in the production of high quality agricultural equipment and intermediate bulk containers (IBC's).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#97;&#120;&#116;&#111;&#110;&#64;&#119;&#101;&#45;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">spaxton@we-design.com</a>","https://www.we-design.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PH2MAQV623Z6">39</a>","DUTTON-LAINSON COMPANY","ZANE NORTON","","451 W 2ND ST","","HASTINGS","NE","68901-7535","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#110;&#111;&#114;&#116;&#111;&#110;&#64;&#100;&#117;&#116;&#116;&#111;&#110;&#45;&#108;&#97;&#105;&#110;&#115;&#111;&#110;&#46;&#99;&#111;&#109;">znorton@dutton-lainson.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJWNBGN6PE93">40</a>","SITESCAPES INC","KEN JOHNSON","","2401 PRODUCTION DR","","ROCA","NE","68430-4447","SiteScapes is a designer of steel furniture for urban landscaping and provides site furnishings, outdoor furniture and commercial grade site amenities including steel park benches, trash receptacles, bike parking, ash urns, tree grates, tables and chairs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#64;&#115;&#105;&#116;&#101;&#115;&#99;&#97;&#112;&#101;&#115;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">ken@sitescapesonline.com</a>","http://www.sitescapesonline.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZHNQNG5SXEJ1">41</a>","THE J P COOKE CO","JOHN COOKE","","1311 HOWARD ST","","OMAHA","NE","68102-2820","We are a 121 year old, 4th generation owned small business. We manufacture pre-inked and rubber stamps, time stamps, daters, engraved signage and seals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#111;&#107;&#101;&#64;&#106;&#112;&#99;&#111;&#111;&#107;&#101;&#46;&#99;&#111;&#109;">jcooke@jpcooke.com</a>","http://www.jpcooke.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWNAJRXME9L1">42</a>","GREEN PLAINS INC.","DEVIN MOGLER","","1811, AKSARBEN DRIVE","","OMAHA","NE","68106-2279","Ethanol production Livestock and aquafeed production Grain procurement and storage Ethanol terminal storage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#101;&#118;&#105;&#110;&#46;&#77;&#111;&#103;&#108;&#101;&#114;&#64;&#103;&#112;&#114;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Devin.Mogler@gpreinc.com</a>","http://www.gpreinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QB27AW1H7VM5">43</a>","EARTHWISE ENVIRONMENTAL LLC","NICOLE MCCANN","","1574 COUNTY ROAD 10","","MEAD","NE","68041-4028","Water testing and analysis, chemical treatment programs and services. Equipment for water treatment programs, pre-treatment such as reverse osmosis, softening, de-ionization. Legionella testing and testing supplies, Water Management Plans and administration. Solutions for minimizing water use, non chemical solutions, water saving ideas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#109;&#99;&#99;&#97;&#110;&#110;&#64;&#101;&#97;&#114;&#116;&#104;&#119;&#105;&#115;&#101;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">nmccann@earthwiseenvironmental.com</a>","www.earthwiseenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPSJUUJ9PMA5">44</a>","COMMUNICATION SYSTEMS SOLUTIONS, INC.","PERRY HOWELL","","665 RESEARCH DR","","LINCOLN","NE","68521-5884","CSS provides expertise in electronic hardware design, low volume PCB manufacturing, software design, and dispatch consoles (Mindshare)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#111;&#119;&#101;&#108;&#108;&#64;&#99;&#115;&#115;&#45;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">phowell@css-design.com</a>","http://www.css-design.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PLZJCC5XR9D5">45</a>","KATMAI SUPPORT SERVICES, L.L.C.","CYNTHIA VANDEN BERG","","1010 W 24TH AVE","","BELLEVUE","NE","68005-3912","Nationwide general contractor specializing in Federal Govt. Construction and Project Management with emphasis on Design/Build and Indefinite Delivery Indefinite Quantity Contract – IDIQ; JOC, SABER, MATOC, and MACC contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#118;&#97;&#110;&#100;&#101;&#110;&#98;&#101;&#114;&#103;&#64;&#107;&#97;&#116;&#109;&#97;&#105;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">cvandenberg@katmaicorp.com</a>","http://www.katmaicorp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWK3QLJR4J87">46</a>","MAYHEW SIGNS, INC.","RAYMOND MAYHEW","","4413 E US HIGHWAY 30","STE 2","GRAND ISLAND","NE","68801-9401","We offer you high-quality, high-efficiency signs & installation at affordable prices. Our signs include: electric, LED, neon, channel letters, way-finding & directional. We also do vehicle wrap signs, vinyl banners, building awnings, flags & flag poles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#64;&#109;&#97;&#121;&#104;&#101;&#119;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">ray@mayhewsigns.com</a>","https://www.mayhewsigns.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TTB8GT94H5G9">47</a>","LINCOLN STRUCTURAL SOLUTIONS LLC","DANIELLE KOTTAS","","1259 SAND HILL RD","","LOUISVILLE","NE","68037-7102","We are a supplier of raw materials (carbon, stainless and exotic steel), fasteners, fittings, and made to order parts. In addition to that we have a full service in house laboratory.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#107;&#111;&#116;&#116;&#97;&#115;&#64;&#108;&#105;&#110;&#99;&#111;&#108;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#117;&#114;&#97;&#108;&#46;&#99;&#111;&#109;">dkottas@lincolnstructural.com</a>","www.lincolnstructural.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TN5LGJBQ1XJ8">48</a>","FUSION BOILER WORKS, INC","RANDY RHOADS","","16201 FORT ST STE 8","","OMAHA","NE","68116-3302","Full service boiler and pressure vessel repair company. Retubing of all pressure vessels. R Stamp welding repairs. Refractory repair and installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#64;&#102;&#117;&#115;&#105;&#111;&#110;&#98;&#111;&#105;&#108;&#101;&#114;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">randy@fusionboilerworks.com</a>","http://www.fusionboilerworks.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QAKRCK2ZHLF6">49</a>","ROSEWOOD ENVIRONMENTAL ART","MARY POTTER","","4321 LARIMORE AVE","","OMAHA","NE","68111-2169","Rosewood Environmental Art creates hand-built porcelain sculpture, water-color paintings, oil-paintings, and greeting cards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#114;&#108;&#101;&#110;&#101;&#112;&#111;&#116;&#116;&#101;&#114;&#46;&#114;&#119;&#97;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">charlenepotter.rwa@icloud.com</a>","www.rosewoodenvironmentalart.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SF9SEJSPSDF8">50</a>","MARIANNA INDUSTRIES, INC.","SAMANTHA HOPWOOD","","11222 I ST","","OMAHA","NE","68137-1238","We manufacture shampoos, conditioners, peroxides, alcohol, hair care products. We supply hair accessories, stylist supplies, manicure and pedicure products, cosmetology supplies, salon equipment, salon dryers and other equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#111;&#112;&#119;&#111;&#111;&#100;&#64;&#109;&#97;&#114;&#105;&#97;&#110;&#110;&#97;&#98;&#101;&#97;&#117;&#116;&#121;&#46;&#99;&#111;&#109;">shopwood@mariannabeauty.com</a>","www.mariannabeauty.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DPG3MPBHMC25">51</a>","BLACKSTRAP INC","ALEX HUGHES","","760 E HIGHWAY 275","","NELIGH","NE","68756-2018","Blackstrap INC deals in road, brine and feed salt products. We procure and deliver in semi-load trailer quantities of twenty-five to thirty ton bulk loads. We services state DOT's cities, counties road and street departments, and private snow removal companies with straight salt or salt enhanced with additives to lower melting points to below zero degrees. We also have warehouse space for palletized storage and we have the ability to transload bulk products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#64;&#98;&#108;&#97;&#99;&#107;&#115;&#116;&#114;&#97;&#112;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">alex@blackstrapinc.com</a>","https://www.blackstrapinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G3LFNNL4MSM7">52</a>","FILM SENSE LLC","BLAINE JOHS","","500 W SOUTH ST","STE 7","LINCOLN","NE","68522-1744","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#106;&#111;&#104;&#115;&#64;&#102;&#105;&#108;&#109;&#45;&#115;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">bjohs@film-sense.com</a>","www.film-sense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EY3NCWJM6T63">53</a>","AMERICAN MARKSMAN LLC","SCOTT SEATON","","9684 N 109TH AVE","","OMAHA","NE","68142-1125","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#101;&#97;&#116;&#111;&#110;&#64;&#97;&#109;&#109;&#97;&#114;&#107;&#97;&#109;&#109;&#111;&#46;&#99;&#111;&#109;">sseaton@ammarkammo.com</a>","www.theamericanmarksman.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LX24NLQ6S5N5">54</a>","MAGNUM BUILDERS CORPORATION","ZACH YOUNT","","310 E CLOVERLY RD","","FREMONT","NE","68025-6116","Manufacture and install standing seam metal roofs and wall panels","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#103;&#110;&#117;&#109;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">magnumbuilder@gmail.com</a>","magnumbldrs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVDCYX83C5L9">55</a>","3FM, L.L.C.","JOHN FERGUSON","","3115 S 61ST AVE","","OMAHA","NE","68106-3620","When your business needs superior display graphic products such as wall murals, event graphics, and tradeshow displays, trust the team at SpeedPro Imaging. As the nation's leader in large format imagery, and with over 20 years of industry experience, our experts excel in visual communications.As a national brand specializing in a variety of printed products, SpeedPro takes great pride in partnering with our long term, satisfied clients. Our goal is to be considered an extension of each client's marketing team, and we collaborate with partners to determine the right solution for you and your business's end customer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#101;&#114;&#103;&#117;&#115;&#111;&#110;&#64;&#115;&#112;&#101;&#101;&#100;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">jferguson@speedpro.com</a>","http://www.speedpro-omaha.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBUTE3WJPLZ1">56</a>","SEQSTREAM PBC","ROBERT BOISSY","","1221 N 89TH ST","","OMAHA","NE","68114-2255","SeqStream PBC is devoted to the development of laboratory reference materials, open-source software, nanopore sequencing, and computing systems for the real-time analysis of DNA and RNA sequence data obtained from transplant patients; critically-ill newborns and other patients with undiagnosed diseases; and patients in hospital and non-hospital settings suffering from infectious diseases anywhere in the world.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#111;&#105;&#115;&#115;&#121;&#64;&#115;&#101;&#113;&#115;&#116;&#114;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">rboissy@seqstream.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNNFMK7MN4E7">57</a>","SHABRI, L.L.C","RAKESH SRIVASTAVA","","223 E 14TH ST STE 5","","HASTINGS","NE","68901-3240","Shabri, LLC assists businesses and government agencies by advancing manufacturing design technology. Utilizing the highest level of manufacturing technology and our team of extremely talented designers, Shabri can help businesses and agencies get your products into development faster and more economically than traditional manufacturing methods. Using additive manufacturing, topology optimization, cellular meshing, generative design, and the strongest materials available, our designers create products that stand out and outlast others. Due to our pricing structure you are only charged for the products you order.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#107;&#101;&#115;&#104;&#64;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#118;&#101;&#112;&#114;&#111;&#115;&#116;&#104;&#101;&#116;&#105;&#99;&#115;&#46;&#110;&#101;&#116;">rakesh@innovativeprosthetics.net</a>","https://www.shabricorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWYVUGFKLGQ5">58</a>","SOLAR HEAT AND ELECTRIC INC.","MICHAEL SHONKA","","7342 FARNAM ST","","OMAHA","NE","68114-4654","All types of solar (air, water and electric) design, installation, maintenance and financing development. Residential, Commercial, Institutional, Agriculture and Community Solar projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#115;&#111;&#108;&#97;&#114;&#111;&#109;&#97;&#104;&#97;&#46;&#99;&#111;&#109;">michael@solaromaha.com</a>","www.solaromaha.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHMQHMMHK3E1">59</a>","TVRDY 8 LLC","KELLY TVRDY BENES","","6221 S 90TH ST STE A","","OMAHA","NE","68127-4054","Manufacturer of shadow staging systems used to display and stage hand tools for mechanics to speed repair times and improve inventory control for the reduction of F.O.D. (foreign object debris damage).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#64;&#115;&#104;&#97;&#100;&#111;&#119;&#115;&#116;&#97;&#103;&#105;&#110;&#103;&#115;&#121;&#115;&#116;&#101;&#109;&#46;&#99;&#111;&#109;">kelly@shadowstagingsystem.com</a>","https://shadowstagingsystem.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WHJYYEN4GLM7">60</a>","CRUZE DISTRIBUTION, LLC","MORGAN ERNESTI","","1801 N 1ST ST STE 2","","LINCOLN","NE","68528-4001","ARYSE is an emerging orthopedic and sports bracing provider that believes in creating revolutionary products that disrupt industry standards. Our revolutionary designs mimic the natural movement of the body and allows pre- or post-injury warfighters to have a custom level of support at their end range of motion. The result is enhanced comfort, prolonged protection, and elevated performance. STRATUSFORM by ARYSE is cutting-edge scanning technology that gives doctors and trainers the power to produce 3D-printed bracing. It’s fast, precise, and completely custom.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#114;&#103;&#97;&#110;&#46;&#101;&#114;&#110;&#101;&#115;&#116;&#105;&#64;&#97;&#114;&#121;&#115;&#101;&#46;&#99;&#111;&#109;">morgan.ernesti@aryse.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XKDPZGF2W136">61</a>","PINNACLE GC, INC","TOM HERINK","","932 N I ST","","FREMONT","NE","68025-4146","Proud to be a locally owned and operated company, we draw from over 35 years of experience to help you with repairs, maintenance, and installation. We’ll always make ourselves flexible to your scheduling needs. We pride ourselves on our work quality and customer service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#112;&#105;&#110;&#110;&#109;&#103;&#109;&#116;&#46;&#110;&#101;&#116;">tom@pinnmgmt.net</a>","https://pinnaclemidwest.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XZBGAKEK7K55">62</a>","PRAESENSBIO LLC","MICHAEL WILEY","","8424 W CENTER ROAD","SUITE 201-B","OMAHA","NE","68124-3138","Next-generation sequencing-based infectious disease diagnostics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#112;&#114;&#97;&#101;&#115;&#101;&#110;&#115;&#46;&#98;&#105;&#111;">mike@praesens.bio</a>","www.praesens.bio"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEKMQK87QLG1">63</a>","RONTRONIX, LLC","RONNY HAMIDA","","1213 GRANT AVE","","NORFOLK","NE","68701-2745","Rontronix, LLC specializes in the consultation and procurement of IT and related hardware and software.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#110;&#121;&#64;&#114;&#111;&#110;&#116;&#114;&#111;&#110;&#105;&#120;&#46;&#99;&#111;&#109;">ronny@rontronix.com</a>","www.rontronix.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R2S7BRJMRPP3">64</a>","JIMCO TECHNOLOGIES, LLC","RYDER KELLER","","3721 ARCH AVE","","GRAND ISLAND","NE","68803-5002","JIMCO has been meeting the special needs of the electrical rebuilder and auto electric shop with the BEST test equipment since 1969. JIMCO manufactures and supplies a full line of diagnostic equipment, including alternator-generator-starter test benches, component testers, test leads, new replacement voltage regulators, and accessories for the automotive aftermarket. In addition to excellent pieces of equipment, JIMCO feels our customers deserve our respect. They deserve prompt, accurate answers to their questions. They deserve equipment that is made to last, has minimum down time, and can be kept updated. They deserve a JIMCO!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#99;&#111;&#64;&#106;&#105;&#109;&#99;&#111;&#116;&#101;&#115;&#116;&#46;&#99;&#111;&#109;">jimco@jimcotest.com</a>","https://jimcotest.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L2K2BPLC3JW3">65</a>","MCKINEY MANUFACTURING AND SALES, LLC","JULIE MCKINEY","","1215 CENTER AVE","","MITCHELL","NE","69357-1443","Specializing in CNC waterjet cutting, CNC tube bending and the building of tooling and equipment to support the hydraulic hose and LP/gas generator manufacturing industries, McKiney Manufacturing & Sales (formerly Bare MFG.) has provided tool & die machine shop services in Mitchell, Nebraska. This accumulated expertise, along with our state-of-the-art waterjet and bending equipment and with highly trained employees provides our customers with cost-effective, quality tube bending and fabrication services. Request a quote today or contact us to discuss your unique project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#64;&#109;&#99;&#107;&#105;&#110;&#101;&#121;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">julie@mckineymfg.com</a>","https://mckineymfg.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HTXVMLLF5CG3">66</a>","GENERAL SCORPIO LLC","TRISTAN SCORPIO","","2421 S 9TH ST","","OMAHA","NE","68108-1631","Developments supporting Natural Environment Preservations, Less Carbon Impacting Cost-Effective Industrial Operations Improvements for Existing Businesses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#64;&#103;&#101;&#110;&#101;&#114;&#97;&#108;&#115;&#99;&#111;&#114;&#112;&#105;&#111;&#46;&#99;&#111;&#109;">hr@generalscorpio.com</a>","www.GeneralScorpio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VVW9M3UA9CY4">67</a>","QUANTUM QOOL, INC.","KENT CAMPBELL","","1402 JONES ST STE 214","","OMAHA","NE","68102-3218","ThermOptical Cooling specializes in precision femtosecond laser surface machining (nanomachining) and customized laser workstations for thermal management purposes. Our proprietary nanomachining technique uses ultrafast pulse laser systems to form and create micro-nanostructures on metallic & non-metallic surfaces to significantly increase their surface area and the optical characteristic of emissivity to values that accelerate cooling by 100% plus. This makes radiative heat transfer highly significant, keeping components cooler and extending life cycles many times and can also enhance surfaces to reduce drag. This process is packaged in a customized laser workstation that nanomachines components that complement, eliminate or augment conventional conduction & convection cooling methods involving fans or fluids.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#97;&#109;&#112;&#98;&#101;&#108;&#108;&#64;&#113;&#117;&#97;&#110;&#116;&#117;&#109;&#113;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">kcampbell@quantumqool.com</a>","www.quantumqool.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZA4XP7LR4283">68</a>","IDENTICOMM INC","SUSAN STOLINSKI","","13015 HEAVENLY DR","","OMAHA","NE","68154-2143","For 50 years we have supplied clients both nationally and internationally with inkless fingerprinting materials ?without the mess and hassle of traditional ink pads. We also offer FakeFinder UV light equipment. In addition to our fingeprinting products Identicomm has begun sourcing further products for the Law Enforcement industry including easy to use drug field test detection equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#46;&#115;&#116;&#111;&#108;&#105;&#110;&#115;&#107;&#105;&#64;&#105;&#110;&#107;&#108;&#101;&#115;&#115;&#112;&#97;&#100;&#115;&#46;&#99;&#111;&#109;">susan.stolinski@inklesspads.com</a>","www.inklesspads.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5GLALMW53E8">69</a>","THE GOLDEN HIND GROUP, LLC","STEVE GALLUCCI","","1504 VINTON ST","","OMAHA","NE","68108-1504","We provide project control and management consulting services. Our services include earned value management and analysis, project planning and control, contracting, DoD acquisition/procurement support, budget analysis and support. We also specialize in government contracts involving procurement, manufacturing, and construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#97;&#108;&#108;&#117;&#99;&#99;&#105;&#56;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sgallucci85@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H8ABPBJ68JC4">70</a>","IXB GROUP LLC","JON NIXON","","308 S 8TH AVE","","BROKEN BOW","NE","68822-2007","At IXB Group, we excel in end-to-end project lifecycle management, encompassing everything from strategic planning to execution and closure. Our Project Management Solutions, Procurement Optimization, and Data Science Analytics are designed to deliver projects on time and within budget, ensuring cost-effective outcomes. We leverage advanced Automation Services and AI Integration to streamline processes, enhance efficiency, and drive innovation. Our focus on Risk Mitigation and Supply Chain Management helps minimize disruptions and ensures seamless project execution. Our agile methodologies, combined with a commitment to Process Efficiency, enable us to adapt to evolving client needs and market conditions, fostering continuous improvement. We prioritize stakeholder engagement and transparent communication, building trust and fostering collaboration. We are dedicated to exceeding client expectations. Trust us to navigate complexity and deliver impactful solutions that drive your success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#105;&#120;&#98;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">support@ixbgroup.com</a>","https://www.ixbgroup.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.249&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

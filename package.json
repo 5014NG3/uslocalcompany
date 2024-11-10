@@ -2,6 +2,13 @@
   "dependencies": {
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.6"
+    "@mui/material": "^6.1.6",
+    "sql.js": "^1.12.0"
+  },
+  "browser": {
+    "fs": true,
+    "path": true,
+    "os": true
   }
+
 }

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 061 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.91 seconds and 1.98 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 22 
+(of 22 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9U9D258WPP7">1</a>","ALUMA TOWER COMPANY, INC.","SHANE MULLAN","Assistant General Manager","1639 OLD DIXIE HWY","","VERO BEACH","FL","32960-3656","Leading manufacturer of lightweight aluminum crankup towers available up to 120’ combined with trailers and optional all aluminum shelters to provide mobile units. Insulated shelters are available up to 8’ x 12’ with optional accessories.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#117;&#108;&#108;&#97;&#110;&#64;&#97;&#108;&#117;&#109;&#97;&#116;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">smullan@alumatower.com</a>","http://www.alumatower.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WC1KAVLL6VR8">2</a>","TREASURE COAST PROSTHETICS AND ORTHOTICS SERVICES, INC.","PAUL WERNER","","1645 20TH ST","","VERO BEACH","FL","32960-3565","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#46;&#119;&#101;&#114;&#110;&#101;&#114;&#64;&#116;&#99;&#112;&#97;&#110;&#100;&#111;&#46;&#99;&#111;&#109;">paul.werner@tcpando.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKSLQ2CD7F48">3</a>","CONSTRUCTION MANAGEMENT OF FLORIDA INC.","IGNACIO LIZAMA","","2655 49TH ST STE 1","","VERO BEACH","FL","32967-1551","CONSTRUCTION MANAGEMENT OF FLORIDA, INC (CMF) was founded in 2003 and is based in Vero Beach, FL. We are certified by the SBA as 8(a), HUBZone, WOSB and EDWOSB. Individually our principals have over 35 years of experience in the construction industry. We provide general contracting, construction management and design-build services. CMF believes strongly in execution. We deliver quality work and continually strive to improve our performance. The satisfaction of our clients is the basis for our company's success. SAFETY: The safe execution of work is a CMF fundamental value. Our success in accident prevention creates value for clients, owners, subcontractors and employees alike. CMF will self-perform 15% to 20% of a construction project. Have experience in Job Order Contracting, Sole Source projects for the US Air Force at Cape Canaveral and Patrick Air Force Base, FL, GSA in Washington DC, NAVFAC in LA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#108;&#64;&#99;&#109;&#102;&#108;&#111;&#114;&#105;&#100;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">il@cmfloridainc.com</a>","https://www.cmfloridainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDZLLLFRM6D4">4</a>","ROTORWORLD LLC","BARBARA KAISER","","945 SUNRISE TER","","VERO BEACH","FL","32963-3409","Rotorworld provides global helicopter and jet sales and acquisitions, aviation survival training and custom underwater egress simulator sales, (HUET Simulator sales).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#98;&#97;&#114;&#97;&#64;&#114;&#111;&#116;&#111;&#114;&#119;&#111;&#114;&#108;&#100;&#46;&#99;&#111;&#109;">barbara@rotorworld.com</a>","http://www.rotorworld.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GX6WLMYJM5L9">5</a>","IMG CITRUS INC","MELANIE RESSLER","","2600 45TH ST","","VERO BEACH","FL","32967-1384","IMG Citrus is fully integrated grower, packer, and shipper of fresh Florida Grapefruit. We provide services from Farm to Grocer shelf by following a just-in-time approach as to optimize fruit maturity and to maintain freshness.  We are conveniently located in Vero Beach, Florida, just a few miles away from Interstate 95, which lends itself to dependable and affordable transportation costs. A second-generation family-owned business, we pride ourselves in being environmentally conscious and innovative, having achieved the Agriculture Environmental Leadership Award in 2016. CAGE code 4ZZQ8","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#97;&#110;&#105;&#101;&#64;&#105;&#109;&#103;&#99;&#105;&#116;&#114;&#117;&#115;&#46;&#99;&#111;&#109;">melanie@imgcitrus.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q6T6GZVMALX1">6</a>","DE LA HOZ BUILDERS, INC.","HILDA DE LA HOZ","","1 N ORANGE ST","","FELLSMERE","FL","32948-6638","General Contractors specialize in Commercial and Residential Remodeling Services. Also offering New house construction and Commercial/Institutional Building Contracting services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#108;&#100;&#97;&#64;&#100;&#101;&#108;&#97;&#104;&#111;&#122;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">hilda@delahozbuilders.com</a>","http://www.delahozbuilders.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MSMQUKDZH9Z7">7</a>","THOMPSON'S REMODELING & HOME REPAIR, INC","ROBERT THOMPSON","","3871 39TH SQ","","VERO BEACH","FL","32960-1812","Company if very versatile, Also available for Storm Debris Cleanup. Full Electrical Contractor - Commercial, Residential, 24 Hour Service Dept","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#64;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#115;&#114;&#101;&#109;&#111;&#100;&#101;&#108;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">todd@thompsonsremodeling.com</a>","http://www.verobeachremodeling.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JYJDVPGA3DN4">8</a>","SUPPLY CHAIN TECHNOLOGIES LLC","JON PEERY","","601 21ST ST STE 300","","VERO BEACH","FL","32960-0860","SCT Software’s parcel shipping and manifesting solution, XPS, seamlessly integrates and complies with LTL’s and all major parcel carriers including FedEx, UPS, DHL, and TNT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#101;&#101;&#114;&#121;&#64;&#115;&#99;&#116;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">jpeery@sctsoftware.com</a>","www.sctsoftware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQMRN1LYH4A7">9</a>","ZIN SOLUTIONS, INC.","RONALD DINIZ","","5 STARFISH DR","","VERO BEACH","FL","32960-5232","Zin Solutions is modeled to provide high-level engineering solutions with speed and accuracy. With our highly-experienced staff, low administrative overhead, and a vetted and quality-centric supply chain, we are poised to provide leadership of a project or augment an existing engineering team to provide symbiotic support from the programmatic level to the drafting level and all facets between. Our core competencies are in Mechanical, Aerospace and Systems Engineering and Design, including: * Structural design and analysis, linear and non-linear Finite Element Analysis, modal response, and motion studies * Mechanical component integration * Drafting and process instruction * Ruggedization IAW MIL-STD-810, 202 * Computational Fluid Dynamics * Aerodynamics and Hydrodynamic analysis * Ruggedization IAW DO-160 * Requirements generation * System-subsystem specifications * Statements of Work * Verification Cross Reference Matrix and Bidirectional Traceability Matrix","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#100;&#105;&#110;&#105;&#122;&#64;&#97;&#120;&#105;&#111;&#109;&#116;&#111;&#119;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">rdiniz@axiomtowers.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V2JLR3FE9JJ6">10</a>","BLUE TRIDENT - CMF JV","EMMANUEL BAUTISTA","","2655 49TH ST STE 1","","VERO BEACH","FL","32967-1551","General construction contractor specializing in commercial and industrial construction. Also performs tenant improvements, demolition, stucco, plaster and site work and engineering services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#110;&#110;&#121;&#46;&#98;&#97;&#117;&#116;&#105;&#115;&#116;&#97;&#64;&#98;&#108;&#117;&#101;&#45;&#116;&#114;&#105;&#100;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">manny.bautista@blue-trident.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H12ZBZ634DL4">11</a>","PATRIOT RESPONSE GROUP LLC","JAMES FOSTER","","2770 INDIAN RIVER BLVD","STE 501","VERO BEACH","FL","32960-4292","Patriot Response Group is a full-service emergency management firm offering more than 60 years of combined leadership experience in disaster response, recovery, and construction services. Operating in the U.S. and its territories, we focus on regions with limited resources and communities devasted by hurricanes, tornados, and severe flooding. Our multidisciplinary staff collaborate to provide services including initial disaster relief, temporary and permanent emergency repairs, mitigation and remediation, temporary housing solutions, disaster readiness planning, and data management. We believe we make a difference to our clients with our agile approaches to problem solving and empower individuals through the process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#102;&#111;&#115;&#116;&#101;&#114;&#64;&#112;&#97;&#116;&#114;&#105;&#111;&#116;&#114;&#103;&#46;&#99;&#111;&#109;">jfoster@patriotrg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M9LDPG3YLK51">12</a>","AERIE GROUP INTERNATIONAL LLC","STEPHEN MOSS","","231 OAK HAMMOCK CIR SW","","VERO BEACH","FL","32962-8247","AGI assists public and private entities achieve their goals through innovative approaches and strong customer partnerships in mission critical, security related, and aerospace applications.  Our goal is to delivery solutions that exceed customer expectations in terms of functionality, quality, performance, and affordability.  AGI’s approach is to use flexible, practical and off the shelf methods that foster critical tailoring necessary to meet our customers’ challenges whether it is top down, bottom up or a combination of both.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#109;&#111;&#115;&#115;&#64;&#97;&#101;&#114;&#105;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#98;&#105;&#122;">scmoss@aeriegroup.biz</a>","www.aeriegroup.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FBA2JF49J6U8">13</a>","WRIGHTPSM, LLC","WILLIAM WRIGHT","","2225 53RD AVE","","VERO BEACH","FL","32966-2147","WrightPSM is a full-service Geophysical and Land Surveying Firm based in South Florida. We specialize in subsurface imaging using an array of geophysical tools, including Ground Penetrating Radar, Seismic Refraction, Seismic Reflection, Terrain Conductivity, and Resistivity, among others. This gives us unique abilities to map and interpret subsurface features and processes, including geological hazards, water resources, well site and aquifer characterizations, and shallow oil, gas, and mineral deposits. We also offer hydrographic surveying and sub-bottom profiling services. Geophysical survey deliverables can range anywhere from raw data to processed data, to fully interpreted geologic sections, depending on client's requests.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#64;&#119;&#114;&#105;&#103;&#104;&#116;&#112;&#115;&#109;&#46;&#99;&#111;&#109;">william@wrightpsm.com</a>","www.wrightpsm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZ4TEUVCCG77">14</a>","LONG MONEY TRUCKING SERVICES LLC","GRETCHEN LONG","","601 21ST ST","STE 300","VERO BEACH","FL","32960-0860","Long Money Trucking Services is a freight transportation arrangement company that specializes in freight consulting and mentoring. For years Long Money has had a solid foundation and productive communication between its clients, drivers and dispatchers. We have provided freight and hauling services for a large variety of cargo from; commercial products/supplies, medical/dental supplies, various vehicles, heavy/industrial machinery, various gasses and liquids and more. With our expertise in our field we are able to provide both thorough dispatching and consulting services like truck brokerage, training courses, bids quotes, estimations for fuel, mileage, weight and ware tear and even company startup services. In addition, Long Money offers high level clearance drivers for special case transportation and with their large network of dispatchers nationwide, we are able to provide services all over the U.S – for more information visit www.longmoneytruckingservices.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#108;&#111;&#110;&#103;&#109;&#111;&#110;&#101;&#121;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">info@longmoneytruckingservices.com</a>","www.longmoneytruckingservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LA1WE78FLEZ7">15</a>","B.K.B. SERVICES, LLC","CHRISTOPHER CLEMONS","","5519 57TH WAY","","VERO BEACH","FL","32967-2472","Fulfillment of government service contract to include, but mot limited too, janitorial, landscaping, waste and general services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#108;&#101;&#109;&#111;&#110;&#115;&#56;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cclemons81@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P455EK65FLF7">16</a>","CCC LIMITS INC","GENEA CLOSS","","5087 5TH MNR","","VERO BEACH","FL","32968-1146","CCC Limits, Inc. provides scalable solutions to emerging and established businesses by utilizing twenty (20) years of government and commercial contracting experience to guide our clients to affordable results. CCC Limits, Inc. offers consulting and risk analysis in the areas of contract management, program management, contract pricing, business start up services, and policy establishment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#110;&#101;&#97;&#64;&#99;&#99;&#99;&#108;&#105;&#109;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">genea@ccclimits.com</a>","www.ccclimits.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D5Q5KBMNLCK9">17</a>","NAILED IT ROOFING SOLUTIONS LLC","HECTOR ANDRADE","","7816 102ND AVE","","VERO BEACH","FL","32967-3292","Nailed It Roofing Solutions is a small business that removes and replaces commercial and residential roof systems. Over 10 years of experience in roofing. We offer a in house metal manufacturing facility, certified with Peterson Pac-Clad. We have experience on projects in L3Harris, Brevard County School district, and Palm Bay Police department along with many condominium associations in FL. School contractor badged to comply with Jessica Lunsford Act. Certified to install and offer warranty with Soprema and GAF Commerical roofs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#105;&#108;&#101;&#100;&#105;&#116;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">naileditroofingsolutions@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LZSPS8JPLFT8">18</a>","GORDON & GORDON ENGINEERING, LLC","STACY GORDON","","5690 62ND PL","","VERO BEACH","FL","32967-5300","Design Approval & Consultation by Licensed Professional Engineers; Comprehensive Forensic Engineering and Litigation Support; Consultant DER Structural Engineering for Part 23 & 25 Aircraft; Environmental, Health, & Safety Services; Environmental Due Diligence; Permitting & Regulatory Support; Root Cause and Corrective Action Analyses https://gordongordoneng.com/","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#97;&#99;&#121;&#64;&#103;&#111;&#114;&#100;&#111;&#110;&#103;&#111;&#114;&#100;&#111;&#110;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">stacy@gordongordoneng.com</a>","https://gordongordoneng.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RG3QHC7QESC3">19</a>","SOL INVICTUS, LLC","DANIEL LOFASO","","2066 OCEAN RIDGE CIR","","VERO BEACH","FL","32963-2734","Established in 2010, Digital Elevator, a DBA of Sol Invictus, LLC, is a premier provider of digital marketing solutions, specializing in search engine optimization (SEO), Paid Media/PPC, content marketing, and website development services. With a team of seasoned industry veterans at our helm, we bring a wealth of experience garnered from spearheading marketing campaigns for some of the largest publicly-traded companies and make that Fortune-500 caliber marketing available to high-growth companies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#64;&#100;&#105;&#103;&#105;&#116;&#97;&#108;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#46;&#99;&#111;">dan@digitalelevator.co</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YQC7RNWLQRY5">20</a>","MBECO, INC.","TRACEY LEVY","","601 21ST ST STE 300","","VERO BEACH","FL","32960-0860","At LevCo Technologies, we specialize in delivering comprehensive IT Managed Services that empower you to focus on your core operations while we handle your IT infrastructure. Our expertise spans across various industries, ensuring we can meet the unique technological demands of any organization. Key services include: Managed IT Services - Comprehensive monitoring, management, and optimization of IT systems; Cloud Solutions - Secure cloud migration, hosting, and management tailored to business needs; Network and Cybersecurity - Proactive network monitoring, firewall management, and advanced cybersecurity solutions to protect sensitive data; Disaster Recovery and Data Backup; 24/7 Help Desk Services; IT Consulting and Strategy; Compliance Management - Ensuring your organization adheres to relevant IT and data security regulations (HIPAA, NIST, FTC)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#101;&#121;&#46;&#108;&#101;&#118;&#121;&#64;&#108;&#101;&#118;&#99;&#111;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">tracey.levy@levcotech.com</a>","https://www.levcotech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CCHEWNEKEPH8">21</a>","CRT LOGISTICS, LLC","JENNIFER ABRAHAM","","11646 US HIGHWAY 1","","SEBASTIAN","FL","32958-8426","Freight brokerage with deep rooted relationships with multiple carriers ensuring our customers strategic logistics coordination and execution of shipments of goods from origin to destination. Negotiation tracking and freight consolidation are among our expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#98;&#114;&#97;&#104;&#97;&#109;&#64;&#99;&#114;&#116;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">jabraham@crtlogistics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W55MQ7ETXQT6">22</a>","MICHAEL TAYLOR CONSULTING","MICHAEL TAYLOR","","1981 NEWMARK CIR SW","","VERO BEACH","FL","32968-6711","An experienced nursery manager and grower passionate about cultivating trees and improving efficiencies through innovative and creative problem solving. Strong operations professional skilled in nursery analytics, team development, budgeting, SOP development, science-based protocols, and utilization of new technologies. A self-proclaimed tree nerd who enjoys diving deep into the physiology and morphology of the plants he grows to give the trees the best growth and out-plant performance possible. My passion for plants and people brings together a unique skill set which drives best in class teams and processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#103;&#114;&#101;&#101;&#110;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#110;&#117;&#114;&#115;&#101;&#114;&#121;&#46;&#99;&#111;&#109;">michael@greenmachinenursery.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.918&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

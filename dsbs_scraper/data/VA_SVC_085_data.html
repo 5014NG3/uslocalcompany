@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 085 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.74 seconds and 1.83 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 31 
+(of 31 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFB6MLVCNJF1">1</a>","CAN SEE FIRE SERVICE CO INC","EDWIN CALDAS","Office Manager","205 HALEY RD","","ASHLAND","VA","23005-2451","LIFE SAFETY SYSTEMS SERVICE,INSTALLATION, INSPECTION,MAINTENANCE & SALES (FIRE SPRINKLERS,EXTINGUISHERS,HALON,FM200,CO2,CLEAN AGENT,ALARMS AND SECURITY SYSTEMS DCJS#11-3452)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#119;&#105;&#110;&#64;&#102;&#105;&#114;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">edwin@firesolutionsinc.com</a>","www.firesolutionsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U84CVBRM4DV7">2</a>","PNC CORPORATION","TINH PHAN","Chairman/CEO","14214 WASHINGTON HWY","","ASHLAND","VA","23005-7238","Specialty (Glass & Glazing, Aluminum windows, storefronts, doors).General or prime contracting to complement specialty.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#116;&#105;&#110;&#104;&#64;&#112;&#110;&#99;&#99;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">ptinh@pnccompanies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J7Y2S1AMEG89">3</a>","ACCUMARK INC","S. CRAIG MARTIN","President","9500 KING AIR CT","","ASHLAND","VA","23005-8095","SUBSURFACE UTILITY LOCATING, TEST HOLE SERVICES, VACUUM EXCAVATIONS, UTILITY CLEARANCE FOR MONITORING WELLS AND GEO-PROBING, MAPPING, SURVEYING SERVICES, HORIZONTAL BORING, CADD SERVICES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#97;&#99;&#99;&#117;&#109;&#97;&#114;&#107;&#46;&#117;&#115;">cmartin@accumark.us</a>","HTTP://WWW.ACCUMARK.US"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJTUJSC1EFD6">4</a>","MID-ATLANTIC ENTRY SYSTEMS, INC.","TIMOTHY MORGAN","","8450 OLD RICHFOOD RD","","MECHANICSVILLE","VA","23116-2021","Perimeter security equipment ie. gate operators, turnstiles, barrier gates, bollards","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#64;&#109;&#97;&#101;&#110;&#116;&#114;&#121;&#46;&#99;&#111;&#109;">tim@maentry.com</a>","http://www.midatlanticentry.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJMZM3LYDSS5">5</a>","ARCHITECTURAL PRODUCTS OF VIRGINIA, INC.","DAVID HENRY","","11511 N LAKERIDGE PKWY # C","","ASHLAND","VA","23005-8047","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#101;&#110;&#114;&#121;&#64;&#97;&#112;&#118;&#97;&#46;&#99;&#111;&#109;">dhenry@apva.com</a>","http://www.apva.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJ8JLGADLWE7">6</a>","TRI-CITY OFFICE PRODUCTS INC.","SIDNEY DODSON","","10332 SONNY MEADOWS LN","","MECHANICSVILLE","VA","23116-4905","Tri-City Office Products, Inc. has been providing office supplies and office furniture to the tri-cities area for nearly three decades. in the office supply business working at Tri-City Office Products, Inc. Our mission is to give you something that the big chain stores cannot give you and that is a friendly, organized and knowledgeable service with customer satisfaction in mind.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#118;&#116;&#64;&#116;&#99;&#111;&#112;&#105;&#46;&#99;&#111;&#109;">govt@tcopi.com</a>","tricityofficeproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TLFXRBFRQNL3">7</a>","TOTEMIC BUSINESS SOLUTIONS, LLC","THOMAS GILARDI","","16385 BEAVER DAM RD","","MONTPELIER","VA","23192-2129","Totemic Sustainable Solutions is a Sustainability Company that specializes in beneficial reuse of wasted food utilizing on-site technologies. We are experienced with the unique requirements presented at military bases, hospitals, correctional facilities, universities, K-12 schools, zoos, grocery stores and residential complexes. Established in 2005 with offices in Virginia, Michigan, Pennsylvania, Florida and Alaska. We have a wide range of business, environmental and sustainability expertise. Ranging from managing multi-year, multi-million dollar contracts performing environmental assessment/studies and remediation programs to supporting 8(a)/SDVOSB/HUBZone/SB companies. Programs to beneficially reuse organic waste, specifically wasted food with on-site processing systems; Stormwater BMPs management to reduce regional flooding events; Implementation of renewable energy and energy saving projects; and  PFOS/PFAS remediation with reverse osmosis systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#116;&#101;&#109;&#105;&#99;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">totemicservices@gmail.com</a>","http://www.totemicsolutionsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FHF2JBVUMEH5">8</a>","MCMULLIN TRAINING AND CONSULTING, LLC","STEVE L MCMULLIN","","109 LAURADELL RD","","ASHLAND","VA","23005-8228","Training in leadership and team building, planning, conflict resolution, public-arena decision making","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#109;&#117;&#108;&#108;&#105;&#110;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mcmullintraining@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MQCHRGB1CMA5">9</a>","SPACESAVER STORAGE SOLUTIONS LLC","MICHELE CRAIG","","10040 WHITESEL RD","STE 107","ASHLAND","VA","23005-3426","Specialty Contractor provide wide range of engineered storage solutions including shelving, racking, compact shelving, carousels, vertical storage, bedlifts, package lockers, weapon rack and lockers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#101;&#64;&#115;&#112;&#97;&#99;&#101;&#115;&#97;&#118;&#101;&#114;&#118;&#97;&#46;&#99;&#111;&#109;">michele@spacesaverva.com</a>","www.spacesaverva.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YUNYENGDNYL7">10</a>","STROHMAN ENTERPRISE INC","ALLEN STROHMAN","","7494 INDUSTRIAL PARK RD","STE H","MECHANICSVILLE","VA","23116-1510","VOSB dealer of Garmin GPS, Aimpoint red dot sites and optics and accessories.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#101;&#110;&#64;&#115;&#116;&#114;&#111;&#104;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">allen@strohman.com</a>","https://www.strohmanenterprise.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JR89K2SNY3X1">11</a>","ROUNDTABLE DEFENSE, LLC","JEFF DIXON","","11424 AIR PARK RD STE 104","","ASHLAND","VA","23005-3534","RoundTable Defense is a systems engineering services company, specializing in Test & Evaluation, JCIDS, and Acquisition management. RTD provides unique expertise in both requirements analysis and operational test & evaluation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#105;&#120;&#111;&#110;&#64;&#114;&#111;&#117;&#110;&#100;&#116;&#97;&#98;&#108;&#101;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">jdixon@roundtabledefense.com</a>","http://www.roundtabledefense.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA2DBUMJDCL8">12</a>","VIRGINIA HERITAGE FOODS, INC.","JENNIFER VANCE","","9975 LICKINGHOLE RD STE B","","ASHLAND","VA","23005-3505","Virginia is home. Over 29 years ago, our company was established on the foundation of embracing the best Virginia has to offer and sharing it with the world. From the Premium Products we produce, to the Quality Foods we distribute, we stand committed to the value of service-first. ? We are a multi-line food distributor to supermarket retailers, club stores and military commissaries. We warehouse, deliver and merchandise quality foods for manufacturers throughout the state of Virginia and the region. Driven by our service-first commitment, we provide consistent direct store delivery service to our accounts. ? We provide a private label line of premium products under the Virginia Heritage Foods brand. What that means for you as the consumer is that you can trust our products to be flavorful and delicious, infused with bold and unique flavors your family is sure to love. ?","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#64;&#104;&#101;&#114;&#105;&#116;&#97;&#103;&#101;&#102;&#111;&#111;&#100;&#115;&#99;&#111;&#46;&#99;&#111;&#109;">Jennifer@heritagefoodsco.com</a>","https://www.vaheritagefoods.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L73UNAD3YB95">13</a>","FOODSERVICE CONSULTANTS STUDIO, INC.","STEPHANIE GATEWOOD","","15405 BROAD CREEK LN","","MONTPELIER","VA","23192-2347","Commercial and institutional foodservice facility designers. Services include: space planning & conceptional design to substantial completion inspection; foodservice equipment & facility reviews and reports; budget modeling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#97;&#116;&#101;&#119;&#111;&#111;&#100;&#64;&#102;&#99;&#115;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#46;&#110;&#101;&#116;">sgatewood@fcsassociate.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGYWEMWSX9U5">14</a>","RIVANNA EQUIPMENT COMPANY, LLC","RALPH HATHAWAY JR.","","2155 LANIER LN","STE E","ROCKVILLE","VA","23146-2237","Rivanna was founded in 2001 and specializes in, the sale, maintenance, leasing and repair of all manner of industrial and commercial floor cleaners, polishers, vacuums for both large and small scale operations. We also provide a line of degreasers and detergents. We are a small veteran owned firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#108;&#112;&#104;&#64;&#114;&#105;&#118;&#97;&#110;&#110;&#97;&#99;&#111;&#46;&#99;&#111;&#109;">ralph@rivannaco.com</a>","http://www.rivannaco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJ63MLVHJXW7">15</a>","COMPUTING TECHNOLOGIES INC","ANN MARIE GILLIKIN","President","7459 OLD HICKORY DR","STE 104","MECHANICSVILLE","VA","23111-3631","IT SERVICES; DATABASE, SOFTWARE, AND SYSTEM ENGINEERING; INTEGRATION; HELP DESK; TRAINING; DISTANCE LEARNING; DISTANCE EDUCATION; ORACLE PROGRAMMING; WEB DEVELOPMENT; PROGRAM MANAGEMENT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#103;&#105;&#108;&#108;&#105;&#107;&#105;&#110;&#64;&#99;&#111;&#116;&#115;&#46;&#99;&#111;&#109;">amgillikin@cots.com</a>","http://www.cots.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RXRFY2Q4JR29">16</a>","UNDERPRESSURE, INC.","ROBERT KNAUER","","8272 MEADOWBRIDGE RD","","MECHANICSVILLE","VA","23116-2335","We perform kitchen grease exhaust / kitchen hood cleaning in compliance with NFPA Standard #96","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#107;&#110;&#97;&#117;&#101;&#114;&#64;&#117;&#110;&#100;&#101;&#114;&#112;&#101;&#115;&#115;&#117;&#114;&#101;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">rknauer@underpessure-inc.com</a>","www.underpressure-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMEWBXE8KS43">17</a>","TRIANGLE EXPERIENCE GROUP INC","ROBERT CLARE","","11182 HOPSON RD","STE A","ASHLAND","VA","23005-3507","At TEG, we see decision supremacy and superior battlefield awareness as the ENDS. The MEANS to achieving those ends are veracity, velocity, volume, variety, and value. The WAYS are Comprehensive, Collaborative, Command & Control Mission Application Platform, Advanced Collaborative Enterprise Services, and SCORPION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#99;&#108;&#97;&#114;&#101;&#64;&#116;&#114;&#105;&#97;&#110;&#103;&#108;&#101;&#101;&#120;&#112;&#101;&#114;&#105;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">rclare@triangleexperience.com</a>","http://www.triangleexperience.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJSPATMG8E16">18</a>","ALLIED INSTRUCTIONAL SERVICES, LLC","MARY HALL","","100 ENGLAND ST","FL 2","ASHLAND","VA","23005-2013","Allied Instructional Services is an Outreach programming company offering schools and school divisions a full compliment of services with our highly qualified staff. We are a company led by educators providing high quality, cost effective services to low incidence populations within the public school setting. We work in partnership with local special education directors to ensure that the students we serve receive appropriate, effective high-quality educational services. All members of our administrative team come from special education backgrounds and are committed to seeing that all students succeed. Visit us at http://www.alliedinstructional.com for a full listing of all our services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#104;&#97;&#108;&#108;&#64;&#97;&#108;&#108;&#105;&#101;&#100;&#105;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">mhall@alliedinstructional.com</a>","http://www.alliedinstructional.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VEHEECJC63W6">19</a>","CB CRITICAL SYSTEMS LLC","ANGELA BOWMAN","","10053 LICKINGHOLE RD","STE I","ASHLAND","VA","23005-3481","Data Center Design Build Services and Critical Infrastructure Maintenance Management Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#99;&#98;&#99;&#114;&#105;&#116;&#105;&#99;&#97;&#108;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">service@cbcriticalsystems.com</a>","www.cbcriticalsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MBEYV2VKAWG3">20</a>","KASTLING LLC","DAVID LEE","","14295 COUNTRY CLUB DR","","ASHLAND","VA","23005-3138","Even the best built computer systems and applications must be renovated. Kastling Group has the experience and expertise to lead the way.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#107;&#97;&#115;&#116;&#108;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">hello@kastling.com</a>","https://www.kastling.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6PHHX8N5UM3">21</a>","BALLENGER MOTORSPORTS, INC.","JAMES BALLENGER","","8052 ELM DR","STE G","MECHANICSVILLE","VA","23111-1113","Custom electronics & wire harness design & manufacturing. Automotive & performance parts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#98;&#64;&#98;&#109;&#111;&#116;&#111;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">jamesb@bmotorsports.com</a>","www.bmotorsports.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GB8HJDL1PUH9">22</a>","3 REASONS CONSULTING LLC","JODI COTTON","","5487 WINSMITH DR","","MECHANICSVILLE","VA","23116-5451","3 Reasons Consulting was created to provide pragmatic technology services, so our customers can focus on running their core business. We provide solutions for all IT issues; including advisory and managerial services, information security, regulatory compliance, maintaining data availability, and long range technology recommendations. We offer risk-based information security solutions. We also provide program and project management services. 3RC simplifies cyber security, so you don't have to worry about it.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#100;&#105;&#46;&#99;&#111;&#116;&#116;&#111;&#110;&#64;&#51;&#114;&#101;&#97;&#115;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">jodi.cotton@3reasonsllc.com</a>","www.3reasonsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T2GBFBJQLLN4">23</a>","DATAMATION INC","CHRIS CROWN","","10392 DOW GIL RD","","ASHLAND","VA","23005-7638","Installation, certification, and maintenance of network and telephone cabling; installation, administration, and support of telephone systems including Avaya PBX, Partner, and IP Office systems; installation & support of sound masking equipment; installation & support of wireless access points.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#99;&#114;&#111;&#119;&#110;&#64;&#100;&#97;&#116;&#97;&#109;&#97;&#116;&#105;&#111;&#110;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">chris.crown@datamation-inc.com</a>","www.datamation-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PG1PLC6UPG71">24</a>","CORGIBYTES, LLC","M. SCOTT FORD","","117 HANOVER AVE","","ASHLAND","VA","23005-1813","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#99;&#111;&#114;&#103;&#105;&#98;&#121;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">sales@corgibytes.com</a>","https://corgibytes.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JB7LNK9RMJC4">25</a>","MEDICAL STAFFING 360, LLC","SCOTTESSA HURTE","","12117 HERMON FARMS LN","","ASHLAND","VA","23005-7875","Medical Staffing 360, a woman and minority owned company, is a leading industry provider of high caliber professional talent for a complete range of nursing professions, advanced practice specialties, allied health, ancillary care and medical support services. We provide our full range of services to the private and government sectors.  Core Competencies •	Advanced Practice Staffing •	Allied Health Staffing •	Ancillary Care Staffing •	Cardiopulmonary Staffing •	Healthcare Administration Staffing •	Medical Imaging Staffing •	Medical Lab Staffing •	Nurse Staffing •	Physician Staffing Capabilities •	Nationwide Coverage •	National Network of Partners for Large RFPs •	Able to handle payroll in all 50 states •	Can handle large, medium and small contracts  NAICS Codes: 518210, 541611, 541612, 541990, 561110, 561320, 561330, 561499, 611710, 621111, 621112, 621210, 621320, 621330, 621340, 621399, 621493, 621498, 621511, 621512, 622110","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#117;&#114;&#116;&#101;&#64;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#51;&#54;&#48;&#46;&#99;&#111;&#109;">shurte@medicalstaffing360.com</a>","www.medicalstaffing360.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZJBDXLVCWN3">26</a>","AGAP CONSUMER DIRECTED SERVICES LLC","GWENDOLYN TAYLOR","","8090 MECHANICSVILLE TPKE","STE F","MECHANICSVILLE","VA","23111-1204","AGAP provides non-medical in home care and service facilitation/case management services to the elderly and persons with disabilities. We provide First Aide/CPR/AED training and Personal Care Aide (PCA) classes. AGAP in collaboration with its team has over 20 years of IT expertise in supporting large and small computer systems from back office servers (networks and peripherals) to desktop workstations and 10 years of experience in programming, developing, testing, enhancing and implementing UNIX/Linux based applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#103;&#111;&#100;&#97;&#116;&#104;&#111;&#109;&#101;&#99;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">info@godathomecare.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MEYEKCTMS6Y6">27</a>","CARE PARTNERS STAFFING INC","LINSEY POWERS","","4279 SPRING RUN RD","","MECHANICSVILLE","VA","23116-6638","Care Partners Staffing, Inc is a woman owned company based in Virginia, serving the community, customers, and employees since 1999. At Care Partners Staffing, we specialize in Healthcare Professional Staffing and Home Care Services. Our team strives to provide exceptional staffing solutions for our clients and in-home care for daily support. At Care Partners Staffing, our highly trained professionals offer exceptional staffing solutions for our clients and aim to be an asset to the community. Care Partners Staffing Inc also specializes in Home Care Services. Our team offers appointment scheduling, mobility support, hygiene assistance, shopping, cooking, light cleaning, respite care, shuttling, and medication reminders. Whether you are in search of assistance with activities of daily living or a strategic partner to meet your staffing needs, Care Partners Staffing Inc is the company to call. Look no further and visit us at website at WWW.1STALLY.COM.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#99;&#97;&#114;&#101;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">contact@carepartnersstaffingsolution.com</a>","WWW.1ST-ALLY.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TBU9YTREW4N4">28</a>","SHAMIN-MECHANICSVILLE HOSPITALITY, L.C.","CHARLES PAULETT","","7433 BELL CREEK RD","","MECHANICSVILLE","VA","23111-3542","80 room hotel located at I-295 and US 360 in Mechanicsville, Virginia, close to the city of Richmond and convenient to Richmond International Airport.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#114;&#108;&#101;&#115;&#46;&#112;&#97;&#117;&#108;&#101;&#116;&#116;&#64;&#115;&#104;&#97;&#109;&#105;&#110;&#104;&#111;&#116;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">charles.paulett@shaminhotels.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UAVPP66XW9G9">29</a>","HONEST ELEVATOR LLC","MARY CRAMER","","11407 SWEET HALL WAY","","MECHANICSVILLE","VA","23116-4907","Honest Elevator specializes in, Elevator Repair, Elevator Contract Service, Elevator Repair Service, Elevator Maintenance Service, Elevator Maintenance and Elevator Phone Monitoring. We also provide, Elevator Hydraulic Pressure Test, Elevator Hydraulic Maintenance Service, Elevator Fire Test, Elevator Full Load Traction Testing, Elevator Traction Maintenance, Elevator Test and Elevator service contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#46;&#99;&#114;&#97;&#109;&#101;&#114;&#64;&#104;&#111;&#110;&#101;&#115;&#116;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">mary.cramer@honestelevator.com</a>","https://honestelevator.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DN66TM5C7LM1">30</a>","YOBO INC","JACOB SIMPSON","","9722 ATLEE COMMONS DR","","ASHLAND","VA","23005-8093","Primarily a progressive web app development firm with experience in multiple languages(JS,Java,PHP, Perl, Rust, etc). Also we are PRTG certified trainers and experience in creating custom scripts for PRTG. We can do graphic designs, as well as brochure style websites using WordPress.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#111;&#98;&#64;&#121;&#111;&#98;&#111;&#46;&#100;&#101;&#118;">jacob@yobo.dev</a>","https://yobo.dev"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMA9R3TRKZY7">31</a>","COASTAL LANDSCAPING LLC","MICHAEL HESTER","","8044 ELLERSON STATION DR","","MECHANICSVILLE","VA","23111-1896","Sale and installation of stair lifts, handicap ramps, vertical platform lifts, home elevators","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#100;&#104;&#101;&#115;&#54;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mdhes69@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.584&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

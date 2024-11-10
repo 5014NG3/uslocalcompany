@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 041 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.99 seconds and 2.08 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 29 
+(of 29 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJXQFQ83DQR4">1</a>","KNOWLEDGE BASED SYSTEMS INC","JASON OGLE","","1408 UNIVERSITY DR E","","COLLEGE STATION","TX","77840-2335","Research and Development Software Development Consulting Data management Knowledge management Cyber security 3-d visualization","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#103;&#108;&#101;&#64;&#107;&#98;&#115;&#105;&#46;&#99;&#111;&#109;">jogle@kbsi.com</a>","http://www.kbsi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GZCKAM8QAEE9">2</a>","ARBIN CORPORATION","LEE TILLMAN","","762 PEACH CREEK CUT OFF","","COLLEGE STATION","TX","77845-8704","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#101;&#46;&#116;&#64;&#97;&#114;&#98;&#105;&#110;&#46;&#101;&#109;&#97;&#105;&#108;">lee.t@arbin.email</a>","www.arbin.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RF8GTYHMQLL1">3</a>","SUSTAINMENT TECHNOLOGIES, LLC","MANUEL COLOURA","President & Chief Executive Officer","1733 BRIARCREST DR STE 101","","BRYAN","TX","77802-2738","Provides medical equipment maintenance, parts and supplies, HTME Diagnostic and Imaging equipment supplier, UPS systems maintenance and repair, Sterilizer maintenance, Surgical Instrument repair and refurbishment. MSPV supplier to include Midmark products and Steris repair parts. Quest Medical equipment and supply distributor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#111;&#108;&#111;&#117;&#114;&#97;&#64;&#115;&#117;&#115;&#116;&#97;&#105;&#110;&#109;&#101;&#110;&#116;&#46;&#110;&#101;&#116;">mcoloura@sustainment.net</a>","http://www.sustainment.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K28RDD31J8K5">4</a>","LGL ANIMAL CARE PRODUCTS, INC.","DALE BUSH","","721 PEACH CREEK CUT OFF","","COLLEGE STATION","TX","77845-8705","We provide enclosures and cages for animal research facilities and biomedical research. veterinary care supplies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#117;&#115;&#104;&#64;&#108;&#103;&#108;&#97;&#99;&#112;&#46;&#99;&#111;&#109;">dbush@lglacp.com</a>","http://www.lglacp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJ61FVAR59M1">5</a>","AGS SCIENTIFIC, INC.","JASON GRAY","President","2010 E VILLA MARIA RD STE C","","BRYAN","TX","77802-2583","Provider of mercury analyzers, flame photometers and other analytical instruments and services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#114;&#97;&#121;&#64;&#97;&#103;&#115;&#115;&#99;&#105;&#46;&#99;&#111;&#109;">jgray@agssci.com</a>","https://agssci.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TKXUKSX8FC15">6</a>","REC INDUSTRIES INC","CRAIG LEWIS","","12580 STATE HIGHWAY 30","","COLLEGE STATION","TX","77845-7634","R.E.C.’s construction division operates as a general contractor and mechanical subcontractor for both new construction and renovation projects. With office locations in Bryan/College Station and San Antonio Texas, we have successfully completed projects as large as $14 million across Texas – from Brownsville to Lubbock and Texarkana to Del Rio.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#64;&#114;&#101;&#99;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">craig@recind.com</a>","http://www.recind.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM14KF9YCJ45">7</a>","THE PERSONAL COMPUTER STORE, INC","JOHN CROCKETT","","1400 UNIVERSITY DR E","","COLLEGE STATION","TX","77840-2335","Avinext provides networking, physical security, and audio/visual integration services to public sector customers in Texas. We offer turnkey services from design, implementation, commissioning, and training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#111;&#99;&#107;&#101;&#116;&#116;&#64;&#97;&#118;&#105;&#110;&#101;&#120;&#116;&#46;&#99;&#111;&#109;">crockett@avinext.com</a>","www.avinext.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QL66R8L1WBH4">8</a>","GESSNER ENGINEERING LLC","JOHANNA GESSNER","","401 W 26TH ST STE 3","","BRYAN","TX","77803-2490","Gessner Engineering provides Civil, Structural and Geotechnical Engineering as well as Surveying and Construction Materials Testing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#101;&#115;&#115;&#110;&#101;&#114;&#64;&#103;&#101;&#115;&#115;&#110;&#101;&#114;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jgessner@gessnerengineering.com</a>","http://www.gessnerengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMWVL9MJRG37">9</a>","COLLEGE STATION AUTO PARTS CO.","NEIL GUERRA","","2790 OSBORN LN","","BRYAN","TX","77803-5151","College Station Auto Parts has served our customers by modeling individual programs to fit our customers needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#105;&#108;&#64;&#110;&#97;&#112;&#97;&#116;&#101;&#120;&#97;&#115;&#46;&#99;&#111;&#109;">neil@napatexas.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PMZXHGQZBSX5">10</a>","CENTURION SOLUTIONS, LLC","DOUGLAS JACKSON","","425 SHADY CREEK DR","","BRYAN","TX","77808-7765","Centurion Solutions LLC is a Service Disabled Veteran Owned Small Business specializing in risk management and risk mitigation consulting. We provide solutions to operational & preparedness issues related to safety, security & disaster preparedness. These services include but are not limited to assessments, analysis, planning, training, and exercises.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#106;&#97;&#99;&#107;&#115;&#111;&#110;&#64;&#99;&#101;&#110;&#116;&#117;&#114;&#105;&#111;&#110;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">dcjackson@centurion-solutions.com</a>","http://www.centurion-solutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLLQD5G1KMS6">11</a>","ADVANCE TEAM PROFESSIONALS INC","HORACE SMITH","","4100 PICADILLY CIR","","COLLEGE STATION","TX","77845-4724","Provides business development and proposal consulting, and services in warehousing and distribution, freight transportation, supply and inventory management, vehicle maintenance, facilities support, information technology, and administrative and systems engineering services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#115;&#109;&#105;&#116;&#104;&#45;&#97;&#100;&#118;&#116;&#101;&#97;&#109;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">wsmith-advteam@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8PXMXZ1G2E5">12</a>","AMERICAN BIOCHEMICALS INC.","DEVAN BALACHARI","","2151 HARVEY MITCHELL PKWY S","STE 221","COLLEGE STATION","TX","77840-5242","We provide custom organic synthesis, medicinal chemistry, and early stage drug development contract research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#118;&#97;&#110;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#98;&#105;&#111;&#99;&#104;&#101;&#109;&#105;&#99;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">devan@americanbiochemicals.com</a>","http://americanbiochemicals.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5X9SMJACEN6">13</a>","NORTHPOINT SERVICES, LLC","WESLEY KEEPERS","","15700 PINE TREE RD","","BRYAN","TX","77808-6361","Northpoint Services can provide mechanical, hydraulic, electrical engineering as well as light fabrication and machining services. Our background is in mechanical systems and PLC Control Systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#107;&#101;&#101;&#112;&#101;&#114;&#115;&#64;&#110;&#111;&#114;&#116;&#104;&#112;&#111;&#105;&#110;&#116;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#110;&#101;&#116;">wkeepers@northpointservices.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CN5LVMPQ9HS8">14</a>","SIGN LANGUAGE INTERPRETING SERVICES, LLC","SHERRI ROBERTS","","1501 GLADE ST","","COLLEGE STATION","TX","77840-4360","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#114;&#114;&#105;&#64;&#115;&#108;&#105;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">sherri@slisllc.com</a>","www.signlanguageinterpretingservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PCY9EE6T1WY1">15</a>","FAROLD, INC.","PATRICIA COOPER","","1620 GOOSENECK DR","","BRYAN","TX","77808-1328","Farold Inc is a DOT registered Interstate Trucking Company specializing in refrigerated freight","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#105;&#97;&#64;&#102;&#97;&#114;&#111;&#108;&#100;&#46;&#99;&#111;&#109;">patricia@farold.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CL13YD3E51Z5">16</a>","BINFORD INSECT CONTROL, INC.","BRIEN BINFORD","","1224 S COLLEGE AVE","","BRYAN","TX","77803-4545","For over 67 years, Binford Insect Control Services has provided effective pest and termite control throughout the Brazos Valley from Bryan, TX, to College Station, TX, Navasota, TX and beyond! No matter what type of pest you’re struggling with, our technicians can handle it. Our highly skilled and certified team will evaluate your pest issue and find a solution to best fit your needs and budget. Whether your property is infested with bed bugs, bees, termites, or rodents, count on our pest control service to get the job done in a timely manner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#105;&#99;&#105;&#110;&#99;&#64;&#115;&#117;&#100;&#100;&#101;&#110;&#108;&#105;&#110;&#107;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">bbicinc@suddenlinkmail.com</a>","http://www.binfordinsectcontrol.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WGVKMXHGE7K1">17</a>","T STAR ENGINEERING LLC","MATT LEONARD","","3206 LAUREL TRACE CT","","BRYAN","TX","77807-5113","Texas Space Technology Applications and Research brings the Space industry to Texas, specifically Bryan/College Station by enhancing the commercial space enterprise, providing educational tools and collaborating on research opportunities in the space industry. Through these three tenets T STAR is the commercial leader in Space Exploration for Texas, and returning those benefits to earth.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#116;&#115;&#116;&#97;&#114;&#46;&#117;&#115;">matt@tstar.us</a>","https://www.tstar.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGBFCGKEPU27">18</a>","MDX BIOANALYTICAL LABORATORY INC","EARL WHITE","","5890 IMPERIAL LOOP STE 12","","COLLEGE STATION","TX","77845-6677","Has the equipment and personnel to provide GLP/cGMP drug characterization/identification release and stability studies. Also, has the capability to generate diagnostic biomarkers and test. Can perform raw material analysis under USP and EP validated methods.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#97;&#114;&#108;&#46;&#119;&#104;&#105;&#116;&#101;&#64;&#109;&#100;&#120;&#98;&#105;&#111;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">earl.white@mdxbiolabs.com</a>","www.mdxbiolabs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBJ3SD436B15">19</a>","LEWIS & COOK ENTERPRISES LLC","CRAIG LEWIS","","12580 STATE HIGHWAY 30","","COLLEGE STATION","TX","77845-7634","We are a real estate developer and property managemnet company. We do commercial construction and rental and leasing of those commercial properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#64;&#114;&#101;&#99;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">craig@recind.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YDKHBTKW6JP5">20</a>","AGGIELAND CONSTRUCTION LTD","BRITT JONES","","3026 BARRON RD STE 500","","COLLEGE STATION","TX","77845-6906","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#116;&#116;&#46;&#106;&#111;&#110;&#101;&#115;&#64;&#97;&#103;&#103;&#105;&#101;&#108;&#97;&#110;&#100;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">britt.jones@aggielandconstruction.com</a>","www.aggielandconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FCG5VA2EW1L2">21</a>","CAPSHER TECHNOLOGY, INC.","STEVEN ONEAL","","1604 CRESCENT POINTE PKWY","","COLLEGE STATION","TX","77845-3896","CAPSHER Technology provides custom software and business technology solutions, consulting and full service development. CAPSHER has built successful platforms, ecosystems, applications for startups to Global 500 companies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#110;&#101;&#97;&#108;&#64;&#99;&#97;&#112;&#115;&#104;&#101;&#114;&#46;&#99;&#111;&#109;">soneal@capsher.com</a>","https://capsher.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QN7LMSVPN5V3">22</a>","HASHMARK STRATEGIES LLC","JEREMY WILLIAMS","","4205 MIDDLEHAM AVE","","COLLEGE STATION","TX","77845-5083","Financial Analysis and fiscal policy research, writing, and implementation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#101;&#109;&#121;&#46;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#104;&#97;&#115;&#104;&#109;&#97;&#114;&#107;&#46;&#117;&#115;">jeremy.williams@hashmark.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JVRMM1B822D8">23</a>","DUDLEY ENGINEERING LLC","ANNA DUDLEY","","40 PAMELA LN","","COLLEGE STATION","TX","77845-9445","A full service structural engineering firm providing structural design, assessment, forensics, construction administration and inspections.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#117;&#100;&#108;&#101;&#121;&#64;&#100;&#117;&#100;&#108;&#101;&#121;&#100;&#117;&#110;&#104;&#97;&#109;&#46;&#99;&#111;&#109;">adudley@dudleydunham.com</a>","https://dudleyeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQ35LM4MLF43">24</a>","AUGUSTA CREST LLC","DAVID RICE","","6011 AUGUSTA CIR","","COLLEGE STATION","TX","77845-8985","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#97;&#117;&#103;&#117;&#115;&#116;&#97;&#99;&#114;&#101;&#115;&#116;&#46;&#110;&#101;&#116;">david@augustacrest.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HJBLV7NQUC88">25</a>","THE ABURA GROUP, LLC","STEPHANIE ADAMS","","4971 WINDING CREEK","","COLLEGE STATION","TX","77845-3003","We help organizations in education and engineering and technology workforce sectors creatively solve problems – known and unknown – to build successful organizations of the future. Through expert assessment, vision and credibility, we empower our clients to implement authentic, elegant solutions to programmatic and cultural challenges and continuously improve. We adeptly consult through new initiatives and all phases of the change cycle: conflicts or under performance, assessment and evaluation, planning, and maintenance or management of sustainable changes. Our depth of experiences as diverse C-suite leaders of educational, professional, corporate and nonprofit organizations equip our firm to consult about all aspects of operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#97;&#100;&#97;&#109;&#115;&#64;&#116;&#104;&#101;&#97;&#98;&#117;&#114;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">sgadams@theaburagroup.com</a>","www.theaburagroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RG7BG2PBF2Q6">26</a>","INTENTIONAL CHANGE LLC","TONI PETERSON-HARDY","","6939 RAYMOND STOTZER","","COLLEGE STATION","TX","77845-9072","Intentional Change LLC is a WOSB that was established in 2021. We are dedicated to transforming mathematics education and empowering educators to achieve unparalleled success. At Intentional Change, our strategies are rooted in the latest educational research and evidence-based practices. We draw from best practices to deliver innovative instructional methods that promote conceptual understanding, critical thinking, and problem solving skills. Our team of experienced educators provides professional development tailored to meet the needs of K-6 educators. From workshops to coaching, we equip teachers with the knowledge and skills to excel in the classroom, and we equip instructional coaches with the tools to support teachers in their efforts. Our onsite and virtual personalized services lay the groundwork for sustainable success in math instruction and empower educators and students for years to come.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#105;&#64;&#109;&#97;&#116;&#104;&#45;&#119;&#104;&#121;&#115;&#46;&#99;&#111;&#109;">toni@math-whys.com</a>","www.math-whys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJ9GCADMAS31">27</a>","CELACARE ANALYTICAL SERVICES LLC","KENNETH YATES","","800 RAYMOND STOTZER PKWY","BDLG 1904","COLLEGE STATION","TX","77843-4478","Environmental and Clinical Microbiological Testing and Research Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#121;&#97;&#116;&#101;&#115;&#64;&#99;&#101;&#108;&#97;&#99;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">byates@celacare.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T5LYB76L7RG6">28</a>","FLUXWORKS, INC.","BRYTON PRASLICKA","","707 TEXAS AVE S STE 106E","","COLLEGE STATION","TX","77840-1976","FluxWorks LLC manufactures and supplies magnetic gears (MG) & MG integrated machines including Ultra-reliable motor solutions for aerospace needs,	Low cost, backlash-free gear solutions, low speed, low weight, high power drives, Ultra-high efficiency capable and Low-maintenance, non-contact quasi-direct drive. In addition, FluxWorks provides consulting in the area of electric machine analysis and design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#121;&#116;&#111;&#110;&#64;&#102;&#108;&#117;&#120;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;">bryton@fluxworks.co</a>","https://fluxworks.co"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GWPYT38MH7F9">29</a>","STUBBCO LLC","DANTE STUBBS","","985 MARQUIS DR","","BRYAN","TX","77803-1635","CORE COMPETENCIES Construction Services • Commercial Building • Specialty Trade Contractors • HVAC | Plumbing • Facilities Support Services • Janitorial Services • Maintenance Support • Facilities Operations • Base Support Services • Landscaping • Waste Removal • Fire Safety and Protection Services • Electrical Services • Maintenance Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#110;&#116;&#101;&#115;&#116;&#117;&#98;&#98;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Dantestubbs@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.086&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

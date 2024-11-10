@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 740 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.69 seconds and 1.73 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 31 
+(of 31 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1LFT56BVAE8">1</a>","JEZZI CORPORATION","FRANK EATES","","2100 PORTSMOUTH BLVD","","PORTSMOUTH","VA","23704-6248","Auto Body Repair, Auto Mechanical Repair,Retail Sales,Parts & Accessories,Fabrication,Auto Sales,Auto Electric, Vehicle Modifications, Truck Body Manufacturing,vehicle maintenance,auto painting,Painting,custom equipment installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#99;&#64;&#106;&#101;&#122;&#122;&#105;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">gac@jezzicorp.com</a>","www.gacautomotive.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1GVZ5Z6K5L4">2</a>","EPSILON SYSTEMS SOLUTIONS INC","JOHN MURDOCK","Vice President","605 COMMERCE ST","","PORTSMOUTH","VA","23707-2002","Install, repair, maintain HVAC/AC&R systems (marine & commercial). Design, install, test, repair hyperbaric and breathing air systems. Marine insulation. Tank cleaning/gas free. Field Services/AIT capabilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#117;&#114;&#100;&#111;&#99;&#107;&#64;&#101;&#112;&#115;&#105;&#108;&#111;&#110;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">jmurdock@epsilonsystems.com</a>","http://www.epsilonsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GM5CPRZY6TN4">3</a>","HYDRAULIC SERVICE CO, INC","NICK JESSEE","","3215 VICTORY BLVD","","PORTSMOUTH","VA","23702-1831","Hydraulic Service Co., Inc. is 'Your One Stop Hydraulic Shop' for all of your Hydraulic and Garage Equipment needs. We have been in business for over 55 years. We specialize in Commercial, Industrial, and Automotive Hydraulic and Pneumatic Equipment. Our facility is built to accommodate large pieces of equipment, up to and including huge ladder fire trucks, pumps, cylinders, air compressors, lift jacks, and cylinders of all sizes. For more information please visit our website at http://www.hydraulicservice.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#107;&#64;&#104;&#121;&#100;&#114;&#97;&#117;&#108;&#105;&#99;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">nick@hydraulicservice.com</a>","http://www.hydraulicservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z7HGN56W12L3">4</a>","U. S. FLAG & SIGNAL COMPANY","DANIELLE MCILWEE","","802 FIFTH ST","","PORTSMOUTH","VA","23704-6762","Small Woman Owner (SWAM) certifed flag manufacturing that specializes in military spec flags, guidons, hardware as well as streamers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#77;&#67;&#73;&#76;&#87;&#69;&#69;&#64;&#70;&#76;&#65;&#71;&#77;&#65;&#75;&#69;&#82;&#46;&#67;&#79;&#77;">DMCILWEE@FLAGMAKER.COM</a>","HTTP://WWW.FLAGMAKER.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4ZMPGLLZ8D9">5</a>","ART CRAFT FABRICATORS INC","ROBERT TWINE","","2707 SYER RD","","PORTSMOUTH","VA","23707-4743","Provide in shop and on-site machining services for heavy industry, utilities, steel mills, military and commercial maritime interests.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#119;&#105;&#110;&#101;&#64;&#99;&#111;&#108;&#108;&#105;&#110;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#110;&#101;&#116;">rtwine@collinsmachine.net</a>","http://www.collinsmachine.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NJ4QFY2G6JM7">6</a>","CHESAPEAKE BAY DIVING, INC","AARON ADDISON","","655 MT VERNON AVE","","PORTSMOUTH","VA","23707-2018","underwater construction, salvage, underwater repairs, underwater inspection, bridge repair, ship repair, salvage, waterfront facility maintenance and repair, waste water treatment facility repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#114;&#111;&#110;&#46;&#97;&#100;&#100;&#105;&#115;&#111;&#110;&#64;&#99;&#104;&#101;&#115;&#97;&#112;&#101;&#97;&#107;&#101;&#98;&#97;&#121;&#100;&#105;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">aaron.addison@chesapeakebaydiving.com</a>","http://www.chesapeakebaydiving.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K65JKFKWKXM7">7</a>","MARINE SPECIALTY PAINTING INC.","ALFRED MARCHIGIANI","Office Manager","3350 ELM AVE","","PORTSMOUTH","VA","23704-7108","We specialize in ship repair and PCMS tile, Nonskid, Woodworking, carpentry, Surface Preparation (blast, power tool, UHP, solvent wipe, power tooling), Preservation (critical coat, non-critical coat, spray, brush/roll, Xylon 1010), Insulation/lagging removal & reinstallation, Metal fabrication & Ship fitting, Shop welding, Shipboard welding, Pipe fitting & Fabrication, QA inspections, Powder Coating, Lead Ballast loading & unloading, Zincs removal, replace, & reinstallation, Staging & Containment, Pressure washing & steam cleaning, and Dialetric Shield removal & reinstallation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#113;&#64;&#109;&#115;&#112;&#118;&#97;&#46;&#99;&#111;&#109;">rfq@mspva.com</a>","www.marinespecialtypainting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FUNFJRJAKGL2">8</a>","BEACH MARINE SERVICES INC","GEORGE LAUTERBACH","","801 VICTORY BLVD","","PORTSMOUTH","VA","23702-2966","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#119;&#108;&#64;&#98;&#101;&#97;&#99;&#104;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">gwl@beachmarine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QS6SW3CSE6H9">9</a>","HYDRAULIC REPAIR CORPORATION","FORREST SMITH","","2503 DETROIT ST","","PORTSMOUTH","VA","23707-1707","Sales and service of hydraulic equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#121;&#100;&#114;&#97;&#117;&#108;&#105;&#99;&#114;&#101;&#112;&#97;&#105;&#114;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">hydraulicrepair@verizon.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGLGEURLKCH1">10</a>","ATLANTIC FABRICATION & BOILER SERVICES, INC.","JOSHUA PERRY","President","1 BEECHWOOD CT","","PORTSMOUTH","VA","23702-2313","Metal fabrication, duct fabrication and installation, weld repairs and boiler repairs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#101;&#114;&#114;&#121;&#64;&#97;&#102;&#98;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jperry@afbsinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GN7LEMJ38AK1">11</a>","PROFESSIONAL ATHLETIC REPAIR, INC","ROGER WARD","","709 QUEEN ST","","PORTSMOUTH","VA","23704-3419","WE SERVICE ALL BRANDS OF FITNESS AND EXERCISE EQUIPMENT INCLUDING REUPHOSTERING PADDING ON LOCATION. OUR TECHS. ARE OEM TRAINED. WE PROVIDE MAINTENANCE CONTRACTS ON FITNESS EQUIPMENT. JANUARY 2006 WILL MARK OUR 20TH YEAR IN BUSINESS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#112;&#114;&#111;&#97;&#116;&#104;&#108;&#101;&#116;&#105;&#99;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">Rproathletic@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J3E6DAA3MKW8">12</a>","AVW TECHNOLOGIES, INC.","MICHAEL WENDEL","Office Manager","355 CRAWFORD ST","STE 808","PORTSMOUTH","VA","23704-2825","AVW Technologies provides Professional Engineering Services to Naval Acquisition Programs, Test and Evaluation Support to COMOPTEVFOR, and Engineering Management Consulting Services to ship builders.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#100;&#101;&#108;&#64;&#97;&#118;&#119;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">wendel@avwtech.com</a>","avwtech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLT5LFGMM741">13</a>","GUARDIAN SYSTEMS LLC","HAROLD BUSBY","VICE PRESIDENT, MARKETING","3050 HIGH ST STE G","","PORTSMOUTH","VA","23707-3425","We specialize in bringing unique/unknown technologies and capabilities to the Federal marketplace- specifically: Photogrammetry drone software, remote training/remote support smartphone systems, sUAS and CUAS manufacturing support, CAT Support and Systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#98;&#117;&#115;&#98;&#121;&#64;&#103;&#117;&#97;&#114;&#100;&#105;&#97;&#110;&#45;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#110;&#101;&#116;">wbusby@guardian-systems.net</a>","http://www.guardiansystems.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLYKWYW4L278">14</a>","PORTSMOUTH BOATING CENTER LLC","MICHAEL DAVIS","","1244 BAY ST","","PORTSMOUTH","VA","23704-1839","Portsmouth Boating Center is a full service marina offering quality marine mechanics and a 70-Ton 22 ft Beam Travelift. Storage facilities can accommodate boats up to 70 feet. The fuel dock is easily accessible for boats up to 120 feet.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#112;&#111;&#114;&#116;&#115;&#109;&#111;&#117;&#116;&#104;&#98;&#111;&#97;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">mike@portsmouthboating.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3CJBTN21RZ4">15</a>","MID-ATLANTIC BUSINESS COMMUNICATIONS, INC","GREG MILLER","","701 PORT CENTRE PKWY","","PORTSMOUTH","VA","23704-5909","Here at Mid Atlantic Business Communications, we specialize in the telecommunication industry. We are an authorized platinum business partner for Avaya. We service the the entire United States. Avaya Joint Delivery Certified","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#109;&#97;&#98;&#99;&#46;&#99;&#111;&#109;">gmiller@mabc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LADYDZBJL9J8">16</a>","AUTUMN CORPORATION","JENNIFER HELON","","3610 WINCHESTER DR","","PORTSMOUTH","VA","23707-4330","We offer specialized programs and individualized senior care services designed to help achieve the best possible outcomes for you or your loved one. If you are seeking short-term rehabilitation our skilled team will get you home as quickly and safely as possible. We also offer long-term skilled nursing care and respite care in a warm home-like atmosphere.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#46;&#104;&#101;&#108;&#111;&#110;&#64;&#115;&#97;&#98;&#101;&#114;&#104;&#101;&#97;&#108;&#116;&#104;&#46;&#99;&#111;&#109;">jennifer.helon@saberhealth.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q681JVRZDPD1">17</a>","CRANE TECH SOLUTIONS LLC","FRANK HEGAN","","2030 PONDEROSA ST","","PORTSMOUTH","VA","23701-2634","Installation of OCR and LPR systems, DGPS systems, automatic guided vehicles, heavy lifting equipment (cranes), LED lights, refurbish spreaders and other heavy lifting equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#104;&#101;&#103;&#97;&#110;&#64;&#99;&#116;&#45;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">fhegan@ct-sol.com</a>","http://www.cranetechsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJDPLJV39MH9">18</a>","COGNITIVE PERFORMANCE GROUP OF FLORIDA, LLC","JENNIFER PHILLIPS","","1040 UNIVERSITY BLVD STE 100","","PORTSMOUTH","VA","23703-2650","At Cognitive Performance Group provide our customers with design, development, deployment, and assessment of organizational and training solutions. Our overall purpose is to find the best ways to train and assess cognitive performance. For more information, please visit our website at http://www.CognitivePerformanceGroup.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#101;&#110;&#110;&#105;&#64;&#67;&#79;&#71;&#78;&#73;&#84;&#73;&#86;&#69;&#80;&#69;&#82;&#70;&#79;&#82;&#77;&#65;&#78;&#67;&#69;&#71;&#82;&#79;&#85;&#80;&#46;&#67;&#79;&#77;">Jenni@COGNITIVEPERFORMANCEGROUP.COM</a>","http://www.cognitiveperformancegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAFKL4K55F51">19</a>","ITMC SOLUTIONS LLC","SHEYLA BLACKMAN","","100 7TH STREET","SUITE 104","PORTSMOUTH","VA","23704-4800","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#108;&#97;&#99;&#107;&#109;&#97;&#110;&#64;&#105;&#116;&#109;&#99;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">sblackman@itmcsolutions.com</a>","http://www.itmcsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQKSJPA48KN6">20</a>","B E COURIER SERVICE INC","MICHAEL BRADY","","800 LOUDOUN AVE","","PORTSMOUTH","VA","23707-3235","Courier Services, Freight Deliveries","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#99;&#111;&#117;&#114;&#105;&#101;&#114;&#55;&#49;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">becourier715@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HGY6A4LNLJB4">21</a>","AMERICAN FLEET SERV, INC","KAREN CASSELL","","3000 ELMHURST LN","","PORTSMOUTH","VA","23701-2737","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#102;&#108;&#101;&#101;&#116;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#110;&#101;&#116;">admin@americanfleetservice.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNVGTJBKA8Y1">22</a>","AUX SECURITY, LLC","BRUCE ARCENEAUX","","719 HIGH ST","","PORTSMOUTH","VA","23704-3425","Aux Security, LLC provides a wide range of high-quality security and support services. We know being able to count on dependable, worry-free service is important to our customers. So, we combine up-front preparation and training with strong management and direction so our customers will have the security of knowing they are getting the best possible service. Our mission is to help our customers accomplish their mission worry-free. We are Aux: Support, Service, Security (SDVOSB)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#99;&#101;&#110;&#101;&#97;&#117;&#120;&#64;&#97;&#117;&#120;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">barceneaux@auxsecurity.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QKBXU4U5JWA9">23</a>","FEAGIN GLOBAL ENTERPRISES LLC","TIFFANY FEAGIN","","4444 SOUTHAMPTON ARCH","","PORTSMOUTH","VA","23703-1510","Feagin Global Enterprise LLC (FGE) is a leading provider of exceptional Financial and Operational Auditing and Human Resources services to the Federal, State, and Commercial sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#102;&#101;&#97;&#103;&#105;&#110;&#64;&#102;&#103;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bfeagin@fgenterprisellc.com</a>","fgenterprisellc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DV98MGR8HA38">24</a>","LADY JS KINGDOM OF MUSIC","JACQUELINE SPRATLEY","","1085 ESTATES CT","","PORTSMOUTH","VA","23703-5466","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#100;&#121;&#106;&#64;&#108;&#97;&#100;&#121;&#106;&#115;&#107;&#105;&#110;&#103;&#100;&#111;&#109;&#46;&#99;&#111;&#109;">ladyj@ladyjskingdom.com</a>","http://www.ladyjskingdom.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNRPS2KNLXD9">25</a>","REVEAL HOMES, LLC","MICHAEL MORRISON","","19 RIVERCREST DR","","PORTSMOUTH","VA","23701-2033","Reveal Homes, LLC was established in 2004 in Martha’s Vineyard Massachusetts with the intentions of building the highest quality custom designed modular single-family, multi- family, and townhouses, in addition to community development and affordable housing projects. As a veteran owned business, we are also dedicated to provide housing for veterans and military families here in Hamptons Roads and throughout Virginia. Reveal Homes, LLC is a licensed and insured Class A General Contractor offering full-service project management, handling all phases of the construction process from initial design creation, engineering, preparation of stamped building plans, site-preparation, permitting, modular delivery, modular setting, electric, plumbing, HVAC, and final interior and exterior completion to receipt of occupancy. Reveal Homes, LLC is prepared and ready to accept Federal, State and Local government procurement projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#114;&#101;&#118;&#101;&#97;&#108;&#104;&#111;&#109;&#101;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">michael@revealhomesllc.com</a>","www.revealhomesllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7WDLLJNDQF7">26</a>","PORTRAIL CRANE SERVICE, LLC","JAMES STEVENS","","3301 MARINER AVE","","PORTSMOUTH","VA","23703-2421","Maintenance, repair, refurbishment, rebuild, update, relocate, install, and disassembly of all load carrying and handling equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#110;&#46;&#83;&#116;&#101;&#118;&#101;&#110;&#115;&#64;&#112;&#111;&#114;&#116;&#114;&#97;&#105;&#108;&#99;&#114;&#97;&#110;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">Dan.Stevens@portrailcraneservice.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGPME734DR25">27</a>","TAG IT BRAND IT LLC","SAMUEL TOLBERT","","132 NAUTICO WAY","","PORTSMOUTH","VA","23703-5469","Tag It Brand It is a digital marketing and branding company, specializing in creating marketing strategies that aligns with the overall financial goal and business objective for their clients. Tag It Brand It also design professional websites that is centered around creating an exceptional user experience, ultimately leading to a high conversion rate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#117;&#101;&#108;&#46;&#116;&#111;&#108;&#98;&#101;&#114;&#116;&#46;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">samuel.tolbert.e@gmail.com</a>","https://www.tagitbrandit.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S89KUP6NLTG8">28</a>","KOT BRIGHT LLC","KWAUNIA BRIGHT","","13 CENTRE PORT CIR","","PORTSMOUTH","VA","23703-5453","Professional Trucking & Logistics carrier, perform local operations. Transport(non-hazardous) Heavy or Light cargo. Hauling, Pickup & Delivery, Courier Services. Handle the movement & relocation of FTL (Full-Truckload) & LTL (Less-than-Truckload). Move JIT loads, drop & hook, economy commercial trucks. Dependable & great communication skills.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#110;&#100;&#116;&#98;&#114;&#105;&#103;&#104;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kandtbright@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAH3X2YXS4J5">29</a>","TRIFECTA LOGISTICS LLC","KIBIBI KELLY","","100 7TH ST STE 104","","PORTSMOUTH","VA","23704-4800","Trucking company specializing in drayage. Servicing the Port of Virginia. 3 owned semi-trucks. 3 company employed drivers. Import and export services via port or rail.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#114;&#105;&#102;&#101;&#99;&#116;&#97;&#108;&#111;&#103;&#115;&#46;&#99;&#111;&#109;">info@trifectalogs.com</a>","www.trifectalogs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X9ZGB6XMNXA3">30</a>","KEACONSULTANTS LLC","MARC ALLMOND","","127 ARMSTRONG ST","","PORTSMOUTH","VA","23704-1801","Mathematics and Computer Science and professional experience in transportation and customer service industry. Results driven goal setter seeking a position as a Contract Administrator II at your company displaying expertise in leadership, communication, and problem solving to enhance customer satisfaction and drive business growth","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#69;&#65;&#67;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#76;&#76;&#67;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">KEAConsultantsLLC@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KP8MPUN47ZY8">31</a>","EXODUS LOGISTICS LEARNING CENTER LLC","CHARLES MUNDY","","3345 BRANDYWINE DR","","CHESAPEAKE","VA","23703-4626","Online and in-person training company in the transportation and logistics industry. Our focus is to create entrepreneur in the specialty areas of transportation, such as Freight Dispatching, Freight Brokering, Trucking, Warehousing, last mile and courier services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#101;&#120;&#111;&#100;&#117;&#115;&#100;&#105;&#115;&#112;&#97;&#116;&#99;&#104;&#105;&#110;&#103;&#97;&#110;&#100;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@exodusdispatchingandtraining.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.435&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

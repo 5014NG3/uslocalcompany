@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 209 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.01 seconds and 2.08 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 40 
+(of 40 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MB6LW5CWJNB5">1</a>","RSI, INC.","JACE WAECHTER","Government Sales","1670 KOHLERS XING","","KYLE","TX","78640-6052","Wire & Cable, Connectors, Labels, Heat Shrink Tubing & Sleeving, Relays, Encapsulants, Potting Compounds, Cable Ties, Backshells, Gaskets- Custom EMI/RFI Thermal, Markers, Ferrites EMI/CORE, value-added manufacturing, rugged electronics/computer","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#97;&#101;&#99;&#104;&#116;&#101;&#114;&#64;&#114;&#115;&#105;&#45;&#99;&#114;&#105;&#46;&#99;&#111;&#109;">jwaechter@rsi-cri.com</a>","http://www.rsi-cri.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKHATXFM2ND3">2</a>","ZAMORA, L.L.C.","GRAVIEL ZAMORA","Member","1425 S LOOP 4","","BUDA","TX","78610-5743","Professional Land Surveying, Mapping and GPS Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#122;&#97;&#109;&#111;&#114;&#97;&#64;&#122;&#119;&#97;&#45;&#116;&#101;&#120;&#97;&#115;&#46;&#99;&#111;&#109;">grzamora@zwa-texas.com</a>","zwa-texas.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CP4RU1C6E3M5">3</a>","VANTEX SERVICE CORPORATION","ALISTAIR ELLIOTT","Business Development Director","3090 OLD BLACK COLONY RD","","BUDA","TX","78610-3412","We provide portable toliets/latrines for military and special events that require daily/weekly/monthly servicing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#105;&#115;&#116;&#97;&#105;&#114;&#64;&#118;&#97;&#110;&#116;&#101;&#120;&#46;&#99;&#111;&#109;">alistair@vantex.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXKJVYNCF2N5">4</a>","ARM AUTOMATION, INC.","DEREK BLACK","Vice President","14121 W HIGHWAY 290","STE 4","AUSTIN","TX","78737-9396","ARM Automation designs and manufactures electronic controllers, actuation systems and robotics for motion control applications. ARM has special expertise in developing harsh-duty/high-temp embedded servo controllers which utilize network communications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#101;&#114;&#101;&#107;&#46;&#66;&#108;&#97;&#99;&#107;&#64;&#97;&#114;&#109;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Derek.Black@armautomation.com</a>","www.armautomation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G2FWYMNM3CH3">5</a>","ZARA ENVIRONMENTAL LLC","KRISTA MCDERMID","Vice President","2104 HUNTER RD","","SAN MARCOS","TX","78666-5101","Biological research and land management. Organismal specialties include karst fauna, invertebrates, herpetofauna and ornithology. Extensive GIS capabilities. Cave gate construction, exotic species control, and regular property upkeep.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#122;&#97;&#114;&#97;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#46;&#99;&#111;&#109;">admin@zaraenvironmental.com</a>","http://www.zaraenvironmental.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U4SMC47KK9S6">6</a>","TEQSYS INC","KERI RAMIREZ","","420 WILD ROSE DR","","AUSTIN","TX","78737-4546","TEQSYS is an information technology solutions provider offering consulting, professional and managed services, software and hardware sales, and customized training. We solve complex business challenges using real world experience and innovative technology solutions specifically designed for your environment, resources, and budget. Our offerings cover eDiscovery, archiving and retention, security and compliance, data backup and recovery, email security, messaging and collaboration, cloud services, hosting/migrations, and identity management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#114;&#105;&#46;&#114;&#97;&#109;&#105;&#114;&#101;&#122;&#64;&#116;&#101;&#113;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">keri.ramirez@teqsys.com</a>","http://www.teqsys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E3W3M92ASRQ5">7</a>","GOVERNMENT MARKETING AND PROCUREMENT, LLC","MARK GRAZDAN","","13350 RANCH ROAD 12","","WIMBERLEY","TX","78676-5075","Government Marketing & Procurement (GMP) is a CVE verified Service Disabled Veteran Owned Small Business (SDVOSB). We are government technology solutions provider delivering breakthrough technology to federal, state and local government agencies. GMP is recognized as a trusted partner throughout the government market sector with fielded solutions in every federal government agency and numerous state and local entities. Our business model focuses on providing our clients with mission critical solution sets designed to meet even their most complex requirements. GMP has a proven history of helping government agencies find the most effective technology solution with the most compelling value proposition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#103;&#114;&#97;&#122;&#100;&#97;&#110;&#64;&#103;&#109;&#112;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">mgrazdan@gmpgov.com</a>","www.gmpgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJ8FKSVZ1MU9">8</a>","WHITENTON GROUP, INC.","SCOTT JECKER","President","3413 HUNTER RD","","SAN MARCOS","TX","78666-5864","Natural and cultural resource surveying, reporting, and permitting assistance. Ecological training. Wetlands, endangered species, water quality, erosion control, storm water, archaeology, construction monitoring, GIS/GPS, Section 404 permitting assistance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#119;&#106;&#101;&#99;&#107;&#101;&#114;&#64;&#119;&#104;&#105;&#116;&#101;&#110;&#116;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">swjecker@whitentongroup.com</a>","http://www.whitentongroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZV1JPG8Z7M17">9</a>","JCF BRIDGE & CONCRETE, INC.","CHRISTINA DENSON","","1300 GATLIN CREEK RD E","APT B","DRIFTWOOD","TX","78619-9127","Turnkey design, construction and installation of bridges and concrete structures for new and renovation type construction projects. We specialize in difficult access and larges tructures taht require ingenuity and experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#100;&#101;&#110;&#115;&#111;&#110;&#64;&#106;&#99;&#102;&#45;&#98;&#114;&#105;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">c.denson@jcf-bridge.com</a>","http://www.jcf-bridge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NHHTCY8KMDH4">10</a>","LULUS OSTRICH RANCH LLC","WILLIAM HAYWARD","Owner","609 OAK MDWS","","SAN MARCOS","TX","78666-8358","Logistic, Electronics, Mantainance, AC Generaors, Computers, Commications, Build Construction, Services (Labor, Bidding, South West Asia, security, Facility, (Kuwait,Iraq, Qatar, Afghanistan, Etc)) Contractor Bidder for USA Military.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#108;&#117;&#115;&#111;&#115;&#116;&#114;&#105;&#99;&#104;&#64;&#103;&#114;&#97;&#110;&#100;&#101;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">lulusostrich@grandecom.net</a>","https://lorllc.wordpress.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5QEGALNWY45">11</a>","CUSTOMER RESEARCH INTERNATIONAL, INC.","MICHELLE VRUDHULA","Vice President","135 S GUADALUPE ST","","SAN MARCOS","TX","78666-5531","Data collection firm, specializing in telephone, online, and mail modes for market research and social science research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#99;&#114;&#105;&#45;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">michelle@cri-research.com</a>","http://www.cri-research.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RVFRJML4U377">12</a>","EXCELL ENVIRONMENTAL INC","RICHARD ROLLINS","","549 S LOOP 4","","BUDA","TX","78610-9388","Fuel system installation, removal, service, testing. Critical fuel system (eg. generator) installation, service. Lubrication system installation. Storage tank cleaning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#46;&#114;&#111;&#108;&#108;&#105;&#110;&#115;&#64;&#101;&#120;&#99;&#101;&#108;&#108;&#102;&#115;&#46;&#99;&#111;&#109;">rick.rollins@excellfs.com</a>","http://www.excellfs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HV85BEN2R2G9">13</a>","WATERLINE STUDIOS, INC.","DOMINIC SHAW","","219 CANDLE LEAF CV","","DRIPPING SPRINGS","TX","78620-4527","Fountain Design including mechanical/electrical, fountain renovation, water effects design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#104;&#97;&#119;&#64;&#119;&#97;&#116;&#101;&#114;&#108;&#105;&#110;&#101;&#102;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#115;&#46;&#99;&#111;&#109;">dshaw@waterlinefountains.com</a>","http://www.waterlinefountains.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E99ARR3KN4L5">14</a>","L2 CONSULTING SERVICES, INC.","TONY BAILEY","","2100A E HIGHWAY 290","","DRIPPING SPRINGS","TX","78620-4438","L2 provides worldwide avionics design, integration, fabrication, installation, and training services per our FAA CRS and PMA operations. EFB, CNS/ATM, ELS/EHS, Satcom, ADS-B, RAAS, TAWS, RVSM, TCAS, Flat Panels, DFDR, and FMS among other avionics systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#105;&#108;&#101;&#121;&#46;&#116;&#111;&#110;&#121;&#64;&#76;&#50;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">bailey.tony@L2aviation.com</a>","http://www.l2aviation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKJSFB1EKJS7">15</a>","ACM BODY & FRAME, INC.","TERRANCE HARRISON","","1661 COTTONWOOD PKWY","","SAN MARCOS","TX","78666-5871","Welcome to ACM Tractor Sales and Body Shop. ACM represents many of the best agricultural equipment manufactures, including Branson, Kioti, and Zetor tractors. Hustler, Modern and Husqvarna zero turn lawn equipment. We are proud to offer new and used commercial equipment as well as equipment for the everyday user. ACM also specializes in steel and aluminum welding, fiberglass repair, collision repair, and paint and body work. Our 20 employees are skilled with diverse talents. We restore fire trucks, paint fleets of trucks and buses, automobiles, repair jack-knifed 18 wheeler's, straighten frames of all sizes (even for our competitors) and repair storm damage on RVs as well as fire damage to most vehicles. For more information, visit us at http://www.acmwork.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#114;&#121;&#64;&#97;&#99;&#109;&#98;&#111;&#100;&#121;&#97;&#110;&#100;&#102;&#114;&#97;&#109;&#101;&#46;&#99;&#111;&#109;">terry@acmbodyandframe.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXJXSMP4H4J1">16</a>","ACTIVE DEPLOYMENT SYSTEMS, LLC","KAYLA HUFF","","280 HUGO RD","","SAN MARCOS","TX","78666-2537","Active Deployment Systems provides mobile hygiene units to support military uses, disaster relief, and commercial events nation wide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#97;&#121;&#108;&#97;&#64;&#97;&#99;&#116;&#105;&#118;&#101;&#100;&#101;&#112;&#108;&#111;&#121;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">Kayla@activedeployment.com</a>","https://www.activedeployment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3JTNFY1HV21">17</a>","AEROLEARN, INC.","JAMES RICE","","13225 MADRONE MOUNTAIN WAY","","AUSTIN","TX","78737-8833","Aviation maintenance training provider using online delivery for basic and recurrent training. Shop equipment and facilities for aviation maintenance training also available. Custom aviation maintenance training course development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#105;&#99;&#101;&#64;&#97;&#101;&#114;&#111;&#108;&#101;&#97;&#114;&#110;&#46;&#99;&#111;&#109;">mrice@aerolearn.com</a>","https://www.aerolearn.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMWGXHNM1TM3">18</a>","J.S. ELECTRIC, INC.","LISA SCHMIDT","","4702 FM 1327","","BUDA","TX","78610-9624","Electrical Contractor, Service, Maintenance. All aspects of electric.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#64;&#106;&#115;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jselectric@jselectric.com</a>","www.jselectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R9U9TCNNKMF5">19</a>","WMK, LLC","ANNMARIE BUCKINGHAM","","239 COMMERCIAL DR","","BUDA","TX","78610-3525","MobilityWorks Commercial is the nation's leading dealer of wheelchair accessible vans, minivans, transport vans, shuttles, and ambulettes. Our vehicles can be built to match your individual specifications without sacrificing our superior craftsmanship. View our lineup to learn more about your commercial vehicle options. Speak with a MobilityWorks Commercial Representative: 888-466-5504.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#109;&#97;&#114;&#105;&#101;&#46;&#98;&#117;&#99;&#107;&#105;&#110;&#103;&#104;&#97;&#109;&#64;&#109;&#111;&#98;&#105;&#108;&#105;&#116;&#121;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">anmarie.buckingham@mobilityworks.com</a>","www.mobilityworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X1DNWHRQXR35">20</a>","WRIGHT CONSTRUCTION GROUP LLC","BERNARD WRIGHT","","150 RUSSELL LN BLDG 9","","DRIPPING SPRINGS","TX","78620-3433","Wright Construction Group, LLC will be provide our clients with experienced support in the following areas: Program Mgt Project Mgt Construction Mgt Disaster Response/Recovery Environmental Compliance Quality Control Mgt Business Development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#114;&#110;&#97;&#114;&#100;&#46;&#119;&#114;&#105;&#103;&#104;&#116;&#64;&#119;&#114;&#105;&#103;&#104;&#116;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">bernard.wright@wrightconstructiongrp.com</a>","http://wrightconstructiongrp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D85UFH3LAAB8">21</a>","SPOT ON SURVEYING, INC","JULIE HAHN","","614 JERRYS LN APT C","","BUDA","TX","78610-2903","Land Surveyor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#97;&#104;&#110;&#64;&#115;&#112;&#111;&#116;&#111;&#110;&#115;&#117;&#114;&#118;&#101;&#121;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jhahn@spotonsurveying.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LTKMN5HW91M5">22</a>","MOUNTAIN VIEW BUSINESS GROUP, LP","STEVEN PAPLANUS","","428 FLYING ORCHID DR","","SAN MARCOS","TX","78666-3747","We have expertise in software design and implementation, specializing both in environmental modeling and analysis software as well as support of IOT and sensing. We also specialize management systems for business and construction, and providing training for employees and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#45;&#118;&#105;&#101;&#119;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">steve@mountain-viewgroup.com</a>","https://www.mountain-viewgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TE3PVQK7NNF8">23</a>","AUSTIN ARMATURE WORKS LP","CLAYTON TISCHLER","","496 COMMERCIAL DR","","BUDA","TX","78610-3536","Sale and service of industrial and municipal pumps, motors, and controls and related systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#121;&#116;&#111;&#110;&#116;&#64;&#97;&#97;&#119;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">claytont@aawems.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBJCYLL7KCZ3">24</a>","TEXAS MARKET RESEARCH GROUP LLC","MICHELLE VRUDHULA","","135 S GUADALUPE ST","","SAN MARCOS","TX","78666-5531","Texas Market Research Group (ReconMR) conducts public opinion polling, online surveys and mail surveys for government and academic entities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#46;&#118;&#114;&#117;&#100;&#104;&#117;&#108;&#97;&#64;&#114;&#101;&#99;&#111;&#110;&#109;&#114;&#46;&#99;&#111;&#109;">michelle.vrudhula@reconmr.com</a>","www.reconmr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKNTUJXWBTE5">25</a>","FISHVIEWS, INC","COURTNEY GALLAGHER","","1230 WATER PARK RD","","WIMBERLEY","TX","78676-6269","We create interactive, 360degree panoramic maps of waterways above and below the surface and other linear geography such as trails, pipelines, etc. We integrate data and collaborative tools into our maps and provide advanced navigation features to enhance exploration and information exchange.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#117;&#114;&#116;&#110;&#101;&#121;&#64;&#102;&#105;&#115;&#104;&#118;&#105;&#101;&#119;&#115;&#46;&#99;&#111;&#109;">courtney@fishviews.com</a>","www.earthviews.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YQFDS4S1GJB9">26</a>","INTERNATIONAL MATRIX MANAGEMENT INSTITUTE, INC","CATHY CASSIDY","","765 SKYLINE RIDGE LOOKOUT","","WIMBERLEY","TX","78676-6040","The Matrix Management Institute offers expert consulting, diagnostic and training for organizations that need to operate cross-functionally. We support clients of all sizes and in all industries who need to improve the way their organizations operate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#97;&#115;&#115;&#105;&#100;&#121;&#64;&#109;&#97;&#116;&#114;&#105;&#120;&#109;&#97;&#110;&#97;&#103;&#101;&#109;&#101;&#110;&#116;&#105;&#110;&#115;&#116;&#105;&#116;&#117;&#116;&#101;&#46;&#99;&#111;&#109;">ccassidy@matrixmanagementinstitute.com</a>","www.matrixmanagementinstitute.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RTR2GANJB3J7">27</a>","BEYOND LOGISTICS SERVICES LLC","IVAN VALLE","","189 NODENA DR","","DRIPPING SPRINGS","TX","78620-2359","Janitorial Services Parking Services Transportation Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#98;&#101;&#121;&#111;&#110;&#100;&#108;&#115;&#46;&#99;&#111;&#109;">sales@beyondls.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQSFR2UA3J21">28</a>","TMG UTILITY ADVISORY SERVICES, INC.","PAMELA GLANVILL","","388 FEATHERGRASS DR","","BUDA","TX","78610-8911","Advisory, Professional Services, Project Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#109;&#46;&#103;&#108;&#97;&#110;&#118;&#105;&#108;&#108;&#64;&#116;&#109;&#103;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">pam.glanvill@tmgconsulting.com</a>","https://tmgconsulting.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N9BMGPLA2K86">29</a>","AFFORDABLE CART RENTAL CORP","VAN WATSON","","1971 N INTERSTATE 35","","SAN MARCOS","TX","78666-6717","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#102;&#111;&#114;&#100;&#97;&#98;&#108;&#101;&#114;&#101;&#110;&#116;&#97;&#108;&#99;&#111;&#114;&#112;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">affordablerentalcorp@yahoo.com</a>","www.affordcarts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MD68YFMAKED6">30</a>","FLEXIBLE OR SOLUTIONS LLC","JULIANNE HODSDEN","","4955 BELL SPRINGS RD UNIT 16","","DRIPPING SPRINGS","TX","78620-5575","We design, fabricate and install operating room ceiling systems and structural supports for ceiling-mounted medical equipment in healthcare facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#104;&#64;&#102;&#108;&#101;&#120;&#105;&#98;&#108;&#101;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">julieh@flexibleors.com</a>","www.flexibleors.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RR6MACGA5CK8">31</a>","JMETIC CONSULTING LLC","JOHN MCPHERSON","","1036 WINDMILL RD","","DRIPPING SPRINGS","TX","78620-3954","Data Center Consolidation Active Directory consolidation Ecommerce business development Infrastructure Automation Cloud Operations Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#109;&#99;&#112;&#104;&#101;&#114;&#115;&#111;&#110;&#64;&#106;&#109;&#101;&#116;&#105;&#99;&#46;&#99;&#111;&#109;">john.mcpherson@jmetic.com</a>","www.jmetic.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HPL2D5SG22L9">32</a>","AUSTIN ELEVATOR CO LLC","SARA FAIRCHILD","","336 MILLENNIUM DR","","KYLE","TX","78640-5142","MAINTENANCE, REPAIR, INSTALLATIONS, MODERNIZATIONS, INSPECTIONS, AND CONSULTING Efficiency. Safety. Integrity. Diligence.  We are a small, family owned and operated company. Established in 2015 by Joshua and Sara Fairchild, AEC has successfully performed all types of elevator service throughout the state of Texas.  At Austin Elevator, we've built our livelihoods on quality workmanship at affordable prices. No job is too big or too small, we've experienced it all and we can help you every step of the way. We've happily done it all for 16 years!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#64;&#97;&#117;&#115;&#116;&#105;&#110;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">sara@austinelevator.com</a>","http://www.austinelevator.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T8DNHBZ9KJX7">33</a>","WB ARTHUR LLC","ZACHARY WHITLEY","","5365 INDUSTRIAL WAY DR","","BUDA","TX","78610-5750","ORGANIZATIONS SUCH AS LAZY BOY FURNITURE, AUTONOMY THERAPY, AND WHITE LODGING TRUST US FOR THEIR WATER DAMAGE REPAIR, RESTORATION & CLEANUP NEEDS. BECAUSE WE PROVIDE THE FASTEST DISASTER RESPONSE FOR EVERY EMERGENCY SITUATION, AND WE USE THE MOST TECHNOLOGICALLY ADVANCED EQUIPMENT TO HELP SPEED UP THE RESTORATION OF AFFECTED PROPERTIES TO A FUNCTIONAL AGAIN.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#99;&#64;&#119;&#98;&#97;&#114;&#116;&#104;&#117;&#114;&#46;&#99;&#111;&#109;">zac@wbarthur.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM58L3DT26E5">34</a>","ANLAR ENTERPRISES LLC","SAMUEL BYRD","","255 SENECA DR","","AUSTIN","TX","78737-4760","Janitorial and building services provider. General cleaning, floor care, carpet care, window cleaning, pressure washing, progress construction cleaning, post construction / final cleaning services and landscaping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#117;&#101;&#108;&#97;&#98;&#121;&#114;&#100;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">samuelabyrd@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNC1B6DK5WL5">35</a>","FRONT LINE ADVISORY GROUP LLC","JESSY MILNER","","4207 E HIGHWAY 290","","DRIPPING SPRINGS","TX","78620-4206","Other Consulting Services, Process Improvement, Organization, Organizational, Portfolio Management, Administrative, Security Clearance, Advisory, Enterprise, Operational, Information Technology, Leadership, Human Resources, Scientific, Development, Business, Emergency, Executive, Defense","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#105;&#108;&#110;&#101;&#114;&#64;&#102;&#114;&#111;&#110;&#116;&#108;&#105;&#110;&#101;&#97;&#100;&#118;&#105;&#115;&#111;&#114;&#121;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">jmilner@frontlineadvisorygroup.com</a>","www.frontlineadvisorygroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SKE1KWV5D3X3">36</a>","MAKE THE CHANGE LLC","ANTISHA WALLEY","","136 GREENBRIER DR","","KYLE","TX","78640-5726","Make the Change, LLC is a Human Resources consultancy that provides professional development training military, federal, public and private sector employees. We offer on site and virtual training, in addition to management and human resources consulting. I am the owner and sole consultant. Although the business was opened in January of 2020, I have more than 10 years experience as a Human Resources professional to include HR Director in City government and currently for the past two years as HR Manager at Travis County in Austin, Texas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#105;&#115;&#104;&#97;&#100;&#64;&#109;&#97;&#107;&#101;&#116;&#104;&#101;&#99;&#104;&#97;&#110;&#103;&#101;&#46;&#105;&#111;">Tishad@makethechange.io</a>","https://makethechange.io/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H7H9NZVCM7H1">37</a>","HAWKEYE ENTERPRISES, LLC","WILLIAM HENDRICKS","","873 LONESOME TRAIL","","DRIFTWOOD","TX","78619-5730","SEe Website: www.hawkent.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#103;&#104;&#119;&#97;&#121;&#49;&#50;&#52;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">highway124@gmail.com</a>","hawkent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBT8FA3L2XJ3">38</a>","BIG DOG CONTROLS, LLC","ALICIA MAYFIELD","","308 VALLEY DR","","WIMBERLEY","TX","78676-5219","Low Voltage Wiring and controls of commercial HVAC systems. Commercial building automation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#105;&#99;&#105;&#97;&#64;&#98;&#105;&#103;&#100;&#111;&#103;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#115;&#46;&#110;&#101;&#116;">alicia@bigdogcontrols.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U78RUJ53TKC9">39</a>","DR BILL VAUGHN CONSULTING INC","BILL VAUGHN","","900 HAWTHORNE LOOP","","DRIFTWOOD","TX","78619-4440","Dr Bill Vaughn assists federal agencies with Organizational challenges. These services are but not limited to, Organization Development Consulting and Training, Process Improvements, Change Management, Conflict Training, Employee Engagement Processes, Needs Assessment, Organization Effectiveness and Executive Development. Management and Staff training to include Leadership language to create a more positive and Engaging workplace, positive workplace environment development, enhanced employee productivity, change and conflict management, Stress and time management, and Meeting efficiency training. Employee training to include Employee development, Increased workflow, Leadership development, Process improvements, team building. Other services include Human resource consulting, speaking and presentation training, change and conflict management, stress and time management, Generational training to assist Gen Z and Millennials acclimation into the workplace.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#114;&#66;&#105;&#108;&#108;&#64;&#100;&#114;&#98;&#118;&#99;&#46;&#99;&#111;&#109;">DrBill@drbvc.com</a>","https://www.drbvc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WT94S9C8NY53">40</a>","DESIGN BY JEANE LLC","KIMBERLY JEANE","","558 BIG BROWN DR","","AUSTIN","TX","78737-2544","At Growth x Design, we specialize in strategic talent acquisition for startups and SMBs, navigating the complexities of growth through people operations. Our expertise in Human Resources Consulting (NAICS 541612) extends to Management Consulting (541618), Executive Search (561312), Professional Employer Services (561330), and Business Support (561499, 561990). We guide smart, cost-effective hiring decisions aligned with your evolving needs, enhancing employee engagement and operational efficiency. Our services include talent management, workforce planning, HR policy development, and strategic planning, all designed to foster sustainable growth. Committed to excellence, integrity, and innovation, we're your partners in shaping the future of your industry, ensuring resilience in a dynamic business landscape.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#98;&#101;&#114;&#108;&#121;&#106;&#101;&#97;&#110;&#101;&#56;&#52;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kimberlyjeane84@gmail.com</a>","https://jeanedesigns.wixsite.com/growthxdesign"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.115&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

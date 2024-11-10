@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 139 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.06 seconds and 2.14 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 25 
+(of 25 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SDLAFJ1HHDF9">1</a>","PROVERBS CONSULTING LIMITED LIABILITY COMPANY","TAMARA JOHNSON","Owner/Consultant","319 ABEL DR","","GLENN HEIGHTS","TX","75154-3865","project management, program management, project coordinator, financial analyst, business analyst, strategic planning, consultant, SBA ODA, grants management, diester agent, auditor, management analyst","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#97;&#109;&#97;&#114;&#97;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#112;&#104;&#100;&#46;&#99;&#111;&#109;">info@tamarajohnsonphd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGURBBCVMAR1">2</a>","WESCO CHEMICALS INC","GENE K SAUNDERS","","103 INDUSTRIAL DR","","WAXAHACHIE","TX","75165-6105","Provides custom chemical blends for the control of scale & corrosion in industrial water, HVAC,& process water systems. Programs include onsite field service, accessories,& control systems for optimum performance and efficiency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#114;&#107;&#46;&#115;&#97;&#117;&#110;&#100;&#101;&#114;&#115;&#64;&#119;&#101;&#115;&#99;&#111;&#99;&#104;&#101;&#109;&#105;&#99;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">kirk.saunders@wescochemicals.com</a>","http://www.wescochemicals.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJGWN783BNB5">3</a>","KAREN CARLISLE","KAREN CARLISLE","","2009 HIGHRIDGE LN","","MIDLOTHIAN","TX","76065-5538","FASTENERS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#97;&#101;&#114;&#111;&#115;&#112;&#97;&#99;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">bkaerospace@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K4UTKVECB1V5">4</a>","TAHOECONOMICS, LLC","LARRY BLANK","","6061 MONTGOMERY RD","","MIDLOTHIAN","TX","76065-4833","Electric utilities, gas utilities, water utilities, utility pricing, utility rates, utility regulation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#66;&#64;&#116;&#97;&#104;&#111;&#101;&#99;&#111;&#110;&#111;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">LB@tahoeconomics.com</a>","http://www.tahoeconomics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q6VBJKMY2GN4">5</a>","COVENANT DEVELOPERS INC","LISA HOLMES","","140 STEEL DUST DR","","RED OAK","TX","75154-5441","Brick masons Carpenters Carpet, floor, and tile installers and finishers Cement masons, concrete finishers, segmental pavers, and terrazzo workers Construction equipment operators Construction laborers Drywall and ceiling tile installers, tapers, plasterers, and stucco masons Electrician Elevator installers and repairers Glaziers HVAC Hazardous materials removal workers Insulation workers Painters and paperhangers Plumbers, pipe layers, pipefitters, and steamfitters Roofers Sheet metal workers Structural and reinforcing iron and metal workers Welders","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#99;&#111;&#118;&#101;&#110;&#97;&#110;&#116;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#101;&#114;&#115;&#46;&#110;&#101;&#116;">michelle@covenantdevelopers.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W9EPE4A8CGJ4">6</a>","STEAM SOLUTIONS INC","ROBERT GRASS","","107 EWING ST","","FERRIS","TX","75125-1905","BOILER SERVICE AND INSTALLATION CONTRACTOR REFURBISH USED BOILERS FOR RENTAL/RESALE ASME S & U STAMPS NBIC R STAMP","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#84;&#69;&#65;&#77;&#83;&#79;&#76;&#85;&#84;&#73;&#79;&#78;&#83;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">STEAMSOLUTIONS@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N3LNU8LS15F9">7</a>","PEARL 1 SERVICES LLC","MICHAEL WILLIAMS PE","","411 ALLIANCE BLVD., STE. 1309","","WAXAHACHIE","TX","75165-1474","Pearl 1 Services is a full service General Contractor performing renovations, design build, new construction and remodels. Key personnel experience with Commercial & Industrial Building Construction, Water, sewer line construction, highway, street and bridge construction, poured concrete foundation and structures contractors, structural steel, framing, roofing and other building contractors, MEP, HVAC, insulation, drywall, finish carpentry, other specialty trades, landscaping and environmental consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#112;&#101;&#64;&#112;&#101;&#97;&#114;&#108;&#49;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">michaelpe@pearl1services.com</a>","pearl1services.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CCBFF9R9EA43">8</a>","CROSSROADS INFORMATION TECHNOLOGY GROUP LLC","VANESSA HALL","","107 RIDGE CREST DR","","RED OAK","TX","75154-5123","CrossRoads Information Technology Group (ITG) provides strategic consulting technology services and managed services for government organizations, corporate, commercial, and non-profit organizations. Our technical and business consulting can mobilize the right people, skills and technologies to help organizations improve their performance. We have a solid base of project and program managers as well as trainers, developers, researchers, network, architecture and business analyst professionals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#118;&#104;&#97;&#108;&#108;&#64;&#99;&#114;&#111;&#115;&#115;&#114;&#111;&#97;&#100;&#115;&#105;&#116;&#103;&#46;&#99;&#111;&#109;">drvhall@crossroadsitg.com</a>","http://www.crossroadsitg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVC2DCNEMN88">9</a>","KT EQUIPMENT SERVICES INC","TIMOTHY HARRYMAN","","260 MCKINLEY CIR","","WAXAHACHIE","TX","75167-0124","K T Equipment Services Inc Service and sell equipment in all 50 states providing products in lubrication equipment, fluid inventory control systems, tanks & accessories, tank packages, air compressors & accessories, aluminum air pipe & accessories, quick lube equipment, light & cord reels, lifts & automotive equipment, and D.E.F. equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#98;&#101;&#114;&#108;&#121;&#64;&#107;&#116;&#101;&#113;&#117;&#105;&#112;&#115;&#101;&#114;&#118;&#46;&#99;&#111;&#109;">kimberly@ktequipserv.com</a>","ktequipserv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXV8G2X6M4Y8">10</a>","MERGEMENT LLC","MARTAIN ODONELL","","101 NORTHBROOK DR","","WAXAHACHIE","TX","75165-0009","Providing systems engineering, testing, integration, installation, configuration and networking with cleared personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#100;&#111;&#110;&#101;&#108;&#108;&#64;&#109;&#101;&#114;&#103;&#101;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">modonell@mergement.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VD6EB2FGYBT9">11</a>","SENTURIAN ONE, LIMITED CO","JOHNATHAN MALLIOS","","114 N ROGERS ST","","WAXAHACHIE","TX","75165-3642","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#97;&#108;&#108;&#105;&#111;&#115;&#64;&#115;&#101;&#110;&#116;&#117;&#114;&#105;&#97;&#110;&#111;&#110;&#101;&#46;&#99;&#111;&#109;">jmallios@senturianone.com</a>","www.senturianone.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPTPANT6CMQ7">12</a>","HAZMAT SAFETY CONSULTING, LLC","BOB RICHARD","","6200 N I 35","","WAXAHACHIE","TX","75165-5602","HazMat Safety Consulting, LLC (HSC) is a technical services company. Our team served in various regulatory roles within the US DOT Office of Hazardous Materials Safety and have more than 60 years of experience related to classifying, packaging, handling, transporting, and storing hazardous materials from explosives to lithium batteries. We provide exceptional service by helping our clients comply with the hazmat handling, transport, and storage regulations. HSC services include Compliance Assessments/Audits, Developing/Delivering Training, Guidance Materials, Permits/Approvals, Penalty Remediation Support, Regulation Interpretation, Lithium Battery Transport/Storage, Expert Witness, Lithium Battery Analysis Testing/Battery Design, Hazmat Packaging. We develop safety and compliance programs and ensure customer satisfaction by applying continuous improvement strategies and delivering optimized solutions. Please visit, WWW.HAZMATSAFETY.COM.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#64;&#104;&#97;&#122;&#109;&#97;&#116;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">brichard@hazmatsafety.com</a>","www.hazmatsafety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X7NBK4VUZ8G4">13</a>","PEAK MODULAR MANAGEMENT LLC","DANNY PEARROW","","209 E MAIN ST","STE 107","WAXAHACHIE","TX","75165-3755","General contractor specializing in temporary and permanent modular sales, service and leasing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#101;&#97;&#114;&#114;&#111;&#119;&#64;&#112;&#101;&#97;&#107;&#109;&#109;&#46;&#99;&#111;&#109;">dpearrow@peakmm.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WMAAMQE8BLM5">14</a>","CM PROFESSIONAL SERVICES LLC","COLEMAN MCKOY","","312 HARVEST WAY","","RED OAK","TX","75154-8872","CM Professional Services Providing Services In Background Investigation, Surveillance, Workers Compensation Investigation, Digital Forensics, Training, Development Training, and Security Guard Service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#101;&#109;&#97;&#110;&#95;&#109;&#99;&#107;&#111;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">coleman_mckoy@yahoo.com</a>","https://cmprosvc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D3MUNSR3WL96">15</a>","INDUSTRIAL ENERGY SOLUTIONS INC.","JAMIE DUNKLEY","","6406 MILL VALLEY DR","","MIDLOTHIAN","TX","76065-6968","WIND TURBINE FOUNDATION RETROFITS: WIND FARM DEMOLITION BRIDEG DEMOLITION CONCRETE CORING CONCRETE SCANNING WIRE SAWING EPOXY INJECTION FIRE PROOFING WATER PROOFING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#105;&#101;&#115;&#105;&#110;&#99;&#116;&#120;&#46;&#99;&#111;&#109;">admin@iesinctx.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GEMQVN8V8UD5">16</a>","J&L INNOVATIONS, LLC","JASCHICA SHELLEY","","2801 N HIGHWAY 77 STE 210","","WAXAHACHIE","TX","75165-6110","J & L Innovations, LLC provides a multitude of services including: In-home care for seniors, Process Server services, Private Investigator Services, Residential Home Builder Services, CPR training, Home Maker Services, Respite care, and Group home services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#64;&#106;&#99;&#108;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">jas@jclinnovations.com</a>","https://www.jclinnovations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YUC8NEYCYK93">17</a>","COMPETITIVE DATA ANALYTICS, LLC","FRANTZ DEWILLIS","","1717 N OAK BRANCH RD","","WAXAHACHIE","TX","75167-8213","We use open-source data research capabilities and statistical modeling to predict competition outcomes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#100;&#101;&#119;&#105;&#108;&#108;&#105;&#115;&#64;&#99;&#100;&#97;&#45;&#117;&#115;&#46;&#99;&#111;&#109;">fdewillis@cda-us.com</a>","https://cda-us.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1UCSEBFB878">18</a>","ALLEN LEARNIMY LLC","SHAUNTE ALLEN, M. ED","","1602 WAVECREST DR","","GLENN HEIGHTS","TX","75154-7928","Founded in 2021, Allen Learnimy, LLC is an EdTech company providing workplace literacy training using our proprietary multisensory learning framework. We help essential industries in North Texas develop their employees' abilities to read, write, and communicate job-related duties and tasks safely and more effectively. Catering to diverse learning styles ensures that every employee can grasp and apply the material immediately in their roles. Companies benefit from enhanced employee performance and retention, increasing sales and profitability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#108;&#101;&#110;&#64;&#97;&#108;&#108;&#101;&#110;&#108;&#101;&#97;&#114;&#110;&#105;&#109;&#121;&#46;&#99;&#111;&#109;">sallen@allenlearnimy.com</a>","https://www.allenlearnimy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBZAFKEA8MJ7">19</a>","EXPRESS BACKGROUND CHECKS, LLC","ERICA GERKEN","","512 MAGNOLIA LN","","GLENN HEIGHTS","TX","75154-2114","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#97;&#64;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#98;&#97;&#99;&#107;&#103;&#114;&#111;&#117;&#110;&#100;&#99;&#104;&#101;&#99;&#107;&#115;&#46;&#99;&#111;&#109;">erica@expressbackgroundchecks.com</a>","www.expressbackgroundchecks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FZSKRGPMS2P8">20</a>","LENGO STRATEGIC PARTNERS, LLC","SHEENA THOMAS","","1221 CREST RIDGE DR","","RED OAK","TX","75154-0138","Lengo Strategic Partners, LLC was launched in 2016. With a mission to educate, inform and empower each client through designed competitive business plans and organizational strategies Lengo helped entrepreneurs build better businesses and maximize the leverage of their resources.  Today, we help entrepreneurs and corporate clients develop operational strategies to maximize workflow optimization and improve organizational and project performance to avoid contractual impacts and increase overall profits.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#101;&#110;&#97;&#64;&#108;&#101;&#110;&#103;&#111;&#102;&#111;&#99;&#117;&#115;&#46;&#99;&#111;&#109;">sheena@lengofocus.com</a>","https://www.lengofocus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DA2KKQGAMVF1">21</a>","A & M LOGISTICS OF TEXAS LLC","MAMMIE SISTRUNK","","209 MELODY WAY","","RED OAK","TX","75154-8898","A & M LOGISTICS OF TEXAS, LLC provides freight transportation, hauling and construction for disaster relief projects. We also specialize in hauling sand to various locations as needed. Our team of owner operators are ready to provide top quality clean up services for any type of disaster recovery projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#107;&#101;&#121;&#64;&#97;&#109;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#45;&#114;&#101;&#99;&#114;&#117;&#105;&#116;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">mickey@amlogistics-recruiters.com</a>","https://amlogisticsoftexas.wixsite.com/website"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RYDURMJM5YG9">22</a>","FRUITFUL TRAINING GROUP LLC","CHERRON CASTILLO","","135 WAGON WHEEL DR","","WAXAHACHIE","TX","75167-4830","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#114;&#114;&#111;&#110;&#64;&#102;&#114;&#117;&#105;&#116;&#102;&#117;&#108;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">cherron@fruitfultraininggroup.com</a>","www.fruitfultraininggroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYYXKB939DQ9">23</a>","AUBDEN FX LLC","RONALD WASHINGTON","","2320 HIGH PLAIN LN","","WAXAHACHIE","TX","75167-1389","Over a decade of premier transportation. Minority-owned, deeply committed to excellence. With a nationwide reach, we ensure timely delivery and foster industry partnerships. Our legacy of reliability and customer focus sets us apart in delivering exceptional solutions for diverse businesses.'","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#117;&#98;&#100;&#101;&#110;&#46;&#102;&#114;&#101;&#105;&#103;&#104;&#116;&#120;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">aubden.freightx@gmail.com</a>","aubden.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N2WWKQJGK897">24</a>","HUMAN RESOURCES 911 L.L.C","DANA LYNCH","","160 OXFORD RANCH RD","","WAXAHACHIE","TX","75167-7002","We are a woman-owned Human Resources Consulting firm offering full human resources services and who specializes in employment and accommodations support for individuals and Veterans with disabilities. With over 20 years of Human Resources Leadership experience, Master’s Degreed in Human Resources Management and SHRM-CP certified, we offer a full suite of Human Resources services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#104;&#117;&#109;&#97;&#110;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#115;&#57;&#49;&#49;&#46;&#111;&#114;&#103;">info@humanresources911.org</a>","www.humanresources911.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RK13M4CACYX4">25</a>","BBPEREZ FLOORS LLC","EVELARDO PEREZ","","1511 FARRAR RD","","PALMER","TX","75152-1242","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#114;&#101;&#122;&#46;&#101;&#118;&#101;&#53;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">perez.eve50@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.219&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

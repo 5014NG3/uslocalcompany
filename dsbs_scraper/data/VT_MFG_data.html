@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Vermont;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.96 seconds and 0.97 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 60 
+(of 60 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SN3XFT4F9UL5">1</a>","METAL-FLEX WELDED BELLOWS, INC.","ROBERT GUYER","GEN MGR","149 LAKEMONT RD","","NEWPORT","VT","05855-9453","ISO 9001 registered to design and manufacture edge welded SST bellows devices and assemblies. Applications range from UHV Semiconductor processing, to Aerospace, to Industrial Mechanical seals. ITAR Registered.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#121;&#101;&#114;&#49;&#64;&#109;&#101;&#116;&#97;&#108;&#102;&#108;&#101;&#120;&#98;&#101;&#108;&#108;&#111;&#119;&#115;&#46;&#99;&#111;&#109;">guyer1@metalflexbellows.com</a>","http://www.metalflexbellows.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PKD7N9DT5NQ6">2</a>","STEPHENS PRECISION, INC","JULIAN STEPHENS","Controller/Sales","293 INDUSTRIAL DR","","BRADFORD","VT","05033-9221","Full Service Machine Shop, Short run CNC Milling, Turning,Prototype, Production, Tooling, Precision Grinding and Honing, Light Assembly, Kitting. ISO 9001:2015 registered","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#97;&#110;&#64;&#115;&#116;&#101;&#112;&#104;&#101;&#110;&#115;&#112;&#114;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">julian@stephensprecision.com</a>","http://www.stephensprecision.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CWPJT28Q9KX9">3</a>","WHITNEY BLAKE COMPANY","SHELDON SCOTT","PRESIDENT & CEO","20 INDUSTRIAL DR","","BELLOWS FALLS","VT","05101-3122","MANUFACTURE RUBBER AND PLASTIC INSULATED ELECTRICAL RETRACTILE CORDS. MEET MIL SPECS SCL-6608, MIL-C-55668, MIL-C-13273 AND OTHERS. DESIGN TO SPECIFIC REQUIREMENTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#115;&#64;&#119;&#98;&#108;&#97;&#107;&#101;&#46;&#99;&#111;&#109;">sps@wblake.com</a>","www.whitneyblake.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T9VPBLFZMH97">4</a>","CHROMA TECHNOLOGY CORP.","CHRIS KARP","FINANCIAL OFFICER","10 IMTEC LN","","BELLOWS FALLS","VT","05101-3119","THIN FILM OPTICAL COATING, FLUORESCENCE MICROSCOPY, BAND PASS FILTERS, BEAM SPLITTERS, MICROSCOPE CUBES, DICHROIC MIRRORS, RAMAN SPECTROSCOPY, OPTICAL FILTERS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#107;&#97;&#114;&#112;&#64;&#99;&#104;&#114;&#111;&#109;&#97;&#46;&#99;&#111;&#109;">ckarp@chroma.com</a>","http://www.chroma.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K7EKMZPR9M63">5</a>","BIKE TRACK, INC.","RACHEL STAPLES","Contract Administrator","19 CENTRAL ST","","WOODSTOCK","VT","05091-1005","Bike Track, Inc was established in 1993 and has over two decades’ worth of experience providing high-quality products and solutions to customers in both the private and government sectors. The company originally made a revolutionary type of panel for bike trails; we have since transitioned to flooring solutions utilized in tents and other outdoor shelters, with over 3.5 million square feet of flooring sold. We offer both 1” and 2” high-density polyethylene panels, and have an option for a unique top-access cable management system molded into the 2” panels. Our floors are compatible with most tent manufacturers, including DRASH, Base-X, Alaska, Eureka, and Western. Our floor panels are easy to install and strike, no tools required, no loose parts. In addition, we offer staging systems for a better viewing experience in your tent. Our products are made in the USA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#115;&#116;&#97;&#112;&#108;&#101;&#115;&#64;&#98;&#105;&#107;&#101;&#116;&#114;&#97;&#99;&#107;&#46;&#99;&#111;&#109;">rstaples@biketrack.com</a>","http://www.biketrack.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRELJMMRJBB1">6</a>","LIQUID MEASUREMENT SYSTEMS, INC.","SARAH LUMAN","Vice President","141 MORSE DR STE 103","","FAIRFAX","VT","05454-4448","All types of fuel measurement systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#104;&#46;&#108;&#117;&#109;&#97;&#110;&#64;&#108;&#105;&#113;&#117;&#105;&#100;&#109;&#101;&#97;&#115;&#117;&#114;&#101;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">sarah.luman@liquidmeasurement.com</a>","http://www.liquidmeasurement.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VHLVLK6G6BA5">7</a>","AADCO MEDICAL, INC.","DANIELLE DAVIS","National Contract Coordinator","2279 VT ROUTE 66","","RANDOLPH","VT","05060-4406","MANUFACTURER OF X-RAY PROTECTIVE WEAR. ERGOLITE APRONS, APRON RACKS, ACCESSORIES, XRAY PROTECTIVE GLASSES AND A FULL LINE OF LEAD ACRYLIC BARRIERS. C-GEL PADS AND OTHER O.R. AND IMAGING ACCESSORIES ***BUY DIRECT FROM THE MANUFACTURER AND SAVE***","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#108;&#101;&#100;&#64;&#97;&#97;&#100;&#99;&#111;&#109;&#101;&#100;&#46;&#99;&#111;&#109;">danielled@aadcomed.com</a>","http://www.aadcomed.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZC4XTA2CQC7">8</a>","VERMONT AWARDS AND ENGRAVING, INC.","MARGI SWETT","President/Owner","650 INDUSTRIAL PARK RD","","SAINT ALBANS","VT","05478-1877","engraving, sublimation on metal, glass and plastic. National award winners for proprietary methods. Engrave swords, rifles, shells, medals for military as well as standard stock and custom items","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#103;&#105;&#64;&#118;&#101;&#114;&#109;&#111;&#110;&#116;&#97;&#119;&#97;&#114;&#100;&#115;&#46;&#99;&#111;&#109;">margi@vermontawards.com</a>","https://www.vermontawards.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGJJH5BMNA73">9</a>","NORTH COUNTRY ENGINEERING INC","TOM BRONSON","GENERAL MANAGER","106 JOHN TAPLIN RD","","DERBY","VT","05829-9778","PRODUCER OF ALL TYPES OF MACHINED PARTS FROM SMALL RUNS TO LARGE PRODUCTION. PRECISION MILLING AND TURNING AND GRINDING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#110;&#111;&#114;&#116;&#104;&#99;&#111;&#117;&#110;&#116;&#114;&#121;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">tom@northcountryeng.com</a>","http://www.northcountryeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q4NVVRWM1675">10</a>","CHARRON WOOD PRODUCTS, INC.","ANDY CHARRON","President","28 RIVER ST","","WINDSOR","VT","05089-1438","Wood Products, Fids, Wood Mallets, Flag Stands, Wood Boxes, Work Benchs, Sawhorses, Tool Handles, Turnings,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#99;&#104;&#97;&#114;&#114;&#111;&#110;&#119;&#111;&#111;&#100;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">andy@charronwoodproducts.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EED2KNVTFKM4">11</a>","PCM INNOVATION INC","KENNETH RICKETTS","","10 PRECISION DR","","N SPRINGFIELD","VT","05150-9700","As a critical element of the PCM Innovation Group, Lucas Industries has a 35-year history of producing fixtures,tools, parts,and design-to-completion turn-key assemblies for the precision aerospace segment. Supplying production tooling and parts in aluminum, steel, composite, plastic, and foam to both commercial and defense clients, Lucas is well-positioned to leverage specialized fabricating know-how in order to face new challenges. Certified ISO 9001:2015/AS9100D.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#99;&#107;&#101;&#116;&#116;&#115;&#64;&#108;&#117;&#99;&#97;&#115;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">kricketts@lucasindustries.com</a>","http://www.lucasindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCTJFDT8WJD5">12</a>","CAM DEVELOPMENT AND MICRO COMPONENTS, INC.","STEPHEN CORBETT","","84 BLISSVILLE RD","","HYDEVILLE","VT","05750-","Machine JOB SHOP, Short run CNC MILLING, TURNING, LATHE. Prototype, PRODUCTION, TOOLS & GAGES;ISO 9001:2000 registered; Explosive Components, Firing Pins, Weapon parts; Medical & Military Components; Precision Micro Components to a +/- .0005 Tolerance; Munitions Components;","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#101;&#110;&#64;&#99;&#97;&#109;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#110;&#116;&#46;&#110;&#101;&#116;">stephen@camdevelopment.net</a>","https://www.camdevelopment.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W9Z1CJ2RM4K4">13</a>","NEW ENGLAND WOODCRAFT, INC.","KAREN WILBER","","481 NORTH ST","","BRANDON","VT","05733-9509","Custom contract furniture manufacturer for dormitories and barracks. We offer delivery and installation services.  GSA Schedule available GS-03F-040DA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#119;&#105;&#108;&#98;&#101;&#114;&#64;&#110;&#101;&#119;&#111;&#111;&#100;&#99;&#114;&#97;&#102;&#116;&#46;&#99;&#111;&#109;">kwilber@newoodcraft.com</a>","http://www.newoodcraft.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJV6CBAU3N98">14</a>","ISOTECH NORTH AMERICA INC","SCOTT SABOURIN","Director of Marketing","158 BRENTWOOD 4","","COLCHESTER","VT","05446-7994","Isotech North America, Inc. supplies Temperature Calibration Equipment and Services to customers in the United States and Canada. Free lifetime technical support is included with each purchase.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#105;&#115;&#111;&#116;&#101;&#99;&#104;&#110;&#97;&#46;&#99;&#111;&#109;">scott@isotechna.com</a>","http://www.isotechna.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZEEQRUVWVZC9">15</a>","NEW ENGLAND RESEARCH, INC.","GREGORY MARTIN","President","331 OLCOTT DR","STE L1","WHITE RIVER JUNCTION","VT","05001-9263","NER has a unique and versatile rock properties analysis laboratory. With eight servo-controlled test frames for measurements of deformation, velocity, permeability, and electrical resistivity, core analyses are conducted at in situ conditions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#110;&#101;&#114;&#46;&#99;&#111;&#109;">gmartin@ner.com</a>","http://www.ner.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QPK9ZKXLA2E8">16</a>","LEDDYNAMICS INC","ROBERT SPARADEO","","296 BEANVILLE RD","","RANDOLPH","VT","05060-9301","Providing high quality, US made Solid State Lighting ans Electronics sine 2000, LEDdynamics' award winning design team provides innovation solutions to virtually and LED lighting challenge. Our high standards for design and manufacture produce LED lighting and controls well suited for reliability-critical applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#111;&#98;&#115;&#64;&#108;&#101;&#100;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Bobs@leddynamics.com</a>","http://www.LEDdynamics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKJ1YDSCLMH1">17</a>","MOBILE MEDICAL INTERNATIONAL CORPORATION","JEFFREY PAQUET","","2176 PORTLAND ST","STE 4","SAINT JOHNSBURY","VT","05819-8971","Designers, Mfrs & Operators of Mobile Surgical Units and mobile healthcare delivery facilities. Mfrs of integrated, rapidly deployable, temporary shelter systems designed for medical & general use. Svc Dept for warranty & maintenance svcs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#97;&#113;&#117;&#101;&#116;&#64;&#109;&#109;&#105;&#99;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">jpaquet@mmicmedical.com</a>","http://www.mmicmedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SA7VAWUMX6W3">18</a>","ALKEN INC","SKIP RODGERS","Exec. Director Mktg/Sales","40 HERCULES DR","","COLCHESTER","VT","05446-5835","manufacturer of electronic head and eye trackers and hand held laser scanner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#105;&#112;&#64;&#112;&#111;&#108;&#104;&#101;&#109;&#117;&#115;&#46;&#99;&#111;&#109;">skip@polhemus.com</a>","www.polhemus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N9JZMB8GEE53">19</a>","MAPLE LANDMARK INC","MICHAEL RAINVILLE","President","1297 EXCHANGE ST","","MIDDLEBURY","VT","05753-1187","Manufacturer of wooden toys, games, and gifts. Made in Vermont from native woods. Crafted with care for quality. Also custom woodwork and promotional items.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#109;&#97;&#112;&#108;&#101;&#108;&#97;&#110;&#100;&#109;&#97;&#114;&#107;&#46;&#99;&#111;&#109;">mike@maplelandmark.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJSMBBF82CB6">20</a>","RAJ COMMUNICATIONS, LTD.","DEBRA SICARD","","3 EWING PL","","ESSEX JUNCTION","VT","05452-2821","We sell electron microscope supplies and accessories, drill apertures and started drilling apertures for other fields like satellites etc and sell laboratory supplies from tweezers to vacuum evaporators.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#64;&#108;&#97;&#100;&#100;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">ds@laddresearch.com</a>","www.laddresearch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LM2GLXW5EP91">21</a>","NEW ENGLAND CONTAINER CO.","CRAIG BERTRAND","President","1 LEMNAH DR","","SAINT ALBANS","VT","05478-2327","Manufacturer of tin plate and stainless steel metal containers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#64;&#110;&#101;&#119;&#101;&#110;&#103;&#108;&#97;&#110;&#100;&#99;&#111;&#110;&#116;&#46;&#99;&#111;&#109;">craig@newenglandcont.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DUUFPGLKDHN5">22</a>","IMAGE TEK MFG. INC","BETHANEY LANOU","GOVERNMENT CONTRACT SPECIALIST","280 CLINTON ST","","SPRINGFIELD","VT","05156-3308","PRINTED CIRCUIT BOARD MANUFACTURER, SURFACE MOUNT CIRCUIT BOARD ASSEMBLY, CABLE WIRE HARNESS ASSEMBLY AND MANUFACTURE, AND EMS ELECTROMECHANICAL BOXBUILD. RFID & UID LABELING, BARCODE LABELS, POLYESTER LABELS, POLYIMIDE LABELS, LAMINATED LABELS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#110;&#111;&#117;&#64;&#73;&#77;&#65;&#71;&#69;&#84;&#69;&#75;&#76;&#65;&#66;&#69;&#76;&#83;&#46;&#67;&#79;&#77;">blanou@IMAGETEKLABELS.COM</a>","http://www.imagetekmfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V4FWL44YJ2U7">23</a>","CHAMPLAIN CABLE CORPORATION","RICHARD TRAHAN","Sales","175 HERCULES DR","","COLCHESTER","VT","05446-5925","XLC coax, plenum, fiber","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#114;&#97;&#104;&#97;&#110;&#64;&#99;&#104;&#97;&#109;&#112;&#99;&#97;&#98;&#108;&#101;&#46;&#99;&#111;&#109;">rtrahan@champcable.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q4BUEZEN93A9">24</a>","OMEGA OPTICAL, LLC","HEATHER CUDWORTH","","21 OMEGA DR","","BRATTLEBORO","VT","05301-4444","Omega produces a wide range of custom interference filters from UV to LWIR for biomedical, industrial, commercial, astronomy, defense and aerospace applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#99;&#117;&#100;&#119;&#111;&#114;&#116;&#104;&#64;&#111;&#109;&#101;&#103;&#97;&#102;&#105;&#108;&#116;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">hcudworth@omegafilters.com</a>","http://www.omegafilters.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNQQCBA36J56">25</a>","ROUND HILL FENCE & SECURITY, INC.","JESSE INGALLS","Asst. Manager","288 TELEPHONE LN","","ORLEANS","VT","05860-9203","Sale and installation of all types of fence and gates, access control, alarm systems, CCTV systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#69;&#83;&#83;&#69;&#64;&#114;&#111;&#117;&#110;&#100;&#104;&#105;&#108;&#108;&#102;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">JESSE@roundhillfence.com</a>","http://www.roundhillfence.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VWNRKQCLG3L6">26</a>","MILTON, VERMONT SHEET METAL, INC","WENDELL DEVENGER","","103 GONYEAU RD","","MILTON","VT","05468-3296","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#100;&#64;&#116;&#114;&#105;&#97;&#110;&#103;&#108;&#101;&#109;&#101;&#116;&#97;&#108;&#102;&#97;&#98;&#46;&#99;&#111;&#109;">wad@trianglemetalfab.com</a>","www.trianglemetalfab.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YU16QKLGN323">27</a>","CONCEPT2, INC","TRACY DESROCHER","","105 INDUSTRIAL PARK DR","","MORRISVILLE","VT","05661-8532","Supply high end Rowing equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#121;&#100;&#64;&#99;&#111;&#110;&#99;&#101;&#112;&#116;&#50;&#46;&#99;&#111;&#109;">tracyd@concept2.com</a>","https://www.concept2.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKWKC4DA8CL7">28</a>","ONLOGIC, INC.","JUSTIN MCCABE","","435 COMMUNITY DR","","SOUTH BURLINGTON","VT","05403-6860","Mini-ITX and small form factor related products, providing integrated solutions and components.We target the embedded applications market with excellent performance, efficient power consumption, small size, low noise emission, and design flexibility.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#46;&#109;&#99;&#99;&#97;&#98;&#101;&#64;&#111;&#110;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">justin.mccabe@onlogic.com</a>","www.onlogic.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QQBQG1E7JH67">29</a>","HAYWARD TYLER, INC","JEFF BELOTTI","","480 ROOSEVELT HWY","","COLCHESTER","VT","05446-5834","Hayward Tyler provides engineered pump and motor solutions. Pump and motor engineering includes code calculations, stress analysis, computational fluid dynamics, cavitation analysis, hydraulic design, seismic design, thermal analysis, 3-D modeling, performance testing, finite element analysis. Engineered solutions are manufactured and tested in house. Quality system is accordance with nuclear requirements and the firm is ASME amd NUPIC audited and approved.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#101;&#102;&#102;&#114;&#101;&#121;&#46;&#66;&#101;&#108;&#111;&#116;&#116;&#105;&#64;&#104;&#97;&#121;&#119;&#97;&#114;&#100;&#116;&#121;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">Jeffrey.Belotti@haywardtyler.com</a>","http://www.haywardtyler.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L7ZKPTM92MJ1">30</a>","SMALL DOG ELECTRONICS, INC.","RICHARD LENCHNER","","316 FLYNN AVE","","BURLINGTON","VT","05401-5066","Apple Authorized Specialist Reseller, and Apple Service provider. Authorized iPad, iphone, Apple Tv, iPod reseller. Apple professional products and solutions reseller based on xserve, promise raid storage, mac mini, MacBook, Mb Air, Mac Pro, Applecare.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#108;&#101;&#110;&#99;&#104;&#110;&#101;&#114;&#64;&#115;&#109;&#97;&#108;&#108;&#100;&#111;&#103;&#46;&#99;&#111;&#109;">richardlenchner@smalldog.com</a>","https://shop.smalldog.com/apple-government-services.html"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFGWVH2XGJL7">31</a>","MATRIXCHEM INC,","ANDREA BUTLER","","1484 THOMPSONBURG RD","","SOUTH LONDONDERRY","VT","05155-9304","We are a Domestic manufacturer of fine chemicals both organic and non organic.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#114;&#105;&#120;&#99;&#104;&#101;&#109;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">matrixcheminc@gmail.com</a>","www.matrixcheminc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MR7JNBNLCG51">32</a>","PRE-TECH PLASTICS, INC","CHARLOTTE BENEDICT","","209 BLAIR PARK RD","","WILLISTON","VT","05495-7434","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#102;&#111;&#119;&#108;&#101;&#114;&#64;&#112;&#114;&#101;&#116;&#101;&#99;&#104;&#112;&#108;&#97;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">cfowler@pretechplastics.com</a>","http://www.pretechplastics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SHL9T736ESK9">33</a>","DESSUREAU MACHINES, INC.","MARK DESSUREAU","","53 GRANITE ST","","BARRE","VT","05641-4139","Dessureau Machine has been a faithfull supplier to Vermont Manufacturers since 1940.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#100;&#64;&#100;&#101;&#115;&#115;&#117;&#114;&#101;&#97;&#117;&#46;&#99;&#111;&#109;">markd@dessureau.com</a>","www.dessureau.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XM5KLJU3JGX9">34</a>","SEMIPROBE, INC.","DENIS PLACE","","276 E ALLEN ST STE 4","","WINOOSKI","VT","05404-1570","SemiProbe manufacturers a line of manual, semiautomatic and fully automatic wafer probing systems with a complete line of accessories.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#108;&#97;&#99;&#101;&#64;&#115;&#101;&#109;&#105;&#112;&#114;&#111;&#98;&#101;&#46;&#99;&#111;&#109;">dplace@semiprobe.com</a>","http://www.semiprobe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DSQLL3J5WS28">35</a>","STATICWORX, INC.","KIMBERLY PETRACCARO","","372 HURRICANE LN STE 201","","WILLISTON","VT","05495-2080","ESD (anti-static/conductive) floors for computer rooms, labs, air traffic control, call centers, DOD, aerospace, clean room, health care facilities, raised flooring, telecommunication, radio, tv, elextronic handling. ESD carpet, ESD vinyl tile, Glue Free & Interlocking ESD options, ESD epoxy, ESD coatings, ESD maintenance, ESD rubber, ESD (static dissipative) seating , ESD resilient flooring. Motorola R56, FAA STD 019F, ANSI/ESD S.20.20","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#105;&#109;&#98;&#101;&#114;&#108;&#121;&#64;&#115;&#116;&#97;&#116;&#105;&#99;&#119;&#111;&#114;&#120;&#46;&#99;&#111;&#109;">Kimberly@staticworx.com</a>","http://www.StaticWorx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBDNYNKP66J4">36</a>","GORDON'S WINDOW DECOR, INC.","KELLY CLEMENTS","","8 LEROY ROAD","","WILLISTON","VT","05495-8965","Commercial window treatments - all types - manufacture, supply and install.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#99;&#64;&#103;&#111;&#114;&#100;&#111;&#110;&#115;&#119;&#100;&#46;&#99;&#111;&#109;">kellyc@gordonswd.com</a>","gordonswindowdecor.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VL8TD47S4FD5">37</a>","K & E PLASTICS, INC.","ERIC BRODERSON","","141 MORSE RD","","BENNINGTON","VT","05201-1661","K & E Plastics has over 50 years experience machining plastics and nonmetallic parts and currently occupies a 30,000 sq ft facility in Bennington, Vermont. Our capabilities include custom machining of thermosets and thermoplastics on a contract basis. K & E Plastics is a US family owned small business with client clusters in Aviation, Medical, Automotive, Composites, Defense and Power Utility Industries. We are HUBZone certified, ISO-9001 and ITAR compliant.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#64;&#107;&#101;&#112;&#108;&#97;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">eric@keplastics.com</a>","http://www.keplastics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8DUTX9JK973">38</a>","JBM SHERMAN CARMEL INC","CHRISTINE FRAZIER","","14 MORSE RD","","BENNINGTON","VT","05201-1639","We are a Manufacturer of Amored Vehical Parts; Certified Robotic and manual Welding (AWS D1.1, Laser Cutting (including UHH)and Metal Forming (Press break of 350 max. tonage output. CNC Machining. Metal coatings: Carc, powder coat and special coatings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#101;&#64;&#106;&#98;&#109;&#45;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">christine@jbm-usa.com</a>","http://www.jbm-usa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GBJSKBGLNBE5">39</a>","PRECISION COMPOSITES OF VERMONT, LLC","TIMOTHY NOLAN","","630 GILMAN RD","","LYNDONVILLE","VT","05851-8311","PCOVT is manufacturer/fabricator of custom composite structures for a wide array of markets and applications. Participate security imaging, medical imaging and other industrial and recreational markets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#46;&#110;&#111;&#108;&#97;&#110;&#64;&#112;&#99;&#111;&#118;&#116;&#46;&#99;&#111;&#109;">tim.nolan@pcovt.com</a>","www.pcovt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PWVCZMSLSMN6">40</a>","VERMONT NATURAL COATINGS, INC.","DONNA PION","","190 JUNCTION RD","","HARDWICK","VT","05843-6051","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#105;&#111;&#110;&#64;&#118;&#101;&#114;&#109;&#111;&#110;&#116;&#110;&#97;&#116;&#117;&#114;&#97;&#108;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">dpion@vermontnaturalcoatings.com</a>","http://www.vermontnaturalcoatings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLDWNTYGPCF5">41</a>","BIOMEDIC APPLIANCES, INC.","DEBORAH LOWE","","8A EWING PL","","ESSEX JUNCTION","VT","05452-2821","Woman-owned health care business providing custom prosthetic and orthotics devices and services to people of all ages.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#64;&#98;&#105;&#111;&#109;&#101;&#100;&#105;&#99;&#97;&#112;&#112;&#108;&#105;&#97;&#110;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">deb@biomedicappliances.com</a>","www.biomedicappliances.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4HJLGLH5VY5">42</a>","DATA INNOVATIONS LLC","DON RICHARDS","","463 MOUNTAIN VIEW DR STE 305","","COLCHESTER","VT","05446-5952","Software, Medical Instrument Manufacturer FDA Cleared","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#115;&#64;&#100;&#97;&#116;&#97;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">drichards@datainnovations.com</a>","http://www.datainnovations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G13HKQTKT1M9">43</a>","YOUNG VIEW FARM, LLC","MERLE YOUNG, III","","118 COUNTY RD","","WEST GLOVER","VT","05875-8602","Young View Farm, LLC offers milk production services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#111;&#117;&#110;&#103;&#118;&#105;&#101;&#119;&#102;&#97;&#114;&#109;&#115;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">youngviewfarms@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UCMTNMGEYG28">44</a>","KORE SOLUTIONS, INC","SUZANNE SWINK","","150 PILGRIM PARK RD","","WATERBURY","VT","05676-1748","Northern Reliability specializes in energy storage systems on a commercial or industrial scale using renewable energy (Solar Photovoltaic)as the prime power source.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#119;&#105;&#110;&#107;&#64;&#107;&#111;&#114;&#101;&#112;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">sswink@korepower.com</a>","www.korepower.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YRTNSGWCHW57">45</a>","KINGDOM BREWING, LLC","BRIAN COOK","","353 COBURN HILL RD","","NEWPORT","VT","05855-9926","We are a brewery with live music. We have a farm as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#110;&#103;&#100;&#111;&#109;&#98;&#114;&#101;&#119;&#105;&#110;&#103;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">kingdombrewing@yahoo.com</a>","www.kingdombrewingvt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X145MKUHEFL8">46</a>","KAD MODELS AND PROTOTYPES INC","BRIAN KIPPEN","","313 RT 14 S","","EAST RANDOLPH","VT","05041-","We work with your designers and engineers to iterate, perfect, and produce your company’s products to make dreams a reality. Our experienced team offers creative and immediate support to help ensure your company or your customers are able to exceed expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#64;&#107;&#97;&#100;&#109;&#111;&#100;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">brian@kadmodels.com</a>","www.kadmodels.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LALRPJ83NLL5">47</a>","BILANCIA CORPORATION","DAVID GOODSPEED","","106 ALLEN ST","","RUTLAND","VT","05701-4542","BalanceWorks is your total foot care, footwear and 3rd generation shoe repair store. We combine old world craftsmanship with 21st century technology to provide properly fitted shoes for balance and foot comfort expressed in pain free posture, proper stance and gait for improved health, fitness and sport. Caring for our vets since 2012.  Foot Care: Prescription Fabrication Custom Orthotic Footbeds Off the Shelf Insoles Diabetic Inserts Free Foot Evaluation AFO (Ankle Foot Orthosis) Footwear: Orthopedic, European & Healing Shoes, Boots, Sandals & Slippers Diabetic Footwear Molded Shoes & Boots Shoe Modification & Repair: Orthopedic Footwear Work Lifts (Leg Length Leveling) Stretching Bunion Pocket Hammertoe Pocket Heavy Duty Stitching Leather Goods Statewide Mobile Service Offered Medicaid & Medicare Provider On Site & Remote-Mail Capable Preventative Approach & Programs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#111;&#100;&#50;&#102;&#101;&#101;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">good2feet@gmail.com</a>","http://www.Balanceworks.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D6EYW2D82XG5">48</a>","THINKMD PBC","BARRY FINETTE","","50 LAKESIDE AVENUE UNIT 830","","BURLINGTON","VT","05401-5402","health care capacity solutions mobile health health data analytics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#102;&#105;&#110;&#101;&#116;&#116;&#101;&#64;&#116;&#104;&#105;&#110;&#107;&#109;&#100;&#46;&#111;&#114;&#103;">bfinette@thinkmd.org</a>","www.thinkmd.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9KKQ3XNWBC4">49</a>","WHEEL PAD L3C","JULIE LINEBERGER","","14 CASTLE HILL RD","","WILMINGTON","VT","05363-9745","Wheel Pad is a 200 sq.ft. accessible bedroom and bathroom that can be attached to an existing home. It provides eco-friendly temporary accessible housing for people with mobility issues, allowing friends and/or family to provide support until permanent accessible housing can be arranged. (Permanent models available.) • Temporary Accessible Housing • Accessible Housing • Rapid Response Disabled Housing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#117;&#108;&#105;&#101;&#64;&#87;&#104;&#101;&#101;&#108;&#80;&#97;&#100;&#46;&#99;&#111;&#109;">Julie@WheelPad.com</a>","https://www.WheelPad.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RDJSCUFN4SC5">50</a>","ECOGLOBAL LLC","CALEB RICK","","11 N CMN","","CHELSEA","VT","05038-4414","Our company produces Ekomats, a ground access mat used to move heavy equipment over soft or sensitive terrain. We also produce Ekopallets, a shipping pallet used to transport goods. Both products are made from Ekopolimer, a recycled material that contains 77% dirty low-density polyethylene (LDPE) plastic waste. This is plastic that would otherwise end up in the landfill or ocean. Additionally, Ekopallets can be made from ocean plastics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#97;&#108;&#101;&#98;&#64;&#101;&#107;&#111;&#109;&#97;&#116;&#115;&#46;&#99;&#111;&#109;">Caleb@ekomats.com</a>","https://www.ekomats.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5WEJED5N514">51</a>","LOGOX, LLC","LYNNE ROBERTS","","484 SALTER HILL RD","","ARLINGTON","VT","05250-8652","LogOX, LLC is an SBA certified WOSB in Arlington, Vermont. Our patented invention is a Hauler, Cant Hook and Timberjack in one tool which is the ultimate chainsaw, sawmill, and log splitter assistant. The LogOX 3-in-1 Forestry Tool was designed in Vermont by a fellow woodsman, rigorously field-tested, and built entirely in the USA. The LogOX's patented design means no more bending over to pick up stove length logs, running your chainsaw into the ground, or swinging around a dangerous pulp hook. Our ergonomic design greatly reduces the painful back and knee strain we've all experienced in the past from hours of bending and lifting. The quick release hitch pin assembly allows you to easily add the cant hook and timberjack forestry tool attachments, giving you an instant mechanical advantage when rolling and lifting logs. We also offer the patented WoodOX Sling, a handheld firewood carrier. In addition we offer a patented Hearth Bin Firewood Storage Rack.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#110;&#110;&#101;&#114;&#111;&#98;&#101;&#114;&#116;&#115;&#64;&#116;&#104;&#101;&#108;&#111;&#103;&#111;&#120;&#46;&#99;&#111;&#109;">lynneroberts@thelogox.com</a>","https://www.thelogox.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJC7KAMMDYC4">52</a>","MVP ROBOTICS, INC.","QUINN CONNELL","","226C INDUSTRIAL DR","","BRADFORD","VT","05033-9236","Mobile targets for tactical and firearms training. Dynamic, remote-controlled, hit-sensing targets for military, law enforcement and civilian training. Mobile, sensing tactical targets for live fire training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#113;&#117;&#105;&#110;&#110;&#64;&#109;&#118;&#112;&#114;&#111;&#98;&#111;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">quinn@mvprobotics.com</a>","www.mvprobotics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWEKRCZC2GK8">53</a>","DALE E. PERCY, INC.","MATTHEW PERCY","","269 WEEKS HILL RD","","STOWE","VT","05672-5245","Dale E. Percy, Inc. is a family-owned excavation company, proudly located in the heart of the Green Mountains. Reliable and dependable since 1949.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#100;&#97;&#108;&#101;&#112;&#101;&#114;&#99;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">matt@dalepercyinc.com</a>","https://dalepercyinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TZEMM7EA4NX1">54</a>","MOCO LLC","AMY PEROTTI","","48 CARPENTER ST","","NORWICH","VT","05055-9414","We produce an organic, less sugary, healthy hot chocolate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#64;&#109;&#111;&#99;&#111;&#118;&#116;&#46;&#99;&#111;&#109;">amy@mocovt.com</a>","www.mocovt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U5WJWW4MGT58">55</a>","LIVE WIRE LLC","CATHY FINCH","","20 INDUSTRIAL DR","","BELLOWS FALLS","VT","05101-3122","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#108;&#105;&#118;&#101;&#45;&#119;&#105;&#114;&#101;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">sales@live-wire-llc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UN3TMAWDC6Q8">56</a>","VERDA MEDICAL SYSTEMS, LLC","JEFFREY PAQUET","","2176 PORTLAND ST STE 4","","SAINT JOHNSBURY","VT","05819-8972","Water Quality Systems meeting ANSI/AAMI ST108 standard and VA Directive requirements for sterile processing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#97;&#113;&#117;&#101;&#116;&#64;&#109;&#109;&#105;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">jpaquet@mmicglobal.com</a>","www.mmicmedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUG3ZNNMCA11">57</a>","EVERMIND DIGITAL HEALTH, INC.","CLAUDIA ZAYFERT","","295 MAIN ST","","NORWICH","VT","05055-9356","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#122;&#64;&#101;&#118;&#101;&#114;&#109;&#105;&#110;&#100;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">cz@evermindgroup.com</a>","EVERMINDGROUP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H6PTK8W8FXA5">58</a>","WILK PAVING, INC.","STEPHEN WILK","","738 RUTLAND RD","","WEST RUTLAND","VT","05777-4421","Wilk Paving, Inc. specializes in serving a broad range of asphalt paving and asphalt related markets including government customers including airport paving and railway paving. We work with everyone from Vermont Agency of Transportation engineers, to counties, municipalities, schools and colleges, commercial businesses, utilities, developers, general contractors, and residential property owners and homeowners. We are committed to providing the highest quality asphalt and workmanship to all of our customers. Our team of professionals is well versed in all aspects of road design and construction from initial planning, to design, to Vermont’s permitting process through construction. Whether your project is industrial, commercial, residential or municipal in nature, Wilk Paving, Inc. has the knowledge and expertise to get your job done right. Please contact us to discuss your asphalt paving project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#119;&#105;&#108;&#107;&#112;&#97;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">steve@wilkpaving.com</a>","https://www.wilkpaving.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZLJNT3VA1MG3">59</a>","JOANNE PETROZZI INCORPORATED","JOANNE PETROZZI-JONES","","2205 ROUTE 7","","POWNAL","VT","05261-9656","Dion Snowshoes and NeviTREK Snowshoes have teamed up to combine the best of two Northeast brands. With decades of experience in the snowshoeing world, we can now equip more customers than ever: from racers & winter hikers who demand performance, to general outdoor enthusiasts and first-timers, to workers who require safe footing and secure traction. Our snowshoes are designed and built in the USA.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#97;&#110;&#110;&#101;&#64;&#100;&#105;&#111;&#110;&#115;&#110;&#111;&#119;&#115;&#104;&#111;&#101;&#115;&#46;&#99;&#111;&#109;">Joanne@dionsnowshoes.com</a>","https://www.dionnevitrek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYPKLDZCDB14">60</a>","MANUFACTURING SOLUTIONS, INC","ROBERT COOKSON","","153 STAFFORD AVE","","MORRISVILLE","VT","05661-8515","Full-service suite of manufacturing services and contract manufacturing. ISO 9001:2015, Lean manufacturer, providing electrical and mechanical assembly and sub-assembly production. CAD-based precision material and fabric cutting, and complete fulfillment services including picking, kitting, packing and shipping. MSI provides complete assembly and sub-assembly services. We assemble, package, store and ship your products. From concept to completion, we leverage the latest technology to streamline the manufacturing process, reduce lead times, and maintain exceptional quality control. Inventory and Storage Management Services: we will store your inventory until orders are placed and control the fulfillment process up to the point of delivery.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#99;&#64;&#109;&#115;&#105;&#118;&#116;&#46;&#99;&#111;&#109;">robc@msivt.com</a>","https://www.msivt.com/"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 1.972&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

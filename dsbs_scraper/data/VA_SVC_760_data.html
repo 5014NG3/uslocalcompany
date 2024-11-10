@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 760 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.69 seconds and 1.77 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 48 
+(of 48 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XNYBGTSSJ2E7">1</a>","DESKTOP SERVICE CENTER, INC.","PHILISE CONEIN","CEO/COO","111 N 17TH ST","","RICHMOND","VA","23219-3609","Creative Talent and IT Staffing (Temp Employment), Multimedia, Graphics and Web Training and Web Development Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#105;&#115;&#101;&#64;&#116;&#101;&#99;&#104;&#101;&#97;&#100;&#46;&#99;&#111;&#109;">philise@techead.com</a>","http://www.techead.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HZ5BXMWF4KG3">2</a>","SHOAP PROCESS EQUIPMENT INC","DAVID SHOAP","PRESIDENT","2950 WESTCHESTER RD","","RICHMOND","VA","23225-1843","PUMPS, MIXERS, TANKS, FILTERS, PUMP STATIONS, WASTEWATER TREATMENT, PLANTS AND EQUIPMENT, SCREENS, WATER TREATMENT, AERATION SYSTEMS. FOOD INDUSTRY SANITARYT 3A PUMPS AND MIXERS, SUBMERSIBLE PUMPS, SLURRY PUMPS, SANITARY FACTORY-BUILT AND ENGINEERED SYSTEMS, SUBMERSIBLE MOTORS, FACTORY-BUILT AND DESIGNED PACKAGE WASTEWATWER TREATMENT PLANTS AND PUMPING STATIONS,STORMWATER TREATMENT SYSTEMS, OIL REMOVAL SYSTEMS, FIRE FIGHTING FOAM TREATMENT SYSTEMS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#104;&#111;&#97;&#112;&#64;&#115;&#104;&#111;&#97;&#112;&#112;&#114;&#111;&#99;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">dshoap@shoapprocess.com</a>","http://www.shoapprocess.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GTL9EJJL6FK8">3</a>","SCHNEIDER LABORATORIES GLOBAL, INC.","FAYEZ ABOUZAKI","MANAGER, CONTRACTS & MARKETING","2512 W CARY ST","","RICHMOND","VA","23220-5117","Schneider Laboratories specializes in the analyses of organic compounds, asbestos and metals in various matrices including paint, soil, wipes, building materials, wastewater, drinking water and hazardous wastes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#98;&#111;&#117;&#122;&#97;&#107;&#105;&#64;&#115;&#108;&#97;&#98;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">fabouzaki@slabinc.com</a>","http://www.slabinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G3XBF8L77H32">4</a>","MILES AHEAD DISTRIBUTION, INC.","LYNWOOD HURDLE","vice-president","6301 OLD WARWICK RD STE D","","RICHMOND","VA","23224-1478","Miles Ahead Dist. is a janitorial and food service supply distributor who specializes in the repair of commercial floor maintenance equipment. We've been in business in the Rich., VA area since 1994 and are known for prompt delivery and customer service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#104;&#117;&#114;&#100;&#108;&#101;&#64;&#109;&#105;&#108;&#101;&#115;&#97;&#104;&#101;&#97;&#100;&#100;&#105;&#115;&#116;&#114;&#105;&#98;&#117;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">lhurdle@milesaheaddistribution.com</a>","www.milesaheaddistribution.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HB9FAX7RGL85">5</a>","SUTTON - CLARK SUPPLY INCORPORATED","JOHN CLARK","President","1705 BROOK RD","","RICHMOND","VA","23220-1803","hose, belting, gaskets, seals, tubing, gasket sheet, Mil-Specs, conveyor belting, transmission belting, V-Belts, Mil-Spec Hose, hydraulic hose, hydraulic couplings, rubber hose, rubber tubing, plastic hose, plastic tubing, brass fittings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#46;&#99;&#108;&#97;&#114;&#107;&#64;&#115;&#117;&#116;&#116;&#111;&#110;&#99;&#108;&#97;&#114;&#107;&#46;&#99;&#111;&#109;">jack.clark@suttonclark.com</a>","http://www.suttonclark.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VL7HS8JUL9D9">6</a>","FRANCE ENVIRONMENTAL INC","JOSEPH FRANCE","President/Secretary","7834 FOREST HILL AVENUE, SUITE 7","","RICHMOND","VA","23225-1974","FEI is a full service environmental engineering consulting firm. We inspect for asbestos, LBP, Mold, Radon, Phase I ESA, PCA's, UST removal oversight and specification writing. Licensed in VA, NC, WV, Md.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#70;&#114;&#97;&#110;&#99;&#101;&#64;&#70;&#114;&#97;&#110;&#99;&#101;&#69;&#110;&#118;&#46;&#99;&#111;&#109;">JFrance@FranceEnv.com</a>","www.franceenv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUYJBELJR3H3">7</a>","COMMONWEALTH ARCHITECTS, P.C.","JOHN (MITCH) ROWLAND","Director of Business Development","101 SHOCKOE SLIP FL 3","","RICHMOND","VA","23219-4152","The company provides Architectural, Interior Architectural, Historical Architectural and Visualization services to the private and public sectors....specializing in revitalization and adaptive re-use of buildings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#111;&#119;&#108;&#97;&#110;&#100;&#64;&#99;&#111;&#109;&#97;&#114;&#99;&#104;&#115;&#46;&#99;&#111;&#109;">mrowland@comarchs.com</a>","http://www.comarchs.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FMH2CB6HBZS8">8</a>","SOUTHERN SPECIALTY CORPORATION","HARVEY SMITH","","5334 DISTRIBUTOR DR","","RICHMOND","VA","23225-6104","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#111;&#117;&#116;&#104;&#101;&#114;&#110;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#121;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">sales@southernspecialtycorporation.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J36HXHWD8JY5">9</a>","SUMMIT CONSTRUCTION & ENVIRONMENTAL SERVICES LLC","CHARLES CRENSHAW, II","","6290 OLD WARWICK RD","STE D","RICHMOND","VA","23224-1473","General Contracting, Government, Design/Build, Interior and Exterior Renovation, Industrial, Waterfront, Concrete, Demolition, Asbestos/Lead/Hazardous Material Remediation, Property Management, REO Maintenance and Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#114;&#101;&#110;&#115;&#104;&#97;&#119;&#64;&#115;&#117;&#109;&#109;&#105;&#116;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#101;&#115;&#46;&#99;&#111;&#109;">ccrenshaw@summitconstructiones.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HGR5PWWHDMP5">10</a>","CHMURA ECONOMICS & ANALYTICS, LLC","LESLIE PETERSON","","1309 E CARY ST STE 200","","RICHMOND","VA","23219-4138","Applied Economics Consulting Firm. Performs economic impact studies, workforce analysis, and labor market modelling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#115;&#108;&#105;&#101;&#64;&#99;&#104;&#109;&#117;&#114;&#97;&#101;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">leslie@chmuraecon.com</a>","www.chmura.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBBLXS66AYZ7">11</a>","RICHARD ROSANELLI","RICHARD ROSANELLI","","5630 RIVERSIDE DR","","RICHMOND","VA","23225-2536","Provide assistance and guidance in understanding of Federal, State, & local government fields of procurement, marketing, and logistics. Can help you navigate through the maze of regulations and culture of the Federal government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#46;&#114;&#111;&#115;&#97;&#110;&#101;&#108;&#108;&#105;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">r.rosanelli@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMTVMJMR24Y1">12</a>","TEAM HENRY ENTERPRISES, LLC","DEVON HENRY","","2150 MAGNOLIA ST","","RICHMOND","VA","23223-2310","Team Henry is a multi-discipline contracting firm that specializing in civil, environmental, marine, and emergency response services. The firm also has an Information Technology Division","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#101;&#110;&#114;&#121;&#64;&#116;&#101;&#97;&#109;&#104;&#101;&#110;&#114;&#121;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">dhenry@teamhenryent.com</a>","http://www.teamhenryent.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WXA6JPF8KDQ9">13</a>","AUXO MEDICAL, LLC","TANNER SEESE","","5401 DISTRIBUTOR DR","","RICHMOND","VA","23225-6105","Provider of capital surgical equipment and service and repair for Surgery centers, hospitals, laboratories and universtities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#115;&#101;&#101;&#115;&#101;&#64;&#97;&#117;&#120;&#111;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">tseese@auxomedical.com</a>","auxomedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGSLXV5GL471">14</a>","M & M ENTERPRISE OF VA. LLC","JOSEPH MILES","","901 BARLEN DR","","RICHMOND","VA","23225-7305","M & M Entreprise LLC. Providing service in transportation, Courier, Express delivery, local,general freight, photographic, and graphic design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#101;&#112;&#104;&#109;&#105;&#108;&#101;&#115;&#106;&#114;&#52;&#52;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">josephmilesjr44@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPR4GKMXCEK4">15</a>","BASKERVILL & SON PC","COURTNEY NESTON","","1051 E CARY ST","STE 200","RICHMOND","VA","23219-4029","Architectural and engineering services (M/E)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#101;&#115;&#116;&#111;&#110;&#64;&#98;&#97;&#115;&#107;&#101;&#114;&#118;&#105;&#108;&#108;&#46;&#99;&#111;&#109;">cneston@baskervill.com</a>","http://www.baskervill.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E65KS84E2119">16</a>","OUTSIDE BOX LLC","CANDICE SOMERVILLE","","1428 FLOYD AVE","","RICHMOND","VA","23220-4618","HUBZone, EDWOSB, General Construction, Historical, Cultural Resources, Renovation, Program and Project Management, Construction Planning, DB, LEED, Environmental, Certified Construction Quality Management, Construction Management, and Support services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#110;&#100;&#105;&#99;&#101;&#64;&#111;&#117;&#116;&#115;&#105;&#100;&#101;&#116;&#104;&#101;&#98;&#111;&#120;&#108;&#108;&#99;&#46;&#117;&#115;">candice@outsidetheboxllc.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDMWBLTXS7L9">17</a>","MACK GLOBAL LLC","ROBIN MACK","","4121 MYLAN RD","","RICHMOND","VA","23223-2258","Management and Environmental Consulting Solutions for Strategic Planning, Telework/Telecommute support, and Disaster Recovery planning. SwAM certified one stop shop for EVERYTHING else! Available 24/7 Dependable Service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#109;&#97;&#99;&#107;&#64;&#109;&#97;&#99;&#107;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">Rmack@mackglobal.com</a>","http://www.mackglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RXUWC9NERTL5">18</a>","ANSELUX LLC","FIDEL AGHOMO","","3104 DOUGLASDALE RD","","RICHMOND","VA","23221-3618","At Anselux LLC we use our expertise and years of experience in software development and architecture to help businesses design and develop a cost-effective end-to-end software solution tailored specifically to their needs. Anselux LLC also provides consulting services and placement of highly qualified IT personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#73;&#68;&#69;&#76;&#65;&#71;&#72;&#64;&#65;&#78;&#83;&#69;&#76;&#85;&#88;&#46;&#67;&#79;&#77;">FIDELAGH@ANSELUX.COM</a>","http://www.anselux.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7AEYXELPWS3">19</a>","NYFELER ASSOCIATES, LLC","GEORGE NYFELER","","619 W CARY ST","","RICHMOND","VA","23220-5502","Topographic surveys for civil engineering and architectural design to include plant species identification, High accuracy survey layout for heavy construction, boundary surveying, GPS control surveys. Staff of 9 includes (2) LEED APs, (1) LS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#110;&#121;&#102;&#101;&#108;&#101;&#114;&#64;&#110;&#121;&#102;&#101;&#108;&#101;&#114;&#115;&#117;&#114;&#118;&#101;&#121;&#46;&#99;&#111;&#109;">gnyfeler@nyfelersurvey.com</a>","http://www.nyfelersurvey.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UPHDEH2R6ED4">20</a>","R. S. HARRITAN & COMPANY, INC.","MICHAEL PANTELE","","3280 FORMEX RD","","RICHMOND","VA","23224-6370","Whether a project is large or small, involves heavy machinery or delicate instruments, R.S. Harritan's experience and ability to focus on the individual needs of each customer, enables it to complete a multitude of projects for the most demanding clients. Depending upon the project, we will spend more time on scheduling and planning than actual construction. It is our commitment to quality and our ability to focus on each individual project and client requirement, that has earned us a highly respected place in the mechanical and electrical marketplace. R.S. Harritan has it all! For plant repair, renovation and maintenance, we are your 'one stop contractor'.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#95;&#112;&#97;&#110;&#116;&#101;&#108;&#101;&#64;&#101;&#109;&#99;&#111;&#114;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mike_pantele@emcorgroup.com</a>","http://www.rsharritan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLQRPRDTUN95">21</a>","NATIONWIDE ELECTRIC SUPPLY COMPANY, INC.","BRAD HULSE","","27 E 2ND ST","","RICHMOND","VA","23224-4253","We make your job easier by providing exactly the part and the advice you need. We are located in Richmond, Virginia, but service the entire country and beyond. Let us help you with your electrical supply needs today. For more information, please visit our website at http://nationwideelectric.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#64;&#110;&#97;&#116;&#105;&#111;&#110;&#119;&#105;&#100;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">brad@nationwideelectric.com</a>","www.nationwideelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LHWKR8TL8WJ6">22</a>","THE MALLETTE GROUP LLC","GEORGE M HARTSFIELD","","15 W CLAY ST","","RICHMOND","VA","23220-3910","'Crucial Conversations' training create and implement conflict resolution and team enhancement learning modules,'Alternative Dispute Resolution develops human capital initiative success,Unconscious bias in the workplace training to help organizations form teams that effectively use conflict-avoidance strategies to enhance communications and increase employee engagement,EEO grievance procedure, policy development and interpretation,hostile work environment and sexual harassment,Direct strategy development and work plan alignment for a portfolio of human services, Designing programs for senior-level performance accountability plans and monitored performance of directors. Utilizing our services for ADR has resulted in an 85-90 resolution rate completed for our clients","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#111;&#114;&#103;&#101;&#64;&#116;&#104;&#101;&#109;&#97;&#108;&#108;&#101;&#116;&#116;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">george@themallettegroup.com</a>","www.themallettegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBJGPYPTQ6K3">23</a>","ASTYRA CORP","KEN AMPY","","411 E FRANKLIN ST STE 105","","RICHMOND","VA","23219-2243","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#109;&#112;&#121;&#64;&#97;&#115;&#116;&#121;&#114;&#97;&#46;&#99;&#111;&#109;">kampy@astyra.com</a>","astyra.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLXDG226BKY3">24</a>","AMES 1 LLC","JOHN MAHLER","","919 E MAIN ST","STE 1000","RICHMOND","VA","23219-4623","AMES 1, LLC is an 8(a)-certified, HubZone Certified, Alaska Native owned firm providing design-build and design-bid-build construction services, building renovations and alterations, facilities operations and maintenance, and environmental services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#97;&#104;&#108;&#101;&#114;&#64;&#97;&#109;&#101;&#115;&#49;&#46;&#110;&#101;&#116;">jmahler@ames1.net</a>","www.ames1.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYRJLBKMJF97">25</a>","PARMA RICHMOND LLC","AUBREY MOORE","","919 E MAIN ST STE 100","","RICHMOND","VA","23219-4600","Nonresidential Property Managers. For more information you can reach us at 804-344-3600.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#111;&#111;&#114;&#101;&#64;&#112;&#97;&#114;&#109;&#99;&#111;&#46;&#99;&#111;&#109;">amoore@parmco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GHEHNCHVN153">26</a>","BROOK'S STITCH & FOLD, LLC","DEVON CHESTER","","711 N SHEPPARD ST","","RICHMOND","VA","23221-1713","Brook's is a full-service laundry facility offering dry-cleaning, alterations, linen rental, wash & fold and self serving laundry services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#104;&#101;&#115;&#116;&#101;&#114;&#64;&#98;&#114;&#111;&#111;&#107;&#115;&#115;&#116;&#105;&#116;&#99;&#104;&#102;&#111;&#108;&#100;&#46;&#99;&#111;&#109;">dchester@brooksstitchfold.com</a>","www.brooksstitchfold.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GG89M2MBMY13">27</a>","ENVIROTAIN, LLC","MARY GRAY","","1706 HANOVER AVE","","RICHMOND","VA","23220-3506","Distributor of Regulated Medical Waste containers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#103;&#114;&#97;&#121;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#116;&#97;&#105;&#110;&#46;&#99;&#111;&#109;">mgray@envirotain.com</a>","www.Envirotain.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKPHDMHP2Q98">28</a>","SEABOARD CONTRACTING LLC","TODD GRAHAM","","7400 BEAUFONT SPRINGS DR","STE 300","NORTH CHESTERFIELD","VA","23225-5519","We are a contracting company that specialize in, concrete and construction. We have professional relationships with manufacturers of bolts, screws & nuts and are able to offer special pricing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#114;&#97;&#104;&#97;&#109;&#64;&#115;&#101;&#97;&#98;&#111;&#97;&#114;&#100;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">tgraham@seaboardcontracting.com</a>","seaboardcontracting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDN8LTCCZ9T1">29</a>","FOUR DEEP MULTIMEDIA, LLC","JOHN LOGAN, III","","101 MANCHESTER RD","STE 133","RICHMOND","VA","23224-4179","Four Deep Multimedia, LLC, is a full service advertising and marketing agency. Serving our clients is our main priority. We value every opportunity to make your business or organization better. Whether through print, web, video or social media, we are dedicated to creating bold solutions for our clients. Four Deep has served hundreds of clients from around the country.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#46;&#108;&#111;&#103;&#97;&#110;&#64;&#102;&#111;&#117;&#114;&#100;&#101;&#101;&#112;&#46;&#99;&#111;&#109;">jt.logan@fourdeep.com</a>","www.fourdeep.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F5DJH5SUJAN3">30</a>","DSQUORUM LLC","DMITRI ADLER","","1717 E CARY ST","","RICHMOND","VA","23223-6935","Data Society provides premiere data science training and consulting services for the U.S. government. We have demonstrated success in training government officials at the Department of Commerce, Department of Health and Human Services, and the U.S. Army, and in building bespoke data algorithms for large organizations such as the International Monetary Fund. Data Society offers three core competencies: Online learning: On-demand learning to solve a data problem quickly, with videos, practical exercises, downloadable guides, and reusable code templates for maximal efficiency. Customized training: Training designed specifically for you. We provide a cohesive set of multi-day in-person workshops across skill levels to tackle the problems your employees face daily. End-to-end consulting: We perform analytics projects starting from experimental design and data collection through predictive data analysis to inform executive decision-making.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#105;&#116;&#114;&#105;&#64;&#100;&#97;&#116;&#97;&#115;&#111;&#99;&#105;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">dmitri@datasociety.com</a>","www.datasociety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULPSSZR938B3">31</a>","AQUEOUS SOLUTIONS GLOBAL, LLC","BRUCE KITCHEN","","2828 COFER RD","","RICHMOND","VA","23224-7102","ASG has developed a water-purification technology that removes contaminants such as Arsenic, Fluoride, Lead, Iron and Manganese. The ASG oxidation media also kills bacteria and other organisms on contact in the water. Although many competing systems also remove contaminants, ASG technology offers several advantages. It’s more efficient. A given volume of ASG media removes more contaminants than competing systems. The exact amount depends on the level of contamination and the rate of water flow through the media. ASG media doesn’t require electricity to work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#105;&#116;&#99;&#104;&#101;&#110;&#64;&#97;&#113;&#117;&#101;&#111;&#117;&#115;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">bkitchen@aqueoussolutionsglobal.com</a>","www.AqueousSolutionsGlobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P6M2LLVEMNL8">32</a>","CURE, INC.","KASEY HAYES","","418 E MAIN ST","","RICHMOND","VA","23219-3822","We are CURE, a business-centric digital agency. CURE was founded on the principle that the best work comes from enlisting a business approach. Whether public or private sector, we create effective solutions. This includes marketing strategies, websites, app design, social media campaigns, advertising, branding, and market research. We are accustomed to collaborating with multiple stakeholders, partners, and community organizations within one project. We recommend our services by project goal and ensure we are accomplishing the right objective with the most effective tool(s).  Our approach to working together begins with a thorough understanding of our clients’ goals and intended audiences. We then establish a robust plan by service to inform execution and corresponding goals. We prefer to act as an extension of your team and find open communication leads to the best work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#115;&#101;&#121;&#64;&#99;&#117;&#114;&#101;&#97;&#103;&#101;&#110;&#99;&#121;&#46;&#99;&#111;&#109;">kasey@cureagency.com</a>","cureagency.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CYL7FCXN45N7">33</a>","OWEN DESIGN CO LLC","JENNIFER OWEN","","1520 W MAIN ST","STE 105","RICHMOND","VA","23220-4687","Market research Brand strategy Marketing strategy Content development Brand systems development Print collateral Website design & production Identity design Name development Copywriting & editing Content development Infographic design Publication design Annual report design Email design & production Newsletter design & production Interactive PDF design & development Proofreading Photo retouching Illustration Print management Brand management consultation Monthly website maintenance Analytics review and insights Email marketing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#64;&#111;&#119;&#101;&#110;&#100;&#101;&#115;&#105;&#103;&#110;&#99;&#111;&#46;&#99;&#111;&#109;">jennifer@owendesignco.com</a>","owendesignco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FN3LH29DSN94">34</a>","THE ENVOY PORTFOLIO LLC","CANDACE MUNDY","","1210 WESTOVER HILLS BLVD UNIT B","","RICHMOND","VA","23225-4434","Envoy is a management consulting firm that advises executives and organizations in the fields of negotiation, communication, facilitation and influence. We facilitate leadership meetings, negotiate partnerships, produce summits, mediate conflicts, guide strategic planning, moderate events, communicate across boundaries, channel influence, coach executives, and provide leadership and management training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#105;&#110;&#115;&#111;&#110;&#64;&#101;&#110;&#118;&#111;&#121;&#112;&#111;&#114;&#116;&#102;&#111;&#108;&#105;&#111;&#46;&#99;&#111;&#109;">stinson@envoyportfolio.com</a>","www.envoyportfolio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JS8HYMXALMZ1">35</a>","BOHEMIAN VISIONS LLC","MARIE MALVOISIN","","1305 W MAIN ST","","RICHMOND","VA","23220-4851","BOHEMIAN VISIONS LLC is a Photography and Multimedia company specializing in commercial services for marketing and design. Bohemian Visions is a veteran, woman, and minority owned small business based in the Richmond area of Virginia. They have over a decade of professional experience in photography and video production that they can utilize in working on your projects and marketing campaigns. They have Certified Professional Photographers and Content Writers that communicates compelling stories through multiple media domains, to include photography and written correspondence. Services include, but are not limited to, head shots, social media, website copy, coverage of special emphasis programs, and content creation focused on promotion of diversity, team performance, and the design of visual monologues to convey the organization's mission and vision. Let them help bring personality to your brand and connect more effectively with your clientele.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#106;&#97;&#120;&#111;&#110;&#64;&#98;&#111;&#104;&#101;&#109;&#105;&#97;&#110;&#118;&#105;&#115;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">cmjaxon@bohemianvisions.com</a>","www.bohemianvisions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6M9UHXUGSK3">36</a>","GARZA WEB DESIGN LLC","MARY GARZA","","1011 E MAIN ST","STE 202","RICHMOND","VA","23219-3576","We design, build, and host websites. Our web development expertise includes Wordpress, Drupal, Craft CMS, and Shopify. We also perform search engine optimization services so you can be seen during Google searches.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#64;&#103;&#97;&#114;&#122;&#97;&#119;&#101;&#98;&#100;&#101;&#115;&#105;&#103;&#110;&#46;&#99;&#111;&#109;">mary@garzawebdesign.com</a>","https://garzawebdesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RYCVHMF1D3P4">37</a>","ARAZ SYSTEMS LLC","CAROLINE CAYLOR","","11 S 12TH ST","STE 117","RICHMOND","VA","23219-4053","ARAZ Systems stands out among VAR's by delivering distinct advantages through our US-manufactured computers. How we can compete- we combine local production w/comprehensive national support, offering the same warranties & service agreements throughout the U.S. This unique approach allows us to compete effectively w/larger players on value pricing. As a minority-owned,WOSB located in a HUBZone,ARAZ not only meets but often exceeds socio-economic certification requirements, providing added value for government & corporate partners focused on diversity & economic impact. Our operations span 3 critical sectors: Custom Computer IT Solutions, IT Services in over 50 states, which include installation/removal of UPS & Fuel Support; each tailored to meet the rigorous demands of our clients. Considering your specific requirements, ARAZ Systems could be an exceptional partner that aligns with your goals, delivering robust solutions & sustainable value across multiple business needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#97;&#114;&#111;&#108;&#105;&#110;&#101;&#64;&#97;&#114;&#97;&#122;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">Caroline@arazsystems.com</a>","www.arazsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEULP1DTMGR4">38</a>","FLAVOR NEWS LLC","DEONE WHITE-MCWILLIAMS","","1108 E MAIN ST STE 803","","RICHMOND","VA","23219-3522","We specialize in education and training. We also specialize in print media.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#108;&#97;&#118;&#111;&#114;&#110;&#101;&#119;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">flavornews@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NEKSAGK4MMQ5">39</a>","INTEGRITY PROPERTY MANAGEMENT GROUP, LLC","JAMEL GOODLET","","5430 BRANDON BLUFF WAY","","RICHMOND","VA","23223-5801","With over 3 years of experience, we’re a commercial landscape and property maintenance company proud to offer our services to clients throughout Central Virginia and the surrounding areas. Great service begins and ends with experienced and friendly professionals, which is why we put so much effort into selecting the best people to join our team. We aim to not only meet your needs, but also exceed your expectations of what dependable property maintenance service can be.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#108;&#64;&#105;&#110;&#116;&#101;&#103;&#114;&#105;&#116;&#121;&#112;&#109;&#103;&#46;&#99;&#111;&#109;">jamel@integritypmg.com</a>","https://www.integritypmg.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAJNC63UKLH3">40</a>","FATBIRD CREATIVE LLC","CHRISTOPHER FRENDO","","1901 E MAIN ST APT E113","","RICHMOND","VA","23223-7099","We have decades of experience producing content and providing our advertising and marketing services for government agencies, the military, and fortune 500 companies. Services we provide include but are not limited to Branding & Strategy, Advertising & Marketing Services, Creative and Art Direction, Media Buying, Video Production Services, Animation & Motion Graphics, Sound Design & Audio Composing, Graphic Design, illustration, Social Media, Virtual Reality, Augmented Reality, Website Development & Design, Extended Reality, and Guerilla Marketing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#102;&#114;&#101;&#110;&#100;&#111;&#64;&#102;&#97;&#116;&#98;&#105;&#114;&#100;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">cfrendo@fatbirdcreative.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WEJSHG3LHK19">41</a>","RAPID FORENSIC CELL TYPING, INC.","JONATHAN BREW","","800 E LEIGH ST STE 1234","","RICHMOND","VA","23219-1539","We specialize in helping forensic investigators and intelligence personnel identify (~5 minutes per sample) which evidentiary samples contain useful biological information, so DNA profiling efforts are focused on the most promising samples. The lab gets important evidentiary information quickly that can either inform sample processing decisions and/or be combined with DNA profiles to increase the value of the evidence. Our SaaS model workflow can be performed in 1% of the time and at 5% of the cost of processing a DNA sample.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#99;&#98;&#114;&#101;&#119;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">joncbrew@gmail.com</a>","https://rapidforensiccell.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RUGSUX6LKW41">42</a>","WOLF DEN LLC","NICOLE WIENCKE","","1108 E MAIN ST STE 906","","RICHMOND","VA","23219-3534","Wolf Den: Elite Sniper Training. We specialize in snipercraft and designated marksman skillsets. Our capabilities include long-range shooting, precision marksmanship, advanced ballistics analysis, sniper tactics, and spotter communication. With mobile training teams and a dedicated facility, we deliver customized programs, accelerated learning, and equipment testing. We provide top-tier training to elite units worldwide, empowering professionals with the skills they need for success in the most challenging environments. Elevate your sniping capabilities with Wolf Den's unmatched expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#111;&#108;&#101;&#64;&#119;&#111;&#108;&#102;&#100;&#101;&#110;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">nicole@wolfdenusa.com</a>","https://wolfdenusa.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TGF8ZSLGDXV5">43</a>","NEW DAWN HEALTHCARE LLC","EYOHKA KAMARA","","1108 E MAIN ST STE 906","","RICHMOND","VA","23219-3534","Focused on providing essential and sought-after medical support services through temporary nursing and allied health professional staffing assistance. We provide various CLIA Waived Point-of-Care Testing, Rapid Molecular and PCR Covid-19 Testing, Toxicology Testing for Drugs and Alcohol, Vaccine and Injection Services, Traveler's Medical Support Services, DOT Physicals as well as remote diagnostic and, patient monitoring and supportive services to aide in patient treatment. New Dawn Healthcare sources timely logistical support and delivery of Medical supplies, medical equipment, industrial healthcare and hardware supplies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#110;&#101;&#119;&#100;&#97;&#119;&#110;&#45;&#104;&#101;&#97;&#108;&#116;&#104;&#99;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">info@newdawn-healthcare.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JKVPQ6LCY147">44</a>","REPAIR THE BREACH LLC","QUEEN HARRIS","","503 MANSFIELD DR","","RICHMOND","VA","23223-5830","Repair The Breach, LLC is a Human Services consulting firm that specializes in providing guidance, support, and coaching to individuals and teams seeking to maximize their inner strengths and marketability for success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#112;&#97;&#105;&#114;&#116;&#104;&#101;&#98;&#114;&#101;&#97;&#99;&#104;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">repairthebreachllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNHBGMMH98G8">45</a>","EMBODIED EMPATHY LLC","JOHN BLATTER","","3013 LAMB AVE","","RICHMOND","VA","23222-2713","Embodied Empathy helps people experience the reality of another through first-person, immersive virtual reality experiences specializing in movement, storytelling, haptics, and three-dimensional sound. These experiences are used in training, education and treatment related to movement, soft skills, empathy and bias.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#104;&#101;&#110;&#114;&#121;&#98;&#108;&#97;&#116;&#116;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">johnhenryblatter@gmail.com</a>","www.embodiedempathy.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7BCFCR1GF54">46</a>","JPOINT COLLABORATIVE LLC","DESTINY AMAN","","6532 VISCHER RD","","RICHMOND","VA","23225-4187","We specialize in management consulting services to include strategic planning, marketing and branding, communications, graphic visualization, behavioral science, social science research and analysis, program evaluation, and project management. We also provide organizational development and design, change management, executive and leadership training, team building, employee development, and communication training services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#115;&#116;&#105;&#110;&#121;&#64;&#106;&#112;&#111;&#105;&#110;&#116;&#99;&#111;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">destiny@jpointcollaborative.com</a>","www.jpointcollaborative.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBU8BWBNCCW7">47</a>","MAVEN CREATIVE SOLUTIONS, LLC","JAYSA CECIL","","3712 CRUTCHFIELD ST","","RICHMOND","VA","23225-4738","We specialize in medical strategic consulting and veteran healthcare. We also specialize in program and project management, process and quality improvement and policy development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#121;&#115;&#97;&#64;&#109;&#97;&#118;&#101;&#110;&#99;&#115;&#46;&#99;&#111;&#109;">jaysa@mavencs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLWCE2ZFYHN1">48</a>","XTRONUM SECURITY LLC","KYLE DOUGLAS","","1108 E MAIN ST STE 906","","RICHMOND","VA","23219-3534","We specialize in providing comprehensive penetration testing services, covering internal, external, wireless, and cloud environments, along with targeted application tests. Our offerings also encompass thorough vulnerability scanning and assessments, strategic consulting, and the development of tactics, techniques, and procedures (TTPs) for social engineering. Additionally, our portfolio includes purple teaming and red teaming exercises, which merge offensive and defensive strategies to simulate real-world attacks, thereby strengthening security measures.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#116;&#100;&#111;&#117;&#103;&#108;&#97;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kyletdouglas@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.491&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

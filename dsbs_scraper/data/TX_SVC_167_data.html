@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 167 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.06 seconds and 2.17 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 54 
+(of 54 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KH3CTNCMNEA5">1</a>","EPRO LLC","ROBERT WHITAKER","CEO","7302 ROBIN ST","","TEXAS CITY","TX","77591-3554","Engineering Support Services;Inventory & Records Management; Configuration and Data Management;Training, Training Development and Administrative Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#119;&#104;&#105;&#116;&#97;&#107;&#101;&#114;&#49;&#64;&#101;&#112;&#114;&#111;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">robert.whitaker1@eprollc.com</a>","http://www.eprollc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAZRLSW43C73">2</a>","TRIAD MARINE & INDUSTRIAL SUPPLY, INC.","TINA MILLER","","1155 FM 518 RD","","KEMAH","TX","77565-3130","Sales and Service of Inflatable Boats, Liferafts, Outboard Motors and Marine Related Safety Equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#116;&#114;&#105;&#97;&#100;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">tmiller@triadmarine.com</a>","http://www.triadmarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K9N1UDSNRQE7">3</a>","D & G COMMUNICATIONS, INC.","CLAYTON KELLEY","","2333 PALMER HWY","","TEXAS CITY","TX","77590-7141","D&G Communications INC is one of the largest small dealers for the marine electronics, communication, and navigation equipment on the Gulf Coast. We provide sales, services, and installation of all marine electronic, communication, and navigation equipment. We are dealers for several different brands of two way radios.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#121;&#116;&#111;&#110;&#64;&#100;&#103;&#99;&#111;&#109;&#109;&#46;&#110;&#101;&#116;">clayton@dgcomm.net</a>","http://www.dandgcomm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GWHUFL545B49">4</a>","AMERICAN JANITORIAL SERVICES LTD","ANNI GREENE","","520 DICKINSON AVE","","LEAGUE CITY","TX","77573-7070","American Janitorial Services, Ltd. Providing services in the greater Houston area in carpet cleaning, floor cleaning, power washing, and window cleaning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#97;&#106;&#115;&#108;&#116;&#100;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">accounting@ajsltdservices.com</a>","https://www.americanjanitorialservicesltd.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RV5JQ3TJJJ38">5</a>","SUNTRAC SERVICES, INC","THERESA O'DONEL","","1818 E MAIN ST","","LEAGUE CITY","TX","77573-4145","Radiation Safety Consulting services, Instrument Repair and Calibration, Leak Test Services, Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#114;&#101;&#115;&#97;&#64;&#115;&#117;&#110;&#116;&#114;&#97;&#99;&#46;&#99;&#111;&#109;">theresa@suntrac.com</a>","www.suntrac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PZ2JADBERA63">6</a>","REPUBLIC HELICOPTERS, INC.","KJIRSTIN LARSON","","8315 FM 2004 RD","","SANTA FE","TX","77510-8451","Helicopter charter - passengers and cargo. FAR 135 Air Carrier with FAR 133 and 137 Operating Certificate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#100;&#117;&#112;&#111;&#110;&#116;&#64;&#114;&#101;&#112;&#117;&#98;&#108;&#105;&#99;&#104;&#101;&#108;&#105;&#99;&#111;&#112;&#116;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">kdupont@republichelicopters.com</a>","www.republichelicopters.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELA5WWAGZJ33">7</a>","E-LONESTAR, LLC","BYRON BERRY","","341 CREEKSIDE DR","","LEAGUE CITY","TX","77573-1755","Online Laboratory Management System OLIMS? provides laboratories with a complete solution for tracking, monitoring and reporting results online in a protected and secure environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#101;&#114;&#114;&#121;&#64;&#101;&#108;&#115;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">bberry@elssoftware.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXK3PJ5URCZ7">8</a>","BLACKBOX MIGRATIONS LLC","WILLIAM DANNENMAIER","","3326 AVENUE O","","GALVESTON","TX","77550-6712","A small business providing training and consulting to governmental and commercial clients. 	Training / Course Development 	Technical Project Management 	Database Services & Data Warehousing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#105;&#108;&#108;&#64;&#66;&#108;&#97;&#99;&#107;&#66;&#111;&#120;&#80;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Bill@BlackBoxPartners.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZS5M7SP3C85">9</a>","M & B ENGINEERING, INC.","DARIN MASSEY","","2600 S SHORE BLVD","STE 300","LEAGUE CITY","TX","77573-2944","Structural, Thermal, Fluids, Fracture and Fatigue Analyses, Project Engineering, System Engineering, Engineering Testing, Project Management, Safety and Reliability Engineering and Improvements, Risk Identification. Develop RAESRs, FMEAs, and Hazards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#97;&#115;&#115;&#101;&#121;&#64;&#109;&#97;&#110;&#100;&#98;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">dmassey@mandbengineering.com</a>","http://www.mandbengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M22FF78CS6Z6">10</a>","STONEWATER INC.","SHEILA SCHUMER","","1650 E WINDING WAY DR","SUITE 110","FRIENDSWOOD","TX","77546-5128","We have an extensive background in Disaster Response including: Demolition, Reconstruction, Weatherization, Mold Remediation, Trash Removal, Lead Remediation, Asbestos Remediation, Elevation, Permitting, Invoicing, Tracking, Staff Augmentation, Construction, reconstruction, Rehabilitation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#105;&#108;&#97;&#46;&#115;&#99;&#104;&#117;&#109;&#101;&#114;&#64;&#115;&#116;&#111;&#110;&#101;&#119;&#97;&#116;&#101;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sheila.schumer@stonewaterinc.com</a>","www.stonewaterinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJGJPJNVDRP6">11</a>","EVCO PARTNERS LP","EMILY MARKS","","2701 PALMER HWY","","TEXAS CITY","TX","77590-6938","Burgoon Company has over 30 years distributing MRO, Industrial, Safety, and Laboratory supplies and equipment to Federal Government Prime Contractors for DOE, DOL, NASA and DOD. We also provide supplies and equipment to state agencies, local institutions, healthcare and universities. We have over 30 employees located throughout the United States with product distribution and management experience","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#97;&#114;&#107;&#115;&#64;&#98;&#117;&#114;&#103;&#111;&#111;&#110;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">emarks@burgooncompany.com</a>","http://www.burgooncompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z4J3KHWXZ5C7">12</a>","EM2 MANAGEMENT SOLUTIONS, INC.","JEANNE MENSINGH","","2600 S SHORE BLVD STE 300","","LEAGUE CITY","TX","77573-2944","Services offered are: Auditing (Internal and External) Training ISO 9001:2000 QMS ISO 17025-2005 QMS Validation cGMP Corrective/Preventive Action Gap Analysis Cost of Quality Laboratory Management Technical Writing/Review Procedures","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#101;&#110;&#115;&#105;&#110;&#103;&#104;&#64;&#108;&#97;&#98;&#116;&#111;&#112;&#105;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jmensingh@labtopiainc.com</a>","www.labtopiainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EM9XDU3C8683">13</a>","KIRTI INTERNATIONAL INC","DHARMESH PATEL","","2705 61ST ST STE D","","GALVESTON","TX","77551-1865","Marine Fenders, Furniture, gift artical, textile clothing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#97;&#114;&#109;&#101;&#115;&#104;&#95;&#55;&#55;&#48;&#54;&#50;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">dharmesh_77062@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2KME7VN2RQ1">14</a>","ADVANCED IMAGING MANAGEMENT, LLC","LYNN WILLIAMS","","4007 MASTERS DR","","LEAGUE CITY","TX","77573-5885","Advanced Imaging Management (AIM) provides Diagnostic Imaging for hospitals, imaging centers, & MDs. Services include Shared Services, Interim Mobiles, and Fixed Site answers for modalities such as MRI, CT, PET/CT, U/S, Bone Density, and imaging support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#110;&#110;&#64;&#97;&#105;&#109;&#114;&#97;&#100;&#105;&#111;&#108;&#111;&#103;&#121;&#46;&#110;&#101;&#116;">lynn@aimradiology.net</a>","http://www.aimradiology.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MRABL86NG1J7">15</a>","ROYCE, RALPH","RALPH ROYCE","","1208 SHADY OAK LN","","DICKINSON","TX","77539-3329","Air show consulting service Air Boss service Aviation Subject matter expert witness Aircraft evaluations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#121;&#99;&#101;&#64;&#97;&#105;&#114;&#98;&#111;&#115;&#115;&#49;&#46;&#99;&#111;&#109;">royce@airboss1.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYKMXENQEAG1">16</a>","RAMTEC MARINE SYSTEMS LLC","WALING WALTHAUS","","373 COLUMBIA MEMORIAL PKWY","","KEMAH","TX","77565-3187","INSTALLATION, MAINTENANCE ANS REPAIR OF AUTOMATION AND SAFETY SYSTEMS FOR THE MARINE AND OFFSHORE INDUSTRY","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#76;&#69;&#83;&#64;&#82;&#65;&#77;&#84;&#69;&#67;&#45;&#77;&#65;&#82;&#73;&#78;&#69;&#46;&#67;&#79;&#77;">SALES@RAMTEC-MARINE.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WWN3DMBPKKA9">17</a>","THE PRESTON GROUP LLC","LISA PRESTON","","2820 FM 517 RD E","","DICKINSON","TX","77539-8617","SBA Loviewan Program Compliance Reviews and Assistance. Internal Control Measures. Independent Loan Review. Policies and Procedures.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#112;&#114;&#101;&#115;&#116;&#111;&#110;&#64;&#116;&#104;&#101;&#45;&#112;&#114;&#101;&#115;&#116;&#111;&#110;&#45;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">lpreston@the-preston-group.com</a>","http://www.the-preston-group.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N56NMLF6GMJ5">18</a>","I5 NETWORKS INC.","MARCIA JACKSON","","601 CIEN RD., SUITE 200","","KEMAH","TX","77565-3075","As an IT Managed Services Provider or MSP, we focus on providing comprehensive high-quality IT Services to our community. Our solutions are customized to provide cost-effective optimization to your IT Infrastructure and keys to support mission-critical systems and disaster recovery.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#116;&#46;&#112;&#114;&#111;&#106;&#101;&#99;&#116;&#115;&#64;&#105;&#53;&#45;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">it.projects@i5-networks.com</a>","www.i5-networks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z5G2ZFJUUH91">19</a>","DC PLANNING CONSULTANTS & ASSOCIATES, INC.","MISHELENE BAKER","","7305 MALLARD DR","","TEXAS CITY","TX","77591-3613","DC Planning Consultants and Project Managers provide environmental and urban planning and related services for communities of all sizes. We are dedicated to finding solutions for your community to accomplish short term goals and guide long range plans.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#100;&#99;&#112;&#108;&#97;&#110;&#110;&#105;&#110;&#103;&#97;&#115;&#115;&#111;&#99;&#46;&#111;&#114;&#103;">info@dcplanningassoc.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K8HYJEDK87K9">20</a>","ASEDA ENTERPRISES, INC.","MARK CONRAD","","211 E PARKWOOD AVE","STE 210","FRIENDSWOOD","TX","77546-5387","Aseda Enterprises dBA Express Employment Professionals is one of the top staffing companies in the U.S. and Canada. We help people find jobs and provide workforce solutions to businesses. Express has more than 760 franchise locations that provide a full range of employment solutions that include full-time, temporary, and part-time employment in a wide range of positions, including professional, commercial, and administrative.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#99;&#111;&#110;&#114;&#97;&#100;&#64;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#112;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">mark.conrad@expresspros.com</a>","https://www.expresspros.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZKYKHHLVG66">21</a>","EMPIRE ADVERTISING & DESIGN LLC","LEEANNE AGUILAR","","1145 BUTLER RD","","LEAGUE CITY","TX","77573-4871","We are a full service design firm specializing in graphic design, website design, video production, photography, printing and marketing consulting service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#101;&#97;&#110;&#110;&#101;&#64;&#101;&#109;&#112;&#105;&#114;&#101;&#97;&#100;&#46;&#99;&#111;&#109;">leeanne@empiread.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JC95KJ8CDSV5">22</a>","GARY & LANA LIFE SAVING SKILLS","GARY & LANA STAUDT","","2108 SAVANNA CT N","","LEAGUE CITY","TX","77573-5034","CPR, ACLS, PALS, 1st Aid, & Health & Safety Instructors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#115;&#116;&#97;&#117;&#100;&#116;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">glstaudt@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U311GSXN4F93">23</a>","LATAVCO CONSULTING GROUP, LLC","LATRAVIOUS BELL","","2622 PORT CARISSA DR","","FRIENDSWOOD","TX","77546-3497","Provide IT related focusing on Database Admistration, Sarbane Oxley, Oracle services and Educational related Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#116;&#114;&#97;&#118;&#105;&#111;&#117;&#115;&#46;&#98;&#101;&#108;&#108;&#64;&#108;&#97;&#116;&#97;&#118;&#99;&#111;&#46;&#99;&#111;&#109;">latravious.bell@latavco.com</a>","www.latavco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGNMA4HKRZH3">24</a>","TECHNOLOGY MANAGEMENT SOLUTIONS LLC","TRACEY POLETTI","","2964 STARCROFT CT","","LEAGUE CITY","TX","77573-3064","TMS, LLC provides Reliability, Availability and Maintainability and Cost(RAMC) Analysis, Modeling, Simulation, and Analysis (MS&A), supply & provisioning as well as traditional acquisition support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#101;&#121;&#46;&#112;&#111;&#108;&#101;&#116;&#116;&#105;&#64;&#116;&#109;&#115;&#108;&#108;&#99;&#46;&#117;&#115;&#46;&#99;&#111;&#109;">tracey.poletti@tmsllc.us.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GL1NNB9E3SQ3">25</a>","DYNO OIL & ELECTRIC LLC","AL CISNEROS","","1215 N SHORE DR","","KEMAH","TX","77565-2382","DYNO Oil is a petroleum products marketing and maritime logistics company capable of delivering fuels and additives via tanker, pipeline or direct delivery in the U.S. and throughout the world. DYNO consults in alternative energy/lighting, and U.S./Latin America trade.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#99;&#105;&#115;&#110;&#101;&#114;&#111;&#115;&#64;&#100;&#121;&#110;&#111;&#111;&#105;&#108;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">alcisneros@dynooilgroup.com</a>","www.dynooilgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5VQEQ3SLGM7">26</a>","INNOVATIVE BUSINESS SERVICE, LLC","MARLON BROWN","","1033 WALNUT POINTE","","LEAGUE CITY","TX","77573-0902","Innovative Business Service, is a Woman Owned Small Business (WOSB), supply company. We supply goods, products, office, janitorial, paper, building, medical and safety supplies, personal hygiene and PC software and accessories to government entities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#98;&#114;&#111;&#119;&#110;&#64;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#118;&#101;&#98;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#115;&#101;&#114;&#118;&#46;&#99;&#111;&#109;">mkbrown@innovativebusinessserv.com</a>","www.innovativebusinessserv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S3JNZRBN66F8">27</a>","RANDY DOWNS","RANDY DOWNS","","2406 CAMINO CT","","TEXAS CITY","TX","77590-4645","troubleshoot Microsoft networks - Server 2003, 2008, 2012, SEO - Search Engine Optimization, Website development, Convert Outdated products: Windows XP, Office 2003, SBS 2003 - Malware Removal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#64;&#100;&#111;&#119;&#110;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">support@downsconsultingservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2J7M6C6S3J9">28</a>","GALVESTON TRANSPORTATION, LLC","FRANKLIN CARNES","","7500 FM 1765","","TEXAS CITY","TX","77591-3672","At Galveston Limousine we have a foundational commitment to service, and to customer satisfaction so we want to make clear the different types of service we have to offer. We have inexpensive shared shuttle service to and from the airports for those looking for the most economical option to get from the Houston airports to Galveston or from Galveston to the Houston airports. We offer the size and style of transportation you need from vans, minibuses, Sprinters, mini-coaches and full size motor coaches at a very reasonable price. That is your most economical choice. We specialize in private car service for all occasions with a selection of sedans, sport utility vehicles, limousines, Sprinters, buses and luxury buses. Mini buses along with the limousines and the Sprinters are perfect for weddings, Quinceaneras, parties and group activities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#119;&#99;&#52;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">fwc4@aol.com</a>","http://www.galvestonlimo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y1QRQP5NG583">29</a>","ALSEPT, KAREN","KAREN ALSEPT","","16630 EDWARD TEACH","","GALVESTON","TX","77554-","Training provider of workplace safety and health","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#101;&#110;&#46;&#97;&#108;&#115;&#101;&#112;&#116;&#64;&#116;&#114;&#114;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">karen.alsept@trreco.com</a>","http://www.trreco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFRYK4RXZLF3">30</a>","CINCO INTERNATIONAL GROUP, LLC","SYLVIA SILGUERO","","3707 FATTA DR","","DICKINSON","TX","77539-6449","Cinco International Group is a full-service labor provider for temp, temp to perm or direct placement labor and or craftsmen to contractors and employers who need them, where and when they need them, for as long as they need them. To ensure a productive and successful match, we have developed a comprehensive screening and recruiting process that sets us apart from other staffing firms. We can provide executive recruiting and human resource consulting to small or large companies. Our goal is to build long term relationships by providing quality placements, exceptional customer service, and strategic solutions to plan for future workforce development needs. We as an organization are led by our commitment to our clients and will provide professional services using our resources and vast industry knowledge while maintaining integrity and confidentiality. Recruiting Process","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#121;&#108;&#118;&#105;&#97;&#115;&#64;&#99;&#105;&#110;&#99;&#111;&#105;&#103;&#46;&#99;&#111;&#109;">sylvias@cincoig.com</a>","www.cincoig.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VN5ND8D5QBL7">31</a>","LIGGIO'S TIRE AND SERVICE CENTER, INC.","ANTHONY FALCO","","2604 44TH ST","","DICKINSON","TX","77539-6694","auto repair, tires, tubes and service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#103;&#103;&#105;&#111;&#115;&#116;&#105;&#114;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">liggiostire@gmail.com</a>","www.liggiostire.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R9SLA7D88BR5">32</a>","ADVANCED REFRIGERANT TECHNOLOGIES LLC","KRISTY DEFORD","","1613 HIGHWAY 3 S","","LEAGUE CITY","TX","77573-7307","EPA CERTIFIED REFRIGERANT RECLAIMER, ON SITE RECOVERY AND RECLAMATION SERVICES FOR LARGE QUANTITIES OF REFRIGERANT.BUY, SELL, CLEAN REFRIGERANTS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#121;&#64;&#97;&#100;&#118;&#114;&#101;&#102;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">kristy@advreftech.com</a>","www.advreftech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKFRZWESKTZ3">33</a>","RYAN MARINE SERVICES, INC.","THOMAS RYAN","","7500 HARBORSIDE DR","","GALVESTON","TX","77554-2876","Ryan Marine Services has provided services to the marine offshore industry for over 30 years; transporting cargo, fuel, water and personnel to ships, ports and platforms from Brownsville, Texas to Key West, Florida.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#114;&#121;&#97;&#110;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">andy@ryanmarine.com</a>","www.ryanmarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DEFEXPU39329">34</a>","RMA COMMERCIAL GENERAL CONTRACTORS LLC","RICARDO MERINO","","220 AMBER LN","","LEAGUE CITY","TX","77573-1802","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#101;&#114;&#105;&#110;&#111;&#64;&#114;&#109;&#97;&#99;&#103;&#99;&#46;&#99;&#111;&#109;">rmerino@rmacgc.com</a>","rmacgc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UY12TL1UWRR3">35</a>","ATLAS EXECUTIVE CONSULTANT LLC","PAUL HILL","","2114 HIDDEN LAKE DR","","LEAGUE CITY","TX","77573-6978","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#104;&#105;&#108;&#108;&#64;&#97;&#116;&#108;&#97;&#115;&#101;&#120;&#101;&#99;&#46;&#99;&#111;&#109;">pshill@atlasexec.com</a>","https://atlasexec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VDEUGKNTAUR3">36</a>","FORGE TECH, INC","MATHEW RYBICKI","","900 ANDERS LN STE 15","","KEMAH","TX","77565-2689","Forge Tech, Inc. provides portable technology to safely fabricate metal joints through patented friction forge bonding in hazardous worksites including refineries, bulk storage terminals, pipelines and petrochemical plants where traditional welding is restricted or forbidden due, e.g., to the risk of fire or explosion. This unique process provides our customers with permanent engineered solutions to retrofit and repair in service tanks, pipes and other vessels containing hazardous materials, fuels or other Volatile Organic Compounds without the necessity of removing from service or shutting down operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#121;&#98;&#105;&#99;&#107;&#105;&#64;&#102;&#111;&#114;&#103;&#101;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mrybicki@forgetechinc.com</a>","http://www.forgetechinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E5YNRDJT2JF8">37</a>","KORT INDUSTRIES LLC","GREG KIMBROUGH","","5309 I-45 SOUTH","","LA MARQUE","TX","77568-","At Kort Industries LLC, we have only one purpose – satisfying you and your needs for protective coating services. Our goal is to provide the best industrial coatings and services to Houston-area companies. To achieve our goal, we have assembled a team of experienced industrial coatings professionals who share our belief that business is built on customer satisfaction and driven by quality, responsiveness and satisfaction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#107;&#105;&#109;&#98;&#114;&#111;&#117;&#103;&#104;&#64;&#107;&#111;&#114;&#116;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">gkimbrough@kortindustries.com</a>","www.kortindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EDUPDFAVPKN6">38</a>","KEMAH HARDWARE & LUMBER WHOLESALE, LLC","TONI RANDALL","","1027 HIGHWAY 146","","KEMAH","TX","77565-3049","KHL Wholesale is a wholesale company specializing in, but not limited to, lumber & building materials. Our extensive background and resources in retail LBM & hardware have positioned us to branch into wholesale. We bring immediate and reliable service unmatched by our competition with a concise focus on the federal, state, and local governments. We also provide innovative solutions to many supply issues your business may have in today's volatile global supply market.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#75;&#72;&#76;&#87;&#104;&#111;&#108;&#101;&#115;&#97;&#108;&#101;&#46;&#99;&#111;&#109;">sales@KHLWholesale.com</a>","https://www.khlwholesale.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KU47KMWYELC7">39</a>","SOUTHERN LABORATORY AND INDUSTRIAL INC","KRIS ANDAUR","","2600 S SHORE BLVD","STE 300","LEAGUE CITY","TX","77573-2944","Laboratory gas generator sales, service, and support to include Hydrogen, Nitrogen, Zero-Air, and Dry compressed air gas generators. Universal Power Supply sales to inclued power ranges from 200VA up to 100kVa. Deionized water processor sales to include both point-of-use, and full 'House' centralized systems for ASTM Types I, II, and III water specifications. Laboratory supply, chemical, and reagent sales. Installation services for all equipment are avaialbe.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#114;&#105;&#115;&#64;&#103;&#101;&#116;&#115;&#108;&#105;&#46;&#99;&#111;&#109;">Kris@getsli.com</a>","www.getsli.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MVGFNWMKELQ2">40</a>","PARADIGM FIELD INDUSTRIAL SOLUTIONS, LLC","MICHAEL MORRISON","","211 W SAUNDERS ST","","LEAGUE CITY","TX","77573-3831","ProForce Industrial Services, LLC is a leading supplier and provider of mechanical integrity based solutions for the industrial and oil and gas markets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#112;&#102;&#50;&#105;&#46;&#99;&#111;&#109;">mike@pf2i.com</a>","www.pf2i.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y2GMKHZM45F6">41</a>","FAITH AND MARIE LLC","MARIE YOUNGBLOOD","","1100 GULF FWY S STE 110","","LEAGUE CITY","TX","77573-5148","Senior Helpers is a Healthcare provider from our certified dementia office. Senior Helpers provide Personal Care for the elderly and disabled applying proven public health practices which includes research and our copyrighted care notes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#121;&#111;&#117;&#110;&#103;&#98;&#108;&#111;&#111;&#100;&#64;&#115;&#101;&#110;&#105;&#111;&#114;&#104;&#101;&#108;&#112;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">myoungblood@seniorhelpers.com</a>","https://www.seniorhelpers.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1CDLPU5KL14">42</a>","DEMAYA SERVICES LLC","JONI KARNOWSKI","","2879 ROMANO LN","","LEAGUE CITY","TX","77573-2373","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#107;&#97;&#114;&#110;&#111;&#119;&#115;&#107;&#105;&#64;&#100;&#101;&#109;&#97;&#121;&#97;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">jkarnowski@demayaservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CG6ZFQQLZJW3">43</a>","FIVE AND TWO MARKETING LLC","ELIZABETH ROGERS","","10213 STEWART RD","","GALVESTON","TX","77554-9283","Marketing and communications agency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#122;&#64;&#102;&#105;&#118;&#101;&#97;&#110;&#100;&#116;&#119;&#111;&#109;&#97;&#114;&#107;&#101;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">liz@fiveandtwomarketing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P8CNA8N3KA86">44</a>","TRANSFORMATIVE LEADERSHIP CONNECTIONS LLC","PATRICK PILOLA","","2905 RED MAPLE COURT","","FRIENDSWOOD","TX","77546-7906","Career, Life, and Leadership Coach and Part-time Consultant: Helping individuals, aspiring leaders, and organizations reach their full potential and peak performance through increased knowledge, heightened self-awareness, and transformative energetic shifts. 35-Years Government Experience including roles as a NASA Branch Chief, Supervisor, Division Chief, Manager, and Senior Executive. Held positions in NASA Headquarters; the International Space Station Program Office; Engineering Directorates at NASA/Johnson Space Center and Kennedy Space Center; Safety, and Mission Assurance; and Boeing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#112;&#105;&#108;&#111;&#108;&#97;&#64;&#116;&#114;&#97;&#110;&#115;&#102;&#111;&#114;&#109;&#119;&#105;&#116;&#104;&#112;&#97;&#116;&#46;&#99;&#111;&#109;">ppilola@transformwithpat.com</a>","https://www.transformwithpat.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSRMYYT484Z7">45</a>","DS IMPORTS LLC","DHARMESH PATEL","","2406 BELUCHE DR","","GALVESTON","TX","77551-1502","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#97;&#114;&#109;&#101;&#115;&#104;&#56;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dharmesh8@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QBCEWKVMXPK3">46</a>","PISTOL POINT LOGISTICS LLC","MATTHEW WIGGINS JR.","","617 9TH ST","","KEMAH","TX","77565-2937","Our mission is to assist the government and private sector with small and large emergency situations that include natural disasters and other unplanned and humanitarian emergencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#105;&#115;&#116;&#111;&#108;&#112;&#111;&#105;&#110;&#116;&#54;&#54;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">pistolpoint66@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YXFWXMGBFHT5">47</a>","OCEANIC ENERGY LLC","THOMAS HAALAND","","207 E SHORE DR","","KEMAH","TX","77565-2358","Producing fresh potable water on a vessel, built at a world class shipyard, modular, mobile, and rapid delivery compared to onshore desalination!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#67;&#72;&#64;&#79;&#99;&#101;&#97;&#110;&#105;&#99;&#69;&#110;&#101;&#114;&#103;&#121;&#71;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">TCH@OceanicEnergyGroup.com</a>","OceanicEnergyGroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YRGXFEMKT4J6">48</a>","ORION TECH EDUCATION LLC","JOHN BENSON","","701 SOUTHFIELD DRIVE","","FRIENDSWOOD","TX","77546-3056","We provide technology lessons for all age groups, online and via camps. Our technology courses act as and enhance existing STEM curriculum. Our technology lesson include javascript coding, python coding, c++ coding, 3d printing with blender and maya, Photoshop and video-editing, YouTube casting, robot building, micro-controller with arduino and rasberry pi. These lesson will prepare student for the future of technology. We provide these lessons at discounted costs to bridge the digital divide among poorer and undeserved demographics. These lessons can also be integrated into cognitive learning for seniors and veterans post deployment. Lesson can be tailored for vocational training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#98;&#101;&#110;&#115;&#111;&#110;&#51;&#49;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">johnbenson31@hotmail.com</a>","https://oriontechgov.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XX38T5JJCNV1">49</a>","DELTA FREIGHT SOLUTIONS LLC","JOHN FRAZIER","","6179 NEWCASTLE LN","","LEAGUE CITY","TX","77573-2583","Freight Broker","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#100;&#101;&#108;&#116;&#97;&#45;&#102;&#114;&#101;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">info@delta-freight.com</a>","www.delta-freight.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PWUKA21ADK94">50</a>","RESTRICT FLOW L.L.C.","DAVID DUSL","","3010 AUTUMN HARVEST DR","","FRIENDSWOOD","TX","77546-5289","Led by an experienced Service Disabled Veteran Owned Small Business (SDVOSB) leader and a previous NASA contract aeronautical engineer with 18 years experience within government contracts, Restrict Flow provides the following services: Fluid Flow restriction device design and delivery, standard flat orifice plates, and fluid flow process engineering/consulting. Customers can expect quick, proven, specialized solutions tailored to their fluid flow challenges, especially when orifice plate cavitation or pipe cavitation is an issue. Whether you simply have a given set of flow conditions that need to be met, or are looking for an approach from a larger system perspective, we solve problems and deliver solutions. We support various types of fluid systems whether power piping (B31.1), process piping (B31.3), marine applications and others. Our team has experience with government processes including PDR, CDR, and safety reviews.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#114;&#101;&#115;&#116;&#114;&#105;&#99;&#116;&#102;&#108;&#111;&#119;&#46;&#99;&#111;&#109;">info@restrictflow.com</a>","www.restrictflow.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FPCENW3J6NW5">51</a>","J3 DEVELOPMENT LLC","BENNIE DAVIS JR","","2518 BERNADINO DR","","LA MARQUE","TX","77568-2514","J3 Development LLC, a certified SDVOSB, MBE, VBE, HUBZone, and SBA Small Business, offers comprehensive solutions across government contracting, agriculture, renewable energy, real estate, and transportation. Based in Houston, Texas, we excel in construction, sustainable farming, solar energy, and community development, with divisions like J3 Transportation, J3 Family Farms, and J3 Family Market, each aligned with strategic NAIC codes. Founded in 2019, we empower communities through innovation and strategic partnerships. Pursuing SBA 8(a) certification, we're poised to expand our impact and deliver excellence on a broader scale.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#100;&#97;&#118;&#105;&#115;&#50;&#51;&#52;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">badavis234@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NC95JFKDP5W5">52</a>","CYBERHELM TECHNOLOGIES LLC","AUSTIN SUDERSKI","","7021 N HOLIDAY DR","","GALVESTON","TX","77550-3027","CyberHelm Technologies LLC is an innovative information technology company trying to change the landscape of how customers fulfill their company needs. By adding as a collective body, CyberHelm effectively acts as a team to execute specific tasks, as opposed to the typical 'one person one mission' narrative that is the industry norm. Our emphasis is on recruiting the 1% of 'doers' in the IT world and retaining them for their entire careers, and thus allowing us to satisfy customer needs with happy, competent, efficient personnel. please let me know if this suffices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#117;&#115;&#116;&#105;&#110;&#115;&#117;&#100;&#101;&#114;&#115;&#107;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Austinsuderski@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W55WVF2EC3J3">53</a>","TFRS INC","RACHEL STANSEL","","7727 WETZEL RD","","DICKINSON","TX","77539-8266","We provide Emergency Vehicle Upfitting and installation of lights, sirens, programming, and vehicle maintenance. Installation of Graphics and conspicuity. We also install K-9 Vehicle Inserts, Cages, K9 cooling and Heat Alert systems. We also Install prisoner transport units.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#120;&#97;&#115;&#102;&#105;&#114;&#115;&#116;&#114;&#101;&#115;&#112;&#111;&#110;&#115;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">texasfirstresponseservices@gmail.com</a>","www.tx1rs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RQMHXBPNRA37">54</a>","LAGO MAR MAID SERVICES LLC","JADA BREWINGTON","","13266 ANCHOR ISLE CT","","TEXAS CITY","TX","77568-1189","Lago Mar Maid Services, LLC, based in Texas, delivers professional janitorial and cleaning solutions with a client-focused approach. We specialize in a wide range of services, including vacuuming, dusting, mopping, window and baseboard cleaning, as well as floor stripping, waxing, wall washing, and trash removal. Our team also excels in deep cleaning and post-construction cleaning, ensuring every space is meticulously maintained. Detail-oriented and committed to excellence, Lago Mar Maid Services, LLC prioritizes client satisfaction by delivering tailored cleaning services that meet the highest standards of cleanliness and care. With a dedicated workforce and advanced cleaning techniques, we consistently provide efficient, reliable, and quality-driven results to our diverse clientele.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#119;&#105;&#110;&#103;&#116;&#111;&#110;&#106;&#97;&#100;&#97;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">brewingtonjada@yahoo.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.258&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

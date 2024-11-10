@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Mississippi;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.19 seconds and 1.20 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 76 
+(of 76 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PFBLJASAKDQ9">1</a>","ELECTRO NATIONAL CORP","HELEN PARKER","Director of Mat'l/Sales","511 MATTHEWS DR","","CANTON","MS","39046-3251","CUSTOM MANUFACTURING, PRESSURE SWITCHES, ROTARY SWITCHES, SEALED SWITCHES, CURRENT SENSORS, VOLTAGE SENSORS, SOLENOIDS, REED RELAYS, METAL FABRICATING AND STAMPING, ELECTRICAL PANELS, WIRING HARNESSES, HYDRAULIC TEST DESIGN, POWER UNITS, TUBE BENDING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#112;&#97;&#114;&#107;&#101;&#114;&#64;&#101;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">hparker@electronational.com</a>","http://www.electronational.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKV2FEWCLPX8">2</a>","US COATING SPECIALTIES & SUPPLIES, INC","EARL WASHINGTON","Operations Manager","125 W MAYES ST","","JACKSON","MS","39213-6212","SLIP PREVENTION FLOOR CLEANERS, FLOOR COATINGS, JANITORIAL SUPPLIES. SALES,INSTALLATION & SERVICE OF HI BUILD EPOXY COATING.Construction of residential & commercial buildings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#117;&#115;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">info@uscoatingspecialties.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HC2KMD6BQKZ5">3</a>","HIGH TECH INC","BRIAN SPYCHALSKI","PRESIDENT","21120 JOHNSON RD","","LONG BEACH","MS","39560-3711","ELECTRONIC ENGINEERING, HYDROPHONES, SIGNAL CONDITIONING ELECTRONICS; UNDERWATER SENSORS AND DATA TELEMETRY; OCEANOGRAPHY, ANTI SUBMARINE WARFARE (ASW) SYSTEMS AND FIELD MEASUREMENTS AND SEISMIC SURVEY INSTRUMENTATION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#103;&#104;&#95;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">high_techinc@bellsouth.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ML9JCDW4CZW7">4</a>","THE MARTIN GROUP LLC","DEBORAH MARTIN","President","157 N UNION ST","","CANTON","MS","39046-3740","We provide a full range of temporary and professional employees including subject matter experts in forestry, engineering, sexual harassment prevention training and manufacturing. We provide contract workers in unskilled and skilled labor, including clerical and professional staff. We also maintain a database of retired government employees to serve in special project support work including consulting & training of new hires. We handle clerical & admin support staff including data entry. We also provide logistics support staff & emergency response support staff.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#105;&#115;&#116;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">dmartin@servicespecialistltd.com</a>","http://www.servicespecialistltd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X6YEXD1FZNH8">5</a>","AJA MANAGEMENT & TECHNICAL SERVICES INC","ANDREW JENKINS","President/CEO","912 N WEST ST","","JACKSON","MS","39202-2566","30 Yrs Exp. Services:Planning, Program/Construction/Project Mngt,Planning,Data Mngt,Contract Admin,Facility Operations,R-O-W Acqui.,Envir.Assess.,Bldg Technologies,Value Engineering,Construction,MBE Outreach,Permitting,Performance Contracting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#106;&#97;&#105;&#110;&#99;&#64;&#97;&#106;&#97;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">ajainc@ajaservices.com</a>","http://www.ajaservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D1HMJ984VW97">6</a>","VANGUARD INTERNATIONAL INC","JOHN VALLAS","SALES / SERVICE","104 CHERRY RIDGE CV","","FLORA","MS","39071-9556","SECURITY & FIRE ALARMS,SOUND-PAGING & INTERCOM, CLOCK SYSTEMS,WIRE & SPECIAL CABLE,MONEY SAFES, DEPOSITORIES,PNEUMATIC TUBE SYSTEMS,METAL DETECTION/X-RAY SECURITY EQUIP,MAN-TRAP ENTRY PORTALS,SECURITY CONSULTING SVCS,CAMERA SYSTEMS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#118;&#97;&#110;&#103;&#117;&#97;&#114;&#100;&#105;&#105;&#46;&#99;&#111;&#109;">john@vanguardii.com</a>","https://www.vanguardii.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QKPGNTCJYYR8">7</a>","NVISION SOLUTIONS INC","SOCORRO HARVEY","President / CEO","88360 DIAMONDHEAD DR E","","DIAMONDHEAD","MS","39525-3643","GIS Services and application development. Remote Sensing services and application development. Spatial database development/deployment. Web-based integrations of these three core technologies. ESRI ArcIMS deployment, training, and development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#118;&#101;&#121;&#64;&#110;&#118;&#105;&#115;&#105;&#111;&#110;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">sharvey@nvisionsolutions.com</a>","http://www.nvisionsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LN46BBJSG5N7">8</a>","PFG PRECISION OPTICS INC","TREVOR GREEN","Business Development","733 BIENVILLE BLVD","","OCEAN SPRINGS","MS","39564-2842","High-quality manufacturer of classical optic components - lenses, prisms, beamsplitters, mirrors and windows from 4mm to 300mm in size with nunmerous types of vacuum deposited coatings in the UV to near IR wavelengths.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#117;&#114;&#116;&#110;&#101;&#121;&#64;&#112;&#102;&#103;&#111;&#112;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">courtney@pfgoptics.com</a>","http://www.pfgoptics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LPR6UJ9FDHF9">9</a>","ALCATEC, LLC.","ROSEMARY BARBOUR","Managing Member","5250 GALAXIE DR","","JACKSON","MS","39206-4311","Design, software, hardware, communications,integration, training, program management, planning, information technology services, consulting, database application, processing, administration, data, support services; mobile commercial laundry units","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#97;&#114;&#98;&#111;&#117;&#114;&#64;&#97;&#108;&#99;&#97;&#116;&#101;&#99;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">rbarbour@alcatecllc.com</a>","www.alcatecllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DSMTLKQSAEP7">10</a>","MARINE GEARS, INC.","NEAL HALEY","VP Sales & Purchasing","1690 HWY 1 NORTH","","GREENVILLE","MS","38703-1943","Manufacturers of Marine Gears, Open Gears, Marine Propulsion Gear Units, Torsional Couplings, Pneumatic and Hydraulic Clutches, Standard Parts and Special Design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#104;&#97;&#108;&#101;&#121;&#64;&#104;&#97;&#108;&#101;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">nhaley@haleyinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBCKL5V8PCJ3">11</a>","COMPLETE ENVIRONMENTAL & REMEDIATION CO. L.L.C.","KEVIN IVY","","37 DAVID SWAN LN","","PURVIS","MS","39475-3076","tank, vessel, line cleaning; oil and chemical spill response, soil remediation, site prep, haz and non haz waste mgt","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#118;&#121;&#64;&#107;&#101;&#108;&#108;&#101;&#121;&#99;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">kivy@kelleycompanies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1UNWLLUZAQ3">12</a>","POWER DYNAMICS INNOVATIONS LLC","DOUGLAS MEYER","COMPUTER SERVICES MANAGER","1301 MARTIN LUTHER KING BLVD","","PICAYUNE","MS","39466-5426","Engineering and manufacture of pipe tensioners, winches, cranes, pipe handling and custom equipment for the oil industries. Specialization involving hydraulic power applications. OEM for hydraulic directional drilling rigs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#101;&#121;&#101;&#114;&#64;&#112;&#111;&#119;&#101;&#114;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmeyer@powerdynamicsllc.com</a>","www.powerdynamicsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLNFV288GME8">13</a>","ESSENTIAL KNOWLEDGE SYSTEMS LLC","BEDDHU MURALI","President & CEO","7 SILVER MAPLE TRL","","PETAL","MS","39465-4176","Interactive Web/mobile app development and hosting based on JavaScript and Lua frameworks supported by highly scalable databases. Web-based image, video processing applications supported by AI backends, video conferencing applications including screen sharing and screen recording and session recording, web-hosting services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#50;&#64;&#101;&#115;&#107;&#110;&#115;&#46;&#99;&#111;&#109;">bm2@eskns.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CEZQHX7SJLN5">14</a>","DEMEX INTERNATIONAL, INC","GARY DEMARSH","President","7144 DUMMY LINE RD","","PICAYUNE","MS","39466-9646","Products, services, & consulting for the use of explosives in offshore platform removals, trenching, marine salvage, marine construction, explosive forming/welding, and other services related to the explosive field.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#114;&#121;&#64;&#100;&#101;&#109;&#101;&#120;&#46;&#117;&#115;">gary@demex.us</a>","http://www.demex.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RSCDDXH8DFZ9">15</a>","RAS ENTERPRISES LLC","RANDALL SOBOUL","Owner, RAS ENTERPRISES","2512 25TH AVE","STE 3","GULFPORT","MS","39501-4814","RAS is a SDVOSB/HUBZone Small Business, wholly owned by Randy Soboul. our competencies are Bulk/Industrial Gases, Grounds Maintenance, Program Management and Quality Control RAS was named a named a “TOP 100 Service Disabled Veteran Owned Business by Diversity Business.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#64;&#114;&#97;&#115;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#98;&#105;&#122;">randy@rasenterprises.biz</a>","http://www.rasenterprises.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VJGWLNQGLCP9">16</a>","FORRESTER & ASSOCIATES LLC","LARRY FORRESTER","","181 E MAIN ST","","ACKERMAN","MS","39735-9708","Forestry Consulting and Management, IT and computer consulting and sales, Commercial and governmental construction, Utilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#64;&#102;&#111;&#114;&#114;&#101;&#115;&#116;&#101;&#114;&#97;&#46;&#99;&#111;&#109;">larry@forrestera.com</a>","www.forrestera.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8MYPB2ZENR2">17</a>","RED LASER TECHNOLOGY INC","ADRIAN JONES","CEO","1230 RAYMOND RD","STE 1222","JACKSON","MS","39204-4579","Red Laser is an advanced technology development and consulting firm with a unique focus and ability to leverage our algorithm based technology. For over a decade, RedLaser has delivered high quality information system solutions to government and commercial clients within the prescribed time and budget. We improve our clients’ return on IT investment by developing solutions that best meet their needs through the application of innovative computing and network technologies. RedLaser maintains our commitment to the highest quality of service in every project by using ISO 9001:2008, and CMMI certified processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#114;&#105;&#97;&#110;&#106;&#111;&#110;&#101;&#115;&#64;&#114;&#101;&#100;&#108;&#97;&#115;&#101;&#114;&#46;&#110;&#101;&#116;">adrianjones@redlaser.net</a>","http://www.redlaser.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q6LAL94SMAG5">18</a>","COUNTRY LANE LAWN SERVICE, LLC","BRAD WEDEL","","20381 HIGHWAY 8 W","","ABERDEEN","MS","39730-8566","We've been in business for 20 years, providing complete lawn and landscape maintenance. We also offer turf weed control, fertilization, as well as, irrigation system maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#117;&#110;&#116;&#114;&#121;&#108;&#97;&#110;&#101;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">countrylane1@gmail.com</a>","countrylanelawn.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3RND4D1F1E5">19</a>","GARY-BUCHANAN ENTERPRISES, LLC","DEBRA BUCHANAN","","972 GARVIN ST","","JACKSON","MS","39206-5020","Gary-Buchanan Enterprises provides professional consulting services to “for-profit” and “not-for-profit” clients in selected industries. Real estate services, including mortgage loan origination, and signing agent services are also provided.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#114;&#97;&#64;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#103;&#98;&#101;&#46;&#99;&#111;&#109;">debra@enterprisesgbe.com</a>","www.enterprisesgbe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q2DULYPDKYU8">20</a>","SR1 TECHNOLOGIES, LLC","GREGORY GREEN","","369 TOWNE CENTER BLVD STE B","","RIDGELAND","MS","39157-4833","Forward-looking company that looks to develop current and future technology needs. SR1 Technologies provides: Software Development, Database Development, E-Business (Webhosting, Online Development), Networking, Data Analysis, and Technology Security","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#114;&#101;&#101;&#110;&#64;&#115;&#114;&#49;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">tgreen@sr1tech.com</a>","http://www.sr1tech.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3J7RKA5ZBF2">21</a>","INFORMATION MANAGEMENT SYSTEMS, INC","GARY HENNINGTON","","1635 LELIA DR STE 102","","JACKSON","MS","39216-4876","IMS places highly-skilled Geographic Information System (GIS) and database specialists at customer locations. These IMS staff members become an integral part of the customers team, while having the expertise of the IMS family at their disposal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#104;&#101;&#110;&#110;&#105;&#110;&#103;&#116;&#111;&#110;&#64;&#105;&#109;&#115;&#103;&#105;&#115;&#46;&#99;&#111;&#109;">ghennington@imsgis.com</a>","http://www.thegeospatialgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JQNUTNM9N8W8">22</a>","SPECIALTY METALS SUPPLY INC","PHILLIP BOWMAN","","250 COMMERCE PARK DRIVE","","JACKSON","MS","39213-7052","stainless steel all grades aluminum all alloys copper all alloys brass all alloys sheet, plate, angle,tubing,pipe,rod,bar,flat, round,square,expanded metal,metal grating,fiberglass grating in molded and pultruded","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#112;&#112;&#101;&#114;&#115;&#97;&#99;&#107;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">coppersack@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8JHJD3C3ZC3">23</a>","ROBERT SMITH GLASS INC","BEVERLY SMITH","","210 GRAND AVE","","MERIDIAN","MS","39301-5737","GLASS, INC. is an established, full-service glass company with various capabilities of installing glass products including store fronts, skylights, mirrors, security glass, shower enclosures, and specialty glass of all types, Glass Inc. can handle all your glazing needs. Our product lines are widely used in hotels, resorts, condos, and residential buildings throughout the Southeast. Our expertise in all types of commercial and residential glass and glazing systems has won us numerous honors and Excellence in Construction Awards. Curtain walls, storefronts, commercial aluminum windows, and other heavy glass installations have become our specialty. We can fabricate and install any size project. We've also successfully completed more than 1,000 commercial glazing projects of all sizes at casinos, schools, hospitals, professional buildings, and military bases, among other locations. No job is too big or too small.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#118;&#101;&#114;&#108;&#121;&#64;&#103;&#108;&#97;&#115;&#115;&#105;&#110;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#101;&#100;&#46;&#110;&#101;&#116;">beverly@glassincorporated.net</a>","http://www.glassincorporated.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YM89YJASCKP5">24</a>","RESERVE OF GAUTIER LLC","ABRIL WILLIAMS","","3513 BEASLEY RD","","GAUTIER","MS","39553-5824","Life is not about how much time we're given, but how we choose to spend it. Spend yours living, where work and play intersect at The Pointe Apartments. Bid farewell to long commutes when you live here. Our dynamic location puts you close to major dining, shopping, entertainment and recreational options. At The Pointe Apartments, you won't have to trade lifestyle for convenience! Just moments from wherever you want to be...","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#112;&#111;&#105;&#110;&#116;&#101;&#109;&#103;&#114;&#64;&#104;&#101;&#114;&#105;&#116;&#97;&#103;&#101;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">thepointemgr@heritageproperties.com</a>","http://liveatthepointeapts.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4QMF74U62G8">25</a>","STOVER DEVELOPMENTS, LLC","ADDIE STOVER","","4780 I 55 FRONTAGE ROAD STE 100","","JACKSON","MS","39211-5583","Administrative Services, Business Strategy, Management Consulting, Grant Writing and Management,Program Evaluation, Program Development, Program/Project Management, Training and Technical Assistance, Business Development, Community-based Research, Workforce Development, Economic Development, Community Education Programs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#111;&#118;&#101;&#114;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#110;&#116;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">stoverdevelopments@gmail.com</a>","http://www.stoverdevelopments.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCLHJ56EN7N5">26</a>","CRITICAL POWER SYSTEMS, INC","ANNETTE BANNERMAN","","2043 EMILY ST","","TUPELO","MS","38804-8028","Service and sales of all electrical power equipment, i.e. line conditioners, UPS, isolation transformers, generators","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#109;&#112;&#115;&#64;&#99;&#114;&#105;&#116;&#105;&#99;&#97;&#108;&#112;&#111;&#119;&#101;&#114;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#105;&#110;&#99;&#46;&#116;&#101;&#99;&#104;">demps@criticalpowersystemsinc.tech</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TKB8SDYD6YW5">27</a>","SEVANS TRUCKING LLC","SAMUEL EVANS","","1035 HIGHWAY 245 S","","OKOLONA","MS","38860-8919","Sevans Trucking LLC is a trucking and transportation company dedicated to providing skilled and experienced relocation services. Being a SDVOSB gives us the upper hand when providing our services because we incorporate the same military values and morals into every pickup and deliver, we complete. Having an 18-wheeler give us the capability to haul and deliver, tankers, oversized or heavy loads, construction equipment, bull wagons, 5th wheels, household appliances, specialized cargo and have even delivered jet fuel to various airports. In addition, Sevans Trucking is available for fallen tree removal when the unexpected happens. If you’re looking for an expert relocator, look no further! Call (662)523-0407 or email iisamuel24@gmail.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#105;&#115;&#97;&#109;&#117;&#101;&#108;&#50;&#52;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">iisamuel24@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TMN5FWLLLGG5">28</a>","H & G GENERAL GOODS & SERVICES LLC","GILBERT BROWN","","540 SHUQUALAK RD","","PRESTON","MS","39354-9448","H&G is a dealer and reseller of construction materials including lumber and other wood products, sheetrock, roofing materials, and related items. Additionally, H&G provides office furnishings and equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#99;&#107;&#49;&#49;&#53;&#53;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">zack1155@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q9ZQSGDCL4E4">29</a>","ELECTRO MECHANICAL SOLUTIONS INC","CHRISTY DAVIDSON","","4328 SHENANDOAH RD","","VICKSBURG","MS","39180-8949","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#121;&#46;&#100;&#97;&#118;&#105;&#100;&#115;&#111;&#110;&#64;&#101;&#109;&#115;&#105;&#110;&#99;&#50;&#46;&#99;&#111;&#109;">christy.davidson@emsinc2.com</a>","http://www.emsinc2.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U22GRS3KD836">30</a>","NEW GLOBAL SYSTEMS FOR INTELLIGENT TRANSPORTATION MANAGEMENT CORPORATION","YING ZHANG","","95 WOODLANDS GREEN DRIVE","","BRANDON","MS","39047-7768","Traffic simulation modelling, research and development, real world simulation modeling for evacuation and alternative transportation plans, audit traffic simulation, connected vehicle related research and development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#103;&#115;&#105;&#109;&#64;&#110;&#103;&#115;&#105;&#109;&#46;&#99;&#111;&#109;">ngsim@ngsim.com</a>","http://www.ngsim.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HPNPM19CJKU6">31</a>","GS RESEARCH LLC","MARK ISAACS","","238 WASHINGTON ST","","BAY SAINT LOUIS","MS","39520-4235","GS Research, LLC has two patents for the design and construction of cost effective, net zero energy buildings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#119;&#111;&#110;&#100;&#101;&#114;&#119;&#105;&#110;&#100;&#111;&#119;&#46;&#110;&#101;&#116;">mark@wonderwindow.net</a>","wonderwindow.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FPYLSNACC9S6">32</a>","HYPERION TECHNOLOGY GROUP INC","GEOFFREY CARTER","","545 N COMMERCE ST","","TUPELO","MS","38804-4029","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#99;&#97;&#114;&#116;&#101;&#114;&#64;&#104;&#121;&#112;&#101;&#114;&#105;&#111;&#110;&#116;&#103;&#46;&#99;&#111;&#109;">gcarter@hyperiontg.com</a>","http://www.hyperiontg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MPC8MNE7MLQ7">33</a>","LEROY BOWLIN HEATING AND AIR CONDITIONING, INC.","GLEN BOWLIN","","3742 HIGHWAY 82 W","","GREENVILLE","MS","38701-8602","We carry a complete line of indoor comfort equipment with innovations that raise the standards of comfort and reliability, including air conditioners, heat pumps, gas furnaces, programmable thermostats, humidifiers, ductless split systems, boilers, air cleaners, ultra violet lights, ventilators and zoning products. We are licensed contractors and specialists in the field of heating and air-conditioning. Whether you are in need of a heating and air conditioning system, repair services or preventative maintenance, our skilled technicians can handle the job.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#100;&#49;&#57;&#54;&#51;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">glend1963@yahoo.com</a>","www.bowlinairconditioning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBYZXF42ZBK2">34</a>","PROFESSIONAL SOLUTIONS CO INTERNATIONAL LLC","TIMOTHY BROGDON","","7250 STENNIS AIRPORT RD","STE 215","KILN","MS","39556-8039","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#66;&#114;&#111;&#103;&#100;&#111;&#110;&#64;&#80;&#114;&#111;&#83;&#111;&#108;&#67;&#111;&#46;&#99;&#111;&#109;">TBrogdon@ProSolCo.com</a>","www.prosolco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LSBGL9MNCK28">35</a>","SYNC INFORMATION SERVICES, LLC","WILLIAM WILLIS","","681 WEST DR","","RIDGELAND","MS","39157-4612","We provide custom solutions (software) to businesses looking to automate daily task","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#46;&#119;&#105;&#108;&#108;&#105;&#115;&#64;&#115;&#105;&#115;&#99;&#115;&#46;&#110;&#101;&#116;">william.willis@siscs.net</a>","https://siscs.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DP86Q1453369">36</a>","FISH RESEARCH AND DEVELOPMENT LLC","FARLAND HOLLIMAN","","106 GLEN AUBURN DR","","CLINTON","MS","39056-6051","Conduct research and develop approaches to improve effectiveness and aid development of equipment related to management of fish, specializing in theory and application of waterborne electric fields for fish control, capture, and monitoring.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#109;&#104;&#111;&#108;&#108;&#105;&#109;&#97;&#110;&#64;&#102;&#105;&#115;&#104;&#114;&#97;&#110;&#100;&#100;&#46;&#99;&#111;&#109;">fmholliman@fishrandd.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LZL7FMSMH6T3">37</a>","LA TERRELL HOLDINGS CORPORATION","LASHERRICK TERRELL","","1456 REDDIX ST","","JACKSON","MS","39209-4419","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#122;&#117;&#110;&#105;&#118;&#101;&#114;&#115;&#105;&#116;&#121;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">bizuniversityinc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q3ANUNNSGAY7">38</a>","MERCATOR HEALTH ADVISORS, INC.","MITCHELL MONSOUR","","21 SHEFFIELD CT","","JACKSON","MS","39211-5738","Established in 1999, Mercator Health Advisors is a VOSB certified healthcare management and consulting firm. We are a team of professionals well versed in all facets of healthcare delivery, including related sectors of public health, technological advances, and economic development. Our mission is for the expansion of collaboration between public and private entities in support of government lifetime commitments and inherent public safety nets. Our post CV-19 workforce environment, supported by virtual technologies, will only accelerate the pending transformations. These will all be consistent with universal application of common 'management - consulting - contracting' principles destined to touch all sectors of business and government services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#116;&#99;&#104;&#46;&#109;&#111;&#110;&#115;&#111;&#117;&#114;&#64;&#109;&#101;&#114;&#99;&#97;&#116;&#111;&#114;&#104;&#101;&#97;&#108;&#116;&#104;&#46;&#99;&#111;&#109;">mitch.monsour@mercatorhealth.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZVNNZ9ASJDP2">39</a>","ECO-RESTORE LLC","BRANDON PIKE","","14231 SEAWAY RD","STE 7012","GULFPORT","MS","39503-4662","We facilitate and conduct environmental restoration and enhancement projects in a variety of areas","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#105;&#107;&#101;&#64;&#119;&#101;&#116;&#108;&#97;&#110;&#100;&#115;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">bpike@wetlandssolutions.com</a>","www.ecorestore.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QHK1T4GDMCM3">40</a>","VETGUARD MEDICAL SUPPLY, LLC","SCHUYLER JONES","","4780 I 55 N STE 100","","JACKSON","MS","39211-5583","We provide high-density sterile storage systems and carts. We also provide nitrile and vinyl examination gloves.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#104;&#117;&#121;&#108;&#101;&#114;&#64;&#118;&#101;&#116;&#103;&#117;&#97;&#114;&#100;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">schuyler@vetguardmedical.com</a>","www.vetguardmedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KA4XCRBNRK45">41</a>","ECPC MISSISSIPPI LLC","FREDERICK BYRD","","317 E CAPITOL ST APT 701","","JACKSON","MS","39201-3401","Provide specialized paints and coatings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#118;&#101;&#114;&#108;&#97;&#115;&#116;&#105;&#110;&#103;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#97;&#110;&#100;&#112;&#97;&#105;&#110;&#116;&#115;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">everlastingcoatingsandpaints@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UB66KUB3DDJ5">42</a>","KSD WRECKER SERVICE LLC","KELVIN MYERS","","2485 FLOWERS RD","","TERRY","MS","39170-7125","The vehicle towing company to contact when you want a reliable outcome is KSD Wrecker Service, LLC. When your car breaks down, I can get it transported to the repair shop of your choice. KSD is also available to handle your battery replacements, and tire changes, gas delivery, automotive repair such as rotors, brakes, struts, a/c repair, brake pads MS, AL, and LA area. Call KSD Wrecker Service, LLC to request help with your car or truck.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#97;&#107;&#101;&#114;&#50;&#52;&#56;&#53;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">sbaker2485@comcast.net</a>","http://ksd-wrecker-service-llc.business.site/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBVJZ9N6AJJ5">43</a>","ASCEND SURGICAL SALES LLC","JEFF JONES","","574 HIGHLAND COLONY PKWY","STE 320L","RIDGELAND","MS","39157-6073","At Ascend Surgical Sales, LLC we intend to partner with our customers to improve their clinical skills, practice performance and patient services through the use of advanced medical devices and technology. We will accomplish this by distributing medical devices, provide specialty procedure accessories and clinical education services for physicians and staff throughout the United States, Canada and Mexico. By partnering with our manufacturers, Ascend Surgical Sales, LLC fully supports the development of new technology to extend the use of the products in their respective markets. We endeavor to make enough profit to generate a fair return for our investors and to finance growth, expansion of our product lines and continued development of high quality customer support systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#106;&#111;&#110;&#101;&#115;&#64;&#97;&#115;&#99;&#101;&#110;&#100;&#115;&#117;&#114;&#103;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">jeff.jones@ascendsurgical.com</a>","http://www.ascendsurgical.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CL9HDJT8V554">44</a>","TAYLOR INDUSTRIES, LLC","LUCY TAYLOR","","308 DISTRIBUTION DR","","MADISON","MS","39110-9066","'Our Knowledge Is Our Niche'. We research, design, test and manufacture chemical products to meet our clients particular needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#97;&#109;&#99;&#97;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">joamca@bellsouth.net</a>","www.taylorindustriesllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VHHKKLF1RKY6">45</a>","HC SIMULATION LLC","ROBERT HESTER","","1577 BARNES RD","","CANTON","MS","39046-4880","Physiological simulation for education, research and assistance in clinical trials","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#64;&#104;&#99;&#115;&#105;&#109;&#117;&#108;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">robert@hcsimulation.com</a>","hcsimulation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5Z3D4K1MMG3">46</a>","PIONEER LLC","PINA SHAH","","4919 DENNY AVE","","PASCAGOULA","MS","39581-5521","We provide expert assistance with healthcare systems, equipment & services (IT, diagnostic, staffing, facility infrastructure etc) and associated engineering services. We also have additional services that encompass Management Consulting, Management Development and Training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#116;&#111;&#64;&#109;&#121;&#112;&#105;&#111;&#110;&#101;&#101;&#114;&#46;&#98;&#105;&#122;">cto@mypioneer.biz</a>","www.mypioneer.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C4JLGKTLAPN7">47</a>","CORNERSTONE ENGINEERING LLC","MAURICKA MCKENZIE","","600 E NORTHSIDE DR","STE A","CLINTON","MS","39056-3443","Cornerstone Engineering, LLC dba Nehemiah Engineering is a civil engineering company specializing in construction management and geotechnical, structural and water resource engineering. At CE-NE, we combine our 4+ years industry experience and dedicated expert team, to provide the full-service engineering support you need to complete projects on time and within budget. Here we deliver customized project management services from inception to completion of projects and our logistics support is your one stop shop for all construction needs. CE-NE provides a variety of management services like location surveying/mapping, design drafts/modules, hydraulic/MEP modeling, project planning, cost estimates, materials procurement, inspections and more. In addition, our large network makes it easy to complete all types of projects from civil, commercial and even governmental. We are your professional management team dedicated to quality, for more info visit www.cornerstoneengllc.net","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#99;&#107;&#101;&#110;&#122;&#105;&#101;&#64;&#99;&#111;&#114;&#110;&#101;&#114;&#115;&#116;&#111;&#110;&#101;&#101;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">mmckenzie@cornerstoneengllc.com</a>","cornerstoneengllc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V69VB5KFJ4X6">48</a>","CASINO COMPLIANCE ESSENTIALS OF MS LLC","KELLI BELL","","1612 CAHILL DR","","GULFPORT","MS","39507-4232","Regulatory compliance, Business management, Logistics, Administrative Policies and Procedures, Internal controls","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#109;&#98;&#101;&#108;&#108;&#50;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kmbell28@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YXELPPKBNBV8">49</a>","HERITAGE CONSTRUCTION LLC","HYDER BHATTI","","4720 8TH ST","","MERIDIAN","MS","39307-5805","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#114;&#105;&#116;&#97;&#103;&#101;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#108;&#108;&#99;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">heritageconstructionllc@yahoo.com</a>","www.hcbuilt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XS9PHPCQPQS3">50</a>","JEF ADVANCED TECHNOLOGIES, LLC","JOSEPH FORD","","296 GUTHRIE CARTER RD","","MOSELLE","MS","39459-9561","Environmental Personnel, Equipment & Services Disaster Relief Emergency Management personnel, equipment & services. Military Rapid Response Facilities & support USA Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#101;&#112;&#104;&#46;&#102;&#111;&#114;&#100;&#64;&#106;&#101;&#102;&#45;&#97;&#116;&#46;&#99;&#111;&#109;">joseph.ford@jef-at.com</a>","https://jef-at.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W3DKL1GFRFB9">51</a>","SIX DIMENSIONS CONSULTING, LLC","NAKEITRA BURSE","","546 TWIN CEDARS DR","","MADISON","MS","39110-7288","Six Dimensions, LLC has the capacity to work with small, midsize, and large agencies and organizations to conduct services relative to public health programming. Services include program development, training, implementation, evaluation, advocacy, and health communications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#98;&#117;&#114;&#115;&#101;&#64;&#115;&#105;&#120;&#100;&#105;&#109;&#115;&#46;&#99;&#111;&#109;">nburse@sixdims.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEMQMF6HUTE7">52</a>","AMERICAN PILLARS CONTRACTING LLC","BENJAMIN APOLLOS","","514 HAWKINS RD","","COURTLAND","MS","38620-9599","1.	AMERICAN PILLARS CONTRACTING, LLC. is a business administration and management consultant company organized for helping businesses to improve their revenue, business structure, market presence and effectiveness, rewrite and reconstruct its administrative, overall management and personnel structures of and for its customers.  2.	In addition, American Pillars Contracting, LLC. will provide construction project management, fitness center development, management and building construction services for itself and outside customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#110;&#106;&#97;&#109;&#105;&#110;&#97;&#112;&#111;&#108;&#108;&#111;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">benjaminapollos@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEDGA5TVX8V3">53</a>","PM GREEN ENERGY, LLC","MARK NORTON","","176 ANNANDALE PKWY E","","MADISON","MS","39110-7943","PM Green Energy, LLC is a self-powered portable housing manufacturing company specializing in the distribution of disaster homes for victims and first responders. No one knows when a natural disaster is going to hit and what effect that may have on a person’s housing, utilities and peace of mind. PMGE came up with their patented version of mobile housing to help alleviate some of those issues. PMGE produces six different free-standing model homes; family, first responder, workforce, command/control centers, medical clinics, and guard shacks. All are equipped with air conditioning/heating, electricity/plumbing, water holding/catching tanks, kitchens/dining rooms, work/living spaces and more - all tailored to individual needs and situations. In addition, we offer a series of Rogue Solar Powered generators for those interested in DIY kits. We provide First-World Comfort in Third-World Conditions -for more information, please visit our website www.pmgreenenergy.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#98;&#110;&#111;&#114;&#116;&#111;&#110;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mbnorton3@gmail.com</a>","pmgreenenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XW3PVNMZE3E8">54</a>","BYG PLLC","BRYAN GREEN","","5050 BOVINA CUT OFF RD","","VICKSBURG","MS","39180-0861","An Engineering Services Company, Mech, Civil, Elect, Hrydo, Enviro, Master Planning, Science and Technology, Quality Assurance and program management of construction projects. Survey, Mapping,Remote Sensing Analytics and Strategic Planning and Autonomous Vehicles (air, ground, and water)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#103;&#114;&#101;&#101;&#110;&#64;&#98;&#121;&#103;&#46;&#99;&#111;&#109;&#112;&#97;&#110;&#121;">bgreen@byg.company</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9QLDMQLW3J1">55</a>","VIBE LLC","HAGAN WALKER","","101 W MAIN ST","","STARKVILLE","MS","39759-2822","We make Glo Cubes and Glo Pals, products born out of Mississippi State University. These products are liquid activated.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#103;&#97;&#110;&#64;&#103;&#101;&#116;&#103;&#108;&#111;&#46;&#99;&#111;&#109;">hagan@getglo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PXAAQX9EH9M5">56</a>","RESEARCHFIRST INC","ELLIS HILL","","8 MOCKINGBIRD LN","","GULFPORT","MS","39507-1610","ResearchFirst, Inc. is a market research and marketing consulting firm specializing in new technologies needs and practices. We have been helping our clients better understand their markets through primary research and bringing the industry's best together through telecom conferences and association management since 1988. Our annual conferences address broadband services marketing, video services marketing, consumer services bundling and packaging, as well as sales channel and operations topics. We have assisted Fortune 100 companies with process improvement programs, sales improvement programs in call centers and retail operations, and customer satisfaction programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#108;&#105;&#115;&#64;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#102;&#105;&#114;&#115;&#116;&#46;&#99;&#111;&#109;">ellis@researchfirst.com</a>","https://www.researchfirst.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM56CKMG6HY6">57</a>","GI JEAN LLC","ANGELA YONCE","","9128 OLD RIVER RD","","PETAL","MS","39465-9230","G.I. Jean is a small research and development company. We research, develop, and manufacture new alternative medicine products that promote physical and mental wellness.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#105;&#101;&#64;&#103;&#105;&#106;&#101;&#97;&#110;&#46;&#99;&#111;&#109;">angie@gijean.com</a>","https://www.gijean.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NF35UN941R81">58</a>","WBF GLOBAL LLC","CANDICE PITTMAN","","106 SOUTHWOOD DR","","CANTON","MS","39046-5524","Instruction Design Research and Development Data and analysis Program Evaluation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#112;&#105;&#116;&#116;&#109;&#97;&#110;&#64;&#119;&#98;&#102;&#45;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">c.pittman@wbf-global.com</a>","www.wbf-global.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EA87GWWGX8K1">59</a>","CHAHTA SERVICES INC","VICKEY PACE","","114 MAINTENANCE RD","","CHOCTAW","MS","39350-4105","CSI is wholly owned by Mississippi Band of Choctaw Indians and was established in 2009 with the goal of providing Facilities Support Services and other specialized training services in the areas of Workforce Development, CMMC compliance, Cybersecurity training, ITT, and Virtual Reality development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#112;&#97;&#99;&#101;&#64;&#99;&#104;&#97;&#104;&#116;&#97;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">vpace@chahtaservicesinc.com</a>","www.chahtaservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNEQJADYLJW5">60</a>","CAKE IS ART, LLC","ANJAIL BELTON","","6155 AUTUMN OAKS DR","","OLIVE BRANCH","MS","38654-6611","Retail various baked cakes and pies, retail various cake supply tools, materials, and equipment, provide youth and adult leadership development training, provide baking and pastry instruction and training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#107;&#101;&#115;&#98;&#121;&#97;&#110;&#106;&#97;&#105;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cakesbyanjail@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PKUHZGF4JLF5">61</a>","AVENUES AUCTION & REALTY LLC","JANE HAWKINS","","425 26TH AVE","","MERIDIAN","MS","39301-5722","We offer Berry Amendment compliant Fire Fighting Chemicals, fire retardant products,remediation products, recyclyin systems,supplies, and FLOURINE FREE products. In addition, we have absorbents and bio-remediation products for spill clean up.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#110;&#101;&#64;&#97;&#118;&#101;&#110;&#117;&#101;&#115;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">Jane@avenuesare.com</a>","www.avenuesare.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHGAFG4YYTM3">62</a>","SPI&I GLOBAL CORP","JASON NEWSOME","","21 AL QADDUS RD","","SUMRALL","MS","39482-4140","Strategic Process, Implementation, and Investments Connecting Resources, Minimizing Cost, Maximizing ROI","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#97;&#115;&#111;&#110;&#64;&#115;&#112;&#105;&#105;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">Jason@spiiglobal.com</a>","www.spiiglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MK1PL2UTMS56">63</a>","OLD SOUTH CONTRACTORS, LLC","KENNY MEASELL","","101 WELLS COVE","","PHILADELPHIA","MS","39350-2784","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#101;&#110;&#110;&#121;&#109;&#101;&#97;&#115;&#101;&#108;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Kennymeasell@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC4AWDUERMN7">64</a>","EAST SYSTEMS INC","GEORGE EAST","","41 FABRITEK DR","","COLUMBUS","MS","39702-7067","East Systems designs, manufactures, and services electrical control systems for various industries, including the printing, mining, packaging, wire, and converting industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#97;&#115;&#116;&#115;&#121;&#115;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">eastsys@bellsouth.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CKGLVK4ZY2A1">65</a>","GLOBAL UNITED AGUCOURP, LLC","WILLIAM GAVIN","","105 SHORT VERNON RD","","CLINTON","MS","39056-3226","Global United is fully committed to planting, protecting, and preserving organic seeds. Cultivating wholesome organic produce is a way of life. Our exceptional planting techniques are tailored to each species of plant and the geographical location of the parcel to be planted. This guarantees the best yield for anything you choose to grow. We pride ourselves on our ability to make your grounds rich and fertile, our focus is to improve all soil types and bring them to their greatest growing potential. We use pure organic mulch and compost products paired with cutting edge technology and techniques to accomplish this goal. Our commitment to organic soil preparation is our highest priority because here at GU, we understand that cultivating nutritious dense crops all starts from the ground up.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#111;&#98;&#97;&#108;&#117;&#110;&#105;&#116;&#101;&#100;&#55;&#48;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">globalunited700@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJY9FTBV5Z46">66</a>","JUST LISTEN, LLC","MILDRED HOWARD","","3411 COOK RD","","EDWARDS","MS","39066-9219","We provide a wealth of knowledge to the food and business industries; in regards to safety, compliance, and management. Our 20 years of experience enables us to offer comprehensive solutions and techniques in the application of the HACCP principles, Food Safety Standards, federal and local regulatory requirements. We as consultants can also assist with the interpretation of audit results and highlight areas of concern in business production. Specific training courses with customized presentation materials can be designed for all levels of staff and / or type of environments. Our service is targeted to local food service businesses, and quality departments within a food (retail or manufacturing) environment. We also provide notarial, residential, and auditing services to the general public; along with business integrity and management solutions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#108;&#105;&#115;&#116;&#101;&#110;&#108;&#108;&#99;&#50;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">justlistenllc20@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VWNEHDKESUK8">67</a>","ENLIGHTN PRODUCTION, LLC","ELIJAH BELL","","8241 SYCAMORE CREEK DR","","MERIDIAN","MS","39305-9406","Enlightn Production, LLC is a procurement company. We pride ourselves procuring Peripheral Technology and Fasteners. We have had success for the past 14 years in procurement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#110;&#108;&#105;&#103;&#104;&#116;&#110;&#50;&#48;&#49;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">enlightn2017@gmail.com</a>","https://enlightn2017.wixsite.com/website-2"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W1JTNYRLBUM5">68</a>","E-NETWORK, LLC","JUANYCE TAYLOR","","110 OLD FARM RD","","CLINTON","MS","39056-2307","Educational, evaluation, research and training consultants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#97;&#110;&#121;&#99;&#101;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">juanycetaylor@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LGW4RJ3SCHN1">69</a>","ALCHEMY INTEGRATED PROJECTS LLC","JAMESHYIA BALLARD","","611 S PEAR ORCHARD RD UNIT 1622","","RIDGELAND","MS","39157-4836","Alchemy Integrated Projects LLC is a public health consulting firm specializing in grant writing, program evaluation, and program management. Our focus includes improving maternal and child health, ensuring health equity, developing and implementing evidence based strategies, and supporting sustainable and transferable projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#104;&#121;&#105;&#97;&#46;&#97;&#105;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jameshyia.aip@gmail.com</a>","https://www.alchemyip.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGFCSKG1GFJ4">70</a>","HIGHEST LEVEL PROFESSIONAL SERVICE, LLC","LAJOYCE ROSEBOROUGH","","104 MAGNOLIA STREET","","SARDIS","MS","38666-1607","As a staffing company for government contracting, we understand that having access to specialized equipment and materials is crucial in order to provide our clients with the highest level of service. One of the key advantages of our equipment is that it allows us to qualify and efficiently identify and evaluate potential candidates for our clients. For example, we use state of the art of software to analyze resumes and other application material, helping us to quickly identify the most qualified candidates for any given role. We also use sophisticated data analytics tools to identify trends and patterns in the job market, which helps us to anticipate our clients' needs and stay ahead of the curve.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#106;&#111;&#121;&#99;&#101;&#64;&#104;&#105;&#103;&#104;&#101;&#115;&#116;&#108;&#101;&#118;&#101;&#108;&#112;&#114;&#111;&#102;&#101;&#115;&#115;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">lajoyce@highestlevelprofessional.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PD3FBE7N3AF5">71</a>","TECH VS MACHINE LLC","TERENCE LACEY","","3825 NORTH STATE STREET","","JACKSON","MS","39216-3121","Tech vs Machine LLC is a %100 veteran-owned small business. Our team of certified IT professionals have a combined total of over 22 years of military and governmental expertise. We are a full-service IT consulting & support company, as well as a supplier of certified IT/electronics products. As a highly reputable source of IT products & support in both the public and government sectors, we strive to supply our customers with the best tools and service needed to improve operational efficiency, guided by innovation. We have specialists in Tier 1/Tier 2 IT support, systems design, automation, B2B commerce, and more. Working directly with OEMs such as Lenovo, Exos, AdTran, etc. we thoroughly vet and review our products to ensure that they meet every expectation and can support moderate and high levels of demand. We are FAR compliant and available to support the United States Government, State Governments, and Local Governments in meeting operational and readiness goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#118;&#109;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tvmunlimited@gmail.com</a>","www.techvsmachine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RGS8CXKX54T5">72</a>","MCCARTY CONSULTING, LLC","TERESSA FULGHAM MCCARTY","","516 GREENMONT DRIVE","","JACKSON","MS","39212-2226","McCarty Consulting, based in Jackson, MS, provides consulting services in compliance, research, and curriculum design. Under the leadership of Dr. Teressa McCarty, our expertise extends across education and various industries. With a decade of experience in public schools, Dr. McCarty excels in research, policy development, project management, and curriculum design. Our mission is to help organizations achieve their goals through process streamlining and the creation of curricula that foster continuous improvement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#97;&#109;&#64;&#109;&#99;&#99;&#97;&#114;&#116;&#121;&#45;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">team@mccarty-consulting.com</a>","www.mccarty-consulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJTXFKM2YNV1">73</a>","TRENDWELD CO. LLC","JORDAN SHOWALTER","","8223 ROAD 298","","PICAYUNE","MS","39466-9754","Trendweld Co. LLC is a majority Woman and Native American-owned small business located in Hancock County, Mississippi. We exist to provide a wide range of general, unique, and customized in-shop welding services to those in need of welding fabrication/manufacturing while understanding our guiding principles of Quality, Safety, Improvement, Leadership, Teamwork, Work-life Balance and Community Generosity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#104;&#111;&#119;&#97;&#108;&#116;&#101;&#114;&#64;&#116;&#114;&#101;&#110;&#100;&#119;&#101;&#108;&#100;&#46;&#99;&#111;&#109;">jshowalter@trendweld.com</a>","www.trendweld.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VTZCZLH3C7G5">74</a>","ATLAS FEDERAL SOLUTIONS, LTD","CHARLES HOWARD","","780 SADDLE CREEK CV","","HERNANDO","MS","38632-1401","Atlas Federal Solutions, LTD. is committed to excellence in government contracting. With a solid foundation rooted in our veteran heritage, we bring a unique blend of integrity, discipline, and expertise to every project we undertake. At Atlas Federal Solutions, we specialize in providing innovative solutions tailored to the specific needs of government agencies. Our agile and responsive approach, coupled with our unwavering dedication to compliance and customer satisfaction, sets us apart in the industry. With a proven record of success and a commitment to continuous improvement, we stand ready to deliver exceptional results for our clients while making a positive impact in the communities we serve. Welcome to Atlas Federal Solutions, where excellence meets integrity in government contracting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#111;&#119;&#97;&#114;&#100;&#57;&#57;&#48;&#53;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">choward9905@yahoo.com</a>","Atlas1st.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T5DFVMZEM986">75</a>","PEARL ALDER PRODUCTS, LLC","ALAN ALDERMAN","","6045 WOODS RD","","PICAYUNE","MS","39466-2186","Pearl Alder Products, LLC is an engineering group with over 15 years of experience in oil and gas engineering consultancy, upstream and downstream chemical applications, and industrial water treatment. The team is also heavily experienced in construction management, miscellaneous goods retail, and custom item procurement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#100;&#46;&#97;&#108;&#100;&#101;&#114;&#109;&#97;&#110;&#50;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">chad.alderman29@gmail.com</a>","http://www.pearlalderproductsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GHX3XJTZF246">76</a>","ENRETRO EHS SOLUTIONS INC","TONY FLAVORS","","142 BEAUFORT CIR","","MADISON","MS","39110-7916","EnRetro EHS Solutions Inc. is an experienced Environmental Health and Safety Management Company with over 25 years of expertise providing service to industrial sectors including Power Generation and Chemical Plant Manufacturing. Our capabilities include Hazardous Waste Management, Contractor Management, Human Performance Improvement, Root Cause Investigations, OSHA and MSHA Safety Compliance, and Behavior-Based Safety Programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#102;&#108;&#97;&#118;&#111;&#114;&#115;&#64;&#101;&#110;&#114;&#101;&#116;&#114;&#111;&#46;&#99;&#111;&#109;">tonyflavors@enretro.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.434&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

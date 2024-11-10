@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 033 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.96 seconds and 2.03 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 91 
+(of 91 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E3K2ZQWLDF38">1</a>","PAULK'S MOVING & STORAGE, INC","KIM TILKA","PRESIDENT","4321 N W ST","","PENSACOLA","FL","32505-4049","RELOCATION, LOCAL MOVE, COMMERCIAL STORAGE. WORLDWIDE RELOCATIONS, INTRA & LOCAL MOVES, COMMERCIAL STORAGE, RECORD STORAGE, HAULING. DATA MANAGEMENT & STORAGE, RECORD STORAGE, DESTRUCTION SERVICE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#64;&#112;&#101;&#110;&#115;&#97;&#99;&#111;&#108;&#97;&#109;&#111;&#118;&#101;&#114;&#46;&#99;&#111;&#109;">kim@pensacolamover.com</a>","http://www.paulksmovingfl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLCBBLJXDEY7">2</a>","LARRY M. JACOBS & ASSOCIATES, INC","KEITH JACOBS, PE","SECRETARY","328 E GADSDEN ST","","PENSACOLA","FL","32501-4062","GEOTECHNICAL ENGINEERS, REGISTERED IN 2 STATES.GEOTECHNICAL ENGINEERING; SOILS INVESTIGATIONS, FIELD & LABORATORY; MATERIALS DESIGN, MATERIALS TESTING. QUALITY CONTROL DURING CONSTRUCTION, DESIGN OF EARTH STRUCTURES,CONSTRUCTION MATERIALS SUCH AS CONCRET","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#106;&#64;&#108;&#109;&#106;&#45;&#97;&#46;&#99;&#111;&#109;">keithj@lmj-a.com</a>","www.lmj-a.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYD5VKNJF9W3">3</a>","PENSACOLA AVIATION CENTER, LLC","KIMBERLY FIELDS","PRESIDENT","4145 MAYGARDEN RD","","PENSACOLA","FL","32504-5019","AIRCRAFT SALES, SERVICES INCLUDING FUEL, STORAGE, MAINTENANCE OF AIRCRAFT FLIGHT INSTRUCTION, CHARTER, AIR TAXI, PARTS FOR AIRCRAFT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#102;&#105;&#101;&#108;&#100;&#115;&#64;&#112;&#101;&#110;&#115;&#97;&#99;&#111;&#108;&#97;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">kfields@pensacolaaviation.com</a>","https://wwwpensacolaaviation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DV6FSRBVQ3W4">4</a>","GULF COAST ELECTRIC MOTOR SERVICE, INC.","VICTOR RODRIGUEZ","PRESIDENT","3810 HOPKINS ST","","PENSACOLA","FL","32505-5223","SERVICE AND SALES OF ALL TYPES OF ELECTRIC MOTORS, SUBMERSIBLE PUMPS, AND GENERATORS. ARMATURE REWINDING, FIELD REPAIRS, U.L. LISTED, MEMBER OF E.A.S.A.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#116;&#111;&#114;&#64;&#103;&#99;&#101;&#109;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">victor@gcemsinc.com</a>","WWW.GCEMSINC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QDS7DMF5G8J3">5</a>","STOA INTERNATIONAL/FLORIDA, INC.","MICHAEL WERNER JR","VICE PRESIDENT","121 E GOVERNMENT ST","","PENSACOLA","FL","32502-5801","We have completed projects for medical, military, commercial, governmental, educational, and residential clients. Our projects range in size from small renovations to 270,000 SF large scale facilities encompassing over $60 million in construction value.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#119;&#101;&#114;&#110;&#101;&#114;&#64;&#115;&#116;&#111;&#97;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">mwerner@stoaarchitects.com</a>","http://www.stoaarchitects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGMJMAL3CCC3">6</a>","HERNANDEZ CALHOUN DESIGN INTERNATIONAL P.A.","SARAH HERNANDEZ-TRUJILLO","President","420 N PALAFOX ST","","PENSACOLA","FL","32501-3919","AWARDED IN 2003- USACE SOUTH ATLANTIC DIVISION MILITARY SMALL BUSINESS A-E EXCELLENCE AWARD, ARCHITECTURE,PROGRAMMING,INTERIOR DESIGN,MASTER PLANNING,SITE/FACILITY EVALUATIONS,HISTORIC RENOVATION,CODE ANALYSIS,COST ESTIMATING,MEDICAL DESIGNS, 25 YEARS OF MILITARY DESIGN EXPERTISE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#104;&#46;&#104;&#101;&#114;&#110;&#97;&#110;&#100;&#101;&#122;&#64;&#104;&#101;&#114;&#110;&#97;&#110;&#100;&#101;&#122;&#99;&#97;&#108;&#104;&#111;&#117;&#110;&#46;&#99;&#111;&#109;">sarah.hernandez@hernandezcalhoun.com</a>","http://www.hernandezcalhoun.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YL2FRVQMJPW1">7</a>","TECHNICAL SOFTWARE SERVICES, INC.","MICHAEL SHANHOLTZ","Vice President","31 W GARDEN ST","STE 100","PENSACOLA","FL","32502-5685","Technical Software Services, Inc. (TECHSOFT), established in 1990 in Pensacola, Florida, is qualified as a small business under NAICS code 541530.  TECHSOFT provides training course design, development, and delivery; software and systems engineering; network services and support; and process improvement for the U.S. Navy and other Department of Defense (DoD) entities as well as commercial clients.  With more than 20 years of Naval Training systems development experience, TECHSOFT has significant expertise in applying the Naval Education and Training Command (NETC) End to End (E2E) process to every phase of a training development project. TECHSOFT provides both government and commercial clients with coaching and guidance applying Capability Maturity Model Integration (CMMI®). Our CMMI experts are credentialed with ISACA.org as Certified CMMI (V3.0) Associates and have individually participated in over 45 process improvement appraisals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#115;&#103;&#64;&#116;&#101;&#99;&#104;&#115;&#111;&#102;&#116;&#46;&#99;&#111;&#109;">bsg@techsoft.com</a>","http://www.techsoft.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PQD3KLJ2JC59">8</a>","TECHNOLOGIES FOR TOMORROW, INC.","PAMELA COCO","President","1106 N 9TH AVE","","PENSACOLA","FL","32501-3236","Technologies For Tomorrow, Inc. provides goods and services including the following: system integration/design,internet security, desktop workstations, rackmount server/infrastructure, cable design/testing, LAN, WAN, voice,web svcs,engineering svcs, and telecom network design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#109;&#99;&#64;&#116;&#102;&#116;&#99;&#111;&#109;&#112;&#117;&#116;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">pamc@tftcomputers.com</a>","http://www.tftcomputers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBJHHNLTFTG7">9</a>","RUBBER & SPECIALTIES, INC.","LANCE COOK","Vice President","5011 COMMERCE PARK CIR","","PENSACOLA","FL","32505-1870","Industrial Rubber Distributor-specializing in hose, gaskets, conveyor belting, expansion joints","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#65;&#78;&#67;&#69;&#64;&#114;&#117;&#98;&#98;&#101;&#114;&#97;&#110;&#100;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">LANCE@rubberandspecialties.com</a>","www.rubberandspecialties.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WEZ6AX8LQKT9">10</a>","ENERGY SYSTEMS AIR CONDITIONING CONTRACTORS INC","DANNY MARSHALL","CEO","1027 S FAIRFIELD DR","","PENSACOLA","FL","32506-5907","RESIDENTIAL AND COMMERCIAL HEATING AND AIR CONDITIONONS SERVICE REPAIRS AND NEW CONSTRUCTION INSTALLATION AND DESIGN OF GEO-THERMAL SYSTEMS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#110;&#121;&#46;&#103;&#101;&#111;&#112;&#114;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">danny.geopro@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FQJCJU29P1Y6">11</a>","STILTMART LEARNING MANAGEMENT SYSTEMS, INC.","KIM GOSSEEN","President & Owner","2617 TINOSA CIR","","PENSACOLA","FL","32526-1526","NS Software Services prior experiences in Learning Management Systems, (LMS), database modeling, Programming, and teaching software packages.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#103;&#111;&#115;&#115;&#101;&#101;&#110;&#64;&#110;&#115;&#115;&#115;&#102;&#108;&#46;&#99;&#111;&#109;">kimgosseen@nsssfl.com</a>","http://WWW.NSSOFTWARESERVICES.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZTHTFJB6KA79">12</a>","GLOBAL BUSINESS SOLUTIONS, LLC.","CHRISTOPHER MIDDLETON","Vice President","316 SOUTH BAYLEN ST","STE 500","PENSACOLA","FL","32502-5999","Premier IT services provider with extensive credentials in Database Management, Software Engineering and Application Development, Hardware and Network Support, Integrated Web Services, Content Management and Enterprise Technology Education.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#105;&#100;&#100;&#108;&#101;&#116;&#111;&#110;&#64;&#103;&#98;&#115;&#105;&#46;&#99;&#111;&#109;">cmiddleton@gbsi.com</a>","http://www.gbsi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZJZCNCPGM869">13</a>","HIXARDT TECHNOLOGIES, INC.","MICHAEL HICKS","President","282 N PALAFOX ST","","PENSACOLA","FL","32502-4841","Consulting & Systems Integration. Hardware Sales: Dell, HP, CISCO, SUN, Network Cabling, Fiber, IP Telephony, CISCO Wireless sales & installation. Electrical Services: Generators UPS (APC), Data Center Air & flooring.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#104;&#105;&#99;&#107;&#115;&#64;&#104;&#105;&#120;&#97;&#114;&#100;&#116;&#46;&#99;&#111;&#109;">mike.hicks@hixardt.com</a>","http://www.hixardt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8C5DQUUDJS1">14</a>","COMMSTRUCTURES, INC.","JAMES HOBBS","President","101 E ROBERTS RD","","PENSACOLA","FL","32534-9535","Custom steel fabricators; Specialize in communication structures & misc. steel components; Engineer, design, manufacture & install towers, accessories, pedestals & antenna support structures; Maintain & repair lines & equipment on existing sites to 1000'","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#111;&#98;&#98;&#115;&#64;&#99;&#111;&#109;&#109;&#115;&#116;&#114;&#117;&#99;&#116;&#117;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">jhobbs@commstructures.com</a>","http://www.commstructures.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S2BMDJ9J7PC6">15</a>","DIVERSIFIED TECHNOLOGY SALES, INC.","CHARLOTTE REEDY","OWNER","3630 HIGHWAY 196","","MOLINO","FL","32577-3984","WIRE, CABLE, FIBER OPTICS, COMMUNICATION, DATA, UPS, ELECTRICAL,TOOLS, 3M, AMP, BAY NETWORKS, BELDEN, BERK-TEK, CARLON, CISCO, JOSLYN, ESSEX, GREAT LAKES, HUBBELL, ICC, IDEAL, KLEIN, LANCAST, LEVITON, OCC, PANUDIT, SUPERIOR, TRIPPLITE, TYTON","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#101;&#101;&#100;&#121;&#64;&#100;&#105;&#118;&#116;&#101;&#99;&#104;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">creedy@divtechsales.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTK7AGCB61T5">16</a>","LARRY TRONU MECHANICAL, INCORPORATED","LARRY TRONU","","3701 N PACE BLVD","","PENSACOLA","FL","32505-4339","Air Conditioning, Heating & Ventilation sheet metal fabrication","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#64;&#76;&#84;&#77;&#69;&#67;&#72;&#46;&#67;&#79;&#77;">larry@LTMECH.COM</a>","www.LTMech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8JPY4M2UJE6">17</a>","AIR DESIGN SYSTEMS, INC","WILLIAM BROWN","","400 LURTON ST","","PENSACOLA","FL","32505-5246","HVAC, PLUMBING, RESIDENTIAL AND COMMERCIAL. FOR MORE INFORMATION VISIT OUR WEBSITE AT http://www.airdesignhvac.com/","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#87;&#89;&#65;&#84;&#84;&#64;&#65;&#73;&#82;&#68;&#69;&#83;&#73;&#71;&#78;&#72;&#86;&#65;&#67;&#46;&#67;&#79;&#77;">SWYATT@AIRDESIGNHVAC.COM</a>","http://www.airdesignhvac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LERTSV4EQKB3">18</a>","ESA SOUTH, INC.","SEAN HARMON","","1681 SUCCESS DR","","CANTONMENT","FL","32533-5103","ESA South, Inc. is a verified SDVOSB business founded in 1999. Working from our principal office in Cantonment, Florida and satellite offices in Ft. Hood, TX and Poplar Bluff, MO we specialize in providing construction and construction management services for commercial and Government agencies, with projects ranging from $5,000 to more than $10,000,000. We have extensive experience supporting Multiple Award IDIQ contracts for the Design and Construction of Federal Facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#109;&#111;&#110;&#64;&#101;&#115;&#97;&#115;&#111;&#117;&#116;&#104;&#46;&#99;&#111;&#109;">sharmon@esasouth.com</a>","http://www.esasouth.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MFHKDZWYNZJ3">19</a>","CALDWELL ARCHITECTS, INC.","TASHA PEARSON","","116 N TARRAGONA ST","","PENSACOLA","FL","32502-4842","Caldwell Associates Architects, Inc. provides architectural design, planning and development, design build, interior design, and space planning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#115;&#104;&#97;&#64;&#99;&#97;&#108;&#100;&#119;&#101;&#108;&#108;&#45;&#97;&#115;&#115;&#111;&#99;&#46;&#99;&#111;&#109;">tasha@caldwell-assoc.com</a>","http://www.caldwellarchitects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8CKCUXYNPR8">20</a>","HAM PEST CONTROL, INC.","PHILIP HAM","","1420 W ROBERTS RD","","CANTONMENT","FL","32533-8385","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#109;&#112;&#101;&#115;&#116;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">hampestcontrol@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J7KHEN6M4HZ9">21</a>","ROGERS VALUATION & ACQUISITION, INC.","MICHAEL ROGERS","President","4601 SPANISH TRL","STE B","PENSACOLA","FL","32504-5040","Real estate appraisal and brokerage.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#114;&#111;&#103;&#101;&#114;&#115;&#118;&#97;&#108;&#117;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">mike@rogersvaluation.com</a>","https://www.rogersvaluation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8W4E1YUQKK5">22</a>","CARPET CREATIONS OF FLORIDA, INC.","MICHAEL PAYTON","","3305 N S ST","","PENSACOLA","FL","32505-4124","We provide full service floor covering installation, including planning, removal, installation and maintenance. In-house rug plant using wool care certified technicians, carpet and rug binding, finishing, repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#99;&#97;&#114;&#112;&#101;&#116;&#99;&#114;&#101;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;">mike@carpetcreations.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K32XYYKVNW83">23</a>","R-COM ENTERPRISE, LIMITED LIABILITY COMPANY","RUTHEL MCCORMICK","President / Electronics Engineer","1700 E BURGESS RD","","PENSACOLA","FL","32504-7113","Wire & Wireless Hardware/Software Sales. LAN/MAN/WAN Design & Implementation. Cable Certification. Database and Query Application Design. Web Site Design using Windows and Unix utilities. Data Warehousing, Multimedia and Security services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#116;&#104;&#101;&#108;&#64;&#114;&#99;&#111;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">ruthel@rcoment.com</a>","http://www.rcoment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LTGYJ5XGTSM3">24</a>","IAN-CONRAD BERGAN, LLC","JOHN DURDEN","","1001 E BELMONT ST","","PENSACOLA","FL","32501-4100","Supplied complete TLI solution for MSC vessel (T-AKR) and awarded contract for MSC (T-AKE). 30 years experience in marine instrumentation for all types of vessels","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#100;&#117;&#114;&#100;&#101;&#110;&#64;&#98;&#101;&#114;&#103;&#97;&#110;&#109;&#97;&#114;&#105;&#110;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">kdurden@berganmarinesystems.com</a>","https://berganmarinesystems.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LX3BLA9NLD49">25</a>","GILMORE MOVING & STORAGE, INC","JIM BERAN","","31 E FAIRFIELD DR","","PENSACOLA","FL","32501-1403","Founded in Pensacola in 1955 as a Commercial & Residential Moving Company, a service in which we still provide today; along with Paper Shredding, Records Storage and Document scanning. Local National Moving & Storage services as an agent for Wheaton World Wide Moving","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#66;&#69;&#82;&#65;&#78;&#64;&#71;&#73;&#76;&#77;&#79;&#82;&#69;&#83;&#69;&#82;&#86;&#73;&#67;&#69;&#83;&#46;&#67;&#79;&#77;">JBERAN@GILMORESERVICES.COM</a>","http://www.gilmoreservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYQWSYQJJ9G7">26</a>","NORGEM, INC.","MARK JOHNSON","","50 S E ST","","PENSACOLA","FL","32502-4519","Our inventory includes but is not limited to coatings, sealants, adhesives, lubricants, tapes and chemicals primarily used in the aerospace and defense industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#50;&#64;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#115;&#117;&#112;&#112;&#108;&#121;&#99;&#111;&#46;&#99;&#111;&#109;">mjohnson2@johnsonsupplyco.com</a>","johnsonsupplyco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YY4MNKSZ9N59">27</a>","PANHANDLE ALARM AND TELEPHONE COMPANY, INC.","HOWARD JOHNSON","General Manager","10 INDUSTRIAL BLVD","","PENSACOLA","FL","32503-7602","We are a locally owned and operated company who have been providing first class service and support since 1977. We are also a UL 2050, National Industrial Security Systems certified installing Central Station. Panhandle Alarm & Telephone installs proven equipment which virtually eliminates false alarms and user error. We also offer fire alarm, access control, CCTV, and communication systems and are proud to be an authorized Bosch, Avaya, Hirsch and Honeywell dealer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#112;&#97;&#110;&#104;&#97;&#110;&#100;&#108;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">hjohnson@panhandlesystems.com</a>","http://www.panhandlesystems.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RGPYJ8CVLLK8">28</a>","GULF COAST TRAFFIC ENGINEERS, INC.","BLAIR CROOKE","","8203 KIPLING ST","","PENSACOLA","FL","32514-7443","We are a road construction company that specializes in striping of roads, runways, and parking lots. We also manufacture and install road signs. We rent, sell and deliver traffic control devices. We build and repair tennis courts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#105;&#114;&#64;&#103;&#99;&#116;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">blair@gcteinc.com</a>","http://www.gcteinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLNCNA1GA6Y8">29</a>","SPECIALTY VEHICLES SOUTHEAST, INC.","STEPHEN MCNEESE","","685 BROAD ST","","PENSACOLA","FL","32534-4202","Fleetco is a certified small business with a 30-year history in the truck equipment, marine and defense industries. We build customized vehicles and equipment, refurbish truck bodies and trailers and convert shipping containers into operations platforms. We also deliver proven solutions for corrosion management. Our industry leading coatings process has a record of proven performance on vehicles and vessels in every environment. At Fleetco we build vehicle and container solutions tailored to mission requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#101;&#110;&#109;&#64;&#102;&#108;&#101;&#101;&#116;&#99;&#111;&#98;&#117;&#105;&#108;&#100;&#115;&#46;&#99;&#111;&#109;">stephenm@fleetcobuilds.com</a>","http://fleetcobuilds.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBJAF3STHZW3">30</a>","LABLYNX, INC.","JOHN JONES","President","8531 FOXTAIL LOOP","","PENSACOLA","FL","32526-3239","LIMS (Laboratory Information Management System) development. Provide LIMS (Laboratory Information Management) Systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#97;&#64;&#108;&#97;&#98;&#108;&#121;&#110;&#120;&#46;&#99;&#111;&#109;">gsa@lablynx.com</a>","http://www.lablynx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WND2DZ7JS6D3">31</a>","ROCKHILL GROUP, INC., THE","JAMES ROCKHILL","President","1 ROCKHILL DR","","MOLINO","FL","32577-4178","Aviation Technical Services & Equipment; Pilots, Instructors, Mechanics, and Aircraft. Aviation Weather Observation/Forecasting. Courseware Development & Contract Aircrew Training CWD/CAT. Aircraft Maint & Mods, Airfield Management, ATC, Aviation Fuel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#46;&#114;&#111;&#99;&#107;&#104;&#105;&#108;&#108;&#64;&#116;&#104;&#101;&#114;&#111;&#99;&#107;&#104;&#105;&#108;&#108;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">james.rockhill@therockhillgroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUA2VKLKMHF9">32</a>","ONESOURCEPCS, LLC","JOSELITO JONATHAN LLANERA","Manager","3111 PEGGY BOND DR","","PENSACOLA","FL","32504-5018","OnesourcePCS, LLC prides itself in delivering Information Technology (IT) support, Administrative support and Medical clinical services in multiple environments. OnesourcePCS consistently demonstrates its commitment to the delivery of exceptional customer satisfaction; quality services and products; measurable, results?oriented outcomes, on time and within budget. Our services encompass medical, administrative and technology?related support that include hardware and software procurement, network engineering services, IT staffing and support, cyber security service, healthcare IT systems, Healthcare services and Administrative support. OnesourcePCS holds several Governmentwide Acquisition Contracts (GWACs) such as the Navy’s Seaport?e, GSA STARS II, FAA EFAST making it easy for federal agencies to obtain our customizable solutions for their IT and Medical needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#108;&#97;&#110;&#101;&#114;&#97;&#64;&#111;&#110;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#112;&#99;&#115;&#46;&#99;&#111;&#109;">jllanera@onesourcepcs.com</a>","www.onesourcepcs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C4NSSYZNK7M8">33</a>","ROD STEWART ENGINEERING INC","ROD STEWART","","1100 W GARDEN ST","","PENSACOLA","FL","32502-4502","Generates electrical plans, specifications and cost estimates and performes construction administration for new construction, building renovation, motor controls, overhead and underground electrical distribution, airfield, industrial and sports lighting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#100;&#64;&#114;&#111;&#100;&#115;&#116;&#101;&#119;&#46;&#99;&#111;&#109;">rod@rodstew.com</a>","http://rodstew.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GRVJPU5CMKN7">34</a>","SMARTCOP INC","STEVEN WILLIAMS","","410 E GOVERNMENT ST","","PENSACOLA","FL","32502-6132","SmartCOP produces a commercial, off the shelf suite of Public Safety Software that is the most state of the art, integrated and user-friendly system available. We are a corporation engaged in system development, implementation, and support services for a fully integrated suite of public safety products. Our including Computer Aided Dispatch (CAD), Records Management System (RMS), Mobile Computing with Field Based Reporting, and Jail Management System (JMS). Our mission is to maximize public safety, by providing real-time information through integrated software solutions for law enforcement officers, firefighters, EMS personnel, dispatchers, and report takers. At SmartCOP we are proud to say that we accomplish this mission by providing our customers with the most advanced and complete software solution available. For further information please visit us at http://www.smartcop.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#110;&#46;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#115;&#109;&#97;&#114;&#116;&#99;&#111;&#112;&#46;&#99;&#111;&#109;">steven.williams@smartcop.com</a>","http://www.smartcop.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JZ4KKR41G9D4">35</a>","VANARSDALE INNOVATIVE PRODUCTS, INC.","ASHLEY HELMS","","4660 VOYAGER DR","","PENSACOLA","FL","32514-6744","VanArsdale Innovative Products, Inc provides patient marking for radiation therapy to hospitals and Va's nationwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#97;&#114;&#115;&#100;&#97;&#108;&#101;&#46;&#97;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">vanarsdale.ar@gmail.com</a>","www.vanarsdaleproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GM2MN69JNUT3">36</a>","VERTEC, INC.","RONALD BRAY","","141 TERRY DR","","PENSACOLA","FL","32503-7024","Vertec is a development/manufacturing company with state of the art equipment.Facilities include:welding,fabrication,machining,screen printing,spray painting and assembly.Activities include design of prototypes and production of complex fabrications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#101;&#114;&#116;&#101;&#99;&#64;&#118;&#101;&#114;&#116;&#101;&#99;&#46;&#110;&#101;&#116;">vertec@vertec.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NERXYJ7RNMD7">37</a>","EBI MANAGEMENT GROUP INC","MARK KILCAWLEY","","725 S J ST","","PENSACOLA","FL","32502-5239","EBI Management Group is a Service-Disabled Veteran-Owned Small Business (SDVOSB) specializing in an array of professional services for Federal Clients; data analytics, dashboards, financial and technology consulting, accounting execution, financial system modernization, data analytics and visualization, audit and financial training, business transformation, Enterprise Resource Planning (ERP), and Project Management. EBI is considered part of the growing FinTech sector, solving complex financial issues through application of automation and innovative technologies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#65;&#82;&#75;&#46;&#75;&#73;&#76;&#67;&#65;&#87;&#76;&#69;&#89;&#64;&#69;&#66;&#73;&#77;&#71;&#46;&#67;&#79;&#77;">MARK.KILCAWLEY@EBIMG.COM</a>","www.ebimg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G35KKFEWJTB9">38</a>","KPINC CONSULTING, LLC","KATHRYN CORDEIRO","","702 BAY BLVD","","PENSACOLA","FL","32503-6802","A small, woman-owned consulting firm specializing in technical documentation preparation and graphic design. Services include technical writing and editing, presentation preparation, desktop publishing, proposal management, website design and advertising.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#104;&#114;&#121;&#110;&#64;&#107;&#112;&#105;&#110;&#99;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">kathryn@kpincconsulting.com</a>","http://www.kpincconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X6MAZ1YMC9B3">39</a>","K&J SAFETY AND SECURITY CONSULTING SERVICES, INC.","KAREN TUCCI","","3257 ELCANO LN","","CANTONMENT","FL","32533-6876","Specializes in transit safety and security. Provides value engineering, safety/security reviews of existing/start-up systems. Provides safety/security training, certification, threat/vulnerability analysis (TVA), OSHA compliance and safety audits.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#116;&#117;&#99;&#99;&#105;&#64;&#107;&#106;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">ktucci@kjsafety.com</a>","http://www.kjsafety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZXV4CBXPR4J7">40</a>","JOE DEREUIL ASSOCIATES, LLC","KATIE BOWLES","","301 W CERVANTES ST","","PENSACOLA","FL","32501-3029","Structural Engineering Consulting Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#105;&#101;&#64;&#106;&#100;&#115;&#116;&#114;&#117;&#99;&#116;&#117;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">katie@jdstructures.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FM26EU3DH7M6">41</a>","WDR MECHANICAL CONTRACTORS, INC.","ROBBIE HALLFORD","","3018 N DAVIS HWY","","PENSACOLA","FL","32503-3557","WDR Mechanical Contractors, Inc. was founded in 1995 with the goal of providing quality construction and integrity to the construction industry. Safety, quality and productivity have been the key to our success for over 22 years. Safety and quality go in before the job goes out.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#98;&#105;&#101;&#104;&#64;&#119;&#100;&#114;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">robbieh@wdrmechanical.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TN5JVLMJ5HB5">42</a>","EDWARDS BUILDING & DESIGN, INC","ROBERT EDWARDS","","2136 MORNINGSIDE DR","","PENSACOLA","FL","32503-3441","Edwards Building and Design, Inc. is a residential and commercial building company, located in Pensacola, Florida. We are licensed in the states of Florida and Alabama. We specialize in custom renovations and remodeling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#101;&#100;&#119;&#97;&#114;&#100;&#115;&#49;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">bobedwards1@att.net</a>","www.edwardsbuildinganddesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FS6RGCN1Y2G9">43</a>","THE ASTA GROUP, LLC","LINDA BRENT","","223 W GREGORY ST","","PENSACOLA","FL","32502-4821","The ASTA Group, LLC is a woman-owned small business that promotes organizational success through analysis; targeted training and education programs; and on-site support. We are focused on improving human performance through applying transformational strategies, behavioral science research, and innovative technologies. We have conducted over 75 analyses of courses/major training systems across the US DoD and other Government agencies, confirmed viable technical solutions, identified gaps in solutions, and made recommendations based on an in-depth analysis to include knowledge of the industry, benchmarking studies, analysis of best practice, and viability of the concept/ approach. We have designed and developed thousands of hours of innovative training and educational courses for classroom instruction, as well as online learning, simulation, and virtual environments. We have a Top Secret Facility Clearance, and all personnel are cleared at minimum of Secret level, many at Top Secret.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#100;&#97;&#46;&#98;&#114;&#101;&#110;&#116;&#64;&#116;&#104;&#101;&#97;&#115;&#116;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">linda.brent@theastagroup.com</a>","http://www.theastagroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UYGJUB7YGXF5">44</a>","ADSYNC TECHNOLOGIES, INC.","JANE ADKINSON","","201 S F ST","","PENSACOLA","FL","32502-4527","Adsync provides software support and development, training simulations, computer systems design, training, educational support services, instruction, courseware, learning management systems, research and development, flight training, facilities support services, aircraft part and equipment maintenance, electronic and precision equipment maintenance, warehouse management, support activities for air transportation, and modular training simulators.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#100;&#107;&#105;&#110;&#115;&#111;&#110;&#64;&#97;&#100;&#115;&#121;&#110;&#99;&#46;&#99;&#111;&#109;">jadkinson@adsync.com</a>","http://www.adsynctechnologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JX4SJD9NSM93">45</a>","TUTOR 4 YOU LLC","REGINALD SANDERS","","1380A PINNACLE DR","","PENSACOLA","FL","32504-8055","Mathematics Degree, Math Instructor/Tutor with 16 years experience, Online Video and In-person Math tutoring","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#115;&#97;&#110;&#100;&#101;&#114;&#115;&#55;&#52;&#64;&#108;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">rsanders74@live.com</a>","www.tutor4u.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJ7JPZ8JTKN5">46</a>","BOYETT'S VACUUM PUMPING, INC.","LOGAN BOYETT","","7300 MOBILE HWY","","PENSACOLA","FL","32526-8559","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#121;&#101;&#116;&#116;&#115;&#53;&#53;&#51;&#54;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">boyetts5536@gmail.com</a>","http://www.boyetts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S3GLSK2EZKA1">47</a>","GRAND COASTAL BUILDERS INC","JOHN STEADHAM","","6706 N 9TH AVE","","PENSACOLA","FL","32504-9303","Construction related services....Specializing in Contract Solutions including: Building and Structural, Infrastructure, Land Management and Development, Reconstruction and Remodel, Roadway and Hardscape, Remediation and Hazmat.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#104;&#110;&#64;&#71;&#114;&#97;&#110;&#100;&#67;&#111;&#97;&#115;&#116;&#97;&#108;&#46;&#117;&#115;">John@GrandCoastal.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGM2KFQJGX79">48</a>","BULLOCK TICE ASSOCIATES, LLC","ROBERT MAGGIORE","","909 E CERVANTES ST","","PENSACOLA","FL","32501-3213","BTA serves Federal and DOD clients. Services include architecture, interior design, sustainable design, anti-terrorism/force protection, Building Information Modeling, Landscape, food service facility design, cost estimating, surveying, and permitting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#46;&#109;&#97;&#103;&#103;&#105;&#111;&#114;&#101;&#64;&#98;&#117;&#108;&#108;&#116;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">b.maggiore@bulltice.com</a>","http://www.bullocktice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLNBNKH9WDX5">49</a>","ALUMA DESIGNS LLC","DAVID KEIGLEY","","400 N TARRAGONA ST","STE 633","PENSACOLA","FL","32501-3965","We specialize in modern custom designed image display systems and signage. Acrylic Picture frames, Awards, Environmental graphics, Digital Wall Murals, Large Format Printing, Custom Command Walls. Any High tech image display systems and signage solutions perfect for the modern high tech environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#97;&#108;&#117;&#109;&#97;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">david@alumadesigns.com</a>","http://www.alumadesigns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q3BTGSREVL51">50</a>","D&D WELDING AND DESIGN, INC.","JILL SIEFERT","","2715 N W ST","","PENSACOLA","FL","32505-4937","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#108;&#108;&#64;&#100;&#100;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jill@ddweldinginc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GMXJCFM8C3U4">51</a>","EMCO CONSULTING, INC.","LEANNE BLANTON","","321 N DE VILLIERS ST STE 300","","PENSACOLA","FL","32501-3889","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#97;&#110;&#110;&#101;&#64;&#101;&#109;&#99;&#111;&#99;&#111;&#46;&#99;&#111;&#109;">leanne@emcoco.com</a>","www.emcoco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R8QJFPP5H9J1">52</a>","PARSCO, LLC","AMIR FOOLADI","","700 N DE VILLIERS ST","","PENSACOLA","FL","32501-3819","ParsCo offers a full array of services for all your construction needs.  Program and Project Management Cost Engineering Construction Claims Management Commercial Contracting Services Residential Contracting Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#105;&#114;&#64;&#112;&#97;&#114;&#115;&#45;&#99;&#111;&#46;&#110;&#101;&#116;">amir@pars-co.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MHMCMQCH14N5">53</a>","NORTHWEST FLORIDA INVESTMENTS, INC","RANAE STEWART","","7139 N 9TH AVE","","PENSACOLA","FL","32504-6615","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#97;&#101;&#115;&#116;&#101;&#119;&#97;&#114;&#116;&#64;&#101;&#120;&#105;&#116;&#110;&#102;&#105;&#46;&#99;&#111;&#109;">ranaestewart@exitnfi.com</a>","www.floridaexit.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LULHX8RK9JC8">54</a>","DYNAMIC INTEGRATED SERVICES, LLC","JOHN SULLIVAN","","16 W STRONG ST","","PENSACOLA","FL","32501-3138","•Cyber Security including Risk Management Framework (RMF) implementation, Continuous Diagnostics& Mitigation (CDM), and FISMA expertise •Network Infrastructure Management including large scale, mission critical Federal network design, management and operations •Data Analytics including innovative solutions to solve Federal ‘big data’ challenges and data virtualization","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#68;&#46;&#83;&#117;&#108;&#108;&#105;&#118;&#97;&#110;&#64;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#105;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">JD.Sullivan@dynamiciservices.com</a>","http://www.disconsulting.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKF9C6HW6VR6">55</a>","JOINT MISSION ESSENTIAL TRAINING SOLUTIONS, INC.","MICHAEL BERRYMAN","","6336 N BLUE ANGEL PKWY","","PENSACOLA","FL","32526-8076","JMETS provides a variety of services to our government clients and partners, to include: Training and Training Support, Intelligence and Operations Support, Joint Fires Support, Test Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#46;&#98;&#101;&#114;&#114;&#121;&#109;&#97;&#110;&#64;&#106;&#109;&#101;&#116;&#115;&#46;&#99;&#111;&#109;">craig.berryman@jmets.com</a>","www.jmets.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MR3KNXNMN5N5">56</a>","GQS ENTERPRISE, LLC","JOHN LOMAX","","833 HORSEMENS PATH","","CANTONMENT","FL","32533-3828","CORE COMPETENCIES: Facility Support Services • Maintenance Support • Facility Operations • Construction Service • Commercial Buildings • Specialty Trade Contractors • Renovation Services • Project Management • Quality Janitorial Services • Document Shredding • Landscaping • Debris Removal • Real Estate Consulting • Asset Management • Claims Adjusting • Lessor Of Buildings • Property Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#103;&#113;&#115;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#46;&#99;&#111;&#109;">john@gqsenterprise.com</a>","http://www.gqsenterprise.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UEXRF2AEMD59">57</a>","B & K TECHNOLOGY SOLUTIONS LLC","BARBARA EHRESMAN","","5060 COMMERCE PARK CIR","","PENSACOLA","FL","32505-1869","Nationwide electronics recycling company specializing in asset recovery, site-relocation/closure services, and data destruction for businesses and governmental entities. ISO 14001 and R2 certified with a full system of ITAR compliance in place.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#98;&#64;&#97;&#116;&#114;&#101;&#99;&#121;&#99;&#108;&#101;&#46;&#99;&#111;&#109;">barb@atrecycle.com</a>","http://www.atrecycle.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYHVJ3ZCGKT7">58</a>","DELL CONSULTING LLC","LYNN DELL","","129 E GOVERNMENT ST","","PENSACOLA","FL","32502-5801","Dell Consulting offers proven capabilities in DoD facility design services and development, value engineering, cost estimation and preparation of specification and construction documents. Dell’s highly experienced and qualified design professionals have provided electrical, mechanical, and plumbing design services and construction administration throughout the Southeastern and East Coast region of the US for new construction, renovations/additions, and Charrettes on numerous DoD projects. Dell Consulting offers experience at Eglin AFB, Hurlburt Field, Pensacola NAS and DoD bases throughout the U.S. We are very familiar with government standards and preferences and will prepare all designs to comply. We will respond quickly and efficiently to all requests from any government representatives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#89;&#78;&#78;&#64;&#68;&#69;&#76;&#76;&#67;&#79;&#78;&#83;&#85;&#76;&#84;&#73;&#78;&#71;&#76;&#76;&#67;&#46;&#67;&#79;&#77;">LYNN@DELLCONSULTINGLLC.COM</a>","HTTP://DELLCONSULTINGLLC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RJFZK7JSFNR1">59</a>","ROGER A RICH ENTERPRISES INC","ROGER RICH","","905 BRANDERMILL DR","","CANTONMENT","FL","32533-6305","THIS COMPANY PROVIDES THE SALE, INSTALLATION AND SERVICE OF WATER RECYCLE SYSTEMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#98;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">randbenterprises@att.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UCGYBWEDRK47">60</a>","GULF CIVIL ENGINEERING, LLC","STEVE FLOYD","","2940 BAYVIEW WAY","","PENSACOLA","FL","32503-6914","Site investigation and planning, site design and permitting, stormwater management design, utility design and coordination, as well as, transportation and military infrastructure design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#103;&#117;&#108;&#102;&#99;&#105;&#118;&#105;&#108;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">steve@gulfcivileng.com</a>","www.gulfcivilengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5HZT68M1Q87">61</a>","STEELBRIDGE SOLUTIONS, INC.","TERI ZIPPER","","300 W MALLORY ST","","PENSACOLA","FL","32501-2069","Business transformation specialists with laser focus on HR,Project Management and Change Management. Over 20 years experience in world class consulting firms. Focus on client service, transparency and advisory services drives dramatic client results.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#105;&#64;&#115;&#97;&#112;&#105;&#101;&#110;&#116;&#105;&#110;&#115;&#105;&#103;&#104;&#116;&#115;&#46;&#99;&#111;&#109;">teri@sapientinsights.com</a>","www.sapientinsights.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNH3STM1FTS6">62</a>","LOVELL GOVERNMENT SERVICES INC.","CHRIS LOVELL","","223 W GREGORY ST","","PENSACOLA","FL","32502-4821","Federal, State, and Local Medical Supply and Equipment Provider, Ice Provider for Disaster Relief, Vehicle Wrap Manufacturer and Installer, Large and Small Print Media Manufacturer. Exclusive Provider of HemoStyp Trauma Gauze to DoD and Fed Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#108;&#111;&#118;&#101;&#108;&#108;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">chris@lovellgov.com</a>","www.lovellgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X93AQ43L23Y6">63</a>","DANNIE L FOUNTAIN","DANNIE FOUNTAIN","","3021 MELODY LN","","PENSACOLA","FL","32505-3914","Quality Cleaning Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#108;&#102;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#100;&#101;&#116;&#97;&#105;&#108;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#46;&#98;&#105;&#122;">dlf@qualitydetailcleaning.biz</a>","www.qualitydetailcleaning.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKPKHNKFC1J8">64</a>","BAY AREA PRINTING & GRAPHICS SOLUTIONS, INC.","STEPHANIE JUSTICE","","700 S PACE BLVD","","PENSACOLA","FL","32502-5029","We offer a wide variety of options for your business needs including but not limited to; Rigid and Flexible Displays, Presentation Boards, Posters, Window Graphics, Fine Art Reproductions, Outdoor Signs, Banners & More!? We also do aerial printing and photography as well as selling, maintenance and repair of blueprint printing machines and blueprint reproduction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#105;&#110;&#103;&#64;&#98;&#97;&#121;&#97;&#114;&#101;&#97;&#98;&#108;&#117;&#101;&#46;&#99;&#111;&#109;">billing@bayareablue.com</a>","www.bayareablue.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UA8DZM9SABW8">65</a>","PULSE CONSULTING SERVICES LLC","VINCENT COATES","","1132 MERRIE WAY","","PENSACOLA","FL","32514-4682","Pulse Consulting is a minority owed company that specializes in Information Technology","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#110;&#99;&#101;&#64;&#112;&#117;&#108;&#115;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">vince@pulseconsulting.net</a>","www.pulseconsulting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TMFCXS4N7AY6">66</a>","PLURAX LLC","CEDRIC WIGGINS","","13 PALAFOX PL","","PENSACOLA","FL","32502-5637","Plurax, LLC is a certified 8(a), HUBzone, DBE, and ISO 9001:2015 certified. We perform general construction, facilities maintenance, and integrated logistics. Our construction services include design-build, general contracting, and renovations (focusing on demolition, sitework, interior build-outs and MEP). As a GSA Schedule holder, we offer facilities maintenance to include complete operations, maintenance and repair of real property, federal buildings, and military installations. Our offerings include elevator, HVAC, electrical, plumbing, septic, fire alarm/fire suppression, energy management control systems (EMCS), water distribution, septic, telephone, water tanks, renewable energy systems, waste management, recycling, etc. Under our logistics division, we offer a full range of supply chain and warehouse management solutions to our federal partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#119;&#105;&#103;&#103;&#105;&#110;&#115;&#64;&#112;&#108;&#117;&#114;&#97;&#120;&#46;&#110;&#101;&#116;">cwiggins@plurax.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YSKKL7Z3H3T4">67</a>","BONDED TRANSPORTATION OF PENSACOLA, INC.","CHARLES HUAL","","301 MYRICK ST","","PENSACOLA","FL","32505-8061","Moving & Storage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#72;&#85;&#65;&#76;&#64;&#66;&#79;&#78;&#68;&#69;&#68;&#84;&#82;&#65;&#78;&#83;&#46;&#67;&#79;&#77;">CHUAL@BONDEDTRANS.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFP2XE2VS2R8">68</a>","TDG OF NORTH AMERICA, INC","WILLIAM DUNN","","25 W AVERY ST","","PENSACOLA","FL","32501-2113","Networks of Florida is a Managed Services Provider (MSP) for all Technology needs including Voice Over IP. We provide IT Staff augmentation or provide hosted services. Manage IT infrastructures, provide cybersecurity and Information Assurance professionals and conducts training and consulting in these fields.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#100;&#117;&#110;&#110;&#64;&#110;&#111;&#102;&#46;&#99;&#111;&#109;">bdunn@nof.com</a>","https://www.nof.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G6XWCD267UG8">69</a>","INFINITY DATACOM SOLUTIONS LLC","RICK JOHNSTON","","3326 N W ST","","PENSACOLA","FL","32505-3953","Infinity Datacom Solutions is an unlimited low voltage contractor specializing in copper and fiber optic integrated systems cabling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#46;&#106;&#111;&#104;&#110;&#115;&#116;&#111;&#110;&#64;&#105;&#110;&#102;&#105;&#110;&#105;&#116;&#121;&#100;&#97;&#116;&#97;&#99;&#111;&#109;&#46;&#99;&#111;&#109;">rick.johnston@infinitydatacom.com</a>","www.infinitydatacom.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y434BCYG9N98">70</a>","RAY SOLUTIONS PARTNERS LLC","GREGORY VARNSON","","7800 HESTIA PL","","PENSACOLA","FL","32506-3719","Ray Solutions Partners LLC provides professional and technical services for: Program/project management, software development, Advertising, and all forms of media production.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#118;&#97;&#114;&#110;&#115;&#111;&#110;&#64;&#114;&#97;&#121;&#115;&#112;&#46;&#99;&#111;&#109;">gregvarnson@raysp.com</a>","www.raysp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EK7MC9VSLBB4">71</a>","DD PROPERTIES, LLC","DOUG DURHAM","","4122 N DAVIS HWY","","PENSACOLA","FL","32503-2750","Over 15 years of experience of suppling the Multi-Family industry with kitchen and bath cabinet sales and installation. Creating cabinet supply programs tailored to fit the multi-family specific needs and precise timetables.  We are the only PPG Pittsburgh paint supply company for the greater Pensacola area. Offering PPG's full line of architectural coatings for residential and commercial applications. ww.cabinetsdirectpensacola.com Kitchen cabinets Bath Cabinets Laminate Counter tops Cabinet Contractor PPG Paints & Painting Supplies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#64;&#99;&#100;&#105;&#112;&#46;&#98;&#105;&#122;">doug@cdip.biz</a>","www.cabinetsdirectpensacola.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SFFCFE1F95N1">72</a>","BATH FITTER NORTHERN FLORIDA LLC","NATALIE MONGRAIN","","33 BRENT LN","","PENSACOLA","FL","32503-2288","Bath Fitter was founded in 1984 in Montreal, Canada, by Brian Cotton and his two brothers, Wayne and Glenn. Their goal was to make it easier and more time-effective for commercial properties to update their old, worn bathtubs. Today, Bath Fitter products are manufactured in state-of-the-art facilities in the U.S. and Canada. Homeowners and commercial customers can choose from a product line that includes acrylic bathtubs and shower liners, free standing bathtub and shower bases, acrylic seamless walls, domed ceilings, tub and shower doors, accessories and wainscoting. We offer custom solutions to meet your bathroom remodeling needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#109;&#111;&#110;&#103;&#114;&#97;&#105;&#110;&#64;&#98;&#97;&#116;&#104;&#102;&#105;&#116;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">nmongrain@bathfitter.com</a>","https://www.bathfitter.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XYJKREQNEPX8">73</a>","MC SQUARED GROUP, INC","MICHELLE SARRA","","260 S TARRAGONA ST STE 140","","PENSACOLA","FL","32502-6085","The Marketing Bar is a full service marketing and printing firm. We offer custom printing, branded promotional merchandise, custom apparel printing and traditional marketing services. Use your design or let our team of graphic designers create a custom print or promotional product for you. Our Company Stores will save you time and money when ordering print items. Consolidate common items and automate the print process by setting up a custom Company Store for all your print items. Organize by department or division in an online store that we manage for you. The easiest way to order business cards, brochures, direct mail, table covers, corporate gifts, uniforms, t-shirts, trade show items, pens, etc. Each store is set up for your specific need and with the negotiated item prices. The Marketing Bar is your marketing partner. We are confident you will be 100% satisfied with our products, quality, design experience and attentive service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#109;&#97;&#114;&#107;&#101;&#116;&#105;&#110;&#103;&#98;&#97;&#114;&#46;&#99;&#111;&#109;">michelle@marketingbar.com</a>","https://www.marketingbar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SL5KRWM6X2C5">74</a>","PAI & ASSOCIATES, INC.","JULIE PATRICK","","4011B N PACE BLVD","","PENSACOLA","FL","32505-4342","Contract Furniture Installion","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#95;&#102;&#108;&#97;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">julie_fla@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8JDNHW3YEL6">75</a>","EMERALD COAST OFFICE PRODUCTS INC","WILSON WRIGHT","","3355 COPTER RD STE 3","","PENSACOLA","FL","32514-7082","We have over 35 years experience in the sales and installation / reconfiguration of Office furnishings, systems furnishings, seating, tables, desking, filing systems and shelving. We have several years of dealing with federal, state and local governments. We make the most of your GSA , BPA and State dollars. Satisfaction is key to our success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#119;&#114;&#105;&#103;&#104;&#116;&#64;&#101;&#109;&#101;&#114;&#97;&#108;&#100;&#99;&#111;&#97;&#115;&#116;&#111;&#102;&#102;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">wwright@emeraldcoastoffice.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CR5BJDTH65K9">76</a>","ZOTAGROUP LLC","RAZI ATUAR","","3500 BARRANCAS AVE","","PENSACOLA","FL","32507-2357","Consulting firm and technical transition center for technologies that would like to enter the North American market.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#122;&#105;&#64;&#122;&#111;&#116;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">razi@zotagroup.com</a>","http://zotagroup.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8BKQH8GFD64">77</a>","PINK DIAMOND INSPECTIONS LLC","DOMINIQUE JONES","","652 SEAPINE CIR","","PENSACOLA","FL","32506-6239","We specialize in using technology based procedures and root cause analysis to provide value beyond the point of inspection. We preform inspections and Working projects in power generation (nuclear and fossil fuel), steel construction (structural and sheet), and marine industries has given us experience conforming to standards developed by governing bodies such as AWS, ASME, ABS, DNV, ASNT, and API, to name a few.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#106;&#111;&#110;&#101;&#115;&#64;&#112;&#100;&#105;&#110;&#100;&#116;&#46;&#99;&#111;&#109;">djones@pdindt.com</a>","https://www.pdindt.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NPD5N1FMMLH1">78</a>","GULF COAST ENVIRONMENTAL SOLUTIONS, INC","JAMES FOSTER","","106B W LORETTA ST","","PENSACOLA","FL","32505-4322","Full service environmental remediation, consulting and construction company","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#64;&#103;&#99;&#101;&#115;&#102;&#108;&#46;&#99;&#111;&#109;">james@gcesfl.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZFLXG4QP9PZ6">79</a>","RECON OFFSHORE, LLC","JASON BURNS","","3240 ROTHSCHILD DR","","PENSACOLA","FL","32503-5121","RECON Offshore specializes in all aspects of Submerged Cultural Resources Management (SCRM) and Maritime Archaeology. With over 48 years’ experience our mission is to provide our clients with the most reliable and accurate results utilizing cutting-edge technologies. From Section 106 compliance, to remote sensing surveys, to data analysis, to diver investigations, Recon Offshore has the capabilities to work worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#115;&#111;&#110;&#46;&#98;&#117;&#114;&#110;&#115;&#64;&#114;&#101;&#99;&#111;&#110;&#111;&#102;&#102;&#115;&#104;&#111;&#114;&#101;&#46;&#99;&#111;&#109;">jason.burns@reconoffshore.com</a>","https://reconoffshore.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZM2CWJWXDX7">80</a>","GLOBAL MARINE SOLUTIONS INC","MIKE MAJEWSKI","","2004 BAYOU GRANDE BLVD","","PENSACOLA","FL","32507-2907","VESSELS FOR LEASE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#108;&#109;&#115;&#97;&#108;&#101;&#115;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kclmsales1@gmail.com</a>","www.gmsboats.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNT5XGMJEK47">81</a>","COMMERCIAL DOOR SYSTEMS OF FLORIDA, LLC","KENT SIMMONS","","612 W ROMANA ST","","PENSACOLA","FL","32502-5549","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#115;&#105;&#109;&#109;&#111;&#110;&#115;&#64;&#99;&#111;&#109;&#109;&#100;&#111;&#111;&#114;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">ksimmons@commdoorsystems.com</a>","commdoorsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLBUNNPCLMS7">82</a>","DIAMOND AIR DESIGN, LLC","DARRELL BLANCHARD","","200 TERRY DR","","PENSACOLA","FL","32503-7027","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#46;&#100;&#105;&#97;&#109;&#111;&#110;&#100;&#97;&#105;&#114;&#100;&#101;&#115;&#105;&#103;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">d.diamondairdesign@gmail.com</a>","www.diamondairdesign.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCDGG9F88PB6">83</a>","THE RIGHT CHOICE COMPUTER AND IT SOLUTIONS, LLC","TONY CONNER","","7475 DANNY WAY","","PENSACOLA","FL","32526-3849","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#100;&#99;&#111;&#110;&#110;&#101;&#114;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">tonydconner@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEG9GUD3TMU7">84</a>","KLEINHAUS CONSULTING GROUP LLC","JULIANNE KLEIN","","3621 SWAN LN","","PENSACOLA","FL","32504-8331","Conduct community health needs assessments in compliance with IRS requirements for non-profit charity hospitals. Conduct community needs assessments and community health assessments for other organizations, such as public health departments and other non-profit organizations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#107;&#108;&#101;&#105;&#110;&#64;&#107;&#108;&#101;&#105;&#110;&#104;&#97;&#117;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jklein@kleinhausconsulting.com</a>","kleinhausconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KTDVMNYQLPR7">85</a>","NURSES THAT CARE STAFFING AGENCY L.L.C.","ALISSA YOUNG","","6901 N 9TH AVE # 240STE","","PENSACOLA","FL","32504-6670","Nurses That Care Staffing Agency is a minority owned small business healthcare staffing firm that seeks to provide licensed and/or certified medical professionals (CNA's, LPN's, RN's) to healthcare organizations on a temporary basis in the state of Florida. Nurses That Care Staffing Agency is headquartered in Pensacola, Florida.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#105;&#115;&#115;&#97;&#121;&#111;&#117;&#110;&#103;&#64;&#110;&#117;&#114;&#115;&#101;&#115;&#45;&#116;&#104;&#97;&#116;&#99;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">alissayoung@nurses-thatcare.com</a>","www.nurses-thatcare.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJSBVJKUXLB9">86</a>","THE WASH ROOM LLC","GRANT HOFBERGER","","3640 MENENDEZ DR","","PENSACOLA","FL","32503-3133","We are a women owned small business with 3 locations servicing the Gulf Coast from Pensacola FL, to Gulf Port MS. We offer pick up and delivery services.We are the only laundry service in the area offering ozone sanitation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#97;&#110;&#116;&#104;&#111;&#102;&#98;&#101;&#114;&#103;&#101;&#114;&#51;&#49;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">granthofberger313@gmail.com</a>","https://thewashroomlaundry.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RYNZYY569NH5">87</a>","GULF COAST READINESS SOLUTIONS LLC","RICHARD BERNARD","","6060 CHAMPION OAKS DR","","PENSACOLA","FL","32526-1114","Company Overview: GCR Solutions is a Service-Disabled Veteran-Owned Small Business (SDVOSB) firm specializing in government contract resourcing. Established in 2023, we are continually delivering high-quality solutions to both Federal and State requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#46;&#98;&#101;&#114;&#110;&#97;&#114;&#100;&#64;&#103;&#99;&#114;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">richard.bernard@gcrsolutionsllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QTDZC6CDLFQ4">88</a>","BLACKHAWK TRANSPORTATION & HAULING LLC","JOHN MCBRIDE","","8914 KLONDIKE RD","","PENSACOLA","FL","32526-8759","Blackhawk Transportation & Hauling (BTH) LLC, led by a disabled veteran, excels in freight carrying with a focus on exceeding customer expectations. We understand that successful delivery goes beyond transporting goods, aiming to add value and address your business needs through strong relationships, meticulous attention to detail, and punctuality. Specializing in high-value items over $1 million, such as aircraft, construction equipment, classic cars, and boats, BTH is adept at handling oversized loads and port operations across U.S. coasts. Our founder, a former Blackhawk helicopter pilot with a top-secret security clearance, brings proven trust and diligence to ensure we meet your company’s mission and goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#109;&#99;&#98;&#114;&#105;&#100;&#101;&#64;&#98;&#108;&#97;&#99;&#107;&#104;&#97;&#119;&#107;&#116;&#111;&#116;&#46;&#99;&#111;&#109;">john.mcbride@blackhawktot.com</a>","https://www.blackhawktot.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7HAW7JDQN27">89</a>","SWIFTHAND LLC","TAMARA PARMER","","5630 HIGHWAY 95A N","","MOLINO","FL","32577-9350","Janitorial Services Floor polishing, washing, buffing Carpet cleaning Window cleaning Pressure Washing Landscaping sevices Supply replenishment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#115;&#119;&#105;&#102;&#116;&#64;&#115;&#119;&#105;&#102;&#116;&#104;&#97;&#110;&#100;&#46;&#98;&#105;&#122;">tswift@swifthand.biz</a>","https://swifthandllc.godaddysites.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YGVCBPT54EG1">90</a>","ZERODAY STAFFING LLC","ANTHONY VILLANUEVA","","1924 HIGH RIDGE CT","","PENSACOLA","FL","32534-1767","ZeroDay Staffing LLC Capability Statement Overview ZeroDay Staffing, a veteran and minority-owned firm, specializes in providing top-tier staffing solutions across IT, healthcare, finance, and administrative sectors. Core Competencies Staffing Solutions: Temporary, permanent, and contract services. Talent Acquisition: Rigorous candidate screening. Workforce Management: Includes onboarding and compliance. Consulting: Optimizes workforce efficiency. Differentiators Leverages military discipline and diversity. Proven success in adapting to client needs and market conditions. Company Data DUNS: 12-398-2773 CAGE: 9VZL9 NAICS: 541612, 561320, 561311 Contact: Pensacola, FL | (850) 542-9237 | website Contact: Anthony Villanueva, Co-Founder | (414) 458-0210 | anthony@zerodaystaffing.com Contact us to discuss your staffing needs. This version should meet the character limit requirement while still conveying essential information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#110;&#116;&#104;&#111;&#110;&#121;&#64;&#122;&#101;&#114;&#111;&#100;&#97;&#121;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Anthony@zerodaystaffing.com</a>","www.zerodaystaffing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U8EALHHFW928">91</a>","THREE ONE ONE SOLUTION LLC","RANDOLPH LEWIS","","739 S E ST","","PENSACOLA","FL","32502-5441","Countering Malign Foreign Influence (MFI) from the Kremlin. Russia's hybrid war attacks Americans' and foreigners' trust in our democratic institutions, and depicts Russia as a defender of traditional values in the face of decadent west. Three One One Solutions, LLC has created a campaign to undermine the symbol of Russia's power - President Vladimir Putin - through popular social media and viral distribution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#65;&#78;&#68;&#79;&#76;&#80;&#72;&#76;&#69;&#87;&#73;&#83;&#48;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">RANDOLPHLEWIS0@GMAIL.COM</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.027&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

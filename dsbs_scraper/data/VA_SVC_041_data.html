@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 041 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.74 seconds and 1.81 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 77 
+(of 77 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMMTZVVLJ4G8">1</a>","VIRGINIA WATER SYSTEMS, INC.","EARL HOLLOWAY","PRESIDENT","2531 OAK LAKE BLVD","","MIDLOTHIAN","VA","23112-3988","WATER PURIFICATION EQUIPMENT INCLUDING SERVICE DEIONIZATION, REVERSE OSMOSIS, ULTRAFILTRATION AND AUTOMATIC DEIONIZATION FOR LABORATORIES, HOSPITALS AND DIALYSIS UNITS. AREAS SERVED INCLUDE VIRGINIA, WEST VIRGINIA, MARYLAND & WASHINGTON, DC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#104;&#111;&#108;&#108;&#111;&#119;&#97;&#121;&#64;&#118;&#97;&#119;&#97;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">eholloway@vawater.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQXNZEK4PBB1">2</a>","BOITNOTT VISUAL COMMUNICATIONS CORP.","KEITH BOITNOTT","PRESIDENT","14201 JUSTICE RD","","MIDLOTHIAN","VA","23113-6839","RENTAL, STAGING SERVICES FOR AUDIO/VISUAL, VIDEO SYSTEMS. AUDIO-VISUAL, VIDEO RENTAL. AUDIO VISUAL, VIDEO SYSTEMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#98;&#111;&#105;&#116;&#110;&#111;&#116;&#116;&#64;&#98;&#111;&#105;&#116;&#110;&#111;&#116;&#116;&#118;&#105;&#115;&#117;&#97;&#108;&#46;&#99;&#111;&#109;">kboitnott@boitnottvisual.com</a>","http://www.boitnottvisual.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBBXZUPX4LJ5">3</a>","NETWORKING TECHNOLOGIES & SUPPORT INC","BERNARD ROBINSON JR","President","14421 JUSTICE RD","","MIDLOTHIAN","VA","23113-6875","Networking Technologies and Support, Inc. (NTS) is an IT Professional Services firm specializing in Cyber Security, Managed Services, Helpdesk Services and Systems Integration. We are a full service systems integrator providing customers with a single source for a broad range of high-technology products and services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#114;&#111;&#98;&#105;&#110;&#115;&#111;&#110;&#64;&#116;&#104;&#105;&#110;&#107;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">berobinson@thinknts.com</a>","http://www.thinknts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UL74JNM3Y2Z6">4</a>","CVC, LLC","FREDERICK NORMAN","Executive Manager","7348 ROUND RIDGE PL","","CHESTERFIELD","VA","23832-7882","Consulting services for government vendors wishing to increase business results in government. Consulting services for governments wishing to obtain the best negotiated terms with vendors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#114;&#101;&#100;&#46;&#78;&#111;&#109;&#97;&#110;&#64;&#67;&#86;&#67;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#110;&#101;&#116;">Fred.Noman@CVConline.net</a>","https://www.CVConline.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GVCAMA29N614">5</a>","SWINTON & ASSOCIATES, LLC","DERIUS SWINTON","Executive Director","8861 EMERALD DUNES CIR","","CHESTERFIELD","VA","23832-2439","Training and speeches focusing on Leadership and Communication Skills, Cultural Diversity, Team Building, Managing Conflicts, Violence in the Workplace, Dealing with Angry People,Safe Schools","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#115;&#111;&#97;&#114;&#103;&#114;&#111;&#117;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">thesoargroup@gmail.com</a>","http://www.swintonandassoc.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FS6EM5ZDCK69">6</a>","QUALITY CCTV SYSTEMS, INC.","T.J. EIDEN","President/CEO","3513 GREGORY POND RD","","NORTH CHESTERFIELD","VA","23236-1433","Provider of full service Video Surveillance (CCTV) equipment, installation/maintenance. Provider full service security systems to include burglar, fire, access control, installation/maintenance. Installation of Fiber Optic & structured wiring","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#106;&#101;&#105;&#100;&#101;&#110;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#99;&#99;&#116;&#118;&#46;&#110;&#101;&#116;">tjeiden@qualitycctv.net</a>","http://www.qualitycctv.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SWPJGJKSJ5G9">7</a>","GATEWAY FAX SYSTEMS, INC.","ANDREW CHAMBERS","","11032 MERGANSER TER","","CHESTERFIELD","VA","23838-5269","GateWay Fax Systems is dedicated to manufacturing the best and most complete line of Secure Fax products for use with the: STE, vIPer, OMNI, Sectera, STU-IIB, STU-IIIA as well many other cryptographic devices. We offer free technical support and one-year warranties","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#97;&#109;&#98;&#101;&#114;&#115;&#65;&#64;&#103;&#119;&#102;&#115;&#46;&#99;&#111;&#109;">ChambersA@gwfs.com</a>","http://www.gwfs.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YT8PGVAM5247">8</a>","AEGIS ENVIRONMENTAL INC","MATTHEW MARKEE","Managing Principal","11511 ALLECINGIE PKWY","","NORTH CHESTERFIELD","VA","23235-4301","Environmental Consulting: Air quality, Water quality, Waste Management, Permitting, Compliance, Air Dispersion Modeling, Integrated Spill Plans, Training, Environmental Management Systems, Soil and Water Investigations, Remediation, EMS and Compliance Audits, Stormwater Permits and Plans, Erosion and Sediment Control and Inspections","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#97;&#114;&#107;&#101;&#101;&#64;&#97;&#101;&#103;&#105;&#115;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">mmarkee@aegisenv.com</a>","http://www.aegisenv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T7BNUTMC5FF4">9</a>","ELECTRIC POWER, INC.","THOMAS PENDERGRASS","Vice President","1351 WEST HUNDRED ROAD","","CHESTER","VA","23836-2528","High Voltage Maintenance & Acceptance Testing & Manufacturing of Generator Controls & Paralleling Switchgear & Associated Equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#104;&#111;&#109;&#97;&#115;&#64;&#101;&#108;&#101;&#99;&#112;&#119;&#114;&#46;&#99;&#111;&#109;">Thomas@elecpwr.com</a>","https://www.elecpwr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMF6LC62ZSX3">10</a>","BRAINTRAIN INC","JOSEPH SANDFORD","","727 TWINRIDGE LN","","NORTH CHESTERFIELD","VA","23235-5270","BrainTrain develops software for psychological testing and cognitive rehabilitation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#112;&#116;&#97;&#105;&#110;&#64;&#98;&#114;&#97;&#105;&#110;&#116;&#114;&#97;&#105;&#110;&#46;&#99;&#111;&#109;">captain@braintrain.com</a>","www.braintrain.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SW7XDALMCZ73">11</a>","PIPET REPAIR SERVICE, INC.","CATHIE BEAVERS","","5324 HOUNDMASTER RD","","MIDLOTHIAN","VA","23112-6524","We provide quality pipette repair, calibration and certification of all brands of pipette to universities, clinical labs and the biotech community, offering more than 21 years of experience in the field.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#105;&#112;&#101;&#116;&#116;&#101;&#114;&#101;&#112;&#97;&#105;&#114;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">pipetterepair@verizon.net</a>","http://www.pipetterepairservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBMJA98ZE221">12</a>","ASHBY'S BRAKE AND TRUCK REPAIR, INC.","ROBERT ASHBY","","2320 DEEPWATER TERMINAL RD","","RICHMOND","VA","23234-1818","maunufacturing, painting, sandblasting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#87;&#65;&#64;&#99;&#114;&#101;&#110;&#115;&#104;&#97;&#119;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">RWA@crenshawcorp.com</a>","www.Crenshawcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S9M8TWDYSGV3">13</a>","SC STEVENSON CONSULTING, INC.","GALYNA MURPHY","","13500 E BOUNDARY RD","","MIDLOTHIAN","VA","23112-3930","Geotechnical Engineering/Evaluation, Testing and Inspection Services, Plan Review, Code Compliance, Special Inspections, Construction Quality Control, Air Barrier Testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#117;&#114;&#112;&#104;&#121;&#64;&#115;&#116;&#101;&#118;&#101;&#110;&#115;&#111;&#110;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">gmurphy@stevensonconsulting.net</a>","http://www.stevensonconsulting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XNJ4TZPFXHR8">14</a>","RICHMOND SECURITY, INC.","COREY BOGGS","","491 SOUTHLAKE BLVD","","NORTH CHESTERFIELD","VA","23236-3044","Locksmith products and services, CCTV, Electronic Access Control, Intrusion Detection, Security, Safes","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121;&#98;&#64;&#114;&#105;&#99;&#104;&#109;&#111;&#110;&#100;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">coreyb@richmondsecurity.com</a>","www.richmondsecurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAPPRPKYHTP8">15</a>","B3GLOBALCON LLC","KEVIN BEAM","","14303 W SHORE CT","","MIDLOTHIAN","VA","23112-6228","B3GLOBALCON offers a full spectrum of services and products to innovatively and cost-effectively satisfy our customers' international requirements and challenges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#46;&#98;&#101;&#97;&#109;&#64;&#98;&#51;&#103;&#108;&#111;&#98;&#97;&#108;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">kevin.beam@b3globalcon.com</a>","http://www.b3globalcon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NEGRNBMN22X7">16</a>","CWG AND ASSOCIATES, LLC","CARL GOUAUX","","12512 HAMPTON CROSSING DR","","CHESTERFIELD","VA","23832-2057","PMP with strong leadership experience as a military officer and civilian manager. Provide targeted assistance with proposal development to include RFP compliance, FAR compliance, and effective small business subcontract plan development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#64;&#99;&#119;&#103;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">carl@cwgassociatesllc.com</a>","www.cwgassociatesllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCBLSKKJGFH6">17</a>","APACHE FOREST PRODUCTS LLC","JEFF HOKE","","5017 CRAIG RATH BLVD","","MIDLOTHIAN","VA","23112-6243","Sale of specialty timber and wood poles. Long timber lengths up to 44' and poles up to 110'","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#73;&#78;&#69;&#77;&#79;&#78;&#83;&#84;&#69;&#82;&#64;&#65;&#79;&#76;&#46;&#67;&#79;&#77;">PINEMONSTER@AOL.COM</a>","http://www.apacheforestproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFZ1LHKP5J61">18</a>","WB CONTRACTING GROUP INC.","WILLIAM BIGGER","","15525 CHESDIN LANDING CT","","CHESTERFIELD","VA","23838-3240","The company provides institutional, industrial and commercial construction,facilty and computer maintenance management & logistics. Licenses and certifications are maintained with requisite insurance and bonding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#98;&#105;&#103;&#103;&#101;&#114;&#64;&#119;&#98;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#103;&#114;&#111;&#117;&#112;&#46;&#110;&#101;&#116;">wbigger@wbcontractinggroup.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WUJ3EJ3UQ1G3">19</a>","CRYSTAL CLEAR MECHANICAL CLEANING SERVICES LLC","STEVEN WELLS","","14619 HANCOCK FARM PL","","CHESTERFIELD","VA","23832-2529","We provide plate and frame heat exchanger services to include on site inspection, cleaning, evaluation and parts for all makes and models. We also perform cooling tower cleanings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#121;&#115;&#116;&#97;&#108;&#99;&#108;&#101;&#97;&#114;&#109;&#99;&#115;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">crystalclearmcs@msn.com</a>","http://wwwcrystalclearmcs.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCSMMC3G5HG3">20</a>","MULTI INTEREST SERVICE CORPORATION","GREGORY BLOUCH","","3901 CASTLEWOOD RD","","RICHMOND","VA","23234-2613","We are a customs bonded warehouse for receiving import consignments. We are certified to build IPPC Compliant skids and crates for commercial and residential export and domestic applications. We are IATA, DOT and IMO hazmat certified. We actively provide milspec packaging services. We provide warehouse services and can coordinate trucking services. We load and strip ocean sea containers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#71;&#66;&#76;&#79;&#85;&#67;&#72;&#64;&#77;&#73;&#83;&#67;&#85;&#83;&#65;&#46;&#67;&#79;&#77;">GBLOUCH@MISCUSA.COM</a>","HTTP://WWW.MISCUSA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SK1FZSD7LNX5">21</a>","KENNLEY, CORPORATION","DANNI HAISLIP","","8808 METRO CT","STE B","NORTH CHESTERFIELD","VA","23237-2944","Manufacture of Industrial Machinery and replacement parts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#97;&#105;&#115;&#108;&#105;&#112;&#64;&#107;&#101;&#110;&#110;&#108;&#101;&#121;&#46;&#99;&#111;&#109;">dhaislip@kennley.com</a>","http://www.kennley.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PEAJD1HMRXJ4">22</a>","BLUESTONE PROCESS DYNAMICS, LLC","ALISTAIR FIRMIN","","6104 MOSS CREEK CT","","MIDLOTHIAN","VA","23112-2429","From the design and execution of business transformation programs to teaching, coaching and mentoring today’s and tomorrow’s leaders, Bluestone integrates with you and your team to accomplish your goals. Bluestone offers some of the best talent in the world, most are GE alumni. They come with diverse experiences in multiple industries; the common trait within the Bluestone team is a firm commitment to customer success. Each Bluestone team member has a proven track record in leading change, which translates into entrusting your objectives to people who will make a significant contribution to your organization. Bluestone was launched in 2006 and is based in the Greater Richmond, VA area.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#105;&#115;&#116;&#97;&#105;&#114;&#64;&#109;&#121;&#45;&#98;&#108;&#117;&#101;&#115;&#116;&#111;&#110;&#101;&#46;&#99;&#111;&#109;">alistair@my-bluestone.com</a>","https://www.my-bluestone.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ESUDF24K8DF3">23</a>","DOMINION NDT SERVICES INC.","CHRISTOPHER VARGO","","13301 SHORE LAKE TURN","","CHESTERFIELD","VA","23838-3252","Non-Destructive Testing, Visual, Liquid Penetrant, Magentic Particle and Ultrasonic Inspections. Concrete Scanning Ground Pentrating Radar","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#118;&#97;&#114;&#103;&#111;&#64;&#100;&#111;&#109;&#105;&#110;&#105;&#111;&#110;&#110;&#100;&#116;&#46;&#99;&#111;&#109;">cvargo@dominionndt.com</a>","http://www.dominionndt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2V1B37NMSX5">24</a>","GXM CONSULTING LLC","CHAD VANDERSLICE","","1406 DARRELL DR","","MIDLOTHIAN","VA","23114-4500","Founded in 2008, GXM is a Veteran-Owned Small Business committed to pioneering groundbreaking solutions at the intersection of technology, talent, and innovation. Leveraging our Adaptive Framework, we address core challenges in Innovation, Interoperability, Integration, and implementation. From pioneering new pathways with R&D and rapid prototyping to bridging technological gaps and modernizing infrastructures, we turn innovation into application.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#100;&#101;&#114;&#115;&#108;&#105;&#99;&#101;&#64;&#103;&#120;&#109;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">vanderslice@gxmconsulting.com</a>","www.gxmconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SY86CXYNA7T7">25</a>","BCCP CONSULTING, LLC","CHARLES BROCK","","15531 WILLOWMORE DR","","MIDLOTHIAN","VA","23112-5233","Project management and consulting in operations/technical business process management and systems support, including pricing, ordering, inventory, billing, and trouble management; IT Lifecycle Mgmt; systems engineering; and application of IT and networks","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#46;&#98;&#114;&#111;&#99;&#107;&#64;&#98;&#99;&#99;&#112;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">chuck.brock@bccpconsulting.com</a>","http://bccpconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WCQ7UEXME6N5">26</a>","CAPITAL BUSINESS DEVELOPMENT ASSOCIATES INC","THOMAS SMITH","","10701 WELLINGTON FARMS TER","","CHESTER","VA","23831-1652","Innovative, results oriented company team, CB-DA and its principals have more than 30 years of experience working with the National Guard and other Federal and state entities to share requirements and implement new technology insertion nationally.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#46;&#115;&#109;&#105;&#116;&#104;&#64;&#99;&#98;&#45;&#100;&#97;&#46;&#99;&#111;&#109;">thomas.smith@cb-da.com</a>","http://www.cb-da.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MBYGHBPMWJK4">27</a>","NORTHEAST CONSTRUCTION INC","WOO (DAVID) CHEON","","8747 WHITEPINE RD","","RICHMOND","VA","23237-2282","Small Business, 8(A) Certified Firm, SDB, GSA contract holder,- over 18Years specialized in design/build General constructionm, Roof Construction & Building Envelope, Restoration, Renovation, building retrofit,& sustainable building solution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#104;&#101;&#111;&#110;&#64;&#110;&#111;&#114;&#116;&#104;&#101;&#97;&#115;&#116;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">dcheon@northeastusa.com</a>","http://www.northeastusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WYRWEGJAZGJ9">28</a>","THE INSTITUTE FOR PERCEPTION LTD","DANIEL ENNIS","","7629 HULL STREET RD","","NORTH CHESTERFIELD","VA","23235-6441","The Institute for Perception, founded in 1993, is a full-service statistical and market research consulting firm. We conduct extensive research on new models of human perception to provide a basis for methods to support product development, market research, and advertising claim substantiation. Our extensive network of fieldwork partners allows us to manage and execute projects almost anywhere in the world, in central location, home use, or internet-based settings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#46;&#109;&#46;&#101;&#110;&#110;&#105;&#115;&#64;&#105;&#102;&#112;&#114;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">daniel.m.ennis@ifpress.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLDTZHZDH9J5">29</a>","VIRGINIA HEAT TRANSFER & PROCESS EQUIPMENT, INC.","CHRISTOPHER HASLEGO","","1442 GOSWICK RIDGE RD","","MIDLOTHIAN","VA","23114-5515","Supply of all types of heat exchangers, tanks, solids handling equipment. Field service provided for gasketed plate heat exchangers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#118;&#97;&#104;&#101;&#97;&#116;&#46;&#99;&#111;&#109;">chris@vaheat.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8XMHB29QGL5">30</a>","H.T. INNOVATIONS, L.L.C.","ROBERT THOMPSON","","13330 CHESDIN LANDING DR","","CHESTERFIELD","VA","23838-3247","HT Innovations is targeted at providing cost effective, cleared professionals (TS/SCI w/ current polys)in support of DoD and the National Intelligence Community. We offer a range of hard and soft skill sets in the IT, C4ISR and Communications realms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#98;&#46;&#84;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#64;&#72;&#84;&#73;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;">Rob.Thompson@HTInnovations.net</a>","http://www.htinnovations.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JX1QMR51FCL7">31</a>","T PLUMBING & LANDSCAPING LLC","TIRRELL CORPORAL","","6128 BLEST LN","","NORTH CHESTERFIELD","VA","23237-2295","Plumbing, Painting, Carpentry, Electrical, Flooring, Pressure Washing, Kitchen Exhaust Hood Cleaning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#114;&#114;&#101;&#108;&#108;&#64;&#116;&#112;&#108;&#118;&#97;&#46;&#99;&#111;&#109;">tirrell@tplva.com</a>","http://www.tplva.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VF6NV18CZY88">32</a>","H & B SURVEYING AND MAPPING, LLC","ALISON HANSON","","614 MOOREFIELD PARK DR","","NORTH CHESTERFIELD","VA","23236-3655","Professional Land Surveying services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#104;&#97;&#110;&#115;&#111;&#110;&#64;&#104;&#98;&#115;&#117;&#114;&#118;&#101;&#121;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ahanson@hbsurveying.com</a>","http://www.hbsurveying.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPMVDWHUMQM1">33</a>","DSU, LLC","LAURA DEELY","","11920 DEW LN","","MIDLOTHIAN","VA","23112-3624","DSU, llc provides structured cabling design, installation and troubleshooting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#46;&#100;&#101;&#101;&#108;&#121;&#64;&#100;&#115;&#117;&#108;&#108;&#99;&#46;&#117;&#115;">laura.deely@dsullc.us</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNMTDETWAWN9">34</a>","TREASURED TOT LLC","TRINA REUBEN-WILLIAMS","","14619 HOLDING POND CT","","MIDLOTHIAN","VA","23112-4195","Acquiscore research is the research arm of Treasured Tot LLC which began in March 2007.Our expertise includes advanced consumer and business profiling, acquisition strategy, customer segmentation, target modeling forecast modeling, and web analytics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#105;&#110;&#97;&#114;&#101;&#117;&#98;&#101;&#110;&#64;&#97;&#99;&#113;&#117;&#105;&#115;&#99;&#111;&#114;&#101;&#46;&#99;&#111;&#109;">trinareuben@acquiscore.com</a>","www.acquiscore.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGAFL6WNTEL7">35</a>","SQUIRE'S OFFICE SERVICES, LLC","CRYSTAL SQUIRE","","14110 NASH RD","","CHESTERFIELD","VA","23838-4128","Provide IT Systems Analysis, Audit Remediation, Financial Management and Project Management to government agencies who are striving to pass an audit or update/upgrade their IT systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#115;&#113;&#117;&#105;&#114;&#101;&#64;&#115;&#113;&#117;&#105;&#114;&#101;&#111;&#102;&#102;&#115;&#118;&#99;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">csquire@squireoffsvcsllc.com</a>","www.squireoffsvcsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YMZSJDDVMHP4">36</a>","CAPSTONE SECURITY INC","JAMES FORD","","4031 WATER OVERLOOK BLVD","","MIDLOTHIAN","VA","23112-5007","Capstone Security, LLC is a full-service information security consulting firm offering a comprehensive range of services to help businesses protect their valuable assets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#101;&#115;&#46;&#102;&#111;&#114;&#100;&#64;&#99;&#97;&#112;&#115;&#116;&#111;&#110;&#101;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">james.ford@capstonesecurity.com</a>","www.capstonesecurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QTG7F6JZSTH9">37</a>","CAPITOL CARBONIC GAS CORP","MARY SMITH","","1300 WILLIS RD","","NORTH CHESTERFIELD","VA","23237-2919","Woman owned Business Class A General Contractor specializing in Stormwater Management / Dredging, Civil, and Marine Construction projects throughout the state of Virginia, DC, and Maryland.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#109;&#105;&#116;&#104;&#64;&#104;&#97;&#114;&#98;&#111;&#114;&#100;&#114;&#101;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">msmith@harbordredge.com</a>","https://harbordredge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PQX2LBKNS667">38</a>","C&S COMMUNICATIONS LLC","STEPHEN SMITH","","711 MOOREFIELD PARK DR BLDG E","","NORTH CHESTERFIELD","VA","23236-3669","DVD is a communications company offering telephone and data system solutions. Our staff of certified sales and technical professionals provides professional levels of design, installation, training, and project management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#115;&#109;&#105;&#116;&#104;&#64;&#100;&#118;&#100;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">sbsmith@dvdnetworks.com</a>","www.dvdnetworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WAGNHD69JLE5">39</a>","RHUDY & CO. STRATEGIC COMMUNICATIONS, INC.","MICHELE RHUDY","","14342 LANDER RD","","MIDLOTHIAN","VA","23113-6730","RHUDY & CO. STRATEGIC COMMUNICATIONS IS A WOMAN-OWNED STRATEGIC COMMUNICATIONS CONSULTANCY FOUNDED IN 2003 WITH FORMER INTERNAL AND CORPORATE COMMUNICATIONS EXECUTIVES, AGENCY LEADERS, CREATIVE DIRECTORS AND PRINT JOURNALISTS. WE PROVIDE AND SUPPORT GRAPHIC DESIGN, BRAND IDENTITY, COMMUNICATIONS STRATEGY, EMPLOYEE OUTREACH, LEADERSHIP COACHING, EVENT SUPPORT, PROGRAM DEVELOPMENT, INTEGRATION, EMPLOYEE BRANDS, COPY, AND VIDEO PRODUCTION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#101;&#64;&#114;&#104;&#117;&#100;&#121;&#46;&#98;&#105;&#122;">michele@rhudy.biz</a>","www.rhudy.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9H6CCLDCEZ7">40</a>","CONSTRUCTION & SCHEDULE MANAGEMENT SERVICES LLC","PAUL EPPERSON, CCM, PMP, PSP, PMI-SP","","7600 MIDDLEFIELD CT","","CHESTERFIELD","VA","23832-9212","VOSB providing schedule development, management, and support services for government construction contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#46;&#101;&#112;&#112;&#101;&#114;&#115;&#111;&#110;&#64;&#99;&#111;&#110;&#115;&#99;&#104;&#109;&#97;&#110;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">paul.epperson@conschmanservices.com</a>","http://www.conschmanservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XBDJS1B6ZJ67">41</a>","ORBITAL MEDICINE, INC.","CHARLES CUTTINO","","3800 OLD GUN RD W","","MIDLOTHIAN","VA","23113-2020","Emergency medicine consulting, disaster medicine expertise, medical equipment design and testing experience, aerospace medicine, FAA AME exams, scientific research","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#114;&#98;&#105;&#116;&#97;&#108;&#109;&#101;&#100;&#105;&#99;&#105;&#110;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">orbitalmedicine@gmail.com</a>","orbitalmedicine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J3K6NPGUGPH3">42</a>","XYZ UNIVERSITY LLC","SARAH SLADEK","","12609 DAWNRIDGE CT","","MIDLOTHIAN","VA","23114-3398","XYZ University specializes in helping organizations engage younger generations. We provide generation-focused training, keynotes, research, and employee engagement strategies. As a result of working with us, organizations worldwide have reduced turnover, developed leaders, improved productivity and teamwork, and seized market share among younger generations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#108;&#97;&#100;&#101;&#107;&#64;&#120;&#121;&#122;&#117;&#110;&#105;&#118;&#101;&#114;&#115;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">ssladek@xyzuniversity.com</a>","http://www.xyzuniversity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q2LBUTCWQGY5">43</a>","CRAIGSSON DAVID CONSULTING INC","CRAIG CARMAN","","12813 GRENDON DR","","MIDLOTHIAN","VA","23113-2673","Program / Project Management, IT Strategy, Vendor Selection, Requirements Definition/ Analysis, Systems Engineering, ERP Implementation, Earned Value Management, Defense Acquisition, Systems Integration, Systems Testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#99;&#97;&#114;&#109;&#97;&#110;&#64;&#99;&#114;&#97;&#105;&#103;&#115;&#115;&#111;&#110;&#100;&#97;&#118;&#105;&#100;&#46;&#99;&#111;&#109;">ccarman@craigssondavid.com</a>","www.craigssondavid.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JD9RAT44GNE7">44</a>","MICRO DATA TECHNOLOGIES, LLC","ALEXANDER LAWRENCE","","3411 GREEN OAKS CT STE 100","","NORTH CHESTERFIELD","VA","23234-4800","Computer systems integration design consulting services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#95;&#97;&#108;&#101;&#120;&#95;&#108;&#97;&#119;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">c_alex_law@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPJ7WUNXUF13">45</a>","T. R. SEWARD, INCORPORATED","TORRANCE SEWARD, SR.","","7801 REDPINE RD STE E","","NORTH CHESTERFIELD","VA","23237-2290","Seward Commercial Flooring is a certified Small, Minority-owned, Micro Business in Virginia capable of meeting the small business set aside requirements of Sources Sought Solicitations for flooring removal and installation at a fair market price as a prime contractor. Incorporated in 2012, Seward Commercial Flooring has sold and installed ?oorcovering to numerous public and private end-users in Central Virginia. We service the Federal and State government, K-12, Higher Education, Medical, and Corporate sectors. Our o?ering includes carpet, resilient, ceramic, and hardwood products manufactured by Armstrong, Interface, Mannington, Mohawk, Shaw and many others. We employ in-house installers which provides us with greater control of quality and scheduling leading to beter service for our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#115;&#101;&#119;&#97;&#114;&#100;&#64;&#115;&#101;&#119;&#97;&#114;&#100;&#102;&#108;&#111;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">trseward@sewardfloors.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EHMWBZNJ9H33">46</a>","A3 SYSTEMS CORPORATION","AUBREY HINDS","","2101 OLD BERMUDA HUNDRED RD","","CHESTER","VA","23836-5505","A3 Systems is a service-disabled veteran owned (SDVOSB) and small disadvantaged business technology company. A3 Systems specializes in a range of unique and highly-skilled technology support services, industrial and aerospace ground support equipment solutions to the federal government and U.S. military. We are a value-added SDVOSB reseller of choice and 3rd party aggregator (3PA) for a variety of aerospace ground support equipment, information systems hardware and software, and industrial support solutions. A3 Systems exists to providing smarter and reliable services and technologies which accelerate the rate of innovation in a dynamic environment. We strive to build and supply technology solutions that will build and transform our client’s mission; there by generating trust, efficiency and value in our services and products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#117;&#98;&#114;&#101;&#121;&#46;&#104;&#105;&#110;&#100;&#115;&#64;&#97;&#51;&#115;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">aubrey.hinds@a3scorp.com</a>","http://www.a3scorp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RW1NFHG2E346">47</a>","E & T SALON LLC","TOMEKA TAYLOR","","4209 W HUNDRED RD","","CHESTER","VA","23831-1734","E & T Salon LLC is a licensed and board certified hair replacement provider and offers professional non-surgical hair loss replacement as well as custom wig services. We also provide over 20 different weaving techniques. At T. Taylor Salon & Hair Loss Treatment Center we not only care for your hair, we care about YOU!!!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#101;&#121;&#111;&#110;&#100;&#121;&#111;&#117;&#114;&#115;&#101;&#108;&#102;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">cbeyondyourself@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YM8BJESB5217">48</a>","EXPLORERS STUDIO LLC","JILLIAN COLUMBUS","","1619 GREENFIELD DR","","NORTH CHESTERFIELD","VA","23235-4415","Explorers Studio LLC specializes in signage and exhibit design that create accessible environments that educate, stimulate and facilitate a journey. SIGNAGE DESIGN: master planning wayfinding programs signage systems environmental graphics interpretive signage donor recognition programs map design EXHIBIT DESIGN: museum consulting interpretive planning space planning graphic panel design other services include: architectural graphics print collateral (brochures, gallery guides) identity and branding packages","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#108;&#108;&#105;&#97;&#110;&#64;&#101;&#120;&#112;&#108;&#111;&#114;&#101;&#114;&#115;&#115;&#116;&#117;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">jillian@explorersstudio.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LWSMFM7LPUK8">49</a>","HARRIS SUPPORT SERVICES LLC","MARC HARRIS","","15807 PRIMROSE TARRY DR","","MOSELEY","VA","23120-2237","SDVOSB/VET FIRST Government Contractor specializing in DOD and VA Contracting Opportunities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#104;&#97;&#114;&#114;&#105;&#115;&#64;&#104;&#97;&#114;&#114;&#105;&#115;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">marcharris@harrissupportservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHEADZ4JJNQ5">50</a>","VMEK GROUP LLC","ADRIANA LOVVORN","","2719 OAK LAKE BLVD","","MIDLOTHIAN","VA","23112-3991","VMek is focused on building and supporting high speed industrial machines powered by advanced vision technology and excellent machine design. Backed by years of successful machine installations, VMek is positioned to impact our customer's business by providing proven technology, innovative applications, and excellent support. The stringent quality and cost controls required in the food-processing industry are making automation more a requirement than an option for growth. Increased industrial growth provides an increase in effectiveness and flexibility. To maintain consistent quality, competitive prices, and to quickly respond to ever-changing food trends, machine vision technology helps to control the manufacturing processes and improve production efficiency. We are committed to working closely with our customers to understand their requirements and deliver quality industrial solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#114;&#105;&#97;&#110;&#97;&#64;&#118;&#109;&#101;&#107;&#46;&#99;&#111;&#109;">adriana@vmek.com</a>","https://www.vmek.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XJ2WDV5PGEX1">51</a>","BUHLER CONSULTING LLC","CARL BUHLER","","15800 ROBYNSMERE WAY","","MOSELEY","VA","23120-2262","Buhler Consulting, LLC provides consulting services using real-world experience, subject matter expertise, and access to a network of professionals with aerospace and defense experience. Buhler Consulting, LLC specializes in creating innovative solutions; integrating people, processes & resources; strategic planning & program management; continuous process improvement; and leading change. Some of the services we provide are:  Program reviews Proposal reviews Color Team reviews & analysis Request for Information (RFI) reviews Operational assessments with tangible and actionable recommendations to improve your operation Outside perspective review of problem-sets/issues Ability to reach out to a network of subject matter experts with defense and aerospace experience in the areas of logistics, maintenance, sustainment, modernization, and supply chain Gaps and opportunities analysis Roadmap development to lead change Production reviews","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#64;&#98;&#117;&#104;&#108;&#101;&#114;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">carl@buhlerconsulting.com</a>","https://buhlerconsulting.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VHVJM4ZN5U81">52</a>","LIGHTHOUSE XR LLC","ROSELYN DEJARNETTE","","206 KRISTEN LN","","CHESTER","VA","23836-2566","Conscio VR's goal is to expand care options and improve outcomes through innovative VR based approaches for health education and treatment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#108;&#101;&#100;&#101;&#106;&#97;&#114;&#110;&#101;&#116;&#116;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">daledejarnette@gmail.com</a>","https://www.consciovr.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJYBSHSN2R59">53</a>","JAM SUSTAINABILITY SERVICES LLC","MORGAN GERMAN","","6706 RUBY HILL RD","","MOSELEY","VA","23120-1907","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#114;&#103;&#97;&#110;&#46;&#103;&#101;&#114;&#109;&#97;&#110;&#64;&#106;&#97;&#109;&#101;&#104;&#115;&#46;&#99;&#111;&#109;">morgan.german@jamehs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WU3MM1P48LJ6">54</a>","ATLANTIC DRONE PROS, LLC","KEITH MOTTAS","","2605 WHISPERING OAKS TER","","MIDLOTHIAN","VA","23112-4270","Cloud based flight and fleet management with artificial intelligence for flight planning and flight operations. Custom software development for unmanned aircraft flight controllers and aircraft.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#64;&#97;&#116;&#108;&#97;&#110;&#116;&#105;&#99;&#100;&#114;&#111;&#110;&#101;&#112;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">keith@atlanticdronepros.com</a>","https://atlanticdronepros.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R2XAQNPRBYK3">55</a>","EPPS TECHNOLOGIES, LLC","ROWSHAUN EPPS","","5400 SWIFT FOX CT","","MOSELEY","VA","23120-2438","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#112;&#112;&#115;&#64;&#101;&#112;&#112;&#115;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">repps@eppstechnologies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAEHXKHYR8Y6">56</a>","JVL CONSULTING, LLC","JESSICA VANLEEUWEN","","14419 ASHLEYVILLE LN","","MIDLOTHIAN","VA","23112-1577","Leadership Consulting, Coaching and Training; Supervisor Development, Ethics and Integrity, Building a Trusted Leadership Team.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#105;&#99;&#97;&#64;&#116;&#104;&#114;&#105;&#118;&#101;&#119;&#105;&#116;&#104;&#105;&#110;&#116;&#101;&#103;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">jessica@thrivewithintegrity.com</a>","https://www.thrivewithintegrity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8NZNH2P5M64">57</a>","VERITAS GLOBAL LAW, PLLC","JAMES HARRIS","","10243 SIOUX RD","","RICHMOND","VA","23235-1134","Over a decade of management, legal and consulting experience across a broad range of public and private industries that operate both domestically and internationally.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121;&#64;&#118;&#103;&#108;&#97;&#119;&#102;&#105;&#114;&#109;&#46;&#99;&#111;&#109;">corey@vglawfirm.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKQXDF92CVT3">58</a>","ON THE MARK ENVIRONMENTAL LLC","MARK LEEPER","","12421 TAYLOR RD","","CHESTERFIELD","VA","23838-1138","environmental consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#101;&#101;&#112;&#101;&#114;&#57;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mleeper92@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1HZH21E5W23">59</a>","ALTEY MANAGEMENT SERVICES, INC","LORETTA OTEY","","8306 BENDAHL VALLEY DR","","NORTH CHESTERFIELD","VA","23237-3287","Provide Building Management Support Services, for performing custodial and janitorial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#98;&#111;&#116;&#101;&#121;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">lbotey@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGTFMWK9NT58">60</a>","NEW CANAAN PROPERTIES, LLC","KHALIYAH BARAKHYAHU","","5102 W VILLAGE GREEN DR STE 102","","MIDLOTHIAN","VA","23112-4876","We specialize in residential and commercial real estate sales, property management and building investment portfolios. We also specialize in relocation services and pricing strategy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#97;&#108;&#105;&#121;&#97;&#104;&#64;&#110;&#101;&#119;&#99;&#97;&#110;&#97;&#97;&#110;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">khaliyah@newcanaanproperties.com</a>","www.virginiahousesearch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEN4FMDM3ND7">61</a>","SECURE & DEFENSIVE CONSULTING LLC","JOCELYN HOBBS","","813 LIVERPOOL CIR APT 102","","CHESTER","VA","23836-2726","We specialize in consulting, executing, and securing Information Technology Systems (.e.g., security assessment, risk assessment, risk management, insider threat, threat monitoring, data recovery, backup, continuity, data encryption, data in motion, data at rest, awareness training, forensic, email security) operations, and maintenance functions. Also, we specialize in building Global Roadmap (s) for security and formulating security architecture/postures, best practices, and tailoring solutions that fit each organization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#101;&#99;&#117;&#114;&#101;&#100;&#101;&#102;&#101;&#110;&#115;&#105;&#118;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#108;&#108;&#99;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">Securedefensiveconsultingllc@outlook.com</a>","Securedefensiveconsulting.TECH"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W92DKBGD1YL8">62</a>","ROTAS SECURITY LLC","NICHOLAS POPOVICH","","13366 BEACHCREST DR","","CHESTERFIELD","VA","23832-2754","Rotas Security is dedicated to ensuring our partners have a clear path to the highest possible security posture. This is done through practical, realistic assessment of IT assets, personnel, and processes. We perform our assessments leveraging adversarial techniques honed over more than a decade of experience executing threat simulations for a wide variety of organizations. Rotas’ experience crosses multiple industries, to include the Military, as well as the private and public sectors; specifically retail, healthcare, financial, utlity, energy, hospitality, service providers and not-for-profits.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#112;&#111;&#112;&#111;&#118;&#105;&#99;&#104;&#64;&#114;&#111;&#116;&#97;&#115;&#115;&#101;&#99;&#46;&#99;&#111;&#109;">npopovich@rotassec.com</a>","https://rotassec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYJXH1KSVUK8">63</a>","HONOR RENTAL CARS LLC","ABUBAKR ABDUL-ZAHIR","","506 GREENSIDE CT","","CHESTER","VA","23836-2639","Honor Rental Cars LLC offer a rage of different vehicle options such as compact cars, economy cars, and 15 passenger vehicles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#90;&#46;&#72;&#82;&#67;&#50;&#52;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">AZ.HRC247@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKPVF1KX1BS8">64</a>","FOXFIRE CONSULTING, LLC","VALERIE MCCLOUD","","12430 CAMERON BAY DR","","MIDLOTHIAN","VA","23112-3189","Foxfire Consulting, LLC is a Virginia-based Organizational Change Management Consulting firm specializing in technology-driven, human-centered change for businesses and government agencies. Our customized solutions coach leaders to lead with empathy, support employees through transitions, empower and engage them throughout the change process, and equip them with the necessary skills and knowledge to embrace technological change.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#101;&#114;&#105;&#101;&#64;&#102;&#111;&#120;&#102;&#105;&#114;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">valerie@foxfireconsulting.net</a>","https://www.foxfireconsulting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PAUAXKZC8PV4">65</a>","STREETLIGHT PEOPLE, LLC","LINZY GEORGE","","8518 W PINETTA DR","","NORTH CHESTERFIELD","VA","23235-4124","Streetlight People, LLC is a collective of creative, technical, and management professionals providing strategic communication, change management, and administration/project support across a number of market sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#108;&#105;&#110;&#122;&#121;&#103;&#101;&#111;&#114;&#103;&#101;&#46;&#99;&#111;&#109;">hello@linzygeorge.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YFP6BEDYQEK6">66</a>","ROUND & ROUND LLC","CLARENCE ROUND","","6007 TRAIL RIDE DR","","MOSELEY","VA","23120-2401","Round & Round offers a broad range of performance-based services including food service, solid waste removal and landscaping. Round & Round has a unique combination of qualifications that enables it to optimally serve the objectives of its customers. A structured approach coupled with results-oriented philosophy ensures that products and services are delivered on time and within budget.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#114;&#101;&#110;&#99;&#101;&#114;&#111;&#117;&#110;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">clarenceround@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XDAJFQKZ6N78">67</a>","HAIR ART NYC INC","SIMONE HENDERSON","","11112 HULL STREET RD","","MIDLOTHIAN","VA","23112-3204","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#105;&#109;&#111;&#110;&#101;&#64;&#104;&#97;&#105;&#114;&#97;&#114;&#116;&#50;&#103;&#111;&#46;&#99;&#111;&#109;">simone@hairart2go.com</a>","hairart2go.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G21TCL77QX61">68</a>","ARBO GLOBAL, LLC","KENNON ARTIS","","8412 MACANDREW TER","","CHESTERFIELD","VA","23838-5306","ArBo Global, LLC (ABG) is a professional services firm which delivers comprehensive solutions to federal agencies. Leveraging decades of hands-on experiences in the Federal Government, commercial space and the military, ABG is uniquely positioned to support federal agencies’ missions through thoughtful, strategically-relevant solutions. ABG excels as a federal government contractor by offering expertise in communications, marketing, outreach, training, research, diversity outreach, and complex value proposition creation. We deliver strategic communication solutions, innovative marketing campaigns, and impactful outreach programs. Our in-depth research (quantitative and qualitative) services and tailored training programs support informed decision-making.  A Black-owned firm, ABG is a certified Service-Disabled Veteran-Owned Small Business (SDVOSB).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#69;&#78;&#78;&#79;&#78;&#64;&#65;&#82;&#66;&#79;&#71;&#76;&#79;&#66;&#65;&#76;&#46;&#67;&#79;&#77;">KENNON@ARBOGLOBAL.COM</a>","WWW.ARBOGLOBAL.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C59AXD4FU9F5">69</a>","HAULING ANGELS LLC","TYRONE BARNER","","805 SCHOONER DR","","CHESTER","VA","23836-7539","HAULING ANGELS LLC, are men on a mission dedicated to become a success story. To make this a reality we had to change and reconstruct our thinking which are in our minds. We believe that we have the ability to change ourselves and those around us. Our mission is to apply a new strength and new life skills, toward our clients to guarantee reinforcement to our mission of success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#65;&#85;&#76;&#73;&#78;&#71;&#65;&#78;&#71;&#69;&#76;&#83;&#68;&#77;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">HAULINGANGELSDM@GMAIL.COM</a>","https://tyronebarner.wixsite.com/mysite"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7NPA4NYNXJ3">70</a>","FOUR DIRECTIONS CONSULTING LLC","RACHEL RICHARDSON","","9003 WATER OAK CT","","N CHESTERFIELD","VA","23237-4315","Provide services in four areas: Training related to safety and security to include crime analysis with a myriad of certifications. Leadership Development and DISC Communication assessment. Grant research/proposal/writing/management. Event planning/retreats/conferences, and developing community engagement strategies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#110;&#101;&#101;&#46;&#114;&#105;&#99;&#104;&#97;&#114;&#100;&#115;&#111;&#110;&#64;&#52;&#100;&#105;&#114;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">renee.richardson@4directionsconsulting.com</a>","www.4directionsconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DGJFAJ24MKU3">71</a>","B & S DEVELOPMENT INCORPORATED","ANTHONY FORREST","","4001 MONZA DR","","NORTH CHESTERFIELD","VA","23234-4223","General Contracting firm specializing in commercial and residential construction, renovation, and construction management. We provide the following services: drywall, painting, carpentry (framing, door installation, window installation, cabinet installation, stairs, decks, and trim), flooring (carpet tile, VCT tile, vinyl flooring, wood flooring, laminate flooring).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#46;&#102;&#111;&#114;&#114;&#101;&#115;&#116;&#64;&#98;&#97;&#110;&#100;&#115;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">anthony.forrest@bandsdevelopment.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UPZWXJAJ92R1">72</a>","MISS CLASSY LLC","BENNATTA WEST","","5808 MILL SPRING RD","","MIDLOTHIAN","VA","23112-2340","Our mission is to spread awareness of one’s self and promote affirmation from within. Our pieces are just an outward expression of confidence. Our goal is to cater to all women with no reservations! We understand the different challenges that are faced and are here to be an inspiration to all of the women who feel incapable, even those who feel capable! We want you to see and believe that whatever you decide to pursue, is possible! Allow us to help you express yourself! Be confident! Be classy!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#115;&#115;&#99;&#108;&#97;&#115;&#115;&#121;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">missclassyllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4HSY18FJ2H5">73</a>","EFFICIENT ELECTRICAL SOLUTIONS LLC","FRANCISCO PEREZ-RUBIO","","10119 HILLTOP FARMS DR","","CHESTER","VA","23831-1164","Efficient Electrical Solutions is owned and operated by Francisco Perez-Rubio, a native Virginian and veteran of the United States Navy. Efficient Electrical Solutions, LLC has a comprehensive portfolio of electrical work in residential and commercial sites as well as new construction, and maintenance/repair of older properties. Commercial projects include: automotive shops, Medical/Dental facilities, office buildings, manufacturing facilities and food processing sites. Residential work includes: primary residential properties and single/ multi tenant rental properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#117;&#98;&#105;&#111;&#46;&#101;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">frubio.ees@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UBAPLN71ZLD3">74</a>","RESTORATION COMMERCIAL CLEANING SERVICES, LLC","LELA BRADLEY","","12200 MOORES LAKE RD APT 2102","","CHESTER","VA","23831-2455","We Specialize in Janitorial Services, cleaning and sanitizing with services dealing with after construction cleaning and more. We also specialize in Upholstery and Carpet Cleaning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#115;&#116;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#99;&#99;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">restorationccs@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YLJBZ8E923F7">75</a>","CHU INDUSTRIES LLC","MICHAEL STREET","","10130 BRANDYWINE AVE","","NORTH CHESTERFIELD","VA","23237-4254","Chu Industries LLC is a dynamic and SBA certified 8(a) company with a commitment to delivering high-quality media services. Our core team, led by Managing Director Michael Street, leverages extensive experience and expertise to provide comprehensive solutions tailored to meet the specific needs of our clients. We are a woman-owned small business (WOSB) and a minority-owned enterprise, with a current Secret facility clearance, positioning us as a trusted partner for sensitive and high-stakes projects. Established to address the requirements of the Media Services contract at the Defense Contract Management Agency (DCMA), Chu Industries LLC specializes in video and multimedia production, broadcast services, and graphic design. Our team includes seasoned professionals who bring a wealth of experience from prior engagements with similar contracts, ensuring a deep understanding of the industry's evolving needs and challenges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#99;&#104;&#117;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">mike@chuindustries.com</a>","www.chuindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KUDJLLSWKJ83">76</a>","VIRGINIA AUTOMOTIVE SERVICES, INC","ED SHELTON","","6601 ROUTE 1","","NORTH CHESTERFIELD","VA","23237-1220","We are an Auto Repair Center. From preventive maintenance to major repairs, we offer maintenance and repair services for all automotive needs. Our services include, tire repair, tune ups, transmission and engine repair, brakes, timing belts, suspension shot struts, cooling systems, electrical systems, wheel alignment, oil changes, battery testing and replacement, and vehicle inspections.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#104;&#101;&#108;&#52;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">eshel4@comcast.net</a>","https://virginiaautomotiveservice.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EL48EMHAUFL1">77</a>","MAGNITUDE SOLUTIONS LLC","KATHRYN CROSBY","","5807 REEDY SPRINGS DR","","NORTH CHESTERFIELD","VA","23237-2625","Magnitude Solutions LLC is a minority women-owned consultancy that provides expert solutions in strategic planning, organizational development, and culture transformation. With over a decade of experience, we work with organizations to drive sustainable growth, operational efficiency, and inclusivity, ensuring long-term success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#109;&#99;&#114;&#111;&#115;&#98;&#121;&#49;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">kmcrosby18@gmail.com</a>","www.magnitudesolutions.org"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.581&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

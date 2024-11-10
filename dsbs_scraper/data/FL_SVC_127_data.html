@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 127 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.88 seconds and 2.00 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 47 
+(of 47 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MU2BDJSBKGL3">1</a>","THOMPSON PUMP AND MANUFACTURING COMPANY, INC.","RYAN MCHUGH","PUB WK MGR","4620 CITY CENTER DR","","PORT ORANGE","FL","32129-4121","Thompson Pump is a 48 year-old family owned company known worldwide for manufacturing an innovative line of high quality, heavy duty, high performance pumps. Pumps range in size from two to eighteen inches. Thompson Pump sells and rents its entire line of pumps in the areas of construction, municipal, mining, oil and gas, plants and refineries, and environmental remediation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#99;&#104;&#117;&#103;&#104;&#64;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">rmchugh@thompsonpump.com</a>","http://www.thompsonpump.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGQSXLNL8UJ3">2</a>","MEDIATECH INC","RONALD RAGBIR","PRESIDENT","829 CARSWELL AVE","","DAYTONA BEACH","FL","32117-3513","MEDIATECH DESIGNS, MANUFACTURES, INTEGRATES & INSTALLS SMART LECTERNS, CONTROL SOFTWARE, MULTIMEDIA SYSTEMS & ROOMS, ELECTRONIC CLASSROOMS & OTHER ELECTRONIC PRESENTATION ENVIRONMENTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#97;&#108;&#100;&#46;&#114;&#97;&#103;&#98;&#105;&#114;&#64;&#103;&#111;&#109;&#101;&#100;&#105;&#97;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">ronald.ragbir@gomediatech.com</a>","www.gomediatech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S5QZHKFVPD11">3</a>","INTERNATIONAL WUDANG INTERNAL MARTIAL ARTS RESEARCH ASSOCIATION","THERESA MORGAN","President","430 N PINE MEADOW DR","","DEBARY","FL","32713-2306","We publish in all media, provide business consulting services, and teach classes. Our specialty is dual language publications in English/Chinese. We offer web development services, teach technical writing and Chinese martial arts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#111;&#114;&#103;&#97;&#110;&#64;&#119;&#117;&#100;&#97;&#110;&#103;&#46;&#99;&#111;&#109;">tmorgan@wudang.com</a>","https://www.wudang.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VBUZJ531J2G7">4</a>","ALTI-2 TECHNOLOGIES, INC.","JENS GRONEMEYER","","1200 FLIGHT LINE BLVD","STE 5","DELAND","FL","32724-2138","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#115;&#64;&#97;&#108;&#116;&#105;&#45;&#50;&#46;&#99;&#111;&#109;">jens@alti-2.com</a>","http://www.alti-2.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFQAKUNBK2P7">5</a>","AAC-AMERICAN AEROSPACE CORPORATION","ANDY SALERNO","Director of Market Development","1301 SARATOGA ST","","DELAND","FL","32724-2135","Aviation Repair/Overhaul Services Engineering Services Aircraft Part Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#46;&#97;&#101;&#114;&#111;">andy@america.aero</a>","https://www.america.aero"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S1JBJL7FLZE6">6</a>","CLEMENTS FILTER PRODUCTS INC","MARY CLEMENTS","VP","1452 PECOS DR","","ORMOND BEACH","FL","32174-9337","WHOLESALE AVIATION REFUELING & RELATED EQUIPMENT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#121;&#99;&#108;&#101;&#109;&#101;&#110;&#116;&#115;&#49;&#48;&#51;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">maryclements1031@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WLPHEKQYP9T3">7</a>","MAULI SYSTEMS, INC.","KASHYAP SHUKLA","","241 RIVERSIDE DR UNIT 2406","","HOLLY HILL","FL","32117-4983","Mauli Systems, Inc. (MSI) is a full-service IT company providing Independent Oracle and Microsoft Consulting Services. MSI is Oracle Partner Network, Oracle Reseller and Microsoft Partner. MSI is a Certified Small/Minority Business (MBE) by State of CT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#109;&#97;&#117;&#108;&#105;&#46;&#99;&#111;&#109;">sales@mauli.com</a>","https://www.mauli.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMD1ZVVRN4J8">8</a>","SUPERIOR HANDLING EQUIPMENT, LLC","MICHAEL VOLLMAR","","8 AVIATOR WAY","","ORMOND BEACH","FL","32174-2983","For 40 years, Superior Handling Equipment has been supplying robust dock lifts which enable clients to safely, reliably, and efficiently load/unload trucks etc. without any supporting infrastructure. These lifts are used as permanent installations in warehousing, supermarket, retail, medical, construction, and agricultural industries as well as the following government agencies: USPS, Military, VA, and Federal Reserve Bank.  With its unique design, the newly-released, fully mobile, towable version of the lift can be used at any temporary location with vehicular access, including construction sites and disaster areas, and for applications such as defense logistics support etc. Superior Handling Equipment is a woman-owned, small business with an ISO 9001:2015 certified Business Integrated Process Management System. The company produces USA designed and manufactured dock lift product lines that are routinely customized to client’s specific requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#118;&#111;&#108;&#108;&#109;&#97;&#114;&#64;&#115;&#117;&#112;&#101;&#114;&#105;&#111;&#114;&#108;&#105;&#102;&#116;&#115;&#46;&#99;&#111;&#109;">mvollmar@superiorlifts.com</a>","http://www.superiorlifts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NR6SGLXTKGK4">9</a>","DBITPRO LLC","SEAN CASSIDY","","179 ROSA BELLA VW","","DEBARY","FL","32713-5418","dbIT Professionals provides the high-quality expertise and professional services to support your office or home needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#46;&#99;&#97;&#115;&#115;&#105;&#100;&#121;&#64;&#100;&#98;&#105;&#116;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">sean.cassidy@dbitpro.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M8MAKXY2AQN3">10</a>","DELAND METAL CRAFT COMPANY","BROOKE WHITAKER","","300 W BERESFORD AVE","","DELAND","FL","32720-7330","TIG, MIG, stick welding, shear and brake, sandblasting, metal repair, metal fabrication, structural, ornamental and architectural metal fabrication, metal priming and painting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#108;&#97;&#110;&#100;&#109;&#101;&#116;&#97;&#108;&#99;&#114;&#97;&#102;&#116;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">delandmetalcraft@att.net</a>","http://www.delandmetalcraft.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVE8PGERDCS3">11</a>","TALLY GROUP INTERNATIONAL, INC","ANTONELLO COLLINS","","839 GEORGE W ENGRAM BLVD","","DAYTONA BEACH","FL","32114-2525","We are a full-service custodial contractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#97;&#119;&#110;&#48;&#54;&#64;&#116;&#97;&#108;&#108;&#121;&#103;&#114;&#111;&#117;&#112;&#105;&#110;&#116;&#108;&#46;&#99;&#111;&#109;">ashawn06@tallygroupintl.com</a>","http://www.tallygroupintl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GFADMJXY3ND8">12</a>","ALLIED SEARCH PARTNERS, INC.","MELISSA OWENS","","4240 S RIDGEWOOD AVE STE 3","","PORT ORANGE","FL","32127-4561","With our deep industry knowledge and thorough job candidate review and vetting process, Allied Search Partners can alleviate the overworked schedules of Human Resource and hiring professionals, or fill the hiring gap internally that you might have. From the attraction of candidates to background checks, our time tested prescreening process ensures that your employment needs are satisfied quickly and efficiently by taking over the entire employee hiring process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#105;&#115;&#115;&#97;&#64;&#97;&#108;&#108;&#105;&#101;&#100;&#115;&#101;&#97;&#114;&#99;&#104;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">melissa@alliedsearchpartners.com</a>","http://www.alliedsearchpartners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SA2WNE9Q2UX4">13</a>","TECHNOLEAP INC","JAMES SCULL","","7 WATERCLIFF LN","","ORMOND BEACH","FL","32174-3015","Scientific and Technical Services Manufacturing Project Management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#99;&#117;&#108;&#108;&#64;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#101;&#97;&#112;&#46;&#117;&#115;">gscull@technoleap.us</a>","http://www.technoleap.US"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LPDSKGAJFAY3">14</a>","PHOENIX EAST AVIATION, LLC","DARSHAN SHAH","","561 PEARL HARBOR DR","","DAYTONA BEACH","FL","32114-3845","Flight Training, Flight School, Flight Academy, Professional Pilot Training, ATP, Airline Transport Pilot, Airline Dispatcher, Flight Instructor Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#115;&#104;&#97;&#110;&#115;&#64;&#112;&#101;&#97;&#46;&#99;&#111;&#109;">darshans@pea.com</a>","http://www.pea.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1JERVFZTEH3">15</a>","SPIDER INTEGRATION GROUP, LLC","BENJAMIN HEDRICK","","1434 JOHN ANDERSON DR","","ORMOND BEACH","FL","32176-3523","Spider Integration Group is a Small Business, DBE/WMBE company serving the TSA and Airport operations for the installation, integration and evaluation services for BHS technologies. SIG provides the following but not limited to: Review of BHS Contractor CBIS pre-iSAT, EDS Delivery & Placement, BHS Integration and Testing, Test Readiness Review (TRR), iSAT & Checkpoint.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#72;&#101;&#100;&#114;&#105;&#99;&#107;&#64;&#83;&#73;&#71;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">BHedrick@SIGaviation.net</a>","https://www.sigaviation.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GJRMFNHCNV19">16</a>","THOMAS SAFETY SOLUTIONS, INC.","MARYANNA THOMAS","","1325 CHURCH ST","","PIERSON","FL","32180-2650","TSSI is a full-service safety and health consulting firm that can provide On-Site Safety Services, Risk Management Services, Consulting, Comprehensive Safety and Health Training, and many more Safety Solutions that can help your company achieve the safety excellence it deserves.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#116;&#104;&#111;&#109;&#97;&#115;&#64;&#116;&#104;&#111;&#109;&#97;&#115;&#115;&#97;&#102;&#101;&#116;&#121;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mthomas@thomassafetysolutions.com</a>","http://www.thomassafetysolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TMWQKQLJDRL5">17</a>","SCHIRALDI GLENN","GLENN SCHIRALDI","","2920 N ASCIANO CT","","NEW SMYRNA BEACH","FL","32168-6370","Resilience skills training and materials development for high risk groups, such as military, firefighters, police, organizations to optimize health and performance, while preventing stress conditions, such as PTSD, suicide, depression, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#110;&#64;&#117;&#109;&#100;&#46;&#101;&#100;&#117;">glenn@umd.edu</a>","www.ResilienceFirst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W7FZTV5KG5K8">18</a>","INGENION, LLC","OMAR HADDAD","","444 SEABREEZE BLVD STE 615","","DAYTONA BEACH","FL","32118-3951","Digital Design Verification =================== By working closely with our clients, we are able to construct custom-made test benches that verify the operation of their designs against their design requirements. This process involves the following services. * Design Requirements * Test Bench Architecture * IP Core Development * Test Bench Integration and Testing * Test Bench Documentation * Design Verification Plan and Procedure * Coverage Analysis * Long-Term Technical Support Design Review =========== For mature projects that need independent reviewers, Ingenion offers design review services. * FPGA Designs * Peer Reviews","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#109;&#97;&#114;&#46;&#104;&#97;&#100;&#100;&#97;&#100;&#64;&#105;&#110;&#103;&#101;&#110;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">omar.haddad@ingenion.com</a>","http://www.ingenion.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3W1DJZ9DHJ7">19</a>","BLUE DOG VIDEO, LLC","TIM STOCKMAN","","733 BUENA VISTA AVE","","ORMOND BEACH","FL","32174-7612","full service video production company We can produce large scale and small scale videos for internet use and broadcast We specialize in training and internal education videos Blue Dog can also assist in script writing and producing on-air talent","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#64;&#98;&#108;&#117;&#101;&#100;&#111;&#103;&#118;&#105;&#100;&#46;&#99;&#111;&#109;">tim@bluedogvid.com</a>","www.bluedogvideo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUZHFLJU35H7">20</a>","A AND L REMEDIATION SERVICES INC.","NATASHA MCDONALD","","2455 TOMOKA FARMS RD","","PORT ORANGE","FL","32128-3731","Industrial Building Construction. A and L Remediation Services Inc. is a full service asbestos removal company incorporated in 1994 and is a certified minority woman owned business. Fully insured and bonded, providing licensed removal of asbestos and asbestos contaminated materials from Commercial, Industrial, Governmental Facilities and Private Homes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#107;&#109;&#99;&#100;&#111;&#110;&#97;&#108;&#100;&#57;&#57;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">nikmcdonald99@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LM5EGBC48Q19">21</a>","ADAPTIVESTACK TECHNOLOGIES INC","KATHLYN APOSTOLOS","","623 N GRANDVIEW AVE","STE 100","DAYTONA BEACH","FL","32118-3815","Adaptivestack Technologies is a software company comprised of a network of technology and business professionals spanning both federal and private sector markets. Our team prides itself in delivering the innovative products on time and within budget. Our experience in healthcare, defense and other areas gives us the capability to go into a project and make significant impact in a short period of time. Our capabilities are directly related to our company name, AdaptiveStack . We pride ourselves on being Adaptive to technologies, software development lifecycles, processes and procedures within a given business domain, whether it be federal or private, utilizing any technology Stack. Our core areas are : Research & Design, Product Development, Operations & Maintenance for Educational, Financial and Government software.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#109;&#112;&#108;&#105;&#97;&#110;&#99;&#101;&#64;&#97;&#100;&#97;&#112;&#116;&#105;&#118;&#101;&#115;&#116;&#97;&#99;&#107;&#46;&#99;&#111;&#109;">compliance@adaptivestack.com</a>","www.adaptivestack.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE7GN7G9LXG3">22</a>","GLOBAL LEARNING SOLUTIONS LLC","JONTOINETTE WHITE","","104 MUSCOVY CT","","DAYTONA BEACH","FL","32119-1300","Corporate Courseware specializes in delivering high quality, innovative training solutions. We provide customized eLearning and commercial off-the-shelf training courses and materials that can be tailored to meet your needs. We are committed to supporting small to mid-sized companies and government agencies in achieving their training goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#115;&#95;&#101;&#108;&#101;&#97;&#114;&#110;&#105;&#110;&#103;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">gls_elearning@outlook.com</a>","www.corporatecourseware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R1JBAAL1CCC3">23</a>","FUSION TECHNOLOGY STRATEGIES, INC.","ERICA FRIEDLER","","110 CREEK FOREST LN","","ORMOND BEACH","FL","32174-0710","Fusion Technology Strategies Inc., a U.S. Small Business Administration (SBA) Economically Disadvantaged Women-Owned Small Business, was founded in late 2015 to help public and private sector organizations avert cybersecurity threats and manage risk, improve their IT service delivery approaches, and achieve their IT-centric mission/business goals. As a vendor-agnostic partner (that is focused on YOUR success), we provide unbiased advice to address our customer's goals and objectives. By looking at all viewpoints, we provide our customers with a complete picture of what is possible, thereby allowing them to make informed choices for their organizations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#114;&#105;&#99;&#97;&#64;&#102;&#117;&#115;&#105;&#111;&#110;&#116;&#115;&#105;&#46;&#99;&#111;&#109;">Erica@fusiontsi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HH22EME735U3">24</a>","PANTERA TECHNICAL SERVICES CORPORATION","HILSIA FERNANDEZ","","325 WALKER ST","","HOLLY HILL","FL","32117-2734","Vacuum system supplier, Air Compressor Supplier, Laboratory vacuum and compressed air supplier. Air Compressors type Scroll, Screw, Piston. Vacuum pumps type rotary vane, dry vane, claw pump, screw pump,Dental Vacuum system, Low vacuum alarms, Area alarms, NFPA99 compliant, Air dryer, Laboratory Pumps, Medical Gas, Medical Air, Oxygen Concentrator","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#110;&#116;&#101;&#114;&#97;&#116;&#101;&#99;&#104;&#110;&#105;&#99;&#97;&#108;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">panteratechnicalservices@gmail.com</a>","www.vacio.co"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMGNRHV3QKE5">25</a>","ARIES INTERNATIONAL, LLC","DOUGLAS LYNCH","","6222 POPLAR GROVE DR","","PORT ORANGE","FL","32127-9516","Logistics and Operations Management support for contingencies, disasters and short term contracts. Can deploy one person.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#64;&#100;&#111;&#117;&#103;&#108;&#121;&#110;&#99;&#104;&#46;&#111;&#114;&#103;">doug@douglynch.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KD3BGLL8NU76">26</a>","AVIUS AMERICA LLC","BENJAMIN STORY","","5131 S RIDGEWOOD AVE STE F","","PORT ORANGE","FL","32127-5168","Avius provides customer feedback solutions. Using real-time data we allow our clients to understand their customers like never before.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#110;&#64;&#97;&#118;&#105;&#117;&#115;&#46;&#99;&#111;&#109;">ben@avius.com</a>","www.avius.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULG9JD5Y1W23">27</a>","CENSYS TECHNOLOGIES CORPORATION","LARRY LEOVAN","","1808 CONCEPT CT STE 2","","DAYTONA BEACH","FL","32114-1280","Censys Technologies Corporation is a UAS OEM small business operating out of a 20,000 sq ft. manufacturing and engineering space in Daytona Beach, Florida with $5M revenue for FY21. Censys provides steadfast customer support right from manufacturing and sales of the UAS to engineering support including payload integration, co-development, and data processing. Censys signature product is the Sentaero; a rapidly deployable, fixed wing VTOL UAS with VLOS & BVLOS variants, having proven endurance in a variety of conditions with a multitude of field-swappable, intelligent payload options depending on the mission. Censys also specializes in manufacturing Mobile Command Centers that are currently being employed by several state law enforcement and other federal agencies for their complex UAS operations in a variety of environments","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#111;&#118;&#97;&#110;&#108;&#97;&#114;&#114;&#121;&#64;&#99;&#101;&#110;&#115;&#121;&#115;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">leovanlarry@censystech.com</a>","www.censystech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WAGDZJMCF9V7">28</a>","FLORIDA SCIENTIFIC SERVICES, INC.","M. S. BOWLER","","4240 S RIDGEWOOD AVE STE 2","","PORT ORANGE","FL","32127-4561","Stirring and shaking is our specialty. Since 1982, Florida Scientific Services, Inc., d/b/a Variomag-USA and 2mag-USA has provided specialized laboratory equipment and supplies, including motorless electromagnetic stirrers and shakers. We have over 30 years experience with inductive and magnetic drive concepts. Have questions? Need a customized stirring solution? Call us today! View our website of lab specialties for detailed product information and online shopping cart: www.variomag.com & www.2magUSA.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#105;&#115;&#116;&#114;&#97;&#116;&#105;&#111;&#110;&#64;&#118;&#97;&#114;&#105;&#111;&#109;&#97;&#103;&#46;&#99;&#111;&#109;">administration@variomag.com</a>","www.variomag.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HVNNA7ANZRC5">29</a>","SAMSULA WASTE INC","NATASHA MCDONALD","","2455 TOMOKA FARMS RD","","PORT ORANGE","FL","32128-3731","Commercial, Institutional Building Construction, Specialty Trade Contractors, Concrete Product Manufacturing, Concrete Product Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#112;&#114;&#111;&#99;&#101;&#115;&#115;&#105;&#110;&#103;&#64;&#114;&#101;&#103;&#105;&#115;&#116;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#112;&#108;&#117;&#115;&#46;&#111;&#114;&#103;">jpprocessing@registrationsplus.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X5P8UKE3KUH6">30</a>","LOTUS ENGINEERING AND CONSTRUCTION, INC.","MAHMOUD MADKOUR","","4717 DIXIE DR","","PONCE INLET","FL","32127-7107","Civil Engineering and Construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#64;&#108;&#111;&#116;&#117;&#115;&#45;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">sam@lotus-engineering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QFBWKAW12YT7">31</a>","28 TRANS, LLC","ALESSANDRO JANITSCHEK","","204 DAVENTRY DR","","DEBARY","FL","32713-2137","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#65;&#78;&#73;&#84;&#83;&#67;&#72;&#69;&#75;&#64;&#50;&#56;&#84;&#82;&#65;&#78;&#83;&#46;&#67;&#79;&#77;">JANITSCHEK@28TRANS.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SGK4P8L5RL44">32</a>","VALOR ROBOTICS, LLC","SATHYA GANGADHARAN","","506 FENTRESS BLVD STE H","","DAYTONA BEACH","FL","32114-1277","Zero-G Horizons Technologies, LLC (ZGHT) assists organizations that are looking to enhance their products or services, increase efficiency, and minimize costs by providing engineering solutions that will accelerate revenue growth through innovation. Our service capabilities can be categorized into the following specialized areas: Research & Development (Rapid Prototyping, Rigid & Soft Robotics, Machine Learning & AI, PCB Design, System Integration); Testing & Evaluation ( Mechanical Testing, Design Optimization, Computational Fluid Dynamics, Finite Element Analysis, Thermal Analysis); Technical Consulting (Product Scoping, Fabrication Guidance, Operations Analysis, Bid & Proposal, Project Management).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#116;&#104;&#121;&#97;&#46;&#103;&#97;&#110;&#103;&#97;&#100;&#104;&#97;&#114;&#97;&#110;&#64;&#118;&#97;&#108;&#111;&#114;&#114;&#111;&#98;&#111;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">sathya.gangadharan@valorrobotics.com</a>","www.valorrobotics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MMX8MEEYJTT1">33</a>","SOUTHERN COMFORT HVAC LLC","MARK CAMERON","","1835 S RIDGEWOOD AVE","","SOUTH DAYTONA","FL","32119-2236","Southern Comfort installs, and services air conditioning and heating for residential and commercial customers. We offer all your commercial refrigeration needs, as well as being able to offer mobile coolers and freezers to rent if needed. With over 30 years of experience, Southern Comfort HVAC is well qualified and ready to help you with our experienced, professional and efficient staff. Southern Comfort offers quality and timeliness on all work performed. A core set of values are applied on every job with ethics and integrity being stressed to all our employees. We want what is best for our customers and will offer solutions that keep our client’s best interest in mind. Our experience in the HVAC and refrigeration fields ensure that the work will be complete and efficient and our commitment to our customer is fulfilled. D-U-N-S # 07-952-2668 CAGE code 8DET4 NAICS codes 238220, 333415, 811310, 532289, 493120 WWW.SOUTHERNCOMFORTFL.COM","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#117;&#116;&#104;&#101;&#114;&#110;&#99;&#111;&#109;&#102;&#111;&#114;&#116;&#104;&#118;&#97;&#99;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">southerncomforthvacllc@gmail.com</a>","www.southerncomfortfl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAQPL1PJY7K8">34</a>","GLOBAL ENERGY RESEARCH & DEVELOPMENT INC.","THOMAS EGGERICHS","","1055 WHISPERING CREEK WAY","","OSTEEN","FL","32764-9117","We provide analytical Services ranging from ASTM Spec testing to sample recovery for military, industrial, commercial and consumer industry markets throughout the United States of America. NAICS CODES:","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#108;&#111;&#98;&#97;&#108;&#101;&#110;&#101;&#114;&#103;&#121;&#114;&#100;&#46;&#99;&#111;&#109;">Services@globalenergyrd.com</a>","https://www.globalenergyrd.com/contact-us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H96HL1MUNZ63">35</a>","CHEMPRO TECHNOLOGIES INC.","MICHAEL PHILLIPS","","512 FENTRESS BLVD STE D","","DAYTONA BEACH","FL","32114-1283","Provide Chemical, Biological, Radiation and Nuclear detection Equipment and integrated systems for critical infrastructure, ships and vehicles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#112;&#104;&#105;&#108;&#108;&#105;&#112;&#115;&#64;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#105;&#99;&#115;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">michael.phillips@environicsusa.com</a>","www.environicsusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCC7M53YNJT7">36</a>","ANCHOR CONTRACTING UNLIMITED LLC","MELISSA COLONNA","","780 FORT FLORIDA RD","","DEBARY","FL","32713-9718","We are a small general contractor that can handle construction, property rentals, manufacturing and sales. Specializing in creative solutions to get the job completed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#105;&#115;&#115;&#97;&#46;&#99;&#111;&#108;&#111;&#110;&#110;&#97;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">melissa.colonna@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SUEHZFYCCPM7">37</a>","MISS QUALITY LOGISTICS LLC","KELLEY BEVERLY","","1944 YELLOWFIN DR","","PORT ORANGE","FL","32128-3015","Miss Quality Logistics is a new and energized freight brokerage, creating experiences that you want to repeat and share. We aim to partner with our clients to lessen the challenges faced in transporting goods, allowing them more time growing their businesses .We care about the people, products, and process. Over 20 years in the industry. We oversee loads through all significant cargo modes. Through our innovative TMS and transport organization, we focus on productivity and straight forward solutios for our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#98;&#101;&#118;&#101;&#114;&#108;&#121;&#64;&#109;&#105;&#115;&#115;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">kbeverly@missqualitylogistics.com</a>","https://www.missqualitylogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJMQSDT69456">38</a>","BOTELMOT RESEARCH LLC","CRAIG TINUS","","48 HERNANDEZ AVE","","ORMOND BEACH","FL","32174-5506","research and development ecologist, data analyses, restoration of aquatic systems population monitoring and habitat evaluation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#114;&#97;&#105;&#103;&#64;&#98;&#111;&#116;&#101;&#108;&#109;&#111;&#116;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">Craig@botelmotresearch.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HSMQYBM91GK4">39</a>","RADON TESTING SERVICES, LLC","MARK PERRY","","2924 GIBRALTAR BLVD","","NEW SMYRNA BEACH","FL","32168-2428","Radon measurement of any commercial or residential building. Can conduct both short-term and long-term tests in a wide range of environmental conditions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#115;&#114;&#97;&#100;&#111;&#110;&#116;&#101;&#115;&#116;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rtsradontesting@gmail.com</a>","https://www.radontestingservices.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FVV3XLJL8VQ6">40</a>","ORCA ENGINEERING INC.","SCOTT RAYMOND","","1701 FROGS LEAP CT","","PORT ORANGE","FL","32128-4046","ORCA Engineering creates custom analytical tools designed to eliminate the complexity and monotony from data science processes. We deploy proven techniques that automate data processing, analysis, and reporting, and grant users the opportunity to efficiently and effectively communicate observations and conclusions. With the click of a button, stop endlessly searching, and spend your time making actionable, data-driven decisions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#111;&#114;&#99;&#97;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">scott@orcaeng.com</a>","www.orcaeng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMVYW26JSLE9">41</a>","B & B OUTDOOR LLC","ANDREA BECKER","","117 W PALMETTO AVE","","PIERSON","FL","32180-2264","B&B Outdoor, LLC specializes in site development, ground construction, land maintenance and emergency services. We have proudly served the Central Florida area with more than 10 years of government, commercial and industrial experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#97;&#64;&#98;&#98;&#45;&#111;&#117;&#116;&#100;&#111;&#111;&#114;&#46;&#99;&#111;&#109;">andrea@bb-outdoor.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E94FTZJPNC33">42</a>","UPRIVER SOLUTIONS LLC","SHAUN HARRIS","","104 VERDE WAY","","DEBARY","FL","32713-5425","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#117;&#110;&#64;&#117;&#112;&#114;&#105;&#118;&#101;&#114;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">shaun@upriversolutionsllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGHBPSSJX675">43</a>","E-CIG SOURCE, LLC","PEGGY WHITMORE","","955 S WOODLAND BLVD","","DELAND","FL","32720-7321","E-Cig Source, LLC. can provide solutions for the education and inspections of vaping and related products as a smoking alternative including support services, data entry, quality assurance, and inspections for compliance and safety. As a SDVOSB, E-Cig Source is committed to maintaining unsurpassed technical knowledge, and integrity by delivering quality services conforming to industry best practices and continuous process improvement. E-Cig Source has shown steady industry growth since 2012, through our high-quality standards. Professionals in: •	Observing places of business for compliance and education to help them succeed. •	Gathering and analyzing data and attention to detail •	Deep knowledge of past and current vaping arena; as well as nicotine personal management / training. •	Education and enforcement of industry related safety standards and regulations •	Enforcement of Youth Access to Tobacco and Vaping products •	Compliance inspections for ENDS products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#101;&#99;&#105;&#103;&#100;&#101;&#108;&#97;&#110;&#100;&#46;&#99;&#111;&#109;">sales@ecigdeland.com</a>","www.ecigdeland.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X616UKKQZVY7">44</a>","PROTOTECH LLC","DUSTIN JOHNSON","","6824 VINTAGE LN","","PORT ORANGE","FL","32128-4093","ProtoTech specializes in the full product development cycle of composite products. This includes CNC machining, mold manufacturing, design and engineering, research and development, reverse engineering, and advanced composite manufacturing and fabrication techniques.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#117;&#115;&#116;&#105;&#110;&#64;&#112;&#114;&#111;&#116;&#111;&#116;&#101;&#99;&#104;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">dustin@prototechmfg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHYXB9C3ZKN1">45</a>","AURORA RESEARCH RESOURCES, LLC","MICHELLE MITCHELL","","3145 S ATLANTIC AVE APT 1102","","DAYTONA BEACH","FL","32118-6271","Aurora Research Resources is the provider of quality medical devices in the areas of Deep Vein Thrombosis (DVT) prophylaxis, Lymphedema management, and Pressure Ulcer prevention. We offer better value by leveraging technology with high manufacturing standards to deliver simple, safe, and effective devices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#97;&#117;&#114;&#111;&#114;&#97;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#114;&#101;&#115;&#111;&#117;&#114;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">michelle@auroraresearchresources.com</a>","auroraresearchresources.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MZQ5EU38G9J4">46</a>","SWEENT LLC","JULIAN TEJERA-SOSA","","225 N PENINSULA DR 2","","DAYTONA BEACH","FL","32118-4215","Sweent LLC, established 2020, is a veteran-owned small business providing technology solutions for digital success. Services: 1. Web Design/Development: Attractive, user-friendly websites for all devices 2. Custom Software: Unique tools for specific business needs 3. Mobile Apps: User-friendly smartphone/tablet applications 4. Cloud Services: Secure online platforms for efficient data access 5. IT Consulting: Expert guidance for technology improvement 6. E-commerce: Effective online stores 7. Data Management: Organize/analyze information for smarter decisions 8. Digital Marketing: SEO, content creation, social media strategies 9. Project Management: On-time, within-budget tech projects 10. Technical Support: Ongoing system maintenance We're committed to delivering effective technology solutions for business growth and efficiency. Our experienced team tackles any tech challenge, providing custom solutions across industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#101;&#106;&#101;&#114;&#97;&#64;&#115;&#119;&#101;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">jtejera@sweent.com</a>","https://sweent.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGKBQFZJBDK5">47</a>","MITIGATION ASSESSOR, LLC","MICHELLE CHACE","","2605 N OLEANDER AVE APT 1","","DAYTONA BEACH","FL","32118-2217","Physical security consulting firm offerings: Threat and Risk Assessment; Design Basis Threat; Site Selection Assessment; Electronic Security Systems (ESS) design (Construction Documents) assessment review; ESS migration planning; ESS needs analysis; and specialized physical security assessments. SBA Certified Veteran and Economically Disadvantaged Women Small Owned Business Clients: Active SAM Contractor; Higher Education; Corporate; etc. SAM UEI EGKBQFZJBDK5, CAGE 9XL56, NAICS 541690, 541618, 813920, 541310, 641611, 928110","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#116;&#105;&#103;&#97;&#116;&#105;&#111;&#110;&#97;&#115;&#115;&#101;&#115;&#115;&#111;&#114;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">mitigationassessor@outlook.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.906&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

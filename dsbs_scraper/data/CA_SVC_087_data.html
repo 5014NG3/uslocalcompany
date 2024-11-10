@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 087 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.41 seconds and 2.51 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 32 
+(of 32 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZMWEMLEDNNF5">1</a>","INTERWORKING LABS, INC","CHRIS WELLENS","Office Manager","230 MOUNT HERMON RD STE 209","","SCOTTS VALLEY","CA","95066-4034","InterWorking Labs provides software for insuring interoperability, compliance and correct operation of networks and network manageable products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#105;&#119;&#108;&#46;&#99;&#111;&#109;">info@iwl.com</a>","https://iwl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6PXTFSW4ZN9">2</a>","WFN HOLDINGS INC","TIMOTHY BENT","Senior Meteorologist","108 WHISPERING PINES DR","STE 245","SCOTTS VALLEY","CA","95066-4793","WeatherFlow Inc. is a leader in the private sector weather industry, with over two decades of experience in applying the latest in observational, modeling, and forecasting technology to its clients’ most challenging problems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#98;&#101;&#110;&#116;&#64;&#119;&#101;&#97;&#116;&#104;&#101;&#114;&#102;&#108;&#111;&#119;&#46;&#99;&#111;&#109;">tbent@weatherflow.com</a>","http://www.weatherflow.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YCKMK5PLJLA3">3</a>","TRIDENT SERVICES, INC.","TIM HUMPHREYS","Vice President","1260 41ST AVE STE K","","CAPITOLA","CA","95010-3929","TRIDENT Services is a provider of zOS and OS/390 environment enhancement software tools and systems consulting services. TRIDENT Services makes use of available software tools including its own proprietary SMP/E methodology, and OS/EM software products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#95;&#104;&#117;&#109;&#112;&#104;&#114;&#101;&#121;&#115;&#64;&#116;&#114;&#105;&#115;&#101;&#114;&#118;&#46;&#99;&#111;&#109;">tim_humphreys@triserv.com</a>","http://www.triserv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U1TCMTKHFHM5">4</a>","KINNETIC ENVIRONMENTAL, INC.","KENNETH KRONSCHNABL","Manager","9057 SOQUEL DR.","BLDG. C STE B","APTOS","CA","95003-","oceanographic, environmental sampling and consulting services, dredge disposal and reuse, stormwater monitoring and analysis, bioassay and bioaccumulation studies, analytical chemistry","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#107;&#114;&#111;&#110;&#115;&#99;&#104;&#64;&#107;&#105;&#110;&#110;&#101;&#116;&#105;&#99;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">kkronsch@kinneticenv.com</a>","www.kinneticenv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J5FRH8YHM337">5</a>","LEE & ASSOCIATES RESCUE EQUIPMENT, INC.","CARL KUSTIN","Vice President","14670 HIGHWAY 9","","BOULDER CREEK","CA","95006-9763","Lee & Assocites provides technical rescue, rope access, safety equipment and training and Confined Space Rescue and Confined Space Rescue Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#108;&#101;&#110;&#101;&#64;&#108;&#101;&#101;&#114;&#101;&#115;&#99;&#117;&#101;&#46;&#99;&#111;&#109;">joelene@leerescue.com</a>","http://www.leerescue.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1RKBQZ3MV27">6</a>","ENGAGE COMMUNICATION, INC.","BRANDON DOYLE","","9565 SOQUEL DR","","APTOS","CA","95003-4152","We’re an equal opportunity innovator; solving specific telecom, networking and security problems for government, military, telecom, utility, enterprise, first responder, cloud services, developers, and PKI solution providers. Whether you’re a utility concerned about NERC compliance and migration to IP networks, a school district focused on reducing telecom costs, a certificate authority protecting highly secure cryptographic material, or you need to ensure the privacy of battlefield communications, Engage can help with efficient and cost-effective solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#110;&#100;&#111;&#110;&#46;&#100;&#111;&#121;&#108;&#101;&#64;&#101;&#110;&#103;&#97;&#103;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">brandon.doyle@engageinc.com</a>","http://www.engageinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLUQE8MNND11">7</a>","FORD LAWRENCE D","LAWRENCE FORD","Owner","5984 PLATEAU DR","","FELTON","CA","95018-9253","Ecological studies, monitoring, management planning, and evaluations for conservation lands, including fire, livestock grazing, habitat of special-status species and natural communities, control of non-native invasive plants, and environmental impacts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#111;&#114;&#100;&#108;&#97;&#114;&#114;&#121;&#53;&#57;&#56;&#52;&#64;&#115;&#98;&#99;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#110;&#101;&#116;">fordlarry5984@sbcglobal.net</a>","rangelandconservation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CBUNHDFRG2W6">8</a>","MARKET TECH, INC","PHIL CROWLEY","President","340 EL PUEBLO RD STE E","","SCOTTS VALLEY","CA","95066-4237","Market Tech Inc. is a leading distributor of Lasers and Instrumentation for life science, medical, aerospace, quality control and research applications. We offer a wide variety of Gas, Solid State and Diode Lasers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#64;&#109;&#97;&#114;&#107;&#101;&#116;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">phil@markettechinc.net</a>","https://www.markettechinc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4HBKNJJNMX8">9</a>","MAGGIORA BROS. DRILLING, INC.","MICHAEL MAGGIORA","","595 AIRPORT BLVD","","WATSONVILLE","CA","95076-2027","WATER WELL DRILLING AND REPAIRS. WATER WELL PUMP INSTALLATION, SERVICE AND REPAIRS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#116;&#115;&#111;&#110;&#118;&#105;&#108;&#108;&#101;&#64;&#109;&#97;&#103;&#103;&#105;&#111;&#114;&#97;&#98;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">watsonville@maggiorabros.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFFMJ921G934">10</a>","PF DISTRIBUTION CENTER, INC.","JOHN DUNNING","PRESIDENT","60 OLD EL PUEBLO RD","","SCOTTS VALLEY","CA","95066-3540","Invented by a Police Officer, the amazing new PowerFlare PF-200 Safety Light is an essential piece of equipment for police, military, firefighters, EMTs, rescue first responders, and members of emergency response teams. Great for hikers and campers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#112;&#102;&#100;&#99;&#105;&#46;&#99;&#111;&#109;">john@pfdci.com</a>","http://www.pfdci.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZQC4J9Q6B836">11</a>","ECOLOGICAL CONCERNS INCORPORATED","JOSHUA FODOR","","125 WALK CIR","","SANTA CRUZ","CA","95060-5942","Design, permit, grow, build, maintain, monitor ecological landscape and habitat restoration projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#102;&#111;&#100;&#111;&#114;&#64;&#101;&#99;&#111;&#108;&#111;&#103;&#105;&#99;&#97;&#108;&#99;&#111;&#110;&#99;&#101;&#114;&#110;&#115;&#46;&#99;&#111;&#109;">jtfodor@ecologicalconcerns.com</a>","http://www.ecologicalconcerns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X1AJMS1NQTD9">12</a>","2ND NATURE LLC","NICOLE BECK","","500 SEABRIGHT AVE STE 205","","SANTA CRUZ","CA","95062-3480","2NDNATURE is an ecosystem science and design firm specializing in aquatic resource assessment, monitoring and restoration plans. We devise innovative and sustainable solutions to enhance todays impacted ecosystems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#111;&#108;&#101;&#64;&#50;&#110;&#100;&#110;&#97;&#116;&#117;&#114;&#101;&#119;&#97;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">nicole@2ndnaturewater.com</a>","https://www.2ndnaturewater.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6WPKNPN5KY8">13</a>","CENTER FOR PROFESSIONAL DEVELOPMENT, INC.","CHARLOTTE MILLINER","","175 WESTDALE DR.","","SANTA CRUZ","CA","95060-9675","Management Consulting, Training, and Executive Coaching Services. CPD's approach allows for individual, group, and organizational achievements to flourish concurrently.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#105;&#108;&#108;&#105;&#110;&#101;&#114;&#64;&#99;&#112;&#100;&#105;&#110;&#102;&#111;&#46;&#99;&#111;&#109;">cmilliner@cpdinfo.com</a>","http://www.cpdinfo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FKFENCPNS4Q2">14</a>","FERGUSON SAFETY PRODUCTS, INC","NATALIE LOMONOSOFF","","303 POTRERO ST STE 2","","SANTA CRUZ","CA","95060-2756","Suicide Prevention, Teen Adult XXL Smock, Blanket, Pillow, Mattress, Sleeping Bag, Kilt, Jumpsuit","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#97;&#108;&#105;&#101;&#64;&#102;&#101;&#114;&#103;&#117;&#115;&#111;&#110;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">natalie@fergusonsafety.com</a>","http://www.fergusonsafety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZEKVQMAHFQB6">15</a>","ACCESS OPTIONS INC","IRA SAGAL","","109 LEE RD # D","","WATSONVILLE","CA","95076-9422","We provide a full range of vehicle and building modifications to provide access for persons with disabilities. From simple mechanical hand controls to joystick driving, from porch lifts to stairway lifts, from scooters to wheelchairs, we provide access.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#97;&#99;&#99;&#101;&#115;&#115;&#111;&#112;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@accessoptions.com</a>","http://www.accessoptions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QE99M763HHA9">16</a>","SCOTTS VALLEY MAGNETICS, INC.","JERRY HUMPHRIES","","300 EL PUEBLO RD STE 107","","SCOTTS VALLEY","CA","95066-4238","- Engineering, Manufacturing and Test of RF components and assemblies including Antennas and Coax Cable Assemblies - Manufacturing and testing of large core fiber optic cable assemblies - Engineering, manufacturing and test of inductors and transformers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#114;&#121;&#64;&#115;&#118;&#109;&#97;&#103;&#110;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">jerry@svmagnetics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5ULTXBAT8M4">17</a>","DONATINI, INC.","VINCE DONATINI","","333 LAKE AVE STE C","","SANTA CRUZ","CA","95062-4678","Marine Electronics sales , Surveillance Technologies, Maritime Safety equipment, installations , service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#105;&#110;&#99;&#101;&#64;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#104;&#105;&#99;&#107;&#115;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">Vince@johnsonhicksmarine.com</a>","www.johnsonhicksmarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBN3J9GKEFK5">18</a>","SOUTHALL ENVIRONMENTAL ASSOCIATES INC","BRANDON SOUTHALL","","9099 SOQUEL DR","STE 8","APTOS","CA","95003-4033","SEA, Inc. conducts biological research and consulting services related to measuring and estimating the impacts of noise and other human activities on marine life.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#97;&#110;&#100;&#111;&#110;&#46;&#83;&#111;&#117;&#116;&#104;&#97;&#108;&#108;&#64;&#115;&#101;&#97;&#45;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">Brandon.Southall@sea-inc.net</a>","www.sea-inc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2S2QQKQLW51">19</a>","HADLAND IMAGING LLC","TODD RUMBAUGH","","802 SEABRIGHT AVE","","SANTA CRUZ","CA","95062-3427","Hadland Imaging is the industry-leading provider of visible & IR high-speed & ultra high-speed (UHS) cameras, specialized imaging systems & solutions & accessories. We provide complete imaging solutions to top researchers worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#117;&#109;&#98;&#97;&#117;&#103;&#104;&#64;&#104;&#97;&#100;&#108;&#97;&#110;&#100;&#105;&#109;&#97;&#103;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">trumbaugh@hadlandimaging.com</a>","http://www.hadlandimaging.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELNWKL1RBL67">20</a>","WATERWAYS CONSULTING, INC.","MATT WELD","","509A SWIFT ST","","SANTA CRUZ","CA","95060-5823","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#119;&#64;&#119;&#97;&#116;&#119;&#97;&#121;&#115;&#46;&#99;&#111;&#109;">mattw@watways.com</a>","http://www.watways.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MSXNKM6GRXD3">21</a>","VEL COM COMMUNICATIONS","FERNANDO VELASCO","","1114 PACIFIC AVE APT 305","","SANTA CRUZ","CA","95060-4475","Install & test of Fiber Optics Cable, computer data wiring services, Electrical, concrete,Underground pulling, trenching,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#46;&#118;&#101;&#108;&#97;&#115;&#99;&#111;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">f.velasco@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CKKLCB8GB9K6">22</a>","COMMUNITY TREE SERVICE, LLC","NATHAN DENNEY","","416 SALINAS RD","","ROYAL OAKS","CA","95076-5233","All phases of tree servicing, tree removals, tree trimming, stump removal, tree cabling, tree assessment, building demolition, dumpster servicing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#79;&#102;&#102;&#105;&#99;&#101;&#64;&#99;&#111;&#109;&#109;&#117;&#110;&#105;&#116;&#121;&#116;&#114;&#101;&#101;&#46;&#99;&#111;&#109;">Office@communitytree.com</a>","www.communitytree.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N4SDNYNH4145">23</a>","ONFILTER, INC.","VLADIMIR KRAZ","","730 MISSION ST","STE 102","SANTA CRUZ","CA","95060-3688","Electromagnetic interference (EMI) filters for power lines, ground and other applications; instrumentation for electromagnetic interference measurements; off-the-shelf and custom filters","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#107;&#114;&#97;&#122;&#64;&#111;&#110;&#102;&#105;&#108;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">vkraz@onfilter.com</a>","www.onfilter.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y7MCZC1UM4J3">24</a>","WEST COMMUNICATION SERVICE, INC.","PETRA SCHREUER","","3333 SOQUEL DR","SUITE B","SOQUEL","CA","95073-2054","Provide Product, Service and installation for low voltage systems: telephone, structured cabling, copper and fiber optics, sound and paging, intercom and access systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#101;&#116;&#114;&#97;&#46;&#83;&#64;&#99;&#111;&#109;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#99;&#111;&#46;&#99;&#111;&#109;">Petra.S@comserviceco.com</a>","WWW.COMSERVICECO.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PERFTFZTDA42">25</a>","EYASCO INC","JEFFREY SCHUYLER","","125 HANGAR WAY","STE 290","WATSONVILLE","CA","95076-2494","Eyasco specializes in low power automated systems with integrated telemetry for real time or near real time monitoring and control from remote locations. All Eyasco systems are designed around a powerful enterprise database that collects instrumentation readings, checks alarm levels, applies scale factors and shows system and instrument status in a graphic project tree.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#64;&#101;&#121;&#97;&#115;&#99;&#111;&#46;&#99;&#111;&#109;">jeff@eyasco.com</a>","www.eyasco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G6U3J8N1PL27">26</a>","SPK AND ASSOCIATES, LLC","CARLOS ALMEIDA","","5011 SCOTTS VALLEY DR STE A","","SCOTTS VALLEY","CA","95066-4280","We are experts in process optimization and regulatory compliance, and we select and use best in class tools to accelerate software and hardware development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#108;&#109;&#101;&#105;&#100;&#97;&#64;&#115;&#112;&#107;&#97;&#97;&#46;&#99;&#111;&#109;">calmeida@spkaa.com</a>","www.spkaa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S5D4NGPEE8H7">27</a>","SYNOPTIC DATA PBC","ELIZABETH WILSON","","108 WHISPERING PINES DR STE 245","","SCOTTS VALLEY","CA","95066-4793","Synoptic provides services of data processing and data hub services, including data retrieval, storage, manipulation, dissemination, archiving, and quality control. The primary data sets handled include geophysical data from disciplines like meteorology, oceanography, and geology, and it has clients and partners in the government, business, and academic, and consumer sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#105;&#122;&#97;&#98;&#101;&#116;&#104;&#46;&#119;&#105;&#108;&#115;&#111;&#110;&#64;&#115;&#121;&#110;&#111;&#112;&#116;&#105;&#99;&#100;&#97;&#116;&#97;&#46;&#99;&#111;&#109;">elizabeth.wilson@synopticdata.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NRQQJW2JMLC9">28</a>","ITS CATCHING LLC","MONTE ASH","","790 MARINER PARK WAY","UNIT 8","SANTA CRUZ","CA","95062-3854","USCG Licensed Captain Certified towing vessels Diving Swimming Marine Salvage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#110;&#116;&#101;&#97;&#115;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">monteash@gmail.com</a>","www.towboatussantacruz.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M665KEGFSG28">29</a>","BASTILLE NETWORKS, INC.","IVAN O SULLIVAN","","499 LAKE AVE","","SANTA CRUZ","CA","95062-3938","Bastille is the first company to enable enterprise security teams to assess and mitigate the risk associated with the growing Internet of Radios. Bastille’s patented software and security sensors bring visibility to devices emitting radio signals (Wi-Fi, cellular, wireless dongles and other IoT communications) in your organization’s airspace. Bastille’s technology scans the entire radio spectrum, identifying devices on frequencies from 60MHz to 6 GHz. This data is then gathered and stored, and mapped so that you can understand what devices are transmitting data, and from where in your corporate airspace. This provides improved situational awareness of potential cyber threats and post-event forensic analysis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#118;&#97;&#110;&#64;&#98;&#97;&#115;&#116;&#105;&#108;&#108;&#101;&#46;&#105;&#111;">ivan@bastille.io</a>","www.bastille.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NM3FNH6JTMP9">30</a>","QEDIQ CORPORATION","DIANE QUICK","","610 GRANITE CREEK RD","","SANTA CRUZ","CA","95065-9733","Qediq Corporation provides engineering services and products in the areas of data analytics, machine learning, autonomous operation, adaptive controls and wireless communications to commercial and government clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#113;&#117;&#105;&#99;&#107;&#64;&#113;&#101;&#100;&#105;&#113;&#46;&#99;&#111;&#109;">dquick@qediq.com</a>","www.qediq.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNJ5FEK88229">31</a>","PERALTA, ANTONIO","BRAULIO PERALTA","","49 HANGAR WAY STE I","","WATSONVILLE","CA","95076-2459","We manufacture parts as to specs. Prototypes or production runs. Precision Machining. Manual machines and Computer Numerical Control machines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#114;&#97;&#108;&#116;&#97;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#115;&#104;&#111;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">peraltasmachineshop@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TKTJNTJ3D8S7">32</a>","CROWN SERVICES LLC","RON CLEMENTS","","6001 BUTLER LN STE 204","","SCOTTS VALLEY","CA","95066-3548","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#110;&#106;&#98;&#108;&#109;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">ronjblm@aol.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.945&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

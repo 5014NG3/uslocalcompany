@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 071 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.96 seconds and 2.06 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 71 
+(of 71 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KTG3DBJ59X38">1</a>","CAM CONSULTING GROUP LLC","CLAUDIA MONTE","Owner","15403 TREVALLY WAY","","BONITA SPRINGS","FL","34135-8540","management consulting; needs assessment; professional development training; business coaching; meeting facilitators and speakers; dispute resolution","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#111;&#110;&#116;&#101;&#64;&#99;&#97;&#109;&#52;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">cmonte@cam4consulting.com</a>","http://www.cam4consulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YC1NGCYHRBZ6">2</a>","ENVIRONMENTAL RESTORATION CONSULTANTS, INC.","JEFF ADAIR","President","24571 REDFISH ST","","BONITA SPRINGS","FL","34134-7111","Environmental, restoration, exotic, fauna, flora, plants, native, conservation, parks, aquatic preservation, consulting, wetland, wildlife, surveys, permitting, mitigation, endangered, plans, impact, reports, agencies, GPS, habitat, mapping, government","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#82;&#67;&#105;&#110;&#99;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">ERCinc@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLS4FA68U879">3</a>","SPEARS HOLDINGS, INC","AMY SPEARS","","12000 SANTALUZ DR APT 101","","FORT MYERS","FL","33913-8158","Combination of technology and professional skills training, IT outsourcing, and event hosting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#112;&#101;&#97;&#114;&#115;&#64;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#105;&#118;&#105;&#116;&#121;&#112;&#111;&#105;&#110;&#116;&#108;&#115;&#46;&#99;&#111;&#109;">aspears@productivitypointls.com</a>","http://www.productivitypointls.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQFLNZYNGF59">4</a>","TARPON BAY EXPLORERS, INC.","WENDY SCHNAPP","General Manager","900 TARPON BAY RD","","SANIBEL","FL","33957-3131","tours & rentals","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#99;&#111;&#101;&#114;&#108;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ecoerler@gmail.com</a>","www.tarponbayexplorers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CU8CMYDTA8Q6">5</a>","FOURTH DIMENSION SECURITIES, INC.","LEE HIDE","Sales Manager","5611 HALIFAX AVE","","FORT MYERS","FL","33912-4412","Suppliers of solar powered outdoor lighting fixtures including (but not limited to) solar street lights, solar floodlights & solar security lights","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#111;&#108;&#97;&#114;&#105;&#108;&#108;&#117;&#109;&#105;&#110;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">sales@solarilluminations.com</a>","http://www.solarilluminations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YF69F3Q5N6J8">6</a>","MARATHON ENGINEERING CORPORATION","HANNAH RISKE","","5615 2ND ST WEST","","LEHIGH ACRES","FL","33971-6332","Marathon Engineering Corporation, manufacturer of Gold Medal Safety Padding®, has an unparalleled history of providing owners with a safe, durable, and easily maintained padded environments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#105;&#115;&#107;&#101;&#64;&#109;&#97;&#114;&#97;&#116;&#104;&#111;&#110;&#101;&#110;&#103;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">hriske@marathonengcorp.com</a>","https://goldmedalsafetypadding.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GGP5ME6AWL73">7</a>","COLIN K DUNN & ASSOCIATES LLC","COLIN DUNN","","16058 VIA SOLERA CIR","APT 101","FORT MYERS","FL","33908-3782","Since 2005, Colin K. Dunn and Associates has helped leaders build winning teams. We do that through training workshops in leadership, communications, and planning for the public, private, and non-profit sectors. Our goal: to help improve organizational performance by developing people. Our vision is to help every workshop participant reach their highest potential.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#105;&#110;&#107;&#100;&#117;&#110;&#110;&#108;&#101;&#97;&#100;&#101;&#114;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">colinkdunnleaders@gmail.com</a>","http://www.colinkdunn.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3C4H6F9L3B7">8</a>","COASTAL ENGINEERING CONSULTANTS INC","KAREN TAYLOR","","28421 BONITA CROSSINGS BLVD","","BONITA SPRINGS","FL","34135-3201","CEC staff of professionals design workable alternatives to produce timely, cost-effective results. Based in Bonita Springs, Florida, CEC is actively involved in the evaluation, planning, permitting and design of diverse projects worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#99;&#101;&#99;&#105;&#102;&#108;&#46;&#99;&#111;&#109;">ktaylor@cecifl.com</a>","http://www.coastalengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GVFJJPGDB1M5">9</a>","ZEROED-IN TECHNOLOGIES, LLC","CHRISTOPHER MOORE","","15353 CHRISTINE WAY","","FORT MYERS","FL","33908-1757","ZeroedIn helps clients to plan, implement, and measure their HR, learning and talent strategies. We provide strategic consulting and technology solutions and support the areas of human resources, enterprise transformation, learning and talent management, e-learning and virtual learning platforms, talent measurement, reporting, workforce analytics, surveying, evaluation, and testing. ZeroedIn provides software that combines personalized dashboards, advanced analytics, collaboration and annotation tools, and strategic planning elements with automated data collection technologies. The software includes a robust survey system for collecting and analyzing valuable opinion and feedback directly from the workforce.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#122;&#101;&#114;&#111;&#101;&#100;&#105;&#110;&#46;&#99;&#111;&#109;">chris@zeroedin.com</a>","http://www.zeroedin.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QX4KPJDNKCW3">10</a>","ACCESS ELECTRONICS LLC","RYAN FERRARO","","12221 TOWNE LAKE DR STE A124","","FORT MYERS","FL","33913-8185","Access Electronics is a Woman-Owned, Small Business servicing the needs of the Aerospace/Military/Commercial Aviation, Space, and Energy Markets. As an Authorized Distributor for Ducommun Technologies, Inc., we specialize in Lighted Pushbutton, Indicator, Panel, and Keyboard Systems. With over 30 years of experience and knowledge with the Ducommun Technologies, Inc. product line, our staff is well equipped to support the technical and logistical needs of our customers. For more information, please visit us at http://www.access-electronics.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#99;&#99;&#101;&#115;&#115;&#45;&#101;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">sales@access-electronics.com</a>","http://www.access-electronics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBQCFLVME425">11</a>","S.W. ENTERPRISE ASSOCIATES, INC.","MARIE FARRELL","","12730 NEW BRITTANY BLVD STE 423","","FORT MYERS","FL","33907-4685","S.W Enterprises provides property management and leasing services to commercial and institutional owners and corporate users of local and multi-market commercial properties. We offer an integrated system to provide owners with better information and greater insight to help improve decision-making confidence and asset performance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#100;&#110;&#97;&#49;&#57;&#54;&#51;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Edna1963@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E1DCKK7B7H55">12</a>","DELFIN TRADING COMPANY","FRANCIS FLYNN","","1204 FLAMINGO DR","","CAPE CORAL","FL","33904-5979","Office Supply Division: Full line of Office Products, fulfilled by direct delivery via FedEx, UPS, USPO Mrs Neat Cleaning Services- Office Cleaning, in Lee, Collier, Charolette Counties, FL","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#112;&#97;&#116;&#114;&#105;&#99;&#107;&#102;&#108;&#121;&#110;&#110;&#64;&#100;&#101;&#108;&#102;&#105;&#110;&#116;&#114;&#97;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">fpatrickflynn@delfintrading.com</a>","www.delfintrading.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JDGFGGAERAZ3">13</a>","RAYMOND E PETERS INC","SUSAN PETERS","","9240 BONITA BEACH RD SE STE 2206","","BONITA SPRINGS","FL","34135-4251","Custom Fabricate Facial Prosthetics: Eyes, Orbitals, Ears, Noses","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#112;&#101;&#116;&#101;&#114;&#115;&#64;&#98;&#101;&#115;&#116;&#112;&#114;&#111;&#115;&#116;&#104;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">susanpeters@bestprosthetics.com</a>","www.bestprosthetics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XYDMDF4HXK48">14</a>","NEWCASTLE AVIATION PARTNERS LLC","FRANK MATOS","","16381 DOMESTIC AVE","STE 100","FORT MYERS","FL","33912-6009","Newcastle Aviation is a global aviation company with decades of combined experience supporting the commercial airline, regional airline and general aviation industries with customers and clients across all continents.Newcastle Aviation markets, distributes, acquires and re-markets: •Aircraft •Engines •Landing Gears •Components •Parts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#114;&#97;&#110;&#107;&#77;&#64;&#110;&#101;&#119;&#99;&#97;&#115;&#116;&#108;&#101;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">FrankM@newcastleaviation.com</a>","http://www.newcastleaviation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDZNDRBGLCH9">15</a>","MYCA MULTIMEDIA & TRAINING SOLUTIONS LLC","KELLY KRAMER","","19024 MARQUESA DR","","FORT MYERS","FL","33913-7898","MYCA Multimedia and Training Solutions is a GSA schedule holder woman-owned small business with over 20 years of experience delivering professional-quality eLearning, multimedia, and training solutions. We specialize in creating innovative, accessible, and engaging content tailored to meet the unique needs of our clients, which include government agencies, municipalities, and private sector organizations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#64;&#109;&#121;&#99;&#97;&#108;&#101;&#97;&#114;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">kelly@mycalearning.com</a>","http://www.mycalearning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M2SJL6F6AGX6">16</a>","SEMCO CONSULTANTS","ZORAN MILATOVIC","","5231 SW 28TH PL","","CAPE CORAL","FL","33914-6016","SEMCO Consultants is a professional services firm specializing in engineering consulting, including Mechanical Engineering, Electrical Engineering, Plumbing, Process Engineering/Piping, CADD, Storage batteries, and solar energy. We service many forms of Industrial and Government projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#118;&#109;&#64;&#115;&#101;&#109;&#99;&#111;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">zvm@semcoconsultants.com</a>","http://semcoconsultants.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PD7ZLXVJZ2M3">17</a>","JEWITT ENGINEERING, INC.","JEFFREY JEWITT","","623 BAYSIDE DR","","FORT MYERS","FL","33919-2503","A successful professional Electrical Engineering Consuting service providing the design, specifications and construction of electrical circuitry and lighting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#106;&#106;&#101;&#119;&#105;&#116;&#116;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">jjjewitt@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E2QBAPTMBG61">18</a>","SERVICE BRANDS LLC","TED EHRLICH","","6141 TIDEWATER ISLAND CIR","","FORT MYERS","FL","33908-4681","Facility cleaning and maintenance. Specialized coatings for facilities. Floor cleaning and restoration. Mold remediation and protection.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#100;&#64;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#98;&#114;&#97;&#110;&#100;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">ted@servicebrandsllc.com</a>","www.servicebrandsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GU3LJMUK6BX1">19</a>","L.A. GIANNUZZI & ASSOCIATES LLC","LUCILLE GIANNUZZI","","12580 WALDEN RUN DR","","FORT MYERS","FL","33913-8148","expertise in FIB, SEM, S/TEM for 2D and 3D materials characterization. expertise in product marketing and development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#99;&#105;&#108;&#108;&#101;&#64;&#108;&#97;&#103;&#105;&#97;&#110;&#110;&#117;&#122;&#122;&#105;&#46;&#99;&#111;&#109;">lucille@lagiannuzzi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DJMGGLCCKGP9">20</a>","ENERGY HARNESS CORP","AARON FISCHER","","71 MID CAPE TER","STE 8","CAPE CORAL","FL","33991-2010","Established in 2010, Energy Harness Corporation (EHC) specializes in the manufacturing and nationwide distribution of high quality commercial LED lighting. Combining our wide range of products and technical expertise, we create innovative LED solutions that will reduce your energy and maintenance costs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#114;&#111;&#110;&#64;&#101;&#110;&#101;&#114;&#103;&#121;&#104;&#97;&#114;&#110;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">aaron@energyharness.com</a>","http://www.energyharness.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T8K7DHEYKLT6">21</a>","EFFECTIVE REHABILITATION MANAGEMENT INCORPORATED","JEFFERY LUCAS","","8024 ALICO RD STE A1","","FORT MYERS","FL","33912-2555","Vocational Rehabilitation, Medical Case Management, Ergonomic Evaluations, Job Placement, Psychological Counselling","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#114;&#76;&#117;&#99;&#97;&#115;&#64;&#69;&#102;&#102;&#101;&#99;&#116;&#105;&#118;&#101;&#82;&#101;&#104;&#97;&#98;&#105;&#108;&#105;&#116;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">DrLucas@EffectiveRehabilitation.com</a>","www.EffectiveRehabilitation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MZ14KQWAT9T9">22</a>","ALICO LODGING, LLC","ANI FARRELL","","9931 INTERSTATE COMMERCE DR","","FORT MYERS","FL","33913-8262","Hotel accommodations, lodging, meeting space, catering and conference services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#102;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#99;&#114;&#111;&#119;&#110;&#101;&#103;&#117;&#108;&#102;&#99;&#111;&#97;&#115;&#116;&#46;&#99;&#111;&#109;">afarrell@crownegulfcoast.com</a>","www.crowneplaza.com/fortmyersfl"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L97MMG5VW9N7">23</a>","BEACON POINT ASSOCIATES LLC","JEFF SUMMEROUR","","1216 SW 4TH ST","","CAPE CORAL","FL","33991-2129","Beacon Point Associates is a Service-Disabled Veteran-Owned Small Business (SDVOSB) who works with market-share leading and specialty medical equipment manufacturers for sales to the Federal government. Beacon Point Associates was founded by a former senior Naval Supply Officer with extensive first-hand knowledge of government acquisition, contracting and procurement processes who for the past 16 years has worked with medical equipment manufacturers selling to the government including turn-key projects such as Integrated Operating Rooms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#115;&#117;&#109;&#109;&#101;&#114;&#111;&#117;&#114;&#64;&#84;&#101;&#97;&#109;&#66;&#80;&#65;&#46;&#99;&#111;&#109;">jeff.summerour@TeamBPA.com</a>","www.beaconpointassociates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TLP5H4MZNY24">24</a>","EXPRESSLO LLC","LUCILLE GIANNUZZI","","5483 LEE ST","STE 12","LEHIGH ACRES","FL","33971-1516","expert in FIB lift out needs and solutions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#117;&#99;&#105;&#108;&#108;&#101;&#46;&#71;&#105;&#97;&#110;&#110;&#117;&#122;&#122;&#105;&#64;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#108;&#111;&#46;&#99;&#111;&#109;">Lucille.Giannuzzi@expresslo.com</a>","www.expresslo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MEQ4LEKCG8A5">25</a>","WATERLEAF INTERNATIONAL LLC","DAVID LEVITAN","","11571 MAJESTIC PALMS BLVD STE 100","","FORT MYERS","FL","33908-3382","Waterleaf International LLC is a full service consulting, integration and engineering firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#108;&#101;&#118;&#105;&#116;&#97;&#110;&#64;&#119;&#97;&#116;&#101;&#114;&#108;&#101;&#97;&#102;&#105;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">dlevitan@waterleafinternational.com</a>","www.waterleafinternational.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XGM6VJRFQF23">26</a>","VIRTUAL COURSE PROVIDERS LLC","MICHAEL BLOCH","","566 BOULDER DR","","SANIBEL","FL","33957-5304","Provide Online Project Management Training for the PMP and CAPM credentials, and PDUs for PMI PMP certification renewal. Official Global Registered Education Provider of the PMI. www.pmeducate.com","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#109;&#101;&#100;&#117;&#99;&#97;&#116;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">pmeducate@gmail.com</a>","www.pmeducate.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSKGG8EEFVS6">27</a>","JOEANNETHOMASJOSEPH COMPANY","JOEANNE THOMAS-JOSEPH","","3110 6TH ST W","","LEHIGH ACRES","FL","33971-1460","Livescan Service Provider Data Collector 4 Background Screening according to F.S. Chapter 435 & FAR Subpart 19.5. Be Effective, Efficient & Productive to save Energy, Money & Time (EMT)! VISION: Serve the State of Florida & Other Mandated Communities","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#83;&#80;&#85;&#84;&#78;&#73;&#75;&#55;&#78;&#69;&#84;&#87;&#79;&#82;&#75;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">ASPUTNIK7NETWORK@GMAIL.COM</a>","HTTP://CALENDLY.COM/DOESS"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NY57K52KEPS8">28</a>","FIRE ANT CONTROL, LLC","PETER RIALS","","6671 JUNIPER LN","","BOKEELIA","FL","33922-3705","Fire Ant Control LLC (FAC) is an SDVOSB Pest Control company based out of FL that specializes in treating any size property for the control of fire ants. Although fully licensed in pest control, we treat only fire ants. Why? Fire ants kill. Fire ants (red ants) inject a venomous protein into the host causing allergic reactions and even anaphylactic shock. They are aggressive, territorial and vicious in the search for food. Fire ants chew on electrical wires causing costly damage and will invade virtually every inch of a property if not controlled. There is no natural enemy or predator for these non-native, invasive fire ants. Many pests can be controlled with a quick pest control killer or diverted by using preventative measures. We kill the colony from the inside out by sterilizing the queens. With our vast knowledge of fire ant behavior and with professional experience we can properly and safely control your fire ant infestations. For more information visit www.fireantcontrol.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#64;&#102;&#105;&#114;&#101;&#97;&#110;&#116;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#46;&#99;&#111;&#109;">pete@fireantcontrol.com</a>","http://fireantcontrol.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VSJSAE8H5KE5">29</a>","HUMANITY INNOVATION LABS LLC","STEPHANIE HUBBARD","","8660 COLLEGE PKWY STE 240","","FORT MYERS","FL","33919-5805","We are an R+D lab and a consultancy. Offering research and development in early stage technologies, and wearable solutions for optimal human performance. Industrial Design, Engineering, Design Research, User Experience are our core capabilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#64;&#104;&#117;&#109;&#97;&#110;&#105;&#116;&#121;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">sb@humanityinnovationlabs.com</a>","www.humanityinnovationlabs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YNU6KX212XB8">30</a>","ADVANCED TECHNOLOGIES OF SOUTHWEST FLORIDA LLC","DANIELLE NELSON","","3620 LANSING LOOP","UNIT 120","ESTERO","FL","33928-3314","We supply and support Agencys with drug detection, explosive detection, metal detection, x-ray scanning, biometrics. all of these services are used for security and protection of individuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#110;&#101;&#108;&#115;&#111;&#110;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#117;&#115;&#46;&#99;&#111;&#109;">dnelson@advancedtechnologiesus.com</a>","www.advancedtechnologiesus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EMNJAVRPLHX5">31</a>","PARAGON FLIGHT TRAINING CO.","CHRIS SCHOENSEE","","511 DANLEY DR","","FORT MYERS","FL","33907-1526","Pilot Training Services, Initial flight orientation, Initial Flight Screening, Third party exam testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#115;&#99;&#104;&#111;&#101;&#110;&#115;&#101;&#101;&#64;&#112;&#97;&#114;&#97;&#103;&#111;&#110;&#102;&#108;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">cschoensee@paragonflight.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JDU3LELFNAL9">32</a>","OPEN PORTAL INC","MICHAEL MARTIN","","12650 FAIRINGTON WAY","","FORT MYERS","FL","33913-2615","Open Portal provide support for Oracle OBIEE,OBIA, Oracle Database and fusion middleware implementations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#111;&#112;&#101;&#110;&#112;&#111;&#114;&#116;&#97;&#108;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">michael.martin@openportaltech.com</a>","www.openportaltech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K39HBMPLN4B3">33</a>","SDVOSB MATERIALS TECHNOLOGY & SUPPLY LLC","HARRISON KENDALL","","1801 PALMDALE CT","","FORT MYERS","FL","33916-2309","LabTECH Environments - We Bring Labs to Life. SDVOSB HUBZone Laboratory: Provide and Install Equipment, Supplies, Testing, Certification SDVOSB HUBZone Furniture: Provide and Install All Types of Furniture SDVOSB HUBZone MRO: 1.5 million maintenance repair operations supplies SDVOSB HUBZone Material Handling & Shelving: Provide and Install Racks, Shelving, Storage As a Certified HUBZone, SDVOSB (Service Disabled, Veteran Owned, Small Business) and Disabled Diversity Supplier with an experienced team of Combat Veterans and family, we have a clear vision at SDVOSB Materials Technology & Supply LLC, to assist our community, businesses and organizations with our 4 core capabilities. Contact us for more info | 917 216-9400 | SDVOSBmaterials.com | harrison.kendall@SDVOSBmaterials.com We are Certified by the VA, SBA, Disability:IN, Ohio, California, Maryland, Virginia, Florida, Massachusetts and NY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#97;&#114;&#114;&#105;&#115;&#111;&#110;&#46;&#75;&#101;&#110;&#100;&#97;&#108;&#108;&#64;&#83;&#68;&#86;&#79;&#83;&#66;&#109;&#97;&#116;&#101;&#114;&#105;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">Harrison.Kendall@SDVOSBmaterials.com</a>","https://www.sdvosbmaterials.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XUWQRWRBDBE9">34</a>","VORTEX LLC","STEVEN ROHRER","","5855 CUBLES DR","","BOKEELIA","FL","33922-2813","Building the Future of America with Veterans Construction and Construction Management Specialists","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#110;&#114;&#64;&#118;&#111;&#114;&#116;&#101;&#120;&#111;&#102;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#46;&#99;&#111;&#109;">stevenr@vortexofamerica.com</a>","www.vortexofamerica.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8PRTL7LCFD1">35</a>","KIRBY, JAMES","LINDA KIRBY","","13650 FIDDLESTICKS BLVD","","FORT MYERS","FL","33912-0395","Trained in sales, management, customer service, woodworking and most tools for mechanics, repair, excavating, wood crafting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#107;&#105;&#114;&#98;&#121;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">lykirby@att.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NU1NBGBDKUA3">36</a>","ALGARRA INTERNATIONAL, LLC","KYLE HUTSON","","2100 BEACON MANOR DR","","FORT MYERS","FL","33907-3058","Full service construction and roofing contractor. Hurricane impact windows and doors. Disaster response and relief. Marine construction. Hospital Construction. Civil Construction. Historic Restoration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#121;&#108;&#101;&#64;&#97;&#108;&#103;&#97;&#114;&#114;&#97;&#73;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">kyle@algarraInternational.com</a>","www.StrikeForceConstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P35QEBRB9TN5">37</a>","BLUE LINE BREACHERS LLC","BRAD GALLAGHER","","21675 BRIXHAM RUN LOOP","","ESTERO","FL","33928-3290","Blue Line Breachers, LLC provides Custom Explosive Breaching, munitions and bulk Storage Magazines, consulting, and training services. Under our DBA as RTR USA, we offer compact to full size equipment, vehicle, vessel, trailer modifications in various configurations to meet the end user needs. We are a small, SDVOB owned company, with over 15 years of sales and training experience in the government and civilian sectors, dedicated to providing the end user a proven product complete with standards and techniques that are in line with National Standards. We are a company that takes pride in our products and services which go hand in hand with our high ethical standards. For more information, please visit us at https://bluelinebreachers.com/.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#110;&#102;&#111;&#64;&#66;&#108;&#117;&#101;&#76;&#105;&#110;&#101;&#66;&#114;&#101;&#97;&#99;&#104;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Info@BlueLineBreachers.com</a>","https://BlueLineBreachers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LA3ZJFLU12P5">38</a>","ESSENCE OF WELLNESS THERAPY LLC","ROSHINI JOSEPH","","113 ROWLAND RD","","LEHIGH ACRES","FL","33936-5932","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#101;&#111;&#119;&#116;&#104;&#101;&#114;&#97;&#112;&#121;&#46;&#99;&#111;&#109;">contact@eowtherapy.com</a>","www.eowtherapy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VRGLGAH5BZQ3">39</a>","KROEHLER TRAINING & CONSULTING, INC","MARK KROEHLER","","4523 SW 5TH PL","","CAPE CORAL","FL","33914-6431","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#107;&#64;&#75;&#114;&#111;&#101;&#104;&#108;&#101;&#114;&#46;&#110;&#101;&#116;">Mark@Kroehler.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FQN3YMCSD943">40</a>","STK TRANSPORTATION LLC","SHANNON KERR","","12590 VILLAGIO WAY","","FORT MYERS","FL","33912-0601","STK Transportation LLC. is a Transportation Management firm specializing in Supply Chain Management, Government Transportation contracts including DOD, FEMA and USPS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#101;&#114;&#114;&#64;&#115;&#116;&#107;&#116;&#114;&#97;&#110;&#115;&#112;&#111;&#114;&#116;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">skerr@stktransportation.com</a>","www.stktransportationgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PVGTTTX1SEJ3">41</a>","PROMETHEUS TSS LLC","DARREN GARNER","","26897 SPANISH GARDENS DR","","BONITA SPRINGS","FL","34135-5360","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#114;&#101;&#110;&#64;&#112;&#114;&#111;&#109;&#101;&#116;&#104;&#101;&#117;&#115;&#116;&#115;&#115;&#46;&#99;&#111;&#109;">darren@prometheustss.com</a>","www.prometheustss.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RLMWUKJT53F3">42</a>","DECEPTION INVESTIGATIONS, LLC","JOSEPH WATERS","","13180 N CLEVELAND AVE","STE 221","NORTH FORT MYERS","FL","33903-6231","I am fully insured and possess experience in administering a range of polygraph examinations of various methodologies. These include diagnostic and screening tests according to APA and FPA evidence-based guidelines. I possess training and experience in post-conviction sex offender testing. I am fully knowledgeable in the evaluation of polygraph charts (i.e. physiological data), test question construction, selection of test methodology, and effectiveness of pre and post-test questioning. I will provide quality controlled examinations in line with professional and ethical standards. I will maintain clear, concise and accurate polygraph chart recordings. I will provide complete video and audio recording of each examination. I will interpret the accuracy of test results and provide specific guidance and recommendations. I will prepare and submit detailed, proficient, technical written reports for each examination and report all findings to the stakeholders in a confidential manner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#105;&#112;&#111;&#108;&#121;&#103;&#114;&#97;&#112;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dipolygraph@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FZ4MKHJDDNL6">43</a>","SITEWELL SOLUTIONS LLC","CHELSEA KIDD","","5202 TOWER DR","","CAPE CORAL","FL","33904-5851","SiteWell Solutions provides physical and mental readiness support services for critical workforces.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#108;&#115;&#101;&#97;&#46;&#107;&#105;&#100;&#100;&#64;&#115;&#105;&#116;&#101;&#119;&#101;&#108;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">chelsea.kidd@sitewellsolutions.com</a>","https://sitewellsolutions.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHE2KEYJQN55">44</a>","INCEPTUS LLC","JOHN SCHLAGER","","1411 SE 47TH ST STE 1","","CAPE CORAL","FL","33904-9687","Inceptus Cybersecurity are trusted advisors that combine adaptable military-grade cyber defenses and high-end consulting services focused on helping organizations deal with the increasing risk and impact of cyberattacks. Combining best-of-breed technologies, advanced data analytics, exclusive threat intelligence, and elite analysts with years of digital combat experience, we develop ultimate cyber resilience that aligns with an organizations strategy to keep its brand and reputation safe, data secured, and business protected","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#64;&#105;&#110;&#99;&#101;&#112;&#116;&#117;&#115;&#115;&#101;&#99;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">js@inceptussecure.com</a>","https://www.inceptussecure.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W6KLB7113JN6">45</a>","RANGEL, GABRIELA SANT ANNA","GABRIELA RANGEL","","15363 UPWIND DR","","BONITA SPRINGS","FL","34135-8588","General translation and conference interpretation services between English and Portuguese. Spanish and French as passive languages. Specializing in Agriculture; wide experience with serving different government departments and agencies; 18 years serving the translation demands of the Canadian Government to and from Portuguese.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#46;&#114;&#97;&#110;&#103;&#101;&#108;&#64;&#97;&#105;&#105;&#99;&#46;&#110;&#101;&#116;">g.rangel@aiic.net</a>","www.gabrielarangel.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SKDLLUXYQHV3">46</a>","MOSTYN MARKETING GROUP LLC","SHARON MOSTYN","","1019 NW 33RD AVE","","CAPE CORAL","FL","33993-9444","Founded by Sharon Mostyn, Mostyn Marketing Group is a Google Partner agency that specializes in measuring and optimizing marketing and advertising for business-to-business (B2B), business-to-consumer (B2C), nonprofit, and agency-for-the-agency (AFTA) clients. With an emphasis on Search Engine Optimization (SEO), Web Analytics, Email Marketing, Social Media, and Traditional Media (TV, radio, print, and direct mail), Mostyn Marketing Group provides a complete range of marketing services. Our team has decades of experience providing marketing strategy and implementation as both in-house and agency-side marketers. This uniquely positions us to understand the ins and outs of managing a marketing budget in order to provide the best ROI across all channels. Whether it’s starting a full-scale marketing program from scratch, a strategic overhaul, or just tactics, Mostyn Marketing Group can help your marketing initiatives succeed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#111;&#115;&#116;&#121;&#110;&#109;&#97;&#114;&#107;&#101;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@mostynmarketing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLR8ELLZ7QE3">47</a>","ISSCONN LLC","ISSA CONNELL","","2150 GRACE AVE","","FORT MYERS","FL","33901-7218","strategic technology consulting services, management information systems, electrical contractor work and construction, and managed services. Extra services: medical waste disposal, renewable energy research and development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#115;&#115;&#99;&#111;&#110;&#110;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">issconnllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9JAJB3VTRG8">48</a>","ORIONIS SHOP LLC","RIGEL GARCIA","","2221 SW 4TH AVE","","CAPE CORAL","FL","33991-4311","Orionis Shop LLC specializes in providing a comprehensive range of wholesale products to meet the diverse needs of government agencies. We specialize in medical, dental, and surgery supplies, including nitrile gloves, medical gowns, and face masks. Our commitment extends to offering a wide array of office supplies, school supplies, and grocery items. With a focus on quality, speed, reliability, and competitive pricing, Orionis Shop LLC is poised to support government entities in fulfilling their procurement requirements efficiently. Founded in 2018, our dedication to prompt delivery and customer satisfaction sets us apart as a reliable partner for government contracting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#103;&#101;&#108;&#46;&#115;&#101;&#109;&#112;&#111;&#119;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rigel.sempower@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F1MWKZ93KM34">49</a>","COMPUTERS AT WORK!, INC.","CHRISTOPHER MCDANIEL","","3033 WINKLER AVE STE 210","","FORT MYERS","FL","33916-9522","vTECH io provides end-to-end hardware, software, professional services, and cybersecurity solutions. We offer innovative, next-generation solutions to protect your network and data from insider threats and cyberattacks featuring best-in-class tools. As a Dell Platinum Partner, we are uniquely equipped to introduce all the high performance and value-driven products Dell offers but with a local presence.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#109;&#99;&#100;&#97;&#110;&#105;&#101;&#108;&#64;&#118;&#116;&#101;&#99;&#104;&#105;&#111;&#46;&#99;&#111;&#109;">chris.mcdaniel@vtechio.com</a>","http://www.vtechio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SQCSVN8QQJJ3">50</a>","KENNEDY INTERNATIONAL LOGISTICS & SERVICES LLC","LAURENCE KENNEDY","","13413 FOURTH ST","","FORT MYERS","FL","33905-2113","Kennedy International Logistics & Services is a provider of comprehensive secure logistics and elite private security solutions. Our expertise spans disaster preparedness, response and relief, humanitarian crises management, maritime security, residential security and protection services worldwide. We supply firearms and source and procure military equipment in addition to surveillance, counter surveillance, anti surveillance, intelligence and data gathering.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#97;&#117;&#114;&#101;&#110;&#99;&#101;&#107;&#101;&#110;&#110;&#101;&#100;&#121;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">Laurencekennedy@outlook.com</a>","https://kennedyint.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NRNWZBKWHQD9">51</a>","SBRAND SOLUTIONS LLC","SHERYL TRENT","","2850 SW 50TH TER","","CAPE CORAL","FL","33914-6035","Professional Facilitation Firm, Certified Master Facilitator, Certified Virtual Facilitator","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#114;&#121;&#108;&#64;&#115;&#98;&#114;&#97;&#110;&#100;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">sheryl@sbrandsolutions.com</a>","www.sbrandsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W9MFAEE5BJ53">52</a>","AMERICAN AIR QUALITY CONSULTING, INC","CHRISTOPHER ROWLANDS","","96 CARDINAL DR","","NORTH FT MYERS","FL","33917-5315","Mold testing, mold assessments, air quality testing, IAQ, clearance testing, post remediation verification","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#97;&#105;&#114;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@americanairqualityconsulting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMSYX5ULNFW5">53</a>","MARAVILLA CLEANERS LLC","MANUEL DORTICOS","","15 W 14TH ST","","LEHIGH ACRES","FL","33972-7219","Maravilla Cleaners is dedicated to delivering exceptional housecleaning services that consistently exceed client expectations. Our skilled team offers comprehensive solutions tailored to your specific needs. From regular maintenance cleaning to deep cleaning, we are committed to creating a pristine and healthy environment for your home. Utilizing eco-friendly products and practices, our meticulous cleaners pay unwavering attention to detail, leaving no area untouched. We specialize in efficient move-in/out cleaning services, ensuring a seamless transition. With flexible scheduling options to accommodate your busy lifestyle, Maravilla Cleaners is the trusted choice for reliable, professional housecleaning services. Experience the transformative difference we can make in your home today. As a trusted and reliable cleaning company, we prioritize professionalism and customer satisfaction. Our cleaners are fully vetted, trained, and insured to provide you with peace of mind.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#110;&#117;&#101;&#108;&#64;&#109;&#97;&#114;&#97;&#118;&#105;&#108;&#108;&#97;&#99;&#108;&#101;&#97;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Manuel@maravillacleaners.com</a>","https://www.maravillacleaners.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D5TZP6P2BHD7">54</a>","COPYLADY, INC.","DAN DETRICK","","1949 DANA DR","","FORT MYERS","FL","33907-2103","Sell service copiers, printers, phone systems, managed IT sales and services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#64;&#99;&#111;&#112;&#121;&#108;&#97;&#100;&#121;&#46;&#99;&#111;&#109;">dan@copylady.com</a>","copylady.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7PGBPPNU3P9">55</a>","PRIMORDIAL VENTURES LLC","NICHOLAS ALEXANDER","","10451 MCGREGOR BLVD","","FORT MYERS","FL","33919-1603","Primordial Ventures launched its US-based management consultancy firm in 2021. Primordial brings over 20 years of professional experience and a deep knowledge base that was honed in both the public and private sectors.  The firm's principals have provided program and project management, operations, human resources, and finance management for several large companies including General Electric, Duke Energy, and Comcast. Primordial has demonstrated proficiency in auditing, process reengineering, governance and oversight, financial/accounting system deployment, operations and training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#104;&#111;&#108;&#97;&#115;&#64;&#112;&#114;&#105;&#109;&#111;&#114;&#100;&#105;&#97;&#108;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#115;&#46;&#110;&#101;&#116;">nicholas@primordialventures.net</a>","https://www.primordialventures.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEP4B2NVMQQ1">56</a>","COLONIAL CONSULTANTS & NOTARY SERVICES, L.L.C.","CHRIS VASCONCELLOS CPP","","12500 COLD STREAM DR APT 303","","FORT MYERS","FL","33912-4621","CCNS is at its heart a Security Programs Consulting Firm; all our personnel and surge capacity personnel/resources have played key Security/law enforcement/liaison roles within Government Agencies. We do have agreements with several specialty organizations in order to provide our customers with exactly what is needed, without the tremendous overhead of maintaining multiple service branches constantly. We provide a workplace safety training that exceeds ISC standards; much of the content currently being utilized by FPS for their programs were developed by our personnel while in Gov service. CCNS also provides Mobile Notary Signing Services; this includes document creation/processing and the ability to electronically file/record/process most documents with applicable government agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#118;&#97;&#115;&#99;&#111;&#110;&#99;&#101;&#108;&#108;&#111;&#115;&#64;&#109;&#121;&#99;&#99;&#110;&#115;&#46;&#110;&#101;&#116;">cvasconcellos@myccns.net</a>","https://www.myccns.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNX7YFZVNYW4">57</a>","TECHNOLOGY AT WORK OF SWFL, INC","SAMARA WEIDNER","","7995 MERCANTILE ST UNIT 1","","N FT MYERS","FL","33917-2113","Car/ Vehicle wash equipment and supplies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#109;&#64;&#116;&#97;&#119;&#99;&#97;&#114;&#119;&#97;&#115;&#104;&#46;&#99;&#111;&#109;">sam@tawcarwash.com</a>","https://www.tawcarwash.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RLTRR7UT5BH3">58</a>","CLOVER TRANSPORT LLC","BRADLEY VICKERS","","13501 ISLAND RD","","FORT MYERS","FL","33905-1842","At the core of Clover Transport LLC is our willingness to achieve success on all fronts. At Clover, we believe that every contract is as valuable as the next and exceptional customer services isn't limited to our key clients but moreover all of our clients. The vast and unparalleled knowledge of our team members has afforded Clover its reputation as one of the most reliable and successful operations in the field of Expedited Motor Cargo. From 'on site' fleet management to expedited line hauls in the supply of mobile government housing, Clover Transport LLC. has the experience to shine brightly as the Industries only 'Full Service' Federally Licensed Interstate Motor Transport firm.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#64;&#99;&#108;&#111;&#118;&#101;&#114;&#116;&#114;&#97;&#110;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">brad@clovertransports.com</a>","https://www.clovertransports.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SBBSFEEGF2N9">59</a>","1PRO MEDIA INC., II","ROBERT CARR","","3810 SW 6TH AVE","","CAPE CORAL","FL","33914-5313","VIDEO PRODUCTION- A turn-key, full service video production company with full service studio. We produce several live and recorded television programs as well as numerous commercial, corporate, and entertainment videos.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#64;&#105;&#116;&#122;&#109;&#101;&#100;&#105;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">robert@itzmediagroup.com</a>","1pro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T2AAQ9V5LNR8">60</a>","MINIOPOLIS LLC","BRIAN SODRE","","12734 KENWOOD LN STE 23","","FORT MYERS","FL","33907-5675","Specializing in the application of cutting-edge prefabricated structural materials, Miniopolis LLC leads in delivering superior building solutions that enhance structural integrity, energy efficiency, and sustainability. Our innovative approach integrates 3D concrete printing, Insulated Concrete Forms (ICFs), Structural Insulated Panels (SIPs), and Fiber Reinforced Polymer (FRP) materials to achieve exceptional performance in construction projects. Build Greener, faster, stronger, and sustainable with Miniopolis LLC","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#99;&#64;&#109;&#105;&#110;&#105;&#111;&#112;&#111;&#108;&#105;&#115;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">gc@miniopolisbuilders.com</a>","www.miniopolisbuilders.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HV54VARCGTQ6">61</a>","LAWTON BUSINESS SOLUTIONS CORP","ADAM ROSENDHAL","","3000 OASIS GRAND BLVD APT 2701","","FORT MYERS","FL","33916-1644","Lawton Business Solutions is a trusted leader in providing comprehensive business solutions to government agencies and private sector organizations. With a focus on efficiency, innovation, and excellence, we specialize in staffing projects that demand agility, expertise, and reliability. Our commitment to delivering unparalleled service has earned us a reputation as a go-to partner for clients seeking tailored solutions to complex challenges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#114;&#111;&#115;&#101;&#110;&#100;&#104;&#97;&#108;&#64;&#108;&#97;&#119;&#116;&#111;&#110;&#98;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">Arosendhal@lawtonbusinesssolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNKGUPHXMQ53">62</a>","M. HERRICK ENTERPRISES, LLC","JON HERRICK","","2819 SE 22ND AVE","","CAPE CORAL","FL","33904-4024","Air Traffic Control Tower and Radar Approach Control Subject Matter Experts (SME). ATC SME, Control tower and Radar facility renovation SME, command and control consoles installation, air traffic control furniture, consoles, procedures, and facilities experts. Mission Critical Consoles sales and installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#72;&#101;&#114;&#114;&#105;&#99;&#107;&#76;&#76;&#67;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">MHerrickLLC@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RAC2GT6YF2T4">63</a>","AGS DEVICES CO.","DREW MCALEENAN","","28630 N DIESEL DR","UNIT 1","BONITA SPRINGS","FL","34135-1811","AGS Devices offers comprehensive, value added services as a reliable distributor of mil-spec electronics and hardware. With in house engineers, management services, manufacturing partners, and inventory stocked across our 3 locations, AGS designs tailored solutions to solve today's supply chain challenges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#101;&#119;&#64;&#97;&#103;&#115;&#100;&#101;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">drew@agsdevices.com</a>","https://agsdevices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UXR6DQKP9JC5">64</a>","T&C TRUST, LLC","THOMAS ROONEY","","1714 SW 43RD LN","","CAPE CORAL","FL","33914-6261","T & C Trust, LLC is a premier IT consulting firm solely owned and operated by industry expert Thomas Rooney. Specializing in custom technology solutions, T & C Trust is committed to helping businesses achieve their objectives through strategic IT planning and implementation. The company offers services in network architecture, cybersecurity, cloud computing, and digital transformation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#111;&#111;&#110;&#101;&#121;&#117;&#115;&#97;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">trooneyusa@hotmail.com</a>","https://thomasrooney.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WFTPE493KQJ8">65</a>","MENDEZ EXPRESS TRUCKING LLC","JUAN MENDEZ","","1226 JAGUAR BLVD","","LEHIGH ACRES","FL","33974-9427","Mendez Express Trucking LLC, is a family-owned business based in Southwest Florida, and proudly holds WBE & MBE Certifications in Florida. Our comprehensive capabilities span across various industries, including REEFERS, POWER ONLY, DRY VAN, GENERAL FREIGHT, PAPER PRODUCTS, BEVERAGES AND HOUSEHOLD GOODS. With all required insurances and permits, the reliability of our fleet, coupled with the expertise of our seasoned team, consistently ensures the safe and timely arrival of every shipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#110;&#100;&#101;&#122;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">mendezexpresstrucking@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HW1HUGDVC4K7">66</a>","RHASHEED D. JILES","RHASHEED JILES","","2465 KATHERINE ST","","FORT MYERS","FL","33901-6336","Rhasheed D Jiles. A Management Consulting Enterprise, Dedicated provider of Strategic Administrative solutions, Committed to Optimizing Processes and delivering tailored support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#108;&#100;&#101;&#110;&#104;&#101;&#97;&#114;&#116;&#114;&#115;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">goldenheartrsv@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D52AHP3QTG74">67</a>","MK'S LAWN AND MAINTENANCE SERVICE INC","MICHAEL KLOPACK","","626 NE JUANITA PL","","CAPE CORAL","FL","33909-1998","Everyone needs lawn care services, but nobody should settle for sub-par work! At MK’s Lawn & Maintenance Service, we provide expert, luxurious lawn care services and more that will change how you see your outdoor spaces. We ensure quality, efficient, trustworthy work every time we are on the job. Our owner, Mike Klopack, has 25+ years of industry experience. We are dedicated to bringing you the best, most efficient work possible. We personalize every single job we do. We will customize and tailor our services to best fit your location and circumstance, whatever work you need. Our staff members have all been loyal employees for as long as 14 years. We all have the expertise, ethics, and passion that holds up the impeccable standards of MK’s Lawn & Maintenance Service. We will always have the same workers present on your jobs, so your yard work is consistent and uniform, so you feel familiar and comfortable with us.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#95;&#119;&#111;&#114;&#107;&#95;&#50;&#52;&#55;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">I_work_247@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z5UQRKNRHGV6">68</a>","CARESETS HEALTH SOLUTIONS LLC","RONITA LOY","","402 ARTHUR AVE","","LEHIGH ACRES","FL","33936-7412","Administration Management, Audits, Accounting, Consultation, Construction, Change Management, Leadership, Project management, Education, Electrical, Risk Management, Quality Analysis, Quality Control, Case Management, Medical, Janitorial, Administrative, Research, Data Mining, Nursing, Health Surveillance, Survey, Counselling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#121;&#64;&#99;&#97;&#114;&#101;&#115;&#101;&#116;&#115;&#104;&#101;&#97;&#108;&#116;&#104;&#46;&#99;&#111;&#109;">loy@caresetshealth.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q68WWLHYAB79">69</a>","MELCHIZEDEK ENTERPRISES INC.","JOEANNE THOMAS-JOSEPH","","3110 6TH ST W","","LEHIGH ACRES","FL","33971-1460","JoeAnne Graduated Member of City of Fort Myers SWFEC Enterprise Adventuring Cohort 2024. FDLE/FBI Approved, Certified, Commissioned & Credentialed Florida Statewide Fee4Service Provider Collecting Data to Process Level 2 Background Screening for those serving Children, People with Disabilities & Elderly on “Live Sites”.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#83;&#80;&#85;&#84;&#78;&#73;&#75;&#55;&#78;&#69;&#84;&#87;&#79;&#82;&#75;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">ASPUTNIK7NETWORK@GMAIL.COM</a>","https://www.calendly.com/doess"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RPNTF9EQB9M5">70</a>","SALLEE PROMOTIONS, INC","BRITTEN SALLEE","","8771 COLLEGE PKWY STE 103","","FORT MYERS","FL","33919-4815","Founded in 2011, Sallee Promotions, Inc. excels in delivering personalized marketing materials and branding solutions tailored to meet the unique needs of our diverse clientele. We pride ourselves on offering competitive pricing and efficient turnaround times, complemented by our in-house design capabilities and strong customer support. Our approach is to view each client as a partner, working collaboratively to achieve their marketing objectives. Committed to community engagement, we actively participate in sponsorships and fundraisers, striving to make a positive impact in the communities we serve. Our mission at Sallee Promotions is to build lasting partnerships while contributing meaningfully to our community.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#116;&#116;&#101;&#110;&#64;&#115;&#97;&#108;&#108;&#101;&#101;&#112;&#114;&#111;&#109;&#111;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">britten@salleepromotions.com</a>","www.salleepromotions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFUQPXLKYHX8">71</a>","IMPERIUM AUTOMATION LLC","BRIAN DAVIS","","1730 NW 10TH AVE","","CAPE CORAL","FL","33993-5001","Imperium Automation LLC is a specialized company in the development, construction, operation, retrofits, and servicing of Building Automation Controls and Energy Management Systems. Since its inception, Imperium Automation has worked with the Federal Government and private sector and has been responsible for helping customers save energy and find issues with their equipment before failures occur. Imperium Automation LLC has completed work in the State of Florida, Texas, Virginia, Colorado, South Carolina, Tennessee and Maryland. Imperium Automation LLC opened its business in February of 2022, focusing in the public and private sector. Imperium Automation LLC offers BMS installations, upgrades, retrofits, and service throughout the U.S, and where required by the US Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#100;&#97;&#118;&#105;&#115;&#64;&#105;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">bdavis@iautomationllc.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.046&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

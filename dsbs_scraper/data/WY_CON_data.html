@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Wyoming;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.99 seconds and 1.02 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 105 
+(of 105 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3NZHVNF1ER8">1</a>","POLE MOUNTAIN ELECTRIC INC","ANNALEE IRANI","PRESIDENT","912 CENTRAL AVE","","CHEYENNE","WY","82007-1372","ELECTRICAL CONTRACTING ON NEW AND REMODELING PROJECTS. WE SUPPLY MATERIAL AND LABOR, AND BID WITH GENERAL CONTRACTORS OR BY OURSELVES ON ELECTRICAL WORK. DATA COMMUNICATIONS: INSTALL CABLING, CONNECT AND INSTALL HARDWARE AND SOFTWARE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#110;&#97;&#108;&#101;&#101;&#46;&#105;&#114;&#97;&#110;&#105;&#64;&#112;&#111;&#108;&#101;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">annalee.irani@polemountainelectricinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NRP5SLQK58A5">2</a>","W G DALE ELECTRIC CO","JOHN BRAUNSCHWEIG","Vice-President","814 CONVERSE AVE","","CHEYENNE","WY","82001-5234","AIR AND WATER POLLUTION CONTROL SYSTEMS, INDUSTRIAL AUTOMATION AND CONTROL SYSTEMS, CATHODIC PROTECTION, HIGHWAY LIGHTING, UPS INSTALLATIONS, DATA/PHONE CABLING, ELECTRICAL CONSTRUCTION, TELEPHONE SYSTEMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#100;&#97;&#108;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">service@daleelectric.com</a>","http://www.daleelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FVMMXNFYTFN3">3</a>","71 CONSTRUCTION","SHELLEY HERNANDEZ","Estimator","7072 BARTON DR","","CASPER","WY","82604-1890","DIRTWORK, GRADING, BASE COURSE, ASPHALT PAVING, WATER & SEWER.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#108;&#108;&#101;&#121;&#64;&#55;&#49;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">shelley@71construction.com</a>","http://www.71construction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBSYZB9RMNM7">4</a>","SE INC","CRAIG SORENSON","SECRETARY","100 CENTRAL AVE","","DEAVER","WY","82421-9701","CONSTRUCT OVERHEAD POWER LINES, TRANSMISSION AND DISTRIBUTION AND ELECTRICAL SUBSTATIONS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#115;&#111;&#114;&#101;&#110;&#115;&#111;&#110;&#64;&#115;&#101;&#105;&#110;&#99;&#119;&#121;&#46;&#99;&#111;&#109;">csorenson@seincwy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M7ZPT8MUMT73">5</a>","S & L INDUSTRIAL","DAVID RAEL","Estimator - Owner","675 ROAD 7 1/2","","COWLEY","WY","82420-5109","Road construction, sand blasting, painting, lead removal, sign manufacture & install, structural painting, excavation, gravel haul-placement, culvert install, design & build, parking lot & road striping, traffic control services, safety products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#119;&#121;&#115;&#108;&#105;&#46;&#99;&#111;&#109;">david@wysli.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1QPPMNS9R23">6</a>","SEHNERT SYSTEMS INC.","KRISTEN KLEIN","sales and construction estimator","2602 FREEDOM DR","","RIVERTON","WY","82501-6120","Complete building contractor, Construction Management, Heavy steel erection, heavy steel fabrication, metal, concrete, tile, wood reroofing and new install, fire stopping installer. Commercial remodel and restoration, gargae door installer maintance,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#121;&#64;&#115;&#101;&#104;&#110;&#101;&#114;&#116;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">kristy@sehnertsystems.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E49KFGGEBAA9">7</a>","TRIHYDRO CORPORATION","DAN GRAVELDING","Senior Vice President","1252 COMMERCE DR","","LARAMIE","WY","82070-7000","Trihydro is an environmental remediation firm providing services across a broad range of disciplines including: geology/hydrogeology, data mgt. (GIS), engineering, geotechnical, chemistry, regulatory permitting and compliance, and risk assessment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#103;&#114;&#97;&#118;&#101;&#108;&#100;&#105;&#110;&#103;&#64;&#116;&#114;&#105;&#104;&#121;&#100;&#114;&#111;&#46;&#99;&#111;&#109;">dgravelding@trihydro.com</a>","http://www.trihydro.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLDFDMGB3WL3">8</a>","MOUNTAIN CONSTRUCTION COMPANY","KIM WILSON","Vice President/Estimator","25 W 10TH ST","","LOVELL","WY","82431-1536","Primary functions: Aggregate crushing and asphalt paving-medium to large projects. Principals all have 20+ years experience in crushing, paving, grading and minor structures and virtually aspects of highway construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#64;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">kim@mountainconstruction.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MUVUM979XWU4">9</a>","MECHANICAL SYSTEMS, INC.","MATTHEW THOMAS","","1313 W LINCOLNWAY","","CHEYENNE","WY","82001-3306","Mechanical Systems, Inc. is a highly qualified mechanical contractor providing complete mechanical and site utility construction services. Mechanical Systems, Inc. was incorporated in Wyoming in 1984 and over the past 35 years we have completed projects of all sizes including educational, large commercial, institutional, governmental, light industrial, and multi-family residential projects. Mechanical Systems, Inc. is a financially sound company with annual sales of approximately $30 million. We are capable of bonding any of our projects and have an aggregate capacity of approximately $25 million and a single job limit of approximately $20 million. We employ an “open shop” philosophy with a very loyal and dedicated workforce and an average annual employment of approximately 80 employees.  We are proud to have been the past recipient of the SBA, six state “Regional Contractor of the Year” and two time selection as The City of Cheyenne “Business of the Year”.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#109;&#115;&#105;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">matt@msiwyo.com</a>","https://www.mechanicalsystemswyo.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F7GUEQAVV5A5">10</a>","KING ENTERPRISES","APRIL HEGGE","President","164 PROGRESS CIR","","MILLS","WY","82644-7701","Working smart and with integrity since founded in 2000. King Enterprises is a Wyoming Woman owned company, specializing in fencing. With the experience, cost competitiveness, and meticulous care to build a diverse array of fencing projects large and small, successfully. We combine value engineering, the know-how, and communication to give our customers the customer service and products they deserve. We value our relationships with skilled subcontractors, suppliers, past customers and our community. It’s just the Wyoming way.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#112;&#114;&#105;&#108;&#64;&#107;&#97;&#118;&#99;&#97;&#116;&#116;&#108;&#101;&#46;&#99;&#111;&#109;">april@kavcattle.com</a>","www.fencewy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QY7AKEHMJVW6">11</a>","WILSON BROS CONSTRUCTION INC","NICK WILSON","Vice-President","980 ROAD 7","","COWLEY","WY","82420-5108","Large and Small Construction and Reclamation projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#119;&#105;&#108;&#115;&#111;&#110;&#45;&#98;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">office@wilson-bros.com</a>","www.wilson-bros.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJZRH5S1KY27">12</a>","BRIDGER VALLEY LAWN & LANDSCAPING, INC.","MARIANNE BLUEMEL","Owner","210 NORTH MAIN ST","","LYMAN","WY","82937-5111","BV LAWN & LDSCPG does the following: Landscape design & const. sprinkler system design/install, s/s auditing, weed pest control, Hydro seeding, tree & shrub trimming/pruning, fert., planting, snow removal & retail, install & gen. const.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#118;&#108;&#97;&#119;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">bvlawn@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YLR4GHA3EXM3">13</a>","TATA, INC.","TAMARA AUSTIN","","413 RANDALL AVE","","CHEYENNE","WY","82001-3036","All aspects of locksmithing, vehicles, buildings, safes sales, installs, service, repairs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#99;&#107;&#103;&#111;&#100;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">lockgods@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHD4TJ28LUB6">14</a>","TELETRACTORS, INCORPORATED","LANCE BIFFLE","President","120 N COLTER AVE","","PINEDALE","WY","82941-5063","Excavate and fill as necessary, construct wooden bridges, intall utitilities and sewer systems, buried phone, power. Grade, haul, remove, demolition, transport.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#108;&#105;&#110;&#99;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">telinc@hotmail.com</a>","www.teletractorsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K54DH5R1QBL1">15</a>","PUMA SERVICES INC","WADE LEWIS","","1720 PACIFIC AVE","","CHEYENNE","WY","82007-1004","Small, medium, large [simple & complex] construction projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#100;&#101;&#46;&#108;&#101;&#119;&#105;&#115;&#64;&#112;&#117;&#109;&#97;&#115;&#116;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">wade.lewis@pumasteel.com</a>","https://www.pumasteel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ96G4SG2L49">16</a>","BYRON'S OFFICE EQUIPMENT, INC.","CASEY ALLISON","","642 N GLENN RD","","CASPER","WY","82601-1623","We have been in business since 1973 and are a full service provider for your technologies needs. from start to finish with phone systems, surveillance, and Cabling, we can handle it all.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#115;&#101;&#121;&#64;&#102;&#105;&#114;&#115;&#116;&#99;&#97;&#108;&#108;&#119;&#121;&#46;&#99;&#111;&#109;">casey@firstcallwy.com</a>","www.firstcallwyoming.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z2Z5EL11MJK4">17</a>","COMMERCIAL FLOORING INC","DOUG FINCH","","3418 E PERSHING BLVD","","CHEYENNE","WY","82001-5916","FLOORING, FLOORING INSTALLATION, FLOORING SUPPLIES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#82;&#64;&#67;&#65;&#82;&#80;&#69;&#84;&#79;&#78;&#69;&#67;&#70;&#73;&#46;&#67;&#79;&#77;">HR@CARPETONECFI.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NH1HLQX2FKL4">18</a>","ENGINEERING, PROCUREMENT & CONSTRUCTION INC.","JOHN CORNISH","President","6131 TRUMPETER DR","","CHEYENNE","WY","82007-1942","EPC Inc provides multidisciplinary detail design engineering services, procurement services and construction and CM. and O&M of hydrogen and fuel cell systems. Hydrogen Fueling stations, R&D and hydrogen power projects are targeted in marketing efforts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#114;&#110;&#105;&#115;&#104;&#64;&#101;&#112;&#99;&#52;&#104;&#50;&#46;&#99;&#111;&#109;">jcornish@epc4h2.com</a>","https://epc4h2.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PDM6C114GQN1">19</a>","COMMUNICATION TECHNOLOGIES, INC","JIM SLAZAR","Vice President of Administration","1900 ELK ST","","ROCK SPRINGS","WY","82901-4005","Communication Technologies, Inc. is an Authorized Motorola, Kenwood and Bendix King Mobile Radio Dealer since 1998, a member of the Certified Service Center Program, and an Authorized Motorola Service Partner. Communication Technologies, Inc. is also an Authorized Networking Solutions Provider and has the experience and knowledge to design full communications systems. We sell and install lighting systems for emergency vehicles. Our experience as a two way-radio dealer has taught us that finding the most reliable communication devices is critical to helping protect communities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#99;&#111;&#109;&#116;&#101;&#99;&#104;&#114;&#97;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">jim@comtechradio.com</a>","http://www.comtechradio.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBB8KN2W6JP4">20</a>","BLM NEVADA LTD","WILLIAM SCHORSCH","","5300 SEATON LN","","WILSON","WY","83014-5239","Speciality use construction customized to tenent needs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#115;&#99;&#104;&#111;&#114;&#115;&#99;&#104;&#64;&#119;&#100;&#115;&#99;&#104;&#111;&#114;&#115;&#99;&#104;&#46;&#99;&#111;&#109;">wschorsch@wdschorsch.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DGVZQNKXB7A5">21</a>","DAN HART PATROL SERVICE, LLC","MIKE WALTER","","1405 E HWY 16","","UPTON","WY","82730-","Capable of moving massive quantities of earth. Building roads, dams and reclaiming locations or abandoned mine locations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#108;&#116;&#101;&#114;&#109;&#64;&#100;&#97;&#110;&#104;&#97;&#114;&#116;&#112;&#97;&#116;&#114;&#111;&#108;&#46;&#99;&#111;&#109;">walterm@danhartpatrol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KD66GKBLGNM5">22</a>","G. K. CONSTRUCTION, INC","LORI GRANDALEN","Vice Pres","1169 LANE 11 1/2","","LOVELL","WY","82431-9547","BITUMINOUS COAL, SURFACE MINING, EQUIPMENT RENTAL, WATER TRUCK, DOZERS, GRADERS, EXCAVATORS, WATER TENDERS, PUMPS, COMPRESSORS, TRANSPORTS, CRANE, WELDER","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#105;&#64;&#103;&#107;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">lori@gkconst.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKJ8LNAU4LH7">23</a>","HAASS CONSTRUCTION CO., INC.","COLLEEN HAASS","","1302 E C ST","","CASPER","WY","82601-2127","Providing high quality construction services in Wyoming and surrounding states for 40 years. Full service general contractor capable of design build, or design bid build project deliveries. We are a HUBZone, Woman owned small business.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#100;&#97;&#109;&#64;&#104;&#97;&#97;&#115;&#115;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Adam@haassconstruction.com</a>","http://www.haassconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKYAQTR592A9">24</a>","NELSON ENGINEERING","MATT BOWERS","Marketing","430 S CACHE ST","","JACKSON","WY","83001-8692","Nelson Engineering provides Civil, Structural, Water, Wastewater, Environmental, Geotechnical, Transportation Engineering services; Construction & Cadastral Surveying, Materials Testing, Construction Administration & Inspection.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#103;&#121;&#114;&#64;&#110;&#101;&#108;&#115;&#111;&#110;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">pgyr@nelsonengineering.net</a>","http://www.nelsonengineering.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8KDTMLM1C55">25</a>","HYDRO LOGIC LLC","CARLA RUMSEY","Owner/Manager","191 HAZELTON ROAD","","BUFFALO","WY","82834-8917","Hydrology and related project experience. Wetland delineation, design, planting, and monitoring. Stream restoration/enhancement. Corps of Engineers Permitting. Reclamation seeding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#117;&#109;&#115;&#101;&#121;&#64;&#104;&#121;&#100;&#114;&#111;&#108;&#111;&#103;&#105;&#99;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">crumsey@hydrologicusa.com</a>","www.hydrologicusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHYTKR6S9JM7">26</a>","WATTLE & DAUB CONTRACTORS","THOMAS TISTHAMMER","","8 GIBBS RD","","LARAMIE","WY","82070-8534","Preservation contractor specializing exclusively in the restoration, preservation, and reconstruction of historic structures. Particular expertise in the preservation of the building envelope (roof, walls, windows, doors) and fine woodworking.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#46;&#116;&#114;&#117;&#106;&#105;&#108;&#108;&#111;&#64;&#119;&#97;&#116;&#116;&#108;&#101;&#97;&#110;&#100;&#100;&#97;&#117;&#98;&#46;&#99;&#111;&#109;">g.trujillo@wattleanddaub.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ECH2K15AFW21">27</a>","GROATHOUSE CONSTRUCTION, INC.","RAY MCELWEE","","1050 N 3RD ST STE A","","LARAMIE","WY","82072-2538","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#99;&#101;&#108;&#119;&#101;&#101;&#64;&#103;&#114;&#111;&#97;&#116;&#104;&#111;&#117;&#115;&#101;&#46;&#99;&#111;&#109;">rmcelwee@groathouse.com</a>","http://www.groathouse.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMCUNHYL7P34">28</a>","ALCO FENCE CO., INC.","KIRK MESSENGER","","2421 E 7TH ST","","CHEYENNE","WY","82001-5680","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#117;&#101;&#114;&#105;&#98;&#98;&#111;&#110;&#115;&#111;&#100;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">blueribbonsod@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VH53FJK2LJJ4">29</a>","SHORT POWERLINE SERVICE, LLC","VERA LACEY","","109 N 4TH ST","","GLENROCK","WY","82637-5029","Powerline construction. Underground and Overhead. Electrical needs as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#108;&#97;&#99;&#101;&#121;&#64;&#115;&#112;&#115;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">vlacey@spswyo.com</a>","https://shortpowerlineservice.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLUMC49WCAP6">30</a>","EXCEL WYOMING","RHONDA BICKNELL","","775 E 8TH ST","","SHERIDAN","WY","82801-3109","Construction of electrical transmission lines, substations, wind farms, waterlines, sewer lines, oil & gas lines, wwtp, wtp, road work, concrete work, and all aspects of utility construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#101;&#120;&#99;&#101;&#108;&#119;&#121;&#46;&#99;&#111;&#109;">info@excelwy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PENGGW3UY663">31</a>","R. S. BENNETT CONSTRUCTION COMPANY, INC.","COREY BENNETT","","601 HIGHWAY 189 N","","BIG PINEY","WY","83113-5150","Road Construction/Repair Utility Sitework Heavy Equipment Transport","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#101;&#121;&#64;&#114;&#115;&#98;&#101;&#110;&#110;&#101;&#116;&#116;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">corey@rsbennettconst.com</a>","www.rsbennettconst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DTG3V463QSK5">32</a>","A PLUS SERVICES LLC","WALTER ORUM","","77 E RIDGE RD","","SHERIDAN","WY","82801-9642","I have been in busines since 1995. We will haul potable and nonpotable water and gravel. We tow cars and large trucks. Worked with Forest Service since 2000. Land usage for storing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#114;&#117;&#109;&#119;&#97;&#108;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">orumwalt@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GRDNTLEXA873">33</a>","A R ACOSTA LTD","ALISA ACOSTA","","3298 N FORK HWY","","CODY","WY","82414-7118","Facility O&M;Construction (Design-Build); Forestry(Logging,Demolition);Mine Closures; Environmental Studies;Project/Program Management; Project Control; Fire Safety; Surveillance; Security; Engineering;Commissioning;Technical Training; Architectural Serv","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#108;&#105;&#115;&#97;&#46;&#65;&#99;&#111;&#115;&#116;&#97;&#64;&#65;&#82;&#65;&#99;&#111;&#115;&#116;&#97;&#46;&#99;&#111;&#109;">Alisa.Acosta@ARAcosta.com</a>","http://www.aracosta.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VUY8S81KH561">34</a>","WORTHINGTON, LENHART & CARPENTER, INC.","SHANE PORTER","","200 PRONGHORN ST","","CASPER","WY","82601-1723","Operating since 1948, WLC currently has offices in Casper, Pinedale, and Rawlins. Specializing in civil engineering, surveying, GIS, grantswriting, materials testing, WLC holds several municipal contracts and executes state contracts on a regular basis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#112;&#64;&#119;&#108;&#99;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">shanep@wlcwyo.com</a>","http://www.wlcwyo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MSCWJEC97PN7">35</a>","BAIRCO CONSTRUCTION INC","STACY BAIR","","1164 ROAD 7","","LOVELL","WY","82431-9627","General Contracting, Road Construction, New Construction, Fish Barriers, Bridge Construction, Underground Utilities, Campgrounds, Culverts/Irrigation, Tree Clearing, Fencing, Masonry, Demolition, Earthwork, Roofing, Remodelling, Concrete, Rock Remediation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#97;&#99;&#121;&#64;&#98;&#97;&#105;&#114;&#99;&#111;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">stacy@baircoconstruction.com</a>","https://www.baircoconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKBEB9J6X1F5">36</a>","JERRY BORNHOFT CONSTRUCTION INC","JERRY BORNHOFT","","2787 E MONROE AVE","","RIVERTON","WY","82501-6108","We provide site work, sewer/water construction, water wells, bridge, building, and demolition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#114;&#110;&#104;&#111;&#102;&#116;&#99;&#111;&#110;&#115;&#64;&#119;&#121;&#111;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bornhoftcons@wyoming.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNJRLN4UHML5">37</a>","ITC ELECTRICAL TECHNOLOGIES","BETSY MCLEMORE","","4630 E MAGNOLIA ST","","CASPER","WY","82604-4225","All aspects of electrical engineering, construction and maintenance. Doing business in the Rocky Mountain region since 2003 and specializing in industrial electrical work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#99;&#108;&#101;&#109;&#111;&#114;&#101;&#64;&#105;&#116;&#99;&#101;&#116;&#46;&#99;&#111;&#109;">bmclemore@itcet.com</a>","http://www.itcet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7LNHCSF18E8">38</a>","SOUND & CELLULAR, INC.","KELLY STIEFVATER","","824 W YELLOWSTONE HWY","","CASPER","WY","82601-1734","DrillComm Sound and Cellular offers a wide range of technical communications solutions with a primary focus on providing innovative, cost effective, voice and data applications to First Responders, Public Safety Organizations, and the private sector.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#109;&#97;&#110;&#97;&#103;&#101;&#114;&#64;&#115;&#111;&#117;&#110;&#100;&#97;&#110;&#100;&#99;&#101;&#108;&#108;&#117;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">officemanager@soundandcellular.com</a>","www.soundandcellular.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H1KBQB5NDUV1">39</a>","ATNIP WELL & PUMP SERVICE","TERRY ATNIP","","41 LYONS VALLEY RD","","LANDER","WY","82520-9403","pump service, water pumps, well service, countertops, cabinetry, carpentry","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#116;&#110;&#105;&#112;&#119;&#101;&#108;&#108;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">atnipwell@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NK86VVNMJ926">40</a>","TRIPLE A BUILDING SERVICES, INC","ANTHONY AGUIRRE","","401 E FREMONT ST","","LARAMIE","WY","82072-3143","20+yrs exp. in all general construction including facilities, campgrounds, and structures. Solar lighting, water pumping and off grid power. Trail reconstruction and maintenance in wilderness areas. Experience in remote locations. 8a certified","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#110;&#116;&#104;&#111;&#110;&#121;&#64;&#84;&#97;&#98;&#115;&#73;&#110;&#99;&#87;&#89;&#46;&#99;&#111;&#109;">Anthony@TabsIncWY.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DFUPH1LU7KM5">41</a>","WYAZ, LLC","JAMES RINEHART","","20 PORTER RANCH RD","","LARAMIE","WY","82070-8567","Land specialist Build to suit office, warehouse Natural Resource consulting Excavation equipment leasing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#121;&#97;&#122;&#106;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">wyazjr@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KYKKLN62YHM8">42</a>","HIGH COUNTRY CONSTRUCTION INC","CHAD CONNELL","PRESIDENT","2077 N 2ND ST","","LANDER","WY","82520-9733","Heavy & Highway, Grading of Land, Golf Course Grading, Dams & Ponds, Gravel crushing and Placement, Underground Utilities, Site Grading, Culvert installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#100;&#99;&#64;&#104;&#105;&#103;&#104;&#99;&#111;&#117;&#110;&#116;&#114;&#121;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">chadc@highcountryconst.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EY7JLHLA3MZ6">43</a>","FRONTIER ACCESS & MOBILITY SYSTEMS, INC","ANDREW MCMAHON","","1207 E PERSHING BLVD","","CHEYENNE","WY","82001-3229","We offer a full line of home and auto access equipment. Our services include installation and maintenance of medical equipment in your home or vehicle. We have a knowlegeable and certified staff that has been servicing our veterans for over 17 years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#97;&#99;&#99;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">andy@frontieraccess.com</a>","http://www.frontieraccess.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFJSUKL2RJ44">44</a>","CARR COATINGS, LLC","JESSICA CARR","","425 PENNSYLVANIA AVE","","LOVELL","WY","82431-1925","SANDBLASTING, APPLICATION OF PROTECTIVE COATINGS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#115;&#115;&#105;&#99;&#97;&#64;&#99;&#97;&#114;&#114;&#99;&#111;&#97;&#116;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">jessica@carrcoatings.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SPUUAD99MK11">45</a>","DIAMOND POINT CONSTRUCTION INC.","JACOB HATCH","","225 W YELLOWSTONE AVE STE 2","","CODY","WY","82414-8701","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#100;&#105;&#97;&#109;&#111;&#110;&#100;&#112;&#111;&#105;&#110;&#116;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#119;&#121;&#46;&#99;&#111;&#109;">office@diamondpointconstructionwy.com</a>","www.diamondpointconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MP4MC6DD1MA6">46</a>","Y2 CONSULTANTS, LLC","BRENDA YOUNKIN","","215 E SIMPSON AVE","","JACKSON","WY","83001-8482","Y2 Consultants,LLC is a certified woman-owned small business staffed by a diverse professional team of engineers and natural resource specialists. Our civil, environmental and structural engineers can design residential, commercial, educational, and industrial structures as well as consult, design, and construction management to address all aspects of projects related to potable water, wastewater, ponds and irrigation. Our natural resource staffs experienced range ecologists, wildlife and range specialists, wetland specialists, and research and policy analysts that can provide their expertise to specific needs. Core competencies range from native plant restoration, term grazing permit renewals, vegetation monitoring, NEPA document review & development, wetland delineation, wildlife management, cooperative monitoring and ArcGIS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#110;&#100;&#97;&#64;&#121;&#50;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#97;&#110;&#116;&#115;&#46;&#99;&#111;&#109;">brenda@y2consultants.com</a>","www.y2consultants.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EB61CPC3NUN7">47</a>","EARTH WORK SOLUTIONS (WY)","TYLER MILLER","","2506 LITTLE POWDER RIVER RD","","GILLETTE","WY","82716-1706","We are a full service all things civil engineering who have been in business since 1970. We provide top notch surveying, dirt work, and customer service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#101;&#97;&#114;&#116;&#104;&#119;&#111;&#114;&#107;&#46;&#117;&#115;&#46;&#99;&#111;&#109;">tyler.miller@earthwork.us.com</a>","www.earthwork.us.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L47XLX9LJLH5">48</a>","CONCORDANT LLC","JR TWIFORD","","208 E GARFIELD ST","STE 200","LARAMIE","WY","82070-3666","Concordant, LLC provides Acquisition, Information Technology, and Program Management Organization services to the federal government and commercial customers. Concordant’s offerings include Acquisition Architecture; design and implementation of Cloud integrated big data analytics and visualization; and construction and civil engineering Program Management. Concordant delivers solutions tailored for our clients’ most difficult problems… harmonized for our customers’ specific needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#114;&#116;&#119;&#105;&#102;&#111;&#114;&#100;&#64;&#99;&#111;&#110;&#99;&#111;&#114;&#100;&#97;&#110;&#116;&#46;&#99;&#111;&#109;">jrtwiford@concordant.com</a>","http://www.concordant.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DARPZL19UP45">49</a>","PANACEA CONSTRUCTION GROUP LLC","KEITH PLASTER","","30 PINION CT","","DUBOIS","WY","82513-8926","SDVOSB, VOSB, HubZone, Construction, Remodel, General Contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#64;&#112;&#97;&#110;&#45;&#103;&#114;&#111;&#46;&#99;&#111;&#109;">keith@pan-gro.com</a>","www.pan-gro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PH56PA8SL233">50</a>","AMERICAN CONTRACTING, LLC","BORIS LOPEZ","","1651 CAREY AVE STE 4","","CHEYENNE","WY","82001-4423","IDIQ CONTRACTS, HISTORIC RENOVATIONS, CULVERT/BRIDGE REPLACEMENT, CUSTOM DESIGNED STRUCTURES/DESIGN BUILD, TOILET BLDG. REPLACEMENT, INTERIOR RENOVATIONS/REMODEL, LANDSCAPING, FACILITY MAINT., ASBESTOS ABATEMENT, MECHANICAL/PLUMBING, ELECTRICAL, ROOFING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#114;&#105;&#115;&#46;&#108;&#111;&#112;&#101;&#122;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">boris.lopez@americancontractingllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CQPGL7UJXD38">51</a>","BROGAN MIKE","MIKE BROGAN","","2133 BUFFALO ST","","CASPER","WY","82604-3775","BHC is capable of preparing water well site investigation reports, performing well investigation/trouble shooting services, and designing wells and pumping systems (including solar power applications). BHC is also capable of overseeing and/or contracting of water well drilling, completion, well rehabilitation, and support to drilling operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#98;&#114;&#111;&#103;&#97;&#110;&#50;&#48;&#49;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">mbrogan2012@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G7EJPSGL4MW9">52</a>","BASIN MECHANICAL INC","NICOLE FERNANDEZ","","3429 COTTONWOOD AVE","","CODY","WY","82414-8414","41 years of experience in providing all facets of plumbing, hydronic systems, air conditioning, waste and water treatment, and all types of process piping. Mechanical system replacements and new systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#111;&#108;&#101;&#64;&#98;&#97;&#115;&#105;&#110;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">nicole@basinmechanical.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DEZ5DXHYD3E1">53</a>","ZOWADA PLUMBING & HEATING INC.","LUKE ROUSH","","724 VAL VISTA ST","","SHERIDAN","WY","82801-3648","We have been in business for over 50 years. We specialize in Commercial, Residential, Water Systems, Water Heaters, Hot Water, Solar, & Steam Heating. We have done contract work for 10 years for the VAMC and 25 years for the Sheridan Memorial Hospital.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#112;&#104;&#49;&#64;&#97;&#99;&#116;&#97;&#99;&#99;&#101;&#115;&#115;&#46;&#110;&#101;&#116;">zph1@actaccess.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X3DNC4EUT8B9">54</a>","SCOTCH BOY, INC.","CIERRA ELWOOD","","6600 HAPPY JACK RD","","CHEYENNE","WY","82009-7521","Commercial and Residential landscape, hardscape and irrigation construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#99;&#104;&#98;&#111;&#121;&#64;&#115;&#99;&#111;&#116;&#99;&#104;&#98;&#111;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">scotchboy@scotchboyinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4NPTLLWGBQ3">55</a>","ROSSER ROBERT MATTHEW","ROBERT ROSSER","","1255 E CRIMSON DAWN RD","","CASPER","WY","82601-9740","World Class coaching and training for rifle and pistol shooting, biathlon and Nordic skiing. All products needed for biathlon ranges, electronic rifles and pistols, targets etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#109;&#46;&#114;&#111;&#115;&#115;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">robert.m.rosser@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GCHLDMYJNGL3">56</a>","KOMODO CONSTRUCTION, LLC","TAYLOR CARROLL","","1301 COUNTY ROAD 141","","HILLSDALE","WY","82060-5010","We are a licensed general contractor specializing in concrete and excavation. Family run, we do quality work and have been in business for 19 years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#100;&#105;&#99;&#97;&#114;&#114;&#111;&#108;&#108;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">tdicarroll@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRP4WPGLLKK1">57</a>","LAMBERT ENGINEERING AND CONSTRUCTION SERVICES, INCORPORATED","JUSTIN LAMBERT","","209 E GRAND AVE STE 211","","LARAMIE","WY","82070-3687","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#108;&#97;&#109;&#98;&#101;&#114;&#116;&#64;&#108;&#45;&#101;&#99;&#115;&#46;&#99;&#111;&#109;">jlambert@l-ecs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYDZKMZL8W71">58</a>","RED HORSE CONSTRUCTION, LLC","DAVID CUMMINGS","","10510 POWDERHOUSE RD","","CHEYENNE","WY","82009-8622","We are a general contracting company that offers design build, construction management and building services for new and existing structures – residential, commercial, and institutional. We also contract water and sewer, roads, bridge, parking lots, and military bombing ranges.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#114;&#101;&#100;&#104;&#111;&#114;&#115;&#101;&#119;&#121;&#46;&#99;&#111;&#109;">dave@redhorsewy.com</a>","www.redhorsewy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGLNNJKHCBQ9">59</a>","ROCKY MOUNTAIN SAND & GRAVEL LLC","CRYSTYN LASLEY","","3423 CHRISTENSEN RD","","CHEYENNE","WY","82009-8407","We are a general contracting business that services Cheyenne, WY and its surrounding areas. We specialize in utility installation, site preparation, excavation, and rock and mineral supply. Our contractors have over 50 years of industry experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#121;&#115;&#116;&#121;&#110;&#64;&#114;&#109;&#115;&#97;&#110;&#100;&#103;&#114;&#97;&#118;&#101;&#108;&#46;&#99;&#111;&#109;">crystyn@rmsandgravel.com</a>","rmsandgravel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNU5KSCJP7K6">60</a>","MC2 ENGINEERING AND CONSTRUCTION, P.C.","MEGAN CROW","","902 N MAIN ST","","SHERIDAN","WY","82801-3036","MC2 Engineering and Construction provides quality Engineering and Construction services to federal entities and businesses across the western United States. Our services include Construction, Rehabilitation, Design/Build Services, Civil and Environmental Engineering and Natural Resource Development. Our Construction Management Services provides for careful selection and supervision of specialty subcontractors in all building trades including HVAC, Mechanical, and Electrical. In Heavy Civil Work, our specialties include Earthwork, Concrete, Grouting, Drilling, Heavy Mechanical and Industrial Electrical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#114;&#111;&#119;&#64;&#109;&#99;&#50;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mcrow@mc2engineering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GYDZALWNJJL5">61</a>","DAVE LODEN CONSTRUCTION INC","ERICK LODEN","","400 HEMLOCK ST","","BUFFALO","WY","82834-9409","roofing and re-roofing services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#111;&#100;&#101;&#110;&#64;&#100;&#97;&#118;&#101;&#108;&#111;&#100;&#101;&#110;&#99;&#111;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">eloden@davelodenconst.com</a>","http://www.davelodenconst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3PJLKZHEMH8">62</a>","ADVANCED COMFORT SOLUTIONS, INC.","LUCAS SARNE","","3941 W 5TH ST","","CHEYENNE","WY","82007-1034","ACSI provides top-notch commercial HVAC, sheet metal fabrication and construction services across a tri-state area that includes Wyoming, Nebraska, and Colorado. Together, with our manufacturer and vendor partners, we are capable of most job sizes or types. From design to installation, our entire staff provides a seamless process from budgeting to completion, within budget and exceeding client expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#107;&#101;&#115;&#64;&#97;&#99;&#115;&#105;&#119;&#121;&#46;&#99;&#111;&#109;">lukes@acsiwy.com</a>","advancedcomfortwy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YUD8LC939NH6">63</a>","HUGHES ENTERPRISES INC","KEITH HUGHES","","13 SLEEPY HOLLOW RD","","BIG PINEY","WY","83113-7600","We are a sand and gravel, excavation and trucking company","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#64;&#104;&#117;&#103;&#104;&#101;&#115;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">keith@hughesenterprisesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q6KNJAM74JE8">64</a>","TAYLOR CONSTRUCTION, INC","DAWN CONNORS","","31 LARRY LOZIER RD","","BOULDER","WY","82923-","Taylor Construction management has over 30 years experience in the construction industry. We offer a wide range of services including river bank stabilization, erosion control, gravel road maintenance, fabrication, and pipeline construction. We specialize in working with environmentally sensitive areas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#116;&#97;&#121;&#108;&#111;&#114;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#98;&#105;&#122;">contact@taylorconstruction.biz</a>","https://www.layingtheway.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EYFWNSM3GJL6">65</a>","LCI TRUCKING AND CONSTRUCTION LLC","RYAN LINDSTADT","","1890 MISSOURI VALLEY RD","","PAVILLION","WY","82523-9618","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#110;&#64;&#108;&#99;&#105;&#119;&#101;&#115;&#116;&#46;&#99;&#111;&#109;">ryan@lciwest.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HCKCT5ZRMDT4">66</a>","TRAVELSTORYSGPS, LLC","AMY ROSS","","4445 N MOOSE WILSON RD","","WILSON","WY","83014-9680","TravelStorysGPS is an intelligent platform connecting people to place by ear. TravelStorysGPS presents quality content about landscapes and communities in an audio format to travelers as they approach and pass points of interest. TravelStorysGPS works with nonprofit organizations, public agencies, and travel businesses to mobilize their content in an accessible, user-friendly way.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#64;&#116;&#114;&#97;&#118;&#101;&#108;&#115;&#116;&#111;&#114;&#121;&#115;&#103;&#112;&#115;&#46;&#99;&#111;&#109;">amy@travelstorysgps.com</a>","www.travelstorys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LWL8FR2VFDR3">67</a>","BOREAL PROPERTY MANAGEMENT, INC.","KELLIE WHEELER","","8000 S US HWY 89","","JACKSON","WY","83001-8807","Family operated full service installation and maintenance care company located north of Jackson, WY. Ten years of quality care with long term clientele. We use environmentally and educated decisions to make our clients lives easier. Excellent project crew with certified arborist, irrigation, and noxious weed spray team.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#98;&#111;&#114;&#101;&#97;&#108;&#106;&#104;&#46;&#99;&#111;&#109;">office@borealjh.com</a>","www.borealjh.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CF4BJYKFP4J3">68</a>","JTR EXCAVATION LLC","TYLER ROSS","","1869 WELSH AVE","","CASPER","WY","82604-2202","8(a) certified as Native American owned. Excavation contractor. Before starting JTR Excavation LLC worked for other excavation/construction contractors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#114;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jtrexcavation@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y335UJF92KP5">69</a>","WYOMING EARTHMOVING CORP","DAVID WISE","","524 1ST ST","","UPTON","WY","82730-5005","40 years of experience in site preparation, and earth moving. Experience in working with government agencies in reclamation of the land. Experienced operators capable of efficiently running equipment and getting work done in a timely matter.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#119;&#121;&#111;&#101;&#97;&#114;&#116;&#104;&#46;&#99;&#111;&#109;">david@wyoearth.com</a>","www.wyoearth.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U3FSHMBDKQD3">70</a>","SENTINEL SECURITY LLC","DANIEL BURDEN","","107 ELKHORN DR","","RIVERTON","WY","82501-8307","Residential, Commercial & Industrial Security Solutions through Consultation, Sales, Installation and Service. ACCESS CONTROL, EMERGENCY POWER, FIRE, INTRUSION, SAFES, SURVEILLANCE… Manage, invoice, and coordinate complete projects, meeting all state and federal regulatory requirements, utilizing insured certified contractors of; low voltage, fire, electrical, construction, mechanical, surveillance, currier and executive protection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#117;&#114;&#100;&#101;&#110;&#100;&#97;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">burdendan@gmail.com</a>","www.facebook.com/sentinelsecure"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GSKWN9HAD6V3">71</a>","HAIDS PLUMBING & HEATING","JOHN HAID","","1105 FALCON ST","","MILLS","WY","82644-","30 years experience in plumbing and heating.10 years experience in General contracting on remodels and major excavation jobs We specialize in new construction, remodels, and repairs. Inspection and detection of plumbing and gas line issues. Boiler replacement and repair. Experience in contracting with city and federal government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#104;&#97;&#105;&#100;&#64;&#104;&#97;&#105;&#100;&#115;&#112;&#108;&#117;&#109;&#98;&#105;&#110;&#103;&#119;&#121;&#46;&#99;&#111;&#109;">johnhaid@haidsplumbingwy.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z8NTC3D1KR64">72</a>","WYODAK ENERGY SERVICES, LLC","LORI ZINK","","135 PINE ST","","BUFFALO","WY","82834-2332","WyoDak Energy Services, LLC offers quality and dependable reclamation, roustabout, pipeline, heavy construction and trucking services. We believe in working with our customers to provide cost-effective and reliable solutions for your projects. Our owners, Chris Knudson and Josh Miller, have over 40 years of experience in the oil & gas industry. We employ industry professionals who are dedicated to completing your project safely, on schedule and within budget. We understand our industry requires very high efficiency and solid value for the money spent in order to remain viable. We will strive to deliver this for you.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#122;&#105;&#110;&#107;&#64;&#119;&#121;&#111;&#100;&#97;&#107;&#101;&#110;&#101;&#114;&#103;&#121;&#46;&#99;&#111;&#109;">lzink@wyodakenergy.com</a>","https://wyodakenergy.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q579ZZG4BK16">73</a>","GREGCO LLC","HECTOR SOLIS","","201 WOODRIDGE LN","","EVANSTON","WY","82930-4617","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#99;&#111;&#119;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">gregcowy@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KXRDA8Z61567">74</a>","TERRY R. PITT CONSTRUCTION INC.","TROY HOUSEHOLDER","","180 POLLUX DRIVE","","ROCK SPRINGS","WY","82901-3329","Heavy equipment company consisting of motor graders(multiple sizes) dozers(multiple sizes) 627/637 scrapers, trackhoes all aspects of pipeline installation and maintenance. WE perform all aspects of dirt work in the oilfield and all oilfield maintenance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#111;&#121;&#46;&#104;&#111;&#117;&#115;&#101;&#104;&#111;&#108;&#100;&#101;&#114;&#64;&#112;&#105;&#116;&#116;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">troy.householder@pitt-construction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGFYYXMX4AS4">75</a>","STEWART G M CORP OF WYOMING","CAMILLE COSTER","","1005 E SERVICE RD","","EVANSTON","WY","82930-9722","One Step Alliance This is why 90% of our core business is from repeat customers. Because of our spotless safety record and skilled staff we know that it's not a job well done unless it's a GMSC job. We are a full-service construction contractor and equipment rental company serving both the public and private sectors in the areas of -  - Engineering & Construction Management - Plant Maintenance & Turnarounds - Civil & Earthwork - Environmental - Concrete & Masonry - Building Construction - Mechanical & Piping - Electrical & Instrumentation - Plant Demolition","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#65;&#77;&#73;&#76;&#76;&#69;&#64;&#71;&#77;&#83;&#84;&#69;&#87;&#65;&#82;&#84;&#46;&#67;&#79;&#77;">CAMILLE@GMSTEWART.COM</a>","www.gmstewart.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE4ZBBU31M33">76</a>","FROG CREEK PARTNERS FCP, LLC","BRIAN DEURLOO","","800 W YELLOWSTONE HWY","","CASPER","WY","82601-1734","The patent pending Gutter Bin(tm)stormwater filtration system easily removes pollution from stormwater within a catch basin. Frog Creek Partners also offers the Clean and Measure Pollution (CAMP) Service so the bins stay clean.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#105;&#97;&#110;&#64;&#70;&#114;&#111;&#103;&#67;&#114;&#101;&#101;&#107;&#46;&#80;&#97;&#114;&#116;&#110;&#101;&#114;&#115;">Brian@FrogCreek.Partners</a>","https://frogcreek.partners/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WP8XJ3S7C341">77</a>","CUSTOM HOME PAINTERS OF CHEYENNE LLC","ERIC MCDONALD","","3304 GREGG WAY","","CHEYENNE","WY","82009-5344","We are a full service professional concrete floor coating contractor. We give unmatched customer service and offer a great product at a great value.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#64;&#116;&#101;&#97;&#109;&#99;&#104;&#112;&#46;&#99;&#111;&#109;">eric@teamchp.com</a>","www.teamchp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R9VRFM92NWH7">78</a>","SUTHERLAND BRAD R","BRAD SUTHERLAND","","1143 WATERFORD","","CASPER","WY","82609-3231","2-3 Man crew & tractor for field work such as tree thinning, dirt road and trail construction or maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#116;&#104;&#101;&#114;&#108;&#97;&#110;&#100;&#98;&#115;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sutherlandbs@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L8JPBK5J1ZN6">79</a>","SNAKE RIVER MECHANICAL ELECTRICAL PLUMBING COMPLETE, INC.","CASEY RAMMELL","","1655 HIGH SCHOOL RD","","JACKSON","WY","83001-8868","Snake River MEP Complete has served the Jackson, WY area since 1992. Covering all phases of commercial mechanical construction, including but not limited to, HVAC, refrigeration, electrical, plumbing, controls and test and balance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#115;&#101;&#121;&#64;&#115;&#114;&#109;&#101;&#112;&#46;&#99;&#111;&#109;">casey@srmep.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJ8JW64N6GT3">80</a>","VAN EWING CONSTRUCTION INC","JAKE EWING","","5650 MAGNUSON BLVD","","GILLETTE","WY","82718-6958","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#101;&#119;&#105;&#110;&#103;&#64;&#118;&#97;&#110;&#101;&#119;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">jaewing@vanewing.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRKZJJX7VB13">81</a>","JERRY'S WELDING SERVICE, INC","JASON MITTLEIDER","","158 STATE HIGHWAY 59","","DOUGLAS","WY","82633-2259","Since 1975, we have continued to service the agriculture, oilfield, uranium mines and general public. We offer shop and field welding, machine shop, mechanic, trailer and equipment repairs, heavy equipment, irrigation pump repair, and roustabout work. We sell all types of steel and offer custom fabrication to fit your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#101;&#108;&#102;&#97;&#98;&#57;&#51;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">steelfab93@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYABM4JN8WH5">82</a>","WESTERN ENGINEERS & GEOLOGISTS, INC.","CARL GERRARD","","1130 ROCKIES CIR","","ROCK SPRINGS","WY","82901-8704","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#46;&#103;&#101;&#114;&#114;&#97;&#114;&#100;&#64;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#101;&#103;&#105;&#46;&#99;&#111;&#109;">rob.gerrard@westernegi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETPNCS1N6TF4">83</a>","EXTREME PRECISION INDUSTRIAL CONTRACTORS, LLC","JENNA CASTLEBERRY","","1540 BUSINESS CIR","","GILLETTE","WY","82716-1402","We are a precision fabrication and machine shop. We have very strict quality control standards to ensure our products meet your rigorous standards.Our founders have over 50 years experience working in the industrial fabrication and service sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#46;&#99;&#97;&#115;&#116;&#108;&#101;&#98;&#101;&#114;&#114;&#121;&#64;&#101;&#112;&#45;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">j.castleberry@ep-industrial.com</a>","https://www.ep-industrial.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EGDNXHTBJ3F6">84</a>","WHETSELL CARPENTRY LLC","JAMES WHETSELL","","26 BREAKNECK RD","","NEWCASTLE","WY","82701-9773","Whetsell Carpentry 	 Specializes in commercial, and residential building, remodeling,roofing,drywall, property maintenance, new construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#50;&#50;&#55;&#51;&#55;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jw22737@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M1Q5FA7VMNH9">85</a>","GANNETT PEAK ENERGY & ENVIRONMENTAL SERVICES","PETER GOTTFRIED","","52 BALD MOUNTAIN RD","","DUBOIS","WY","82513-9709","Reduce the environmental impact of the modern world’s energy demands AND optimize economic benefit by embracing “micro-power.” Through small wind and other creative solutions, we can make a difference today by augmenting our existing energy supplies to non-polluting, readily available, renewable sources.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#103;&#111;&#116;&#116;&#102;&#114;&#105;&#101;&#100;&#64;&#103;&#105;&#115;&#49;&#46;&#99;&#111;&#109;">petergottfried@gis1.com</a>","www.gannettpeakenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q61JKNMMFJW9">86</a>","CLEARWATER RESTORATION LLC","CASE BROWN","","3155 S PITCH FORK DR","","JACKSON","WY","83001-9236","We offer aquatic construction, restoration and environmental services. We are experts in building ponds streams and the infrastructure to support them. We also specialize in fisheries biology and are experts in restoration of aquatic systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#97;&#115;&#101;&#64;&#99;&#108;&#101;&#97;&#114;&#119;&#97;&#116;&#101;&#114;&#114;&#101;&#115;&#116;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">Case@clearwaterrestoration.com</a>","www.clearwaterrestoration.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZT9QJGA63LL6">87</a>","MOUNTAIN VIEW CUSTOM HOMES, LLC","EILEEN BELL","","1410 INDUSTRIAL DR","","SHERIDAN","WY","82801-8327","We specialize in modular and mobile homes with 3,5,7,10/12 pitch roofs. We also do 2 story homes as well and apartment complexes. We specialize in Park model homes and we deliver great customer service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#105;&#108;&#101;&#101;&#110;&#64;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#118;&#105;&#101;&#119;&#104;&#111;&#109;&#101;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">eileen@mountainviewhomesllc.com</a>","www.mountainviewhomesllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UN6VJJKZVD35">88</a>","STEEL RAIN INDUSTRIES LLC","JOHN ZORBAS","","361 HEMLOCK ST","","BUFFALO","WY","82834-9415","We are an excavation and construction company specializing in septic installations, road and driveway maintenance. We have been serving our local community for over 5 years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#122;&#111;&#114;&#98;&#97;&#115;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">jgzorbas@icloud.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WX8MR321WSL6">89</a>","TONGUE RIVER CONSTRUCTION LLC","WILLIAM MIMS","","19 WARD CT","","BANNER","WY","82832-9704","General Building Construction Light and Heavy Civil Remote Location Asbestos Abatement","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#106;&#109;&#105;&#109;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">wjmims@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WMYULNH1PJQ9">90</a>","LONE WOLF LOGISTICS LLC","WYATT WOOLSEY","","7610 EL CAMINO REAL","","CHEYENNE","WY","82009-2057","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#121;&#97;&#116;&#116;&#64;&#108;&#111;&#110;&#101;&#119;&#111;&#108;&#102;&#45;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">wyatt@lonewolf-logistics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MKDEKJKC9HF4">91</a>","BIG BIRD LANDSCAPING LLC","KRISTA GALLARDO","","7221 SPACE DR","","CHEYENNE","WY","82009-2200","We offer a variety of landscaping services to residential and commercial properties. We have the capacity to efficiently finish projects on time, within budget, and with a beautifully executed finish.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#73;&#71;&#66;&#73;&#82;&#68;&#76;&#65;&#78;&#68;&#83;&#67;&#65;&#80;&#73;&#78;&#71;&#76;&#76;&#67;&#64;&#89;&#65;&#72;&#79;&#79;&#46;&#67;&#79;&#77;">BIGBIRDLANDSCAPINGLLC@YAHOO.COM</a>","https://bigbirdlandscapingllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KWZWE3W1UJL5">92</a>","COOPS SPRAY SERVICE LLC","JAY COOPER","","1101 E MAIN ST","","SUNDANCE","WY","82729-5259","We offer weed control. state license and timber thinning, clearing, masticating, fire control and pest control.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#118;&#99;&#110;&#46;&#99;&#111;&#109;">jgcooper@vcn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G61VMVXKUMK8">93</a>","APEX MECHANICAL, LLC","TONIA SPRUHAN","","1800 W WARLOW DR STE A","","GILLETTE","WY","82716-2500","We are a full service plumbing & HVAC company with over 40 years experience. Fast, friendly services with competitive prices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#97;&#112;&#101;&#120;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">office@apexmechanicalwyo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V1R1H6JYBJJ1">94</a>","EWS-RSCI LLC","SHAY LUNDVALL","","2506 LITTLE POWDER RIVER RD","","GILLETTE","WY","82716-1706","EWS-RSCI IS A MP JOINT VENTURE FORMED TO DO ARCHITECTUAL AND EARTH WORK PROJECTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#121;&#46;&#108;&#117;&#110;&#100;&#118;&#97;&#108;&#108;&#64;&#101;&#97;&#114;&#116;&#104;&#119;&#111;&#114;&#107;&#46;&#117;&#115;&#46;&#99;&#111;&#109;">shay.lundvall@earthwork.us.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLHDAEPN3DA6">95</a>","TOMBSPIDER ARMS, INC.","DANIEL TWOMEY","","1121 55 RANCH RD","","GLENROCK","WY","82637-9619","Tombspider Arms, Inc is a Veteran owned and operated business dedicated to professionalism and attention to detail in the sale, repair, customization, and restoration of firearms. We offer a full line of gunsmith services for a wide variety of rifles, shotguns, and handguns.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#98;&#115;&#112;&#105;&#100;&#101;&#114;&#97;&#114;&#109;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tombspiderarms@gmail.com</a>","www.tombspiderarms.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G3N3G6CVBEF6">96</a>","G.N.B., INC.","TOM ELLIS","","1801 W YELLOWSTONE HWY","","CASPER","WY","82604-2801","Eighty years of providing the highest quality products and best customer service in the industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#112;&#101;&#112;&#112;&#101;&#114;&#116;&#97;&#110;&#107;&#46;&#99;&#111;&#109;">tom@peppertank.com</a>","www.peppertank.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HHRWK77M8N74">97</a>","DB WESTERN SERVICES LLC.","DAVID BURTON","","412 LEAVITT ST","","EVANSVILLE","WY","82636-8599","A local and knowledgeable vegetation management company working to make a better Wyoming through good land stewardship.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#100;&#98;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dave@dbwesternservices.com</a>","www.dbwesternservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGWWZ2JGZXT3">98</a>","MASTER CONTROLS LLC","PAUL ROBLES","","1490 COUNTY ROAD 154","","BURNS","WY","82053-9501","We are a full service electrical shop serving Wyoming. We offer excellent customer service and reasonable prices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#109;&#97;&#115;&#116;&#101;&#114;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#115;&#46;&#111;&#114;&#103;">paul@mastercontrols.org</a>","www.mastercontrols.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ME5NLP7MZ127">99</a>","TOTAL RENOVATIONS & DESIGN, LLC","SADIE CARSON","","5083 S VALLEY RD","","CASPER","WY","82604-5151","We specialize in residential and commercial construction and have been building Wyoming since 2013. Our dedication to our customers, employees, and community, as well as the quality of work we deliver is what sets us apart from our competition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#100;&#105;&#101;&#64;&#119;&#101;&#98;&#117;&#105;&#108;&#100;&#119;&#121;&#111;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">sadie@webuildwyoming.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M6B8KPDWBAN7">100</a>","307 ELECTRIC LLC","JAMIE HETT","","1466 WILLER DR","","CASPER","WY","82604-1896","New electrical construction, remodel, maintenance, code compliance of residential and commercial buildings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#109;&#105;&#101;&#64;&#51;&#48;&#55;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">jamie@307electric.com</a>","www.307electric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F8DGRMVRW7X5">101</a>","SAGE ELECTRIC SOLUTIONS LLC","HEIDI DEGRAW","","4996 HIGHWAY 374","","GREEN RIVER","WY","82935-9684","?	Turnkey new and existing electrical design, construction and maintenance ?	Consulting ?	PLC programming, instrumentation design and installation/maintenance. ?	Wellhead automation and controls ?	Liquid and Gas Measurement ?	Specializing in complete Cathodic Protection systems that include pin brazing and CAD welding. ?	Inspection ?	Startup commissioning services with included documentation. ?	Fiber optic installation/splicing and other communication systems. ?	High voltage/substation maintenance and installations. ?	Power line distribution, maintenance and construction ?	Solar Power and Windmills","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#105;&#100;&#105;&#64;&#115;&#97;&#103;&#101;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#111;&#114;&#103;">heidi@sageelectric.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NC4VW9NA3N58">102</a>","DIELUTSA LIMITED COMPANY","MERVIN SEALY","","1912 CAPITOL AVE","STE 500","CHEYENNE","WY","82001-3661","industrial sourcing, manufacturing solutions and trading","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#101;&#97;&#108;&#121;&#64;&#100;&#105;&#101;&#108;&#117;&#116;&#115;&#97;&#46;&#99;&#111;&#109;">msealy@dielutsa.com</a>","http://dielutsa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HEXBF9MCY9J4">103</a>","MAGIC CITY FLOORING LLC","CHANTZ WISNESKI","","2016 S GREELEY HWY UNIT 3C","","CHEYENNE","WY","82007-3790","We provide high-quality flooring services with our range of capabilities and commitment to using the latest techniques and materials. Our expert advice helps clients find the perfect flooring solution. Attention to detail is important to us, as we aim to achieve the perfect look and feel for every project. We have excellent project management skills, ensuring each project is managed efficiently from consultation to cleanup. Our customer service is top-notch, building long-term relationships with our clients and ensuring satisfaction with the results. Our capabilities include expert advice, attention to detail, project management, and customer service, resulting in beautiful, high-quality flooring solutions that exceed our clients' expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#103;&#105;&#99;&#99;&#105;&#116;&#121;&#102;&#108;&#111;&#111;&#114;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">magiccityflooring@gmail.com</a>","magiccityflooring.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FWJ4KZB9EPL3">104</a>","NATIONAL MAINTENANCE BROKERS, LLC","LOUIS LAMACCHIA","","30 N GOULD ST STE 5840","","SHERIDAN","WY","82801-6317","National Maintenance Brokers is a facilities maintenance and repair company performing services Nationwide on commercial, government and residential properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#117;&#105;&#115;&#64;&#110;&#97;&#116;&#109;&#98;&#46;&#99;&#111;&#109;">louis@natmb.com</a>","https://www.nationalmaintenancebrokers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFR6E27FXLW5">105</a>","BYZANTIUM GROUP LLC","FRANCISCO MUNIZ","","1309 COFFEEN AVE STE 11299","","SHERIDAN","WY","82801-5777","Byzantium Group, a Management Consultant Company offering capabilities & solutions, needed of modern governance and industrial base. 1. Project Management Consulting: Consultancy services ensuring coordination, expert planning, and efficient resource allocation with modified version of the ADDIE Process.  2. Bulk Fuel Wholesale and Supply: A trusted wholesale supplier, we deliver cost-effective solutions for all fuel requirements. Extensive network and strategic partnerships enable us to procure fuel at the 'Rack Price.' 3. Organizational Change Management and Manpower Requirements: Experts at comprehensively assessing requirements, fostering stakeholder engagement, and implementing tailored strategies for 'Manhour' allocation, manpower studies, mergers & determining organizations requirements. 4. Long-Haul Transportation: We partner with nationwide carriers for long-haul transportation, with access to fleets and a team of seasoned professionals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#121;&#122;&#97;&#110;&#116;&#105;&#117;&#109;&#71;&#114;&#111;&#117;&#112;&#64;&#112;&#114;&#111;&#116;&#111;&#110;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ByzantiumGroup@protonmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.061&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 650 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.72 seconds and 1.79 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 65 
+(of 65 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DFU1ZJA424J9">1</a>","SIGNAL ENGINEERING CORP.","KENNETH GATELY","President/GM","503 INDUSTRY DR","","HAMPTON","VA","23661-1314","Sales,Installation and Service of; CCTV Systems, Card AccessSystems,Photo Badging Systems,Intercoms,Security Systems,Building automation.Thermal camera/scanner temperature scanners","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#103;&#97;&#116;&#101;&#108;&#121;&#64;&#115;&#105;&#103;&#110;&#97;&#108;&#101;&#110;&#103;&#46;&#110;&#101;&#116;">kgately@signaleng.net</a>","www.signalengineering.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM2GNDJLDWL5">2</a>","ADVEX CORPORATION","SONDRA MAYFIELD","President","121 FLOYD THOMPSON BLVD","","HAMPTON","VA","23666-1307","PRECISION MACHINING: CNC/Conventional-EDM-Turning- Milling & Grinding METAL FABRICATION: SheetMetal/Heavy Metal/Laser 3000 Watt NONDESTRUCTIVETESTING:Radiographic, MT, PT, Ultrasonic, Eddy Current. MARINE & INDUSTRIAL:Installations,Repair,and Testing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#97;&#121;&#102;&#105;&#101;&#108;&#100;&#64;&#97;&#100;&#118;&#101;&#120;&#46;&#110;&#101;&#116;">smayfield@advex.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G5JNG3NQK8A6">3</a>","ANALYTICAL SERVICES & MATERIALS, INC.","VASANTHI UNNAM","President","107 RESEARCH DR","","HAMPTON","VA","23666-1340","ENGINEERING AND TECHNICAL SERVICES, RESEARCH & DEVELOPMENT, SOFTWARE ENGINEERING, AEROSPACE, STRUCTURES AND MATERIALS, ATMOSPHERIC SCIENCES, SPECIALTY COATINGS, INFORMATION TECHNOLOGY SERVICES. WINNER OF 2002 NASA G.M.LOW TROPHY.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#80;&#85;&#78;&#78;&#65;&#77;&#64;&#65;&#83;&#77;&#45;&#85;&#83;&#65;&#46;&#67;&#79;&#77;">VPUNNAM@ASM-USA.COM</a>","HTTP://WWW.ASM-USA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V7F4CN1JL3A6">4</a>","ZEL TECHNOLOGIES LLC","SUSAN HUGHES","Director of Business Development","54 OLD HAMPTON LN","","HAMPTON","VA","23669-4197","AN EMERGING LEADER IN APPLIED HIGH TECHNOLOGY SOLUTIONS IN INFORMATION TECHNOLOGY,PROGRAM MANAGEMENT,SYSTEMS ANALYSIS,DECISION SUPPORT SYSTEM ENGINEERING/INTEGRATION,SYSTEMS ARCHITECTURE DESIGN,DATABASES,REQUIREMENTS DEFINITION,CONCEPTS OF OPERATION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#46;&#104;&#117;&#103;&#104;&#101;&#115;&#64;&#122;&#101;&#108;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">susan.hughes@zeltech.com</a>","http://www.zeltech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENG5KSE6FZV5">5</a>","ANALYTICAL MECHANICS ASSOCIATES, INC.","JOHN ABRAMS","Contracts Manager","21 ENTERPRISE PKWY","STE 300","HAMPTON","VA","23666-6413","Support in the areas of aeronautics and space technologies: Flight System Engineering, Multi-Disciplinary Analyses, Advanced GN&C, and Mission Operations. State-of-the-art solutions for Engineering, Data Visualization, and Software Systems Integration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#46;&#97;&#98;&#114;&#97;&#109;&#115;&#64;&#97;&#109;&#97;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">j.abrams@ama-inc.com</a>","http://www.ama-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TUHBZQDC4XW8">6</a>","SCIENCE & TECHNOLOGY CORPORATION","ELYSE WEBB","Executive VP & COO","21 ENTERPRISE PKWY STE 150","","HAMPTON","VA","23666-6413","Technical Support Services;CB Defense;Atmospheric Sciences;Remote Sensing;Programatic Support; Science Data Processing & Modeling ;Test & Evaluation; IT Support","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#98;&#98;&#64;&#115;&#116;&#99;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">webb@stcnet.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJM8WZ8EF8K6">7</a>","VIGYAN INC","SUDHIR MEHROTRA","President","30 RESEARCH DR","","HAMPTON","VA","23666-1325","ViGYAN's business areas include aeronautics R&D; wind tunnel testing; data acquisition systems development; scientific, engineering and business software development; and computer technology support including computer networking and maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#104;&#114;&#111;&#116;&#114;&#97;&#64;&#118;&#105;&#103;&#121;&#97;&#110;&#46;&#99;&#111;&#109;">mehrotra@vigyan.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NTNEKLNPAYV7">8</a>","INOMEDIC HEALTH APPLICATIONS, INC.","CYNTHIA GROSS","President/CEO","2 EATON ST STE 908","","HAMPTON","VA","23669-4099","Environmental Services: Studies and long term monitoring of ecological programs. Medical Services: Comprehensive occupational and aerospace medical services Environmental Health Services: Industrial hygiene, health physics, and public health experts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#103;&#114;&#111;&#115;&#115;&#64;&#105;&#104;&#97;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">cgross@ihamedical.com</a>","www.ihamedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JH8BDPD1DG47">9</a>","TAYLOR ENTERPRISES, LLC","RONALD TAYLOR","Office Manager","2100 ALUMINUM AVE","STE 111","HAMPTON","VA","23661-1205","Historical painting, Specialty coatings, sandblasting, sealants, Interior, exterior painting, acoustical ceiling installation, drywall hanging, taping and finishing, minor repair and renovation, Industrial, commercial","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#84;&#97;&#121;&#108;&#111;&#114;&#64;&#84;&#97;&#121;&#108;&#111;&#114;&#69;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#76;&#76;&#67;&#46;&#99;&#111;&#109;">RTaylor@TaylorEnterprisesLLC.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1JDD62DTQN9">10</a>","SAUNDERS CONTRACTING SERVICES, INC.","BRIAN CUTLER","Vice President","210 CHALLENGER WAY","","HAMPTON","VA","23666-1366","Electrical & telecommunications contractor that serves the entire Hampton Roads area. We service NASA(LARC), Langley AFB and other government installations. We also service Howmet Castings and various other manufacturing facilities in Hampton Roads.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#99;&#117;&#116;&#108;&#101;&#114;&#64;&#115;&#97;&#117;&#110;&#100;&#101;&#114;&#115;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bcutler@saunderscontracting.com</a>","http://www.saunderscontracting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TCLFVWFM2DE9">11</a>","MAC PAR SERVICES LLC","DAVID PARHAM","PRESIDENT","20 RESEARCH DR BLDG B","","HAMPTON","VA","23666-1325","OUR COMPANY SERVICES ARE RESIDENTIAL AND COMMERCIAL INTERIOR DEMOLITION, NEW CONSTRUCTION/RENOVATION, MOLD, LEAD PAINT ABATEMENTS AND MATERIAL HAULING. FOR MORE INFORMATION VISIT US AT WWW.MACPARSERVICES.COM","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#112;&#97;&#114;&#104;&#97;&#109;&#64;&#109;&#97;&#99;&#112;&#97;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dparham@macparservices.com</a>","http://www.macparservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UZ5JDZBS2CN3">12</a>","JOSEPH P HARVEY PE PC","JOHN ADAMS","","29 KINGS WAY","","HAMPTON","VA","23669-3503","JP Harvey Engineering Solutions (JPHES) was established in 1998 and is headquartered in Hampton, Virginia. We are a certified small business registered in the System for Award Management (SAM). We have experience working on mechanical, electrical, plumbing engineering, and communications design projects with federal agencies. We understand the procedures and requirements of these projects. We have extensive experience with new designs, renovations, repairs, inspections, analysis, planning, administration of construction, and studies. In fact, we have vast experience working with government facilities throughout our 18 year history.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#65;&#100;&#97;&#109;&#115;&#64;&#106;&#112;&#104;&#101;&#115;&#46;&#99;&#111;&#109;">JAdams@jphes.com</a>","http://www.jphes.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NM27WLDHFC15">13</a>","INDUSTRIAL AUTOMATION SPECIALISTS CORP","PRESTON BURTON","","17 RESEARCH DR","","HAMPTON","VA","23666-1324","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#66;&#85;&#82;&#84;&#79;&#78;&#64;&#73;&#65;&#83;&#67;&#79;&#82;&#80;&#46;&#78;&#69;&#84;">PBURTON@IASCORP.NET</a>","http://www.iascorp.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GSYCU149L9Y7">14</a>","RPC INDUSTRIES INC","BRYAN HELDRETH","President","705 INDUSTRY DR","","HAMPTON","VA","23661-1002","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#100;&#114;&#101;&#116;&#104;&#64;&#114;&#112;&#99;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">heldreth@rpcindustries.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TACVNZU977A3">15</a>","C.K. ANALYTICS, INC.","CAROL KLEEMEIER ZENO","","20 RESEARCH DR","","HAMPTON","VA","23666-1325","Universal Laboratories has been in business for 20 years providing environmental analysis of groundwater, wastewater, and soil for compliance and in hazardous waste characterization.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#107;&#108;&#101;&#101;&#109;&#101;&#105;&#101;&#114;&#64;&#117;&#110;&#105;&#118;&#101;&#114;&#115;&#97;&#108;&#108;&#97;&#98;&#111;&#114;&#97;&#116;&#111;&#114;&#105;&#101;&#115;&#46;&#110;&#101;&#116;">c.kleemeier@universallaboratories.net</a>","http://www.universallaboratories.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NCFDF8YBGJG6">16</a>","METRO COMMUNICATIONS, INC.","PATRICK WALSH","NATIONAL ACCOUNT EXECUTIVE","132 E QUEEN ST","","HAMPTON","VA","23669-4004","Film, video, interactive multimedia productions.Pre-production through post-production.Nationally-recognized writers, producers,directors,videographers. Broadcast quality Film/Video Production Interactive Multimedia,special effects, 2D/3D animation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#119;&#97;&#108;&#115;&#104;&#64;&#109;&#101;&#116;&#114;&#111;&#45;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">pwalsh@metro-productions.com</a>","http://www.metro-productions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z6HCF8N2ZCF3">17</a>","KYONG SPEIGNER","KYONG SPEIGNER","","1501 BIG BETHEL RD STE 200","","HAMPTON","VA","23666-1251","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#115;&#112;&#101;&#105;&#103;&#110;&#101;&#114;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">kcspeigner@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J6NNERB6JR86">18</a>","HEALTH IN COLOR, INC","LAWRENCE CARTER","Managing Principal","4410 CLAIBORNE SQ E STE 334","","HAMPTON","VA","23666-2074","REESSI is a premier private research and education firm that specializes in developing, evaluating and disseminating digital learning and communications tools to ethnic and racial populations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#97;&#119;&#114;&#101;&#110;&#99;&#101;&#67;&#97;&#114;&#116;&#101;&#114;&#64;&#104;&#101;&#97;&#108;&#116;&#104;&#105;&#110;&#99;&#111;&#108;&#111;&#114;&#46;&#110;&#101;&#116;">LawrenceCarter@healthincolor.net</a>","http://www.healthincolor.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKLDGVL7SCM4">19</a>","CRAFT ENGINEERING ASSOCIATES, INC.","LEI LANI LUCERO","","2102 48TH ST","","HAMPTON","VA","23661-1202","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#102;&#116;&#64;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#46;&#99;&#111;&#109;">craft@engineer.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFAMY7MGPG24">20</a>","PEMBROKE CONSTRUCTION COMPANY, INCORPORATED","GERALD CANNON","","802 W PEMBROKE AVE","","HAMPTON","VA","23669-3327","PAVING CONTRACTOR, ASPHALT, CONCRETE PAVEMENT REPAIRS & ASPHALT REPAIRS, PARKING LOTS INSTALLATION TENNIS COURTS INSTALLATION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#97;&#110;&#110;&#111;&#110;&#64;&#112;&#101;&#109;&#98;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">jcannon@pembcon.com</a>","http://www.pembrokeconstruction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5AKXCM37D31">21</a>","BIHRLE APPLIED RESEARCH INC","LEAH THRELKELD","","81 RESEARCH DR","","HAMPTON","VA","23666-1324","Aeronautical research, high fidelity air vehicle simulations, low speed wind tunnel testing with precision aircraft models, developer of D-Six multifunction, reconfigurable simulation software for PCs & SimGen for rapid flight model development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#116;&#104;&#114;&#101;&#108;&#107;&#101;&#108;&#100;&#64;&#98;&#105;&#104;&#114;&#108;&#101;&#46;&#99;&#111;&#109;">lthrelkeld@bihrle.com</a>","http://www.bihrle.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X8PFQ6YDT4K7">22</a>","KETA TECHNOLOGIES, L.L.C.","KIM RAINES","","1001 N CAMPUS PKWY","STE 204","HAMPTON","VA","23666-1250","Keta Technologies differentiates itself by our ability to provide a detailed assessment of your current environment, design the best infrastructure for your needs, and provide the proper technical oversight to ensure your project is delivered on time, within budget, and–most importantly–successfully meets your objectives. Services Include the following: Consulting and Strategic Planning of Technology Solutions Network Design, Implementation, and Management Application Architecture Assessment and Planning for Upgrades and Implementation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#97;&#103;&#111;&#118;&#64;&#107;&#101;&#116;&#97;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">sbagov@ketatech.com</a>","www.ketatech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNDLRV59X845">23</a>","BLUEFORCE, INC.","TRACIE ANTON","","6 MANHATTAN SQ STE 101","","HAMPTON","VA","23666-5846","Subject matter expertise, acquisition program support, and specialized legal expertise for national security operations with emphasis on command and control, expeditionary operations, and national security law and policy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#110;&#116;&#111;&#110;&#64;&#98;&#108;&#117;&#101;&#102;&#111;&#114;&#99;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">tanton@blueforceinc.com</a>","http://www.blueforceinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VB1GQK4NSV75">24</a>","ARTI, INCORPORATED","ROBERT HOLMES, JR.","","47 W QUEENS WAY","SUITE I","HAMPTON","VA","23669-4066","ARTi delivers professional support services and solutions in the areas of information technology (specializing in MS SharePoint modernization, customization, and application development), program/project management, Logistics Support Operations and training services (analysis, design, development, implementation, and evaluation). ARTi teams anticipate customer needs through an Agile methodology. Our skilled, professional staff has extensive experience in diverse areas, but with the common goal to exceed customer expectations through cost-effective and value added solutions with a professional, ethical workforce.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#104;&#111;&#108;&#109;&#101;&#115;&#64;&#97;&#114;&#116;&#105;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">robert.holmes@artiinc.com</a>","http://artiinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SMQ8BN2NH6R5">25</a>","PREMIER DECKING LLC","REGINALD MACK","","12 ASHE MEADOWS DR","","HAMPTON","VA","23664-2070","Fully certified NBPI (NAVSEA) firm able to complete all your surface preparation, painting and flooring installation needs. Experienced installers of carpet, tile, and terrazo.epoxy non-skid","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#46;&#109;&#97;&#99;&#107;&#64;&#112;&#114;&#101;&#109;&#105;&#101;&#114;&#100;&#101;&#99;&#107;&#105;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">r.mack@premierdeckingllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EDG8CCZ57L68">26</a>","CHENEGA LOGISTICS, LLC","MATTHEW MARKLEY","","303 BUTLER FARM RD STE 107","","HAMPTON","VA","23666-1568","Professional & managed services. Core svcs include program management, engrg svcs, voice & data networking, unified communications, application devel, web hosting, cloud services (IaaS/PaaS/SaaS), data warehousing, big data analytics, & cyber security","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#97;&#114;&#107;&#108;&#101;&#121;&#64;&#99;&#104;&#101;&#110;&#101;&#103;&#97;&#46;&#99;&#111;&#109;">mmarkley@chenega.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEW1YJD3LWF7">27</a>","S. C. JONES SERVICES, INC.","STEVEN JONES","","764 SETTLERS LANDING RD","","HAMPTON","VA","23669-4035","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#105;&#114;&#100;&#111;&#103;&#54;&#57;&#54;&#57;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">Birdog6969@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G96LA3L8MR23">28</a>","DATA-TRONIX INC","MARVIN JACKSON","","406 ABERDEEN RD","","HAMPTON","VA","23661-1348","IT services and repair/maintenance. Help Desk Services. Office equipment sales service and supplies. Parts and other computer related services Other various Supplies and equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#106;&#97;&#99;&#107;&#115;&#111;&#110;&#64;&#100;&#97;&#116;&#97;&#45;&#116;&#114;&#111;&#110;&#105;&#120;&#46;&#99;&#111;&#109;">mjackson@data-tronix.com</a>","http://www.data-tronix.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L96YGEN6UPX1">29</a>","MCKENDREE SERVICES, INC.","WILLIAM MCKENDREE","","13 S JUNIPER ST","","HAMPTON","VA","23669-3264","Provide support services for grounds maintenance and landscaping, facilty support services, janitorial services, pest control services and Cued language transliteration services for the deaf/hh","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#64;&#109;&#99;&#107;&#101;&#110;&#100;&#114;&#101;&#101;&#45;&#109;&#115;&#105;&#46;&#99;&#111;&#109;">william@mckendree-msi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RQHJU1SBB7F9">30</a>","METRO PRODUCTIONS GOVERNMENT SERVICES, LLC","JAMES HUNT","","132 E QUEEN ST","","HAMPTON","VA","23669-4004","Professional Support Services to include program management, audio visual, still photography, video production, print and motion graphics,digital signage, DVD authoring, closed circuit television, video teleconferencing, Inside and Outside Plant operations, applications development,web applications, service desk, media development in support of training exercises, Communication planning and products, and Communication assessment and evaluation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#117;&#110;&#116;&#64;&#109;&#101;&#116;&#114;&#111;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#105;&#111;&#110;&#115;&#45;&#103;&#115;&#46;&#99;&#111;&#109;">jhunt@metroproductions-gs.com</a>","http://www.metroproductions-gs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GV3ML2HDKLN3">31</a>","COUNTER MEASURES DIRECT CMD FOUNDATION UNLIMITED LLC","KEENEN TERRY","","13 POST OAK CT","","HAMPTON","VA","23666-1864","Counter Measures Direct is a privately owned security firm that works in the area of threat assessment, violence prevention, security analysis, and incident resolution for public and private corporations as well as other business entities throughout the Nation. Our firm understands the psycho dynamics of interpersonal violence and introduces a practical methodology useful in assessing potential levels of risk in known subjects. Our CMD operatives have a better understanding of how to practically and validly assess suspected individuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#109;&#100;&#102;&#111;&#117;&#110;&#100;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">info@cmdfoundation.com</a>","www.cmdunlimited.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X24RY3N8CF25">32</a>","REMSA INC","SONYA ASHFORD","President/CEO","124 W QUEENS WAY","","HAMPTON","VA","23669-4014","REMSA, Inc. is a multi-disciplinary Environmental Consulting company founded in 1986 by Ms. Rosetta Billups and headquartered in Hampton Virginia. We are a Woman-owned (WOB), Small/Disadvantaged Business (SDB), and Minority Business Enterprise (MBE) that has grown to become a respected leader in the selected services and consulting fields. Our company has an outstanding reputation for taking care of employees and performing excellent services throughout the community. REMSA, Inc. vow to remain focused on our mission of providing the best services to our community, private-owned, commercial and governmental clients. We have done this with responsibility and responsiveness and will continue our commitment to excellence in the services we provide. GSA Schedule Environmental Services (GS-10F-0190J) GSA Schedule Information Technology (GS-35F-0559K).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#104;&#102;&#111;&#114;&#100;&#64;&#114;&#101;&#109;&#115;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sashford@remsainc.com</a>","http://remsainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SLLNPZMZBCQ1">33</a>","CONGLOMERATE EMPOWERMENT LLC","MICHAEL MITCHELL","","2 PETERBOROUGH DR","","HAMPTON","VA","23666-1458","Podcast Host. Advisor. Speaker. Trainer. Skilled at providing business support services, training and management to tax-exempt and small businesses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#121;&#97;&#99;&#103;&#101;&#99;&#101;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tonyacgeceo@gmail.com</a>","www.congempowerment.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXKLGRZ7MME6">34</a>","THREAT TEC, LLC","JAMES CRAWFORD","","34 RESEARCH DR","","HAMPTON","VA","23666-1325","Threat Tec LLC is a VOSB providing certified Red Team exercise support and immersive training environments. We support US Military training and rehearsal exercises, war games, experiments, and operational tests and evaluations.For more information please visit our website at https://www.ThreatTec.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#99;&#64;&#116;&#104;&#114;&#101;&#97;&#116;&#116;&#101;&#99;&#46;&#99;&#111;&#109;">jimc@threattec.com</a>","www.ThreatTec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNEBR8F6GXY1">35</a>","CABCO ENTERPRISES, INC.","BRIAN WHITE","","401 ROTARY ST","","HAMPTON","VA","23661-1318","Torque wrench calibration / repair, Industrial bicycle repair / new, Hand tool repair, custom tooling / fabrication, sand bags","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#46;&#119;&#104;&#105;&#116;&#101;&#64;&#99;&#97;&#98;&#99;&#111;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#99;&#111;&#109;">b.white@cabcoenterprises.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLKSJZDZ6DS4">36</a>","J&F ALLIANCE GROUP INC.","FALANA DULA-KING","","54 OLD HAMPTON LN","","HAMPTON","VA","23669-4197","Law Enforcement Training Cognitive Braining Training Mobile and Desktop App Development Augmented Reality Virtual Reality Application Development Web Development Specialize in building technology applications (Augmented Reality, Virtual Reality, Mobile Applications, web-enabled applications). Expertise encompasses Cyber Security, Program Management, Research and Development, Software Development, Management Consulting, Technical Consulting, Physical Distribution, Integrated Logistics Support (ILS), Logistics Consulting Services, Transportation and Supply, Administrative Services, Machine learning, Artificial Intelligence. Could Architecture, Secure Cloud Database Development. Unmanned systems design and manufacturing,algorithm programming We are Microsoft Certified Partners, Google Preferred Developers, iOS App Developers, AWS Registered Partner, Magic Leap partners.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#100;&#117;&#108;&#97;&#45;&#107;&#105;&#110;&#103;&#64;&#106;&#102;&#97;&#108;&#108;&#105;&#97;&#110;&#99;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">fdula-king@jfalliancegroup.com</a>","www.jfalliancegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DK46A6E9N4S1">37</a>","ASCOLTA, LLC","RICK PALERMO","","1100 EXPLORATION WAY STE 316J","","HAMPTON","VA","23666-6264","Ascolta has proven experience supporting commercial and Department of Defense contracts over a wide range of Software Development, DevOps, Software Integration, Cybersecurity, and Cloud projects.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#112;&#97;&#108;&#101;&#114;&#109;&#111;&#64;&#97;&#115;&#99;&#111;&#108;&#116;&#97;&#46;&#99;&#111;&#109;">rpalermo@ascolta.com</a>","www.ascolta.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MAG4QBJX6R97">38</a>","GUERDON GLOBAL SOLUTIONS LLC","LORAINE TRIGGS","","20 RIDING PATH","","HAMPTON","VA","23669-1081","Over twenty years of in the federal contracting arena in several functional areas including contract administration, pricing and proposal development, project management, operations and finance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#116;&#114;&#105;&#103;&#103;&#115;&#64;&#71;&#50;&#83;&#46;&#108;&#108;&#99;">ltriggs@G2S.llc</a>","www.g2s.llc"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NPBJBKRZV9N9">39</a>","CLEAR ASPECT SOLUTIONS LLC","KURT DITTMER","","534 SETTLERS LANDING RD","","HAMPTON","VA","23669-4031","CAS, an innovative, low-cost company provides DoD exceptional analysis and collaborative life-cycle management for Strategic Development Planning through rapid problem framing. Using an inexpensive analytical tool, Capabilities-Based Assessment Tool (CBAT), we deliver analysis products to stakeholders at the speed of decisions in warfighter/operator terms, displayed graphically on maps for requirements and capabilities. CBAT is deterministic, providing repeatability and speed to generate multiple runs a day, quantifying capability effectiveness in a force mix context versus “cost” – it isn’t what a system does but what fills in for what it can’t do that informs portfolio decisions. “Costs” aren’t just life-cycle or O&M, but include operational “costs” such as ramp space, force protection, numbers of C-17 loads, or even bandwidth. Ultimately, CBAT saves you money by focusing where high fidelity, expensive analysis tools are employed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#117;&#114;&#116;&#46;&#100;&#105;&#116;&#116;&#109;&#101;&#114;&#64;&#99;&#97;&#115;&#111;&#108;&#110;&#115;&#46;&#99;&#111;&#109;">kurt.dittmer@casolns.com</a>","casolns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RVNEAKR2T6N7">40</a>","SCANSAMERICA, INC.","LARRY PAYTON","","3413 N ARMISTEAD AVE","","HAMPTON","VA","23666-","ScansAmerica will digitally scan your existing business, professional and government paper documents and store them on long-term, inexpensive media for fast, automated retrieval when needed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#114;&#114;&#121;&#46;&#112;&#97;&#121;&#116;&#111;&#110;&#64;&#115;&#99;&#97;&#110;&#115;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#46;&#99;&#111;&#109;">larry.payton@scansamerica.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5E6Z2YZCUE4">41</a>","HIGHGATE TRAINING SYSTEMS, LLC","JIM CRAWFORD","","34 RESEARCH DRIVE","STE 500","HAMPTON","VA","23666-1325","Highgate Training Systems LLC provides operational environment training support, distributive learning, synthetic training environments, and wargaming experimentation and evaluation. We are OE subject matter experts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#99;&#64;&#104;&#105;&#103;&#104;&#103;&#97;&#116;&#101;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">jimc@highgatetrainingsystems.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YB3SV7CPH7D6">42</a>","TRUE AIM TACTICAL, LLC","THEODORE DIGGS III","","68 GLENHAVEN DR","","HAMPTON","VA","23664-1850","Firearms, firearm accessories, ammunition, SOT items, gunsmithing, consulting, procurement, logistics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#100;&#46;&#100;&#105;&#103;&#103;&#115;&#64;&#116;&#114;&#117;&#101;&#97;&#105;&#109;&#116;&#97;&#99;&#116;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">ted.diggs@trueaimtactical.com</a>","www.trueaimtactical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HV16N9CZGKJ6">43</a>","JAN MILLER GRAPHICS, INC.","CLAIRE BELLECCI","","9 E MELLEN ST","","HAMPTON","VA","23663-1709","Mellen Street Creative envisions, communicates and delivers marketing messages in a direct, strategic and creative way. Our graphic and web design solutions include: brand development with logos and guidelines, print ads, print collateral, brochures, direct mail, publications and reports, trade shows, website design and development, email marketing and newsletters, social media advertising and management, as well as writing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#109;&#101;&#108;&#108;&#101;&#110;&#115;&#116;&#46;&#99;&#111;&#109;">contact@mellenst.com</a>","mellenst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYPKUJTC2NJ8">44</a>","SAS CONSULTING GROUP LLC","SARAH SKWERES","","704 ATHENS AVE","","HAMPTON","VA","23669-1302","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#107;&#119;&#101;&#114;&#101;&#115;&#64;&#115;&#97;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">sskweres@sasconsultinggroup.com</a>","www.sasconsultinggroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8KSVKTXARM4">45</a>","T. L. PAYNE CONSULTING LLC","TAMIKA LETT","","49 JORDAN DR","","HAMPTON","VA","23666-4109","SUMMARY T. L. Payne Consulting was founded in 2014 with the goal of helping individuals and organization transform by identifying and utilizing their best assets to develop desired outcomes. We specialize in Human Services Continuing Education, Leadership Development, Policies and Procedures development, Emotional Intelligence, Diversity, Equity & Inclusion Training, and Corporate Retreats. We constantly strive to be a company that delivers an outstanding work product without requiring a lot of maintenance from our government clients. Our goal is to surpass your expectations and make your job easier, not more difficult. BUSINESS SUMMARY: T. L. Payne Consulting helps customers meet their goals and objectives by providing technical resources to meet their short- and long-term goals relating to growth and development of individuals and organizations.  CAPABILITIES •	Consulting •	Educational Services •	Managed Services •	Policy Development •	Training development","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#109;&#105;&#107;&#97;&#46;&#112;&#97;&#121;&#110;&#101;&#64;&#116;&#108;&#112;&#97;&#121;&#110;&#101;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">tamika.payne@tlpayneconsultingllc.com</a>","www.tlpayneconsultingllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJLKP1JLV448">46</a>","ROAD RUNNER MOBILE WELDING AND FABRICATION LLC","LOREN BURTON","","506 COPELAND DR STE C","","HAMPTON","VA","23661-1343","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#97;&#100;&#114;&#117;&#110;&#110;&#101;&#114;&#119;&#101;&#108;&#100;&#115;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">Roadrunnerwelds@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J2KBEKJUBUP3">47</a>","VERDEN-HILLEBRAND JULIA","JULIA VERDEN-HILLEBRAND","","67 SHENANDOAH RD","","HAMPTON","VA","23661-3425","I have over 25 years of experience with branding, graphic design, including print and web design. I founded my company in April 2017. I specialize in branding and offer creation of logo design, marketing and sales materials, posters, flyers, brochures, displays, packaging, web design, online ads, power point presentations, annual reports, trade show design, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#100;&#101;&#115;&#105;&#103;&#110;&#104;&#97;&#117;&#115;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">info@designhauscreativeservices.com</a>","https://www.designhauscreativeservices.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NK4MV8EJ46Z6">48</a>","CLARKE INFORMATION TECHNOLOGY SOLUTIONS, LLC","ANDRE CLARKE","","358 MARLFIELD CIR","","HAMPTON","VA","23669-1733","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#108;&#97;&#114;&#107;&#101;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">info@clarkeits.com</a>","www.clarkeits.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M2M1NJSD9FD3">49</a>","THINK ACQUISITION LLC","WILLIAM RANDOLPH","","25 CASTLE HAVEN RD STE 1102","","HAMPTON","VA","23666-6032","Think Acquisition (est. 2019) is led by Mr. William Randolph, retired former Head of Contracting Activity for DHS, Senior Executive Service member, and Procurement. Think Acquisition (SDVOSB) has won federal contracts for training, workforce development and leadership development with DHS and Washington Headquarters Service. Think Acquisition has cultivated numerous strategic relationships within the federal acquisition market to provide a unique, comprehensive and holistic approach to govcon solutioning for both federal and commercial entities. For more info, please email William@thinkacquisition.net to request our Capabilities Statement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#64;&#116;&#104;&#105;&#110;&#107;&#97;&#99;&#113;&#117;&#105;&#115;&#105;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">william@thinkacquisition.net</a>","www.thinkacquisition.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGUDDUJNUA33">50</a>","NALI, LLC","DORIS OWENS","","122 E PEMBROKE AVE","","HAMPTON","VA","23669-3143","Provide Janitorial, Landscaping Services; including Carpet and Upholstery Cleaning and Other Buildings and Dwellings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#119;&#101;&#110;&#115;&#64;&#110;&#97;&#108;&#105;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dowens@naliservices.com</a>","www.naliservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLGMB92XAN65">51</a>","T PENINSULA HOTEL VA, LLC","SAMANTHA BEAN","","1851 MERCHANT LN","","HAMPTON","VA","23666-2950","Intuitively constructed with an efficient use of space and with a focus on sustainability, Element helps you stay connected and feel alive and balanced while you are away. Reflecting the smart design of urban residences, the flowing layouts of our guest rooms were created to maximize space and enable you to use the room in multiple ways. Wake up to our signature Rise complimentary breakfast,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#97;&#109;&#97;&#110;&#116;&#104;&#97;&#46;&#66;&#101;&#97;&#110;&#64;&#108;&#116;&#100;&#104;&#111;&#115;&#112;&#105;&#116;&#97;&#108;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">Samantha.Bean@ltdhospitality.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LL6DLQMZ4AQ5">52</a>","THE HICKMANN BRAND LLC","ASHLEY HICKMANN","","236 MILL POINT DR","","HAMPTON","VA","23669-3533","FOUNDED IN 2017, THIS SMALL WOMAN MINORITY OWNED FIRM IS LOCATED IN HAMPTON, VIRGINIA. SERVING THE HAMPTON ROADS, RICHMOND, AND NORTHERN VIRGINIA REGIONS, WE SPECIALIZE IN USING THE TOOLS NECESSARY TO ASSIST OUT CLIENTS WITH MAKING INFORMED DECISIONS. WE SPECIALIZE IN THE FOLLOWING SERVICES: Consulting, Real Estate Buy, Sell, Invest, Property Management, Notary.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#104;&#101;&#104;&#105;&#99;&#107;&#109;&#97;&#110;&#110;&#98;&#114;&#97;&#110;&#100;&#46;&#99;&#111;&#109;">info@thehickmannbrand.com</a>","www.thehickmannbrand.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N3BQK78KZPL3">53</a>","VANGUARD FACILITY SUPPORT SERVICES LLC","DERRICK ROSS","","16 MALLARD RUN","","HAMPTON","VA","23669-5911","Facilities support parking lot management roofing management warehouse safety stripping janitorial services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#97;&#110;&#103;&#117;&#97;&#114;&#100;&#102;&#115;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">Vanguardfss@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FK3ANA3BX6P2">54</a>","KING DAVID ENTERPRISE LLC","KARRON DAVID","","26 WELCOME WAY","","HAMPTON","VA","23666-0576","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#73;&#78;&#71;&#68;&#65;&#86;&#73;&#68;&#69;&#78;&#84;&#69;&#82;&#80;&#82;&#73;&#83;&#69;&#55;&#53;&#55;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">KINGDAVIDENTERPRISE757@GMAIL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4UNK8MM8AQ8">55</a>","THE SAILINGS LLC","THOMAS MCKENNA","","99 SHENANDOAH RD","","HAMPTON","VA","23661-3425","The Sailings LLC provides maritime and littoral consultation services to US government agencies and business contractors supporting US maritime forces. Our services include analysis of maritime and littoral operations to support US maritime strategic concepts Distributed Maritime Operations (DMO), Littoral Operations in a Contested Environment (LOCE) and Expeditionary Advanced Base Operations (EABO), as well as analysis of the physical environment to include instruction in traditional navigation and weather forecasting to improve decision maker operational risk analysis. Products and Services Tide and Tidal Current Analysis Navigation Planning and Analysis Exercise Waterspace Management Range Safety Officer Modeling and Simulation Integration Management Wargaming Support Red Cell Game Design Threat Analysis Instruction/Facilitation Navigation Weather Amphibious Operations Operational Planning Ship Simulation Operational Integration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#109;&#99;&#107;&#101;&#110;&#110;&#97;&#64;&#116;&#104;&#101;&#115;&#97;&#105;&#108;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">tamckenna@thesailings.com</a>","thesailings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H2DJCPG6N3P8">56</a>","XZELANT LOGISTICS LLC","ALFONZO HALL","","104 DAN LEIGH CT","","HAMPTON","VA","23666-4533","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#102;&#111;&#110;&#122;&#111;&#64;&#120;&#122;&#101;&#108;&#97;&#110;&#116;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">alfonzo@xzelantlogistics.com</a>","https://www.xzelantlogistics.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3GWG1B4T4M5">57</a>","BUMPERS TRUCKING LLC","CARLOS BUMPERS","","305 E ST","","HAMPTON","VA","23661-1209","Newport News, VA based trucking and hauling company serving the east coast and surrounding states. We provide general freight and dedicated services for most all freight and hauling needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#111;&#115;&#64;&#98;&#117;&#109;&#112;&#101;&#114;&#115;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">carlos@bumperstrucking.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XFNPKJW8CKN5">58</a>","DEV5 SOLUTIONS & CONSULTANT LLC","MARILYN COCHRAN","","24 REGAL WAY","","HAMPTON","VA","23669-4681","At Dev5 Solutions & Consultant LLC. Our core Competencies are:PMP-Certified Project Management Services (Agile, Waterfall, Iterative DevSecOps), Business Process Improvement Services, Business Technical Writing Services, Business, Cost, & Data Analysis Services, and Engineering Commercial Computer-aid Design (CAD) Technical Drawing Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#108;&#121;&#110;&#99;&#55;&#53;&#55;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">marilync757@gmail.com</a>","https://www.dev5solutionsconsultant.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DF3YLC9CBAN6">59</a>","J1S MOBILE SOLUTIONS, LLC","TUWANA JONES","","204 WELLS CT","","HAMPTON","VA","23666-6237","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#117;&#119;&#97;&#110;&#97;&#46;&#106;&#111;&#110;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tuwana.jones@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QBRRJ2LGV8R9">60</a>","THURMOND LEGACY VENTURES LLC","DANA THURMOND","","17 RHODA CT","","HAMPTON","VA","23664-1769","Surface Kingz delivers exterior cleaning services to commercial and government entities. Our core focus areas include pressure washing, soft washing, window cleaning, and kitchen exhaust system cleaning. We are a small business based in Hampton, Virginia.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#117;&#114;&#109;&#111;&#110;&#100;&#108;&#101;&#103;&#97;&#99;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">thurmondlegacy@gmail.com</a>","www.surfacekingz.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJS8UKHPKHD5">61</a>","METALS OF DISTINCTION, INC","WILLIAM GILLIAM","","532 E MERCURY BLVD","","HAMPTON","VA","23663-2229","The company specializes in custom wrought iron, aluminum, stainless steel and steel fabrication. Also, provides services in miscellaneous fabrication, ornamental metal fabrication and installation, structural steel fabrication, pipe welding and welding repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#116;&#97;&#108;&#115;&#64;&#103;&#105;&#108;&#108;&#105;&#97;&#109;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">metals@gilliamwelding.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NUG2UKSHAQL3">62</a>","TT&M MEDICAL TRANSPORTATION LLC","TENA ARTISE","","1285 N KING ST STE 7","","HAMPTON","VA","23669-2233","Your trusted partner in medical transportation. We specialize in providing safe, reliable, and compassionate transport services for a wide range of needs. From routine doctor appointments to urgent medical situations, our dedicated team ensures your comfort and well-being on every journey. With services including medical transport, non-emergency transport, emergency transport, and more, we cater to diverse medical needs with professionalism and empathy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#116;&#97;&#110;&#100;&#109;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ttandmllc@gmail.com</a>","https://ttandmllc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QLCLYB8ASWJ7">63</a>","CMV COMMUNICATORS, LLC","VIRGIL THORNTON SR.","","61 MIZZEN CIR","","HAMPTON","VA","23664-1784","Specializes in providing customized executive coaching, leadership training, and performance improvement services. We also help organizations increase employee internal and external engagement to increase retention and productivity. Our expertise lies within our core capabilities, which include strengthening leadership cohesiveness to improve collaboration and teamwork.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#77;&#86;&#67;&#79;&#77;&#77;&#85;&#78;&#73;&#67;&#65;&#84;&#79;&#82;&#83;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">CMVCOMMUNICATORS@GMAIL.COM</a>","WWW.CMVCOMMUNICATORS.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XGV1NPPGQK55">64</a>","OMEGA PROPERTY DEVELOPMENT LLC","AHMED DULAIMI","","308 LONDONSHIRE TER","","HAMPTON","VA","23666-2116","We involves overseeing and coordinating construction projects from start to finish, ensuring they are completed on time, within budget, and to the specified quality standards. This includes managing resources, schedules, costs, and ensuring compliance with safety and legal requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#100;&#117;&#108;&#97;&#105;&#109;&#105;&#64;&#111;&#112;&#100;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">eddulaimi@opdusa.com</a>","https://www.opdusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GXF2V1T3KUQ9">65</a>","MEDVEDSKA LLC","NATASHA SANDERS","","221 CHERRY AVE","","HAMPTON","VA","23661-2734","Over a decade in operations management experience across various industries. Let me use my expertise in SQL data analytics and qualitative analysis to create solutions to any obstacle.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#74;&#64;&#109;&#101;&#100;&#118;&#101;&#100;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">AJ@medvedska.com</a>","medvedska.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.543&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

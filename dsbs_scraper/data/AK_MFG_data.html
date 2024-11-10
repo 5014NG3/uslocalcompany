@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Alaska;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.09 seconds and 1.10 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 77 
+(of 77 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RL6FBZJKEZY1">1</a>","REFRIGERATION AND FOOD EQUIPMENT, INC.","DEBBI BROOKS","President","1901 W TUDOR RD","","ANCHORAGE","AK","99517-3114","COMMERCIAL REFRIGERATION INCLUDING WALK-INS, AIR CONDITIONING - SALES & SERVICE. SUBCONTRACTOR COMMERCIAL KITCHEN EQUIPMENT PROJECTS; PARTS SALES FOR ALL COMMERCIAL FOOD & Refrigeration EQUIPMENT; SERVICING OF ALL COMMERCIAL KITCHEN EQUIPMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#98;&#111;&#98;&#114;&#111;&#111;&#107;&#115;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#110;&#46;&#99;&#111;&#109;">debobrooks@alaskan.com</a>","www.refrigerationfoodequip.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U5H7REQ5JD44">2</a>","ALASKA GARDEN & PET SUPPLY INC","JOEL KLESSENS","President","114 N ORCA ST","","ANCHORAGE","AK","99501-1850","50 plus years in business. ANIMAL FEED, AGRICULTURAL PRODUCTS, FENCING, GRASS SEED, FERTILIZER, ROPE, GARDENING PRODUCTS, PEST CONTROL AGENTS, SOILS, PLANTS, PET SUPPLIES, ANIMAL HEALTH AIDS, DISTILLED WATER, HORTICULTURAL PRODUCTS AND HYDROSEEDING, Icemelt, De-icing,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#108;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#109;&#105;&#108;&#108;&#97;&#110;&#100;&#102;&#101;&#101;&#100;&#46;&#99;&#111;&#109;">joel@alaskamillandfeed.com</a>","http://www.alaskamillandfeed.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R983N5ALTCP4">3</a>","HAYDEN ELECTRIC MOTORS, INC.","JEFF MEYER","PRESIDENT","4191 OLD SEWARD HWY","","ANCHORAGE","AK","99503-6029","COMPLETE REPAIR OF ALL ELECTRIC MOTORS, GENERATORS, AND VOLTAGE REGULATORS. SALE OF MOTORS, GENERATORS, MOTOR CONTROLS, METERS, VOLTAGE REGULATORS. FIELD REPAIRS OF ELECTRICAL APPARATUS IN STATE OF ALASKA. UL CERTIFIED FOR EXPLOSION PROOF MOTOR REBUILDS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#64;&#104;&#97;&#121;&#100;&#101;&#110;&#45;&#97;&#107;&#46;&#99;&#111;&#109;">jeff@hayden-ak.com</a>","http://www.hayden-ak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GKLMTS2N2CY9">4</a>","GEOCHEM, INC.","DAVID NEUBAUER","","310 K ST","STE 200","ANCHORAGE","AK","99501-2064","GeoCHEM, Inc. manufactures and distributes a diversified line of products for civil construction and land protection","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#103;&#101;&#111;&#99;&#104;&#101;&#109;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">david@geocheminc.com</a>","http://www.geocheminc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLVBKGK1FNL1">5</a>","EAGLE ENTERPRISES, INC.","MIKE MURPHY","COMMERCIAL SALES","5849 OLD SEWARD HWY","","ANCHORAGE","AK","99518-1479","INDUSTRIAL SAFETY EQUIPMENT AND SUPPLIES; MARINE SAFETY EQUIPMENT ; AVIATION SAFETY EQUIPMENT AND SUPPLIES; ARCTIC CLOTHING; GAS DETECTION EQUIPMENT,RESCUE EQUIPMENT AND SUPPLIES; FIRST AID EQUIPMENT AND SUPPLIES; FIRE FIGHTING EQUIPMENT AND SUPPLIES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#107;&#101;&#64;&#101;&#97;&#103;&#108;&#101;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#110;&#101;&#116;">Mike@eaglesafety.net</a>","http://www.eaglesafety.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HFMGSNKVCU37">6</a>","ACME FENCE COMPANY, INC.","MARK LULAY","PRESIDENT","6230 A ST","","ANCHORAGE","AK","99518-1819","OVER 30 YRS EXPERIENCE IN ALL AREA'S OF ALASKA INSTALLING GUARDRAIL,CHAIN LINK,AND SPECIALTY FENCING/GATES,BRIDGE RAILS, POST INSTALLATIONS,LANDSCAPE BARRIERS,TEMPORARY FENCE SIGNING. MATERIAL SALES AND INSTALLATION.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#97;&#99;&#109;&#101;&#102;&#101;&#110;&#99;&#101;&#46;&#110;&#101;&#116;">mark@acmefence.net</a>","http://www.acmefence.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8PDG2LYKLJ1">7</a>","DENALI FENCEWORKS LLC","JOEL WIGGINS","OWNER","2399 RICHARDSON AVE","","DELTA JUNCTION","AK","99737-","FULL SERVICE FENCE INSTALLATION & MATERIALS, CHAINLINK, GUARD RAIL, SAFETY FENCING, GATES, ELECTRONIC GATE SYSTEMS,PRIVACY FENCING","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#100;&#101;&#110;&#97;&#108;&#105;&#102;&#101;&#110;&#99;&#101;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">office@denalifenceworks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M54HJUDY74J5">8</a>","KLEBS MECHANICAL, INC.","MIKE KLEBS","","1107 E 72ND AVE","","ANCHORAGE","AK","99518-2369","SUPPLY AND INSTALL HEATING, PLUMBING, VENTILATION AND AIR CONDITIONING SYSTEMS. ARCHITECTURAL FLASHING AND TRIM. STAINLESS STEEL AND ALUMINUM FABRICATION; WELDING. DUCT CLEANING, IN FLOOR RADIANT HEATING, BOILERS, SERVICE ALL HVAC SYSTEMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#108;&#101;&#98;&#115;&#64;&#107;&#108;&#101;&#98;&#115;&#104;&#101;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">mklebs@klebsheating.com</a>","http://www.klebsheating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KL3NJMMB4MH6">9</a>","AIRBORNE TECHNOLOGIES INC","TIM VEENSTRA","president","4338 N GUNFLINT TRL","","WASILLA","AK","99623-9217","Design and manufacture unmanned aerial systems. Design and manufacture satellite communication ocean buoys. Provide remote sensing airborne services including multispectral and thermal imagery, lidar and aerial survey and photography services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#118;&#101;&#101;&#110;&#115;&#116;&#114;&#97;&#64;&#97;&#116;&#105;&#97;&#107;&#46;&#99;&#111;&#109;">tveenstra@atiak.com</a>","http://www.atiak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKN7ABSKJPT7">10</a>","TYONEK FABRICATION CORPORATION","SUSAN MASON","Contracts Manager","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Manufacturing and Integration, to include precision machining, electrical assembly and shelter integration, as well as Engineering and Analysis","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#97;&#115;&#111;&#110;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">smason@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3NNALGMSSX7">11</a>","THE PORT GRAHAM CORPORATION","ROBERT BARGERON","PRESIDENT","800 E DIMOND BLVD STE 3-550","","ANCHORAGE","AK","99515-2060","We provide full-service Architect/Engineering, Program/Project & Building Mgmt, & Construction services. This also includes telecom network & critical facility design/construct & O&M, building services, telecom services, remote sites & power systems  ","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#66;&#97;&#114;&#103;&#101;&#114;&#111;&#110;&#64;&#112;&#111;&#114;&#116;&#103;&#114;&#97;&#104;&#97;&#109;&#46;&#116;&#101;&#99;&#104;">RBargeron@portgraham.tech</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MEGLVFPYQXM4">12</a>","J & J SPECIALTIES, LLC","JOEL WIGGINS","","2399 RICHARDSON AVE","","DELTA JUNCTION","AK","99737-","General contractor, concrete foundations, residential/commercial wood & metal framing, finish carpentry, painting, drywall, cabinetry/furniture, decks, roofing, wood flooring, siding, interior/exterior trim, custom woodworking, window installation,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#106;&#97;&#110;&#100;&#106;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#116;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">office@jandjspecialties.com</a>","www.jandjspecialties.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HYB9KQQEJNE8">13</a>","BIG G ELECTRIC & ENGINEERING LLC","DON MAUPIN","President","42005 KALIFORNSKY BEACH RD","","SOLDOTNA","AK","99669-8229","Industrial/commercial electrical company with a broad range of abilities. UL508 panel shop, instrumentation techicians, Horizontal directional drilling unit (Ditch Witch 2720), 3rd party metering and sealing, and utility work.    ","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#46;&#109;&#97;&#117;&#112;&#105;&#110;&#64;&#107;&#111;&#110;&#105;&#97;&#103;&#101;&#119;&#46;&#99;&#111;&#109;">don.maupin@koniagew.com</a>","http://www.biggelectric.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QWL2DQD4C7B4">14</a>","THREE SAINTS BAY, LLC","JENNIFER BROUGHAM","President","2702 DENALI STREET #100","","ANCHORAGE","AK","99503-2747","Provide contracting ability to government entities within 8a, SDB, as a Tribally Owned, Native Alaskan Owned Corporation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#83;&#66;&#67;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#116;&#104;&#114;&#101;&#101;&#115;&#97;&#105;&#110;&#116;&#115;&#98;&#97;&#121;&#46;&#99;&#111;&#109;">TSBContracts@threesaintsbay.com</a>","www.threesaintsbay.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GMUVP8ECWME6">15</a>","INTERIOR MOBILE WELDING & SERVICES INC","RANDALL BEEMAN","President, Bookkeeper","2250 VAN HORN RD","","FAIRBANKS","AK","99701-7206","Were are certified in Mig, Tig, Brazing, Stick, Air Arc, Gas Welding, Wire Feed, Pan Deck, Pipe. We offer welding & fabrication services for structural and pipe, aluminum, stainless steel, cast steel, mild steel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#64;&#103;&#99;&#105;&#46;&#110;&#101;&#116;">welding@gci.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TQRZQGCE7MS8">16</a>","DREAMWORKS CABINETRY LLC","CHRISTOPHER LARRICK","Managing Member","2984 PARKS HWY","","FAIRBANKS","AK","99709-6933","Custom cabinet and countertop manafacturer for residential, commercial, and institutional uses. Highly automated shop with consistent high quality production and high capacity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#100;&#114;&#101;&#97;&#109;&#119;&#111;&#114;&#107;&#115;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">chris@dreamworksalaska.com</a>","http://dreamworksalaska.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HGGJJQ6A21J5">17</a>","GREER TANK, LLC","CYRUS ELTERMAN","","3140 LAKEVIEW DR","","FAIRBANKS","AK","99701-7833","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#101;&#108;&#116;&#101;&#114;&#109;&#97;&#110;&#64;&#103;&#114;&#101;&#101;&#114;&#116;&#97;&#110;&#107;&#46;&#99;&#111;&#109;">celterman@greertank.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EK9NVM7HRJC4">18</a>","GREATLAND LASER LLC","KIMBERLY ERICKSON","CEO","11832 N MAXWELL DR","","WILLOW","AK","99688-0792","Manufacturer and patent holder for Rescue Laser signaling devices. Research and development of patented applications using laser systems for markings on airports, in the marine environment and in industrial applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#46;&#101;&#114;&#105;&#99;&#107;&#115;&#111;&#110;&#64;&#103;&#114;&#101;&#97;&#116;&#108;&#97;&#110;&#100;&#108;&#97;&#115;&#101;&#114;&#46;&#99;&#111;&#109;">kim.erickson@greatlandlaser.com</a>","http://www.greatlandlaser.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W5VHYN9EXEY9">19</a>","DOWLAND-BACH CORPORATION","DELTA FETTES","General Manager","1977 E BOGARD RD","","WASILLA","AK","99654-6525","UL LISTED INDUSTRIAL CONTROL PANEL MANUFACTURER, STAINLESS STEEL SHEET METAL FABRICATION, COMPUTERIZED ENGRAVING SERVICES, STAINLESS STEEL TUBING, PIPE, AND FITTING DISTRIBUTOR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#108;&#116;&#97;&#46;&#102;&#101;&#116;&#116;&#101;&#115;&#64;&#107;&#111;&#110;&#105;&#97;&#103;&#101;&#119;&#46;&#99;&#111;&#109;">delta.fettes@koniagew.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PHRKRCEXL5J6">20</a>","DAVIDSON ROBERT","ROBERT DAVIDSON","","7308 NATHAN DR","","ANCHORAGE","AK","99518-2862","Road construction, new and repair, road grading, suppler of crushed aggregate and gravel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#103;&#98;&#108;&#100;&#95;&#114;&#100;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">agbld_rd@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RHJVG6K73QT3">21</a>","ABS ALASKAN, INC.","JIM NORMAN","","2130 VAN HORN RD","","FAIRBANKS","AK","99701-7204","DC and remote power systems Renewable energy systems data logging and remote communication batteries and battery systems battery backup and UPS systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#97;&#98;&#115;&#97;&#107;&#46;&#99;&#111;&#109;">jim@absak.com</a>","https://www.absak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CULGH8H1MK57">22</a>","TYONEK ENGINEERING & AGILE MANUFACTURING, LLC","BRAD MORIARTY","VICE PRESIDENT","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H7MYZ4Q25WZ2">23</a>","KATMAI SUPPORT SERVICES, L.L.C.","CYNTHIA VANDEN BERG","","11001 OMALLEY CENTRE DR","STE 204","ANCHORAGE","AK","99515-3096","Nationwide general contractor specializing in Federal Govt. Construction and Project Management with emphasis on Design/Build and Indefinite Delivery Indefinite Quantity Contract – IDIQ; JOC, SABER, MATOC, and MACC contracts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#118;&#97;&#110;&#100;&#101;&#110;&#98;&#101;&#114;&#103;&#64;&#107;&#97;&#116;&#109;&#97;&#105;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">cvandenberg@katmaicorp.com</a>","http://www.katmaicorp.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W6LALH34LNK8">24</a>","JONATHAN A HOLMGREN","JONATHAN HOLMGREN","","350 GOLDSTREAM RD","","FAIRBANKS","AK","99712-1007","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#64;&#106;&#111;&#110;&#115;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">jon@jonsmachine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LT36MYK59575">25</a>","TFAB MANUFACTURING LLC","SUSAN MASON","PRESIDENT","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#77;&#65;&#83;&#79;&#78;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">SMASON@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNEFFE29YVA3">26</a>","RAVEN ELECTRIC, INC.","CHARLES HOUSE","","8015 SCHOON ST","","ANCHORAGE","AK","99518-3045","A well-versed solutions provider bringing superior quality and professional services to satisfy any need. 40+yrs of statewide experience in Electrical, Telecomm, IT, specialized services, and General Contracting throughout all of Alaska.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#117;&#115;&#101;&#64;&#114;&#97;&#118;&#101;&#110;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">dhouse@ravenelectric.com</a>","www.ravenelectric.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAHNHCECQLB8">27</a>","PORT GRAHAM DEVELOPMENT CORPORATION","ROBERT BARGERON","PRESIDENT","9131 E FRONTAGE RD STE 20","","PALMER","AK","99645-9335","We provide full-service Architect/Engineering, Program/Project & Building Mgmt, & Construction services. This also includes telecom network & critical facility design/construct & O&M, building services, telecom services, remote sites & power systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#66;&#97;&#114;&#103;&#101;&#114;&#111;&#110;&#64;&#112;&#111;&#114;&#116;&#103;&#114;&#97;&#104;&#97;&#109;&#46;&#116;&#101;&#99;&#104;">RBargeron@portgraham.tech</a>","http://www.pgdcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MYYUKZBKFMN7">28</a>","TATITLEK CONSTRUCTION SERVICES, INC.","RICHARD HOBBS","Owner","561 E 36TH AVE STE 400","","ANCHORAGE","AK","99503-4170","TCSI has significant experience in general contracting, design-build and construction mgmt. Projects include: new construction, vehicle barriers, geothermal system installation, building envelope repair, and range training facility design & construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#98;&#98;&#115;&#64;&#116;&#97;&#116;&#105;&#116;&#108;&#101;&#107;&#46;&#99;&#111;&#109;">dhobbs@tatitlek.com</a>","www.tatitlek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSNBJKU5ULA7">29</a>","ALASKA RUBBER GROUP, INC.","MICHAEL BISHOP BISHOP","","5811 OLD SEWARD HWY","","ANCHORAGE","AK","99518-1479","All locations are retail and wholesale distributors of hose, fittings, pumps, belts and related products. Both Anchorage and Fairbanks have Rigging Divisions and manufacture and test wire rope assemblies, and supply all other rigging associated products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#98;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#114;&#117;&#98;&#98;&#101;&#114;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mikeb@alaskarubbergroup.com</a>","HTTP://WWW.ALASKARUBBERGROUP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZCG5GNAUNJ33">30</a>","A T PUBLISHING INC","MARIE MCCONKEY","Vice President","1720 ABBOTT RD","","ANCHORAGE","AK","99507-3443","Commercial Printing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#101;&#64;&#97;&#116;&#112;&#117;&#98;&#108;&#105;&#115;&#104;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">marie@atpublishing.com</a>","http://www.atpublishing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MFM6WQKK5J39">31</a>","GREEN EARTH LANDWORKS LLC","GLORIA CHRISTINA ENEIX","","5440 B ST","","ANCHORAGE","AK","99518-1639","Green Earth Landworks has completed contracts up to 2.5 million per season. GEL has managed up to 50 employees. We have the equipment and personal to complete complex projects in Alaskas most remote and harsh environments. We are producers of topsoil, compost and BMP products. We are also experienced in SWPPP managments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#97;&#64;&#103;&#114;&#101;&#101;&#110;&#101;&#97;&#114;&#116;&#104;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">christina@greenearthalaska.com</a>","http://www.greenearthalaska.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJHAN9CRZ7J8">32</a>","WESTERN BIOACOUSTICS INC","ROBERT AMBROSE","","1890 OTTER SLIDE LN","","FAIRBANKS","AK","99709-2700","Research on biological and acoustical issues, including impacts of human-caused sounds on wildlife, determining natural ambient sound levels in wildland areas, and standard acoustic studies in conjunction with wildlife inventory and monitoring studies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#105;&#112;&#64;&#97;&#108;&#97;&#115;&#107;&#97;&#115;&#111;&#117;&#110;&#100;&#115;&#46;&#99;&#111;&#109;">skip@alaskasounds.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DL4KXMJ1MHM9">33</a>","HOFFER, INC.","EMILY CHEYSOBHON","","3740 BRADDOCK ST","","FAIRBANKS","AK","99701-7617","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#105;&#108;&#121;&#64;&#104;&#111;&#102;&#102;&#101;&#114;&#45;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;">emily@hoffer-glass.com</a>","www.hoffer-glass.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H9GXT6HCG3M6">34</a>","TRIVERUS LLC","PAULA SMITH","","661 E STEEL LOOP","","PALMER","AK","99645-6689","Triverus designs and manufactures high efficiency outdoor surface cleaning equipment. Our cleaning vehicles are used in Airfield, Municipal and Military markets. We lean heavily on a fit-for-purpose design process that applies our continually improving cleaning and waste management technologies to specific market sectors. Our Services Include the following: Cleaning: Parking facilities Cleaning: Marine & dry dock SWPP: Storm Water Pollution Prevention Core Competencies: Outdoor Surface Cleaning -Parking facilities -Airfields -Marine and dry dock -Restoration of pervious concrete Airfield Maintenance -High-efficiency closed loop recovery: supports Storm Water Pollution Prevention (SWPP) -Fine solids recovery for paint prep or crack sealing pre-cleaning -Runway rubber removal -Glycol recovery -Ramp cleaning -Paint removal -Spill response","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#109;&#105;&#116;&#104;&#64;&#116;&#114;&#105;&#118;&#101;&#114;&#117;&#115;&#46;&#99;&#111;&#109;">psmith@triverus.com</a>","http://www.triverus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCJFCL8RHY65">35</a>","MAGIC METALS, INC.","LORIE TOLSTRUP","","6391 E LARSON WAY","","PALMER","AK","99645-9718","Magic Metals provides the latest in technological advances and contemporary appearance for your simplest do-it-yourself project or full scale commercial application with the industries best warranties. In the past few years, we have upgraded our equipment to the industries best, to provide our customers with a high quality product. Metal fabrication is set apart from other roofing products by it’s long-life, fire resistance and design for easy application. Its contemporary appearance is matched only by the ease in assembly, low maintenance and the all important Alaskan factor... simple snow and debris removal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#103;&#105;&#99;&#109;&#101;&#116;&#97;&#108;&#115;&#64;&#109;&#116;&#97;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#110;&#101;&#116;">magicmetals@mtaonline.net</a>","http://www.magicmetalsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAWJX82ASKJ7">36</a>","ALASKA INTEGRATED SERVICES, LLC","RODGER MORROW","","619 11TH AVE STE 101","","FAIRBANKS","AK","99701-4676","We handle all aspects of sheet metal and temperature controls installation and services. We are a distributor for Delta Controls. We also sell over-the-counter fabricated and non-fabricated metal goods and controls.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#105;&#101;&#115;&#64;&#97;&#107;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">angies@akintegrated.com</a>","https://www.akintegrated.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NGDNXNAW3N85">37</a>","TAKU ENGINEERING, LLC","HARRY BUCHEA","","406 W FIREWEED LN STE 101","","ANCHORAGE","AK","99503-2649","Expertise includes Multi-Discipline, Electrical, Mechanical, Chemical, Civil, Materials Engineering. Project Engineering and Management. Corrosion Engineering, Cathodic Protection, Piping and Tank Inspection/Design. API 570, API 653 and STI SP001","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#114;&#121;&#98;&#117;&#99;&#104;&#101;&#97;&#64;&#116;&#97;&#107;&#117;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">harrybuchea@takuengineering.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPNLEDVG5AS4">38</a>","HAZARD PROTECTION SYSTEMS, INC","GEORGIANNA SCHAALJE","","6841 SEQUOIA CIR","","ANCHORAGE","AK","99516-3700","Manufacturing of our patent pending fire extinguishing ballistic impact system. We provide engineering analysis using proprietary information to design the proper system","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#99;&#104;&#97;&#97;&#108;&#106;&#101;&#64;&#104;&#97;&#122;&#97;&#114;&#100;&#112;&#114;&#111;&#116;&#101;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">gschaalje@hazardprotection.com</a>","http://www.hazardprotection.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F5JZUL8JTEK3">39</a>","GLOBAL PRECISION SYSTEMS, LLC","JORG JENSEN","","3301 C ST STE 400","","ANCHORAGE","AK","99503-3958","Global Precision Systems, LLC (GPS) offers full facility operations and maintenance (O&M) support that includes maintenance, repair, and installation of facility structures, janitorial, pest control, airfield management, materials management, roads and grounds maintenance, snow removal, and security services. GPS operates and maintain water, wastewater, and heating plants and maintain electrical, (including high voltage), HVAC, fire alarm, plumbing, intrusion detection, telephone, and cable systems. GPS performs vehicle and heavy equipment maintenance, fleet management, fuels management, and transportation services. We perform program management, environmental protection, safety, and quality control services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#106;&#101;&#110;&#115;&#101;&#110;&#64;&#98;&#101;&#114;&#105;&#110;&#103;&#115;&#116;&#114;&#97;&#105;&#116;&#115;&#46;&#99;&#111;&#109;">jjensen@beringstraits.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFBVADKWYNM5">40</a>","JOLT CONSTRUCTION & TRAFFIC MAINTENANCE, INC.","KATHLEEN COLE","","2868 S PAULINE CT","","BIG LAKE","AK","99652-","Provides temporary traffic control through work zones. Manufactures and installs highway signage. Installs guardrails. Performs highway landscaping, seeding and maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#106;&#111;&#108;&#116;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">admin@joltconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y3UWLPXZVW57">41</a>","TEDNOLOGIES, INC.","DON HARMAN","","5640 FENWICK CIR","","ANCHORAGE","AK","99516-1719","manufacture temp controlled air cargo containers and repaiir air cargo containers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#64;&#112;&#97;&#108;&#108;&#101;&#116;&#103;&#117;&#121;&#46;&#110;&#101;&#116;">don@palletguy.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EPNHPWKXG455">42</a>","BOBCAT OF JUNEAU LLC","COLTER BOEHM","","5450 GLACIER HWY","","JUNEAU","AK","99801-9507","Sales, Service,Parts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#108;&#116;&#101;&#114;&#64;&#98;&#111;&#98;&#99;&#97;&#116;&#111;&#102;&#106;&#117;&#110;&#101;&#97;&#117;&#46;&#99;&#111;&#109;">colter@bobcatofjuneau.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LB57UH3WJLY9">43</a>","POLAR WIRE PRODUCTS, INC.","MARVIN KUENTZEL","","7941 BRAYTON DR","","ANCHORAGE","AK","99507-2777","Wire Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#118;&#105;&#110;&#64;&#112;&#111;&#108;&#97;&#114;&#119;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">Marvin@polarwire.com</a>","WWW.POLARWIRE.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TUC7LR94GJ49">44</a>","TFAB GROUND SYSTEMS LLC","TODD WHITE","","880 H ST","STE 210","ANCHORAGE","AK","99501-5131","Wire Harness, Cable & Component Integration, Circuit Cards, Electrical Testing, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Assembly, Integration, Aircraft Kitting, A Kits, Acceptance Testing, Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#119;&#104;&#105;&#116;&#101;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">twhite@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JB7DBH1HAFQ3">45</a>","CARTER & CARTER ENTERPRISES, INC.","MARIANA CARTER","MANAGER","113 SEA OTTER DR","","COFFMAN COVE","AK","99918-0009","Excavation & Landscaping, REFORESTATION - PRECOMMERCIAL TREE THINNING, TREE PLANTING, TIMBER CUTTING. Wood (raw materials and small procesing):western red & yellow cedar, sitka spruce and hemlock","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#116;&#101;&#114;&#97;&#110;&#100;&#99;&#97;&#114;&#116;&#101;&#114;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">carterandcarterenterprisesinc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GX34R4Y3RZ58">46</a>","WOLF CREEK FEDERAL SERVICES INC","ROBERT CURSIO","","3800 CENTERPOINT DR","","ANCHORAGE","AK","99503-5825","Metal fabrication (welding, machining, pipefitting, prototyping), Non Destructive Testing; welder train/cert; powdercoating; base operating svcs; facilities operations & maintenance; general construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#99;&#102;&#115;&#105;&#45;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#99;&#104;&#117;&#103;&#97;&#99;&#104;&#103;&#111;&#118;&#46;&#99;&#111;&#109;">wcfsi-contact@chugachgov.com</a>","chugachgov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KBSWED5ZD315">47</a>","ALASKA AIRCRAFT SALES, INC.","KEENAN ZERKEL","","4131 FLOATPLANE DR","","ANCHORAGE","AK","99502-1203","Aircraft repair station located on Lake Hood. Aircraft Sales, maintenance, modifications, sheet metal, float changeover, appraisals, sales, leasing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#107;&#97;&#105;&#114;&#99;&#114;&#97;&#102;&#116;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">sales@akaircraftsales.com</a>","www.akaircraftsales.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FHRUL5ZXKLD3">48</a>","ARCTIC FOX SAFETY & SUPPLY LLC","MARK RODRIGUEZ","","1500 N POST RD","","ANCHORAGE","AK","99501-1710","Arctic Fox Safety & Supply specialize in Construction and Environmental remediation safety apparel, PPE and equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#100;&#64;&#101;&#99;&#99;&#97;&#108;&#97;&#115;&#107;&#97;&#46;&#99;&#111;&#109;">rod@eccalaska.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLMJRKVFDQM2">49</a>","TFAB DEFENSE SYSTEMS, LLC","BRAD MORIARTY","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Full-service mechanical & electrical manufacturing with OEM capability and quality built in. Design & build test sets and software in house. Core Manufacturing Competencies include: Wire Harness, Cable Manufacture, Printed Circuit Board Assembly, Electrical Test Equipment, Precision Machining & Turning, Painting, Coating, Marking, Welding, Sheet Metal Fabrication, Mechanical Assembly, Kitting, Sustaining Engineering, Acceptance Testing, Component Integration.Complex Systems & Subsystems, Aviation Components, Ground Defense Articles, Maritime Defense Articles, Foreign Military Sales, Modeling & Simulation, Environmental Testing Lab On Site. SDB, ANC, 8(a), with DCMA Oversight, 99.7% First Pass Quality Ratings, Fully Certified Operators, Designated Quality Representatives Approved to Conduct OEM Test & Inspection. 2017 Lockheed RMS/Sikorsky Elite Supplier, 2017 Lockheed/Sikorsky Supplier of the Year, 2017 Lockheed Excellence in Performance Award, 2017 Lockheed Outstanding Small Business","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","http://www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JHNFJYNZTU79">50</a>","MECHANICAL SOLUTIONS INC","KIMBERLY BELANGER","","1000 OMALLEY RD","STE 107","ANCHORAGE","AK","99515-3083","Mechanical Solutions, Inc. is a manufacturer’s representative specializing in premium quality heating and air conditioning systems for commercial and industrial markets.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#109;&#98;&#101;&#114;&#108;&#121;&#64;&#109;&#115;&#105;&#45;&#97;&#107;&#46;&#99;&#111;&#109;">kimberly@msi-ak.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GURRMJDK8P33">51</a>","TOGHOTTHELE CORPORATION","SAM PHILLIPS","","307.8 PARKS HWY","","NENANA","AK","99760-","Construction and excavation, road building, site preperation, equipment leasing, fabrication, trucking, site clearing, material sales, logging, driveways, building sites, building assembly, septic installation, residential construction , commercial and insititutional building construction , log cabins , light gauge steel framing and trussing and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#116;&#111;&#103;&#99;&#111;&#114;&#112;&#46;&#110;&#101;&#116;">admin@togcorp.net</a>","http://www.togcorp.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YME3BGMFWFU8">52</a>","MERKOURIS, PAUL","PAUL MERKOURIS","","3062 NORTH CIR","","ANCHORAGE","AK","99507-3955","40+ yrs industry exp; wholesaler of telecommunication equipment & systems, RF systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#100;&#98;&#109;&#115;&#97;&#108;&#101;&#46;&#99;&#111;&#109;">paul@dbmsale.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TUNCNYXB3TS6">53</a>","TSIGONIS COMPANIES, INC.","JERRY FLEISHMAN","","1963 DONALD AVE","","FAIRBANKS","AK","99701-7387","Engineering and manufacturing specializing in wastewater treatment and plastic fabrication","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#114;&#121;&#64;&#108;&#105;&#102;&#101;&#119;&#97;&#116;&#101;&#114;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jerry@lifewaterengineering.com</a>","www.LifewaterEngineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JKMNQAYLA555">54</a>","AURORA INDUSTRIES LLC","HECTOR CRUZ","","2700 GAMBELL ST STE 300","","ANCHORAGE","AK","99503-2833","Manufacture of specialized military apparel. Aurora Industries, LLC is a wholly owned subsidiary of SNC Technical Services, LLC, we are an Alaskan Native Corporation, Small Business Disadvantage, 8(a) Certified Company. Aurora Industries, LLC leverages the experience of its sister companies, SNC Manufacturing, LLC and API, LLC which have been producing military garments for the past 10 years, not limited to ACU’s, ACS’s, FREE Garments, NWU Utility Uniforms and Parkas, Duffel Bags, Balaclavas, Gloves, etc. Aurora has the capability to manufacture on their three main facilities currently operating in Puerto Rico with the availability of over 150,000 manufacturing square feet. Aurora has been the only producers of the Duffel Bags (Regular and the ARMY Improved version) for the last couple of years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#99;&#114;&#117;&#122;&#64;&#115;&#110;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">hcruz@sncts.com</a>","https://snc.org/business-operations/tactical-apparel/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FMD9S7DJ6VJ3">55</a>","KAIYUH SERVICES, LLC","REINHARD MUELLER","","3900 C ST STE 100","","ANCHORAGE","AK","99503-5962","Kaiyuh Services, LLC (KSL) has built a robust portfolio of work in the areas of Food Service, Heavy Civil Construction, Facility Maintenance and Construction over the past decade. We also provided for the upkeep of an overseas power plant rounding out a considerable capacity to solve a wide range of challenges for our customers. KSL has built a wide-ranging capability in military wood packaging, responding to an uptick in worldwide demand for ammunition packaging which we support for multiple calibers and munition types. In more recent years, KSL is the managing partner of a large SABER contract located at Wright Patterson AFB for construction renovation and repairs. This contract has proven our ability to successfully manage a wide variety of concurrent tasks.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#117;&#101;&#108;&#108;&#101;&#114;&#64;&#103;&#97;&#110;&#97;&#97;&#121;&#111;&#111;&#46;&#99;&#111;&#109;">rmueller@ganaayoo.com</a>","www.ganaayoo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E8MKB9CCNB37">56</a>","BOHLMAN HOLDINGS L.L.C.","SHANE BOHLMAN","","23316 MULEY CIR","","CHUGIAK","AK","99567-5484","Bohlman Holdings LLC is a procurement ready Service Disabled Veteran Owned Small Business with extensive experience in Federal Government Contracting. Bohlman Holdings LLC has a proven history of delivering equipment correctly and on time. If ever there is an unforeseen issue, it is addressed right away to meet the requirements for the customer.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#64;&#98;&#111;&#104;&#108;&#109;&#97;&#110;&#104;&#111;&#108;&#100;&#105;&#110;&#103;&#115;&#46;&#99;&#111;&#109;">shane@bohlmanholdings.com</a>","www.bohlmanholdings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNFDTBVHYRK9">57</a>","SMITH JOSHUA","JOSHUA SMITH","","44540 BERYL ST","","KENAI","AK","99611-9815","Experienced Remote Facility Maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#111;&#114;&#116;&#104;&#114;&#111;&#97;&#100;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">northroad@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N2PPA96755J3">58</a>","HIGHMARK MARINE FABRICATION, LLC","COOPER CURTIS","","2018 MILL BAY RD","","KODIAK","AK","99615-6600","Highmark Marine Fabrication provides ABS/USCG certified welding, marine repair, machining, commercial diving, mobile crane services, coatings, Interior & exterior vessel renewal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#111;&#112;&#101;&#114;&#64;&#104;&#105;&#103;&#104;&#109;&#97;&#114;&#107;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">cooper@highmarkmarine.com</a>","www.highmarkmarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SM3DL16FHN43">59</a>","ARCTICOM, LLC","BRUCE HELLENGA","","3301 C ST STE 400","","ANCHORAGE","AK","99503-3958","Arctiom offers a broad range of information technology solutions, provides network and systems administration, enterprise architecture and resource planning; email operations; e-authentication services; certification & accreditation; software design, programming, implementation & testing; maintenance of telecommunications and land mobile radio equipment and systems; help desk support; installation of Giant Voice; Voice Over Internet Protocol; E-911 dispatch systems, and IT transformation services, Turnkey Furniture Supply, Assembly, Installation services. Arcticom offers impressive performance that is recognized with exceptional ratings and commendations tied to installation successes. Satisfied customers include the U.S. Air Force, Army, Navy, Marines and Coast Guard; the Departments of State, Justice, Transportation, Defense, Energy, Commerce, Agriculture, Interior, and Homeland Security; the General Services Administration; the Defense Logistics Agency, and the U.S. Census Bureau.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#101;&#108;&#108;&#101;&#110;&#103;&#97;&#64;&#98;&#115;&#110;&#99;&#46;&#110;&#101;&#116;">bhellenga@bsnc.net</a>","http://www.beringstraits.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3ESMH57AK14">60</a>","TYONEK MACHINING AND FABRICATION, LLC","BRAD MORIARTY","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","TMF provides full spectrum mechanical and electrical fabrication for complex systems, subsystems and components for aviation, ground, and maritime defense articles. Direct experience in manufacturing complex electro-mechanical systems, hydraulics, pneudraulics, control boxes, cables and weapons system hardware for DOD ground vehicle systems. Our expertise includes parts and components design, fabrication and assembly for environmental control units I heating, ventilation, and air conditioning (HVAC), motors and generators, avionics and electronics for aviation and ground vehicles and systems. Core Manufacturing Competencies: Wire Harness, Cable Manufacture, Printed Circuit Board Assembly, Electrical Test Equipment, Precision Machining & Turning, Painting, Coating, and Marking, Welding, Sheet Metal Fabrication, Mechanical Assembly, Kitting, Sustaining Engineering, Acceptance Testing, Component Integration","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#111;&#114;&#105;&#97;&#114;&#116;&#121;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">bmoriarty@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F56MVJXUVMK3">61</a>","AIRCRAFT READINESS ALLIANCE, LLC","TONY FRIDELLE","","880 H ST","STE 210","ANCHORAGE","AK","99501-3450","Aircraft manufacturing; Aviation services; Aircraft maintenance, repair, and overhaul","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#102;&#114;&#105;&#100;&#101;&#108;&#108;&#101;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">tfridelle@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDHFD1FY5D24">62</a>","ASRC PRIME CONSTRUCTORS, LLC","PATRICK MCANALLY","","3900 C STREET","SUITE 301","ANCHORAGE","AK","99503-5965","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#109;&#99;&#97;&#110;&#97;&#108;&#108;&#121;&#64;&#97;&#115;&#114;&#99;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">pmcanally@asrcconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V1M4FREWDMN5">63</a>","ALCHEMY ORTHOTICS & PROSTHETICS LLC","WIL SUNDBERG","","5660 B ST","","ANCHORAGE","AK","99518-1641","Custom fabricated prosthetic limbs and orthotics devices, and supplies. Manufacturing of PPE (face shields)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#105;&#108;&#64;&#97;&#108;&#99;&#104;&#101;&#109;&#121;&#97;&#107;&#46;&#99;&#111;&#109;">wil@alchemyak.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK4XMWJ98516">64</a>","ARED LLC","BRIAN ASHTON","","730 CASE AVE","","WRANGELL","AK","99929-","20 years experience restoring wild salmon runs. Advanced composites materials fabrication techniques. Management of Aircraft modifications for advanced aviation missions capabilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#116;&#111;&#110;&#98;&#64;&#97;&#114;&#101;&#100;&#46;&#110;&#101;&#116;">ashtonb@ared.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GCTTKLA8N1L4">65</a>","GREAT NORTHERN SHEDS, LLC","DEAN SENECAL","","2279 RICHARDSON HWY","","NORTH POLE","AK","99705-6043","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#97;&#116;&#110;&#111;&#114;&#116;&#104;&#101;&#114;&#110;&#115;&#104;&#101;&#100;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">greatnorthernshedsllc@gmail.com</a>","greatnorthernsheds.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H1J6Q1X16W91">66</a>","JADIN TECH, LLC","MATTHEW PAVLAK","","1400 W BENSON BLVD STE 502","","ANCHORAGE","AK","99503-3798","Jadin Tech provides a spectrum of diversified services in the areas of Security Assistance, Security Cooperation, FMS, Full Lifecycle Software Development, Logistics Management, Aircraft Maintenance, Ferrying Services, Depot Level Maintenance, Training & Simulation, Unmanned Aircraft Systems, and U.S. & Foreign Weapons, and Munitions, Cyber Security Training. We offer 100 years of combined experience In Software Development and Training & Simulation support for the U.S. military and have managed multi-million-dollar contracts with no loss of training time for over 20 years. We possess over 20 years of experience and utilize best practice processes and is certified in ISO 9001:2015; ISO 27001; CMMI Service ML3; and ISO 20000-1 quality standards. We are CMMC and NIST 800-171 complaint to level 3.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#116;&#116;&#104;&#101;&#119;&#46;&#80;&#97;&#118;&#108;&#97;&#107;&#64;&#106;&#97;&#100;&#105;&#110;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">Matthew.Pavlak@jadintech.com</a>","https://www.jadintech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EAM5ADE8BAE5">67</a>","COMMERCIAL KITCHEN SOLUTIONS, LLC","DAVE SHEFFREY","","5430 B ST","","ANCHORAGE","AK","99518-1694","Not only does Commercial Kitchen Solutions have an endless supply of products, but we also provide kitchen layout and design services to maximize the use of your space. Commercial Kitchen Solutions provides quality design, equipment and supplies to restaurants, slope camps, hotels and other commercial establishments throughout Alaska.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#46;&#99;&#107;&#115;&#97;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dave.cksak@gmail.com</a>","http://www.commercialkitchensolutionsak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VD3VA3G27KK8">68</a>","T3 AEROSPACE LLC","PAUL STEIN","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#116;&#101;&#105;&#110;&#64;&#116;&#121;&#111;&#110;&#101;&#107;&#46;&#99;&#111;&#109;">pstein@tyonek.com</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHKEJLD34QY7">69</a>","INNER CREATIONS LLC","RYAN WILFER","","5599 CHENA HOT SPRINGS RD","","FAIRBANKS","AK","99712-3510","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#110;&#101;&#114;&#99;&#114;&#101;&#97;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">innercreationsllc@gmail.com</a>","www.inner-creations.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RUDKS757HLA2">70</a>","TYONEK ADVANCED MANUFACTURING, LLC","TODD WHITE","","880 H ST STE 210","","ANCHORAGE","AK","99501-3450","Fiber optics, manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#119;&#104;&#105;&#116;&#101;&#64;&#84;&#89;&#79;&#78;&#69;&#75;&#46;&#67;&#79;&#77;">twhite@TYONEK.COM</a>","www.tyonek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WKFUDADEJ298">71</a>","BETHEL YUUT LLC","MARCUS KUHNS","","2600 DENALI ST STE 102B","","ANCHORAGE","AK","99503-2746","Bethel has established strong manufacturing operations in Puerto Rico and past performance supporting on time delivery of products and services compliant with DoD manufacturing and statutory and regulatory requirements. Bethel’s Quality Assurance Plan ensures product satisfaction for the customer. Bethel incorporates higher levels of inspection throughout the manufacturing process to efficiently identify and address any issues with the production line. This system has proven to be effective in helping Bethel deliver quality products with the highest customer satisfaction. All levels of Bethel’s personnel team understand and engage in this process which integrates executive management, human resources, accounting, personnel, operations, maintenance and compliance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#117;&#104;&#110;&#115;&#64;&#98;&#110;&#99;&#97;&#107;&#46;&#99;&#111;&#109;">mkuhns@bncak.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M11ZLJALG8M5">72</a>","SURVEYORS EXCHANGE, CO.","SHERRI WILMARTH","","3323 DE ARMOUN RD","","ANCHORAGE","AK","99516-3587","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#114;&#114;&#105;&#64;&#115;&#117;&#114;&#118;&#101;&#121;&#111;&#114;&#115;&#104;&#97;&#119;&#97;&#105;&#105;&#46;&#99;&#111;&#109;">sherri@surveyorshawaii.com</a>","www.tse-ak.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4UAPJCFZVY4">73</a>","MICHAEL ESSLIN","MICHAEL ESSLIN","","35940 TERESA WAY","","SOLDOTNA","AK","99669-8623","Electrical contracting, electrical project management, electrician, electrical qaqc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#101;&#115;&#115;&#108;&#105;&#110;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">michaelesslin@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4MAXWWPDKZ2">74</a>","HI-Q-MILITARY ANTENNAS-AES LLC","SCOTT SNYDER","","880 N ST","STE 101","ANCHORAGE","AK","99501-3276","Manufacturer of high frequency (HF) antennas antennas for mobile military applications such as land and sea vehicles, and man-pack systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#64;&#104;&#105;&#113;&#97;&#110;&#116;&#101;&#110;&#110;&#97;&#115;&#46;&#99;&#111;&#109;">scott@hiqantennas.com</a>","https://www.hi-q-militaryantennas.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SL3VYLWGDEX5">75</a>","DELTA POWERSPORTS - FAIRBANKS LLC","JOSH LAWHORNE","","1450 KAREN WAY","","FAIRBANKS","AK","99709-4650","26 years in retail powersports business. We sell ATVs, snowmachines, side by side vehicles and small lawn/garden equipment (Honda, Can-Am, Ski-Doo, Polaris, Honda PE, Honda MC, Stihl.) Certified parts and service departments for all products we sell.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#64;&#100;&#101;&#108;&#116;&#97;&#112;&#111;&#119;&#101;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">josh@deltapowersports.com</a>","https://www.deltapowersportsfairbanks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SBDDZ4XMS1W3">76</a>","ALASKA PRECAST SOLUTIONS, INC","TRACY ARGO","","450 S OLD TRUNK RD UNIT 3","","PALMER","AK","99645-7483","Alaska Precast Solutions is proud to introduce the first-ever Precast Hollow-core Concrete Manufacturing Plant in the State of Alaska. Our state-of-the-art, cutting-edge 43,000 square-foot precast concrete manufacturing facility produces extruded hollow-core plank, precast deck panels & partial-depth precast concrete deck panels. Offering customizable panel casting on 400' beds in 8', 10', 12' & 16' thickness options with lengths tailored to project specifications. We also include delivery and installation services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#121;&#64;&#114;&#101;&#109;&#111;&#116;&#101;&#97;&#107;&#46;&#99;&#111;&#109;">tracy@remoteak.com</a>","https://www.precastak.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NHHZB89SS2N9">77</a>","GRAFIKA CAKE STUDIO LLC","AGATA MIERWINSKA","","11823 OLD GLENN HWY STE 112","","EAGLE RIVER","AK","99577-7751","20+ years, working in baking industry, making cakes and desserts serving community, suppling baked goods or cakes to wedding events, corporate events, and other events","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#103;&#97;&#116;&#97;&#64;&#103;&#114;&#97;&#102;&#105;&#107;&#97;&#99;&#97;&#107;&#101;&#115;&#116;&#117;&#100;&#105;&#111;&#46;&#99;&#111;&#109;">agata@grafikacakestudio.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.22&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

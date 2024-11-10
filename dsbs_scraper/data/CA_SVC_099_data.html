@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 099 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.45 seconds and 2.60 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 23 
+(of 23 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBDKHW5E6K48">1</a>","PAK WEST AIRLINES, INC","ALYSSA BAILEY","Sales Manager","1435 E G ST STE 1","","OAKDALE","CA","95361-4211","SIERRA WEST AIRLINES IS A FAA PART 135 ON-DEMAND AIR CHARTER CARRIER SPECIALIZING IN AD-HOC REQUESTS FOR URGENT TIME-SENSITIVE AIR TRANSFERS. WE BOAST A DEDICATED AND EXPERIENCED 24/7 OPERATIONS DEPARTMENT WITH BASES SPREADING ACROSS THE COUNTRY IN CALIFORNIA, TEXAS, AND OHIO. SIERRA WEST IS ABLE TO SERVE SMALL RURAL AIRPORTS TO LARGE INTERNATIONAL DESTINATIONS, AND CAN SPAN THE ENTIRE WESTERN HEMISPHERE. WE HOLD DECADES OF EXPERIENCE IN ALL FACETS OF PASSENGER AND CARGO FLIGHTS IN OUR DIVERSE AND CAPABLE FLEET, ALLOWING US TO QUICKLY AND EFFICIENTLY MEET A WIDE VARIETY OF AIR TRANSPORTATION NEEDS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#121;&#115;&#115;&#97;&#46;&#98;&#97;&#105;&#108;&#101;&#121;&#64;&#115;&#119;&#97;&#51;&#54;&#53;&#46;&#99;&#111;&#109;">alyssa.bailey@swa365.com</a>","www.sierrawestairlines.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJTJZ49VJ4Y7">2</a>","HOWK WELL & EQUIPMENT CO., INC.","TOM WEIMER","","1825 YOSEMITE BLVD","","MODESTO","CA","95354-2905","Pumps, Water Distribution Parts, Services & Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#119;&#101;&#105;&#109;&#101;&#114;&#64;&#104;&#111;&#119;&#107;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">tweimer@howksystems.com</a>","howksystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WWKMDM4AW355">3</a>","GEOANALYTICAL LABORATORIES, INC.","DONNA KELLER","","2300 MARYANN DRIVE","","TURLOCK","CA","95380-6565","Environmental laboratory sampling and testing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#107;&#101;&#108;&#108;&#101;&#114;&#51;&#49;&#51;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">dkeller313@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NRKNXLJFP579">4</a>","BURTON'S FIRE, INC.","JOHN BURTON","","1301 DOKER DR","","MODESTO","CA","95351-1598","Burton's Fire, Inc. excels in the areas of fire engine parts, service, and repair.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#98;&#117;&#114;&#116;&#111;&#110;&#115;&#102;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">john@burtonsfire.com</a>","WWW.BURTONSFIRE.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PQLNA5RDZJV3">5</a>","SUSAN PALMER","SUSAN PALMER","","2129 GOLDEN WEST LN","","MODESTO","CA","95350-0205","Certified Electronic Reporter and Transcriber, CER-124, CET-124; Certified Verbatim Reporter-Master, Member ID 3418; Notary Public, State of California","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#97;&#108;&#109;&#101;&#114;&#82;&#112;&#116;&#103;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">PalmerRptg@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J43AKVQLEMX6">6</a>","TECH MANUFACTURING & MACHINING INC","BELLA BETGEVERGIZ","","1445 ATLANTA CT","","TURLOCK","CA","95380-5768","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#77;&#77;&#68;&#69;&#78;&#73;&#83;&#64;&#89;&#65;&#72;&#79;&#79;&#46;&#67;&#79;&#77;">TMMDENIS@YAHOO.COM</a>","www.tmmca.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAKYKBWBTW73">7</a>","BAY POWER INC.","BILL JONES","","626 KEARNEY AVE","","MODESTO","CA","95350-5714","Bay Powers, Inc specializes in quality new, used, and obsolete circuit breakers, motor controls, MCC buckets, UL 508A panels, motor starters, safety disconnects, panelboard switches, bus plugs, transformers, and other electrical supply hardware. We carry circuit breakers and controls from the world's leading manufacturers, including Square D, General Electric, FPE, Siemens, and Cutler Hammer - new, used, and obsolete. Bay Power is now also a UL 508A Listed panel shop - adhering to the stringent Standard for Industrial Control Panels. This includes proper component selection, wiring methods, and calculation of short circuit current ratings (SCCR) for all custom panels we design and build. We are inspected by a UL field representative on a quarterly basis to maintain our UL authorization. For more information, please visit our website at http://www.baybreakers.com.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#64;&#98;&#97;&#121;&#112;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">bill@baypower.com</a>","http://www.baypower.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QFCDU3UUUJX9">8</a>","DELTA VOCATIONAL COUNSELING","JESSE RODRIGUEZ","","520 13TH ST","","MODESTO","CA","95354-2438","vocational rehabilitation services, job placement, labor market survyes, insurance, life, health, medical billing, medical bill review.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#108;&#116;&#97;&#118;&#111;&#99;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">deltavoc@att.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQPCB4UB36M5">9</a>","R & S ERECTION, TRI-COUNTY, INC.","LAURA BUCHER","","5265 JERUSALEM CT","","MODESTO","CA","95356-9219","R & S Erection of Tri County Inc. is a service center that opened January 1st of 1969 and is one of several independently owned and operated R&S companies in California. We are your one stop source for all your door, dock, gate, & access control needs. We’re committed to Total Customer Satisfaction, offering same day service to commercial and residential customers and contractors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#98;&#64;&#114;&#115;&#116;&#114;&#105;&#99;&#111;&#117;&#110;&#116;&#121;&#46;&#99;&#111;&#109;">laurab@rstricounty.com</a>","http://www.rstricounty.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HT7QZ1Q3GV45">10</a>","R.J. MFG.","RICHARD JONES","","1201 S BLAKER RD","","TURLOCK","CA","95380-8305","Provides goods and services to DOD agencies. Specializing in Airborne Training Apparatus. Static line training devices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#106;&#109;&#116;&#117;&#114;&#108;&#111;&#99;&#107;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">rjmturlock@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D4SPSR5AP5A3">11</a>","LONDON LOGISTICS LLC","ANNA KAUR","","1045 SPERRY AVE STE F239","","PATTERSON","CA","95363-9286","Transportation broker and Carrier","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#110;&#100;&#111;&#110;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">londonlogisticsllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C96MRLFT2J57">12</a>","SEMO COMMUNICATIONS, INC.","BRIAN SELF","","3228 ESTA AVE","","MODESTO","CA","95355-9284","Wilson Technologies is a Local provider of Allworx and Avaya Partner ACS equipment and support services. We work with a wide range of small, mid-size, and enterprise telecommunications customers. With Wilson Technologies no job is too Big or too small. With over 100 years of combined telecommunications field experience, Wilson Technologies is uniquely equipped to help you handle all the challenges facing the overburdened IT and communications managers. We install all Categories of inside or outside wire such as Cat3, Cat5E, Cat6, Cat7, COAX and fiber optics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#119;&#105;&#108;&#115;&#111;&#110;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">brianwilsontechnologies@gmail.com</a>","www.wilson-technologies.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P98KDBEFUNU5">13</a>","DOGS WITH JOBS, LLC","DEBRA DESHON","","5642 HINDS RD","","OAKDALE","CA","95361-2207","Inspection services for quagga and zebra mussels at lakes utilizing detection canines, education for boaters on clean drain and dry, consulting services to establish or improve current mussel prevention programs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#57;&#115;&#110;&#107;&#105;&#100;&#115;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">k9snkids@icloud.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q1FFWPKWBY33">14</a>","BLACK WATER CONSULTING ENGINEERS, INC.","JEFF BLACK","","602 LYELL DR","","MODESTO","CA","95356-8997","Black Water is a California Central Valley engineering firm that provides professional services in water, wastewater, drainage, and construction management. Our engineering staff consists of experts in the planning and design of water supply, treatment, and distribution systems; wastewater collection, conveyance, and treatment works; and storm water analysis and drainage facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#64;&#98;&#108;&#97;&#99;&#107;&#119;&#97;&#116;&#101;&#114;&#45;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">jeff@blackwater-eng.com</a>","www.blackwater-eng.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z9CRM3EFAC77">15</a>","SUN VALLEY TRANSPORT, INC.","KATIE BORRELLI","","8125 ALDERSON RD","","HUGHSON","CA","95326-9825","We provide collection and transportation of waste water, vegetable oil and non hazardous liquid bulk.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#105;&#101;&#46;&#98;&#111;&#114;&#114;&#101;&#108;&#108;&#105;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">katie.borrelli@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZD18X8M55MK1">16</a>","RIVERBANK CONSTRUCTION, INC.","JOSEPH MOSES","","5300 CLAUS RD, STE 14","","MODESTO","CA","95357-1667","General contracting services. This can range from Room additions, construction, flooring, concrete, industrial commercial buildings.drywall installation, wood work, floor titling,and remediation services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#111;&#115;&#101;&#115;&#64;&#114;&#105;&#118;&#101;&#114;&#98;&#97;&#110;&#107;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">jmoses@riverbankcon.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y5SFNJSXK6K1">17</a>","PAC SHIELD ROOF SERVICES INC","RAFAEL LAPIZCO","","5151 PENTECOST DR STE A1","","MODESTO","CA","95356-9213","A full service commercial roofing contractor certified by most major roofing manufacturers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#112;&#105;&#122;&#99;&#111;&#114;&#64;&#112;&#97;&#99;&#115;&#104;&#105;&#101;&#108;&#100;&#46;&#99;&#111;&#109;">lapizcor@pacshield.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z7HSJ3P6WA71">18</a>","MODESTO DIRECT APPLIANCE, INC.","AMY THEIS","","2412 MCHENRY AVE","","MODESTO","CA","95350-3238","ORDERING, WAREHOUSING, DELIVERY, STOCKING, SHIPPING, SALES, SERVICING, SUPPLYING, INSTALLING HOME APPLIANCES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#116;&#64;&#100;&#105;&#114;&#101;&#99;&#116;&#97;&#112;&#112;&#108;&#105;&#97;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">amyt@directappliance.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HHWGP4HH1Y68">19</a>","LIMA CHARLIE, INC","DAVID WALDBAUER","","2104 PARK RIDGE DR","","RIVERBANK","CA","95367-9653","We provide safe and effective housing, when needed. We specialize in hotels, travel, transitional placement, emergency lodging, and mid to long term housing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#108;&#105;&#109;&#97;&#99;&#104;&#97;&#114;&#108;&#105;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">david@limacharlieinc.com</a>","https://www.limacharlieinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKPMZ23TU163">20</a>","STORER TEST EXPRESS","SARAH STORER","","3519 MCDONALD AVE","","MODESTO","CA","95358-9770","•	Patent-Pending BusTest Express? offers a first-of-its-kind, entirely self-sustaining mobile medical testing and treatment system through 45-foot motorcoaches equipped with the infrastructure needed to conduct COVID-19 testing and provide vaccinations or other health and wellness services, anywhere in the country.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#115;&#116;&#101;&#120;&#112;&#114;&#101;&#115;&#115;&#64;&#115;&#116;&#111;&#114;&#101;&#114;&#98;&#117;&#115;&#46;&#99;&#111;&#109;">testexpress@storerbus.com</a>","https://bustestexpress.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HURSJ9KC6LV3">21</a>","C & W MANUFACTURING","CHRISTOPHER CHALABI","","351 N WALNUT RD","STE 16","TURLOCK","CA","95380-9428","Machining of large and precise components, holding tight tolerances on complex components. Manufacturing machinery components. Manufacturing aerospace and defense components.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#99;&#119;&#45;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">chris@cw-mfg.com</a>","cw-mfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPL1HFL21VK6">22</a>","ROCKIN R INC.","CHAD COSTA","","9637 RODDEN RD","","OAKDALE","CA","95361-9590","Rockin R Inc was established in 2002 by Robin Costa. The firm has a General Engineering Contractors License (A) #806934 obtained in 2002. Rockin R has performed as Sub and Prime Contractors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#97;&#100;&#64;&#82;&#111;&#99;&#107;&#105;&#110;&#82;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Chad@RockinRinc.com</a>","www.RockinRinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S2P5NDAFMXN1">23</a>","WILLIAMS FIRE PROTECTION, INC","MARGARET WILLIAMS","","623 LAUREL AVE","","OAKDALE","CA","95361-2552","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#119;&#105;&#108;&#108;&#105;&#97;&#109;&#115;&#64;&#100;&#111;&#110;&#116;&#103;&#101;&#116;&#108;&#105;&#116;&#46;&#99;&#111;&#109;">mwilliams@dontgetlit.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 5.063&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

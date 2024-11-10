@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: South Dakota;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.01 seconds and 1.02 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 46 
+(of 46 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QAZKX9MKPNN2">1</a>","TRAIL-EZE, INC.","VALERIE ANDERSON","SALES MGR","323 QUINCE ST","","MITCHELL","SD","57301-4810","WE MANUFACTURE EQUIPMENT HAULING HYDRAULIC TRAILERS, TAG TRAILERS 6 TON TO 20 TON AND CABLE REEL TRAILERS, AND MANUFACTURE ASME CODE VACUUM TRUCKS & TRAILERS, OIL FIELD VACUUM TRUCKS, TRUCK RIGS, AND CUSTOM TANK TRUCKS, AND TRAILERS.EQUIP TRAILERS SLIDE AXLES, BUS HAULERS, HYDRAULIC TAILS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#97;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#64;&#116;&#114;&#97;&#105;&#108;&#101;&#122;&#101;&#46;&#99;&#111;&#109;">valanderson@traileze.com</a>","www.traileze.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3JTFH2FHAR8">2</a>","JENNER EQUIPMENT CO","DENNIS JENNER","","3200 DEADWOOD AVE","","RAPID CITY","SD","57702-9656","SALES, PARTS, AND SERVICE FOR CASE IH AG, CASE CONSTRUCTION, BOBCAT LOADERS, KUBOTA TRACTORS, AND WACKER COMPACTION EQUIPMENT; CUB CADET GARDEN TRACTORS, REDI HAUL TRAILERS AND FORD TRACTORS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#110;&#105;&#115;&#64;&#106;&#101;&#110;&#110;&#101;&#114;&#101;&#113;&#117;&#105;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">dennis@jennerequipment.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NQKTCJ49B3Q4">3</a>","SCOTCHMAN INDUSTRIES, INC.","BRAD HAYNES","Customer Service","180 E US HIGHWAY 14","","PHILIP","SD","57567-2104","SCOTCHMAN HYDRAULIC IRONWORKERS. PUNCHING AND SHEARING FOR METAL MODELS WITH 40,50,65,90,120 TONS PUNCH PRESSURE. MIL-P450420. SCOTCHMAN & BEWO CIRCULAR COLD SAWS, LOW RPM STEEL CUTTING MODELS WITH 10, 12-1/2 & 14 INCH DIAMETER BLADES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#104;&#64;&#115;&#99;&#111;&#116;&#99;&#104;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">bradh@scotchman.com</a>","http://www.scotchman.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLFVU1M9CH41">4</a>","NORTHERN TRUCK EQUIPMENT CORPORATION","JOHN WARTENBEE","Sales Coordinator","47213 W SCHWEIGER CIR","","SIOUX FALLS","SD","57107-6456","TRUCK BODIES AND EQUIPMENT, TRAILERS AND EQUIPMENT, REFUSE EQUIPMENT, SNOW EQUIPMENT, UTILITY EQUIPMENT, CONSTRUCTION EQUIPMENT, SANDBLASTING, PAINTING, MANUFACTURING, ASSEMBLY, WELDING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#97;&#114;&#116;&#101;&#110;&#98;&#101;&#101;&#64;&#110;&#116;&#101;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">jwartenbee@ntecorp.com</a>","https://www.ntecorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E1SRQ5YSVJC6">5</a>","SIOUX CORPORATION","BRIAN JOHNSON","Government Sales Representative","1 SIOUX PLZ","","BERESFORD","SD","57004-1500","UL1776 certified steam cleaners, hot water pressure washers. UL 1203 All Electric Explosion Proof Certified steam cleaners and hot water pressure washers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#115;&#105;&#111;&#117;&#120;&#46;&#99;&#111;&#109;">bjohnson@sioux.com</a>","www.sioux.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KGHDGZ4BWQC8">6</a>","RAPID DIESEL SERVICE, INC.","ELTON BIERMAN","PRESIDENT","1105 N CREEK DR","","RAPID CITY","SD","57703-2219","DIESEL FUEL INJECTION PUMPS & INJECTORS. DIESEL ENGINES. GASOLINE INJECTORS. TURBO CHARGERS. DRIVE IN SERVICE FOR SMALL & MEDIUM DIESEL CARS & TRUCKS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#103;&#114;&#114;&#100;&#115;&#105;&#64;&#114;&#97;&#112;&#105;&#100;&#100;&#105;&#101;&#115;&#101;&#108;&#46;&#99;&#111;&#109;">mgrrdsi@rapiddiesel.com</a>","http://www.rapiddiesel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SB76B96D1YG7">7</a>","HOUSE OF GLASS, INC.","STANLEY ALBRECHT","President","2 N STATE ST","","ABERDEEN","SD","57401-3659","SELL AND INSTALL ENERGY SAVING ALUMINUM WINDOWS AND DOORS. GLASS & ALUMINUM ENTRANCES. SELL KITCHEN CABINETS,PLASTICS,HOLLOW METAL DOORS & FRAMES AND FINISH HARDWARE, PAINT, PAINT SUNDRIES, WOOD DOORS, WINDSHIELD REPLACEMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#98;&#114;&#101;&#99;&#104;&#116;&#64;&#104;&#103;&#105;&#110;&#99;&#46;&#98;&#105;&#122;">salbrecht@hginc.biz</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ELWPDN3QJJN5">8</a>","T AND R ELECTRIC SUPPLY CO. INC.","KIRSTEN TAGGART","Sales","308 SW 3RD ST","","COLMAN","SD","57017-2016","BUY, SELL, RENT AND DELIVER RECONDITIONED, REBUILT, REWOUND DISTRIBUTION AND SUBSTATION TRANSFORMERS AND RELATED SWITCHGEAR.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#114;&#115;&#116;&#101;&#110;&#46;&#116;&#97;&#103;&#103;&#97;&#114;&#116;&#64;&#116;&#114;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#46;&#99;&#111;&#109;">kirsten.taggart@trelectric.com</a>","https://www.t-r.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EET5MSRNLTN7">9</a>","DAKOTA FLUID POWER, INC.","DANIEL CHAPMAN","SEC/TREA","3409 N LEWIS AVE","","SIOUX FALLS","SD","57104-5101","SALES AND SERVICE OF HIGH PRESSURE TOOLS AND EQUIPMENT. SALES AND SERVICE OF HYDRAULIC EQUIPMENT AND SUPPLIES. MANUFACTURING OF HYDRAULIC POWER UNITS AND SYSTEMS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#104;&#97;&#112;&#109;&#97;&#110;&#64;&#100;&#97;&#107;&#111;&#116;&#97;&#102;&#108;&#117;&#105;&#100;&#112;&#111;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">dchapman@dakotafluidpower.com</a>","http://www.dakotafluidpower.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CHWKANT8L8N3">10</a>","MORRIS INC.","MARK MORRIS","MANAGER","220 W HIGHWAY 14/34","","FORT PIERRE","SD","57532-2064","Highway Heavy Utility Construction, Ready Mix Concrete, Asphalt Crushing, Asphalt Production, Asphalt Laydown, Site Preparation, Metal Fabrication & Machining, Agriculture Irrigation Systems, Electric Motor Repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#109;&#111;&#114;&#114;&#105;&#115;&#64;&#109;&#111;&#114;&#114;&#105;&#115;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mark.morris@morris-inc.com</a>","www.morris-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HGF7FWSN5JY6">11</a>","BFW, INC","LYNN COOPER","PRESIDENT","2843 SAMCO RD STE A","","RAPID CITY","SD","57702-9366","BFW, Inc. offers an innovative all LED product line up – from robustly built and very bright portables, to our high-intensity Hatteras fiber-optic LED system that is tested and approved for headlights and scopes – BFW products are always well thought out solutions to meet the needs of our customers – from the physicians and surgeons who use them, to nurses who prepare them, to biomedical engineers who maintain them.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#110;&#110;&#64;&#98;&#102;&#119;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">lynn@bfwinc.com</a>","http://www.bfwinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBEAJKMW5Q16">12</a>","DIVINE CONCRETE, INC.","JAMES FRANK","PRESIDENT","500 HWY 18","","BONESTEEL","SD","57317-","SUPPLIER OF READY MIXED CONCRETE. CONSTRUCTION CREWS AVAILABLE TO FORM AND POUR FLATWORK, POURED WALLS. PRECAST MANUFACTURER OF STORM SHELTERS, SEPTIC TANKS, STEPS, FEEDBUNKS. NOW EXPANDING IN THE PRECAST AREA.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#46;&#102;&#114;&#97;&#110;&#107;&#64;&#100;&#105;&#118;&#105;&#110;&#101;&#99;&#111;&#110;&#99;&#114;&#101;&#116;&#101;&#46;&#99;&#111;&#109;">jim.frank@divineconcrete.com</a>","http://www.divineconcrete.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZSVNPAG5M873">13</a>","CENTURY BUSINESS PRODUCTS INC","KEVIN JERGENSON","PRESIDENT","1011 E 15TH ST","","SIOUX FALLS","SD","57104-5210","OFFICE EQUIPMENT SALES & SERVICE & SUPPLIES. COPIERS, PRINTERS, SHREDDERS, & FACSIMILE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#99;&#98;&#112;&#45;&#115;&#100;&#46;&#99;&#111;&#109;">kevin@cbp-sd.com</a>","http://www.cbpnow.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNLLWNKLCV57">14</a>","FOOTHILLS SEED INC","WILLIAM SJOMELING","PRESIDENT","2323 JUNCTION AVE","","STURGIS","SD","57785-2518","WE CAN FURNISH ALL NATIVE AND INTRODUCED SPECIES OF GRASS SEED, LEGUME SEED & WILDFLOWER SEEDS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#102;&#111;&#111;&#116;&#104;&#105;&#108;&#108;&#115;&#115;&#101;&#101;&#100;&#64;&#114;&#117;&#115;&#104;&#109;&#111;&#114;&#101;&#46;&#99;&#111;&#109;">billfoothillsseed@rushmore.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7B7DHD2XDU1">15</a>","DAKOTA WESTERN CORP OF THE LAKE TRAVERSE RESERVATION","ROBERT HUFF","General Manager","45679 VETERANS MEMORIAL DR","","SISSETON","SD","57262-8700","Manufacture plastic film for garbage bags,trash bags, can liners, construction film, and agricultural film.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#117;&#102;&#102;&#46;&#100;&#119;&#99;&#64;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#99;&#111;&#109;&#109;&#46;&#110;&#101;&#116;">rhuff.dwc@venturecomm.net</a>","https://www.dakotawesterncorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JAD6GJ4GX716">16</a>","OCTAFLEX ENVIRONMENTAL SYSTEMS, INC.","BARBARA GROSS","President","709 E ST","","TIMBER LAKE","SD","57656-7725","OctaFlex Environmental Systems specializing in steel, aluminum fabrication. Modular wash decks, Loading/Containment Pads, helicopter pad, CAWF(Containerized Assembled Washdown Facility, Drive on Containment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#98;&#64;&#79;&#67;&#84;&#65;&#70;&#76;&#69;&#88;&#46;&#67;&#79;&#77;">barb@OCTAFLEX.COM</a>","http://www.octaflex.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TG24U7NE4AL6">17</a>","JR KOOP, INC","SHERRI ZWEIFEL","President","27077 GAYLE AVE","","TEA","SD","57064-8158","Allied vender-Caterpillar rental.Manufacturer of Caterpillar powerproducts,portable heater/dryer/ventilation/pressurize high efficient.Exceeds OSHA and MSHA regulations.Stand alone min.Flood recovery of buildings to prevent mold,mildew,drying out fast!!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#104;&#101;&#114;&#109;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">info@thermdynamics.com</a>","HTTP://WWW.THERMDYNAMICS.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CK9MM7JZEZ47">18</a>","LAKOTA CONTRACTING INC","MARTY PFISTER","","420 E SAINT PATRICK ST STE 107","","RAPID CITY","SD","57701-4200","Lakota Contracting, Inc. was founded in 1999, as an Indian Owned Economic Enterprise. It currently qualifies as a small business generating average annual revenues of 1.5 million dollars with geographic coverage including the Domestic 50 United States and Washington DC, Puerto Rico, US Territories and to CONUS ports or consolidation points for orders received from overseas activities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#116;&#121;&#64;&#108;&#97;&#107;&#111;&#116;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">marty@lakotainc.com</a>","http://lakotainc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G4JZL8A4CSB9">19</a>","MICHAELS FENCE AND SUPPLY OF SO. DAK., INC.","PAUL MICHAILIDIS","","3900 N POTSDAM AVE","","SIOUX FALLS","SD","57104-7031","Installation and material sales for chain link, iron, cedar and vinyl fences and gates.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#115;&#102;&#101;&#110;&#99;&#101;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">paul@michaelsfencecompany.com</a>","www.michaelsfencecompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ND9FVENL3CK8">20</a>","D & H HANSEN INC","DOUG HANSEN","","40979 245TH ST","","LETCHER","SD","57359-5204","Custom manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#119;&#104;&#97;&#110;&#115;&#101;&#110;&#64;&#104;&#97;&#110;&#115;&#101;&#110;&#119;&#104;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">dwhansen@hansenwheel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S7F2HNKHKEN3">21</a>","JACOBS PRECISION WELDING, INC","CHAD JACOBS","Operator","522 S MAIN ST","","LEAD","SD","57754-1002","Welding, Machine, and Manufacturing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#100;&#64;&#106;&#97;&#99;&#111;&#98;&#115;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">chad@jacobswelding.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EG5NJ8LCXGY8">22</a>","WATERTREE, INC.","KIRK JENKINS","","2447 W MAIN ST","","RAPID CITY","SD","57702-2421","Water Treatment, Bottled Water, Deionization, Pools and spas sales and service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#105;&#114;&#107;&#46;&#106;&#101;&#110;&#107;&#105;&#110;&#115;&#64;&#112;&#111;&#111;&#108;&#115;&#97;&#110;&#100;&#115;&#112;&#97;&#115;&#46;&#99;&#111;&#109;">kirk.jenkins@poolsandspas.com</a>","http://www.watertree-rc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJ6QRJL9BVP3">23</a>","MASTEL PRECISION SURGICAL INSTRUMENTS, INC.","ELIZABETH MATHEWS","","2843 SAMCO RD","UNIT A","RAPID CITY","SD","57702-9366","Design, manufacture (Class I), and sell ophthalmic surgical instruments. Refurbish and repair same instruments as well as brands other than Mastel Precision. Our engineering provides design solutions (procedural and mechanical).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#97;&#116;&#104;&#101;&#119;&#115;&#64;&#109;&#97;&#115;&#116;&#101;&#108;&#46;&#99;&#111;&#109;">lmathews@mastel.com</a>","www.mastel.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N7YJQ9S73BB5">24</a>","BOOM CONCRETE INC","TROY VANDERBOOM","","202 S GIRARD AVE","","NEWELL","SD","57760-2100","Precast Concrete Products: Basements, buildings, foundations, SST Outhouse Restroom, Well Pits, Cisterns and Septic Tanks, Feed Bunks, Boat Ramp Planks, Specialty Products, Deck Blocks, Picnic Tables, Patio Pavers, Bird Baths, and etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#99;&#98;&#111;&#111;&#109;&#64;&#115;&#100;&#112;&#108;&#97;&#105;&#110;&#115;&#46;&#99;&#111;&#109;">vcboom@sdplains.com</a>","http://www.boomcon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGFLY125WCJ3">25</a>","ZANFEL LABORATORIES, INC","WILLIAM YARBROUGH","","600 STEVENS PORT DR STE 105","","DAKOTA DUNES","SD","57049-5149","Zanfel is specially formulated wash for urushion-induced contact dermatitis. urushiol is the toxin known to cause the itching and rash associated with poison ivy/oak/sumac/poisonwood and related plants.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#87;&#73;&#76;&#76;&#73;&#65;&#77;&#64;&#122;&#97;&#110;&#102;&#101;&#108;&#46;&#99;&#111;&#109;">WILLIAM@zanfel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLLBL2AMKGQ9">26</a>","ROSENBAUER AMERICA LLC","MATT KRANER","","100 3RD ST","","LYONS","SD","57041-8000","Rosenbauer America manufactures firefighting apparatus for deployment worldwide. Our product line includes; Aerials, ARFF, Pumpers, Rescues, Tankers, Wildlands and Specialty Vehicles. See us on GSA or visit www.rosenbaueramerica.com for more information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#107;&#114;&#97;&#110;&#101;&#114;&#64;&#114;&#111;&#115;&#101;&#110;&#98;&#97;&#117;&#101;&#114;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#46;&#99;&#111;&#109;">mkraner@rosenbaueramerica.com</a>","http://www.rosenbaueramerica.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMLPSVF2GMG9">27</a>","THERMO BOND BUILDINGS LLC","MICHAEL KASTNING","Sales Manager","1001 W MAIN ST","","ELK POINT","SD","57025-2289","Manufacturer of pre-fabricated Equipment Shelters to house communication electronics at remote sites.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#107;&#97;&#115;&#116;&#110;&#105;&#110;&#103;&#64;&#116;&#104;&#101;&#114;&#109;&#111;&#98;&#111;&#110;&#100;&#46;&#99;&#111;&#109;">Mkastning@thermobond.com</a>","http://www.thermobond.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KECNJB8J5879">28</a>","CSI, L.L.C.","MICHAEL CURRY","","338 STREETER DRIVE","","NORTH SIOUX CITY","SD","57049-0001","Provider of Medical products; (HIS) Hospital Information System, (EHR) Electronic Medical Records, (RIS PACS) Radiology Imaging System, Picture Archiving and Communication System. Complete IT 24/7 Helpdesk, Managed Services, IT support agreements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#117;&#114;&#114;&#121;&#64;&#99;&#115;&#105;&#110;&#111;&#118;&#46;&#99;&#111;&#109;">mcurry@csinov.com</a>","http://www.csinov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMTCFN7QLTQ6">29</a>","AT ANALYTICAL, LLC","ANGELA LEE","","101 ST OLAF AVE","","BALTIC","SD","57003-3005","We provide maintenance and repair service of scientific laboratory instruments and equipment for research facilities and hospitals. We are also the exclusive manufacturer and distributor of the PAWS portable automated wash station.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#105;&#101;&#64;&#97;&#116;&#97;&#105;&#110;&#99;&#46;&#98;&#122;">angie@atainc.bz</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TY1JDNB71JU6">30</a>","ADAMS THERMAL SYSTEMS INC","KRISTOPHER LEPINE","","47920 W 5TH ST","","CANTON","SD","57013-5802","Iso/Ts 16949 Certified","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#108;&#101;&#112;&#105;&#110;&#101;&#64;&#97;&#100;&#97;&#109;&#115;&#116;&#104;&#101;&#114;&#109;&#97;&#108;&#46;&#99;&#111;&#109;">klepine@adamsthermal.com</a>","http://www.adamsthermalsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JBE5YHKQGBB5">31</a>","NASCENTECHNOLOGY MANUFACTURING INC","DARYL SCHOFIELD","","1404 9TH AVE SW","","WATERTOWN","SD","57201-5091","Research,development and manufacture of inductors and transformers for high reliability applications using both traditional wire-wound and multi-layer ceramic manufacturing processes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#99;&#104;&#111;&#102;&#105;&#101;&#108;&#100;&#64;&#110;&#97;&#115;&#99;&#101;&#110;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">dschofield@nascentechnology.com</a>","http://www.nascentechnology.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VK14GN5KQ1L5">32</a>","QUALITY WOOD DESIGNS INC.","DANIELLE DEKRUIF","","1100 W SPRUCE ST","","MITCHELL","SD","57301-4838","Since 1961 we have specialized in custom design and fabrication of wood and metal products. We have worked in numerous industries and are confident we have a solution for your need. We handle everything from design to finished product and shipping services to meet your unique needs. We encourage you to browse through our past products to see our depth and quality. Our design team paired with our state-of-the-art equipment and qualified staff provide a complete 'end-to-end' experience for our customers. Our vast in-house capabilities allow for shorter lead times and cost savings we pass on to our customers. Our promise to you, our customer, is to use our 100 + years of experience and quality materials, products and services in each project we build, and we stand behind them.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#108;&#101;&#64;&#113;&#117;&#97;&#108;&#105;&#116;&#121;&#119;&#111;&#111;&#100;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">danielle@qualitywooddesigns.com</a>","www.qualitywooddesigns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WQBAMD2MQLQ6">33</a>","GAGE BROS. CONCRETE PRODUCTS INC.","DAVID HONNER","","2810 N BAHNSON AVE","","SIOUX FALLS","SD","57104-9606","A LEADING MANUFACTURER OF INNOVATIVE CONCRETE PRODUCTS. WE ARE A FULL SERVICE FIRM WITH DESIGN ASSIST CAPABILITIES IN ADDITION SUBCONTRACTORS FOR INSTALLATION AND CAULKING OF OUR PRODUCTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#110;&#110;&#101;&#114;&#64;&#103;&#97;&#103;&#101;&#98;&#114;&#111;&#116;&#104;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">dhonner@gagebrothers.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V5HZG64PMKR5">34</a>","TOWER SYSTEMS, INC.","KARI CARLSON","","17226 447TH AVE","","WATERTOWN","SD","57201-7615","With a core team of people deeply committed to our success, Tower Systems is a family-operated business headquartered in Watertown, South Dakota, with a division in Winter Park, Florida and a satellite office in Angle Inlet, Minnesota. CEO Kari L. Carlson is a second-generation owner following in the footsteps of her father Bill, who was a highly respected trailblazer in the tower industry. Even as the company grows and expands its services across the globe, the culture remains tight-knit, focused on safety, respect and quality.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#99;&#97;&#114;&#108;&#115;&#111;&#110;&#64;&#116;&#111;&#119;&#101;&#114;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">Kcarlson@towersystems.com</a>","http://towersystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K269AL6EU8E5">35</a>","FAIR MANUFACTURING, INC.","DENA NANNINGA","","2900 ALUMAX RD","","YANKTON","SD","57078-8008","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#102;&#97;&#105;&#114;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">sales@fairmfg.com</a>","www.fairmfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JTN1DN4YZJ76">36</a>","SAB SCIENCES INC","EDDIE SULLIVAN","","2100 E 54TH ST N","","SIOUX FALLS","SD","57104-5509","Genetic engineering, biopharmaceutical reserach, development and manufacturing, quality control, quality assurnace, regulatory compliance, human polyclonal antibody manufacturing, vaccines.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#100;&#105;&#101;&#64;&#115;&#97;&#98;&#46;&#98;&#105;&#111;">eddie@sab.bio</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JH3TE8CVQN27">37</a>","DYNAMIC ENGINEERING, INC.","SCOTT HENRICKS","","221 CESSNA ST","","WATERTOWN","SD","57201-5614","We are an ISO 9001:2015 registered precision component manufacturer located in Watertown SD. We have extensive machining capabilities and a skilled workforce able to handle complex jobs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#67;&#79;&#84;&#84;&#72;&#64;&#68;&#89;&#78;&#65;&#77;&#73;&#67;&#69;&#78;&#71;&#73;&#78;&#69;&#69;&#82;&#73;&#78;&#71;&#46;&#78;&#69;&#84;">SCOTTH@DYNAMICENGINEERING.NET</a>","WWW.DYNAMICENGINEERING.NET"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGBKLCLK7P56">38</a>","MACURCO, INC.","AARON SHERMAN","","1504 W 51ST ST","","SIOUX FALLS","SD","57105-6617","acurco Gas Detection is a division of Aerionics Inc., and is a leading global provider of rapidly deployable connected, intelligent gas detection systems that enable real-time safety and toxic threat detection. Macurco designs, develops and manufactures a full set of fixed and portable gas detection monitors for the protection of workers, responders and the community.propane (LP) and methane (natural gas).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#104;&#101;&#114;&#109;&#97;&#110;&#64;&#109;&#97;&#99;&#117;&#114;&#99;&#111;&#46;&#99;&#111;&#109;">asherman@macurco.com</a>","http://www.macurco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2LBSMA5KRJ8">39</a>","NATIVE SOURCE ENTERPRISES, LLC","CHARLES GINSBACH","","908 S 2ND AVE","","SIOUX FALLS","SD","57104-5006","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#115;&#101;&#64;&#109;&#105;&#100;&#99;&#111;&#46;&#110;&#101;&#116;">nse@midco.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E795WTKQS3K6">40</a>","ROTH TRUCKING INC","JOHNNA CLEMMONS","","2135 DAKOTA CRAFT DR","","RAPID CITY","SD","57701-7953","Aggregate Transportation with material handling. Loading and conveyor unloading aggregate. Excavating. Heavy Haul Transportation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#104;&#110;&#110;&#97;&#64;&#114;&#111;&#116;&#104;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">Johnna@rothtrucking.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=URXHT86VMMB9">41</a>","AMERICAN WARRIOR ENTERPRISES INC","TERENCE GRAVES","","27135 S PARKLANE DR","BLDG A","SIOUX FALLS","SD","57106-8000","American Warrior Enterprises is a Service Disabled Veteran Owned Small Business and one of the most capable metal fabrication firms that you’ll find. Our roots in metal fabrication and tooling are deep. Our experience is broad, encompassing projects for applications that are as varied as they are demanding. And our flexibility and responsiveness are legendary.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#114;&#97;&#118;&#101;&#115;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tgraves1@gmail.com</a>","https://americanwarriorenterprises.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GH5AJC6LKJ43">42</a>","CARDINAL INDUSTRIES, INC.","DARREN BEYER","","724 COMMERCE ST","","ABERDEEN","SD","57401-3312","Cardinal Industries, Inc. is a custom plastics manufacturer located out of Aberdeen, SD. We specialize in the production and distribution of custom plastic and rubber products. Our services include; injection mold plastics and rubber products, precision custom molds, parts, and assemblies. Our business has over 50 years of experience dealing with many unique industries while providing the highest quality productions and customer service. To view more on our Federal Contracting, please visit <a href='https://www.fedlinks.com/cardinal-industries-inc'>Fedlinks Cardinal Industries Inc</a>.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#105;&#113;&#117;&#111;&#116;&#105;&#110;&#103;&#64;&#110;&#118;&#99;&#46;&#110;&#101;&#116;">ciquoting@nvc.net</a>","http://www.cardinalcustomproducts.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNQ6XL6N31J7">43</a>","NOVUM NANO, LLC","ROSE GERANI","","600 N ELLSWORTH RD","","BOX ELDER","SD","57719-2012","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#110;&#111;&#118;&#117;&#109;&#110;&#97;&#110;&#111;&#46;&#99;&#111;&#109;">contracts@novumnano.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QC9EMUJMNLG3">44</a>","GALUSHA TECHNOLOGIES LLC","ABIGAIL BURNETT","","919A LAWRENCE ST","","BELLE FOURCHE","SD","57717-1969","Capable of designing and installing solar power equipment and solar power electrical systems. Partner with a variety of businesses to deliver industrial gases and bottled water. Also partner with a small business to provide IT equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#108;&#117;&#115;&#104;&#97;&#116;&#101;&#99;&#104;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">galushatech@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C2GAAUMK25Z1">45</a>","TRIGGER INTERACTIVE, LLC","TYLER BROCKEL","","2301 RESEARCH PARK WAY, SUITE 130","","BROOKINGS","SD","57006-1724","Trigger Interactive is the developer of A.I.M.S.S. (the Attachable Interactive Modular Shooting System). A.I.M.S.S. is a portable system of wireless smart target attachments that mount to any type of steel firearm targets and allows the targets to interact with a shooter. Controlled by a smartphone app, A.I.M.S.S. delivers complex and dynamic shooting scenarios while shooting real weapons, with live ammunition, at real targets. By separating the electronics from proprietary targets, our patent pending system delivers a superior portable, realistic, informative, and cost efficient method for live-fire weapons training compared to current market options.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#64;&#116;&#114;&#105;&#103;&#103;&#101;&#114;&#105;&#110;&#116;&#101;&#114;&#97;&#99;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">tyler@triggerinteractive.com</a>","https://www.triggerinteractive.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCP4SM7FACA7">46</a>","TIME TO PLAN LLC","DAVID RIDL","","6108 GRAND TETON CT","","RAPID CITY","SD","57702-8538","Time to Plan LLC excels in delivering innovative, tailored solutions across various sectors, including Agriculture, IoT, AI, and Automation. With a decade of experience in project management and financial strategy, our team of experts ensures top-notch service and operational excellence. We integrate cutting-edge technologies with traditional processes to offer comprehensive services that enhance efficiency and exceed client expectations. Our commitment to exceptional customer service and quality sets us apart as the ideal partner for your business needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#114;&#105;&#100;&#108;&#56;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">davidridl8@gmail.com</a>","ttpdr.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.061&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 021 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.91 seconds and 2.01 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 42 
+(of 42 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YV6NE5U427M6">1</a>","AXIS AEROTECH, INC.","CHRIS BOUCHARD","PRESIDENT","1045 COLLIER CENTER WAY STE 3","","NAPLES","FL","34110-8475","AIRCRAFT ELECTRONIC SYSTEMS REPAIR (COMM & MIL)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#76;&#69;&#83;&#64;&#65;&#88;&#73;&#83;&#65;&#69;&#82;&#79;&#84;&#69;&#67;&#72;&#46;&#67;&#79;&#77;">SALES@AXISAEROTECH.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L511YBZN3NK7">2</a>","GREAT CIRCLE LEARNING INC","NANCY MICHAELS","Executive Vice President","5113 CASTLEROCK WAY","","NAPLES","FL","34112-7929","Instructional Design and Development, Software to automate design and development of instructor-led trainingManagement Training and Development, LeaderGuide Pro, Training program development tool, Critical thinking, Mentoring, Leadership, Creative problem solving, Team development, Conflict Management,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#110;&#99;&#121;&#64;&#103;&#99;&#108;&#101;&#97;&#114;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">nancy@gclearning.com</a>","http://www.greatcirclelearning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ED6KVBY8V2S6">3</a>","INTERNATIONAL SATELLITE SERVICES, INC.","SANDRA KIMBALL","Sales","1004 COLLIER CENTER WAY","STE 204","NAPLES","FL","34110-8484","Provider of all satellite telecommunications constellations including Inmarsat, Iridium, MSAT, and Globalstar","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#107;&#97;&#64;&#105;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#115;&#97;&#116;&#101;&#108;&#108;&#105;&#116;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">saka@internationalsatelliteservices.com</a>","www.internationalsatelliteservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LGBFC31GKF95">4</a>","FISCHER INTERNATIONAL SYSTEMS CORPORATION","CHRISTINE CARGNONI","","3520 KRAFT RD STE 100","","NAPLES","FL","34105-4957","Mainframe software development with specialty in storing mainframe information via (VTM) virtual tape management and Jes2 management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#67;&#67;&#64;&#70;&#105;&#115;&#99;&#104;&#101;&#114;&#73;&#110;&#116;&#101;&#114;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#46;&#99;&#111;&#109;">CCC@FischerInternational.com</a>","www.fisc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KETMUPRT2V69">5</a>","MEETING SITES PRO, INC.","KEVIN HARTY","","3594 BEAUFORT CT","","NAPLES","FL","34119-8643","Hotel Site Selection, Contract Negotiation, Pre-conference, On-site and Post-conference, Air Ground Hotel Travel Arrangements, Audio-visual and Simultaneous Interpretation Equipment, Translation, Graphics, Printing,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#109;&#101;&#101;&#116;&#105;&#110;&#103;&#115;&#105;&#116;&#101;&#115;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">kevin@meetingsitespro.com</a>","http://www.meetingsitespro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLXEFNMXKQB6">6</a>","JM ALLEN CORP","JAMES ALLEN","","208 CHESHIRE WAY","","NAPLES","FL","34110-4413","Military Communications Project Management, Project Management Consulting, Military Communications Engineering, Systems Engineering","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#101;&#110;&#109;&#49;&#49;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">allenm113@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7MLSY1BRYW6">7</a>","SAME DAY TRANSCRIPTIONS, INC.","ROBERT FOLEY","","8891 SHENENDOAH CIRCLE","","NAPLES","FL","34113-1660","We provide fast turnaround transcription services for medical organizations, business conferences and meetings and educational institutions. Our system provides rapid scalability in workload, allowing us to take on large projects with short notice.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#111;&#108;&#101;&#121;&#64;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#116;&#114;&#97;&#110;&#115;&#99;&#114;&#105;&#112;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">rfoley@researchtranscriptions.com</a>","http://www.researchtranscriptons.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RKBHH8MPHLG8">8</a>","FLETCHER FLYING SERVICE INC","JAMES HUTCHINS","","195 AIRPARK BLVD","","IMMOKALEE","FL","34142-3896","Aerial Agricultural Application and Fire-fighting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#104;&#117;&#116;&#99;&#104;&#105;&#110;&#115;&#64;&#99;&#111;&#97;&#115;&#116;&#97;&#108;&#97;&#105;&#114;&#115;&#116;&#114;&#105;&#107;&#101;&#46;&#99;&#111;&#109;">mhutchins@coastalairstrike.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X2BKMNKEFKX5">9</a>","JEMNI INC","BRANDON HLAVKA","","8191 WILSHIRE LAKES BLVD","","NAPLES","FL","34109-0796","Package Design, worldwide printing, paper, graphic imaging, facility maintenance, packaging solutions,procurement, distribution, on-line commerce & supply chain solutions,pharmacy packaging supplies, pharmacy labels supplies, cold chain packaging, food packaging, manufacturing packaging, packaging design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#110;&#100;&#111;&#110;&#64;&#106;&#101;&#109;&#110;&#105;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">brandon@jemniinc.com</a>","http://www.jemniinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KHY4NL1LA841">10</a>","CORE INTERNATIONAL INC","LOIS VARRICK","President","8729 MUSTANG ISLAND CIR","","NAPLES","FL","34113-1645","project management, management, consulting services, logistics, training, compliance, energy, environment, economic analysis, financial management, infrastructure, sector reform, international development, research, community outreach, development, planning, training, evaluation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#118;&#97;&#114;&#114;&#105;&#99;&#107;&#64;&#99;&#111;&#114;&#101;&#105;&#110;&#116;&#108;&#46;&#99;&#111;&#109;">lvarrick@coreintl.com</a>","http://www.coreintl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S67XBLS5DNQ7">11</a>","MULTIMEDIA SOLUTIONS, INC.","THOMAS SCHONROCK","","4451 YACHT HARBOR DR","","NAPLES","FL","34112-4216","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#115;&#99;&#104;&#111;&#110;&#114;&#111;&#99;&#107;&#64;&#109;&#117;&#108;&#116;&#105;&#109;&#101;&#100;&#105;&#97;&#45;&#102;&#108;&#46;&#99;&#111;&#109;">tschonrock@multimedia-fl.com</a>","https://multimedia-fl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EUFRWC8MCYD1">12</a>","HALEX SOFTWARE CONSULTING LLC","DAVID WOOLBRIGHT","","13401 POND APPLE DR E","","NAPLES","FL","34119-8581","Halex Software Consulting, LLC is a Veteran Owned Small Business delivering exceptional consulting services supporting ERP Business and Technology Solutions. We specialize in Oracle E-Business Suite and other Oracle Technologies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#119;&#111;&#111;&#108;&#98;&#114;&#105;&#103;&#104;&#116;&#64;&#104;&#97;&#108;&#101;&#120;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">dwoolbright@halexsoftware.com</a>","http://www.halexsoftware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HR9MVR34W4X6">13</a>","CASSIDY CONSULTING GROUP LLC","ADRIENNE MORRIS","","14846 TYBEE ISLAND DR","","NAPLES","FL","34119-4826","C2G provides management consulting, analytics, process improvement, information technology and acquisition program management; feasibility studies, process audits; financial analysis including FIP/FIAR; IT support including requirements development, ERP implementation; system administration hosting; & help desk support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#111;&#114;&#114;&#105;&#115;&#64;&#99;&#97;&#115;&#115;&#105;&#100;&#121;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#117;&#115;">amorris@cassidyconsulting.us</a>","www.c2g-llc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GU75H4T3FGB7">14</a>","TECHTRUEUP, LLC","GLEN HOWELL","","4850 TAMIAMI TRL N","UNIT 301","NAPLES","FL","34103-3034","TechTrueUp (TTU) is a Service-Disabled Veteran technology consulting firm that offers a comprehensive suite of Cybersecurity services and solutions using industry-leading next generation tools combined with our comprehensive information security services. Our business services is a leader in the areas of Staff Augmentation and Veteran Call Centers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#101;&#110;&#64;&#116;&#101;&#99;&#104;&#116;&#114;&#117;&#101;&#117;&#112;&#46;&#99;&#111;&#109;">glen@techtrueup.com</a>","http://www.techtrueup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZZKNM9JCNYJ3">15</a>","PEKE SAFETY, LLC","SHANDRA HECKMAN","","3461 RUNAWAY LN","","NAPLES","FL","34114-8413","Peke Safety is a specialist purveyor of PPE clothing, articulating frame shelter systems, respirators, patient isolation equipment, and custom vehicle solutions to medical, government, and military customers in the United States and globally. Since the company’s founding in 2013 Peke has expanded our capability to include training and emergency management consulting, allowing us to help safety managers and other emergency coordinators through every part of the purchasing and readiness process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#100;&#114;&#97;&#64;&#112;&#101;&#107;&#101;&#115;&#97;&#102;&#101;&#116;&#121;&#46;&#99;&#111;&#109;">shandra@pekesafety.com</a>","www.pekesafety.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QMSWSA9XQUD9">16</a>","TOTAL INTELLIGENCE GROUP INC","MICHAEL GIALLOMBARDO","","5659 STRAND CT STE 106","","NAPLES","FL","34110-3400","Our 30 years in training, event security & operations merits repeat business from United Structural Associates and wj Events. We utilize experience of veterans in providing consulting, security & management services in event & project management. SDVOSB","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#116;&#111;&#116;&#97;&#108;&#105;&#110;&#116;&#101;&#108;&#108;&#105;&#103;&#101;&#110;&#99;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">mike@totalintelligencegroup.com</a>","www.totalintelligencegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6L4AFMK5YH8">17</a>","OWCER LLC","EUGENE ROSENFELD","","8491 LAUREL LAKES CV","","NAPLES","FL","34119-6791","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#111;&#115;&#101;&#110;&#102;&#101;&#108;&#100;&#64;&#111;&#119;&#99;&#101;&#114;&#46;&#99;&#111;&#109;">erosenfeld@owcer.com</a>","https://owcer.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKU5YJNQSTS6">18</a>","FOUR BT, LLC","PETER CHOLAKIS","","84 COTTONWOOD LN","","NAPLES","FL","34112-7230","Job Order Contracting, Job Order Contract software, services, support, and unit price books.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#99;&#104;&#111;&#108;&#97;&#107;&#105;&#115;&#64;&#52;&#98;&#116;&#46;&#117;&#115;">pcholakis@4bt.us</a>","www.4bt.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNLTXFHJAEG7">19</a>","SGA CORP. NAPLES","JOHN LAMB","","4530 ARNOLD AVE","STE 6","NAPLES","FL","34104-3344","SGA Corp. Naples is a full service Glazing Contractor licensed and insured in Collier/Lee counties of Florida. SGA provides all glass and glazing needs for commercial, residential and industrial projects including new construction, remodeling, service and FBC impact requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#115;&#103;&#97;&#99;&#111;&#114;&#112;&#110;&#97;&#112;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">john@sgacorpnaples.com</a>","www.sgacorpnaples.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EHNGHJMXPGJ8">20</a>","WAVEARRAY ANTIFOULING SYSTEMS LLC","BRUCE CARPENTER","","195 BASIK DR","STE 306","NAPLES","FL","34114-8632","We build Antifouling Systems to prevent to growth of algae, barnacles, zebra mussels and other biofouling species on boats, docks, water intakes, buoys and bridges. Antifouling improves the speed of boats, reduces fuel consumption, improves mechanical and electronics performance and is better for the ecosystem than toxic bottom paints. Its great for the wallet and great for our waterways and oceans.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#99;&#97;&#114;&#112;&#101;&#110;&#116;&#101;&#114;&#64;&#119;&#97;&#118;&#101;&#45;&#97;&#114;&#114;&#97;&#121;&#46;&#99;&#111;&#109;">bcarpenter@wave-array.com</a>","www.wave-array.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TKK1M8Q7BD78">21</a>","ALWAYS THERE HOME HEALTH CARE INC.","ROSALIND MINICOZZI","","317 N COLLIER BLVD","SUITE 201","MARCO ISLAND","FL","34145-2442","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#122;&#122;&#105;&#99;&#111;&#122;&#122;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Rozzicozzi@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KA3KVKXYT8M1">22</a>","ETHENBRIDGE LLC","MICHAEL FRANCO","","11490 SUMTER GROVE CIR UNIT 2205","","NAPLES","FL","34113-8879","Software for testing vulnerabilities of secure communications","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#101;&#116;&#104;&#101;&#110;&#98;&#114;&#105;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">mike@ethenbridge.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LAEFK8C97HJ1">23</a>","STARFIRE DYNAMICS INC","JOSEPH SEHWANI","","4610 ABACA CIR","","NAPLES","FL","34119-9826","Starfire is an 8(a) Certified disability-owned MSP company that provides application support and enterprise resource planning across a wide variety of software applications. Our specialties include SAP solutions, Salesforce Customization and Accessibility; complimented by our recruiting practices for staff augmentation. We have a deep passion for the blind and disabled community and strive to ensure that technology meets accessibility guidelines. Contact us to learn more about our federal contracting abilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#101;&#64;&#115;&#116;&#97;&#114;&#102;&#105;&#114;&#101;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">joe@starfiredynamics.com</a>","https://starfiredynamics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TAMAH472KB76">24</a>","ALAMAV LLC","ALLISON MURRELL","","4830 CHERRY WOOD DRIVE","","NAPLES","FL","34119-1448","ALAMAV is a construction materials, supply and professional services company that tends to the needs of our customers. We are able to provide quality materials, equipment and supplies at competitive prices, as well as professional construction services and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#105;&#115;&#111;&#110;&#64;&#97;&#108;&#97;&#109;&#97;&#118;&#46;&#99;&#111;&#109;">allison@alamav.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D3K6HB7HBCE7">25</a>","TRUIEM INC","SCOTT KIMMELMAN","","374 5TH AVE N","","NAPLES","FL","34102-5541","Gulf Coast DevOps delivers proven automation and service assurance solutions for complex digital transformation initiatives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#107;&#105;&#109;&#109;&#101;&#108;&#109;&#97;&#110;&#64;&#116;&#114;&#117;&#105;&#101;&#109;&#46;&#99;&#111;&#109;">scott.kimmelman@truiem.com</a>","truiem.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE4VQQETCEF7">26</a>","ROPA INTEGRATED SOLUTIONS, LLC","ROSEMARY PASCARELLA","","1261 NAPLES LAKE DR","","NAPLES","FL","34104-6610","RoPa Integrative Solutions develops innovative solutions for healthcare environments to promote streamlined operations for technology, people, and information enhancing outcomes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#112;&#97;&#115;&#99;&#97;&#114;&#101;&#108;&#108;&#97;&#64;&#114;&#111;&#112;&#97;&#105;&#115;&#46;&#99;&#111;&#109;">rpascarella@ropais.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLCCFCU94JU9">27</a>","HAVENS & COMPANY, INC.","DIANE GREEN","","586 BAY VILLAS LANE","","NAPLES","FL","34108-2842","Havens & Company, is a WBE (certified by WBENC and NWBOC) employee benefits brokerage and consulting firm that specializes in non-medical employee benefits such as life, AD&D, disability, dental, vision, voluntary and executive benefits. We work with Fortune 1000 companies and compete successfully with the large consulting houses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#103;&#114;&#101;&#101;&#110;&#64;&#104;&#97;&#118;&#101;&#110;&#115;&#97;&#110;&#100;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">dgreen@havensandcompany.com</a>","www.havensandcompany.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V72TKP8KEBX8">28</a>","GAMPINE GROUP CONSULTING LIMITED LIABILITY COMPANY","ASSANA GAMPINE","","322 BURNT PINE DR","","NAPLES","FL","34119-9772","Fortune 500 corporations trust us for their financial management and business support needs because we help them solve complex analytical problems and execute projects by combining strong analytical skills, system skills, business acumen and teamwork.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#115;&#97;&#110;&#97;&#64;&#103;&#97;&#109;&#112;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">assana@gampine.com</a>","https://gampine.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KY3BMCM6ZFT8">29</a>","DIVERSIFIED-IT CORP","MICHAEL MALARNEY","","8928 BURROWING OWL CT","","NAPLES","FL","34120-1894","Diversified-IT is a Certified Service Disabled, Veteran Owned, Small Business (SDVOSB) that focuses on the people side of large Enterprise Resource Planning business transformation projects. We work with the SAP (including S/4HANA), Oracle, and Workday software solutions. We also have experience with EHR systems. It is important to deploy custom Organizational Change Management (OCM) and training solutions. Our deliverables align, engage, and educate stakeholders, designed to garner buy-in from leadership to supply chain personnel, resulting in higher user adoption.  We typically deploy a blended training delivery, developing robust e-learning, instructor-led, and virtual instructor-led training. Select toolsets used include Articulate, Enable Now, and Captivate. We deliver practical training (say “NO” to 100’s of PPT slides) that truly resonates, contributing to successful go-lives.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#108;&#97;&#114;&#110;&#101;&#121;&#64;&#100;&#105;&#118;&#101;&#114;&#115;&#105;&#102;&#105;&#101;&#100;&#45;&#105;&#116;&#46;&#99;&#111;&#109;">malarney@diversified-it.com</a>","www.diversified-it.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EHA9FV16C2J5">30</a>","CLARITYMINDED CONSULTING, INC.","CHARLES LUDWIGSEN","","260 3RD ST SW","","NAPLES","FL","34117-2109","ClarityMinded exists to coach, lead, and grow teams of Agile Practitioners, enabling success on every project. We don’t just teach Agile. Through implementation and cultural repositioning we empower an Agile organization to carry themselves through and far beyond our partnership. In addition to leading Agile teams, we provide full software development lifecycle resources for custom application systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#64;&#99;&#108;&#97;&#114;&#105;&#116;&#121;&#109;&#105;&#110;&#100;&#101;&#100;&#46;&#99;&#111;&#109;">chuck@clarityminded.com</a>","https://www.clarityminded.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C94UGFTMG6P4">31</a>","COYOTE BEAUTIFUL LLC","STEPHANIE MACKLEY","","10213 BOCA CIR","","NAPLES","FL","34109-7325","Providing highly skilled professional trade associates full-time, part-time, temporary, remote job, and or consulting in the professional areas of Business Structure, Taxes, CFO, Controller, Accounting, Contractors and Laborers for building projects. All Professional Trade Associates have 15 years plus years experience in the area of expertise requesting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#105;&#101;&#109;&#97;&#99;&#107;&#108;&#101;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">stephiemackley@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVGDXHSFZNB6">32</a>","ARYEHMS PARTNERS LLC","RANDY REAMS","","2343 VANDERBILT BEACH RD STE 624","","NAPLES","FL","34109-2777","5g telecom installation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#46;&#114;&#101;&#97;&#109;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">randy.reams@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MK8NBDHJDL55">33</a>","GEN-AVIV LLC","ROY LEVY","","1075 FRANK WHITEMAN BLVD","","NAPLES","FL","34103-3842","GEN-AVIV LLC provide two specific services/products to our clients:  24/7 continuous autonomous aerial data collection and dissemination for critical infrastructure, public safety / emergency response and recovery.  Space as a Service for UAS development, testing and demonstration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#101;&#118;&#121;&#64;&#103;&#101;&#110;&#45;&#97;&#118;&#105;&#118;&#46;&#99;&#111;&#109;">rlevy@gen-aviv.com</a>","www.gen-aviv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KYB2SHKVKC65">34</a>","KLEN SPACE INC","BRIT RAWLINGS","","4555 SHEARWATER LN","","NAPLES","FL","34119-8838","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#116;&#64;&#107;&#108;&#101;&#110;&#115;&#112;&#97;&#99;&#101;&#46;&#99;&#111;&#109;">brit@klenspace.com</a>","www.klenspace.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1PLQWC7RPJ4">35</a>","MLC LLC","MARCI CHARLAND","","2575 NORTHBROOKE PLAZA DR","UNIT 207","NAPLES","FL","34119-8099","CERTIFIED HEALTHCARE BUSINESS CONSULTANT","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#105;&#64;&#112;&#102;&#115;&#46;&#104;&#101;&#97;&#108;&#116;&#104;">marci@pfs.health</a>","www.pfs.health"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N8R3U348HS89">36</a>","DELUNA GLOBAL ENTERPRISE LLC","FIDEL DE LUNA","","405 5TH AVE S","STE 7","NAPLES","FL","34102-6515","Supply of a catalog of goods and services covering a wide spectrum from construction to food services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#105;&#100;&#101;&#108;&#64;&#100;&#101;&#108;&#117;&#110;&#97;&#103;&#101;&#46;&#99;&#111;&#109;">fidel@delunage.com</a>","https://www.delunage.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6Z4JQXS5CN7">37</a>","KD BART FEDERAL SERVICES LLC","DENNIS BARTALINO","","711 9TH ST SW","","NAPLES","FL","34117-2158","Sales, service and light construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#97;&#114;&#116;&#55;&#49;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dbart711@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MA96BCRGDCS9">38</a>","XCHANGE.LOANS INC.","ANDRE CUADRADO","","132 BEDZEL CIR","STE 1401","NAPLES","FL","34104-0502","The Xchange.Loans platform is an online marketplace to buy and sell mortgage loans and OREO assets. The platform offers automated CA execution, timed call for offers, bid collection, bidder proof of funds, single & multi-asset bidding, secure data file transfer, and data rights management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#101;&#64;&#120;&#99;&#104;&#97;&#110;&#103;&#101;&#46;&#108;&#111;&#97;&#110;&#115;">dre@xchange.loans</a>","https://xchange.loans"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F5QYB46QL1F7">39</a>","ALVIAR ROLL-OFFS LLC","DELIA ALVIAR","","1029 N 29TH ST","","IMMOKALEE","FL","34142-2639","Debris removal, Garbage collection , Bulk hauling, Skid steer work","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#118;&#105;&#97;&#114;&#55;&#55;&#55;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">alviar777@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J4GVPZW7KZV3">40</a>","SONJI GROUP LLC","SONJI NICHOLAS","","3415 ALLEGHENY COURT","","NAPLES","FL","34120-4440","We provide office supplies, medical supplies, and hardware. We also offer management, education, and training services. Based in Southwest Florida, principal officers have more than 30 years of experience with successfully fulfilling contracts. We aim to meet and exceed client expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#115;&#111;&#110;&#106;&#105;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">admin@sonjigroup.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HA45WH46DP22">41</a>","SOUTHWEST FLORIDA LIGHTING & ELECTRICAL INC.","NIKKI SAKOFF","","4340 LORRAINE AVE","","NAPLES","FL","34104-4739","We are an electrical contractor. We specialize in lighting projects across the country. We sell and install commercial lighting fixtures.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#107;&#107;&#105;&#64;&#115;&#119;&#102;&#108;&#101;&#46;&#99;&#111;&#109;">nikki@swfle.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MRBNQMC61RN1">42</a>","917 SMITH INC","OLEKSII SYNIAVSKYI","","2039 PARSON ST","","NAPLES","FL","34120-5319","917 Smith INC is headquartered in Naples, FL, est. in Springfield, OH in 2017. We have provided freight and hauling services for a large variety of cargo from; commercial products/supplies, medical/dental supplies, various vehicles, heavy/industrial machinery, various gasses and liquids and more. We have been doing business in the United States operated freight shipping company. 917 Smith Inc is outfitted with a wide variety of transport equipment specially designed to get your shipment safely to its destination. With a network of over 10,000 freight carriers; we pair your shipment with the safest quality equipment possible to ensure a successful pickup, transfer, and delivery. Whether it’s heavy haul, oversized freight, heavy equipment, specialized shipping. Offering our customers 24/7 support during the time frame of their scheduled shipment, shipment tracking, and liability insurance; gives our customer peace of mind from inception to completion of shipping.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#64;&#57;&#49;&#55;&#115;&#109;&#105;&#116;&#104;&#46;&#99;&#111;&#109;">alex@917smith.com</a>","www.917smith.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.937&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 085 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.91 seconds and 1.97 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 32 
+(of 32 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KTJUXWKJEGA3">1</a>","GCY INC","HILARY YOUNG","President","1505 SW MARTIN HWY","","PALM CITY","FL","34990-3340","LAND SURVEYING & MAPPING; GPS SURVEYING; BATHYMETRIC/HYDROGRAPHIC/GIS SERVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#105;&#108;&#97;&#114;&#121;&#64;&#103;&#99;&#121;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">hilary@gcyinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQXFPDE9Q7L4">2</a>","CSA OCEAN SCIENCES INC","ROBERT MULCAHY","","8502 SW KANSAS AVE","","STUART","FL","34997-7120","Marine Environmental Consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#117;&#108;&#99;&#97;&#104;&#121;&#64;&#99;&#111;&#110;&#115;&#104;&#101;&#108;&#102;&#46;&#99;&#111;&#109;">rmulcahy@conshelf.com</a>","http://www.csaocean.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JNBMEWGXC9K9">3</a>","RADIOTRONICS INC","JOHN JOHNSTON","General Manager","1315 SW COMMERCE WAY","","STUART","FL","34997-7231","Radiotronics, Inc. has been in the electronics and communications business since 1988 providing 2-way radio, cellular, beeper, RADAR & LASER recertification and repair services for the community and law enforcement agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#104;&#110;&#64;&#65;&#99;&#101;&#75;&#57;&#46;&#99;&#111;&#109;">John@AceK9.com</a>","http://www.AceK9.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NM82KUQBMKH4">4</a>","MARVIN GOTTLIEB & CO INC","MARVIN GOTTLIEB","President","10311 SE JUPITER NARROWS DR","","HOBE SOUND","FL","33455-3253","Human resources training and development, management development, supervisory skills development, elearning design and production, research, needs analysis, document preparation, executive coaching, English,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#118;&#105;&#110;&#64;&#99;&#111;&#109;&#112;&#114;&#111;&#106;&#46;&#99;&#111;&#109;">marvin@comproj.com</a>","http://www.comproj.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5ZBG2MNJQW1">5</a>","THE WALTON COMMUNICATIONS GROUP .LLC","WILLIAM WALTON","","5651 SE WINGED FOOT DR","","STUART","FL","34997-8643","We are a multi-faceted communications consulting firm. We provide a staff of communication experts specializing in the training and development of professionals in medicine,sales,business,law enforcement. as providing communication services in: Presentation skills, powerpoint do’s and dont's, train the trainer, leadership building, any kind of human interaction skills. Communications training, management communications,consulting, presentation skills.Listening seminars to remember more effectively.Project development skills. All things communicative.Communicating with the public,fellow employees etc.Police verbal judo,courtroom preparation,dealing with diversity in the workplace. Selling skills for non sales people,provide advice and direction in any communications area. We can even make the difficult presentations for you if needed.Our clients will attest to the value we deliver.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#108;&#116;&#111;&#110;&#64;&#116;&#104;&#101;&#119;&#97;&#108;&#116;&#111;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#111;&#114;&#103;">walton@thewaltongroup.org</a>","www.thewaltongroup.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MW2EA4LENX73">6</a>","DLE TECHNICAL SERVICES, LLC","ROB DE LA ESPRIELLA","","4634 SW LONG BAY DR","","PALM CITY","FL","34990-8807","Training: BlueDragon Hyper-Integrated Causal Analysis (HCA) methodology(Accident investigation workshops); leadership training, coaching and mentoring; NQA-1 quality assurance and lead auditor training; corrective action program and continuous improvement culture training; supply chain management fundamentals training.  Technical Support: Root Cause Evaluations; operational readiness reviews; site program assessments; assessment of management control systems; Accident and Incident Investigations; NQA-1 and DOE O 414.1D Quality Assurance Program development and improvement; Organizational Development; Continuous Improvement program development; Corrective Action Program evaluation and development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#98;&#108;&#117;&#101;&#100;&#114;&#97;&#103;&#111;&#110;&#49;&#46;&#99;&#111;&#109;">rob@bluedragon1.com</a>","http://www.bluedragon1-ips.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKPHZRNF2EV3">7</a>","CIRCLE 6 CONSULTING INC","NATHAN SPRAGUE","","6578 SW KEY DEER LN","","PALM CITY","FL","34990-8851","World-class Lean Six Sigma consulting. We offer Green Belt training, Black Belt training, Master Black Belt training, Sponsor training, Executive Leadership training as well as one-off modules covering the entire spectrum of Lean and Six Sigma tools.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#115;&#112;&#114;&#97;&#103;&#117;&#101;&#64;&#99;&#105;&#114;&#99;&#108;&#101;&#54;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">nsprague@circle6consulting.com</a>","http://www.circle6consulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HNNCB4MB4SL3">8</a>","UNEW, INC.","MARK DENDER","","3321 SE GRAN PARK WAY","","STUART","FL","34997-8837","ETS is the master of 3D scanning & engineering to accurately digitize any object for: first article & quality inspection, comparison to CAD, reverse engineering, CAD model creation, or complete manufacturing, PMA certification, replacement part products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#100;&#101;&#110;&#100;&#101;&#114;&#64;&#117;&#110;&#101;&#119;&#46;&#99;&#111;&#109;">mark.dender@unew.com</a>","www.unew.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QQ2FKS5CUKW3">9</a>","REVOLUTION PROTOTYPE INC.","MICHAEL PRIEST","","7360 SW JACK JAMES DR","","STUART","FL","34997-7051","4 Axis CNC Milling Machine, CNC Lathe, Precision Tuning, Tool & Die work, Metal Work, vehicle and aircraft components, TIG Welding, motorcycle parts and components, tube & pipe fittings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#118;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#112;&#114;&#111;&#116;&#111;&#116;&#121;&#112;&#101;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">revolutionprototype@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QTGFT5DNDWC3">10</a>","PROCEDURE SOLUTIONS MANAGEMENT, LLC","STEPHEN MCCORD","","3132 SE FAIRWAY W","","STUART","FL","34997-6026","Our mission is to provide services globally to high-risk and supporting industries in a risk managed approach in order to achieve maximum sustainable results from rule-based (procedure based) human-factored solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#99;&#99;&#111;&#114;&#100;&#64;&#112;&#114;&#111;&#99;&#101;&#100;&#117;&#114;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#109;&#103;&#109;&#116;&#46;&#99;&#111;&#109;">smccord@proceduresolutionsmgmt.com</a>","http://www.proceduresolutionsmgmt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBNVXJK4N398">11</a>","FLORIDA OCULAR PROSTHETICS, INC.","JUDY RIBEIRO","","967 SE FEDERAL HWY","","STUART","FL","34994-3702","We provide the highest quality and comprehensive care in the fabrication and maintenance of custom ocular and facial prosthetics. We specialize in artificial eyes, scleral shells, maxillofacial, nasal, and auricular prosthetics. We are a BOC Accredited facility founded in 2004. Our main office is located in Stuart, Florida and we have 16 additional offices throughout the state of Florida (including Valdosta, GA). A combined 20+ years of experience in the custom fabrication and fitting of Ocular and Maxillofacial prosthetics. Our Ocularists provide service for patients of all ages with highest quality care and professionalism. We provide the utmost patient care to better improve our patients' quality of life. We take pride in personally customizing each prosthesis until we meet complete customer satisfaction. We are not only focused on the comfort and appropriate fit of the prosthesis but take personal interest in detailed aesthetic appeal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#108;&#111;&#114;&#105;&#100;&#97;&#111;&#99;&#117;&#108;&#97;&#114;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">floridaocular@bellsouth.net</a>","http://www.floridaocularprosthetics.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XQBLNLTJMTN5">12</a>","PADDEN DESIGN ENGINEERING, LLC","DAVID PADDEN","","1239 SE INDIAN ST STE 109","","STUART","FL","34997-5633","Provider of engineering services including design analysis and test for the development and support of advanced aerospace systems and components. Major products supported are propulsion and mechanical system components, advanced composites, tooling and maintenance training systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#46;&#112;&#97;&#100;&#100;&#101;&#110;&#64;&#112;&#97;&#100;&#100;&#101;&#110;&#100;&#101;&#46;&#99;&#111;&#109;">dave.padden@paddende.com</a>","http://www.paddende.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TYKKE3RJTSA4">13</a>","A GREEN WORLD CONSTRUCTION CO INC","ALEXANDRA TOPOLE","","1 KNOWLES RD","","STUART","FL","34996-6610","We do underground utilities, as well as commercial and industrial build outs, also new construction. Marine work includes Tug, tow, and safety boats with personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#101;&#120;&#97;&#110;&#100;&#114;&#97;&#64;&#97;&#103;&#114;&#101;&#101;&#110;&#119;&#111;&#114;&#108;&#100;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">alexandra@agreenworld-inc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N84PLWNPEJF2">14</a>","WMD GUNS LLC","WYNN ATTERBURY","","3070 SE DOMINICA TER","","STUART","FL","34997-5717","Material Science engineering, Performance coated Small Arms, application of performance coatings on defense articles","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#121;&#110;&#110;&#64;&#119;&#109;&#100;&#103;&#117;&#110;&#115;&#46;&#99;&#111;&#109;">wynn@wmdguns.com</a>","www.wmdguns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJKQAN2HJR83">15</a>","MANAGEMENT MARINE SERVICE INC","GEORGE ADAMS","","20618 SW CITRUS BLVD","","INDIANTOWN","FL","34956-3292","We provide boats and crews for search and rescue support, water transportation of passengers and goods, diving and recovery operations, near shore and inland marine support services, training of personnel in the operation of small craft, navigation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#71;&#65;&#100;&#97;&#109;&#115;&#64;&#65;&#100;&#97;&#109;&#115;&#82;&#105;&#98;&#115;&#46;&#110;&#101;&#116;">GAdams@AdamsRibs.net</a>","http://www.managementmarineservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PFR1M8A48EH4">16</a>","THE TRANSIT GROUP, INC.","JAMES SELLERS","","1458 NE SUNVIEW TER","","JENSEN BEACH","FL","34957-3900","EAI scientists and associates have extensive experience providing environmental monitoring, permitting and consultation services in support of the following types of projects: beach nourishment; coastal construction; inlet, harbor, and channel dredging; power plant and other industrial operations; land planning and development; stormwater improvements; utility corridor construction; environmental resource permitting; protected species management; habitat conservation planning; and conservation land management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#109;&#121;&#64;&#101;&#99;&#111;&#108;&#111;&#103;&#105;&#99;&#97;&#108;&#45;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">jimmy@ecological-associates.com</a>","ecological-associates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J568UKT8PRX4">17</a>","STUART LAWN & GARDEN, LLC","THOMAS OBRIEN","","3326 SE DIXIE HWY","","STUART","FL","34997-5241","Sales, Service and Repair of chainsaws, trimmers, mowers. Sales of parts, safety equipment, hand tools for landscaping, tree services, emergency equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#106;&#117;&#115;&#116;&#101;&#114;&#99;&#49;&#53;&#50;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">adjusterc152@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNVFMEJLTE33">18</a>","WATERBLASTING, LLC","CHAYE PIMENTEL","","3920 SE COMMERCE AVE","","STUART","FL","34997-4958","The Stripe Hog® Waterblasting System quickly and completely removes all types of durable traffic markings from asphalt and concrete surfaces with the least amount of negative impact to the surface. The Stripe Hog® does its work using many needle sharp 40,000 psi water jets and a powerful vacuum recovery system, called the Smart Vac® that leaves the road or runway clean and almost dry. The resulting debris is quickly de-watered using a patented process, so that the debris can then be dumped in a dried state in one big clump that easily falls from the tank.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#72;&#65;&#89;&#69;&#64;&#116;&#104;&#101;&#104;&#111;&#103;&#46;&#99;&#111;&#109;">CHAYE@thehog.com</a>","www.thehog.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CL3KVMNDNNC9">19</a>","BOLD NEW DIRECTIONS, INC.","SUZANNE GUTHRIE","","2929 SE OCEAN BLVD APT 130-4","","STUART","FL","34996-2746","We provide and book Keynote Speakers, Motivational Speakers, Training Events, Performance Artists, Trade Show Events and Sessions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#98;&#111;&#108;&#100;&#110;&#101;&#119;&#100;&#105;&#114;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">info@boldnewdirections.com</a>","www.boldnewdirections.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DN31EDFAZJH9">20</a>","ONTRAXSYS LLC","KELLY ERNCE","","603 SW KEATS AVE","","PALM CITY","FL","34990-1320","Pro-Tech Staffing Solutions is a temporary work temporary staffing firm that finds, retains and trains workers. Capable of finding short-term, temporary and contract workers for a broad range of assignments. Specialize professional and technical roles in the IT, Medical and industrial sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#64;&#111;&#110;&#116;&#114;&#97;&#120;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">kelly@ontraxsys.com</a>","https://www.ontraxsys.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RQL2S28UKXQ2">21</a>","MARINE VENTURES INTERNATIONAL, INC.","GLENN COMER","","8524 SW KANSAS AVE","","STUART","FL","34997-7120","Marine Ventures International Inc. (MVI) provides clients with top-level professionals and specialists in scientific,environmental, engineering, management and consulting services to virtually all industries associated with the world’s oceans, coastal zones and waterways, supporting energy, infrastructure, ports / harbors, government and submarine telecom organizations. MVI was founded in 2009 to provide high quality marine environmental science and technical personnel to conduct field operations and data acquisition supporting the Energy Industry. It has since evolved to be a broad-spectrum provider of services, personnel, and equipment in support of ocean and coastal projects worldwide. Our strength lies in our personnel having extensive education, years of hands-on experience, and a proven track record of successful problem solving and project execution worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#111;&#109;&#101;&#114;&#64;&#109;&#97;&#114;&#105;&#110;&#101;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">kcomer@marineventures.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N28CANF7FTV1">22</a>","FIVE OCEANS FLORIDA, INC","CHESTER CLAUDON","","4529 SW CARGO WAY","","PALM CITY","FL","34990-5521","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#116;&#64;&#70;&#76;&#82;&#83;&#84;&#46;&#99;&#111;&#109;">chet@FLRST.com</a>","www.flrst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UWEXRH14NVV7">23</a>","ACCESS COUNSELING AND ASSESSMENT PA","SUSAN SULLIVAN","","901 SW MARTIN DOWNS BLVD STE 207","","PALM CITY","FL","34990-2860","Psychological Evaluations, Expert Testimony, Forensic Psychologist, Clinical Psychologist, Psychotherapist, Therapist, Therapy","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#114;&#83;&#117;&#115;&#97;&#110;&#83;&#117;&#108;&#108;&#105;&#118;&#97;&#110;&#64;&#68;&#114;&#83;&#117;&#115;&#97;&#110;&#83;&#117;&#108;&#108;&#105;&#118;&#97;&#110;&#46;&#99;&#111;&#109;">DrSusanSullivan@DrSusanSullivan.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VKA5PHPNDPY3">24</a>","GLOWHOST.COM, LLC","MATTHEW LUNDSTROM","","3499 SW THISTLEWOOD LN","","PALM CITY","FL","34990-7717","Web Hosting, Remote Server Management, Server Monitoring, Technical Support, Server Control Panel Licensing, Domain Name Registration, IT Services, Data Conversion, Programming Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#105;&#110;&#103;&#64;&#103;&#108;&#111;&#119;&#104;&#111;&#115;&#116;&#46;&#99;&#111;&#109;">billing@glowhost.com</a>","https://glowhost.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJS7V6AGFCA3">25</a>","PIPER CONSULTING, LLC","ELIZABETH FOKS","","230 SE ASHLEY OAKS WAY","","STUART","FL","34997-2803","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#102;&#111;&#107;&#115;&#64;&#119;&#101;&#97;&#114;&#101;&#112;&#105;&#112;&#101;&#114;&#46;&#99;&#111;&#109;">lfoks@wearepiper.com</a>","www.wearepiper.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZS49EKCT11E6">26</a>","ADVANCED SURGICAL TECHNOLOGIES, INC","BARBARA ALFARO","","7815 SW ELLIPSE WAY E10","","STUART","FL","34997-7268","We are a turnkey laser provider including the requisite laser, an experienced technician to run the laser, laser safety eyewear and signs and single-use fiber optics (if so desired). We have the latest in laser technology to cover a wide-variety of surgical specialties. We have online scheduling through our website or 24/7 call center with no software needed. Additionally, we have paperless reporting, laser logs, billing and virtual signing which assists all of our facilities in their Green initiatives and provides information on the spot. All technicians are equipped with hand-held devices which have all maintenance records, and technician credentialing information. We have 24-hour scheduling, and excellent availability which allow our facilities to schedule at their physician convenience. Our techs are highly trained and experience local techs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#108;&#102;&#97;&#114;&#111;&#64;&#97;&#115;&#116;&#108;&#97;&#115;&#101;&#114;&#46;&#99;&#111;&#109;">balfaro@astlaser.com</a>","WWW.ASTLASER.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J9AKLJ7GAK98">27</a>","424 LABORATORIES, LLC","JOHN GLOISTEIN","","110 SW MONTEREY RD STE 4","","STUART","FL","34994-4678","Founded in 1997, LabDS is a facilities and construction management firm. We specialize in creating productive work and laboratory environments from Initial Outfitting and Transition Planning (IO&T) to complete Project Management. As a small minority owned business, we have had the privilege of working with large institutions including Army, USDA, AstraZeneca and Coca-Cola.  We self-perform and team with partners to provide the most cost-effective solution to meet the needs of the government, industrial, education, healthcare, and pharmaceutical communities. Let us be your solutions partner to help you move your mission forward.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#108;&#111;&#105;&#115;&#116;&#101;&#105;&#110;&#64;&#108;&#97;&#98;&#100;&#115;&#46;&#99;&#111;&#109;">jgloistein@labds.com</a>","https://labds.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3B2J3N8JXK1">28</a>","GRAPHIC DESIGNS INTERNATIONAL LLC","KIMBERLY AMSALEM","","7941 SW JACK JAMES DR","","STUART","FL","34997-7243","Graphic Designs offers multiple production processes to create your fleets look down to your decals. Without being limited to a single production type you can mix and match to meet your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#105;&#109;&#64;&#103;&#100;&#105;&#103;&#114;&#97;&#112;&#104;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">Kim@gdigraphics.com</a>","www.gdigraphics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QL6ER5XJC9L5">29</a>","JMT CONSULTANTS, INC.","JOSEPH TEETS","","5225 SE INKWOOD WAY","","HOBE SOUND","FL","33455-7854","Engineering firm specializing in small gas turbine designs of: microturbines, Advanced 2-Spool microturbine, Advanced 2-Spool Turboprops having design engineering, structural, aero, low emissions combustion also manufacturing, sheet metal fabrication assembly and test.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#97;&#112;&#111;&#119;&#101;&#114;&#64;&#98;&#101;&#108;&#108;&#115;&#111;&#117;&#116;&#104;&#46;&#110;&#101;&#116;">tmapower@bellsouth.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SJW3HV1Y1H43">30</a>","MANU KEA INCORPORATED","JENNIFER STALLINGS","","2646 SW MAPP RD STE 306","","PALM CITY","FL","34990-2758","Sourcing specialists for PPE, fall safety equipment, marine hardware, marine safety equipment, mountaineering and specialty chemicals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#46;&#115;&#116;&#97;&#108;&#108;&#105;&#110;&#103;&#115;&#64;&#109;&#97;&#110;&#117;&#107;&#101;&#97;&#46;&#99;&#111;&#109;">Jennifer.stallings@manukea.com</a>","www.manukea.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JVTNCJJJ1QP3">31</a>","BELLA ROSE CONSTRUCTION INC","JOHN ZERVOPOULOS","","4517 SE COMMERCE AVE","","STUART","FL","34997-8860","Your South Florida home or business is situated in a sun-soaked tropical climate where you can enjoy the sun, sand and lush tropical scenery. Florida must also endure the ravages of hurricanes and tropical storms. Advanced Hurricane Protection is a privately-owned, family-operated company in Stuart, FL. Our company is well-established with the residents of South Florida, and we provide and install hurricane impact windows and shutters for residential and commercial customers. Bella Rose Construction Inc. is a well-known general contractor that offers construction services for homes and businesses. John Zervopoulos started these companies so that we can serve our clients with dependable protection from hurricanes, as well as quality service for remodels, renovations, and new construction. Let us show you how our experience and dedication to your satisfaction make our businesses well worth the investment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#104;&#117;&#114;&#114;&#105;&#99;&#97;&#110;&#101;&#46;&#110;&#101;&#116;">john@advancedhurricane.net</a>","http://www.advancedhurricane.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YV5DX8FWNTT4">32</a>","UNITED FREIGHT SERVICES LLC","JERMAINE GRAVES","","2658 SE WILLOUGHBY BLVD","","STUART","FL","34994-4700","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#101;&#114;&#109;&#97;&#105;&#110;&#101;&#64;&#117;&#110;&#105;&#116;&#101;&#100;&#102;&#114;&#101;&#105;&#103;&#104;&#116;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">Jermaine@unitedfreightcorp.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.902&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

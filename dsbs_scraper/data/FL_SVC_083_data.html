@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 083 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.93 seconds and 2.00 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 20 
+(of 20 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZMFQN6SQC871">1</a>","ANTENNAS FOR COMMUNICATIONS, OCALA, FL, INC.","MATT ADERHOLT","VP Sales and Marketing","2499 SW 60TH AVE","","OCALA","FL","34474-4324","AFC manufactures, markets and sells worldwide satellite dish antennas, radomes, antenna feeds, microwave and waveguide components and ultra low loss waveguide transmission line Tallguide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#102;&#99;&#115;&#97;&#97;&#116;&#46;&#99;&#111;&#109;">sales@afcsaat.com</a>","http://www.afcsat.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NBUULWBMHCW4">2</a>","BRACE ENTERPRISES INC","REBECCA BRACE","","94 SW RIDGEWOOD RD","","DUNNELLON","FL","34431-2234","signs, sign faces, graphic design, digital printing, vinyl marking, reflective marking, special needs, custom needs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#99;&#107;&#121;&#64;&#98;&#114;&#97;&#99;&#101;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#46;&#99;&#111;&#109;">becky@braceenterprise.com</a>","http://www.braceenterprise.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UJNRH8M1FZ54">3</a>","OWEN & ASSOCIATES","SHELLY OWEN","","121 NW 3RD ST","","OCALA","FL","34475-6640","Full service court reporting firm. Conference rooms for meetings, mediations, depositions. Stenographic court reporters for depositions, meetings, court proceedings, CART (state & federal). Audio/video transcription, videoconferencing, & videographers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#119;&#101;&#110;&#97;&#115;&#115;&#111;&#99;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">owenassocs@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C3K4NSVJRDF8">4</a>","VETERANS TRADING COMPANY, INC.","JOHN PIERCE","","202 SW 33RD AVE","","OCALA","FL","34474-1927","Veterans Trading Company serves Federal Prime Contractors, government agencies and select enterprise organizations with Product Distribution and Operational Outsourcing Services. Veterans Trading Co. is ISO9001 and AS9120 Certified and AS5553 Compliant","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#105;&#101;&#114;&#99;&#101;&#64;&#118;&#116;&#99;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">jpierce@vtcusa.com</a>","http://www.vtcusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FYD6LEKQ3LT1">5</a>","KNIGHT STORAGE TRAILER, LLC","ELAINE GOODELLE","","2150 NW 40TH ST","","OCALA","FL","34475-3402","Storage Trailers for Ocala & Gainesville, FL For over two decades, Knight Storage Trailer, LLC of Ocala, FL has been the area's premier storage solution. Our portable storage trailers offer all the storage you need in a mobile and affordable method. No matter if you are a homeowner cleaning out your garage, an office that needs to store extra chairs and desks or anyone else, you won't believe how convenient our trailer rentals can be. We offer a variety of storage containers to fit your needs. We deliver storage containers all over the Ocala, FL and Gainesville, FL.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#109;&#111;&#110;&#100;&#64;&#107;&#110;&#105;&#103;&#104;&#116;&#115;&#116;&#111;&#114;&#97;&#103;&#101;&#116;&#114;&#97;&#105;&#108;&#101;&#114;&#46;&#99;&#111;&#109;">raymond@knightstoragetrailer.com</a>","http://www.knightstoragetrailers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TD9JB8KJQDP3">6</a>","EMERGENCY RESPONSE EDUCATORS AND CONSULTANTS, INC.","TERESA NEWSOME","","233 NE 58TH AVE STE 101","","OCALA","FL","34470-3406","EREC, a Women-owned Business offers turnkey solutions for your emergency management and homeland security exercises, training and planning needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#110;&#101;&#119;&#115;&#111;&#109;&#101;&#64;&#101;&#114;&#101;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">tnewsome@erecinc.com</a>","http://www.erecinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZFCCBYCKHXT3">7</a>","JOSE W GUTIERREZ LLC","JOSE GUTIERREZ","","12550 SW 112TH STREET RD","","DUNNELLON","FL","34432-5414","Landscaping maint. irrigation trimming removal groundprep design/construction fertilizers pesticides sod Prop/maint remodel gypsumboard tile electrical plumbing roof repair/seal flooring painting parkingpaving fence welding concrete window/door install","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#97;&#102;&#121;&#103;&#114;&#101;&#101;&#110;&#112;&#114;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">leafygreenpr@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNPFLXJKLC13">8</a>","ABOVE AND BEYOND CLEANING, INC.","DEBORAH KLOSS","","12200 NE 212TH STREET RD","","FORT MC COY","FL","32134-3406","Janitorial - Commercial, Cleaners, Flooring, Professionals, High maintenance cleaning, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#107;&#108;&#111;&#115;&#115;&#64;&#116;&#97;&#109;&#112;&#97;&#98;&#97;&#121;&#46;&#114;&#114;&#46;&#99;&#111;&#109;">dkloss@tampabay.rr.com</a>","http://www.aboveandbeyondcleaninginc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAL9YKG91H68">9</a>","KIEFER REALTY PA","SCOTT KIEFER","","119 MARION OAKS BLVD","","OCALA","FL","34473-2200","Residential and commercial real estate, real estate leasing, property management, Community Association Manager, Notary, HUD listing broker, REO, BPO","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#105;&#101;&#102;&#101;&#114;&#82;&#101;&#97;&#108;&#116;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">KieferRealty@gmail.com</a>","www.KieferRealtyPa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLCBT7CM1AP3">10</a>","DRYWALL REPAIR AND REPOIRE L.L.C","DANIEL OSBORNE","","6798 SW 148TH PLACE RD","","OCALA","FL","34473-5132","DRR Drywall Repair is a State Licensed drywall contractor based out of Ocala, Florida. Serving Marion, Alachua, Citrus, Lake, Sumter Counties, we specialize in repairing and replacing damaged drywall! Drywall hole repairs, water/ heat damaged drywall repair, drywall crack repair, drywall seam and tape repair, and popcorn ceiling repair and removal. If you have an important drywall project in your home, business, or commericial setting, and you demand professionalism and excellent quality, we look forward to serving your needs! DRR Drywall Repair 6798 SW 148th PL RD Ocala, FL 34473 Phone: (352) 817-3094 FL Licensed Contractor: #SCC131151954","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#114;&#100;&#114;&#121;&#119;&#97;&#108;&#108;&#114;&#101;&#112;&#97;&#105;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">drrdrywallrepair@gmail.com</a>","https://www.drrdrywallrepair.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NR2CE6GCFPC5">11</a>","N-TACT SECURITY LLC","BOBBI TUCKER","","401 NW 1ST AVE","","OCALA","FL","34475-8803","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#78;&#84;&#65;&#67;&#84;&#76;&#76;&#67;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">NTACTLLC@GMAIL.COM</a>","NTactSecurity.Com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XTMJV7C8PBB6">12</a>","TIP TOP TREE EXPERTS, L.L.C.","JAMES GUENTHER","","41711 LILLIAN LN","","WEIRSDALE","FL","32195-5268","We provide Professional Tree Care Services and Professional Lawn & Landscape Services to commercial & residential clients in Central Florida. We combine the expertise and capabilities of a large company with the personal attention of a small, Family-Owned business. We are passionate about this business – about trees, gardens and landscapes, and especially about the relationships we develop with our clients and staff.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#112;&#116;&#111;&#112;&#116;&#114;&#101;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tiptoptrees@gmail.com</a>","http://www.tiptoptreeexpertsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VRQBMWQ6R588">13</a>","DIGITAL FURY LLC","MARC RICE","","3440 SE 45TH ST","","OCALA","FL","34480-9311","At Digital Fury, we believe in the power of visual storytelling. Our job is to listen to your ideas and get to know your brand. We learn how to think like your customers and then press the boundaries of creativity to develop a message that speaks to their unique needs. We were born in the age of digital communication and it shapes who we are today. We listen to modern trends in the industry but our values remain very traditional. While visual storytelling is at the center of what we do, our commitment to our clients defines who we are. From creative development and market research to customized campaigns and media buying, we have the expertise and experience to deliver results across a wide range of mediums. The message we deliver is always unique to your organization. Its simple, memorable, and easy to understand.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#64;&#100;&#105;&#103;&#105;&#116;&#97;&#108;&#102;&#117;&#114;&#121;&#116;&#118;&#46;&#99;&#111;&#109;">marc@digitalfurytv.com</a>","http://www.digitalfurytv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NVJYETJS3ZE9">14</a>","CLR AQUATICS INC","CASEY CATTERTON","","855 W HIGHWAY 318","","CITRA","FL","32113-2145","lake, canal, and waterway clearing of heavy vegetation as well as forest like environments on the waterways and its associated organics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#114;&#97;&#113;&#117;&#97;&#116;&#105;&#99;&#115;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">clraquaticsinc@gmail.com</a>","www.clraquaticsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TU5UZC6JWUP8">15</a>","SEYMOURWYNN INVESTMENTS, LLC","BERNARD SHAW","","4091 SE 22ND AVE","","OCALA","FL","34480-9159","SEYMOURWYNN INVESTMENTS,LLC Providing Freight transportation and logistic services in heavy haul trucking, flatbed trucking, van trucking, refrigerated trucking, full truck load, partial truck load, LTL less than truck load,refrigerated trucking, dry freight, double drop trailer, lowboy trailer, and inter modal freight.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#121;&#109;&#111;&#117;&#114;&#119;&#121;&#110;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">seymourwynn@gmail.com</a>","seymourwynn.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8MXDBHMMWY7">16</a>","TUNGSTEN NDT SERVICES LLC","IVAN SANTIAGO","","612 BAHIA CIR","","OCALA","FL","34472-8506","Tungsten NDT Services provides non-destructive testing (NDT), materials testing and welding services for a diverse range of industries. We help you ensure the reliability and safety of your products, equipment or plant assets with our world-class services in non-destructive testing (NDT), materials testing and welding quality. Our Total Quality Assurance services can support production processes, quality control, and regulatory compliance as well as new construction, pipelines, plant maintenance and scheduled shutdown inspection. Our vast expertise and knowledge in NDT and materials testing mean we can select the right techniques and procedures to detect defects and irregularities in your products, equipment, production facilities or plant assets and provide you with necessary data to assist you in making informed decisions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#73;&#118;&#97;&#110;&#55;&#118;&#101;&#114;&#100;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Ivan7verde@gmail.com</a>","http://www.tungstenndtservices.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JATJCBKE86S7">17</a>","R AND K ENVIRONMENTAL LLC","REUBEN LAW","","4275 NE 137TH ST","","ANTHONY","FL","32617-2320","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#107;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#97;&#108;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">randkenvironmental@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PZ2RZNKYEVF1">18</a>","CONVERGENCE DYNAMIC SOLUTIONS GROUP LLC","GREGORY BRADLEY","","1964 NE 50TH CT","","OCALA","FL","34470-2171","Convergence Dynamic Solutions Group, LLC provides strategic consulting, contract compliance, and training services to commercial, not for profit and government organizations. Our Consulting can mobilize the right people, skills, and technologies to help organizations improve their performance and maintain contract or regulatory compliance. As a Veteran-Owned Small Business, Convergence Dynamic Solutions Group is committed to excellence and creating innovative and flexible solutions for our State and Federal clients. What sets CDSG apart from the competition? Extensive Experience in Contract Compliance Performance-Based Processes Integrated Solutions Relationship Management Strategic Mix of Technology and Business CORE CAPABILITIES Our technology experts and business professionals analyze research, design, and implement solutions in the areas of: Consulting Operational Audits and Performance Assessments Instructional Design/E-Learning/Instructor-led Training Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#98;&#114;&#97;&#100;&#108;&#101;&#121;&#64;&#99;&#111;&#110;&#118;&#101;&#114;&#103;&#101;&#110;&#99;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#98;&#105;&#122;">gbradley@convergencesolutions.biz</a>","www.convergencesolutions.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZEK2VL9A4EV8">19</a>","GFL DEFENSE, LLC","LAURIE LANPHEAR","","2310 SE 59TH ST","","OCALA","FL","34480-6139","We are a reseller of tactical gear and equipment and defense solutions. We offer equipment ranging from tactical radios, drones, tablets, bicycles, solar panel chargers, night vison and anti-drone systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#108;&#97;&#110;&#112;&#104;&#101;&#97;&#114;&#64;&#103;&#102;&#108;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">llanphear@gfldefense.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FPXXT4KYBYJ8">20</a>","JOBE TRUCKING, INC","DULARIE JOBE","","13350 SW 60TH COURT RD","","OCALA","FL","34473-2931","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#98;&#101;&#116;&#114;&#117;&#99;&#107;&#105;&#110;&#103;&#105;&#110;&#99;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">jobetruckinginc@yahoo.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.948&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

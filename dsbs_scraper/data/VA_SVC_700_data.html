@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 700 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.76 seconds and 1.82 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 60 
+(of 60 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPEKWGJ3WPM5">1</a>","MODERN MACHINE AND TOOL COMPANY INCORPORATED","BRENT MEADORS","PRESIDENT","11844 JEFFERSON AVE","","NEWPORT NEWS","VA","23606-2506","PRECISION MACHINE SHOP SERVICES, ELECTRONIC CIRCUIT DESIGN & FABRICATION SERVICES, MECHANICAL ENGINEERING SERVICES,ELECTRONIC,FORCE & LENGTH CALIBRATION SERVICES, STRESS ANALYSIS SERVICES.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#101;&#97;&#100;&#111;&#114;&#115;&#64;&#109;&#109;&#116;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">bmeadors@mmtool.com</a>","http://www.mmtool.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDJKCLB9UJ46">2</a>","CAROLINA CLEAN, INC.","SHIRLEY NEWSOME","PRESIDENT","909 48TH ST","","NEWPORT NEWS","VA","23607-2207","Custodial, housekeeping, Janitorial, Trucking, Food Service, electricial construction and Warehousing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#105;&#110;&#97;&#99;&#108;&#110;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">carolinacln@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FVEGSK5D3N53">3</a>","CORNWELL ENGINEERING GROUP, INC.","DAVID CORNWELL","Manager","712 GUM ROCK CT","","NEWPORT NEWS","VA","23606-2524","DEVELOPMENT AND DESIGN OF TREATMENT PROCESSES, INDUSTRIAL PROCESSES AND RECOVERY SYSTEMS ASSOCIATED WITH WATER AND WASTEWATER FACILITIES INCLUDING TRANSPORT, TREATMENT, DELIVERY, SOLIDS HANDLING, ETC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#111;&#114;&#110;&#119;&#101;&#108;&#108;&#64;&#99;&#111;&#114;&#110;&#119;&#101;&#108;&#108;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dcornwell@cornwellinc.com</a>","http://www.cornwellinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N2RDKG84ZR98">4</a>","AH ENVIRONMENTAL CONSULTANTS, INC.","SEAN MCNAMARA","Director of Environmental Programs","11837 ROCK LANDING DR","STE 300","NEWPORT NEWS","VA","23606-4493","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#99;&#110;&#97;&#109;&#97;&#114;&#97;&#64;&#97;&#104;&#101;&#110;&#118;&#46;&#99;&#111;&#109;">smcnamara@ahenv.com</a>","http://www.ahenv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SHG5YDSACYF1">5</a>","BAY ELECTRIC CO., INC.","JOHN BIAGAS","President / CEO","627 36TH ST","","NEWPORT NEWS","VA","23607-3015","Full Service General (New & Renovation)Construction and Electrical Firm dedicated to performance to our clients. Capable in new construction, Design/Build, and maintanance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#102;&#98;&#105;&#97;&#103;&#97;&#115;&#64;&#98;&#97;&#121;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#99;&#111;&#46;&#99;&#111;&#109;">johnfbiagas@bayelectricco.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WRLNL96Z2KE4">6</a>","EAST COAST REPAIR & FABRICATION, LLC","RENE DOIRON","PRESIDENT- MANAGER","1201 TERMINAL AVE","","NEWPORT NEWS","VA","23607-","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#100;&#111;&#105;&#114;&#111;&#110;&#64;&#101;&#99;&#114;&#102;&#97;&#98;&#46;&#99;&#111;&#109;">rdoiron@ecrfab.com</a>","www.ecrfab.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KAYDD5Z99549">7</a>","GENEX SYSTEMS, LLC","SEOUNG-SHIN KIM","President","11848 ROCK LANDING DR","STE 303","NEWPORT NEWS","VA","23606-4425","Specializes in engineering research and development, testing and evaluation, software development and other IT services, and administrative multi-media, and professional services. Have extensive experience of working with NASA, DoD, and DoT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#107;&#105;&#109;&#64;&#103;&#101;&#110;&#101;&#120;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">skim@genexsystems.com</a>","www.genexsystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ULF7NMTVUUJ3">8</a>","COMMONWEALTH ENVIRONMENTAL SERVICES, INC.","GEORGE KNIGHT","President","2207 MARSHALL AVE","","NEWPORT NEWS","VA","23607-4617","Facilities Support Contractor Computer Research Contractor Custodial Services Contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#99;&#101;&#115;&#106;&#97;&#110;&#46;&#99;&#111;&#109;">admin@cesjan.com</a>","www.cesjan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W7D3J4P28HE3">9</a>","KELVIN INTERNATIONAL CORP","AL GUERRA","Executive Director","742 BLUECRAB RD","","NEWPORT NEWS","VA","23606-2549","Design, construction, and repair of cryogenic equipment. Design and construction of gaseous nitrogen and oxygen generators. Design and construction of liquid level sensors for cryogenic liquids.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#117;&#101;&#114;&#114;&#97;&#64;&#107;&#101;&#108;&#118;&#105;&#110;&#105;&#99;&#46;&#99;&#111;&#109;">guerra@kelvinic.com</a>","HTTP://WWW.KELVINIC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KVVLCK54KWG7">10</a>","UHP PROJECTS, INC","RICHARD DUPUY","President","4811 MERCANTILE DR","","NEWPORT NEWS","VA","23607-2231","Ultra High Pressure waterjetting Surface preparation and recoating services. Specializing in the application of most industrial coatings. Licensed Lead Abatement contractor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#46;&#100;&#117;&#112;&#117;&#121;&#64;&#117;&#104;&#112;&#112;&#114;&#111;&#106;&#101;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">r.dupuy@uhpprojects.com</a>","http://www.uhpprojects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NEHGMNZDL1R5">11</a>","COLLIER RESEARCH & DEVELOPMENT CORP","IVONNE COLLIER","Vice President","760 PILOT HOUSE DR STE A","","NEWPORT NEWS","VA","23606-2068","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#118;&#111;&#110;&#110;&#101;&#64;&#99;&#111;&#108;&#108;&#105;&#101;&#114;&#97;&#101;&#114;&#111;&#115;&#112;&#97;&#99;&#101;&#46;&#99;&#111;&#109;">ivonne@collieraerospace.com</a>","www.collieraerospace.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J5W7RVJZJ3C9">12</a>","MID-ATLANTIC INSTALLERS, INC.","JUSTIN BRAGG","","12674 PATRICK HENRY DR","","NEWPORT NEWS","VA","23602-9529","We are a professional electronic security company that employs a highly trained staff, positioned to provide you with the optimal solution for any of your security needs. Mid-Atlantic Technology Services is a SWaM certified, BBB A+ Accredited, Class A Contractor. We are a Department of Criminal Justice Services (DCJS) regulated Electronic Security Company specializing in residential, small to large business and governmental security solutions. We are innovators in the security field and strive to provide the optimal security solution for your safety & security needs. We offer a wide variety of services such as; project planning & design, installation, preventative maintenance and system upgrades and integration, just to name a few.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#115;&#101;&#99;&#64;&#109;&#97;&#115;&#101;&#99;&#46;&#99;&#111;&#109;">masec@masec.com</a>","http://www.midatlantic-ts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P1K6LPNHPAS3">13</a>","ATLANTIC COMMUNICATIONS, INC.","CHARLES BLOUNT","","4811 MARKET DR","","NEWPORT NEWS","VA","23607-2217","SALES AND SERVICE OF WIRELESS COMMUNICATIONS EQUIPMENT. SALES AND SERVICE OF PUBLIC SAFETY RADIO/LIGHTING/SIREN/RADAR/COMPUTER/VIDEO/UPFITTING FOR VEHICLES. STATE OF VIRGINIA CERTIFIED LABORATORY FOR PERFORMING TUNING FORK CERTIFICATION TESTING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#46;&#98;&#108;&#111;&#117;&#110;&#116;&#64;&#97;&#116;&#108;&#97;&#110;&#116;&#105;&#99;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">chuck.blount@atlanticcom.net</a>","http://www.atlanticcom.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DFU8TJPARHS7">14</a>","JC MUSTARD ENGINEERING INC","JOHN MUSTARD","President","251 ENTERPRISE DR","","NEWPORT NEWS","VA","23603-1335","Concrete pavement breaking, general and specialty machine shop work, hydraulic and mechanical equipment manufacture and service","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#109;&#117;&#115;&#116;&#97;&#114;&#100;&#64;&#101;&#97;&#115;&#116;&#101;&#114;&#110;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">jcmustard@easternmachine.com</a>","www.easternmachine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7SRYQVNKMV3">15</a>","ITA INTERNATIONAL LLC","MICHAEL MELO","President","700 TECH CENTER PKWY","STE 202","NEWPORT NEWS","VA","23606-3075","- Vulnerability Assessments - Organizational Analysis and Operational Planning - Mission Essential Task Development - Maintenance Management & Small Boat Operations - Training Program Development - Marine Services - Engineering Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#109;&#101;&#108;&#111;&#64;&#105;&#116;&#97;&#45;&#105;&#110;&#116;&#108;&#46;&#99;&#111;&#109;">mikemelo@ita-intl.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FP7LLSG7Z719">16</a>","HARRIS TRUCK & AUTO BODY SHOP, INC.","TERRY HARRIS","","719 INDUSTRIAL PARK DR","","NEWPORT NEWS","VA","23608-1358","We provide professional services from automotive repair, paint, and mechanical, to signage, graphic design, and vehicle restoration. We specialize in commercial fleets for large and small business as well as services for individuals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#114;&#121;&#64;&#104;&#97;&#114;&#114;&#105;&#115;&#116;&#114;&#117;&#99;&#107;&#46;&#104;&#114;&#99;&#111;&#120;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">terry@harristruck.hrcoxmail.com</a>","http://www.harristruckshop.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMMANW3WNC23">17</a>","UAV COMMUNICATIONS, INC.","MATT TWIGGS","","1 BAYPORT WAY STE 250","","NEWPORT NEWS","VA","23606-4572","BOSH Global Services specializes in Unmanned Aerial Systems support services, UAS command and control communications, networking, training, Information Technology, C2 and ISR operational support, and video distribution technology.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#46;&#116;&#119;&#105;&#103;&#103;&#115;&#64;&#109;&#97;&#103;&#46;&#117;&#115;">matt.twiggs@mag.us</a>","http://www.magaero.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NNNLARQR76V3">18</a>","THE KROHN GROUP INC","WESLEY KROHN","President","807 BACON CT STE 204","","NEWPORT NEWS","VA","23602-9692","Provide Merchant Services, Electronic Check Conversion, Electronic & Paper Automatic Drafting, Mobile Payments, Wireless Payments, EMV-Compliant Terminals, Recurring Billing, free Placement Terminals, E-Commerce Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#115;&#108;&#101;&#121;&#107;&#64;&#116;&#104;&#101;&#107;&#114;&#111;&#104;&#110;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">wesleyk@thekrohngroup.com</a>","http://www.thekrohngroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDSWTAFPFTL3">19</a>","RAND ENTERPRISES, INC","RANDY BIAGAS","","850 39TH ST STE 101","","NEWPORT NEWS","VA","23607-3171","General Contracting, Electrical, Communication Data wiring, Fire Alarm, CCTV, Security, Access Control","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#110;&#100;&#121;&#46;&#98;&#105;&#97;&#103;&#97;&#115;&#64;&#114;&#101;&#105;&#45;&#118;&#97;&#46;&#99;&#111;&#109;">randy.biagas@rei-va.com</a>","http://www.randenterprisesinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RAPNNBLWCJL6">20</a>","ALLIANCE SOLUTIONS GROUP, INC.","ROBERT CAMPBELL","CEO/Director","11818 ROCK LANDING DR","# 105","NEWPORT NEWS","VA","23606-4230","ASG delivers customized, cutting-edge solutions to solve the world's most complex environmental, health, safety and emergency management challenges through a systematic, proven method that prepares our partners for a safe and secure tomorrow.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#101;&#116;&#105;&#110;&#103;&#64;&#97;&#115;&#103;&#45;&#105;&#110;&#99;&#46;&#111;&#114;&#103;">marketing@asg-inc.org</a>","http://www.asg-inc.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HJLNNE9G2EM1">21</a>","SPECTRUM COMM INC.","JEFF WASSMER","","1 BAYPORT WAY","STE 300","NEWPORT NEWS","VA","23606-4560","Founded in 1999, Spectrum is a Service Disabled Veteran Owned Small Business serving the Department of Defense and federal agencies with Digital Services, Operational Support, and Management Consulting. We deliver robust and well-led teams that work seamlessly with our customers and their organizations to solve problems, improve process, and plan for the future. We specialize in delivering highly cleared staff with unique skills and backgrounds in the US and around the world. Our teams are enhanced by researchers who are envisioning the future of the enterprise, Data Science, AI/Deep Learning, Cyber-Security, and Fog/Edge.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#119;&#97;&#115;&#115;&#109;&#101;&#114;&#64;&#115;&#112;&#116;&#114;&#109;&#46;&#99;&#111;&#109;">jeff.wassmer@sptrm.com</a>","http://www.sptrm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P3Q3RVQRPNA9">22</a>","TIDEWATER ENVIRONMENTAL INC","DANNY DANGERFIELD, JR.","","11822 CANON BLVD","","NEWPORT NEWS","VA","23606-2891","Tidewater Environmental t/a SANAIR is an Indoor Environmental Company specializing in Indoor Environmental Surveys,Remediation Services,Structure Drying, and Ventilation Systems Cleaning. SANAIR began providing these services in 1993.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#100;&#97;&#110;&#103;&#101;&#114;&#102;&#105;&#101;&#108;&#100;&#64;&#115;&#97;&#110;&#97;&#105;&#114;&#99;&#108;&#101;&#97;&#110;&#46;&#99;&#111;&#109;">Ddangerfield@sanairclean.com</a>","http://www.sanairclean.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMU6FQHKFMS5">23</a>","GOLDBELT HAWK L.L.C.","LEWIS HICKS","","603 PILOT HOUSE DR STE 400","","NEWPORT NEWS","VA","23606-1904","Goldbelt Hawk, LLC is a leading provider of Cyber Security, Analysis and Enterprise IT solutions. As an Alaska Native?owned Corporation (ANC) and a Small Disadvantaged Business (SDB), Goldbelt Hawk is fully committed to excellence in the creation of innovative solutions that fit our customers’ needs. Core Competencies: Cyber Intelligence, ISR & Advanced Threat Analysis Specialized Software Development Portal Development, Integration & Migration Core Competency Resource Modeling Exploitation & Targeting All?Source Intelligence Analysis Enterprise Modernization Operational Readiness & Modeling Cyber Policy Definition Company Highlights: Currently supporting over 20,000 military personnel worldwide on a single contract. Defining the new Cyber Policy within DoD & Joint environments. Excellent CPARS/PPIRS ratings. Numerous awards for exceptional performance & maintaining operational readiness on behalf of our customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#104;&#105;&#99;&#107;&#115;&#64;&#103;&#98;&#104;&#97;&#119;&#107;&#46;&#99;&#111;&#109;">Lhicks@gbhawk.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PDHDA7UGAGT6">24</a>","DTH CORPORATION","DASHAUN HOWARD","","850 39TH ST STE 201C","","NEWPORT NEWS","VA","23607-3171","DTH Corporation that Speacializes in Demolition, Construction, Renovations, Underground Utilities, Electrical, Plumbing, HVAC, Security and Building Construction. DTH Corporation is experienced in working on government and military contracts, large industrial commercial accounts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#117;&#110;&#64;&#100;&#116;&#104;&#99;&#111;&#114;&#112;&#111;&#114;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">shaun@dthcorporation.com</a>","www.dthcorporation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FHRCMNBQ9KN9">25</a>","M.E. FISHER FUNERAL HOME, INC","MARK FISHER","","2117 MADISON AVE","","NEWPORT NEWS","VA","23607-5280","We are a full service funeral home. We specialize in international and nationwide shipping of human remains. Also we provide cremation services and offer the sale of caskets and urns to the general public.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#107;&#64;&#77;&#69;&#70;&#105;&#115;&#104;&#101;&#114;&#70;&#117;&#110;&#101;&#114;&#97;&#108;&#72;&#111;&#109;&#101;&#46;&#99;&#111;&#109;">Mark@MEFisherFuneralHome.com</a>","www.MEFisherFuneralHome.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6NNMLAUJNP5">26</a>","TECHNOLOGY AND TELECOMMUNICATIONS CONSULTANTS, INC.","RAY TURNER","","703 MARINERS ROW","","NEWPORT NEWS","VA","23606-4432","TTC provides custom content in SharePoint using out of the box and other tools to help users automate, collaborate and manage data. We also build mobile applications and provide project management, training and Video Teleconferencing support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#46;&#116;&#117;&#114;&#110;&#101;&#114;&#64;&#116;&#116;&#99;&#105;&#110;&#46;&#99;&#111;&#109;">ray.turner@ttcin.com</a>","https://www.ttcin.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HRN3DKK1YK52">27</a>","WORLD CLASS SOLUTIONS INCORPORATED","SHARON OWENS-CLARK","","2815 HUNTINGTON AVE","","NEWPORT NEWS","VA","23607-3915","World Class Solutions Inc. has over 35 years of experience in the fields of medical supplies and equipment along with 10 years of selling tactical apparel and 15 years in the MRO, plumbing and construction industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#111;&#110;&#64;&#119;&#111;&#114;&#108;&#100;&#99;&#115;&#46;&#98;&#105;&#122;">sharon@worldcs.biz</a>","worldcsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G579HPCLUAV1">28</a>","PENINSULA COMMERCIAL SERVICES, INC.","KEVIN HUMPHRIES","","12672 PATRICK HENRY DR","","NEWPORT NEWS","VA","23602-9529","Successful janitorial experience in office, manufacturing, 24/7, lab, multi-location, high security & other environments. Capability includes restorative cleaning of carpets, refinishing of VCT, deep scrubbing of tile & grout floor types","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#104;&#117;&#109;&#112;&#104;&#114;&#105;&#101;&#115;&#64;&#115;&#109;&#99;&#108;&#101;&#97;&#110;&#118;&#97;&#46;&#99;&#111;&#109;">khumphries@smcleanva.com</a>","www.smcleanva.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NN49A4HGVWT5">29</a>","R & K ENTERPRISE SOLUTIONS INC","JEFFREY CONNORS","","11830 CANON BLVD","STE D","NEWPORT NEWS","VA","23606-2568","SETA support to federal Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#110;&#110;&#111;&#114;&#115;&#64;&#114;&#97;&#110;&#100;&#107;&#101;&#115;&#46;&#99;&#111;&#109;">jconnors@randkes.com</a>","https://www.randkes.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P22UPLNX2KT2">30</a>","HAN PING HUANG & ASSOCIATES, INC.","ELAINE CLAIBORNE","Marketing Director","770 PILOT HOUSE DR","","NEWPORT NEWS","VA","23606-1943","Providing organic, inorganic and metals analysis of wastewater, drinking water, ground water and soil. We also provide microbiological support, toxicity testing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#105;&#98;&#111;&#114;&#110;&#101;&#64;&#106;&#114;&#114;&#101;&#101;&#100;&#46;&#99;&#111;&#109;">claiborne@jrreed.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJZVA39U8243">31</a>","ROTH PRINT MANAGEMENT CO.","CINDY PRESTON","","1010 CHARTWELL DR","","NEWPORT NEWS","VA","23608-7759","can provide graphic design, print brochures, envelopes, letterhead, catalogs, labels, packagaing, posters, pocketfolders, s,rack cards, peciality projects, sell sheets, signs, stickers, post cards, direct mail, website development, electronic ads, banners and production","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#105;&#110;&#100;&#121;&#64;&#114;&#112;&#109;&#100;&#101;&#115;&#105;&#103;&#110;&#112;&#114;&#111;&#46;&#99;&#111;&#109;">cindy@rpmdesignpro.com</a>","http://www.rpmdesignpro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LHRFJJBMNJF3">32</a>","GLOBAL CONSTRUCTION SOLUTIONS, INC","DANIEL ESCOBAR","","5875 JEFFERSON AVE","","NEWPORT NEWS","VA","23605-3219","Global Solutions, Inc is a firm with a focus on supporting Federal Government on Technology, Administration and General Construction. Global has established a solid reputation for quality, safety, timeliness of completion, high ethical standards, and exceptional employees. We are passionate about the building process, striving to understand the evolving needs of our customers, to find new ways to continually improve.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#115;&#99;&#111;&#98;&#97;&#114;&#64;&#103;&#108;&#111;&#98;&#97;&#108;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">descobar@global-solutionsinc.com</a>","www.global-solutionsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GC21DFNATJW3">33</a>","ACR TECHNICAL SERVICES INC","CHARLES SUCHOWSKI","","710 INDUSTRIAL PARK DR","","NEWPORT NEWS","VA","23608-1381","Service company specializing in calibration & repair of general/specialized test equipment along with providing technical, proffesional and management services of same.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#99;&#104;&#111;&#119;&#115;&#107;&#105;&#64;&#97;&#99;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">suchowski@acrts.com</a>","http://www.acrts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6GABN8CKCL9">34</a>","H.R. WARD INC.","HEATHER TOWNSEND","","350 WOOD DUCK LN","","NEWPORT NEWS","VA","23602-7566","H.R. Ward, Inc doing business as HRW Door Solutions provides Commercial & Industrial door installation, maintenance and door repair of rolling steel, sectional doors, automatic doors, hangar doors, hollow metal doors, impact doors, electric door motors, dock levelers, hangar doors, wood doors, warehouse doors, as well as handicap accessible doors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#119;&#100;&#111;&#111;&#114;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">hrwdoor@yahoo.com</a>","http://hrwdoor.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UUA9QVGSNTN5">35</a>","THE CLOSERS OF VIRGINIA, INC","BELLA TROWBRIDGE","","714 J CLYDE MORRIS BLVD STE 155","","NEWPORT NEWS","VA","23601-1506","Licensed and bonded title insurance agency and certified settlement agent providing closing and escrow services and title insurance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#116;&#114;&#111;&#119;&#98;&#114;&#105;&#100;&#103;&#101;&#64;&#116;&#104;&#101;&#99;&#108;&#111;&#115;&#101;&#114;&#115;&#46;&#117;&#115;&#46;&#99;&#111;&#109;">btrowbridge@theclosers.us.com</a>","http://www.theclosers.us.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGB6PNBJS1H5">36</a>","INTEGRATED SYSTEMS DESIGNS, LLC","ANDREW PARR","","11834 CANON BLVD STE I-1","","NEWPORT NEWS","VA","23606-2581","Electronic Security Systems Design and Install, Wireless Mesh Systems Design and Install, Protected Distribution Systems, Automatic Control Points-gates,barriers, Mechanical - HVAC, Controls,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#112;&#97;&#114;&#114;&#64;&#105;&#110;&#116;&#101;&#103;&#114;&#97;&#116;&#101;&#100;&#115;&#100;&#46;&#99;&#111;&#109;">aparr@integratedsd.com</a>","http://www.integratedsd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDRVERK7NUB1">37</a>","TOMMY GARNER, INC.","LAUREN JETT","","12535 WARWICK BLVD","","NEWPORT NEWS","VA","23606-2694","Service and replace all brands and sizes of heating and air conditioning equipment as well as water heaters.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#101;&#110;&#64;&#116;&#111;&#109;&#109;&#121;&#103;&#97;&#114;&#110;&#101;&#114;&#46;&#99;&#111;&#109;">lauren@tommygarner.com</a>","www.tommygarner.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5KSLRECSHK8">38</a>","BOYLE REPORTING & CAPTIONING SERVICES, LLC","LOIS BOYLE","","510 TUDOR CT","","NEWPORT NEWS","VA","23603-1139","Boyle Reporting & Captioning Services LLC provides court reporting & captioning services throughout Southeastern Virginia and the Washington, D.C. area. We specialize in Depositions, Military Court Marshals, Hearings, Mediations, Trials, Arbitration, and eNotary services. For over 25 years, we have delivered quick turnarounds of accurate transcripts. You will find our prices competitive, but our quality uncompromised. We also know and understand how important it is to incorporate the values of ethics, quality, accuracy, integrity, and trust in a relationship with our clients. Boyle Reporting & Captioning Services stands ready to assist you with your litigation support needs. For more information, please contact us at www.boylereportingservices.net.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#121;&#108;&#101;&#114;&#101;&#112;&#111;&#114;&#116;&#105;&#110;&#103;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#99;&#111;&#120;&#46;&#110;&#101;&#116;">boylereportingservices@cox.net</a>","www.boylereportingservices.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKVXVSDPECN3">39</a>","MARKESMAN LLC","DANIEL MARKES","","11817 CANON BLVD","STE 610","NEWPORT NEWS","VA","23606-4519","Markesman Group is a Service Disabled Veteran Owned Small Business founded in 2014 providing Cyber Security, Offensive Cyber, Enterprise IT Support Services, and ISR services. Markesman Group is currently located in Newport News, VA and servicing Federal and DoD customers. We are a best value provider of network defense and operations professional services that meet government (DoD 8570) and industry certification requirements ranging from vulnerability assessments, continuous monitoring, incident handling and response, information assurance, policy development, certification and accreditation (C&A), DIACAP to RMF transformation, contingency planning, continuity of operations (COOP), insider threat, cloud security, cloud migration, penetration testing, secure network design, forensic analysis, malware analysis and triage, and cyber security certification training. Additonally, Markesman provides ISR service solutions in: IMINT, FMV, SIGINT, HUMINT and All Source analysis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#46;&#109;&#97;&#114;&#107;&#101;&#115;&#64;&#109;&#97;&#114;&#107;&#101;&#115;&#109;&#97;&#110;&#46;&#99;&#111;&#109;">daniel.markes@markesman.com</a>","www.markesman.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLSNSDLKZRF3">40</a>","EAGLE INVESTMENT CONSULTING, LLC","VALERIE BEVERLEY","","12695 MCMANUS BLVD","","NEWPORT NEWS","VA","23602-4435","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#98;&#101;&#118;&#101;&#114;&#108;&#101;&#121;&#56;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">vbeverley85@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CSLCQEYBNTD7">41</a>","ZIEGLER PLUMBING & SEWER INC","THERESA SIEBELS","","15324 WARWICK BLVD","","NEWPORT NEWS","VA","23608-2649","Ziegler Plumbing has 50+ years of experience in all residential and commercial plumbing, pumping, video inspection, storm system cleaning and inspecting, septic cleaning and inspecting, hydro-excavation, backflow prevention testing and repair, smoke testing, high pressure jetting and pipe bursting,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#114;&#101;&#115;&#97;&#64;&#122;&#105;&#101;&#103;&#108;&#101;&#114;&#112;&#108;&#117;&#109;&#98;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">theresa@zieglerplumbing.com</a>","www.zieglerplumbing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MT29N4NLP4K5">42</a>","D C POWELL & ASSOCIATES INC","DARRELL POWELL, SR.","","922 LACON DR","","NEWPORT NEWS","VA","23608-2500","D C Powell and Associates, Inc., A full Service staffing agency located in Newport News, Virginia. Our firm was founded in 2014 and is a small S.W.a.M. and DBE-certified firm that offers medical staffing, I.T. Support, Helpdesk, Unskilled, Semi-Skilled, Skilled, Professional, staffing support  Our company offers a variety of ways that you can use our support to include: Temporary-to-hire, Direct hire, Per-diem, Payrolling, and Long-term temporary placements. With our extensive experience, we can address challenging client needs with practical solutions. Our staffing coordinators are ready to collaborate with your team to thoroughly comprehend the requirements for finding the ideal candidate for your organization. We have expertise in recruiting, screening, interviewing, and conducting personal, professional, criminal, and academic background checks and pre-employment testing for various software packages, including [specific software packages].","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#100;&#99;&#112;&#111;&#119;&#101;&#108;&#108;&#97;&#110;&#100;&#97;&#115;&#115;&#111;&#99;&#105;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">darrell@dcpowellandassociates.com</a>","www.dcpowellandassociates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CMDQRLB8GEZ5">43</a>","MIND OVER MONEY, LLC","TREMAINE WILLS","","2506 JEFFERSON AVE STE 215","","NEWPORT NEWS","VA","23607-4511","Provides Financial planning and investment advice to individuals and small business owners. Teach financial literacy courses, credit consulting, employee benefits explanations and human resource consulting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#101;&#109;&#97;&#105;&#110;&#101;&#64;&#109;&#105;&#110;&#100;&#111;&#118;&#101;&#114;&#109;&#111;&#110;&#101;&#121;&#46;&#110;&#101;&#116;">tremaine@mindovermoney.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LXRKH98F9RG4">44</a>","SINGTONE LLC","JOSEPH SINGLETON","","733 THIMBLE SHOALS BLVD","RM 203 STE 170","NEWPORT NEWS","VA","23606-4260","SingTone Technologies is a certified 8(a), SWaM, SBE, MBE, DBE, SDVOSB information technology consulting firm registered in sbsd.virginia.gov, vetbiz.va.gov, sam.gov, and web.sba.gov. We are the premier one-stop shop choice for all your IT program/project management and digital advertisement/marketing needs. We specialize in advanced SEO, digital marketing, creating, hosting, and supporting custom websites and customer relationship management (CRM) and enterprise resource planning (ERP) applications to help reduce overhead costs and automate processes. We also provide services to assist with digital advertisements via social media, managing projects, help/service desk support, testing, technical writing, configuration management, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#105;&#110;&#103;&#108;&#101;&#116;&#111;&#110;&#64;&#115;&#105;&#110;&#103;&#116;&#111;&#110;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">jsingleton@singtonellc.com</a>","https://singtonellc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PKMCZJN8GFJ4">45</a>","PMA, INC.","THOMAS STODGHILL","","10325 WARWICK BLVD","","NEWPORT NEWS","VA","23601-3702","PMA Architecture was established in 1978 and provides architectural, interior design, urban design, historic preservation, and planning services. PMA has completed multiple MWR projects, including LEED projects, on Virginia military bases and oversees historic properties on military bases in VA, DC and MD. PMA also has extensive experience in multi-family, medical facility, and commercial design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#106;&#115;&#64;&#112;&#109;&#97;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">tjs@pmaarchitecture.com</a>","www.pmaarchitecture.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKCWWTZGTJG8">46</a>","RESOLUTION THINK LLC","THERESSA THOMAS","","2501 MARSHALL AVE","STE E","NEWPORT NEWS","VA","23607-4636","We provide Other Computer Related Services, Software Implementation, Software Development Life Cycle, Systems Integration, Independent Verification & Validation Testing, Information Assurance, Quality Assurance, Instructional Systems Design, e-Learning, Training, Program Management, Administrative Services and Technical Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#109;&#97;&#115;&#64;&#114;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#116;&#104;&#105;&#110;&#107;&#46;&#99;&#111;&#109;">thomas@resolutionthink.com</a>","www.resolutionthink.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MPLTKE7V95A7">47</a>","CHENAULT CORPORATION, THE","JAMES CHENAULT","","5109 GOLDSBORO DRIVE","#21E","HAMPTON","VA","23605-1343","The Chenault Corporation is a Small Business Consulting/Engineering company founded in 2016, with headquarters in Hampton, Virginia. The Chenault Corporation provides System Engineering and System Administration Enterprise solutions to the DoD Community. We have extensive experience in System Engineering, System Administration, Database Administration, Programming & Scripting, and Training.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#101;&#110;&#97;&#117;&#108;&#116;&#99;&#111;&#114;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">chenaultcorp@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MZGZMCZDVJE3">48</a>","CSTE INC","JOE CLARK","","307 OYSTER POINT RD","","NEWPORT NEWS","VA","23602-6018","C and S Hauling LLC is a trucking transportation company specializing in the movement of specialized freight and General Freight. Also brick and stone related construction material wholesalers as well as industrial supplies. Now servicing construction needs, specifically excavation, and demolition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#110;&#100;&#115;&#104;&#97;&#117;&#108;&#105;&#110;&#103;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">candshaulingllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N5XVKBBXW7L1">49</a>","AERY AVIATION, LLC","SCOTT BEALE","","1009 PROVIDENCE BLVD","","NEWPORT NEWS","VA","23602-8701","Aviation engineering services. Aircraft flight operations and training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#101;&#97;&#108;&#101;&#64;&#97;&#101;&#114;&#121;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">sbeale@aeryaviation.com</a>","www.aeryaviation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DVH3KR8KFZK3">50</a>","CAPE TECHNOLOGY SOLUTIONS, LLC","JOHN MIZELLE","","7 CRESTMONT PL","","NEWPORT NEWS","VA","23606-2103","DoD Live, Virtual, Constructive Simulation Experts in Software Development, Integration, Exercises and Training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#109;&#105;&#122;&#101;&#108;&#108;&#101;&#64;&#99;&#97;&#112;&#101;&#116;&#101;&#99;&#104;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">john.mizelle@capetechsolutions.com</a>","www.thecapesolution.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MDHGMM9F6HJ5">51</a>","MONARCH MOVERS LLC","LAUREL EDWARDS","","313 WOODBROOK RUN","","NEWPORT NEWS","VA","23606-1258","Local & Long Distance Full service moving and storage. Packing and unpacking and packing supplies. Post move cleaning. Trucking and delivery","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#121;&#110;&#101;&#64;&#109;&#111;&#110;&#97;&#114;&#99;&#104;&#109;&#111;&#118;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">wayne@monarchmovers.com</a>","www.monarchmovers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEMLKM4MMKG1">52</a>","EXORDIUM VENTURES, LLC","MARIA LAWRENCE-JENKINS","","10827 WARWICK BLVD","","NEWPORT NEWS","VA","23601-3742","Exordium Ventures LLC (EV) is a government contractor with over 15 years combined government contracting experience. EV is a partner in excellence with the US Government for a variety of services such mailroom operations, administrative support, contract close out, staff augmentation, custodial services and warehouse logistics. EV provides an intimate customized experience for each customer. EV is a quality contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#106;&#101;&#110;&#107;&#105;&#110;&#115;&#64;&#101;&#120;&#111;&#114;&#100;&#105;&#117;&#109;&#118;&#101;&#110;&#116;&#117;&#114;&#101;&#115;&#46;&#99;&#111;&#109;">mljenkins@exordiumventures.com</a>","www.exordiumventures.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UFCDKJNQYGS3">53</a>","HEALTHY MIND COUNSELING & NUTRITION LLC","KIMBERLY PARKER","","733 THIMBLE SHOALS","170","NEWPORT NEWS","VA","23606-4260","Kimberly Parker is a licensed psychotherapist and Forensic Evaluator that specializes in trauma. Kimberly is also a forensic evaluator, and she volunteers to provide a psychological piece for those escaping inhumane treatment from various countries. Kimberly’s area of expertise is in PTSD, Traumatic Brain Injuries, Personality Disorders, Somatic Disorders, and eating disorders. Kimberly assists clients with healing their various parts of self with evidence-based treatment models such as EMDR & Brainspotting Therapy. DEI consultant for corporations to improve employee wellness and retain retention rates.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#97;&#108;&#116;&#104;&#121;&#109;&#105;&#110;&#100;&#110;&#117;&#116;&#114;&#105;&#116;&#105;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">healthymindnutrition@gmail.com</a>","www.healthymindcounselingandnutrition.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJK3WJEE5W97">54</a>","OCKERMAN AUTOMATION CONSULTING INC","LINDA MARTES","","2600 WASHINGTON AVE","STE 1002","NEWPORT NEWS","VA","23607-4333","Marine, electrical engineering Naval Architecture","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#100;&#97;&#64;&#111;&#99;&#107;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">linda@ock-inc.com</a>","www.ock-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GK51H2WMJGQ9">55</a>","GLAD CARE TRANSPORT LLC","GLADYS ANDERSON","","802 MATTMOORE PL","","NEWPORT NEWS","VA","23601-4636","Glad Care Transport provides non-Emergency medical transportation services in ambulatory, wheelchair, and stretcher transportation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#97;&#100;&#99;&#97;&#114;&#101;&#103;&#114;&#111;&#117;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">gladcaregroup@gmail.com</a>","https://www.gladcaretransport.org/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RDNPETKK6W65">56</a>","BIOGENIC SOLUTIONS CONSULTING LLC","RUSSELL BURKE","","127 EDMOND DR","","NEWPORT NEWS","VA","23606-2619","Environmental Consulting, including (1) living shoreline and oyster reef planning, development, and implementation, (2) JPA Permit Assistance, (3) Underwater Videography, and (4) other Marine Science Field Surveys/Evaluations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#112;&#98;&#117;&#114;&#107;&#101;&#64;&#98;&#105;&#111;&#103;&#101;&#110;&#105;&#99;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">rpburke@biogenicsolutionsconsulting.com</a>","www.biogenicsolutionsconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2QKM239WDD4">57</a>","APOLLO FREIGHT TRANSPORT LLC","CAROL JONES","","49 GAMBOL ST","","NEWPORT NEWS","VA","23601-2448","Apollo Freight Transport, LLC is an approved motor carrier for the Dept. of Defense. AFT has an interstate authority to transport general freight and containers from the ports and railyard in local and interstate commerce. AFT hauls local, state and federal government freight with 25 years CDL A experience, clean background and TWIC enabling us access to any military base, port and railyard with our UIIA certification.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#111;&#108;&#64;&#97;&#112;&#111;&#108;&#108;&#111;&#102;&#114;&#101;&#105;&#103;&#104;&#116;&#116;&#114;&#97;&#110;&#115;&#112;&#111;&#114;&#116;&#46;&#99;&#111;&#109;">carol@apollofreighttransport.com</a>","www.apollofreighttransport.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PHLRV3LDJJ18">58</a>","BRAVE HAVEN LLC","ERICA THOMPSON","","2536 COLE ST UNIT E","","FORT EUSTIS","VA","23604-1330","We are minority-owned, veteran-owned and disadvangtaged business equipping women with the skills to succeed in the ever-evolving field of Technology. She’s Brilliant was created in mind with empowering women in the tech industry. We believe in accepting women in all levels of knowledge to become highly qualified professionals. It is our goal to attain and sustain our alumni within their career field but also to get more women into the tech field.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#97;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#115;&#109;&#105;&#108;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ericathompsonsmiles@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XYH8J4MQ6XS7">59</a>","DREYMONS CAFE LLC","MAY AQUINO-GARCIA","","710 GALAHAD DR","","NEWPORT NEWS","VA","23608-1808","We provide a casual dine-in experience and catering services to the 757 and our local military community. We craft Ameri-Asian dishes that fill bellies and souls and leave customers looking forward to their next event or in-house experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#121;&#97;&#97;&#113;&#117;&#105;&#110;&#111;&#51;&#56;&#51;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">Mayaaquino383@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V6K5FNHMS8M3">60</a>","ACENA IT SERVICES LLC","WINIBAL ACENA","","4312 CAMBRIDGE CT","","NEWPORT NEWS","VA","23602-5267","Acena IT Services, LLC is your premier partner for comprehensive IT solutions, specializing in computer training, repair, and support. Our certified trainers and technicians offer personalized service tailored to your needs. Key Services:  • User Training: Customized sessions on software, hardware, and cybersecurity.  • IT Consulting: Infrastructure planning and optimization for enhanced performance.  • Hardware Repair: Diagnostics and repairs for desktops, laptops, printers, and servers.  • Software Support: Installation, troubleshooting, and malware removal.  • Network Services: Setup and optimization of LAN and wireless networks.  • On-Site & Remote Support: Tailored solutions delivered wherever needed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#101;&#110;&#97;&#105;&#116;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">acenaitservices@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.609&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 303 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.08 seconds and 2.16 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 34 
+(of 34 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JMGUMCKAU767">1</a>","V-TECH ENVIRONMENTAL SERVICES LLC","POLLY VANN","OWNER","1510 BUDDY HOLLY AVE","","LUBBOCK","TX","79401-5131","SITE ASSESSMENTS, WASTE MANAGEMENT SERVICES, PERMIT APPLICATIONS, SAMPLING SERVICES, DISPOSAL SERVICES, UST REMOVAL, NORM,REMEDIATION, IAQ ASSESSMENTS, NOISE SURVEYS, AIR PERMITING, CONSTRUCTION & INDUSTRIAL STORM WATER, EMERGENCY RESPONSE, ASBESTOS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#118;&#97;&#110;&#110;&#64;&#118;&#45;&#116;&#101;&#99;&#104;&#101;&#115;&#46;&#99;&#111;&#109;">pvann@v-teches.com</a>","http://www.v-teches.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T4B5ZJNA5JK4">2</a>","ITSQUEST INC","JEFF REAGAN","Government Procurement Manager","4505 82ND ST","STE 3","LUBBOCK","TX","79424-3219"," itsQuest is a full-service staffing company that provides professional placement services in: short or long term employment opportunities, recruiting, management resources, payrolling, and career counseling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#114;&#101;&#97;&#103;&#97;&#110;&#64;&#105;&#116;&#115;&#113;&#117;&#101;&#115;&#116;&#46;&#99;&#111;&#109;">jeffreagan@itsquest.com</a>","http://www.itsquest.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DTBSHFUMKCU8">3</a>","RED BUFFALO, LLC","BOYD BLAIR","","61 S LAKESHORE DR","","RANSOM CANYON","TX","79366-2406","Prescribed burning Fire training Brush clearing Provides presentations about fire in Nature for all ages.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#46;&#98;&#108;&#97;&#105;&#114;&#64;&#114;&#101;&#100;&#98;&#117;&#102;&#102;&#97;&#108;&#111;&#46;&#117;&#115;">keith.blair@redbuffalo.us</a>","redbuffalo.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E336YPWSVJD5">4</a>","FRYE, GARY L","GARY FRYE","owner","3004 79TH ST","","LUBBOCK","TX","79423-1822","Grant reviewer, Grant related services, Grant reviewing services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#108;&#102;&#114;&#121;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">glfrye@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK91FMF1Y4M8">5</a>","LUBBOCK AUDIO VISUAL, INC","BRIAN WAGNON","Sales Coordinator","2120 AVENUE Q","","LUBBOCK","TX","79411-2032","Lubbock Audio Visual, Inc. specializes in turnkey design-build solutions with the ability to deliver consulting, estimating,and computing services. Authorized for over 350 manufacturers of professional video, audio & telecommunications products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#119;&#97;&#103;&#110;&#111;&#110;&#64;&#108;&#97;&#118;&#46;&#99;&#111;&#109;">bwagnon@lav.com</a>","https://www.lav.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CXCSXVQHN9X4">6</a>","KING CONSULTANTS, INC","JACE HASSOLDT","","1205 E 46TH ST","","LUBBOCK","TX","79404-3807","ENVIRONMENTAL CONSULTANTS,INDUSTRIAL HYGIENE SERVICES, SAFETY AUDITS, ASBESTOS CONSULTING,LEAD ASSESSMENTS, HAZARDOUS REMEDIATION, ENVIRONMENTAL SITE ASSESSMENTS,UST REMOVAL,ASBESTOS AND LEAD ABATEMENT,CONSTRUCTION AND RENOVATION","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#97;&#115;&#115;&#111;&#108;&#100;&#116;&#64;&#107;&#105;&#110;&#103;&#99;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#110;&#101;&#116;">jhassoldt@kingcompanies.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H5XALPKM6TC5">7</a>","FANNING FANNING & ASSOCIATES INC","SCOTT FANNING","","2555 74TH ST","","LUBBOCK","TX","79423-1405","Consulting Engineering Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#70;&#65;&#78;&#78;&#73;&#78;&#71;&#64;&#70;&#65;&#78;&#78;&#73;&#78;&#71;&#70;&#65;&#78;&#78;&#73;&#78;&#71;&#46;&#67;&#79;&#77;">SFANNING@FANNINGFANNING.COM</a>","FANNINGFANNING.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DNXEC2Y28CF5">8</a>","SOUTH PLAINS IMPLEMENT LTD","JEFF COFFMAN","","3305 101ST ST","","LUBBOCK","TX","79423-4076","AGRICULTURAL EQUIPMENT SALES, RENTAS AND SERVICE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#64;&#115;&#112;&#105;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">jeff@spitractor.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z99JRHPHMKS2">9</a>","CHAMBERS ENGINEERING, LLC","CHRIS CHAMBERS","","5501 SPUR 327","","LUBBOCK","TX","79424-1203","MEP Design Engineering General Contracting HVAC Contracting Eletrical Contracting Contracting Management Airport and Airfield Specialty Construction","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#99;&#64;&#99;&#104;&#97;&#109;&#98;&#101;&#114;&#115;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">chrisc@chambersengineering.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CFNJV3XQJXK1">10</a>","BOBBY FLETCHER","ROBERT FLETCHER","","8016 ELMWOOD AVE","","LUBBOCK","TX","79424-2618","Established in 1975. Experience in appraising equipment for agencies, banks, private individuals. Also a real estate broker and have given testimony in court.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#102;&#97;&#117;&#99;&#116;&#105;&#111;&#110;&#101;&#101;&#114;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">bfauctioneers@aol.com</a>","https://www.fletcherauctioneers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DLMLVSMHV6S4">11</a>","FOX MEDICAL CASE MANAGEMENT, INC.","BARRY BIELER","","4044 136TH ST","","LUBBOCK","TX","79423-2741","Fox Translation Services is a company that provides written translation and remote interpretation (OPI and VRI) in over 250 languages as well as VRI-ASL. Fox hires certified native speakers that are experts in both target and source languages and have a minimum of 5 years experience specializing in the medical, legal, education, public health and governmental fields of translation. NAICS: 541930 FMCM works with insurance carriers and self-insured employers to provide medical case management services (English & Spanish) to injured workers to get them back to gainful employment. FMCM is a Certified WOSB, MWOSB,& EDWOSB. Medical review services too.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#114;&#114;&#121;&#64;&#102;&#111;&#120;&#116;&#114;&#97;&#110;&#115;&#108;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">barry@foxtranslation.com</a>","https://www.foxtranslation.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NXNLPP5KXWP2">12</a>","LEEAGRA INC","LYNN LEE","","117 E 70TH ST","","LUBBOCK","TX","79404-5834","Manufacturer of diesel tanks and high clearance spray tractors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#110;&#110;&#64;&#108;&#101;&#101;&#97;&#103;&#114;&#97;&#46;&#99;&#111;&#109;">lynn@leeagra.com</a>","https://www.leeagra.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMFWNA21EBJ4">13</a>","INFECTION CONTROLS, INC.","RODNEY MADSEN","","1414 AVENUE J","","LUBBOCK","TX","79401-4024","GermBlast is an advanced disinfection and sanitization process, designed to protect our customers and their clients from harmful bacteria, viruses, and fungi. Keeping the fight outside the body.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#100;&#110;&#101;&#121;&#64;&#103;&#101;&#114;&#109;&#98;&#108;&#97;&#115;&#116;&#46;&#99;&#111;&#109;">rodney@germblast.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FFK2L6FRM4A8">14</a>","SOUTHWEST REGIONAL PCR, L.L.C.","BETHANY WALL","","2002 W LOOP 289 STE 116","","LUBBOCK","TX","79407-7702","MicroGenDX specializes in low-cost, highly accurate qPCR + NGS microbial DNA diagnostics-providing answers where cultures or PCR alone have failed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#46;&#119;&#97;&#108;&#108;&#64;&#109;&#105;&#99;&#114;&#111;&#103;&#101;&#110;&#100;&#120;&#46;&#99;&#111;&#109;">beth.wall@microgendx.com</a>","www.microgendx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MVKQXCNBNEZ5">15</a>","TRANS INTELLIGENCE LLC","BAYIER ZONG","","6112 76TH ST","","LUBBOCK","TX","79424-1755","traffic signal control Software development and sales","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#107;&#46;&#104;&#46;&#108;&#64;&#116;&#114;&#97;&#110;&#115;&#45;&#105;&#110;&#116;&#101;&#108;&#108;&#105;&#103;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">frank.h.l@trans-intelligence.com</a>","http://www.trans-intelligence.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CD96HWR5M755">16</a>","LLANO WASTE COMPANY LLC","JESSICA GROSS-BROOKS","","419 HIGHWAY 62","","WOLFFORTH","TX","79382-2258","This organization primarily operates in the Nonhazardous Waste Disposal Sites business / industry Specializing in Sanitary Services sector. Our services include providing containers for removing debris post construction and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#112;&#112;&#114;&#111;&#99;&#101;&#115;&#115;&#105;&#110;&#103;&#64;&#114;&#101;&#103;&#105;&#115;&#116;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#112;&#108;&#117;&#115;&#46;&#111;&#114;&#103;">jpprocessing@registrationsplus.org</a>","http://llanowastecorporation.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JD7HGNQN4K88">17</a>","FLINT AVENUE, LLC","AMY WOOD","","3911 4TH ST","","LUBBOCK","TX","79409-9805","Flint Avenue is a marketing and technology agency located at the Texas Tech Innovation Hub in Lubbock, TX. We collaborate with  businesses to open that connection to their customers through website and custom app development and managed support. Our integrated team of marketers and software developers can create a technology solution and then help our clients bring it to market. ","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#46;&#119;&#111;&#111;&#100;&#64;&#102;&#108;&#105;&#110;&#116;&#97;&#118;&#101;&#110;&#117;&#101;&#46;&#99;&#111;&#109;">amy.wood@flintavenue.com</a>","www.flintavenue.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJMJT61JB2B3">18</a>","EPIC SKY PROPERTIES LLC","PATTY SHIPTON","","6306 IOLA AVE","STE 200","LUBBOCK","TX","79424-2731","Established in 1994. We specialize in commercial office space for state or federal agencies in Texas. Also, we assist with designing, developing and creating lease space for your agency. Can produce efficient space to meet the tenant needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#104;&#105;&#112;&#116;&#111;&#110;&#64;&#99;&#109;&#115;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#105;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">pshipton@cmspropertiesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MKB3BHL2KND5">19</a>","CRESTRIDGE GROUP LLC, THE","STEVE HURT","","13209 FRANKFORD","SUITE 163","LUBBOCK","TX","79424-6671","The Crestridge Group is a leading innovator in security and integration technologies for lightweight multi-function systems. We develop affordable secure communications, sensors and robotics platforms.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#46;&#104;&#117;&#114;&#116;&#64;&#99;&#114;&#101;&#115;&#116;&#114;&#105;&#100;&#103;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">steve.hurt@crestridgegroup.com</a>","www.crestridgegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MJAQG13AXJA8">20</a>","69TH STREET DEVELOPMENT, LTD.","PATTY SHIPTON","","6306 IOLA AVE","STE 200","LUBBOCK","TX","79424-2731","Established in 1994. We specialize in commercial office space for state or federal agencies in Texas. Also, we assist with designing, developing and creating lease space for your agency. We work to produce efficient space to meet the tenant needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#104;&#105;&#112;&#116;&#111;&#110;&#64;&#99;&#109;&#115;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#105;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">pshipton@cmspropertiesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WF8BKQP1CG74">21</a>","CONDORSAA AVIATION, LLC","ALBERT BURNETT","","7701 TRENTON AVE","","LUBBOCK","TX","79424-0718","Aircraft avionics repair, calibration and installation services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#99;&#111;&#110;&#100;&#111;&#114;&#97;&#118;&#105;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">office@condoravionics.com</a>","www.condoravionics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LHJJMVQM9JU5">22</a>","GRIFFIN WINK ADVERTISING","GERALD GRIFFIN","","3223 S LOOP 289 APT 130","","LUBBOCK","TX","79423-1337","Since our humble beginnings as W.C. Griffin Advertising Incorporated in 1975, we have let one principle guide us: big or small, local or national, no two clients or their stories are the same. During the next two decades, we let this seemingly simple concept guide our work. GriffinWink Advertising worked tirelessly to deliver measurable, profound results for our clients. As the digital era of advertising began as the millennium turned, we retained our core belief system while adapting to stay ahead of the curve in an ever-changing industry. The result of our constant adaptation was our Tradigital approach being born. Today, GriffinWink Advertising does not merely adapt; we bring about change in the advertising industry. As a trendsetter, we rely on constant communication, professional creativity, decades of experience, as well as forward-thinking young talents to deliver advertising that is comprehensive, cost-effective, and above all - tailored made to meet your company’s needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#117;&#115;&#116;&#121;&#64;&#103;&#114;&#105;&#102;&#102;&#105;&#110;&#119;&#105;&#110;&#107;&#46;&#99;&#111;&#109;">rusty@griffinwink.com</a>","https://griffinwink.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P69EMF7JFY89">23</a>","DS SEQUENCING LLC","DIANA DOWD","","503 CLOVIS RD","","SHALLOWATER","TX","79363-4732","Gene DNA/RNA mRNA pathogen sequencing. Map DNA of microorganisms, pathogens, and viruses for research using Bioinformatics and computers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#68;&#83;&#115;&#101;&#113;&#117;&#101;&#110;&#99;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@DSsequencing.com</a>","https://dssequencing.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R77VNM7BLYJ3">24</a>","HANDZ ON MAINTENANCE SERVICE LLC","TERRENCE SHELBY","","4611 32ND ST","","LUBBOCK","TX","79410-2410","Small business specializing in remodeling and renovation of facilities. Provides janitorial and custodial services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#50;&#53;&#116;&#104;&#104;&#114;&#49;&#57;&#55;&#51;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">25thhr1973@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJ86UAZUYDK9">25</a>","HASTINGS & WILLARDS REHAB & REMODEL LLC","DANDRE HASTINGS","","4920 S LOOP 289 STE 101","","LUBBOCK","TX","79414-4724","We remodel facilities, perform landscaping services, painting, drywall, plastering, roofing, and construction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#115;&#116;&#105;&#110;&#103;&#115;&#46;&#100;&#97;&#110;&#100;&#114;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">hastings.dandre@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAKHRS93RDM8">26</a>","TEXAS EARTH INC","SARAH TRUESDELL","","5930 E HIGHWAY 62","","LUBBOCK","TX","79403-7225","Company has 20+ years of experience in supplying high quality natural and organic soil amendments for the purpose of improving soil health metrics such as microbial inoculation, water infiltration, porosity, tilth, nutrient uptake and carbon sequestration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#116;&#101;&#120;&#97;&#115;&#101;&#97;&#114;&#116;&#104;&#46;&#99;&#111;&#109;">info@texasearth.com</a>","https://www.texasearth.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KRM3QELU6KZ5">27</a>","WYLIE & SON, INC.","MICKEY O'NEILL","","702 E 40TH ST","","LUBBOCK","TX","79404-3006","Established in 1964. Manufacturer of agriculture sprayers and various farm equipment. Exclusive Case IH application dealer in Texas and Oklahoma with 13 retail locations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#111;&#110;&#101;&#105;&#108;&#108;&#64;&#119;&#121;&#108;&#105;&#101;&#115;&#112;&#114;&#97;&#121;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">moneill@wyliesprayers.com</a>","https://www.wyliesprayers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FGFJDVDLAN18">28</a>","HIGH IMPACT PROPERTIES - TEXAS, LTD.","FORREST SHIPTON","","6306 IOLA AVENUE SUITE 200","","LUBBOCK","TX","79424-2731","Established in 2005. We specialize in commercial office space for state or federal agencies in Texas. Also, we assist with designing, developing and creating lease space for your agency. We work to produce efficient space to meet the tenant needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#115;&#104;&#105;&#112;&#116;&#111;&#110;&#64;&#97;&#114;&#115;&#108;&#117;&#98;&#98;&#111;&#99;&#107;&#46;&#99;&#111;&#109;">fshipton@arslubbock.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PX2WQNLVPXS4">29</a>","DB BEYOND BORDERS CORPORATION","BHARAT BHUSHAN","","6301 75TH ST","","LUBBOCK","TX","79424-1941","“DB BEYOND BORDERS CORPORATION” was founded with the basic idea of getting generic medicines from India and to develop a supply chain for US consumers who are not able to afford branded medicines for their long-term illnesses like Diabetes, Hypertension, high cholesterol etc. By getting generic medicines-DB Beyond Border Corporation can fill the lacuna","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#66;&#66;&#66;&#67;&#64;&#112;&#114;&#111;&#116;&#111;&#110;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">DBBBC@protonmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9HXLAQ6XWC9">30</a>","OPPORTUNITY SKY CAPITAL, LLC","PATRICIA SHIPTON","","6306 IOLA AVENUE SUITE 200","","LUBBOCK","TX","79424-2731","Established in 2006. We specialize in commercial office space for state or federal agencies in Texas. Also, we assist with designing, developing and creating lease space for your agency. We work to produce efficient space to meet the tenant needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#115;&#104;&#105;&#112;&#116;&#111;&#110;&#64;&#99;&#109;&#115;&#112;&#114;&#111;&#112;&#101;&#114;&#116;&#105;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">pshipton@cmspropertiesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UAJ3T5CWCB81">31</a>","SOLARTECH ENERGY SOLUTIONS LLC","JANIE MCNUTT","","5505 126TH ST","STE 115","LUBBOCK","TX","79424-6957","15 years of experience in solar system consulting and designing with constant focus on research, innovation and transformation. Can provide innovative solutions for solar EV charging infrastructure grid and off-grid.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#106;&#110;&#105;&#64;&#115;&#111;&#108;&#97;&#114;&#116;&#101;&#99;&#104;&#116;&#120;&#46;&#99;&#111;&#109;">soljni@solartechtx.com</a>","https://www.solartechtx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRDWL846ZF83">32</a>","RRC WHOLESALE, LLC","JESSE DIXON","","1604 130TH STREET SUITE 6","","LUBBOCK","TX","79424-","RRC Wholesale is the crossroad between idea and application. We provide white glove marketing, research and sales programs specifically tailored to your product and business needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#114;&#99;&#119;&#104;&#111;&#108;&#101;&#115;&#97;&#108;&#101;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">rrcwholesale@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KFD5DJ2ZCJM2">33</a>","FORESIGHT STRATEGIES LLC","GEORGIA GODFREY","","5110 97TH ST","","LUBBOCK","TX","79424-4866","Founded in 2018, Foresight Strategies is a corporate affairs and management consulting firm. We create strategic roadmaps that target stakeholders to move the needle, increase revenue, enhance brands, and elevate awareness. Foresight Strategies uses systematic research and analysis to develop strategic plans and frameworks to achieve our clients' goals with their stakeholders. We create solutions for our clients that best answer their evolving needs and adjust to today's changing global landscape.  Core Competencies: Change Management Communications Crisis Response & Management Management Consulting Media Public Relations Research & Data Analytics Strategic Planning Social Media Thought Leadership Differentiators: 100% Woman-Owned Business Executives On Every Project Unparalleled High-Profile, High-Pressure Experience Customized to MeetC ustomer Needs Past Performance: Former U.S. Secretary of State Condoleezza Rice KPMG US LLP Boys & Girls Clubs of America","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#111;&#114;&#103;&#105;&#97;&#64;&#102;&#111;&#114;&#101;&#115;&#105;&#103;&#104;&#116;&#45;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">georgia@foresight-strategies.com</a>","www.foresight-strategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1EUS5KSNDV5">34</a>","HEREFORD SKY CAPITAL, LLC","ANDREA GRONEWALD","","6306 IOLA AVE STE 200","","LUBBOCK","TX","79424-2731","Established in 2011. We specialize in commercial office space for state or federal agencies in Texas. Also, we assist with designing, developing and creating lease space for your agency. We work to produce efficient space to meet the tenant needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#97;&#64;&#97;&#114;&#115;&#108;&#117;&#98;&#98;&#111;&#99;&#107;&#46;&#99;&#111;&#109;">andrea@arslubbock.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.26&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

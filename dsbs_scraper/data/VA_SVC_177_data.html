@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 177 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.70 seconds and 1.76 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 67 
+(of 67 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L4LHN6923621">1</a>","COGENT SOLUTIONS INC.","NADIA AYOUBI","CEO","12225 AMOS LN STE 302","","FREDERICKSBURG","VA","22407-7133","Cogent provides the latest information technology solutions and professional support services that are focused on Website Development & Design, E-Business, Network Engineering, Help Desk, Service Desk, Program Management, Project Management, Infrastructure Protection, Cloud, Document Workflow, Web Analytics, Adobe Experience Manager (AEM), and Software Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#121;&#111;&#117;&#98;&#105;&#64;&#99;&#111;&#103;&#101;&#110;&#116;&#45;&#50;&#48;&#48;&#48;&#46;&#99;&#111;&#109;">nayoubi@cogent-2000.com</a>","http://WWW.COGENT-2000.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J3FJZYB4NND3">2</a>","ASYNC-NU MICROSYSTEMS, INC.","DANIEL BOWENS","President / CEO","7415 NI RIVER LNDG","","FREDERICKSBURG","VA","22407-2502","Async-Nu Microsystems is a CVE certified SDVOSB IT firm. We possess a Top Secret Facility clearance and are ISO9001:2015, ISO/IEC27000-1, ISO20000 & CMMI III certified. We provide Helpdesk service, Website design & hosting and Infrastructure support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#98;&#111;&#119;&#101;&#110;&#115;&#64;&#65;&#115;&#121;&#110;&#99;&#45;&#78;&#117;&#46;&#99;&#111;&#109;">Dbowens@Async-Nu.com</a>","https://www.async-nu.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C15ZAGUWMNK7">3</a>","MARSTEL-DAY LLC","SEAN DONAHOE","Partner","10708 BALLANTRAYE DR","STE 208","FREDERICKSBURG","VA","22407-4701","We support clients globally on their environmental priorities, including strategy development; mission sustainment, infrastructure, NEPA, natural/cultural resources, climate resiliency, GIS mapping/analyses, and stakeholder engagement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#100;&#64;&#109;&#97;&#114;&#115;&#116;&#101;&#108;&#45;&#100;&#97;&#121;&#46;&#99;&#111;&#109;">sd@marstel-day.com</a>","http://www.marstel-day.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJXNBUX9HE33">4</a>","FLATTER, INC","J.R. FLATTER","President/ CEO","10700 SPOTSYLVANIA AVE","","FREDERICKSBURG","VA","22408-2674","Founded in 2002, Flatter is a service-disabled veteran-owned small business (SDVOSB). As an ISO 9001:2015 and ISO 27001:2013 registered, we follow our motto, “Excellence is our Baseline,” every day to meet our clients' needs and ensure mission success. Our core capabilities include: Program Management, Administrative Support and Executive Assistance, Finance and Acquisition Support; Mission Advisory Support, Process Re-Engineering, Mission Analytics, Leadership Coaching, Coach Training, and Culture Development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#114;&#46;&#102;&#108;&#97;&#116;&#116;&#101;&#114;&#64;&#102;&#108;&#97;&#116;&#116;&#101;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jr.flatter@flatterinc.com</a>","www.flatterinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NM3TUJ43SDE3">5</a>","RPI GROUP, INC.","ALLEN PAYNE","President","11903 BOWMAN DR","STE 101","FREDERICKSBURG","VA","22408-7338","RPI Group, Inc. (RPI) founded in 2001, provides mission critical services to the National Security Community and the Department of Defense. RPI brings together an accomplished team of national security, systems engineering and cyber experts with the experience, relationships, and qualifications to support a wide range of clients. RPI is headquartered in Fredericksburg, VA (MCB Quantico) with offices in Lexington Park, MD (NAS Pax River); King George, VA (NSWC Dahlgren); San Diego, CA (SPAWAR); Denver, CO (USAF Academy); Phoenix, AZ; and Huntsville, AL. RPI is a Service Disabled Veteran Owned Small Business (SDVOSB).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#112;&#97;&#121;&#110;&#101;&#64;&#114;&#112;&#105;&#103;&#114;&#111;&#117;&#112;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">apayne@rpigroupinc.com</a>","http://www.rpigroupinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MU4FVCJMA373">6</a>","EYEIT.COM, INC.","JAMES WARD","President and CEO","14920 BEAVER DAM DR","STE 3","SPOTSYLVANIA","VA","22551-5886","information assurance engineering, consulting and practical information technology solutions to the Department of Defense, intelligence, medical, and financial agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#46;&#119;&#97;&#114;&#100;&#64;&#101;&#121;&#101;&#105;&#116;&#46;&#99;&#111;&#109;">jim.ward@eyeit.com</a>","HTTP://www.eyeit.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DFTUJHGXQVK7">7</a>","J. BARBER MOVING & STORAGE, INC.","JEFFREY BARBER","president","8110 RIVER STONE DR","STE 8","FREDERICKSBURG","VA","22407-8763","Packaging, moving, & storage.(local, long distance, and worldwide).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#98;&#97;&#114;&#98;&#101;&#114;&#64;&#106;&#98;&#97;&#114;&#98;&#101;&#114;&#109;&#111;&#118;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">jeff.barber@jbarbermoving.net</a>","www.jbarbermovingstorage.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WG7XBTRRAJN1">8</a>","RADIO RECONNAISSANCE TECHNOLOGIES, INC.","NICHOLAS HOBEN","","3328 BOURBON ST","","FREDERICKSBURG","VA","22408-7311","Ruggedized intelligence and electronic warfare associated products, engineering and program management services to the DoD, other U.S agencies and commercial suppliers. Focused on tactical antennas, direction finding and information warfare solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#104;&#111;&#98;&#101;&#110;&#64;&#114;&#97;&#100;&#105;&#111;&#114;&#101;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">nhoben@radiorecon.com</a>","https://www.radiorecon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XBLREJJLNVZ3">9</a>","PATRIOT3, INC.","CHARLES FUQUA","","11040 PIERSON DR","","FREDERICKSBURG","VA","22408-2060","Design, Manufacture & Sales of Law Enforcement & Military Products incl MARS (Mobile Adjustable Ramp Systems), Ballistic Shields incl Award Winning XPS-G2, Minuteman Folding & Ladder Shields, Flex Field, JetBoots Hands Free Diver Propulsion & Rapid Diver","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#102;&#117;&#113;&#117;&#97;&#64;&#112;&#97;&#116;&#114;&#105;&#111;&#116;&#51;&#46;&#99;&#111;&#109;">cfuqua@patriot3.com</a>","http://www.patriot3.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GKKWYX2THF78">10</a>","MECHEM ELECTRONICS, INC.","BRADLEY MECHEM","","3605 LOREN WHITNEY DR","","FREDERICKSBURG","VA","22408-9444","Sales, service, installation, and custom manufacture, of land mobile communications equipment. Digital, analog, secure. Fixed, mobile, portable, and console related items.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#64;&#109;&#101;&#99;&#104;&#101;&#109;&#101;&#108;&#101;&#99;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">brad@mechemelectronics.com</a>","https://www.mechemelectronics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TBNEGBYDP1J9">11</a>","SPELNA, INC.","PHILLIP GREGG","General Manager","225 INDUSTRIAL CT","","FREDERICKSBURG","VA","22408-2443","Real Estate Management / Development Consulting and Business to Business Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#101;&#108;&#110;&#97;&#103;&#114;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">spelnagrp@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EAKBPFPGJJ65">12</a>","II CORPS CONSULTANTS, INC.","EARNEST KING","","1139 HEATHERSTONE DR","","FREDERICKSBURG","VA","22407-4828","II Corps is a SBA Certified 8(a) Service Disabled Veteran Owned Small Business (SDVOSB). Our dedicated team of professionals represents a strong cross section of subject matter experts who are passionate and committed to delivering superb results that are aligned with our core competencies. Our core competencies include: training analysis, leadership education, instructional support, culture and language training, mission assurance/continuity of operations, IT & data infrastructure support, and mission support. What sets us apart is that we are first and foremost trainers and educators with demonstrated expertise in delivering innovative, integrated, and tailored solutions designed to solve complex challenges for our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#97;&#114;&#110;&#101;&#115;&#116;&#46;&#107;&#105;&#110;&#103;&#64;&#105;&#105;&#99;&#111;&#114;&#112;&#115;&#46;&#99;&#111;&#109;">earnest.king@iicorps.com</a>","https://www.iicorps.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JRCFMJBQKGQ3">13</a>","DOVETAIL CULTURAL RESOURCE GROUP I INC","KERRI BARILE","","11905 BOWMAN DR STE 502","","FREDERICKSBURG","VA","22408-7344","We are a full-service, woman-owned cultural resource management firm. Our specialties include archaeology, architectural history, National Register nominations, archival and historical research, battlefield delineations, and cultural resource compliance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#98;&#97;&#114;&#105;&#108;&#101;&#64;&#100;&#111;&#118;&#101;&#116;&#97;&#105;&#108;&#99;&#114;&#103;&#46;&#99;&#111;&#109;">kbarile@dovetailcrg.com</a>","http://www.dovetailcrg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XF3PWDSK9MB3">14</a>","VOIPT LLC","MICHAEL FIX","","4306 BRIDLEPATH CT","","FREDERICKSBURG","VA","22408-8814","Geospatial analytics, wireless signaling protocol development, system engineering lifecycle management, telecommunications system performance engineering, queueing systems engineering","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#102;&#105;&#120;&#49;&#51;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">msfix13@icloud.com</a>","http://www.voipt-llc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MPKCSDBTKCD5">15</a>","PERIGEAN TECHNOLOGIES LLC","BRIAN MOON","","8108 LEE JACKSON CIR","","SPOTSYLVANIA","VA","22553-3818","We use innovative and reliable methods to capture, analyze, portray, share and repurpose organizations' most valuable capital assets: human, structural, customer. We harness the power of concept mapping, knowledge modeling, and thought exercises.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#64;&#112;&#101;&#114;&#105;&#103;&#101;&#97;&#110;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">brian@perigeantechnologies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JWTUDDE53CQ3">16</a>","NATIONAL PROTECTIVE SERVICES INC","ABIGAIL SPIVEY","","11302 ENCHANTED WOODS WAY","","FREDERICKSBURG","VA","22407-7468","A FULL RANGE OF SECURITY SERVICES-ARMED AND UNARMED OFFICERS, UNIFORMED OR PLAINCLOTHES, VEHICLE PATROLS, MONITORING OF FACILITIES, FOR ANY TYPE OF FACILITY-COMMERCIAL, RETAIL, RESIDENTIAL,INDUSTRIAL AND CONSTRUCTION, SPECIAL EVENT AND EMERGENCY SECURITY","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#98;&#105;&#103;&#97;&#105;&#108;&#115;&#112;&#105;&#118;&#101;&#121;&#64;&#110;&#112;&#115;&#118;&#97;&#46;&#99;&#111;&#109;">abigailspivey@npsva.com</a>","HTTP://WWW.NPSVA.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCALWEL6Z4A3">17</a>","TAMARACK TECHNOLOGIES INC","EDDIE BRINSON","","7600 DOWNSTREAM CT","","FREDERICKSBURG","VA","22408-8806","TAMARACK is a technical solutions provider concentrating on Antiterrorism Force Protection (ATFP) Technology Insertion, Systems Engineering and Integration support, Lean Six Sigma (LSS) Black Belt Level Continuous Process Improvement (CPI), and Program Management. TAMARACK has concentrated focus areas and expertise in supporting the US Department of Defense, FEMA, and DOE providing senior Subject Matter Expertise on Access Control and Surveillance Technology Insertion, Threat/Vulnerability Assessments, Analysis of Alternatives (AOA) and Concept of Operations (CONOPS) development. We also deliver a full range of Cybersecurity solutions geared to support an organization from Categorization to Authorization (C&A), Assessment and Authorization (A&A) and Continuous Monitoring sustainment services. We provide Cybersecurity Engineering support related to the A&A/C&A process in support of DoD RMF/DIACAP process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#98;&#114;&#105;&#110;&#115;&#111;&#110;&#64;&#116;&#97;&#109;&#97;&#114;&#97;&#99;&#107;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">ebrinson@tamaracktechinc.com</a>","www.tamaracktechinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WTKWNGLDGKY3">18</a>","PROGRAM CATALYST, INC.","DONALD O'BRIEN","","12004 FAWN LAKE PKWY","","SPOTSYLVANIA","VA","22551-8918","strategic R&D Planning, budgeting, and project monitoring","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#46;&#111;&#98;&#114;&#105;&#101;&#110;&#64;&#112;&#114;&#111;&#103;&#114;&#97;&#109;&#99;&#97;&#116;&#97;&#108;&#121;&#115;&#116;&#46;&#99;&#111;&#109;">d.obrien@programcatalyst.com</a>","http://www.programcatalyst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LRBMF6XFM834">19</a>","PROCUREMENT SPECIALISTS, LLC","APRIL PORTER","","10201 FAIRVIEW RD","","PARTLOW","VA","22534-9616","provide wholesale/retail services for any type of supplies or equipment. Specializing in medical supplies, but not limited to that category. Service consultant.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#122;&#112;&#114;&#119;&#108;&#110;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">hellzprwln@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XELWCZZ9NUE7">20</a>","TWM ASSOCIATES, INC.","LISA JOHNSON","CEO/PRES","13408 BLACK WALNUT LN","","SPOTSYLVANIA","VA","22551-7301","Cybersecurity support, FISMA for OIG or CIO support, Assessment and Authorization support, Security Controls Assessment evaluation, IT audit support, risk management, vulnerability analysis, penetration testing/scanning, DIARMF, IA-PRE, CMMC, SSP PIA PTA FIPS 199 DRP CP","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#84;&#87;&#77;&#73;&#78;&#67;&#46;&#67;&#79;&#77;">lisa.johnson@TWMINC.COM</a>","https://www.twminc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5KSYNHUVHP4">21</a>","BLUE ANGEL INDUSTRIES, LLC","TERESA FREIHOFER","","9400 SIGNATURE WAY","","FREDERICKSBURG","VA","22407-1507","Blue Angel Industries LLC is Registered to do Business with a select group of Government Agencies and Large Companies. Blue Angel has favorable negotiated terms with key suppliers to these businesses and qualifies for several of the necessary requirements that these suppliers do Not meet. Blue Angel is a re-seller of products and services. We provide logistic services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#101;&#115;&#97;&#64;&#98;&#108;&#117;&#101;&#97;&#110;&#103;&#101;&#108;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">teresa@blueangelindustries.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WYNBZ755DHH7">22</a>","ARES SOLUTIONS INCORPORATED","HARLIN SUTTON","","10719 KIRKLAND DR","","SPOTSYLVANIA","VA","22551-4635","Offering a wide range of support services: web/application development, help desk,T&E, IV&V, PM, and requirements and business analysis. Experience supporting Army Inscom, NSWCDD, DIA, SPAWAR, USDA, SSA, and Fannie Mae.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#108;&#105;&#110;&#46;&#115;&#117;&#116;&#116;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">harlin.sutton@gmail.com</a>","www.aressolutionsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HB3VY669DHW1">23</a>","COMMONWEALTH CRIMINAL JUSTICE ACADEMY LLC","THOMAS PERRONI","","56 JOSEPH MILLS DR","STE 100","FREDERICKSBURG","VA","22408-7351","Training and security consultancy services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#106;&#97;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cjatraining@gmail.com</a>","http://www.ccjatraining.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZD8GHZ83S4F3">24</a>","SONNY INC.","ANDRE HUTCHINSON","","10508 CHATHAM RIDGE WAY","","SPOTSYLVANIA","VA","22551-8911","We are highly trained in providing comprehensive Armed and Unarmed Security, Force Protection, Professional Executive Protection, and Private Security. We are fully insured and licensed to provide security solutions for the United States Government, Private Corporations and VIP clients throughout the world. Our security services include surveys, threat and risk assessments, vulnerability penetration test, intelligence analysis, Red Teaming, and completed reports.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#114;&#101;&#64;&#115;&#115;&#103;&#105;&#115;&#46;&#99;&#111;&#109;">andre@ssgis.com</a>","http://www.ssgis.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QDNZY1MXQUK8">25</a>","GLOBAL DIMENSIONS, LLC","CHRIS NEWTON","","923 MAPLE GROVE DR STE 201","","FREDERICKSBURG","VA","22407-6937","Global Dimensions experienced team of professionals offers your organization a wide array of language/linguistic, intelligence, management and training services to meet even the most stringent of government requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#101;&#119;&#116;&#111;&#110;&#64;&#103;&#108;&#111;&#98;&#97;&#108;&#100;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">cnewton@globaldllc.com</a>","www.globaldllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JXU2DXK669V8">26</a>","OMNA INTERNATIONAL LLC","JUDD BAKER","","8305 BROADMORE LN","","SPOTSYLVANIA","VA","22553-3643","We are retired U.S. Marines with a good deal of pragmatic experience in developing organizations with a bias for action. Our specialty is training and education risk and readiness analysis (TERRA).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#100;&#100;&#46;&#98;&#97;&#107;&#101;&#114;&#64;&#116;&#104;&#101;&#111;&#109;&#110;&#97;&#46;&#99;&#111;&#109;">judd.baker@theomna.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUU6XR4L4366">27</a>","SOFTWARE PERFORMANCE GROUP INC","CHAD CLOUD","","3330 BOURBON ST STE 116","","FREDERICKSBURG","VA","22408-7334","Custom software design and development, database design, system and legacy integration, automation, information assurance, cybersecurity, C&A, organizational assessment, performance improvement, interactive learning, project management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#100;&#99;&#64;&#115;&#111;&#102;&#116;&#119;&#97;&#114;&#101;&#112;&#101;&#114;&#102;&#111;&#114;&#109;&#97;&#110;&#99;&#101;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">chadc@softwareperformancegroup.com</a>","http://www.softwareperformancegroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MK3AMJLAYHU6">28</a>","LIBERTY EQUIPMENT REPAIR, INC.","ROBERT CHAMBERS","","10879 HOUSER DR","","FREDERICKSBURG","VA","22408-2451","Medium/Heavy Truck, RV, and Equipment repair facility","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#99;&#104;&#97;&#109;&#98;&#101;&#114;&#115;&#64;&#108;&#105;&#98;&#101;&#114;&#116;&#121;&#101;&#113;&#117;&#105;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">bchambers@libertyequipment.com</a>","libertyequipment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S6EKA36FW7W8">29</a>","TROIKA SOLUTIONS LLC","KENNETH LASURE","","10300 SPOTSYLVANIA AVE STE 116","","FREDERICKSBURG","VA","22408-2697","Troika Solutions is a management consulting and IT products company. We specialize in solving our customer's most difficult asset management, data management, systems integration and logistics problems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#108;&#97;&#115;&#117;&#114;&#101;&#64;&#116;&#114;&#111;&#105;&#107;&#97;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">klasure@troikasol.com</a>","www.troikasol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKJVGALWDLJ3">30</a>","ALMAR VALET INC","ALLEN BROWN","","10697 COURTHOUSE RD","","FREDERICKSBURG","VA","22407-7743","Dry Cleaning and Laundry services Pickup and Delivery","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#101;&#110;&#98;&#64;&#97;&#108;&#109;&#97;&#114;&#45;&#99;&#108;&#101;&#97;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">allenb@almar-cleaners.com</a>","almar-cleaners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PCYHLNL68DZ3">31</a>","JOSEPH BURY, LLC","JOSEPH BURY","","10110 COLECHESTER ST","","FREDERICKSBURG","VA","22408-9564","We specialize in marketing consulting services which include branding, social media management, editorial, writing, and content development services. We also provide project management and website integration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#101;&#64;&#74;&#111;&#115;&#101;&#112;&#104;&#66;&#117;&#114;&#121;&#71;&#111;&#118;&#46;&#99;&#111;&#109;">Joe@JosephBuryGov.com</a>","https://www.JosephBuryGov.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LWYJANBM8BM5">32</a>","GUYDO CONSULTING, INC.","GREGORY GUYDO","","13794 EAGLE VIEW LN","","SPOTSYLVANIA","VA","22551-6409","Guydo Consulting is an innovative IT and consulting firm assisting government agencies in solving their most difficult challenges. Our staff are our most important asset, possessing extensive expertise across the intelligence community in the fields of software design and development, next-gen visualization, and intelligence training and analysis. Members of our team are motivated, capable leaders, adept problem solvers, and consummate professionals in everything they do.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#103;&#117;&#121;&#100;&#111;&#46;&#99;&#111;&#109;">info@guydo.com</a>","http://www.guydo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LC61NXSC3LG1">33</a>","JONES & MASSEY CONSULTING SERVICES, LLC","DENISE JONES","","11806 SWITCHBACK LN","","FREDERICKSBURG","VA","22407-1784","JMCS is an independent contractor that is small woman owned, minority owned, veteran owned small business which is capable of providing a variety of services and supplies. It is the goal of (JMCS) to provide the highest quality services and supplies at the fairest possible price. JMCS maintains exceptional value by maximizing effectiveness and efficiency through dedication, innovation and motivation. JMCS specializes in acquisition and contracting support services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#101;&#110;&#105;&#115;&#101;&#64;&#106;&#111;&#110;&#101;&#115;&#109;&#97;&#115;&#115;&#101;&#121;&#46;&#110;&#101;&#116;">Denise@jonesmassey.net</a>","Jonesmassey.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2ZNTN4ANN36">34</a>","LEUMAS RESIDENTIAL LLC","REGGIE SAMUEL","","4343 PLANK RD","STE 115","FREDERICKSBURG","VA","22407-4807","Leumas provides Affordable Housing, Facilities Management, and Investment Management, services to Governments, Pension Plans, and Public Housing Authorities. We've helped over 75 Public Housing Authorities across the country implement HUD's innovative Rental Assistance Demonstration program.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#103;&#103;&#105;&#101;&#64;&#108;&#101;&#117;&#109;&#97;&#115;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">reggie@leumasgroup.com</a>","http://www.leumasgroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPYVU2NVK9G5">35</a>","SOBIS, INC.","SONYA FORD","","11812 ARBOR GLEN DR","","FREDERICKSBURG","VA","22407-8549","We provide the following services: -	Consulting Services, to include, Costing and Pricing Strategy; Contract and Subcontract Administration; Geographic Information Systems; and Database Design, Development, and Management; -	Climate and Hazards Planning, to include, 	Climate Change Adaptation Planning; Risk Assessment Services; and Hazard Mitigation and Resilience Planning; -	Training & Capacity Building, to include,	Training Course Design and Development and Training and Workshop Facilitation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#102;&#111;&#114;&#100;&#64;&#115;&#111;&#98;&#105;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sford@sobisinc.com</a>","www.sobisinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJLMBNFX4JH5">36</a>","ALL IN SOLUTIONS LLC","ALLISON HICKEY","","3940 PLANK RD","STE Y","FREDERICKSBURG","VA","22407-6874","IT Services, Managed Service Delivery, Software Application Management, Medical Exam Services, ServiceNow, Microsoft Dynamics CRM","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#105;&#115;&#111;&#110;&#46;&#104;&#105;&#99;&#107;&#101;&#121;&#64;&#97;&#108;&#108;&#105;&#110;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">allison.hickey@allin-solutions.com</a>","https://www.allin-solutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C2WSRV1AQCS5">37</a>","AMRUTA INC","BEJU RAO","","7724 ASHLEY FARMS DR","","FREDERICKSBURG","VA","22407-2057","Provide data driven insights and user friendly software to improve safety, compliance, revenue, profitability and reputation for governmental agencies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#106;&#117;&#46;&#114;&#97;&#111;&#64;&#97;&#109;&#114;&#117;&#116;&#97;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">beju.rao@amrutainc.com</a>","www.amrutainc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C8XEC2CQE4L1">38</a>","APB FREIGHT LLC","ANTHONY BROOKS","","9323 LAUREL OAK DR","","FREDERICKSBURG","VA","22407-9382","Provides freight brokering and logistics services for all types of cargo. Local and long-distance transportation of freight.Also provide pavement marking services for parking/facilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#116;&#104;&#111;&#110;&#121;&#98;&#114;&#111;&#111;&#107;&#115;&#48;&#51;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">anthonybrooks03@verizon.net</a>","www.apbfreight.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3XSLXJNFTU9">39</a>","CLEANING FOR COLLEGE, LLC","COUNTESS HARRIS","","10317 MASTIN LN","","SPOTSYLVANIA","VA","22551-3447","Cleaning For College, LLC is an EDWOSB, DBE, Micro and SWaM-certified janitorial/custodial service provider that has served government and private sector organizations in northern and central Virginia since 2017.  Our commitment to excellence, paired with a dedicated team and innovative practices, sets us apart as a leading cleaning solution provider in the region. We provide: Office Cleaning Campus Cleaning Special Event Cleaning Post Construction Cleaning Our past performance includes: ABM Industries Department of Game & Inland Fisheries Gatestone & Co. Pelerin Capital Management/Military Recruiter's Offices","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#102;&#111;&#114;&#99;&#111;&#108;&#108;&#101;&#103;&#101;&#46;&#99;&#111;&#109;">info@cleaningforcollege.com</a>","www.cleaningforcollege.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=REBNB25NLJT9">40</a>","RELIABLE MISSION SOLUTIONS SDVOSB JV, LLC","GLEN ADAMS","","12225 AMOS LN STE 302","","FREDERICKSBURG","VA","22407-7133","Reliable Mission Solutions (RMS) SDVOSB JV, LLC is a collaboration between MicroSystems Automation Group (MSAG) -The Mentor and Cogent Solutions, Inc –The Protégé; through a SBA approved Mentor Protégé Program. RMS SDVOSB JV is a VA CVE SDVOSB small business JV especially designed to help Federal agencies leverage technology to protect organizations, critical infrastructure and technology from cyber threats through expertise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#100;&#97;&#109;&#115;&#55;&#49;&#49;&#64;&#114;&#109;&#115;&#106;&#118;&#46;&#99;&#111;&#109;">gadams711@rmsjv.com</a>","www.rmsjv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NLD2CUCB5385">41</a>","RELIABLE MISSION SOLUTIONS HUB JV LLC","GLEN ADAMS","","12225 AMOS LN","STE 302","FREDERICKSBURG","VA","22407-7108","Cogent provides the latest information technology solutions and professional support services that are focused on Website development & Design, E-Business, Network Engineering, Help Desk, Service Desk, Program Management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#97;&#100;&#97;&#109;&#115;&#55;&#49;&#49;&#64;&#114;&#109;&#115;&#106;&#118;&#46;&#99;&#111;&#109;">gadams711@rmsjv.com</a>","www.rmsjv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8MJF9K8QJT4">42</a>","SHANE'S PRISTINE POWERWASH LLC","SHANE FRENCH","","7806 ALSOP WAY","","SPOTSYLVANIA","VA","22551-3385","Wash building exteriors including concrete and brick and roof cleaning. Residential home repairs and remodeling including deck design and build and repairs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#64;&#112;&#114;&#105;&#115;&#116;&#105;&#110;&#101;&#112;&#111;&#119;&#101;&#114;&#119;&#97;&#115;&#104;&#46;&#99;&#111;&#109;">shane@pristinepowerwash.com</a>","www.pristinepowerwash.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MU1BK3RHMEG1">43</a>","LM SUPPORT SERVICES LLC","LARRY MOPPINS","","10305 LEES CROSSING LN","","FREDERICKSBURG","VA","22408-0290","LM Support Service provide a wide array of state of the art logistical support (warehousing, Transportation, etc.), administrative support (onsite and offsite) and information technology support to our enhance our client needs (server setup, desktops, laptop, tablets, etc.)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#109;&#111;&#112;&#112;&#105;&#110;&#115;&#64;&#76;&#77;&#83;&#83;&#45;&#76;&#76;&#67;&#46;&#67;&#79;&#77;">Lmoppins@LMSS-LLC.COM</a>","WWW.LMSS-LLC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDJYDEFCR3F9">44</a>","CYBER DOJO SOLUTIONS LLC","DEON WHITE","","104 BATTERY LN","","FREDERICKSBURG","VA","22408-2506","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#111;&#110;&#46;&#119;&#104;&#105;&#116;&#101;&#64;&#99;&#121;&#98;&#101;&#114;&#100;&#111;&#106;&#111;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">deon.white@cyberdojogroup.com</a>","https://cyberdojogroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C7EKHXCLMX54">45</a>","DEUCES GARDEN & PATIO CREATIONS LLC","GWENDOLYN MARTINEZ","","6107 SUNLIGHT MOUNTAIN RD","","SPOTSYLVANIA","VA","22553-4499","We are a landscape and hardscape company specializing in residential and commercial projects. We are a member of the Interlocking Paver Institute (ICPI) and the National Concrete Masonry Association (NCMA). Our didactic knowledge affords us the expertise to construct concrete driveways, walkways, patios. We also construct paver patios utilizing a concrete base or 21-A base with a paver overlay. We construct paver walkways and driveways. We specialize in Landscape maintenance and restructuring. We construct retaining walls non-engineered and engineered.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#98;&#114;&#97;&#115;&#119;&#101;&#108;&#108;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">gsbraswell@verizon.net</a>","www.deucesgarden.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHN1TN965E69">46</a>","VINYL 2 VINYL LLC","LATASHA BROOKS","","4820 SOUTHPOINT PKWY","","FREDERICKSBURG","VA","22407-2658","Founded in 2019, Vinyl 2 Vinyl LLC is a professional Consulting Business supporting federal, state, and local government, private, for-profit, and non-profit clients. As a customer-focused, quality-driven organization, Vinyl 2 Vinyl uses industry best practices for continuous improvement, process streamlining, teamwork, and increased quality to exceed our customer’s operational goals and expectations. Vinyl 2 Vinyl specialize in management consultant with experience in all aspects of a business from operations to marketing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#110;&#121;&#108;&#50;&#118;&#105;&#110;&#121;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">vinyl2vinyl@yahoo.com</a>","www.latashabrooks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UPL4PA5HANZ9">47</a>","HENSLEY CONTRACTUAL LLC","JANET HENSLEY","","9714 CEDARMASS CIR","","FREDERICKSBURG","VA","22408-0006","Hensley Contractual, LLC., is a Women-Owned Small Business providing contract management and project management services to commercial, not for profit and government organizations. Our consulting services can help enhance project organization, and set standards for an efficient, effective process that allows both the customer and the business to meet obligations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#110;&#101;&#116;&#104;&#101;&#110;&#115;&#108;&#101;&#121;&#64;&#104;&#101;&#110;&#115;&#108;&#101;&#121;&#45;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#117;&#97;&#108;&#46;&#99;&#111;&#109;">janethensley@hensley-contractual.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P8VLH792C5B7">48</a>","UISAT LLC","FATIMA SHEIKH","","11715 HARRIS MILL CT","","FREDERICKSBURG","VA","22408-1890","Provides strategic consulting in technology services and managed services to commercial, non-profit, and government organizations. Our services can mobilize the right people, skills, and technologies to help organizations improve their performance. Over the years, we have established ourselves as a premier provider of integrated services and solutions to the Federal & State government. We are fully committed to integrity, collaboration, and stellar performance, and, most of all, to our client’s success.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#116;&#105;&#109;&#97;&#64;&#117;&#105;&#115;&#97;&#116;&#46;&#99;&#111;&#109;">fatima@uisat.com</a>","www.UISAT.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U1M4TCUTBUE5">49</a>","VET2MOM PROPERTIES LLC","ELISA DATCHER","","9721 INKWOOD DR","","FREDERICKSBURG","VA","22407-9344","We are a business that specializes in organizational development, corporate training, and business development. We also provide strategic planning for organizations as well as staff development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#105;&#115;&#97;&#100;&#97;&#116;&#99;&#104;&#101;&#114;&#64;&#118;&#101;&#116;&#50;&#109;&#111;&#109;&#116;&#99;&#46;&#99;&#111;&#109;">elisadatcher@vet2momtc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MCRGKAZ9RKN1">50</a>","CPR IT PROS LLC","CHRISTOPHER PRICE","","13819 PERIMETER DR","","FREDERICKSBURG","VA","22407-1974","CPR IT Pros specialize in VOIP, Unified Communications, and network engineering services. We also provide helpdesk and call center services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#112;&#114;&#105;&#99;&#101;&#64;&#99;&#112;&#114;&#105;&#116;&#112;&#114;&#111;&#115;&#46;&#99;&#111;&#109;">Cprice@cpritpros.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DCR9CL6FCVH5">51</a>","CLOUD 211 LLC","EDWARD BRAVADO","","10102 PREMIER ST","","FREDERICKSBURG","VA","22408-9643","Cloud 211 is an Information Technology (IT) services company founded on the principles of constant innovation, decisive disruption of the status-quo and an unmistakably resolute work ethic. We possess skills in Project Management, Process Improvement, Systems Engineering, Cloud Migration and DevOps. We provide support from conceptualization through execution; it is our goal to ensure enduring results. At Cloud 211, we make progress through experience.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#119;&#97;&#114;&#100;&#46;&#98;&#114;&#97;&#118;&#97;&#100;&#111;&#64;&#99;&#108;&#111;&#117;&#100;&#50;&#49;&#49;&#46;&#99;&#111;&#109;">edward.bravado@cloud211.com</a>","Cloud211.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XTYBTA7E3CJ8">52</a>","J & R PAINTING COMPANY LLC","RACHEL DAVIS","","9310 LAUREL OAK DRIVE","","FREDERICKSBURG","VA","22407-9382","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#97;&#99;&#104;&#101;&#108;&#46;&#68;&#97;&#118;&#105;&#115;&#64;&#106;&#97;&#110;&#100;&#114;&#112;&#97;&#105;&#110;&#116;&#105;&#110;&#103;&#99;&#111;&#109;&#112;&#97;&#110;&#121;&#46;&#99;&#111;&#109;">Rachel.Davis@jandrpaintingcompany.com</a>","https://jandrpaints.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QBGJWG6JB2P7">53</a>","JAMES INVESTIGATIVE SERVICES, LLC","FAHEEMAH JAMES","","6107 SUNNY MEADOWS DR","","FREDERICKSBURG","VA","22407-5086","We provide background investigative services for the federal government. We also provide the information needed to complete the investigation process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#106;&#105;&#115;&#101;&#114;&#118;&#46;&#99;&#111;&#109;">info@jiserv.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FY2CK4GD9E39">54</a>","TRUE NORTH SECURITY INC.","TIMOTHY WELTY","","13201 FLINTLOCK DR","","SPOTSYLVANIA","VA","22551-8417","Our IT services seamlessly integrate mission objectives with tailored solutions, rooted in design thinking and human-centered design. We specialize in technically robust and user-friendly IT development, leveraging agile methodologies like SAFe. Our capabilities include custom software development, IT infrastructure design, customer experience optimization, human-centered design, agile practices, and comprehensive IT support. We specialize in developing IT that is both technically robust and user-friendly, by leveraging agile methodologies, including the Scaled Agile Framework (SAFe), we deliver projects efficiently, with continuous improvements and adaptability to changing requirements.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#119;&#101;&#108;&#116;&#121;&#64;&#116;&#114;&#117;&#101;&#110;&#111;&#114;&#116;&#104;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">twelty@truenorthsecurity.com</a>","truenorthsecurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HWMMDTW1NMX4">55</a>","AIROLIVE & CO., LLC","OLIVIER BLE","","11716 ELSIE LN","","FREDERICKSBURG","VA","22407-1770","For all your network cabling ( Fiber optic & Copper) installation, maintenance and repairs. Moves adds and changes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#109;&#105;&#110;&#64;&#109;&#101;&#116;&#105;&#99;&#117;&#108;&#111;&#117;&#115;&#99;&#97;&#98;&#108;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">admin@meticulouscabling.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H8H9M59G43C5">56</a>","A LITE 4 LIFE LLC","REGINA PRICE","","5713 CASTLEBRIDGE RD APT 111","","FREDERICKSBURG","VA","22407-6013","A Lite 4 Life LLC specializes in trauma-informed care focusing on key assumptions and principles for identifying healing and coping strategies that will assist in overcoming past and present trauma. A Lite 4 Life LLC has experience helping clients achieve success and desired outcomes by providing emotional support to employees and fostering healthy relationships for marriages. As marriage commissioner, A Lite 4 Life LLC specialize in creating a personalized and memorable wedding ceremony that reflects your unique love story. Additionally, this company also facilitate Suicide Prevention and Education.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#103;&#105;&#110;&#97;&#46;&#112;&#114;&#105;&#99;&#101;&#64;&#97;&#108;&#105;&#116;&#101;&#52;&#108;&#105;&#102;&#101;&#46;&#99;&#111;&#109;">regina.price@alite4life.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CM7QEW6158R6">57</a>","CRIMINAL & PRIVATE INVESTIGATION AGENCY, LLC","MARTINE DESORMEAUPAREDES","","3516 PLANK RD STE 6B","","FREDERICKSBURG","VA","22407-6861","We specialize in criminal investigative services and digital forensics investigation. We also specialize in background investigation and special investigations, along with protective services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#116;&#105;&#110;&#101;&#46;&#100;&#46;&#112;&#97;&#114;&#101;&#100;&#101;&#115;&#64;&#99;&#112;&#105;&#97;&#108;&#97;&#119;&#46;&#111;&#114;&#103;">martine.d.paredes@cpialaw.org</a>","https://cpialaw.us/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SRAULJP8U2T9">58</a>","130 REPRESENT MEDIA GROUP INC.","AUSTIN ADAIR","","5137 DOMINION DR","","FREDERICKSBURG","VA","22407-8025","130 Represent Media Group, Inc., is a government services contractor with 11 years of experience in DOD and IC contracting. Our consultants are well-versed in many technologies, languages, and other areas of expertise and proficiency. Below is a list of some of the capabilities that we offer: DOD Security Clearances up to Top Secret; Expertise in Business Process Engineering, Project Management, Team Leadership, Systems and Database Administration, Application Development and Maintenance, Data Analysis, and Consultancy Solutions; Programming and Scripting capabilities; Technology expertise with relational and NoSQL Databases, WebServices, and all application stacks; Proficiency and Certification with diverse and complex technologies from systems and networking to applications and infrastructure; and Capability with both Windows and Linux operating systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#100;&#97;&#105;&#114;&#64;&#49;&#51;&#48;&#114;&#101;&#112;&#114;&#101;&#115;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">aadair@130represent.com</a>","https://www.130represent.com/consulting"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKJTUDMVLLR9">59</a>","KMT SERVICES LLC","KAREN TOM","","6103 SALISBURY DR","","SPOTSYLVANIA","VA","22553-4440","Provide custodial, landscaping, and facility maintenance in Spotsylvania, Fredericksburg, Stafford, Culpeper, Orange, Hanover, Caroline, Louisa, King George, throughout Northern and Central Virginia; includes HOA landscaping, groundskeeping, mowing, leaf collection, litter control, trash pickup, edging, tree trimming, bushes, lawncare, for businesses, administrative buildings, offices, schools, parks, athletic fields, highways and rest areas, custodian, maid service, commercial, move in move out cleaning, foreclosure, timeshare, gym, apartment, vacation home, new construction, office and business cleaning, public rest area cleaning, special event cleanup, and school custodial service, building maintenance, handyman services, commercial light bulbs, door locks, floor maintenance, floor waxing buffing, pressure washing walkways, pressure washing walls, fence repair renovation, interior/exterior paint.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#117;&#115;&#116;&#111;&#109;&#101;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#107;&#109;&#116;&#102;&#97;&#99;&#105;&#108;&#105;&#116;&#121;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">customerservice@kmtfacilityservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MC15XJJDCXF3">60</a>","FOX FINANCIAL LLC","BRENDA FOX","","4820 SOUTHPOINT DR STE 105","","FREDERICKSBURG","VA","22407-2605","At Fox Financial, we take pride in offering a comprehensive range of insurance products, including life, health, annuities, home, auto, flood, commercial, professional liability, cyber security insurance and more. Our goal is not just to provide coverage but to build lasting relationships with our clients, ensuring they feel secure and well-informed about their insurance choices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#70;&#79;&#88;&#64;&#70;&#79;&#88;&#70;&#73;&#78;&#65;&#78;&#67;&#73;&#65;&#76;&#45;&#86;&#65;&#46;&#67;&#79;&#77;">BFOX@FOXFINANCIAL-VA.COM</a>","www.foxfinancial.info"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YULBV9M67SV4">61</a>","EKOM CONSULTING LLC","PUSHPINDER DHILLON","","905 TASKFORCE DR","","FREDERICKSBURG","VA","22407-7117","We specialize in healthcare consulting and medical research and development. We also specialize in women's health, neurological consulting and obesity health.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#100;&#104;&#105;&#108;&#108;&#111;&#110;&#64;&#101;&#107;&#111;&#109;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">pdhillon@ekomconsulting.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EE4DXUNWD575">62</a>","GOLDWAY INDUSTRIES LLC","STEPHON MYERS","","6006 HOT SPRING LN","","FREDERICKSBURG","VA","22407-3708","We specialize in janitorial cleaning, landscaping, and facilities management. We also specialize in logistics and staffing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#116;&#101;&#112;&#104;&#111;&#110;&#64;&#103;&#111;&#108;&#100;&#119;&#97;&#121;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">Stephon@goldwayindustries.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DN7XFPNL9AF9">63</a>","QUALITY SOURCING INC","DOUGLAS BAGGETT","","205 MORGAN LN","","SPOTSYLVANIA","VA","22551-2417","We specialize in supplying electronic products and services to all branches of the armed services, we also specialize in obsolescence management and sourcing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#50;&#51;&#48;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">doug2300@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X18YV6UVVFH3">64</a>","E.F. THOMPSON INC","JONATHAN THOMPSON","","8509 PATRIOT HW","","FREDERICKSBURG","VA","22407-","We specialize in contract hauling for government organization. We primarily contract with the USPS. We also specialize in commercial trucking.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#70;&#116;&#104;&#111;&#109;&#112;&#115;&#111;&#110;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">EFthompsoninc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TN8AR7UMPHR5">65</a>","FOCAL POINT K9 DETECTION LLC","JEFFEREY KRUGER","","9301 MILL POND RD","","SPOTSYLVANIA","VA","22551-3533","We specialize in K9 detection in firearms and explosives. We also specialize in K9 detection in lantern flies and termites.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#111;&#99;&#97;&#108;&#112;&#111;&#105;&#110;&#116;&#107;&#57;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">focalpointk9@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1U6L41ENH93">66</a>","ANGEL RIDES INC","TANYA ISON","","11929 GARDENIA DR","","FREDERICKSBURG","VA","22407-8564","We specialize in Ambulance services, Medical Transportation and BLS / ALS transportation. We also Specialize in Patient care, First aid CPR and BLS / ALS level of care.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#110;&#97;&#103;&#101;&#109;&#101;&#110;&#116;&#64;&#97;&#110;&#103;&#101;&#108;&#114;&#105;&#100;&#101;&#115;&#102;&#120;&#98;&#103;&#46;&#99;&#111;&#109;">management@angelridesfxbg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HS12BB9BT1E3">67</a>","TIAN CONSTRUCTION GROUP, LLC","ZHEN TIAN","","4423 TURNBERRY DR","","FREDERICKSBURG","VA","22408-9548","We specialize in building architectural services, construction, and environmental consulting. We also specialize in landscaping architecture, housing rehab consulting, and zoning consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#116;&#105;&#97;&#110;&#64;&#116;&#105;&#97;&#110;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">rtian@tianconstruction.com</a>","tianconstruction.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.48&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

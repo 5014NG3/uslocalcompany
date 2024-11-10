@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: West Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.03 seconds and 1.04 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 49 
+(of 49 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EYSKVTMKNCN5">1</a>","AMERICAN AIRWORKS, INC","WINIFRED LAMBERT","PRESIDENT","578 ROBERT C BYRD DR","","SOPHIA","WV","25921-1800","Manufacturer and distributor of high pressure breathing air compressors, air control panels, containment fill stations, iso un dot gas storage cylinders & asme vessels, air storage systems, Haskel boosters & Sierra air boosters, Honeywell breathing apparatus SCBA, sales & service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#97;&#105;&#114;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">ray@americanairworks.com</a>","http://www.americanairworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZF1BLED9ZWY5">2</a>","TYGART TECHNOLOGY INC","JOHN WAUGAMAN","President","1543 FAIRMONT AVE","","FAIRMONT","WV","26554-0054","Founded in 1991, Tygart designs and develops commercial quality software products and provides Information Technology (IT) services (system analysis, development, network design and administration) for commercial and Government clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#117;&#103;&#97;&#109;&#97;&#110;&#64;&#116;&#121;&#103;&#97;&#114;&#116;&#46;&#99;&#111;&#109;">waugaman@tygart.com</a>","http://www.tygart.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9GBQL5WYL97">3</a>","ADVANCED ASPHALT TECHNOLOGIES LLC","RAMON BONAQUIST","Chief Operating Officer","40 COMMERCE CIRCLE","","KEARNEYSVILLE","WV","25430-5100","Engineering services for the asphalt industry. Laboratory testing, pavement and materials engineering, pavement materials testing equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#116;&#116;&#64;&#101;&#114;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">aatt@erols.com</a>","www.advancedasphalt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FBK3WT3XQVH8">4</a>","TOUCHSTONE RESEARCH LABORATORY, LTD.","WILLIAM CASTO","Chief Financial Officer","1142 MIDDLE CREEK RD","","TRIADELPHIA","WV","26059-1139","Process and Product Development, Materials R&D, Testing Services, Industrial Problem Solving","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#109;&#99;&#64;&#116;&#114;&#108;&#46;&#99;&#111;&#109;">wmc@trl.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MWG9AK77KMA8">5</a>","CARPENTER FROM NAZARETH, INC","JEFFREY FRACK","Program Manager","7082 MAGNOLIA RD","","GREAT CACAPON","WV","25422-3531","FAI provides quality computer sys., comm.,computer net.,& comp.facility management solutions within classified gov. enviro. Our solid gov.business base&exper.is a cornerstone for the same quality service outside the class.envir.in gov.&commercial arenas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#70;&#114;&#97;&#99;&#107;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">JFrack@verizon.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8VKMCYXEYK9">6</a>","UTTS CONTRACTING AND RECREATIONAL SERVICES LLC","KINDRA UTT","OWNERS","266 VICTORY ROAD","","SUTTON","WV","26601-3946","RECREATIONAL SERVICES: GROUNDS MAINTENANCE, LANDSCAPING, CLEANING GROUNDS OR BUILDINGS, MOWING, TREE TRIMMING, OFFICE WORK, WORK MAY DEAL WITH PUBLIC, AND MUCH MORE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#68;&#65;&#87;&#78;&#75;&#85;&#84;&#84;&#64;&#71;&#77;&#65;&#73;&#76;&#46;&#67;&#79;&#77;">BDAWNKUTT@GMAIL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CWQESLBBACW3">7</a>","CHEMBIO SHELTER INC","JERRY PIERCY","","169 MINE ACADEMY DR","","BEAVER","WV","25813-9702","We specialize in underground mining rescue chambers with pressurized oxygen and CO2 scrubbing capabilities. We also have confined space entrapment kits. We also manufacturing all forms of rock dusting equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#105;&#101;&#114;&#99;&#121;&#46;&#74;&#64;&#99;&#98;&#115;&#101;&#113;&#117;&#105;&#112;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Piercy.J@cbsequipinc.com</a>","http://www.cbsequipinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ89XSSNKEL1">8</a>","FRANCIS ENTERPRISES, INC","MARK CYPHERT","","20 MONONGAHELA AVE","","WESTOVER","WV","26501-4122","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#102;&#101;&#110;&#116;&#46;&#117;&#115;">mark@fent.us</a>","http://www.fent.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJFLAWD1Z3N5">9</a>","COLE MOTORSPORTS, LLC","ROBERT GRAVELY","","545 AIRPORT RD","","BLUEFIELD","WV","24701-7388","LaserCut Peel-Ply Laminates – Military/ Industrial Application. Precision cut to fit any vehicle or window. Rock Strike and abrasion resistant. Optically Clear, Highest Light Transmission. Easy installation. Equipped with the latest in Laser cutting technology can give your company a hassle free, ready to install, product for any military/ballistic glass application.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#105;&#100;&#101;&#114;&#98;&#111;&#98;&#64;&#99;&#111;&#108;&#101;&#109;&#111;&#116;&#111;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">spiderbob@colemotorsports.com</a>","http://www.colemotorsports.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6NRADTCAGP8">10</a>","ROHMAC INC","JEREMIAH ROHRBAUGH","","792 OLD LAUREL RUN RD","","MOUNT STORM","WV","26739-5400","Rohmac Inc. specializes in the design and manufacturing of customized original equipment for construction and underground mining","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#101;&#109;&#121;&#114;&#111;&#104;&#114;&#98;&#97;&#117;&#103;&#104;&#64;&#114;&#111;&#104;&#109;&#97;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jeremyrohrbaugh@rohmacinc.com</a>","http://www.rohmacinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HLRTE8M225B8">11</a>","ALPHA TECHNOLOGIES INC","ANGELA ADKINS","","4003 OUT LOOK DR","","HURRICANE","WV","25526-9468","Cloud Services, Datacenter consolidation, Colocation, NOC, SOC, HaaS, Saas, Iaas, DRaas, IoT, and Data Analytics, Helpdesk","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#100;&#107;&#105;&#110;&#115;&#64;&#97;&#108;&#112;&#104;&#97;&#45;&#116;&#101;&#99;&#104;&#46;&#117;&#115;">aadkins@alpha-tech.us</a>","http://www.alpha-tech.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCLKN6PT2138">12</a>","SWANSON INDUSTRIES INC","KATELYN COMBS","","2608 SMITHTOWN RD","","MORGANTOWN","WV","26508-2494","Full service hydraulic repair and manufacturing capabilities. Hydraulic pumps, motors, valves & cylinders. Testing capabilities to 10,000 PSI. Large CNC and manual machining. In-house surface technologies including chrome plating and laser cladding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#111;&#109;&#98;&#115;&#64;&#115;&#119;&#97;&#110;&#115;&#111;&#110;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">kcombs@swansonindustries.com</a>","http://www.swansonindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N5B9NGRYAQ83">13</a>","PARAMOUNTS LLC","NANCEY VELDRAN","","219 S CHURCH ST","","CHARLES TOWN","WV","25414-1307","Specializing in the design, fabrication and installation of custome, conservation-quality artifact mounts for museums, traveling exhibits, exhibit fabricators and private collectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#114;&#97;&#95;&#109;&#111;&#117;&#110;&#116;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">para_mounts@yahoo.com</a>","http://www.para-mounts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RAMEDLJSP6Q8">14</a>","FLOOR SOLUTIONS INC","TROY HOUCHIN","","4964 SUNSET DR","","HUNTINGTON","WV","25704-1031","We provide floor contracting services including carpet, tile, concrete and VCT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#108;&#111;&#111;&#114;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#105;&#110;&#99;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">floorsolutionsinc@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LP5UFEZMDEK7">15</a>","DIRECT ONLINE MARKETING LLC","JUSTIN SEIBERT","","4727 JACOB ST","","WHEELING","WV","26003-1843","Direct Online Marketing provides a range of internet marketing services, including paid search marketing (pay per click), search engine optimization (seo), Web site development and design, content management systems, email campaign systems, blog building.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#64;&#100;&#105;&#114;&#101;&#99;&#116;&#111;&#109;&#46;&#99;&#111;&#109;">justin@directom.com</a>","http://www.directom.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7QZD3K7G8H4">16</a>","BEST BUSINESS STRATEGIES LLC","SHIRLEY BYARD","","1712 WHEELING AVE","","GLEN DALE","WV","26038-1735","We offer tools to help grow your business. Accounting and Customer Relation Management software sales, support & training, Business Checks & Forms, cloud hosting, email marketing services, Backup services, Credit card services, gift and loyalty cards,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#66;&#101;&#115;&#116;&#66;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#83;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">solutions@BestBusinessStrategies.com</a>","BestBusinessStrategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8YTKKNENCT9">17</a>","COLE TRUCK PARTS, INC","JERRY MCVEY","","1015 BLUEFIELD AVE","","BLUEFIELD","WV","24701-2745","We provide parts for all make of vehicles. From light to Medium Heavy trucks. Have worked with the federal prison in the past.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#99;&#118;&#101;&#121;&#64;&#99;&#111;&#108;&#101;&#116;&#114;&#117;&#99;&#107;&#112;&#97;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">gmcvey@coletruckparts.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZGBQ7W1GRC5">18</a>","OCEANETICS, INC.","CHRISTOPHER PFAFF","","8446 WELCH PINEVILLE RD","","WELCH","WV","24801-9832","INNOVATION AT ANY DEPTH. Oceanetics delivers unique solutions that serve the breadth of all maritime domains -- from the surface of the ocean, to the depths of the uncharted seafloor. Oceanetics provides turnkey solutions to deliver your unique projects; we specialize in marine requirements, harsh environments, and remote locations. Our specialized services include: Mooring Solutions, Subsea & Seabed Warfare (SSW), Critical Infrastructure Protection (to include Waterside security barriers and harbor security), Renewable Ocean Energy, Engineering & Design, and Custom Fabrication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#112;&#102;&#97;&#102;&#102;&#64;&#111;&#99;&#101;&#97;&#110;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">cpfaff@oceanetics.com</a>","http://www.Oceanetics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3CBKU9TAK55">19</a>","FASTENERS & SUPPLY, INC","TIM HOPKINS","","387 ELIZABETH PIKE","","MINERAL WELLS","WV","26150-8440","We provide hardware, fasteners, abrasives, safety and protective equipment, metal roofing and siding, anchor bolts and wide range of construction and industrial supplies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#115;&#116;&#101;&#110;&#101;&#114;&#115;&#115;&#117;&#112;&#112;&#108;&#121;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">fastenerssupply@aol.com</a>","www.fastenersandsupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KSRJWM6WL9W5">20</a>","INSIGHT AUDIO/VISUAL SERVICES, L.L.C.","CHRISTOPHER BURNS","","83 VERONICA LN","","CHARLES TOWN","WV","25414-4150","Selling and Installing Audiovisual equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#117;&#114;&#110;&#115;&#64;&#97;&#118;&#105;&#110;&#115;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">cburns@avinsight.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZGVEEE3BND1">21</a>","SISTERSVILLE TANK WORKS INC","JASON MORGAN","","1942 MCCOY AVE","","SISTERSVILLE","WV","26175-1019","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#116;&#119;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sales@stwinc.com</a>","http://www.stwinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U6KMAMPNK4Z8">22</a>","AZIMUTH INC","CRAIG HARTZELL","Sr. Vice President","113 MATHIESON ST","","MORGANTOWN","WV","26501-2903","Electronic Systems and Software engineering, installation of computer and communications, electronic equipment, training & development, military logistics, depot support, and service to DOD worldwide","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#114;&#112;&#105;&#112;&#97;&#100;&#64;&#109;&#101;&#46;&#99;&#111;&#109;">corpipad@me.com</a>","http://www.azimuthinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FD91Q1BMD7M3">23</a>","ATHENA SCIENCES CORP","DANIEL MCCAUGHERTY","","320 ADAMS ST STE L01","","FAIRMONT","WV","26554-3174","Athena provides computing solutions for federal and commercial clients in the fields of aerospace/transportation, biometrics, energy, and enterprise business systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#64;&#97;&#116;&#104;&#101;&#110;&#97;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">dan@athenasciences.com</a>","www.athenasciences.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RMY7H78PSQT4">24</a>","CASEY CONSTRUCTION LLC","JOHN CASEY","","1100 WASHINGTON ST","","RAVENSWOOD","WV","26164-1021","Casey Construction Company is a full service builder and material provider who specializes in general contracting, design build, commercial construction and construction management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#46;&#99;&#97;&#115;&#101;&#121;&#64;&#99;&#97;&#115;&#101;&#121;&#45;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">j.casey@casey-construction.net</a>","https://www.casey-construction.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LE2SN3C9HLH8">25</a>","INTELLIGENT NETWORK SECURITY LLC","SCOTT MARSHALL","","550 HAMRIC LANE","","SPENCER","WV","25276-","Reverse Engineering of Advanced Persistent Threat, Penetration Testing, Advanced Network Security","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#109;&#97;&#114;&#115;&#104;&#97;&#108;&#108;&#64;&#105;&#110;&#116;&#101;&#108;&#108;&#105;&#103;&#101;&#110;&#116;&#45;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#45;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">scott.marshall@intelligent-network-security.com</a>","https://www.intelligent-network-security.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M9NDADJG1K55">26</a>","AGILE5 TECHNOLOGIES INC","LISA FRITSCH","","1000 TECHNOLOGY DR","STE 1370","FAIRMONT","WV","26554-9044","Software services company focusing on enterprise systems, agile transformation, cloud migration, cloud services, AWS, Azure, cybersecurity, DevSecOpps, CI/CD Pipeline, automated testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#46;&#102;&#114;&#105;&#116;&#115;&#99;&#104;&#64;&#97;&#103;&#105;&#108;&#101;&#53;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">lisa.fritsch@agile5technologies.com</a>","www.agile5technologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N921JHUCKXL8">27</a>","MOUNTAIN STATE SOFTWARE SOLUTIONS, LLC","AARON WEIKLE","","119 E WASHINGTON ST","","CHARLES TOWN","WV","25414-1071","Providing comprehensive and complete software solutions on time and under budget...every time!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#107;&#119;&#64;&#109;&#115;&#51;&#45;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">akw@ms3-inc.com</a>","www.ms3-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MB69QHMC9P61">28</a>","METRICK PEST CONTROL LLC","MIKE METRICK","","150 GRANBY CIR","","BEAVER","WV","25813-9232","Servicing all of Southern West Virginia. Whatever your pests might be: ants, mice, spiders, termites or just plain bugs, Metrick's exterminator can handle your bug extermination needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#116;&#114;&#105;&#99;&#107;&#112;&#101;&#115;&#116;&#99;&#111;&#110;&#116;&#114;&#111;&#108;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">metrickpestcontrol@yahoo.com</a>","www.metrickpestcontrol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPJGBP38RCB3">29</a>","K2 MOTORSPORTS LLC","KEITH FILZEN","","167 MOUNTAIN VIEW FARM LN","","CALDWELL","WV","24925-1101","K2 Motorsports is a full-service facility that provides top level diagnostic and repair services, complimented by in-house fabrication, 2WD, 4WD, AWD dyno tuning services for clients in Greenbrier County West Virginia and surrounding areas. We cater to specialty vehicles, high-end cars, 4X4’s and diesel trucks. We also specialize in Vehicle Cyber Security and Telematics","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#105;&#116;&#104;&#64;&#107;&#50;&#109;&#111;&#116;&#111;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#111;&#114;&#103;">keith@k2motorsports.org</a>","http://www.k2motorsports.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNRFZT2SN2B3">30</a>","DATAGARDEN INC","JOHN MOODY","","41 MEADOW BROOKE DR","","MORGANTOWN","WV","26508-2911","Integration and interoperability focusing on security and video management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#109;&#111;&#111;&#100;&#121;&#64;&#100;&#97;&#116;&#97;&#103;&#97;&#114;&#100;&#101;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">john.moody@datagardeninc.com</a>","www.datagardeninc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KVMTJANNET58">31</a>","GREENBRIER GOVERNMENT SOLUTIONS INC","SCOTTY JOHNSON","","220 KOPPERSTON RD","","OCEANA","WV","24870-5600","Greenbrier, a licensed specialty contractor (WV059875), is a premier firm specializing in providing Infrastructure Engineering, Cyber Security, Customer Engagement and Application Development services to our government and commercial clients. Our success hinges on three key factors: Intense Customer Focus: nothing is more important than the satisfaction of our customers, and we work hard to assure we meet and exceed requirements. People Centric Attitude: People are our biggest asset, and the core of what we do. Process Driven Approach: We are ISO 9001:2015, ISO 20000-1: 2018, ISO 270001, ISO 20243:2018, and CMMI Level 3 (Services) certified.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#103;&#103;&#115;&#119;&#118;&#46;&#99;&#111;&#109;">sjohnson@ggswv.com</a>","http://www.ggswv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G824SW1VT747">32</a>","CRA COMMUNICATIONS, LLC","ALISHA MADDOX","","1031 QUARRIER ST # B","","CHARLESTON","WV","25301-2317","CRA provides brand communications strategies. That is simply defines as advertising, public relations, social media, paid media and digital services. We excel at comprehensive strategy and solutions to all communications issues and styles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#100;&#100;&#111;&#120;&#64;&#99;&#104;&#97;&#114;&#108;&#101;&#115;&#114;&#121;&#97;&#110;&#46;&#99;&#111;&#109;">amaddox@charlesryan.com</a>","http://www.charlesryan.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XN25CJTB9C25">33</a>","INDICIA CONSULTING LLC","SUSAN MAZUR-STOMMEN","","417 TEMPLE ST","","HINTON","WV","25951-2226","A full service organization dedicated to providing organizations with in depth qualitative research, with a focus on ethnography. Our main areas are energy and sustainability behavior change.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#115;&#97;&#110;&#109;&#97;&#122;&#117;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">susanmazur@gmail.com</a>","www.indiciaconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQZCVXFJYBN5">34</a>","DUAL SENSE, LLC","BALAKISHORE YELLAMPALLE","","401 CASSINA DR","","MORGANTOWN","WV","26505-2492","Research and development Sensors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#108;&#97;&#107;&#105;&#115;&#104;&#111;&#114;&#101;&#121;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">balakishorey@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FJUYMXT2D417">35</a>","DOCIT SOLUTIONS, LLC","MICHAEL OFORI-DUODU","","194 STATICE DR","","HEDGESVILLE","WV","25427-7311","DocIT solutions is a start up small business and minority owned establishment setup in 2006 to offer information and communications technology solutions and awareness, including: - Database management solutions: architecture, hardware, software, networking Cybersecurity and Information Assurance Data Security Management consulting Database systems engineering and Data Analytics Information systems migration and integration Information systems engineering and Data Analytics Knowledge Management IT Operations and Maintenance Systems regulatory compliance (CIS Benchmarks, DHS Hardening, DoD STIGS, FISMA Compliance, NIST Compliance)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#111;&#64;&#100;&#111;&#99;&#105;&#116;&#98;&#105;&#122;&#46;&#99;&#111;&#109;">dro@docitbiz.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UJHTFJ6T2DR6">36</a>","UNIVERSAL ENGINEERING & CONTRACTING LLC","PATRICK SMITH","","400 AIRPORT RD","STE 6C","ELKINS","WV","26241-8702","Specializing in backup electrical power systems. Design, turn-key installations, maintenance, & repair. Switchgear installations, Low, medium, and high voltage systems, underground power distribution systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#64;&#117;&#101;&#99;&#46;&#103;&#108;&#111;&#98;&#97;&#108;">pat@uec.global</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VSN1TLVEWDR7">37</a>","MAKA ENERGY SOLUTIONS LLC","DUANE PELLEN","","619 N FRONT ST","","WHEELING","WV","26003-2319","Licensed General Contractor and Engineering Contractor","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#107;&#97;&#101;&#110;&#101;&#114;&#103;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">makaenergy@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZJ9QL4L3CK9">38</a>","DISRUPTIVE CONCEPTS, INC","SCOTTY JOHNSON","","220 KOPPERSTON ROAD","","OCEANA","WV","24870-5600","We specialize in business process modernization, dedicated to revolutionizing government agencies through strategic planning and cutting-edge solutions. Our expertise lies in optimizing complex workflows, implementing robust cybersecurity measures, and harnessing the power of data analytics for informed decision-making. We seamlessly migrate legacy systems to secure cloud environments, ensuring cost savings and improved collaboration. With a client-centric approach, we prioritize transparency and timely delivery, exceeding expectations while maintaining compliance with federal regulations. Our commitment to innovation and adaptability guarantees that our clients stay ahead in the dynamic landscape of IT, embracing the future with confidence and efficiency.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#121;&#46;&#106;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#103;&#101;&#116;&#45;&#100;&#105;&#115;&#114;&#117;&#112;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">scotty.johnson@get-disruptive.com</a>","www.get-disruptive.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CPSDBK4LU774">39</a>","INHALATION EXPOSURE SYSTEMS LLC","WILLIAM GOLDSMITH","","36 AMHERST RD","","MORGANTOWN","WV","26505-3602","IEStechno provides equipment and services to conduct inhalation toxicology (and related) studies and research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#111;&#108;&#100;&#115;&#109;&#105;&#116;&#104;&#64;&#105;&#101;&#115;&#116;&#101;&#99;&#104;&#110;&#111;&#46;&#99;&#111;&#109;">tgoldsmith@iestechno.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SVSEP21FLXL9">40</a>","TEKTALOS CORP","RACHELLE CHANNELL","","622 KELLEY RD","","BELINGTON","WV","26250-8395","Providing service on contracts for NASA, DOD, Intelligence, and Health related agencies","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#97;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#116;&#101;&#107;&#116;&#97;&#108;&#111;&#115;&#46;&#99;&#111;&#109;">Rachelle@tektalos.com</a>","www.tektalos.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8MUK2HDCKN3">41</a>","NORTH WIND SITE SERVICES, LLC","ALLISON WALKER","","1262 SUNCREST TOWN CENTRE DR","","MORGANTOWN","WV","26505-1828","North Wind Site Services provides full-service environmental remediation and investigation, decontamination, and disinfection. North Wind Site Services is an SBA certified 8(a) firm and is part of a family of companies with common ownership under Cook Inlet Region, Inc. (CIRI), an Alaska Native Corporation (ANC). Under North Wind Group, North Wind Site Services operates under a proven corporate infrastructure that has been in place for over 18 years, a low EMR of 0.76, and a DCAA-approved accounting system to successfully execute Government contracts. North Wind Site Services offers clients a low risk small business concern that is backed by a mature, financially strong parent organization and an excellent past performance history. Occupational Health (Industrial Hygiene, Health Physics, and Respiratory Protection) and facility disinfection and cleansing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#110;&#111;&#114;&#116;&#104;&#119;&#105;&#110;&#100;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">awalker@northwindgrp.com</a>","www.northwindgrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLYNASTHVBS4">42</a>","HEADWATERS, LLC","KRISTEN SAACKE BLUNK","","120 JUBILEE LANE","","HARPERS FERRY","WV","25425-6736","Expertise in watershed restoration, pollution prevention, stream (riparian) condition and assessment, ag and urban best management practice (BMP) evaluation, selection, and monitoring and assessment. Skilled in strategic development, priority evaluation, team building and team-based approaches, project and proposal facilitation, development, review, selection and management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#101;&#110;&#64;&#104;&#101;&#97;&#100;&#119;&#97;&#116;&#101;&#114;&#115;&#45;&#108;&#108;&#99;&#46;&#111;&#114;&#103;">kristen@headwaters-llc.org</a>","http://headwaters-llc.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K2TNGWDESBN3">43</a>","UNIVERSAL SCHEDULE & BOOKING LLC","SHAWN HUTCHINSON","","701 WASHINGTON ST","","HARPERS FERRY","WV","25425-6998","Primarily for the purpose of securing government contracts, we are a small firm specializing in custom software that enhances healthcare outcomes with healthcare apps, affective customer data, and pricing incentives in the fields of substance use disorders, integrative health, and mental health. We refer to this system as the Cooperative Sociocentric Treatment and Outreach Platforms or (C-STOP). We aim to reduce recidivism by 25% or more for recovering Veterans. Our primary customers in the early stage are the Veterans Affairs under the MISSION Act. Secondarily, we currently deploy our electronic commerce software separately into other, specialty fields in science/engineering and tourism. Our Intellectual Property is directed towards electronic-commerce and machine-learning-based approaches to generating scientific insight through new, more valuable forms of data. This includes areas of commerce including digital forms of advertising, booking, pricing, scheduling, and marketing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#119;&#110;&#64;&#117;&#110;&#105;&#118;&#101;&#114;&#115;&#97;&#108;&#115;&#99;&#104;&#101;&#100;&#117;&#108;&#101;&#46;&#99;&#111;&#109;">shawn@universalschedule.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC74MHPNN9L6">44</a>","VIVET, LLC","OLUFUNKE SYLVESTER","","610 1/2 RUSSELL ST","","BECKLEY","WV","25801-5740","Provide various medical services including telemedicine/telehealth with the implementation of artificial intelligence (AI) for analyzing individual baseline and implement more advance technology into healthcare.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#108;&#117;&#102;&#117;&#110;&#107;&#101;&#46;&#115;&#121;&#108;&#118;&#101;&#115;&#116;&#101;&#114;&#64;&#118;&#105;&#118;&#101;&#116;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">olufunke.sylvester@vivetglobal.com</a>","www.vivetglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N5MNJ94WPZ21">45</a>","ACOUSTIC RESEARCH SYSTEMS, INC.","JIM SCOTT","","113 EAST GERMAN STREET","","SHEPHERDSTOWN","WV","25443-3528","Acoustic testing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#105;&#109;&#64;&#97;&#99;&#111;&#117;&#115;&#116;&#105;&#99;&#114;&#115;&#46;&#99;&#111;&#109;">jim@acousticrs.com</a>","https://www.acousticrs.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QSRZKKJQMBG9">46</a>","BRAWNER GROUP K9 SERVICES LLC","RONALD BRAWNER","","427 EXECUTIVE WAY","","HEDGESVILLE","WV","25427-7586","Brawner Group provides training for law enforcement and federal government through online training systems, as well as canines (trained and untrained) and handler courses to pair the teams and standards.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#111;&#110;&#64;&#98;&#103;&#107;&#57;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">Ron@bgk9services.com</a>","Bgk9services.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X97SQC8BCFD8">47</a>","CATHERINE C. SLEMP, LLC","CATHERINE SLEMP","","46 TIMBERLANE DR","","MILTON","WV","25541-1043","Consulting and other services by public health physician leader with ~20 years of governmental and community based experience. Services are aimed at advancing the health and well-being of individuals, families, organizations, and/or communities with a focus on advancing policies, systems, and environments that advance the health of populations. Among other roles, principal has served as an epidemiologist, state public health preparedness director, and state health officer and has worked on efforts at local, state, and federal levels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#116;&#104;&#121;&#46;&#115;&#108;&#101;&#109;&#112;&#64;&#97;&#116;&#116;&#46;&#110;&#101;&#116;">cathy.slemp@att.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E4CNWLNWEBW8">48</a>","A-SQUARED SERVICES LLC","MARK ANDERSON","","1691 BUTTS MILL RD","","HEDGESVILLE","WV","25427-5054","Our principal consultants have indepth experience in program, project and product management in the Human Resources and Learning Management domains. Our consultants' past engagements have included DoD, federal and state civilian agencies, universities, and libraries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#97;&#45;&#115;&#113;&#46;&#117;&#115;">mark@a-sq.us</a>","https://www.a-sq.us/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQ2DG1NU5457">49</a>","VALKYRIE-SALES LLC","LAURA LAURA","","483 N WASHINGTON ST","","BERKELEY SPRINGS","WV","25411-1831","Design and Manufacturer procedural anatomical models for demonstration and education","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#64;&#118;&#97;&#108;&#107;&#121;&#114;&#105;&#101;&#45;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">laura@valkyrie-sales.com</a>","www.valkyrie-sales.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.097&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

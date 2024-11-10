@@ -1,8 +1,9 @@
 import React, { useEffect, useState} from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Pagination, Container, Col, Row, Card, Button , Stack, Badge} from "react-bootstrap";
+import { Pagination, Container, Col, Row, Card , Stack, Badge} from "react-bootstrap";
 import state_meta_data from "./data/sba_city_meta.json"
 import Select from 'react-select'
+
 
 const area_to_name = {
   "RAD" : "Research & Development",
@@ -124,7 +125,6 @@ function HorizontalCard({item}) {
         <GetAreaBadges areas={item.area} />
 
 
-        <Button variant="primary">Go somewhere</Button>
 
       </Card.Body>
     </Card>

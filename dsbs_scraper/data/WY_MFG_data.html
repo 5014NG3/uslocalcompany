@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Wyoming;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+0.99 seconds and 1.00 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 60 
+(of 60 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W5GCJANRZFF5">1</a>","VAUGHN EXCAVATING AND CONSTRUCTION, INC.","MIKE VAUGHN","VICE PRES","2671 S GREELEY HWY","","CHEYENNE","WY","82007-3681","MANUFACTURE PRECAST CONCRETE PRODUCTS: VAULTS, MANHOLES, SEPTIC TANKS, BOX CULVERTS, INLET BOX FENCE, RETAINING WALLS, CATTLEGUARDS, SMALL BRIDGES, U CULVERTS, FEEDBUNKS, GREASE INTERCEPTORS, PICNIC TABLES AND OTHER MADE TO ORDER PRECAST PRODUCTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#114;&#111;&#106;&#101;&#99;&#116;&#115;&#64;&#118;&#99;&#112;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">projects@vcpinc.net</a>","vaughnconcreteproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YELDNXLSYWJ6">2</a>","HASCO INDUSTRIAL SUPPLY","BOB MILEK","VICE PRES","415 BIG HORN AVE","","WORLAND","WY","82401-2018","UTILITY,GOOSENECK & ENCLOSED TRAILERS, CARHART AND DICKIE WORK CLOTHING, PIPE, VALVES, FITTINGS, STEEL, HYDRAULIC HOSE AND FITTINGS, CAMLOCK FITTINGS, WATER STORAGE AND SEPTIC TANKS, TOOLS - HAND AND POWER MILWAUKEE,RYOBI,ABRASIVES, AIR COOLERS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#105;&#108;&#101;&#107;&#64;&#104;&#97;&#115;&#99;&#111;&#105;&#110;&#100;&#46;&#110;&#101;&#116;">bmilek@hascoind.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LHMDQGUJTNK8">3</a>","BURGESS LEE A","TERRY BURGESS","OWNER","552 N BEVERLY ST","","CASPER","WY","82609-1769","LIGHT COMMERCIAL DIVING, SCUBA AND SNORKELING LESSONS, EQUIPMENT - SALES AND SERVICE, RENTAL GEAR, AIR FILLS, TRAVEL ARRANGEMENTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#100;&#105;&#118;&#101;&#114;&#115;&#64;&#119;&#121;&#111;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">westerndivers@wyoming.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M7ZPT8MUMT73">4</a>","S & L INDUSTRIAL","DAVID RAEL","Estimator - Owner","675 ROAD 7 1/2","","COWLEY","WY","82420-5109","Road construction, sand blasting, painting, lead removal, sign manufacture & install, structural painting, excavation, gravel haul-placement, culvert install, design & build, parking lot & road striping, traffic control services, safety products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#119;&#121;&#115;&#108;&#105;&#46;&#99;&#111;&#109;">david@wysli.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QPGGN4YK8TY4">5</a>","ARISTATEK, INC.","SAMUEL KING","CEO","710 E GARFIELD ST","STE 220","LARAMIE","WY","82070-3912","Computerized WMD and HAZMAT information systems, environmental and engineering consults.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#107;&#105;&#110;&#103;&#64;&#97;&#114;&#105;&#115;&#116;&#97;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">sbking@aristatek.com</a>","www.aristatek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JPCPNQFJMJT2">6</a>","BH, INC.","TAMERA BRITZ","CEO","1302 9TH ST","","WHEATLAND","WY","82201-2302","Animal Caging, Restraint, Transport and Management Equipment for supporting biomedical and animal research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#107;&#98;&#114;&#105;&#116;&#122;&#64;&#98;&#114;&#105;&#116;&#122;&#99;&#111;&#46;&#99;&#111;&#109;">tkbritz@britzco.com</a>","www.britzco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YLR4GHA3EXM3">7</a>","TATA, INC.","TAMARA AUSTIN","","413 RANDALL AVE","","CHEYENNE","WY","82001-3036","All aspects of locksmithing, vehicles, buildings, safes sales, installs, service, repairs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#99;&#107;&#103;&#111;&#100;&#115;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">lockgods@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VS7RME6MLKS5">8</a>","KENNON PRODUCTS INC","BECKY COOPER","","1100 HI TECH DR","","SHERIDAN","WY","82801-6012","Kennon builds fabric covers to protect high value assets from heat, cold, blowing sand, wind, ice and hail. Onsite prototyping of covers for aircraft, weapons, electronic components. Difficult and time sensitive challenges welcomed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#101;&#99;&#107;&#121;&#64;&#107;&#101;&#110;&#110;&#111;&#110;&#99;&#111;&#118;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">Becky@kennoncovers.com</a>","http://kennonproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DHD4TJ28LUB6">9</a>","TELETRACTORS, INCORPORATED","LANCE BIFFLE","President","120 N COLTER AVE","","PINEDALE","WY","82941-5063","Excavate and fill as necessary, construct wooden bridges, intall utitilities and sewer systems, buried phone, power. Grade, haul, remove, demolition, transport.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#108;&#105;&#110;&#99;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">telinc@hotmail.com</a>","www.teletractorsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W9LRDRNLKG21">10</a>","SQUARE ONE SYSTEMS DESIGN, INC.","ROBERT VIOLA","Engineering Manager","3500 SOUTHPARK DR","","JACKSON","WY","83001-9509","Square One develops automated, special-purpose electro-mechanical systems for the scientific community. Square One also supplys custom manufacturing systems to the semiconductor, data storage and life science industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#111;&#108;&#97;&#64;&#115;&#113;&#114;&#45;&#49;&#46;&#99;&#111;&#109;">viola@sqr-1.com</a>","www.sqr-1.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJDQQK6CAHM7">11</a>","HI-TECH BED SYSTEMS, CORPORATION","MICHELLE CONNELL","CEO","26 BRUSH CREEK RD","","WHEATLAND","WY","82201-8709","We are a full service metal furniture manufacturing and sales company. We were established in 1998. Products are on GSA Contract. We provide durable products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#105;&#99;&#104;&#101;&#108;&#108;&#101;&#64;&#104;&#116;&#102;&#97;&#98;&#46;&#110;&#101;&#116;">Michelle@htfab.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RKU8Y5W85HQ5">12</a>","POLYGUARD LLC","DEBBIE SAINZ","Marketing","167 TWIN SPRUCE BUSINESS PARK","","AFTON","WY","83110-","Manufacture Thermoplastic burial products","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#111;&#108;&#121;&#103;&#117;&#97;&#114;&#100;&#64;&#115;&#105;&#108;&#118;&#101;&#114;&#115;&#116;&#97;&#114;&#46;&#99;&#111;&#109;">polyguard@silverstar.com</a>","http://www.polyguardvaults.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMFDHJ7SJU94">13</a>","TACTICAL SOLUTIONS INTERNATIONAL","BRIAN BEWLEY","Director","189 BURRIS LENORE RD","","CROWHEART","WY","82512-9710","Provides tactical training to US and allied military and security forces. Provides paramedical services and support to operational taskings. Provides all aspects of security: Guards, technical, Austere environment, armed, Consultancy","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#98;&#101;&#119;&#108;&#101;&#121;&#64;&#119;&#121;&#111;&#109;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bbewley@wyoming.com</a>","http://www.tacticalsolutionsintl.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H9LMVU7MY4G3">14</a>","TOTALLY BENIGN ENTERPRISES","JOHN WICKMAN","President","3745 STUDER AVE TRLR A","","CASPER","WY","82604-1339","Company conducts research and development in solid, monopropellant and liquid propulsion systems. Produces sounding rockets and currently has a small launch vehicle under development. More information can be found at www.space-rockets.com/wspc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#119;&#105;&#99;&#107;&#109;&#97;&#110;&#64;&#119;&#105;&#99;&#107;&#109;&#97;&#110;&#115;&#112;&#97;&#99;&#101;&#99;&#114;&#97;&#102;&#116;&#46;&#99;&#111;&#109;">jwickman@wickmanspacecraft.com</a>","https://www.wickmanspacecraft.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MLFCVM4W1AD9">15</a>","OK FINE PRODUCTIONS","SHARON MOONEY","","227 S FENWAY ST","","CASPER","WY","82601-3026","OK Fine Productions is the Sole Proprieter, Sole Manufactuer and Sole Distributor of Multi-Purpose Rescue Training Dummies for Military, Department of Homeland Security, First Responders, Rehab, VA Police, US Marshal Service, Forestry, Law Enforcement.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#114;&#100;&#101;&#114;&#115;&#64;&#116;&#114;&#105;&#98;&#99;&#115;&#112;&#46;&#99;&#111;&#109;">orders@tribcsp.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QH6HY3CNGN73">16</a>","VAST MANUFACTURING, INC","JOHN KINANE","","3593 GREYBULL RIVER RD","","GREYBULL","WY","82426-9500","Electronic cable assembly AS9100 compliant","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#118;&#97;&#115;&#116;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">john@vastmfg.com</a>","http://www.vastmfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FSVNT66U8VW3">17</a>","L & H INDUSTRIAL INC","JASON PERCIFIELD","","913 L J CT","","GILLETTE","WY","82718-6542","World leader in design and manufacturing of superior parts for mining, railroad, oilfield and heavy industrial equipment; focusing on innovation and improved reliability and operating costs as well as providing field services for the heavy industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#112;&#101;&#114;&#99;&#105;&#102;&#105;&#101;&#108;&#100;&#64;&#108;&#110;&#104;&#46;&#110;&#101;&#116;">Jpercifield@lnh.net</a>","WWW.LNH.NET"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QENPT7TWLNN3">18</a>","GT AERONAUTICS, LLC","THOMAS RULLMAN","","26 ELK ROAD","","CODY","WY","82414-7810","GT Aeronautics specializes in the design, development, manufacture and sale of unmanned/remotely piloted aircraft systems for defense and commercial applications, as well as composite tooling/manufacturing and composite repair work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#79;&#77;&#64;&#71;&#84;&#65;&#69;&#82;&#79;&#78;&#65;&#85;&#84;&#73;&#67;&#83;&#46;&#67;&#79;&#77;">TOM@GTAERONAUTICS.COM</a>","http://www.gtaeronautics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMV7M4ZW9SF9">19</a>","APIARY MEDICAL INC","BRIAN DAVIS","","209 E 20TH ST","","CHEYENNE","WY","82001-3703","German surgical instruments primarily for orthopedic, spinal and podiatric procedures. 4,000 standard patterns illustrated on-line and in our 400-page catalog. During Covid we have been able to source and provide a wide range of high quality PPE to VA and DoD customers. Superior quality backed by a 100% satisfaction guarantee.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#100;&#64;&#97;&#112;&#105;&#97;&#114;&#121;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">bd@apiarymedical.com</a>","http://www.apiarymedical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XVEEEJHADFW4">20</a>","ANALOGIC ENGINEERING, INC.","GEORGIA GAYLE","","25 DIZZY HORSE RD","","BUFORD","WY","82052-8721","Specializing in non-destructive, ultrasonic flaw detection with real-time image displays and defect recognition. Design and prototyping services for custom electronic instrumentation, control and data acquisition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#97;&#108;&#111;&#103;&#105;&#99;&#64;&#101;&#97;&#114;&#116;&#104;&#108;&#105;&#110;&#107;&#46;&#110;&#101;&#116;">analogic@earthlink.net</a>","www.analogicengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NAHLMKFLYM53">21</a>","VESTIBULAR TECHNOLOGIES, LLC","ELENA OGGERO","","205 ROAD 128A","","CHEYENNE","WY","82007-1831","We are one of the world's leading manufacturers of posturography devices for balance assessment, from the elderly at risk of falling to the athlete with a possible concussion. Our CAPS® line of specialized posturography products is perfect for those clinicians who want to not only screen, assess and diagnose balance disorder/falls-risk patients, but also provide effective rehabilitation for them.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#101;&#110;&#97;&#64;&#118;&#101;&#115;&#116;&#105;&#98;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">elena@vestibtech.com</a>","https://www.vestibtech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MNJRLN4UHML5">22</a>","ITC ELECTRICAL TECHNOLOGIES","BETSY MCLEMORE","","4630 E MAGNOLIA ST","","CASPER","WY","82604-4225","All aspects of electrical engineering, construction and maintenance. Doing business in the Rocky Mountain region since 2003 and specializing in industrial electrical work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#99;&#108;&#101;&#109;&#111;&#114;&#101;&#64;&#105;&#116;&#99;&#101;&#116;&#46;&#99;&#111;&#109;">bmclemore@itcet.com</a>","http://www.itcet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U7LNHCSF18E8">23</a>","SOUND & CELLULAR, INC.","KELLY STIEFVATER","","824 W YELLOWSTONE HWY","","CASPER","WY","82601-1734","DrillComm Sound and Cellular offers a wide range of technical communications solutions with a primary focus on providing innovative, cost effective, voice and data applications to First Responders, Public Safety Organizations, and the private sector.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#109;&#97;&#110;&#97;&#103;&#101;&#114;&#64;&#115;&#111;&#117;&#110;&#100;&#97;&#110;&#100;&#99;&#101;&#108;&#108;&#117;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">officemanager@soundandcellular.com</a>","www.soundandcellular.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QME6H9MFQR85">24</a>","WESTERN PRINTING INC","TRACY DAVISON","","546 MAIN ST","","LANDER","WY","82520-3032","We are a full service commercial print and copy shop specializing in full color digital print production and offset printing. In business since 1964, reasonable pricing and excellent service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#114;&#97;&#99;&#121;&#64;&#119;&#101;&#115;&#116;&#101;&#114;&#110;&#112;&#114;&#105;&#110;&#116;&#105;&#110;&#103;&#108;&#97;&#110;&#100;&#101;&#114;&#46;&#99;&#111;&#109;">tracy@westernprintinglander.com</a>","www.westernprintinglander.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JSEJNNB2N4U4">25</a>","AGTERRA TECHNOLOGIES, INC.","NATALIE TELCK","","212 W BURKITT ST","","SHERIDAN","WY","82801-4233","Provides ag & natural resource industry computerized data capture & Info management systems. Solutions collect, analyze, share data with e-forms,GPS/GIS, mobile apps etc. SprayLogger is a hardware+online pesticide application & mapping system","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#97;&#108;&#105;&#101;&#64;&#97;&#103;&#116;&#101;&#114;&#114;&#97;&#46;&#99;&#111;&#109;">natalie@agterra.com</a>","http://www.agterra.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J9EHN288MVL8">26</a>","PRECISION PROSTHETICS AND ORTHOTICS, L.L.C.","KAMIL LEMAN","","5810 E 2ND ST","","CASPER","WY","82609-4329","Established 2007. Expertise and knowledge maintained through ongoing seminars and workshops. Fully qualified and certified staff. Working directly with At Precision Prosthetics & Orthotics, we go above and beyond to assist you with regaining mobility and self-reliance. We create custom prostheses that you can use to continue your favorite sports activity such as running or skiing. We offer many different arm prostheses and provide solutions to improve function for people with missing fingers or thumbs.your local physicians including a follow up program.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#119;&#121;&#111;&#109;&#105;&#110;&#103;&#112;&#114;&#111;&#115;&#116;&#104;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">office@wyomingprosthetics.com</a>","https://www.wyomingprosthetics.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WMV7K2JXJ4Z8">27</a>","DS MANUFACTURING LLC","BEN WARREN","","585 E BIRCH ST","","GLENROCK","WY","82637-5073","Design Solutions provides three and four axis machining using Cad designing. Specializing in wear parts to enhance equipment availability.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#102;&#103;&#64;&#109;&#99;&#103;&#105;&#110;&#108;&#101;&#121;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mfg@mcginleyinnovations.com</a>","www.mcginleymanufacturing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EB61CPC3NUN7">28</a>","EARTH WORK SOLUTIONS (WY)","TYLER MILLER","","2506 LITTLE POWDER RIVER RD","","GILLETTE","WY","82716-1706","We are a full service all things civil engineering who have been in business since 1970. We provide top notch surveying, dirt work, and customer service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#121;&#108;&#101;&#114;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#101;&#97;&#114;&#116;&#104;&#119;&#111;&#114;&#107;&#46;&#117;&#115;&#46;&#99;&#111;&#109;">tyler.miller@earthwork.us.com</a>","www.earthwork.us.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z5G3EXNGC644">29</a>","PERFECT SWITCH, LLC","SCOTT STOLPER","","265 CRABTREE LANE","UNIT 1","JACKSON","WY","83001-8710","Experts in DC solid state switching and battery isolators using arrayed MOSFET architecture. Solid state relays, low voltage disconnects, circuit breakers, ideal diodes","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#84;&#79;&#76;&#80;&#69;&#82;&#64;&#80;&#69;&#82;&#70;&#69;&#67;&#84;&#83;&#87;&#73;&#84;&#67;&#72;&#46;&#67;&#79;&#77;">STOLPER@PERFECTSWITCH.COM</a>","www.perfectswitch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RKNREDYG1FD8">30</a>","WYOCOMPOSITES, LLC","HEATH VAN EATON","","1623 CENTRAL AVE","","CHEYENNE","WY","82001-4531","WyoComp's mission is to research and promote the use of agriculturally derived products and technologies with the goal of addressing long-term natural resource sustainability issues related to building materials and energy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#118;&#101;&#64;&#119;&#121;&#111;&#99;&#111;&#109;&#112;&#46;&#99;&#111;&#109;">hve@wyocomp.com</a>","https://www.wyocomp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZFJYHML5HKQ2">31</a>","BASTIAN MANUFACTURING LLC","DENNIS BASTIAN","","310 S MAIN ST","","BURNS","WY","82053-5015","Bastian Mfg. is a design, welding, machine, and wood shop. Over 25 years our products have included storage sheds, material handling equip, ladders and aircraft parts/service carts. We can take any mfg project from concept to design completion.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#97;&#115;&#116;&#105;&#97;&#110;&#77;&#97;&#110;&#117;&#102;&#97;&#99;&#116;&#117;&#114;&#105;&#110;&#103;&#64;&#112;&#114;&#111;&#116;&#111;&#110;&#46;&#109;&#101;">BastianManufacturing@proton.me</a>","www.bastianmanufacturing.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H4NPTLLWGBQ3">32</a>","ROSSER ROBERT MATTHEW","ROBERT ROSSER","","1255 E CRIMSON DAWN RD","","CASPER","WY","82601-9740","World Class coaching and training for rifle and pistol shooting, biathlon and Nordic skiing. All products needed for biathlon ranges, electronic rifles and pistols, targets etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#109;&#46;&#114;&#111;&#115;&#115;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">robert.m.rosser@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3PJLKZHEMH8">33</a>","ADVANCED COMFORT SOLUTIONS, INC.","LUCAS SARNE","","3941 W 5TH ST","","CHEYENNE","WY","82007-1034","ACSI provides top-notch commercial HVAC, sheet metal fabrication and construction services across a tri-state area that includes Wyoming, Nebraska, and Colorado. Together, with our manufacturer and vendor partners, we are capable of most job sizes or types. From design to installation, our entire staff provides a seamless process from budgeting to completion, within budget and exceeding client expectations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#117;&#107;&#101;&#115;&#64;&#97;&#99;&#115;&#105;&#119;&#121;&#46;&#99;&#111;&#109;">lukes@acsiwy.com</a>","advancedcomfortwy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETZUBGXNH6H1">34</a>","PERTECH INDUSTRIES, INC.","CATIA MASAROTTI","","860 COLLEGE VIEW DR","","RIVERTON","WY","82501-2203","Founded in 2012, Pertech Industries, Inc.is a privately-held U.S. corporation specializing in the custom design, development and manufacture of scanners, inkjet, impact, and direct thermal printers and printer mechanisms. Our products are widely used in the banking, gaming, money order, and kiosk markets. Pertech also offers depot-level repair and contract manufacturing services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#116;&#105;&#97;&#46;&#109;&#97;&#115;&#97;&#114;&#111;&#116;&#116;&#105;&#64;&#112;&#101;&#114;&#116;&#101;&#99;&#104;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">catia.masarotti@pertechindustries.com</a>","http://www.pertechindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FE4ZBBU31M33">35</a>","FROG CREEK PARTNERS FCP, LLC","BRIAN DEURLOO","","800 W YELLOWSTONE HWY","","CASPER","WY","82601-1734","The patent pending Gutter Bin(tm)stormwater filtration system easily removes pollution from stormwater within a catch basin. Frog Creek Partners also offers the Clean and Measure Pollution (CAMP) Service so the bins stay clean.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#114;&#105;&#97;&#110;&#64;&#70;&#114;&#111;&#103;&#67;&#114;&#101;&#101;&#107;&#46;&#80;&#97;&#114;&#116;&#110;&#101;&#114;&#115;">Brian@FrogCreek.Partners</a>","https://frogcreek.partners/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F8H2B1M42K77">36</a>","TROPHY CREATIVE LLC","SARA WEBER","","508 W 19TH ST","","CHEYENNE","WY","82001-4336","TROPHY Creative is in the awards and personalization business. We provide friendly creative service with a one-stop shop for all of your personalization needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#64;&#116;&#114;&#111;&#112;&#104;&#121;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#46;&#110;&#101;&#116;">sara@trophycreative.net</a>","trophycreative.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRKZJJX7VB13">37</a>","JERRY'S WELDING SERVICE, INC","JASON MITTLEIDER","","158 STATE HIGHWAY 59","","DOUGLAS","WY","82633-2259","Since 1975, we have continued to service the agriculture, oilfield, uranium mines and general public. We offer shop and field welding, machine shop, mechanic, trailer and equipment repairs, heavy equipment, irrigation pump repair, and roustabout work. We sell all types of steel and offer custom fabrication to fit your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#101;&#108;&#102;&#97;&#98;&#57;&#51;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">steelfab93@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ETPNCS1N6TF4">38</a>","EXTREME PRECISION INDUSTRIAL CONTRACTORS, LLC","JENNA CASTLEBERRY","","1540 BUSINESS CIR","","GILLETTE","WY","82716-1402","We are a precision fabrication and machine shop. We have very strict quality control standards to ensure our products meet your rigorous standards.Our founders have over 50 years experience working in the industrial fabrication and service sectors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#46;&#99;&#97;&#115;&#116;&#108;&#101;&#98;&#101;&#114;&#114;&#121;&#64;&#101;&#112;&#45;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">j.castleberry@ep-industrial.com</a>","https://www.ep-industrial.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M1Q5FA7VMNH9">39</a>","GANNETT PEAK ENERGY & ENVIRONMENTAL SERVICES","PETER GOTTFRIED","","52 BALD MOUNTAIN RD","","DUBOIS","WY","82513-9709","Reduce the environmental impact of the modern world’s energy demands AND optimize economic benefit by embracing “micro-power.” Through small wind and other creative solutions, we can make a difference today by augmenting our existing energy supplies to non-polluting, readily available, renewable sources.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#114;&#103;&#111;&#116;&#116;&#102;&#114;&#105;&#101;&#100;&#64;&#103;&#105;&#115;&#49;&#46;&#99;&#111;&#109;">petergottfried@gis1.com</a>","www.gannettpeakenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P224PN7MAVH3">40</a>","RESONO PRESSURE SYSTEMS, INC.","JONATHAN NAUGHTON","","1938 HARNEY ST","STE 243","LARAMIE","WY","82072-3037","Resono Pressure Systems, LLC is a small engineering firm located in Laramie, Wyoming. Resono was founded to commercialize unsteady pressure measurement systems based on a decade of development of these systems as part of unsteady aerodynamics work performed for both the Department of Energy and the Department of Defense. Having a decade of experience with the hardware and software associated with these systems and experience performing unsteady pressure measurements in the wind tunnel, flight test and in field testing on wind turbine blades, Resono is well poised to offer innovative and reliable solutions for a wide range of measurement applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#117;&#103;&#104;&#116;&#111;&#110;&#64;&#114;&#101;&#115;&#111;&#110;&#111;&#112;&#114;&#101;&#115;&#115;&#117;&#114;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">naughton@resonopressuresystems.com</a>","http://www.resonopressuresystems.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UN6VJJKZVD35">41</a>","STEEL RAIN INDUSTRIES LLC","JOHN ZORBAS","","361 HEMLOCK ST","","BUFFALO","WY","82834-9415","We are an excavation and construction company specializing in septic installations, road and driveway maintenance. We have been serving our local community for over 5 years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#103;&#122;&#111;&#114;&#98;&#97;&#115;&#64;&#105;&#99;&#108;&#111;&#117;&#100;&#46;&#99;&#111;&#109;">jgzorbas@icloud.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FVKPYBEPZJK4">42</a>","TUNGSTEN PARTS WYOMING, INC.","DENNIS OMANOFF","","1665 VENTURA DR","","LARAMIE","WY","82070-6667","Manufacture Tungsten Components and Assemblies, Warheads, Penetrators and Buffers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#110;&#110;&#105;&#115;&#64;&#111;&#109;&#97;&#110;&#111;&#102;&#102;&#46;&#99;&#111;&#109;">dennis@omanoff.com</a>","https://tungstenparts.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LBH3QW4M5TV1">43</a>","BLACK TOOTH INNOVATIONS LLC","BRAD WILLIAMS","","130 E HART ST","","BUFFALO","WY","82834-1705","We are a Wyoming based Mechanical Engineering Design and Prototyping company that uses the latest in 3D modeling software and CNC machinery. Come to us with an idea and we'll create a custom tailored design, prototype or fully engineered product.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#97;&#100;&#64;&#98;&#116;&#105;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">brad@btiwyo.com</a>","www.btiwyo.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFT8U57QWUL5">44</a>","FOURTH STATE COMMUNICATIONS, LLC","JOHN EDWARDS","","750 ROAD 138","","CHEYENNE","WY","82007-9639","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#104;&#110;&#109;&#101;&#100;&#119;&#97;&#114;&#100;&#115;&#105;&#105;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Johnmedwardsii@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WQH7WYSTLVT3">45</a>","BIG MUDDY OPERATORS LLC","DEBRA HUGHES","","777 OVERLAND TRL","STE 208","CASPER","WY","82601-1340","We are creating a framework where utilization and extraction of existing oil resources has a more environmentally friendly footprint. We hold the single largest contiguous block of State Mineral acreage in Wyoming and have worked closely with State Agencies to formulate an effective and rigorous partnership. We are working to establish foundation for integrated carbon capture sequestration and utilization. We maintain viability of the coal industry in Wyoming and create long term employment and sustainable employment in the state.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#117;&#103;&#104;&#101;&#115;&#64;&#103;&#108;&#101;&#110;&#114;&#111;&#99;&#107;&#101;&#110;&#101;&#114;&#103;&#121;&#46;&#99;&#111;&#109;">dhughes@glenrockenergy.com</a>","https://www.glenrockenergy.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J9JFM5J4LNT4">46</a>","AVVID CORPORATION","ELIZA DARGER","","222 E BAKER ST","","LARAMIE","WY","82072-2519","Avvid Corporation stands out as a premier provider of exceptional CNC machining services for a wide array of applications across a diverse range of industries. Our services are sought after by small, medium and large companies like Gun Manufacturers, Archery Industries, Medical Component Manufacturers, Aerospace Companies, and any Manufacturer that may need small precision parts machined from metals or plastics anywhere in the United States. With over 20 years of proven excellence in delivering precision components made to precise customer specifications, we have established ourselves as the leading provider of exceptional precision machining services for clients who wouldn't settle for anything less than spectacular work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#108;&#105;&#122;&#97;&#100;&#64;&#97;&#118;&#118;&#105;&#100;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">elizad@avvidcorp.com</a>","www.avvidcorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G61VMVXKUMK8">47</a>","APEX MECHANICAL, LLC","TONIA SPRUHAN","","1800 W WARLOW DR STE A","","GILLETTE","WY","82716-2500","We are a full service plumbing & HVAC company with over 40 years experience. Fast, friendly services with competitive prices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#102;&#102;&#105;&#99;&#101;&#64;&#97;&#112;&#101;&#120;&#109;&#101;&#99;&#104;&#97;&#110;&#105;&#99;&#97;&#108;&#119;&#121;&#111;&#46;&#99;&#111;&#109;">office@apexmechanicalwyo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JK28JGWALJE5">48</a>","FIREPROOF LLC","RYAN SCHILLEMAN","","514 LOWER PRAIRIE DOG RD","","SHERIDAN","WY","82801-9658","Fireproof Fencing, has created an innovative and unique approach to agricultural, wildlife and right-of-way fencing that we believe will change the industry forever. Fencing has been more of a necessary evil, a liability in constant need of repair, and our goal is to change it into a re liable fireproof asset. Using tubular steel posts and our line of patent pending connection components you can enjoy a system that will outlast any wood post system by decades with a fraction of the maintenance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#110;&#64;&#102;&#105;&#114;&#101;&#112;&#114;&#111;&#111;&#102;&#45;&#102;&#101;&#110;&#99;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ryan@fireproof-fencing.com</a>","www.getfireproof.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JLHDAEPN3DA6">49</a>","TOMBSPIDER ARMS, INC.","DANIEL TWOMEY","","1121 55 RANCH RD","","GLENROCK","WY","82637-9619","Tombspider Arms, Inc is a Veteran owned and operated business dedicated to professionalism and attention to detail in the sale, repair, customization, and restoration of firearms. We offer a full line of gunsmith services for a wide variety of rifles, shotguns, and handguns.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#98;&#115;&#112;&#105;&#100;&#101;&#114;&#97;&#114;&#109;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tombspiderarms@gmail.com</a>","www.tombspiderarms.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RYJ1JJ7JMZY6">50</a>","RED RIVER LLC","REILLY SASSE","","2700 N US HIGHWAY 14-16","","GILLETTE","WY","82716-8504","Red River is an ASME certified fabrication company providing pressure vessels, prefabricated piping packages and skid packages to a range of industries. Our clients include government entities as well as some of the worlds leading companies. We are focused on providing top notch manufacturing services to people who value long term relationships. Red River excels in high-quality fabrication across diverse industries: Oil & Gas, Chemical & Petrochemical, Power Generation, Renewable Energy, Mining & Minerals, and Water Treatments Transmission.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#105;&#108;&#108;&#121;&#64;&#114;&#101;&#100;&#114;&#105;&#118;&#101;&#114;&#46;&#116;&#101;&#97;&#109;">reilly@redriver.team</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G3N3G6CVBEF6">51</a>","G.N.B., INC.","TOM ELLIS","","1801 W YELLOWSTONE HWY","","CASPER","WY","82604-2801","Eighty years of providing the highest quality products and best customer service in the industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#112;&#101;&#112;&#112;&#101;&#114;&#116;&#97;&#110;&#107;&#46;&#99;&#111;&#109;">tom@peppertank.com</a>","www.peppertank.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z1LRLL6GL5F5">52</a>","DISA TECHNOLOGIES, INC.","GREYSON BUCKINGHAM","","1010 FALCON AVE","","MILLS","WY","82644-","Disa is an innovative materials liberation company that provides solutions that optimize the world’s use of resources and radically disrupt best practices in the mining and reclamation industries. Disa utilizes patented liberation technology in concert with other equipment to isolate targeted materials in order to deliver efficiencies, reduce costs, and mitigate environmental impacts to its users.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#100;&#100;&#105;&#101;&#64;&#100;&#105;&#115;&#97;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">maddie@disausa.com</a>","www.disausa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7B1MUMPEKC4">53</a>","PHANTOM HYBRID DESIGNS LLC","BRYAN HEBERT","","3930 W 45TH ST","","CASPER","WY","82604-4553","Phantom Hybrid Designs was established in 2016, by owner Bryan Hebert, to develop and provide cost effective and advanced solutions to our customers. Phantom Hybrid Designs treats a wide variety of materials, including ferrous and non-ferrous metals, alloys, and carbides. Phantom Hybrid Designs also provides Laser Engraving as well as Research and Development, repair, and maintenance services for the Oil & Gas industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#121;&#97;&#110;&#64;&#112;&#104;&#97;&#110;&#116;&#111;&#109;&#104;&#121;&#98;&#114;&#105;&#100;&#100;&#101;&#115;&#105;&#103;&#110;&#115;&#46;&#99;&#111;&#109;">bryan@phantomhybriddesigns.com</a>","www.phantomhybriddesigns.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LDZDKDRSD8Q9">54</a>","JMCC WING - FARM & RANCH LLC","JAMES MCCANNEY","","30 N GOULD ST STE 5026","","SHERIDAN","WY","82801-6317","Wind Generators (high efficiency - 2 to 250 kW), water filtration (kitchen, travel, personal, Whole House and commercial), Water from Air, eV car charging stations, diesel LP Gen Sets, Remote energy and water solutions, shipping containers and shipping container buildings (hurricane rated), Shipping containers integrated with remote energy water solutions, outer space radiation mitigation, consultant electricity in outer space, short wave radio science show, K-12 University Science Education, aeroponics (vertical grow towers high concentration low water usage farming), conversion CO2 to O2 outer space application,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#99;&#99;&#97;&#110;&#110;&#101;&#121;&#64;&#117;&#115;&#105;&#110;&#116;&#101;&#114;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">jmccanney@usinternet.com</a>","https://www.jmccanneyscience.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NC4VW9NA3N58">55</a>","DIELUTSA LIMITED COMPANY","MERVIN SEALY","","1912 CAPITOL AVE","STE 500","CHEYENNE","WY","82001-3661","industrial sourcing, manufacturing solutions and trading","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#115;&#101;&#97;&#108;&#121;&#64;&#100;&#105;&#101;&#108;&#117;&#116;&#115;&#97;&#46;&#99;&#111;&#109;">msealy@dielutsa.com</a>","http://dielutsa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K34UX5YHJLQ7">56</a>","MANAGEMENT SOLUTIONS CO","MAHOGONEY WILLIE","","30 N GOULD ST STE 32840","","SHERIDAN","WY","82801-6317","Management Solutions Co is a leading provider of comprehensive business solutions, offering a wide range of services to meet the diverse needs of our clients. With a strong focus on delivering exceptional quality and value, we have established ourselves as a trusted partner for businesses in various industries. We offer the following services 1. Staff Augmentation 2. Industrial Heavy Equipment Leas 3. Commercial Real Estate Lease -Whether you require office space, retail stores, or industrial facilities, we have an extensive portfolio of properties to meet your specific requirements 4. Project Management Services 5. Janitorial Services and waste disposal 6. Notary Support Services At Management Solutions Co, we pride ourselves on delivering exceptional service quality, fostering long-term partnerships, and exceeding client expectations. With our diverse range of services, we aim to provide comprehensive solutions that address the unique needs of businesses across industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#101;&#114;&#118;&#105;&#99;&#101;&#64;&#109;&#103;&#109;&#116;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#99;&#111;&#46;&#99;&#111;&#109;">Service@mgmtsolutionsco.com</a>","www.mgmtsolutionsco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FNVZL8MEHYT1">57</a>","TIGER TEAM ENGINEERING L.L.C.","LUIS FREUND","","1095 SUGARVIEW DR STE 500","","SHERIDAN","WY","82801-5386","At TTE, we deliver comprehensive support services encompassing Contractor Logistics Support (CLS), Integrated Logistics Support (ILS), Program Management, Engineering Services, Supply Chain Management (SCM), Production Support, Field Service Representative (FSR), Staffing, Procurement, Supplier Oversight, Post-Award Support, and Technical Support. Our expertise includes managing Diminishing Manufacturing Sources and Material Shortages (DMSMS) and obsolescence, ensuring optimal supplier base management. We emphasize seamless operation, maintenance, and system optimization throughout their lifecycle. Our dedicated team prioritizes client satisfaction and operational efficiency by proactively addressing DMSMS challenges, providing responsive technical support, and offering effective staffing solutions. TTE is committed to delivering excellence in every aspect of our services, ensuring mission success and reliability for our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#102;&#114;&#101;&#117;&#110;&#100;&#64;&#116;&#116;&#101;&#45;&#101;&#110;&#103;&#46;&#99;&#111;&#109;">lfreund@tte-eng.com</a>","https://tigerteameng.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NADHHQNPL1D5">58</a>","EDGEFLYTE, LLC","TATE SCHROCK","","4008 GUNSMOKE RD","","CHEYENNE","WY","82001-8572","EdgeFlyte is an innovator in next generation edge of space technology; from our highly dynamic weather balloon flight computers to our TLR 6 CubeSat Kits we have a proven record for inventing unique solutions for intricate problems. We offer solutions for mission critical applications and have capabilities to design new solutions for unique mission requirements. With a commitment to quality assurance, we maintain strict processes to deliver excellence in all our services. Embracing adaptability and innovation, we continuously explore emerging trends and technologies to provide cutting-edge solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#116;&#101;&#64;&#101;&#100;&#103;&#101;&#102;&#108;&#121;&#116;&#101;&#46;&#99;&#111;&#109;">tate@edgeflyte.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UFPVM2ULPJA7">59</a>","UPLINKROBOTICS LLC","CHRISTIAN BITZAS","","1938 HARNEY ST","STE 157","LARAMIE","WY","82072-3037","UplinkRobotics is a Wyoming based inspection robotics company that creates high-quality and purpose built inspection tools for various industries, such as home inspection, construction, firefighters, law enforcement and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#97;&#110;&#64;&#117;&#112;&#108;&#105;&#110;&#107;&#114;&#111;&#98;&#111;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">christian@uplinkrobotics.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D2KPU1UGHM71">60</a>","MQ ENTERPRISES INC","KEVIN WALL","","4784 CLEVELAND ST","","MILLS","WY","82604-2347","Turntec Manufacturing is a full service CNC manufacturing and conventional company. Founded in 1993, Turntec Manufacturing has provided machined products and services throughout North America for 30 years.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#114;&#111;&#106;&#101;&#99;&#116;&#115;&#64;&#116;&#117;&#114;&#110;&#116;&#101;&#99;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">Projects@turntecmfg.com</a>","www.turntecmfg.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.03&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

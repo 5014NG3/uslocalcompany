@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 139 of VA;<br/>
+the profile location is in: Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.72 seconds and 1.78 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 24 
+(of 24 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CG3AS5MBHAM9">1</a>","PREMIER TECHNICAL SERVICES CORPORATION","STANLEY TONG","President/CEO","1204 EAST MAIN STREET","","LURAY","VA","22835-1626","IT SUPPORT CONSULTING SERVICES, CONTRACT PROGRAMMING, SOFTWARE DEVELOPMENT, NETWORK IMPLEMENTATION AND ADMINISTRATION, RELATIONAL DATABASES, CASE TOOLS, LANS, GRAPHICS, MANAGEMENT TRAINING AND DEVELOPMENT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#46;&#116;&#111;&#110;&#103;&#64;&#112;&#116;&#115;&#45;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">dave.tong@pts-usa.com</a>","www.pts-usa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HBMLZLJ3KQF5">2</a>","PANAMERICA COMPUTERS, INC.","ROSINA KLING","PRESIDENT","1386 BIG OAK RD","","LURAY","VA","22835-5233","SPECIALIZING IN NETWORK SECURITY,STORAGE AND DIGITAL IMAGING SERVICES-WE CAN OFFER IT SOLUTIONS THAT INCLUDE A COMPLETE PACKAGE OF SERVICES WITH THEIR CORRESPONDING SOFTWARE AND HARDWARE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#115;&#105;&#110;&#97;&#107;&#108;&#105;&#110;&#103;&#64;&#80;&#67;&#73;&#84;&#69;&#67;&#46;&#67;&#79;&#77;">rosinakling@PCITEC.COM</a>","http://www.pcitec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U2QQFQ2PUAB1">3</a>","SUBSIDIUM, INC.","CHRIS CLARK","CIO/FSO","110 BLUE BELL AVE","","LURAY","VA","22835-1655","We provide best of breed IT technologies, equipment & reliable services for Government organizations. Our staff of engineers provide, network design, installation, configuration, test & validation, project management, & maintenance to the Government.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#46;&#99;&#108;&#97;&#114;&#107;&#64;&#115;&#117;&#98;&#115;&#105;&#100;&#105;&#117;&#109;&#46;&#117;&#115;">chris.clark@subsidium.us</a>","http://www.Subsidium.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PLTEGDG1GMS5">4</a>","FAIRFIELD TECHNOLOGIES INC","KENNETH FRIED","President, Federal Systems Group","21 N BROAD ST STE K","","LURAY","VA","22835-1147","FTI delivers software, program/acquisition mgt results for defense, intel, civilian clients. Using Lean Six, CMMI, Agile, ITIL/ISO best practices, FTI professional staff delivers measurable improvement (better, faster, cheaper) on mission-critical efforts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#102;&#114;&#105;&#101;&#100;&#64;&#102;&#97;&#105;&#114;&#102;&#105;&#101;&#108;&#100;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">kfried@fairfieldtech.com</a>","http://www.fairfieldtech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DPQEDJ6CXZM5">5</a>","PANAMERICA COMPUTERS, INC.","ROSINA KLING","PRESIDENT","1386 BIG OAK RD","","LURAY","VA","22835-5233","SPECIALIZING IN NETWORK SECURITY,STORAGE AND DIGITAL IMAGING SERVICES-WE CAN OFFER IT SOLUTIONS THAT INCLUDE A COMPLETE PACKAGE OF SERVICES WITH THEIR CORRESPONDING SOFTWARE AND HARDWARE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#79;&#83;&#73;&#78;&#65;&#75;&#76;&#73;&#78;&#71;&#64;&#80;&#67;&#73;&#84;&#69;&#67;&#46;&#67;&#79;&#77;">ROSINAKLING@PCITEC.COM</a>","http://www.pcitec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D381PGDJL4U8">6</a>","BLUEMONT TECHNOLOGY & RESEARCH, INC.","BERNADETTE GAGNON","","21 TEXTILE ST","","LURAY","VA","22835-1166","We focus on data / information intensive applications, visualization, training, network engineering, research, and emerging technologies. We utilize emerging technologies to provide our customers with a better understanding of their data and information. Our skills include large scale data exploitation, networking (PCAP, deep packet sniffer, analytics, SCADA, visualization), and Virtual Reality (VR) + Augmented Reality (AR) + Immersive Virtual Training (IVT) applications for data analysis, training, and games.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#114;&#110;&#97;&#100;&#101;&#116;&#116;&#101;&#46;&#103;&#97;&#103;&#110;&#111;&#110;&#64;&#98;&#108;&#117;&#101;&#109;&#111;&#110;&#116;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#121;&#46;&#99;&#111;&#109;">bernadette.gagnon@bluemonttechnology.com</a>","http://www.bluemonttechnology.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UW4CGFDPV529">7</a>","RACEY ENGINEERING, PLLC","REBEKAH MOYER-KELLER","","312 W MAIN ST","","LURAY","VA","22835-1023","Civil and Mechanical Engineering; Surveying and Stake Out; Structural Desgin, Land & Lot Planning; Construction Managment; Plumbing & HVAC Designs; Alternative Wastewater Designs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#111;&#121;&#101;&#114;&#64;&#114;&#97;&#99;&#101;&#121;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">rmoyer@raceyengineering.com</a>","http://www.raceyengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VTNGJWHH33J8">8</a>","K3 SOLUTIONS LLC","VICTOR KOO","","58 W MAIN ST STE C","","LURAY","VA","22835-1231","A full life-cycle management and information technology consulting firm providing customized technical solutions. Service areas: project and process management, CMMI, strategy, application development, enterprise and technical infrastructure solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#116;&#111;&#114;&#46;&#107;&#111;&#111;&#64;&#107;&#51;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">victor.koo@k3-solutions.com</a>","http://www.k3-solutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P4PJHWD5NKT8">9</a>","VALLEY AUTOMATION, INC.","PATRICK EMBRY","","1316 E MAIN ST","","LURAY","VA","22835-1628","Systems integration, web design, VoIP, security surveillance, industrial automation and structured cabling services. Specializes in automation services to industrial and municipal clients throughout the United States. Our staff, with over 20 years' experience designing, installing and maintaining automation solutions, is ready to assist your needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#109;&#98;&#114;&#121;&#64;&#118;&#97;&#108;&#108;&#101;&#121;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#46;&#110;&#101;&#116;">pembry@valleyautomation.net</a>","http://www.valleyautomation.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZE4NA4DHCJ1">10</a>","ENTERPRISE ARCHITECTURE AND INFORMATION MANAGEMENT INC.","ARULKUMAR SELVAPPAN","","1 N BROAD ST STE A","OFFICE 2","LURAY","VA","22835-1147","E-AIM. incorporated in 2006 is a minority-owned 8(a) certified small business IT consulting company. We provide strategic technology and business solutions to Federal and State Government. With more than 35 years’ of combined experience working with large and small companies, our reputation mirrors our abilities. When it comes to keeping pace with today’s ever-changing technology needs, our team is the best.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#101;&#108;&#118;&#97;&#112;&#112;&#97;&#110;&#64;&#101;&#97;&#97;&#105;&#109;&#46;&#99;&#111;&#109;">aselvappan@eaaim.com</a>","http://www.eaaim.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NKJTYE4JS8G3">11</a>","DULLESSYSTEMS INC","MONALISHA MISHRA","","1 N BROAD ST.","STE A OFC 105","LURAY","VA","22835-1147","DullesSystems Inc. is a SBA certified 8(A)/HUBZone/EDWOSB/WOSB based in VA. We have DOD Facility Clearance and Cleared resources Secret/TS/SCI. ISO 9001/20000/ 27001 and CMMI-DEV L3 / CMMI-SVC L3 certified. We specialize in -IT Modernization, SAFe Agile Delivery, DevSecOps and O&M Support -Data Analytics, Data Management, BI Reporting and GIS Applications -Cyber Security, Cyber Readiness Review, and Cloud Support Services -IT Governance, Acquisition Support and PMO Support -Testing, Quality Assurance, IV&V Support -Helpdesk Support, Managed IT Services & Staff Augmentation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#77;&#73;&#83;&#72;&#82;&#65;&#64;&#68;&#85;&#76;&#76;&#69;&#83;&#83;&#89;&#83;&#84;&#69;&#77;&#83;&#46;&#67;&#79;&#77;">MMISHRA@DULLESSYSTEMS.COM</a>","www.dullessystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KP78WNZ9RQ15">12</a>","LEVEL 5 CONSULTING LLC","LEONARD GUNSIOR","","1 N BROAD ST APT B","","LURAY","VA","22835-1147","Level 5 Consulting is an IT consulting firm specializing in high-quality, custom software development. We are capable of completing government contracts in software development, mobile application, system integration and administration.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#117;&#110;&#115;&#105;&#111;&#114;&#64;&#108;&#101;&#118;&#101;&#108;&#53;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">sgunsior@level5consulting.net</a>","http://www.level5consulting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBR2NERK9FL9">13</a>","MAMMOTH GLOBAL PARTNERS, INC.","CARL EY","","2157 US HIGHWAY 211 W","","LURAY","VA","22835-5241","media ops, strategic & crisis communication, public affairs ops, media/press consulting, special events, information tech, sports marketing, electrical engineering, contingency ops planning & trng, disaster recovery planning & trng, speech writing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#114;&#108;&#46;&#101;&#121;&#64;&#109;&#97;&#109;&#109;&#111;&#116;&#104;&#103;&#108;&#111;&#98;&#97;&#108;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">carl.ey@mammothglobalpartners.com</a>","www.mammothglobalpartners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NH98BTLDU1R3">14</a>","8 CONSULTING LLC","JOHN WOUTERS","","416 1ST STREET","","SHENANDOAH","VA","22849-1504","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#46;&#119;&#111;&#117;&#116;&#101;&#114;&#115;&#64;&#56;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">john.wouters@8consultingllc.com</a>","www.8consultingllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GNTEQNB33867">15</a>","VIVOWORKS INC","DAVID TOBEY","","770 NEWPORT RD","STE B","SHENANDOAH","VA","22849-3014","VivoWorks virtual learning and workforce development solutions: Assess aptitude for selection or career management; Train new workers; Accelerate and/or transfer skill development for existing workers; Certify capabilities against standards of performance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#104;&#116;&#111;&#98;&#101;&#121;&#64;&#118;&#105;&#118;&#111;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">Dhtobey@vivoworks.com</a>","www.vivoworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D846YX4MXNC7">16</a>","VALIA SOLUTIONS, LLC","VANESSA VASQUEZ","","21 N BROAD ST","STE G","LURAY","VA","22835-1147","As turnkey solutions provider, Valia provides core network infrastructure, data center and unified communications design, testing and implementation drawing from a diverse engineering resource pool of certified network professionals and experts.?","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#118;&#97;&#115;&#113;&#117;&#101;&#122;&#64;&#118;&#97;&#108;&#105;&#97;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">vvasquez@valiasolutions.com</a>","www.valiasolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5DDRL3TAN27">17</a>","VALLEY ADMINISTRATIVE SERVICES LLC","SONYA WILKINS","","21 N BROAD ST","STE E","LURAY","VA","22835-1147","Valley Administrative Services, LLC is committed to excellence and creating innovative, flexible administrative support and management solutions for our Federal, State and Tribal clients. We implement a strategic approach to using best practices in contact center management, facilities operations, public outreach and employee relations. The cost-effective, comprehensive solutions we offer are the invaluable results of years of focused leadership and project management. Our diverse staff has the resources, access to the tools, teams and partners needed to ensure maximum performance and productivity across your program. Based 90-miles from Washington, DC in Page County, Virginia: We are your HUBZone partner.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#110;&#121;&#97;&#64;&#118;&#97;&#108;&#108;&#101;&#121;&#97;&#100;&#109;&#105;&#110;&#115;&#46;&#99;&#111;&#109;">sonya@valleyadmins.com</a>","http://valleyadmins.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DP8RNAF7KQ73">18</a>","PILLAR GLOBAL SOLUTIONS INC","KEVIN MCTARSNEY","","1 N BROAD ST STE A OFC 3","","LURAY","VA","22835-1147","Pillar Global Solutions is your partner in leveraging the best technology available to solve real world business and operational problems.  By staying on top of the latest emerging technologies, and not necessarily trends, we have insight into solutions that can be innovative and cost effective. Using our enterprise IT experience, our growing relationships with hardware & software vendors, and our industry partners we can evaluate customer requirements and make appropriate and effective technology recommendations. We value the relationships we have developed and look forward to working with our customers. We understand that technology investment decisions are important, and that there is value in the foundation of your existing technology infrastructure. Pillar Global Solutions, Inc wants to help you navigate this investment opportunity and leverage what you have today: Let’s Build Upon IT!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#118;&#105;&#110;&#64;&#112;&#105;&#108;&#108;&#97;&#114;&#103;&#108;&#111;&#98;&#97;&#108;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">kevin@pillarglobalsolutions.com</a>","http://www.pillarglobalsolutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6DDW1Z99SW8">19</a>","JSTECH CONSULTING, LLC","JONATHAN STEENBERG","","4 OAKCREST DR","","LURAY","VA","22835-1579","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#116;&#101;&#101;&#110;&#98;&#101;&#114;&#103;&#64;&#106;&#115;&#116;&#101;&#99;&#104;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jsteenberg@jstechconsulting.com</a>","jstechconsultingllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XKXFBVLZTXN3">20</a>","FIVE STONES TECHNOLOGY LLC","STEVE BREMMERMAN","","23 W MAIN ST","","LURAY","VA","22835-1247","Five Stones Technology is focused on selling best of breed and cutting edge products in and around the Cyber and Analytics space. We offer a streamlined approach by bringing Real Time Situational Awareness, Enterprise Visibility and Behavior Analytics to customers in order to reduce operational costs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#64;&#51;&#49;&#54;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">steve@316solutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E5RKL5RSNPM6">21</a>","CARVERBETH, LLC","MELISSA BULLUCK","","1 NORTH BROAD STREET","SUITE A OFFICE 107","LURAY","VA","22835-1147","CarverBeth is an SBA Certified WOSB & HUBZone and self-certified Small Disadvantaged Business (SDB) with a Secret FCL. We are led by a management team leveraging real-world expertise from the defense, intelligence, federal civilian, and commercial sectors. We focus on the mission to maintain, unify, and harden the Federal Government and DoD’s facilities, assets, and communication networks. Our leadership brings 20 years of exp. supporting the Government across multiple industries including Program/Project Management & Professional Services; Enterprise IT services; telecommunications; infrastructure; equipment implementation & installation; facility engineering & maintenance; electrical power; security [physical & logical]; supply chain management & distribution, both CONUS and OCONUS. Our leadership has supported Federal contracts in austere locations, like Iraq, Kuwait, Qatar, and Afghanistan–we execute tough work with ease! We are also a value-added reseller.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#101;&#108;&#105;&#115;&#115;&#97;&#46;&#98;&#117;&#108;&#108;&#117;&#99;&#107;&#64;&#99;&#97;&#114;&#118;&#101;&#114;&#98;&#101;&#116;&#104;&#46;&#99;&#111;&#109;">melissa.bulluck@carverbeth.com</a>","www.carverbeth.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZWK9KDPAFPE3">22</a>","FUSION MASTECH INCORPORATED","TAHIR HAMEED","","23 WEST MAIN STREET","","LURAY","VA","22835-1247","We specialize in Emerging Technologies, Process Improvements, Machine Learning, Artificial Intelligence, and Robotic Process Automation. We also provide cloud services, healthcare IT, and Web and Mobile software development, as well as help desk support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#111;&#114;&#103;&#101;&#46;&#104;&#97;&#109;&#101;&#101;&#100;&#64;&#102;&#109;&#116;&#105;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">george.hameed@fmtigroup.com</a>","https://www.fusionmastech.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L45PMNAWPLP1">23</a>","AMDC, INC.","PRIYA BALANI","","1 N BROAD ST STE A1","","LURAY","VA","22835-1147","Computer Systems Design, Software Development, Data Analytics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#98;&#97;&#108;&#97;&#110;&#105;&#64;&#97;&#109;&#100;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">pbalani@amdcinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J7CUYMT3F628">24</a>","L & B PORTABLES LLC","JOSEPH BALDWIN","","741 CARVELL RD","","RILEYVILLE","VA","22650-1550","Located in Page County, VA we offer portable restroom rentals and restroom trailer rentals for all occasions short term or long term.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#98;&#112;&#111;&#114;&#116;&#97;&#98;&#108;&#101;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">lbportablesllc@gmail.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.523&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

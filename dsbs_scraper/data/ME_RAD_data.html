@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Maine;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.03 seconds and 1.04 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 49 
+(of 49 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y3AXBLEN5G18">1</a>","PURITAN MEDICAL PRODUCTS COMPANY I LP","ROBERT SHULTZ","V.P. Medical Sales & Marketing","31 SCHOOL ST","","GUILFORD","ME","04443-6388","STERILE AND NON-STERILE COTTON, RAYON, DACRON, AND CALCIUM ALGINATE TIPPED APPLICATORS, TONGUE DEPRESSORS, FOAM TIPPED APPLICATORS, ICE CREAM STICKS AND SPOONS, COFFEE STIRRERS, SKEWERS, COCKTAIL FORKS. *PHONE: 800-321-2313* *FAX: 800-323-4153","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#115;&#104;&#117;&#108;&#116;&#122;&#64;&#112;&#117;&#114;&#105;&#116;&#97;&#110;&#109;&#101;&#100;&#112;&#114;&#111;&#100;&#117;&#99;&#116;&#115;&#46;&#99;&#111;&#109;">rlshultz@puritanmedproducts.com</a>","http://www.puritanmedproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PC47Q6BVWWM3">2</a>","THE BAKER COMPANY, INC.","MARY ANNE MARTIN","PRESIDENT","175 GATE HOUSE RD","","SANFORD","ME","04073-2482","MANUFACTURE OF LAMINAR FLOW CABINETS, MODULES AND LAMINAR FLOW BIOLOGICAL SAFETY CABINETS. Design/build for clean air and containment equipment. High level containment of particles.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#97;&#114;&#116;&#105;&#110;&#64;&#98;&#97;&#107;&#101;&#114;&#99;&#111;&#46;&#99;&#111;&#109;">mmartin@bakerco.com</a>","http://www.bakerco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYCASK5NW4C7">3</a>","NORTHEAST LABORATORY SERVICES, INC.","SABRINA GORMLEY","President","227 CHINA RD","","WINSLOW","ME","04901-0629","ENVIRONMENTAL TESTING LABORATORY. WE TEST FOR THE PRESENCE OF ORGANIC AND INORGANIC CONTAMINANTS FOR INDUSTRY. FOOD ANALYSIS MANUFACTURER OF MICROBIOLOGICS FOR INVITRO DIAGNOSTICS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#103;&#111;&#114;&#109;&#108;&#101;&#121;&#64;&#110;&#101;&#108;&#97;&#98;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">sgormley@nelabservices.com</a>","http://WWW.NELABSERVICES.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PH7HDWJJZ7Y9">4</a>","LEAVITT & PARRIS INC","JOHN HUTCHINS","PRESIDENT","256 READ ST","","PORTLAND","ME","04103-3446","MANUFACTURING, INSTALLATION AND SERVICE OF CUSTOM CANVAS AWNINGS AND RELATED PRODUCTS. TENT SALES AND RENTALS. RENTAL OF CHAIRS, TENTS, DANCE FLOORS, LIGHTING AND OTHER ACCESSORIES. RENTAL AND SETTING-UP OF TRADE SHOW BOOTH STOCK.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#117;&#116;&#99;&#104;&#105;&#110;&#115;&#64;&#108;&#101;&#97;&#118;&#105;&#116;&#116;&#97;&#110;&#100;&#112;&#97;&#114;&#114;&#105;&#115;&#46;&#99;&#111;&#109;">jhutchins@leavittandparris.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQ47WMSZSHM9">5</a>","AUBURN MANUFACTURING INC","SUSAN DUFOUR","CONTRACTS ADMINISTRATOR","34 WALKER RD","","MECHANIC FALLS","ME","04256-5340","MANUFACTURE HIGH TEMPERATURE HEAT RESISTENT TEXTILES DESIGNED FOR USE AS ASBESTOS SUBSTITUTES AND WELDING/SAFETY APPLICATIONS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#100;&#117;&#102;&#111;&#117;&#114;&#64;&#97;&#117;&#98;&#117;&#114;&#110;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">sdufour@auburnmfg.com</a>","http://www.auburnmfg.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LCMNFPXG9UE3">6</a>","AEROHYDRO INC","EDWARD STANLEY","CFO","54 E RIDGE RD","","SOUTHWEST HARBOR","ME","04679-4255","computer aided design software","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#116;&#97;&#110;&#108;&#101;&#121;&#64;&#97;&#101;&#114;&#111;&#104;&#121;&#100;&#114;&#111;&#46;&#99;&#111;&#109;">estanley@aerohydro.com</a>","https://aerohydro.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=REZMZWCLBRL8">7</a>","YANKEE MICROWAVE, INC.","DAVID JOSEPH","Contract Manager","290 NAPLES RD","","HARRISON","ME","04040-3910","Wireless Communications; Service/Installations/Management of Wireless Networks, Studio Transmission, Radio maintenance, Video Transmission, Network Engineering & Construction, Antennas","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#105;&#100;&#64;&#121;&#97;&#110;&#107;&#101;&#101;&#109;&#105;&#99;&#114;&#111;&#119;&#97;&#118;&#101;&#46;&#99;&#111;&#109;">david@yankeemicrowave.com</a>","http://www.yankeemicrowave.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKAZKV7N3E45">8</a>","OAKES & PARKHURST GLASS","SOO PARKHURST","President","140 CAPITOL ST","","AUGUSTA","ME","04330-6829","All Glass & glazing products and services. replacement windows . Security glass& glazing. Stained glass products and artists. Auto glass and installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#116;&#101;&#112;&#104;&#97;&#110;&#105;&#101;&#64;&#111;&#112;&#103;&#108;&#97;&#115;&#115;&#46;&#99;&#111;&#109;">Stephanie@opglass.com</a>","www.opglass.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZ4AZRQ1M979">9</a>","SCIENTIFIC SOLUTIONS, INC.","KIMBERLY GILBERT","","305 COMMERCIAL ST","STE 3","PORTLAND","ME","04101-4668","SSI is a R&D engineering firm that specializes in sonar detection system development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#115;&#103;&#105;&#108;&#98;&#101;&#114;&#116;&#64;&#115;&#99;&#105;&#115;&#111;&#108;&#46;&#99;&#111;&#109;">ksgilbert@scisol.com</a>","http://www.scisol.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YZ22EFS1S6X7">10</a>","MICROWAVE TECHNIQUES LLC","KEVIN WILCOX","EXECUTIVE VICE PRESIDENT","28 SANFORD DR","","GORHAM","ME","04038-2646","MANUFACTURERS OF HIGH POWER, LOW FREQUENCY WAVEGUIDE COMPONENTS FOR THE TRANSFER OF MICROWAVE ENERGY (RF).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#87;&#73;&#76;&#67;&#79;&#88;&#64;&#77;&#73;&#67;&#82;&#79;&#87;&#65;&#86;&#69;&#84;&#69;&#67;&#72;&#46;&#67;&#79;&#77;">KWILCOX@MICROWAVETECH.COM</a>","http://www.microwavetechniques.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NWRVPK2J3MD6">11</a>","SAFETY MANAGEMENT SYSTEMS LLC","WILLIAM MAHONEY","Principal","40 MAIN ST STE 13-140","","BIDDEFORD","ME","04005-5179","SMSLLC provides Quality, Safety, and Environmental Management System services to the Marine Industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#109;&#97;&#104;&#111;&#110;&#101;&#121;&#64;&#115;&#109;&#115;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">wmahoney@smsllc.com</a>","http://www.smsllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEQMW3P1S845">12</a>","MESSER TRUCK EQUIPMENT","JEFFREY MESSER","","170 WARREN AVE","","WESTBROOK","ME","04092-4439","For over 120 years and 4 generations, we provide commercial vehicle equipment solutions. We install all types of truck bodies--platform, dump, service, van, refuse. We also stock all the accessories you will need for your work truck or van. Snowplows, sanders, lift gates, cranes, shelving, and ladder racks are all items we install and service. We also custom fabricate with steel and aluminum, so we can produce your idea or customize an existing truck. We have a 60 foot paint booth, so we can paint all the bodies we install to your spec. We are a SDVOSB.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#46;&#109;&#101;&#115;&#115;&#101;&#114;&#64;&#109;&#101;&#115;&#115;&#101;&#114;&#98;&#117;&#105;&#108;&#116;&#46;&#99;&#111;&#109;">jeff.messer@messerbuilt.com</a>","http://www.messerbuilt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKH9WJMLA9Z5">13</a>","DIRIGO R & D INC","CHRISTOPHER TUPPER","Technical Director","613 CUNDYS HARBOR RD","","HARPSWELL","ME","04079-4350","Electronic Products Design","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#116;&#117;&#112;&#112;&#101;&#114;&#54;&#48;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ctupper60@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PTFYTET7U6W9">14</a>","INTERMAT","ALYSSA SEVERANCE","President","389 HILL ST","","BIDDEFORD","ME","04005-4335","High Temperature Composites, C/C, C/P, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#115;&#101;&#118;&#101;&#114;&#97;&#110;&#99;&#101;&#64;&#102;&#105;&#98;&#101;&#114;&#109;&#97;&#116;&#101;&#114;&#105;&#97;&#108;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">aseverance@fibermaterialsinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R8NBLLWCK368">15</a>","MARITIME SURVEILLANCE ASSOCIATES INC","MIKE WORTHINGTON","","2 PEGASUS ST","STE 1","BRUNSWICK","ME","04011-5018","Custom software development and engineering services. Several software products currently used by US Gov agencies and labs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#119;&#111;&#114;&#116;&#104;&#105;&#110;&#103;&#116;&#111;&#110;&#64;&#109;&#115;&#97;&#100;&#101;&#118;&#116;&#101;&#97;&#109;&#46;&#99;&#111;&#109;">mike.worthington@msadevteam.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HERLGKS8J1K4">16</a>","W.D. MATTHEWS MACHINERY CO.","RYAN MARSTON","","901 CENTER ST","","AUBURN","ME","04210-6456","Full service material handling equipment dealer. We offer sales of new and used equipment, as well as parts, service, renatal and leasing. WDM covers 4 New England States with over 50 factory certified technicians.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#109;&#97;&#114;&#115;&#116;&#111;&#110;&#64;&#119;&#100;&#109;&#97;&#116;&#116;&#104;&#101;&#119;&#115;&#46;&#99;&#111;&#109;">rmarston@wdmatthews.com</a>","www.wdmatthews.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LN1KE18A4XE8">17</a>","H. O. BOUCHARD, INC","JEFF BOUCHARD","","349 COLDBROOK RD","","HAMPDEN","ME","04444-1503","H.O. Bouchard has been specializing in transportation & maintenance services since 1958 and continuously offers excellence to their customers and the community. H.O. Bouchard Inc. has been an innovator in the Northeast trucking industry ever since Harold Bouchard began hauling gravel with a single Dodge truck back in 1958.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#102;&#102;&#98;&#64;&#104;&#111;&#98;&#111;&#117;&#99;&#104;&#97;&#114;&#100;&#46;&#99;&#111;&#109;">jeffb@hobouchard.com</a>","http://www.hobouchard.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EBECYU83K777">18</a>","LYMAN MORSE BOATBUILDING, INC.","STEPHANIE FARNHAM","","84 KNOX ST","","THOMASTON","ME","04861-3714","Since 1840, Lyman Morse Boatbuilding has been Maine's premier 'green' manufacturer of custom yachts constructed with renewable energy sources. We specialize in composites and metal to create cutting-edge personal and professional watercraft up 150 feet.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#112;&#104;&#64;&#108;&#121;&#109;&#97;&#110;&#109;&#111;&#114;&#115;&#101;&#46;&#99;&#111;&#109;">steph@lymanmorse.com</a>","www.lymanmorse.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNQSLRBEYM54">19</a>","NAUTEL MAINE INC","GARY GALBRAITH","","201 TARGET CIR","","BANGOR","ME","04401-5719","Nautel designs and manufactures electronic navigational beacon and radio broadcast transmitters and accessories for military and commercial communication applications (aeronautical, marine, land).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#103;&#97;&#108;&#98;&#114;&#97;&#105;&#116;&#104;&#64;&#110;&#97;&#117;&#116;&#101;&#108;&#46;&#99;&#111;&#109;">ggalbraith@nautel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKJKM46NN6X4">20</a>","TANKS UNLIMITED","JOHN MAHAR","","36 NORTHWOOD DR","","PORTLAND","ME","04103-2055","Design and supply steel, fiberglass and poly tanks and pumping systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#97;&#104;&#97;&#114;&#64;&#116;&#97;&#110;&#107;&#115;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">jmahar@tanksunlimited.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HN4VAYL9RSL5">21</a>","SILVEX INCORPORATED","AARON ATKINSON","","45 THOMAS DR","","WESTBROOK","ME","04092-3847","With over 50 years of providing quality finishes such as silver, anodize, phosphate, platinum, electroless nickel and others to some of the world’s leading manufacturers in the aerospace, defense, firearms, electronics, power generation, water purification, and communications industries. Silvex understands that your industry requires strict adherence to deadlines, rigid quality control, outstanding customer service, and a can-do attitude. That is why we are only one of a very few companies to have won Products Finishing’s Top Shop Award all five years of its existence. Silvex is a family owned small business located in Westbrook, Maine and is a AS9100D, ISO 9001:2015 certified company and is continuously expanding our scope of accreditation with NADCAP. At Silvex, it is our mission to provide the service and technical expertise that enables our customers to accomplish their goals.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#114;&#111;&#110;&#97;&#116;&#107;&#105;&#110;&#115;&#111;&#110;&#64;&#115;&#105;&#108;&#118;&#101;&#120;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">aaronatkinson@silvexinc.com</a>","http://www.silvexinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DUM6JQ4PRNM4">22</a>","MARKET DECISIONS, LLC","PATRICK MADDEN","","511 CONGRESS ST STE 801","","PORTLAND","ME","04101-3477","Market Decisions offers sophisticated research capabilities. We design and implement telephone, mail and internet surveys, focus groups, and qualitative interviews. We specialize in health-care, public policy and program evaluation research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#109;&#97;&#100;&#100;&#101;&#110;&#64;&#109;&#97;&#114;&#107;&#101;&#116;&#100;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">pmadden@marketdecisions.com</a>","http://www.marketdecisions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V9XNLWH9NCK3">23</a>","NIXON MATTHEW","MATTHEW NIXON","","1005 FORESIDE RD","","TOPSHAM","ME","04086-5314","Upland saltwater recirculating aquaculture production and R&D, marine consulting including water quality, circulation patterns, dye studies, and permit enforcement, freshwater aquaponics production, and additive manufacturing R&D","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#116;&#116;&#64;&#77;&#117;&#100;&#100;&#121;&#82;&#105;&#118;&#101;&#114;&#70;&#97;&#114;&#109;&#46;&#111;&#114;&#103;">Matt@MuddyRiverFarm.org</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZSNSH25F9MG5">24</a>","PACKGEN","JENNIFER BLOSSOM","","160 CASCADES DR","","AUBURN","ME","04210-7830","Packgen, an environmental packaging company,and producer of oil containment booms. Designer, developer and manufacturer lighweight composite packaging for environmental,chemical producers, refineries, catalysts providers, mining operations,food processor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#108;&#111;&#115;&#115;&#111;&#109;&#64;&#112;&#97;&#99;&#107;&#103;&#101;&#110;&#46;&#99;&#111;&#109;">jblossom@packgen.com</a>","www.packgen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KX8FMVVPQEX5">25</a>","LATTICE TECHNOLOGY GROUP INC.","DANIEL BAGLEY","","154 DEVELOPMENT DR","STE B","LIMESTONE","ME","04750-6173","Engineering consulting services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#46;&#98;&#97;&#103;&#108;&#101;&#121;&#64;&#108;&#97;&#116;&#116;&#105;&#99;&#101;&#116;&#101;&#99;&#104;&#46;&#110;&#101;&#116;">dan.bagley@latticetech.net</a>","http://www.latticetech.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XSL5LUMQL6U5">26</a>","CREDERE ASSOCIATES, LLC","RIP PATTEN","","776 MAIN ST","","WESTBROOK","ME","04092-3419","Environmental and Geotechnical consulting, Phase I ESA, Phase II Investigations, and Remediation, geotechnical investigations, construction monitoring, hydrogeologic investigations, GIS, hazardous building material surveys, Brownfields redevelopment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#112;&#97;&#116;&#116;&#101;&#110;&#64;&#99;&#114;&#101;&#100;&#101;&#114;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">rpatten@crederellc.com</a>","https://www.crederellc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KE4MSY735NX9">27</a>","GSK INC","GARY KOLLMORGEN","","6 NEWBURY RIDGE","","WINDHAM","ME","04062-5042","Technical and Program management services for diverse S&T/R&D projects. Core competencies include distributed and game based modeling and simulation; human, social, cultural, behavioral modeling; decision sciences, technical assessment; and technical writing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#107;&#111;&#108;&#108;&#109;&#111;&#114;&#103;&#101;&#110;&#64;&#103;&#115;&#107;&#105;&#110;&#99;&#46;&#110;&#101;&#116;">gkollmorgen@gskinc.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D84HF9BK2WY7">28</a>","ENGINEERED CONSTRUCTION SERVICES, INC.","TIM DAVISON","","28 POND RD","","RAYMOND","ME","04071-6018","Fabrication and installation of piping & piping systems, Co-Generation units, Boilers, Start up of plants and equipment, AutoCAD 3D capable,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#100;&#97;&#118;&#105;&#115;&#111;&#110;&#64;&#101;&#99;&#115;&#105;&#110;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">tdavison@ecsincorp.com</a>","http://www.ecsincorp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJJUF5US59F3">29</a>","DYNAMIC GRID INC.","KAY AIKIN","","148 MIDDLE ST STE 1C","","PORTLAND","ME","04101-4191","The NexusX software is the “super glue that connects data islands.” Used for information management needs at the USGS it provides unique capabilities in information management, knowledge creation and complex control systems spaces.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#121;&#46;&#97;&#105;&#107;&#105;&#110;&#64;&#105;&#110;&#116;&#114;&#111;&#115;&#112;&#101;&#99;&#116;&#105;&#118;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">kay.aikin@introspectivesystems.com</a>","https://dynamicgrid.ai"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZPC2PGAN4519">30</a>","CCF VENTURES, INC.","CHARLES FEAGA JR.","","154 MAINE AVENUE","","BANGOR","ME","04401-4342","FAA certified repair station. General Aviation Repair, Maintenance, Avionics, Part Sales and aircraft workstation platform fabbrication. Cessna authorized customer service & support facility. Authorized Garmin distributor.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#117;&#99;&#107;&#46;&#102;&#101;&#97;&#103;&#97;&#64;&#109;&#97;&#105;&#110;&#101;&#97;&#101;&#114;&#111;&#46;&#99;&#111;&#109;">chuck.feaga@maineaero.com</a>","http://www.maineaero.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L8P1KX7Y7F34">31</a>","ROADSAFE LLC","CHRISTINE CARRIGAN","","12 MAIN ST","","CANTON","ME","04221-3118","RoadSafe LLC provides In-Service Performance Evaluations (ISPE) of roadside safety features, Software Development, Web Utilities, Consulting, Research, Design, Finite Element Analysis (FEA), Non-Destructive Testing (NDT), Litigation Support, and Drafting Services in the areas of Roadside and Highway Safety. We are a Non-Destructive Testing (NDT) field service and NDT consulting service provider in New England. Our NDT services include ultrasonic weld inspection and straight beam ultrasonic testing (UT), ultrasonic thickness testing (UTT), wood utility pole testing, NDT consulting / Level III NDT services which is the training and certification of personnel in the use of ultrasonics, NDT program development, and NDT procedure development.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#116;&#105;&#110;&#101;&#64;&#114;&#111;&#97;&#100;&#115;&#97;&#102;&#101;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">christine@roadsafellc.com</a>","https://www.roadsafellc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HSYPCUQ7SWZ3">32</a>","DIRIGO STRATEGIES LLC","BRIAN PERKINS","","101 MAIN ST","","THOMASTON","ME","04861-3610","Provides technical and professional papers, studies, reports, and advice on Coast Guard operations, maintenance, support, design, and tactics.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#112;&#101;&#114;&#107;&#105;&#110;&#115;&#64;&#100;&#105;&#114;&#105;&#103;&#111;&#115;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">bperkins@dirigostrategies.com</a>","http://www.dirigostrategies.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N1LRKTJ6FJC3">33</a>","COMPOTECH INC","PAUL MELROSE","","55 BAKER BLVD","STE 203","BREWER","ME","04412-2298","Compotech is a technology company that specializes in designing, marketing and manufacturing composites materials. Our typical clients are in the following sectors: defense, power transmission, wind energy, communication, oil and gas and infrastructure.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#109;&#101;&#108;&#114;&#111;&#115;&#101;&#64;&#99;&#111;&#109;&#112;&#111;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">pmelrose@compotechinc.com</a>","http://www.compotechinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R4X7D2VHL9F6">34</a>","KAZAK TECHNOLOGIES, INC","MIKE MCALEENAN","","4 TALCOTT DR","","WOOLWICH","ME","04579-4529","KaZaK specializes in novel design solutions and finite element analysis of high performance, volumetric efficient, lightweight structures that take advantage of low-cost automated pultrusion and extrusion manufacturing. KaZaK is an active SBIR company","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#109;&#99;&#97;&#108;&#101;&#101;&#110;&#97;&#110;&#64;&#107;&#97;&#122;&#97;&#107;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">mmcaleenan@kazaktechnologies.com</a>","www.kazaktechnologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T2K6WM9HMSV6">35</a>","WORLDWIDE RISK MANAGEMENT INC","JASON ALLEN","","95 EXCHANGE ST","","PORTLAND","ME","04101-5037","Worldwide Risk Management, Inc. specializes in helping companies of all sizes maintain and satisfy the stringent requirements of conducting business internationally. We assist companies from all parts of the world in developing insurance and risk management programs that will suit most any situation. We can customize an insurance program that is right for you and your business. Whether you need Defense Base Act (DBA) Coverage, Foreign Liability, Defense Contractors Insurance, Foreign Workers Compensation, or Medical Evacuation Coverage, our experienced agents will find a way to ensure you have the coverage you need to successfully run your business no matter where you are in the world.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#108;&#108;&#101;&#110;&#106;&#64;&#119;&#111;&#114;&#108;&#100;&#119;&#105;&#100;&#101;&#114;&#105;&#115;&#107;&#46;&#99;&#111;&#109;">Allenj@worldwiderisk.com</a>","https://www.worldwiderisk.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RW35GF2HD771">36</a>","MERIDIAN MSI LLC","MARK KOPYC","","18 PLEASANT ST","STE 205","BRUNSWICK","ME","04011-2201","Standard Missile and AEGIS Combat System Design, Integration, Test and Evaluation, and modeling and simulation engineering services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#46;&#107;&#111;&#112;&#121;&#99;&#64;&#109;&#101;&#114;&#105;&#100;&#105;&#97;&#110;&#45;&#109;&#115;&#105;&#46;&#99;&#111;&#109;">mark.kopyc@meridian-msi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H1ZGG92Y2TB1">37</a>","ELMET TECHNOLOGIES LLC","DAN DRINAN","","1560 LISBON ST","","LEWISTON","ME","04240-3519","Molybdenum, tungsten and related alloys. Manufacturer of refractory metals in various product forms, as well as metal components and assemblies. Elmet supplies various markets, including, but not limited to, flat panel display, sapphire growth, high temperature furnace, medical, semiconductor, lighting, electronics, aerospace and defense","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#100;&#114;&#105;&#110;&#97;&#110;&#64;&#101;&#108;&#109;&#101;&#116;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">ddrinan@elmettech.com</a>","www.elmettechnologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJT5ERY72NJ3">38</a>","WELLS PROFESSIONAL CONSULTING SERVICES LLC","WILLIAM CARON","","31 JAMES ST","","WELLS","ME","04090-6151","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#119;&#101;&#108;&#108;&#115;&#112;&#99;&#115;&#46;&#99;&#111;&#109;">info@wellspcs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SM3SZ7KLA7U3">39</a>","QUODDY BUILDERS LLC","PAUL JACOBS","","295 SMITHFIELD RD","","OAKLAND","ME","04963-4109","Quoddy Builders LLC is a professional licensed contractor that provides residential construction, commercial, both new construction and remodels. Established in 2014 we are a Native American owned and operated business. Our reputation for attention-to-detail, integrity and consistent, skillful execution of jobs result in our 'High Standard of Excellence' and satisfied clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#117;&#108;&#64;&#113;&#117;&#111;&#100;&#100;&#121;&#98;&#117;&#105;&#108;&#100;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">paul@quoddybuilders.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMPGKE21WWW3">40</a>","WATERWORKS MANAGEMENT, LLC","MARY BOWERS","","67 AMES RD","","ALNA","ME","04535-3819","The company’s scope of work includes all aspects of water quality issues such as permitting, filing grant applications, interpreting water quality regulations, mitigating water quality problems, assessing sustainable water use, and providing water sampling personnel. The primary focus of the business is drinking water quality for public health safety.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#105;&#110;&#101;&#104;&#50;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">maineh2o@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J35NJGMK7QA8">41</a>","DOJO RESEARCH & CONSULTING, LLC","DONALD JORDAN","","68 RIVER RD","","WINDHAM","ME","04062-4047","Flow analysis, thermal analysis, mechanical design, 3D printing,FEA, CFD","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#106;&#111;&#114;&#100;&#97;&#110;&#64;&#100;&#111;&#106;&#111;&#114;&#101;&#115;&#101;&#97;&#114;&#99;&#104;&#46;&#99;&#111;&#109;">djordan@dojoresearch.com</a>","www.dojoresearch.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LN4EEXYJDJE3">42</a>","TRADITIONAL RIGGING COMPANY","THOMAS WARD","","654 COLLINSTOWN RD","","APPLETON","ME","04862-7009","Design and manufacture of sails and standing and running rigging for ships, vessels any tonnage; canvas work, awnings, covers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#64;&#116;&#114;&#97;&#100;&#105;&#116;&#105;&#111;&#110;&#97;&#108;&#114;&#105;&#103;&#103;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">tom@traditionalrigging.com</a>","www.traditionalrigging.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EKF4RL7G96E1">43</a>","DGCPARTNERS LLC","DONALD GLEASON JR","","590 GARDINER RD","","DRESDEN","ME","04342-3037","DGCpartners, LLC is a fully insured, VOSB, independent, technology-agnostic management & technology consulting firm offering business & technology advisory services. DGC brings experienced resources that make the critical difference at the beginning of the Business-IT turnaround, strategic program, or business startup/rescue/expansion – in government (Medicare, Medicaid, and technology), manufacturing, aerospace & defense, retail, healthcare, and insurance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#110;&#46;&#103;&#108;&#101;&#97;&#115;&#111;&#110;&#64;&#100;&#103;&#99;&#112;&#97;&#114;&#116;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">don.gleason@dgcpartners.com</a>","https://www.DGCpartners.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TFJDQBYB9K94">44</a>","KELSON MARINE CO","TOBIAS DEWHURST","","2 PORTLAND FISH PIER STE 210","","PORTLAND","ME","04101-4675","Kelson Marine Co. is an ocean engineering firm known for its people-centered culture and world-class technical skills. Markets in which Kelson has a unique focus include: •	Marine aquaculture •	Marine Hydrokinetic renewable energy (Wave energy conversion and tidal energy conversion) •	Offshore floating wind energy •	Floating solar energy •	Advanced mooring systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#98;&#121;&#64;&#107;&#101;&#108;&#115;&#111;&#110;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">toby@kelsonmarine.com</a>","KelsonMarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y5AKKWUJAZB4">45</a>","ALISTER INC","REBECCA NEITHERCUTT","","108 PERHAM ST STE 1","","FARMINGTON","ME","95616-2103","Blockchain Consulting, Blockchain Services, Supply Chain Consulting, Evidence Management, Evidence Consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#101;&#98;&#101;&#99;&#99;&#97;&#64;&#97;&#108;&#105;&#115;&#116;&#101;&#114;&#105;&#110;&#99;&#46;&#111;&#114;&#103;">Rebecca@alisterinc.org</a>","https://www.alisterinc.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L2BJGC5R5HK6">46</a>","COMMON CENSUS INC","DANIEL FREUND","","90 BRIDGE ST UNIT 105","","WESTBROOK","ME","04092-2887","Enroll and administer benefits and related administrative programs (FSA, COBRA, etc.) for an unlimited number of locations, divisions and classes with all benefits using any payroll or HCM or HRIS system. API, SSO capable; SOC 1&2; Services are available for clients with no database to prime the system ('open access). Serves clients of any size; HUBZone certified company; Competitive pricing with capabilities typical of systems costing 5-10X more. Flexible reporting and data management, 834 EDI file management as well as proprietary files managed with automated import and export capabilities; multilingual user interface; training via webinar; coordinates with call centers; coordinates with multiple third-party administrators for ACA, Flexible Spending Accounts, Health Care Savings Accounts, retirement plan coordination.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#110;&#105;&#101;&#108;&#46;&#102;&#114;&#101;&#117;&#110;&#100;&#64;&#99;&#111;&#109;&#109;&#111;&#110;&#99;&#101;&#110;&#115;&#117;&#115;&#46;&#99;&#111;&#109;">daniel.freund@commoncensus.com</a>","www.commoncensus.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YA2CK5WMKBJ7">47</a>","MUHAMMAD H KHAN","MUHAMMAD KHAN","","785 COURT ST","","AUBURN","ME","04210-4011","HR Consulting firm, specializing in building diverse, equitable, and inclusive organizations. We provide services to audit organizational gaps around DE&I, diversity recruiting services to access top talent, develop an organizational road map for advancing belonging, equity, and inclusion, DEI training, and employee & key stakeholder networks to advance access, equity, and inclusion.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#109;&#122;&#97;&#107;&#49;&#48;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">humzak101@gmail.com</a>","https://www.inclusionmaine.org/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EQZFC9NLLFP5">48</a>","INSULSAFE TEXTILES, INC.","DEAN WATERMAN","","55 HOLLAND ST","","LEWISTON","ME","04240-7515","Manufacturing everything from High Tech Technical textiles for safety and apparel to Scrim for filtration products and all things in between","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#119;&#97;&#116;&#101;&#114;&#109;&#97;&#110;&#64;&#105;&#110;&#115;&#117;&#108;&#115;&#97;&#102;&#101;&#46;&#99;&#111;&#109;">dwaterman@insulsafe.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VXB5ZNM6U189">49</a>","NT CONNECT HOLDINGS, INC.","ANASTASIOS KYRIAKIDES II","","2 STORER ST STE 207C","","KENNEBUNK","ME","04043-6882","NT Connect Holdings, Inc., established in 2018, is a leading communication intelligence and IT solutions provider, specializing in the development and operation of mission-critical communications networks. NT Maritime, a division of NT Connect Holdings, Inc., serves as a leading provider of communication intelligence and IT solutions, specializing in the development and operation of mission-critical communications networks. Additionally, it offers Low Earth Orbit satellite connectivity, location services, contact tracing, access controls, and cutting-edge telehealth technologies tailored for the global maritime industry. NT Maritime’s customers include Carnival UK, which owns and operates Cunard Line and P&O Cruises, as well as Disney Cruise Line, Holland America/Princess Cruises, and Norwegian Cruise Line Holdings.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#105;&#99;&#107;&#64;&#110;&#116;&#99;&#111;&#110;&#110;&#101;&#99;&#116;&#46;&#99;&#111;&#109;">nick@ntconnect.com</a>","www.ntconnect.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.105&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

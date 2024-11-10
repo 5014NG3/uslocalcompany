@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Delaware;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.01 seconds and 1.02 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 54 
+(of 54 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UM41G2KG4UN5">1</a>","TRI-STATE CARPET, INC","THOMAS HICKEN","CHAIRMAN","2 S POPLAR ST","","WILMINGTON","DE","19801-5052","FURNISH AND INSTALL VARIOUS FLOOR COVERINGS SUCH AS CARPET, RESILIENT FLOORING, HARDWOOD, CERAMIC, ETC. CARPET CLEANING. ENVIRONMENTALLY SAFE REP-TILE. RECLAMATION OF ALL REMOVED CARPET (RECYCLED INTO AUTO PARTS AND CARPET)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#105;&#99;&#107;&#101;&#110;&#64;&#116;&#114;&#105;&#115;&#116;&#97;&#116;&#101;&#99;&#112;&#116;&#46;&#99;&#111;&#109;">thicken@tristatecpt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDH8DM4ZGS55">2</a>","DATATECH ENTERPRISES INC","VALEH NAZEMOFF","President","36322 SUNFLOWER BLVD","","SELBYVILLE","DE","19975-3751","25 years,QA,Business Analyst, Data Management Infrastucture,Architectural,Aviation,Training Engineering, Woman-owned,8a, FAA, GSA, SeaPort, ECS-III","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#101;&#104;&#46;&#110;&#97;&#122;&#101;&#109;&#111;&#102;&#102;&#64;&#97;&#99;&#111;&#108;&#121;&#115;&#116;&#46;&#99;&#111;&#109;">valeh.nazemoff@acolyst.com</a>","http://www.acolyst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XW1CZK5FGLK8">3</a>","COUNTY ENVIRONMENTAL, INC.","HOWARD MORRISON","PROJECT MANAGER","461 CHURCHMANS RD","","NEW CASTLE","DE","19720-3156","Asbestos Encapsulation/Removal, Lead Abatement, HAZMAT cleanup, HVAC/Duct Cleaning, Coatings, mold remediation, construction, FEMA, Disaster, etc","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#99;&#111;&#117;&#110;&#116;&#121;&#103;&#114;&#112;&#46;&#99;&#111;&#109;">lmorrison@countygrp.com</a>","https://www.countygrp.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GFDDQ63RE5F3">4</a>","POTTS WELDING & BOILER REPAIR CO INC","GEORGE SHILLING","Customer Development","1901 OGLETOWN RD","","NEWARK","DE","19711-5437","We maufacture boiler parts. We also have a field service group to repair boilers. Some of the boiler parts we manufacture: Waterwall Panels, Loose Tubes, Burner Panels, Superheaters, Generating Banks, Economizers, Headers Ect. For both Power and Marine","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#104;&#105;&#108;&#108;&#105;&#110;&#103;&#64;&#112;&#111;&#116;&#116;&#115;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">gshilling@pottswelding.com</a>","www.pottswelding.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EJYHDNFK5967">5</a>","CREATIVE FLOORING CONTRACTORS, INC.","LISA ROSE","TREASURER","95 PIER HEAD BLVD STE 3","","SMYRNA","DE","19977-8203","FURNISH AND INSTALL COMMERCIAL FLOOR COVERINGS, INCLUDING CARPET, SHEET VINYL, VCT, WALL BASE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#115;&#97;&#64;&#99;&#102;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#111;&#114;&#115;&#46;&#110;&#101;&#116;">lisa@cfcontractors.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JASQS72WQ5D4">6</a>","GUARDIAN ENVIRONMENTAL SERVICES CO INC","JOSEPH CUNANE","Project Manager","70 ALBE DR","","NEWARK","DE","19702-1322","Guardian Environmental Services Company, Inc. (GES) provides full service environmental remediation, infrastructure construction and facility support services. We were established in 1987, and are a Service Disabled Veteran Owned Small Business (SDVOSB).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#117;&#110;&#97;&#110;&#101;&#64;&#103;&#101;&#115;&#111;&#110;&#99;&#97;&#108;&#108;&#46;&#99;&#111;&#109;">jcunane@gesoncall.com</a>","http://www.gesoncall.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N3HCBYZJNW93">7</a>","JOSEPH A. COCHRAN & SONS, INC.","JOSEPH COCHRAN","","1483 RED LION RD","","BEAR","DE","19701-1817","Excavating, mechanical contracting, General maintenance, water and sewer main installation, snow removal.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#108;&#108;&#121;&#64;&#99;&#111;&#99;&#104;&#114;&#97;&#110;&#115;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">kelly@cochransexcavating.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W9LAJKNK7JD9">8</a>","BRIGHTFIELDS, INC.","MARK LANNAN","","801 INDUSTRIAL ST","","WILMINGTON","DE","19801-4368","BrightFields, Inc. is an environmental consulting and remediation services firm located in Wilmington, Delaware. We are a woman-owned business and certified WBE/DBE. The company provides environmental management and remediation services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#97;&#110;&#110;&#97;&#110;&#64;&#98;&#114;&#105;&#103;&#104;&#116;&#102;&#105;&#101;&#108;&#100;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mlannan@brightfieldsinc.com</a>","http://www.brightfieldsinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JF8LKPT6WJL4">9</a>","ADVANTAGE INSULATION INC","RICHARD KAROLCZAK","","7843 CANTERBURY RD","","FELTON","DE","19943-5218","Insulation of mechanical systems, duct, pipe, tanks, vessels and equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#100;&#118;&#97;&#110;&#116;&#97;&#103;&#101;&#105;&#110;&#115;&#117;&#108;&#97;&#116;&#105;&#111;&#110;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">advantageinsulationinc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QUU7KSJG1RE4">10</a>","MOUNTAIN CONSULTING, INC.","KIM ADAMS","","103 S BRADFORD ST","","DOVER","DE","19904-7317","We provide design/build services, civil engineering design & consulting, highway construction, bridge construction, general construction, construction management, surveying, construction layout & oversight, stormwater management & design, permitting, CADD, facility & housing maintenance, stormwater installation systems, stream restoration, renovation, graphic design, & business certification consulting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#100;&#97;&#109;&#115;&#64;&#109;&#111;&#117;&#110;&#116;&#97;&#105;&#110;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">kadams@mountainconsultinginc.com</a>","http://www.mountainconsultinginc.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMWABTLKYJU2">11</a>","BURKE EQUIPMENT CO","CHRIS WAGNER","","54 ANDREWS LAKE RD","ROUTE 13","FELTON","DE","19943-4633","Since our opening in 1949, Burke's quality dealership in anchored in our experienced sales, service, parts, and rental departments. We carry Kubota, Bobcat, Stihl, Toro, Walker, Wright and other top of the line commercial equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#119;&#97;&#103;&#110;&#101;&#114;&#64;&#98;&#117;&#114;&#107;&#101;&#101;&#113;&#117;&#105;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">cwagner@burkeequipment.com</a>","http://www.burkeequipment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M3DVXL7K83T5">12</a>","ADVANCE OFFICE INSTALLATIONS INC.","JOSEPH CUTLER","","37 LUKENS DR STE B","","HISTORIC NEW CASTLE","DE","19720-7710","Advance Office Installations, Inc (AOI), is a full service office furniture installation company. We provide and sell new and used office furniture, as well as install, relocate, store, and fix office furniture.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#117;&#116;&#108;&#101;&#114;&#64;&#97;&#111;&#105;&#45;&#105;&#110;&#99;&#46;&#117;&#115;">jcutler@aoi-inc.us</a>","http://www.aoi-inc.us/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=W8KZHYUF2DQ1">13</a>","OVERHEAD DOOR COMPANY OF DELMAR, INC.","ROBERT GROSS","","603 MARSHALL ST","","MILFORD","DE","19963-2307","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#104;&#100;&#98;&#111;&#98;&#98;&#121;&#64;&#118;&#101;&#114;&#105;&#122;&#111;&#110;&#46;&#110;&#101;&#116;">ohdbobby@verizon.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YMLZNTRHN395">14</a>","SOUND-N-SECURE INC","MELISSA PINGUE","","20444 PINGUE DR","","MILFORD","DE","19963-4276","Security Systems, Access Control Systems, CCTV Systems, Background music, P.A. Systems, telephone (VOIP), Stage lighting/sound, Intercom, Duress","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#117;&#110;&#100;&#45;&#110;&#45;&#115;&#101;&#99;&#117;&#114;&#101;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">sound-n-secure@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HR5KNDKX31M1">15</a>","LINDA BERNICE MCCORMICK","LINDA MCCORMICK","","200 TYRONE AVE","","WILMINGTON","DE","19804-1929","Profession Contract Administration (PMP),AbilityOne Distributor, General Contracting, Reinforced Steel Placement\ and Painting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#76;&#105;&#110;&#100;&#97;&#109;&#99;&#99;&#111;&#114;&#109;&#105;&#99;&#107;&#53;&#49;&#53;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Lindamccormick515@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NNGKSPWLLBP1">16</a>","NETWORK DESIGN TECHNOLOGIES INC","JOSEPH RUFFIN","","1000 N WEST ST","STE 1200","WILMINGTON","DE","19801-1058","We leverage over a century of combined expertise in IT infrastructure contracting and related electrical services, supporting security systems, advanced lighting control, and voice and facilities automation design projects.We manage and perform outside plant (OSP) projects, including aerial and underground conduit trunk fiber installations, in-house. Core Capabilities: Interior & Exterior Power Distribution IT Design and Support Premises Structured Cabling Services Electrical Utility Transmission & Distribution Construction Management – Electrical & Mechanical Additional Services: Transit Services Telecommunications Commercial & Industrial Electrical Solutions Reseller of Solar, Wind, and Co-Generation Distribution Solutions","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#114;&#117;&#102;&#102;&#105;&#110;&#64;&#110;&#101;&#116;&#119;&#111;&#114;&#107;&#100;&#101;&#115;&#105;&#103;&#110;&#116;&#101;&#99;&#104;&#110;&#111;&#108;&#111;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">Jruffin@networkdesigntechnologies.com</a>","http://www.networkdesigntechnologies.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UWL4ENSLU8R7">17</a>","EASTERN HIGHWAY SPECIALISTS, INC.","ROBERT FIELD","","3604 DOWNING DR","","WILMINGTON","DE","19802-2406","Bridge Construction and Repair. Concrete Repairs, Structural Steel Repair","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#102;&#105;&#101;&#108;&#100;&#64;&#101;&#97;&#115;&#116;&#101;&#114;&#110;&#104;&#105;&#103;&#104;&#119;&#97;&#121;&#115;&#112;&#101;&#99;&#105;&#97;&#108;&#105;&#115;&#116;&#115;&#46;&#99;&#111;&#109;">rfield@easternhighwayspecialists.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XDN2HJ4SZJF3">18</a>","DELAWARE AUDIO VISUAL INTEGRATION & DESIGN, LLC","BILL SAHM","","38 READS WAY","","NEW CASTLE","DE","19720-1649","Full service audio visual integration. Design, install and service systems. Crestron/AMX certified programming. Certified Polycom/Tandberg VC reseller.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#100;&#101;&#108;&#97;&#119;&#97;&#114;&#101;&#97;&#118;&#46;&#99;&#111;&#109;">sales@delawareav.com</a>","WWW.DELAWAREAV.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HMDLU4NF9KN9">19</a>","GUARDIAN FENCE COMPANY","DAVID SEEMANS","","4783 SUMMIT BRIDGE RD","","MIDDLETOWN","DE","19709-8815","Fence and Gate Contractor Powder Coating100","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#118;&#101;&#121;&#83;&#64;&#103;&#117;&#97;&#114;&#100;&#105;&#97;&#110;&#45;&#102;&#101;&#110;&#99;&#101;&#46;&#99;&#111;&#109;">DaveyS@guardian-fence.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UKU2FCGUKTF1">20</a>","CGC GEOSERVICES LLC","STACY ZIEGLER","","1000 DAWSON DR","STE C","NEWARK","DE","19713-5805","CGC Geoservices provides soil and rock sampling for geotechnical/environmental evaluations and water well, monitor well and geothermal well installation. In addition, we provide exacavation and maintenance services, as well as construction management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#122;&#105;&#101;&#103;&#108;&#101;&#114;&#64;&#99;&#103;&#99;&#103;&#101;&#111;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">sziegler@cgcgeoservices.com</a>","https://cgcgeoservices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X7TYHTXMVK49">21</a>","LIGHTHOUSE CONSTRUCTION, INC.","G. MICHAEL GLICK","","859 GOLF LINKS LN","STE 1","MAGNOLIA","DE","19962-1188","General Contractor Construction Manager Property Maintenance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#71;&#108;&#105;&#99;&#107;&#64;&#76;&#72;&#67;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">MGlick@LHConstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y3F1LG9P3JX5">22</a>","DSS SERVICES, INC.","DWAYNE HOLMES","","373 W NORTH ST STE B","","DOVER","DE","19904-6748","We are dedicated to Customer Satisfaction based on pride in workmenship","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#104;&#111;&#108;&#109;&#101;&#115;&#64;&#100;&#115;&#115;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">dholmes@dssservicesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J165C6LPZJJ5">23</a>","P & C ROOFING INC","ANGELA MARIANO","","35 SOUTHGATE BLVD","","NEW CASTLE","DE","19720-2069","Commercial, industrial, and residential flat and sloped roofing services including re-roofing, new construction, maintenance, repair, and service programs. We also have an extensive sheet metal shop , fabricating all necessary metal and flashing required for direct roofing jobs and outside sales of gutters, downspouts, and specialty metal. We also install garden/vegetative roofing, waterproofing, air barriers, and dampproofing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#101;&#108;&#97;&#64;&#112;&#99;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">angela@pcroofinginc.com</a>","http://www.pcroofinginc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DWNJJLB35W24">24</a>","ANACONDA PROTECTIVE CONCEPTS INC","ALFRED DUNFEE","","210 EXECUTIVE DR","","NEWARK","DE","19702-3335","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#117;&#110;&#102;&#101;&#101;&#49;&#49;&#51;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">dunfee113@comcast.net</a>","http://anacondaprotectiveconcepts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RBMUWJL366K3">25</a>","ROCK SOLID CONTRACTING AND DEVELOPMENT COMPANY, LLC","NORMAN OLIVER","","1213 B ST","","WILMINGTON","DE","19801-5605","RockSolid is a certified minority owned general contractor. Rock Solid Contracting has delivered best-in-class general contracting services to customers in a wide variety of markets, including corporate & commercial, manufacturing, education, City and State governments in Delaware, Pennsyvania, and D.C. and public venues.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#111;&#114;&#109;&#105;&#110;&#115;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">stormins@aol.com</a>","https://rocksolidworks.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XT18FNQVJHN9">26</a>","ASSURANCE MEDIA LLC","JENNIFER MCKENZIE","","590 CENTURY BLVD","STE B","WILMINGTON","DE","19808-6272","We provide design and installation of digital video recording solutions. We take advantage of intelligent video analytics, rules-based motion detection and tracking along with integrated access control and remote video accessibility.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#109;&#99;&#107;&#101;&#110;&#122;&#105;&#101;&#64;&#97;&#115;&#115;&#117;&#114;&#97;&#110;&#99;&#101;&#109;&#101;&#100;&#105;&#97;&#46;&#110;&#101;&#116;">jmckenzie@assurancemedia.net</a>","http://www.assurancemedia.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GSXUNWLNZML2">27</a>","ADVANCED CONSTRUCTION TECHNIQUES INC.","PETER BOWMAN","","1000 N WEST ST STE 1200","","WILMINGTON","DE","19801-1058","Providing safe, successful, and cost effective geotechnical contracting for more than 25 years, ACT’s focus has been multifaceted geotechnical construction projects involving ground modifications, earth retention, seepage barriers and site investigations. These projects require innovative solutions, specialized techniques, and strong safety, engineering, quality control and cost management in order to deliver best value. We have successfully completed projects throughout North America and are continually improving and developing techniques and technology based on our experiences. For over two decades, our practical experience and developed skills have made us an innovator in these specialized techniques and a leader in our industry.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#98;&#111;&#119;&#109;&#97;&#110;&#64;&#97;&#103;&#116;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">pbowman@agtgroup.com</a>","http://www.advancedconstructiontechniques.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAZBCZNKL7U7">28</a>","CO SABINO CORP","VALENTINE VERISSIMO","","301 E SILVER FOX RD","","NEWARK","DE","19702-1455","C.O.Sabino operates as a general contractor,construction Management and supplier. We self perform Carpentry,Painting,Drywall,Electrical Masonry for Commercial and Institutions. We supply construction material for HVAC,plumbing,commercial pipes, fittings ect.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#86;&#97;&#108;&#64;&#99;&#111;&#115;&#97;&#98;&#105;&#110;&#111;&#46;&#99;&#111;&#109;">Val@cosabino.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZF7WD8VF5HH3">29</a>","CLEAN HANDS LLC","ZAKIA WALKER","","60 MARKHAM CT","","SMYRNA","DE","19977-3915","Clean Hands Painting LLC is a woman owned company with a gender and racially diverse workforce that provides residential and commercial painting services across the tribal-state area. Our team of professionals has the training and certifications to handle projects safely, on time, and on budget. Clean Hands is dedicated to providing woman opportunity in an historically male trade. our services include: Full service interior and exterior painting, power washing, bar and joist ceiling painting, line striping, dry wall repair, wallpaper removal, and carpentry,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#107;&#105;&#97;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#114;&#111;&#99;&#107;&#101;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">zakiawalker@rocketmail.com</a>","CLEANHANDSPAINTINGLLC.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZNK1F9UKK2R5">30</a>","KATSU TECHNOLOGIES INC.","DWIGHT EPPS","","25 GOLF VIEW DR APT C3","","NEWARK","DE","19702-1723","Katsu Technologies Incorporated provides community solar services for low and medium income households. We provide installation, maintenance, repair & sales of solar panels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#101;&#111;&#64;&#107;&#97;&#116;&#115;&#117;&#106;&#105;&#110;&#107;&#101;&#110;&#102;&#111;&#117;&#110;&#100;&#97;&#116;&#105;&#111;&#110;&#46;&#111;&#114;&#103;">ceo@katsujinkenfoundation.org</a>","katsu-technologies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFG2LG4LKMN9">31</a>","RKJ CONSTRUCTION INC","KIRTI JOSHI","","2252 SAINT JAMES DR","","WILMINGTON","DE","19808-5219","Performs commercial, institutional and Industrial (Waste water Treatment Plants) project, Rough Carpentry, doors, windows, roofing and wall panels","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#104;&#105;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">joshiconstruction@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VWU5N3TWN8Z3">32</a>","EBANKS CONSTRUCTION, LLC","STACY EBANKS","","507 FLORENCE FIELDS LN","","NEW CASTLE","DE","19720-8752","I am WOSB construction Company that specializes in Lead Abatement and Painting Contracting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#98;&#97;&#110;&#107;&#115;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ebanksconstruction@gmail.com</a>","http://ebanksconstruction.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MN84M2BTX551">33</a>","AXIOM CONSTRUCTION MANAGEMENT INC","DILIP KUMAR","","321 HAZEL AVE","","BEAR","DE","19701-4901","Axiom Construction provides General Construction services, including site work, demolition, hazardous waste remediation, concrete, masonry, roofing, plumbing, HVAC, electrical.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#105;&#108;&#105;&#112;&#64;&#65;&#120;&#105;&#111;&#109;&#99;&#111;&#110;&#115;&#116;&#109;&#103;&#109;&#116;&#46;&#99;&#111;&#109;">Dilip@Axiomconstmgmt.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T6BDZJKMBY91">34</a>","ENTERPRISE MASONRY CORPORATION","RHONDA COX","","3010 BELLEVUE AVE","","WILMINGTON","DE","19802-2402","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#99;&#111;&#120;&#64;&#101;&#109;&#99;&#98;&#114;&#105;&#99;&#107;&#46;&#99;&#111;&#109;">Rcox@emcbrick.com</a>","www.emcbrick.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRA1EHBE5G48">35</a>","TUSKEGEE AERONAUTICAL ENGINEERING INC","WESLEY JOYNER","","3401 N MARKET ST UNIT A","","WILMINGTON","DE","19802-2731","Tuskegee Aeronautical Engineering, Inc.,(TAE, Inc.), minority owned engineering company that engineers, manufactures, procures and packages airplane and other military wartime aircrafts mechanical parts, ground support equipment and miscellaneous hardware Our manufacturing capabilities consist of Set Up, Tooling, Fixturing, Programming, Operating Computer Numerical Controlled (CNC) machining, Manual Milling and/or Turning Machines to manufacture Molds, Dies, Manufactured Parts and Auxiliary Equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#115;&#99;&#101;&#111;&#64;&#116;&#117;&#115;&#107;&#101;&#103;&#101;&#101;&#117;&#115;&#46;&#99;&#111;&#109;">wesceo@tuskegeeus.com</a>","https://tuskegeeus.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TWZLZ7A6QKV3">36</a>","FIRST RATE PROPERTY RESOURCES LLC","JOHN SIMS","","15 DUSTIN DR","","CLAYMONT","DE","19703-1107","We have over 8 years experience in building services that includes renovate, repair, maintain, clean, interior and exterior services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#108;&#115;&#105;&#109;&#115;&#49;&#54;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">johnlsims16@gmail.com</a>","https://firstratellc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N6YZNP126NN4">37</a>","BATTAGLIA ASSOCIATES, INC.","CHRISTINE MEYER","","11 INDUSTRIAL BLVD","","NEW CASTLE","DE","19720-2087","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#101;&#121;&#101;&#114;&#64;&#98;&#97;&#116;&#116;&#97;&#103;&#97;&#115;&#115;&#111;&#99;&#46;&#99;&#111;&#109;">cmeyer@battagassoc.com</a>","http://www.battagassoc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DRUPEJKBM6J6">38</a>","MACCARI COMPANIES, INC.","ANTHONY MACCARI","","1700 FIRST STATE BLVD","","WILMINGTON","DE","19804-3566","Commercial and Industrial Painting, Special Coatings, Tank Linings, Sandblasting, Cementitious and Intumescent Fireproofing","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#111;&#110;&#121;&#64;&#77;&#97;&#99;&#99;&#97;&#114;&#105;&#67;&#111;&#109;&#112;&#97;&#110;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">Tony@MaccariCompanies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GKVNM88N5B47">39</a>","SERVICE RESOURCE GROUP INTERNATIONAL LLC","CHRISTOPHER PILLOTT","","1007 N ORANGE ST","","WILMINGTON","DE","19801-1239","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#112;&#105;&#108;&#108;&#111;&#116;&#116;&#64;&#115;&#114;&#103;&#45;&#105;&#110;&#116;&#46;&#99;&#111;&#109;">c.pillott@srg-int.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HRPBM9LDPJ81">40</a>","KOMPLI, LLC","KRISTIN MARINELLI","","28 STATEN DR","","HOCKESSIN","DE","19707-1339","CORE COMPETENCIES Kompl? provides vital commercial insurance and risk management consulting solutions: • Grants access to world class comprehensive, compliant & affordable commercial insurance and bonding including: cyber and privacy liability, wrap-up (OCIP|CCIP) and captive programs • Provides third party claim administrator (TPA): i.e., property, casualty, marine and healthcare insurance claims administration, compliance and other associated risk consulting services ADDED VALUE • Offering workers’ compensation insurance EMR cost reduction services DIFFERENTIATORS • Provide claims advocacy services • Assist with insurance audit disputes • Evaluate clients insurance classifications for accuracy to help avoid additional cost • Strategically partner with certain risk mitigation/management firms: i.e. safety, loss control and risk analysis","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#105;&#115;&#116;&#105;&#64;&#107;&#111;&#109;&#112;&#108;&#105;&#46;&#99;&#111;&#109;">kristi@kompli.com</a>","www.kompli.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSL1KJ7YK3N9">41</a>","DIVERSE SUPPLY SOLUTIONS LLC","KATHLEEN GORMAN","","35486 BAYVIEW LN","","MILLSBORO","DE","19966-6957","Diverse Supply Solutions is a Manufacturers' Representative of tools supplies and materials serving Customers in the Electric Utility, Construction, Arborist and Landscaping Industries.  Our Leadership team possesses 64 years’ experience in Supply Chain management and strategic sourcing, 50 of which are in these three industries. Our knowledge and experience in multiple industries enable us to leverage our position on pricing, resulting in providing our Customers with safe, high-quality, cost competitive pricing.  Kathleen has worked for fortune 500 companies over the course of her career in supply chain management. She has successfully managed products and services valued in the $50M to $100M dollar spend.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#116;&#104;&#121;&#64;&#100;&#105;&#118;&#101;&#114;&#115;&#101;&#115;&#117;&#112;&#112;&#108;&#121;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#110;&#101;&#116;">kathy@diversesupplysolutions.net</a>","www.diversesupplysolutions.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F4TUPJ6M32Y8">42</a>","KULAK-SRG INTERNATIONAL LLC","CHRISTOPHER PILLOTT","","1007 N ORANGE ST","","WILMINGTON","DE","19801-1239","KSI personnel successfully deliver engineering, procurement, construction, and camp construction and services solutions for our global clients. Our team executes projects under the most difficult conditions in the most challenging locations. We safely deliver projects and services on time and within budget.  From Design-Bid-Build to Design-Build construction, sustainability services, and protection technologies, we provide the highest quality delivery, safely, on time, and to budget. We offer our clients decades of experience as a self-performing contractor. Our experienced team including Executives, Project Managers, Superintendents and skilled labor are dedicated to the quality and success of every project.  Since much of our work is performed in-house, KSI can ensure quality throughout each project stage. Our specialized expertise, experienced professionals, and ongoing training enables us to get the job done right the first time.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#46;&#112;&#105;&#108;&#108;&#111;&#116;&#116;&#64;&#115;&#114;&#103;&#45;&#105;&#110;&#116;&#46;&#99;&#111;&#109;">c.pillott@srg-int.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JG34LWVU8GJ1">43</a>","ON THE MARK LOCATORS, LLC","TYESE GILLESPIE","","1080 S CHAPEL ST STE 201","","NEWARK","DE","19702-1379","On The Mark Locators provides professional Subsurface Engineering Utility Locating Service, we are committed to providing the necessary guidance you need in order to safely advance in your construction process. Our experience technicians and engineer team will provide facilities locating and mapping, Ground Penetration Radar, Concrete Scan, Leak Detection, and Damage Prevention Investigations. Providing a scope of services suitable to the client’s project and needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#105;&#108;&#108;&#101;&#115;&#112;&#105;&#101;&#64;&#111;&#110;&#116;&#104;&#101;&#109;&#97;&#114;&#107;&#108;&#111;&#99;&#97;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">tgillespie@onthemarklocators.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LE9STFKN92M5">44</a>","TOUBASAM INC","MADIOR KHOUSSA","","710 N MARKET ST","STE 2B","WILMINGTON","DE","19801-4922","Toubasam Inc is a diversified, research and development agribusiness company, dedicated to improving the productivity of Sub-Saharan farmers by innovating products and services that sustainably increase crop and livestock yields. We seek to hold a leading market positions in the different businesses in which we operate , Animal Feed ,Organic farming, synthetic fertilizers, pesticides and herbicides wholesaler, Crop Protection, Hybrid Seeds, Agriculture machineries, Irrigation Fertilizers, and Community restoration to address the problem of low-value assets that that destabilize communities. We seek to create a relationship with local nonprofits, government, and land banks to find alternatives to housing and promote local stabilization strategies. Several services rehabilitate, demolished, and build new properties.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#111;&#117;&#98;&#97;&#115;&#97;&#109;&#105;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Toubasaminc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FW1DC74JDGQ6">45</a>","SPEARPOINT LOGISTICS LLC","CARL MARTINEZ","","1 INNOVATION WAY","STE 300","NEWARK","DE","19711-5490","Long-Term Contract and Logistics Fulfillment. Choosing a trusted partner to fulfill a contract shouldn’t be a leap of faith. You need someone with experience, expertise, and a proven track record of excellence in the public and private sectors. Spearpoint Logistics has what it takes to deliver for you. A a veteran-owned business with extensive private sector experience in logistics and complex problem-solving, we leverage our background, our connections, and our dedication to your mission to get the job done.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#97;&#114;&#116;&#105;&#110;&#101;&#122;&#64;&#115;&#112;&#101;&#97;&#114;&#112;&#111;&#105;&#110;&#116;&#108;&#111;&#103;&#46;&#99;&#111;&#109;">cmartinez@spearpointlog.com</a>","www.spearpointlogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EMEUFADJQ5E6">46</a>","BLS SERVICES INC","STANFORD BELFIELD","","373 W NORTH ST","","DOVER","DE","19904-6748","We are a Facility Maintenance Company. We provide lawncare services and paint vacant apartments so new tenants can move in. Drywall repairs, other minor repairs and detail cleaning of the units.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#101;&#108;&#102;&#105;&#101;&#108;&#100;&#64;&#98;&#108;&#115;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sbelfield@blsservicesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J42SQX21N2K7">47</a>","ESMAN GLOBAL RESOURCES LLC","SHADRACH ELECHI","","1679 S DUPONT HWY STE 100","","DOVER","DE","19901-5164","Esman Global Resources LLC is a veteran owned, SBA 8(a) certified small business providing engineering, procurement, construction, maintenance & repair, management, and other technical and professional services across US Federal and State agencies and the Department of Defense. Our professionals have spent decades providing quality and exceptional services. We are especially proud of our contract start up values and have a proven transition process that allows for both immediate and continuous performance accountability.  Esman Global strives to achieve growth, diversification, and profitability by providing quality products and services, delivered in a timely manner while exceeding customer satisfaction. We go above and beyond to maintain customer confidence, pursuing service excellence and continually improve in safety and environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#100;&#114;&#97;&#99;&#104;&#46;&#101;&#108;&#101;&#99;&#104;&#105;&#64;&#101;&#115;&#109;&#97;&#110;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">shadrach.elechi@esmanglobal.com</a>","www.esmanglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKSPGDDENTG9">48</a>","PANGRO DEVELOPMENT LLC","FRANK JASHARAJ","","2600 N BROOM ST","","WILMINGTON","DE","19802-2911","We combine the old times quality, craftsmanship and dedication that have been long past gone, in everything we do.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#97;&#110;&#107;&#106;&#64;&#112;&#97;&#110;&#103;&#114;&#111;&#46;&#110;&#101;&#116;">frankj@pangro.net</a>","https://pangro.net/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M817TME1ZEM3">49</a>","COMMUNITY DEVELOPER SOLUTIONS, LLC","SULTAN TASKIN","","5501 LIMERIC CIR APT 23","","WILMINGTON","DE","19808-3431","Community Developer Solutions, contracting solutions for Residential and Commercial projects in the tristate. Our team has wide spectrum of specialty services. Our experience is deep, and we have a proven track record of successful project delivery. Community Developer Solutions LLC is a minority woman-owned company that’s dedicated to revitalizing and remodeling inner-city communities, with a focus on affordable housing. We are committed to tackling the housing crisis by providing innovative solutions and construction expertise. Our team of experienced developers works closely with communities, residential and commercial projects to create sustainable and inclusive housing options that meet the needs of residents. With our expertise in revitalization, remodeling, and construction, we aim to make a positive impact on communities and contribute to the overall improvement of living conditions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#109;&#109;&#117;&#110;&#105;&#116;&#121;&#100;&#101;&#118;&#101;&#108;&#111;&#112;&#101;&#114;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">communitydevelopersolutionsllc@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GEP8VWBVLES7">50</a>","HENLON INVESTMENT GROUP LLC","RAYON HENLON","","215 SAFFRON CIR","","MIDDLETOWN","DE","19709-9199","Rave Property Solutions offers junk removal, cleanout, residential and commercial cleaning, interior and small structure demolition, small and fallen tree removal and lead abatement services. post and pre construction clean up.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#118;&#101;&#46;&#112;&#115;&#51;&#48;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rave.ps302@gmail.com</a>","https://www.rave-ps.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPH9CMCNGR89">51</a>","YARRELL CONSTRUCTION LLC","LEANDRE YARRELL","","408 KING RAIL CT","","MIDDLETOWN","DE","19709-2205","We're more than just epoxy; we're floor transformation enthusiasts with a sprinkle of fun! At Fin-Tastic Coatings, we're passionate about creating rock-solid epoxy flooring solutions, built on a foundation of conscientious quality and exceptional customer service. Our team of dedicated floor wranglers tackle every project with a smile, ensuring unprecedented quality from meticulous prep work to the final gleaming coat. Whether you're a homeowner seeking a garage makeover or a business needing a functional, high-performance floor, we're here to bring your vision to life, one vibrant, long-lasting square foot at a time. When you choose Fin-Tastic Coatings, you're not just getting an epoxy floor; you're investing in a trusted partner dedicated to exceeding your expectations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#121;&#97;&#114;&#114;&#101;&#108;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">lyarrell@yarrellconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E47XGAKAFE85">52</a>","DELMARVA IRRIGATION, INC","AMANDA MAPP","","11027 DELAWARE AVE","","LAUREL","DE","19956-4402","Sell, service, and install pivot irrigation systems, grain bins, grain systems, and grain handling equipment. Sell, manufacture, service, and install hydraulic doors and windows for residential and commercial consumers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#112;&#112;&#64;&#100;&#101;&#108;&#109;&#97;&#114;&#118;&#97;&#105;&#114;&#114;&#105;&#103;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">amapp@delmarvairrigation.com</a>","https://www.delmarvairr.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJXRVNK6YWX7">53</a>","JASSO & GANT CONSTRUCTION, INC.","TYNISHA JASSO","","132 W INDEPENDENCE BLVD","","NEW CASTLE","DE","19720-4412","Interior and exterior framing, drywall installation and drywall finishing, acoustical ceilings, install doors and hardware, siding and ACP, FRP, layout, construction management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#100;&#101;&#103;&#97;&#110;&#116;&#57;&#50;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sadegant92@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZC8V9RHDJD3">54</a>","PACE SERVICES, LLC","CORRINE PETERS","","105 CARSON DR","","BEAR","DE","19701-1319","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#112;&#101;&#116;&#101;&#114;&#115;&#64;&#112;&#97;&#99;&#101;&#100;&#101;&#46;&#99;&#111;&#109;">cpeters@pacede.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.074&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

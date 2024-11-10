@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: West Virginia;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.05 seconds and 1.05 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 52 
+(of 52 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LK9BTBWNLY96">1</a>","BEK INC","SUSAN ADKINS","SALES MGR","777 10TH AVE W","","HUNTINGTON","WV","25701-3057","MANUFACTURER OF HIGH STRENGTH, CLOSE TOLERANCE FASTENERS, BOLTS, SCREWS, STUDS, PINS, NUTS, ETC. HEADED AND MACHINED PRODUCTS. NON-FERROUS MONELS, STAINLESS, A286, ALLOY, ETC. AN, MS, NAS, NA, NAVAL - NUCLEAR.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#118;&#101;&#108;&#49;&#64;&#108;&#101;&#118;&#101;&#108;&#49;&#102;&#97;&#115;&#116;&#101;&#110;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">level1@level1fasteners.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XUMFPDFE5JH8">2</a>","HUNTINGTON PLATING, INC","MARC HOUVOURAS","PRESIDENT","625 MONROE AVE","","HUNTINGTON","WV","25704-2635","NICKEL, CHROME AND SILVER PLATING, COMPLETE MACHINING AND GRINDING CAPABILITIES. ALSO HONING AND WELDING, REPAIRS OF HYDRAULIC CYLINDERS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#99;&#64;&#104;&#117;&#110;&#116;&#105;&#110;&#103;&#116;&#111;&#110;&#112;&#108;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">marc@huntingtonplating.com</a>","www.huntingtonplating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EYSKVTMKNCN5">3</a>","AMERICAN AIRWORKS, INC","WINIFRED LAMBERT","PRESIDENT","578 ROBERT C BYRD DR","","SOPHIA","WV","25921-1800","Manufacturer and distributor of high pressure breathing air compressors, air control panels, containment fill stations, iso un dot gas storage cylinders & asme vessels, air storage systems, Haskel boosters & Sierra air boosters, Honeywell breathing apparatus SCBA, sales & service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#121;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#97;&#105;&#114;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">ray@americanairworks.com</a>","http://www.americanairworks.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P9GBQL5WYL97">4</a>","ADVANCED ASPHALT TECHNOLOGIES LLC","RAMON BONAQUIST","Chief Operating Officer","40 COMMERCE CIRCLE","","KEARNEYSVILLE","WV","25430-5100","Engineering services for the asphalt industry. Laboratory testing, pavement and materials engineering, pavement materials testing equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#97;&#116;&#116;&#64;&#101;&#114;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">aatt@erols.com</a>","www.advancedasphalt.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G1JVAU5BDWE4">5</a>","UNITED SOUND & ELECTRONICS, LLC","ROBERT HAROLD","Manager","525 E MAIN ST","","BRIDGEPORT","WV","26330-1824","Installation and service of: Sound Systems, CCTV, Fire Alarms, Card Access, Intercom, CAT6 Data, Fiber-optic, and networking Event Production: portable stage and roof system, sound systems, mixing consoles, stage lighting, and personel","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#64;&#117;&#110;&#105;&#116;&#101;&#100;&#115;&#111;&#117;&#110;&#100;&#46;&#110;&#101;&#116;">rob@unitedsound.net</a>","http://www.Unitedsound.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZU51LS7JZ8L5">6</a>","FCX SYSTEMS INC","FRED SCHULER","Director of Sales","400 FCX LN","","MORGANTOWN","WV","26501-2244","FCX Systems is a engineering / manufacturing company that supplies ground support equipment to the military and commercial aviation markets. Power conversion solutions are supplied for a variety of industrial applications as well.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#114;&#101;&#100;&#46;&#83;&#99;&#104;&#117;&#108;&#101;&#114;&#64;&#102;&#99;&#120;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Fred.Schuler@fcxinc.com</a>","http://www.fcxinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YK6HUJQD8DP1">7</a>","COMPTON METALS INC","MARK COMPTON","","192 SIMPSON ST","","CLARKSBURG","WV","26301-9319","SPECIALTY SHEET METAL MANUFACTURING. SERVICES INCLUDE SHEARING, FORMING, PUNCHING, AND PROFILING. PROVIDE DESIGN, ENGINEERING AND LAYOUT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#99;&#111;&#109;&#112;&#64;&#99;&#111;&#109;&#112;&#116;&#111;&#110;&#109;&#101;&#116;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">mcomp@comptonmetals.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KWZGT4MWK774">8</a>","B MACHINE PRODUCTS, INC.","SABRINA BIXMAN","","166 S 3RD ST","","PARKERSBURG","WV","26101-9665","Close tolerance machining. Machining of steel and plastics. Manufacture parts from prints and/or parts. Repair work available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#65;&#66;&#82;&#73;&#78;&#65;&#64;&#66;&#77;&#65;&#67;&#72;&#73;&#78;&#69;&#80;&#82;&#79;&#68;&#85;&#67;&#84;&#83;&#46;&#67;&#79;&#77;">SABRINA@BMACHINEPRODUCTS.COM</a>","bmachineproducts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y3CJRN8DBLE4">9</a>","ALMOST HEAVEN GROUP LLC","ART GLICK","Owner","638 GLICKS RD","","RENICK","WV","24966-6601","Almost Heaven offers Heavenly brand Saunas and Tylo brand Steamrooms and Sauna Heaters, Tylo and Mr. Steam brand Steam Generators, Wooden Hot Tubs from Roberts, Acrylic Spas and Whirlpool Baths from Hydro Spa, and the unique swim-in-place Endless Pool.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#116;&#64;&#97;&#108;&#109;&#111;&#115;&#116;&#104;&#101;&#97;&#118;&#101;&#110;&#46;&#110;&#101;&#116;">art@almostheaven.net</a>","http://www.almostheaven.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V9NLNXS776Z7">10</a>","GOFF BROS MACHINE AND FABRICATION INC","DAVID HUDDLE","","23 SUE LN","","WASHINGTON","WV","26181-6422","MACHINE SHOP WITH FABRICATING, CNC MACHINING,LATHES,MILLS,GRINDING,SHARPENING,WELDING,WORKING WITH ALL MATERIALS,PRIOR GOV.EXPEREINCE,CHEMICAL & PLASTIC INDUSTRIES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#111;&#102;&#102;&#98;&#114;&#111;&#115;&#55;&#55;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#46;&#99;&#111;&#109;">goffbros77@frontier.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3MGSUNNK9E8">11</a>","RICH'S REFRIGERATION, AIR CONDITIONING, HEATING, PLUMBING AND WELDING SERVICE, INC","CHASE ONEY","V.P.","2285 AIRPORT RD","","SUTTON","WV","26601-9280","Industrial, Commercial, Residential, HVAC Fabrication, DDC Controls, GeoThermal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#104;&#115;&#64;&#114;&#105;&#99;&#104;&#115;&#97;&#99;&#46;&#99;&#111;&#109;">richs@richsac.com</a>","richsac.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEBCB728F9L1">12</a>","TRI-STATE ELECTRIC & MACHINE CO INC","ROBERT BARTSCH","President","1702 WHEELING AVE","","GLEN DALE","WV","26038-1735","armature and motor rewindng; balancing services; job shop machining and manufacturing; CNC turning and milling; precision machining; MAZAK turning and milling","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#46;&#98;&#97;&#114;&#116;&#115;&#99;&#104;&#64;&#116;&#115;&#101;&#109;&#46;&#110;&#101;&#116;">r.bartsch@tsem.net</a>","www.tsem.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEUAN69TLVT4">13</a>","CUSTOM MANUFACTURING SERVICES, INC","DARLA BLANKENSHIP","Controller","142 BRICK ST","","PRINCETON","WV","24740-2402","Contract manufacturing incl sheet metal fabrication, wire harness, circuit boards, paint, weld, screen print, electronic equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#114;&#108;&#97;&#98;&#64;&#99;&#109;&#115;&#101;&#114;&#109;&#46;&#99;&#111;&#109;">darlab@cmserm.com</a>","www.cmserm.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z2GUVKBA2P19">14</a>","JABO SUPPLY CORPORATION","JOSEPH HOLLEY","","5164 BRALEY RD","","HUNTINGTON","WV","25705-2012","JABO carries an extensive inventory of top quality products at consistently competitive prices. Equally important is the emphasis we place on service and support. Our staff maintains a high degree of technical expertise and experience and we are adept at helping our customers select the right products for their applications.JABO represents a large and innovative group of manufacturers. We carry a huge inventory, and, with stocking and sales offices located in Huntington, Parkersburg, and Beckley, West Virginia, we have the ability to deliver most of our products within a day.For more information visit our website at http://www.jabosupply.com/index.php","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#116;&#104;&#111;&#108;&#108;&#101;&#121;&#64;&#106;&#97;&#98;&#111;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">jtholley@jabosupply.com</a>","http://jabosupply.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G52KQD4DME75">15</a>","NICHOLAS PRINTING INC","SHANE FAIRCHILD","President","1109 BROAD ST","","SUMMERSVILLE","WV","26651-1803","Nicholas Printing specializes in small format, short-run, high quality single-color, two-color, and four-color offset printing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#110;&#101;&#46;&#102;&#97;&#105;&#114;&#99;&#104;&#105;&#108;&#100;&#57;&#57;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">shane.fairchild99@gmail.com</a>","HTTP://WWW.NICHOLASPRINTING.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CWQESLBBACW3">16</a>","CHEMBIO SHELTER INC","JERRY PIERCY","","169 MINE ACADEMY DR","","BEAVER","WV","25813-9702","We specialize in underground mining rescue chambers with pressurized oxygen and CO2 scrubbing capabilities. We also have confined space entrapment kits. We also manufacturing all forms of rock dusting equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#105;&#101;&#114;&#99;&#121;&#46;&#74;&#64;&#99;&#98;&#115;&#101;&#113;&#117;&#105;&#112;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Piercy.J@cbsequipinc.com</a>","http://www.cbsequipinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HQH7HK2Z6QY2">17</a>","HUNTINGTON STEEL & SUPPLY CO","ANDREW CHILDERS","","100 3RD AVE","","HUNTINGTON","WV","25701-1214","Huntington Steel operates as a steel service center offering a wide range of steel products as well as processing to customize and suit our customers needs for projects small or large.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#67;&#104;&#105;&#108;&#100;&#101;&#114;&#115;&#64;&#104;&#117;&#110;&#116;&#105;&#110;&#103;&#116;&#111;&#110;&#115;&#116;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">DChilders@huntingtonsteel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PJ89XSSNKEL1">18</a>","FRANCIS ENTERPRISES, INC","MARK CYPHERT","","20 MONONGAHELA AVE","","WESTOVER","WV","26501-4122","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#102;&#101;&#110;&#116;&#46;&#117;&#115;">mark@fent.us</a>","http://www.fent.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJFLAWD1Z3N5">19</a>","COLE MOTORSPORTS, LLC","ROBERT GRAVELY","","545 AIRPORT RD","","BLUEFIELD","WV","24701-7388","LaserCut Peel-Ply Laminates – Military/ Industrial Application. Precision cut to fit any vehicle or window. Rock Strike and abrasion resistant. Optically Clear, Highest Light Transmission. Easy installation. Equipped with the latest in Laser cutting technology can give your company a hassle free, ready to install, product for any military/ballistic glass application.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#112;&#105;&#100;&#101;&#114;&#98;&#111;&#98;&#64;&#99;&#111;&#108;&#101;&#109;&#111;&#116;&#111;&#114;&#115;&#112;&#111;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">spiderbob@colemotorsports.com</a>","http://www.colemotorsports.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E6NRADTCAGP8">20</a>","ROHMAC INC","JEREMIAH ROHRBAUGH","","792 OLD LAUREL RUN RD","","MOUNT STORM","WV","26739-5400","Rohmac Inc. specializes in the design and manufacturing of customized original equipment for construction and underground mining","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#114;&#101;&#109;&#121;&#114;&#111;&#104;&#114;&#98;&#97;&#117;&#103;&#104;&#64;&#114;&#111;&#104;&#109;&#97;&#99;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jeremyrohrbaugh@rohmacinc.com</a>","http://www.rohmacinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KPGCDLPQQKN8">21</a>","BURDETTE REALTY IMPROVEMENT INC","MARK CLARTK","","5148 WASHINGTON ST W","","CHARLESTON","WV","25313-1579","Custom Designed Metal Buildings, Backflow, Preventer’s Installed, Renovations, Climate Controlled Storage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#98;&#114;&#105;&#119;&#118;&#46;&#99;&#111;&#109;">mark@briwv.com</a>","briwv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YX2LNUHP4GY4">22</a>","AMTOWER AUTO SUPPLY, INC","MARK AMTOWER","","4766 BENEDUM DR","","BRIDGEPORT","WV","26330-7275","Providing: automotive/truck parts & accessories, paint & surface preparation materials, small engine/marine/atv parts, general repair hardware, tools, service equipment, cleaning supplies, cargo control, chemicals, oils, greases, adhesives","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#107;&#64;&#97;&#109;&#116;&#111;&#119;&#101;&#114;&#110;&#97;&#112;&#97;&#46;&#99;&#111;&#109;">mark@amtowernapa.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCLKN6PT2138">23</a>","SWANSON INDUSTRIES INC","KATELYN COMBS","","2608 SMITHTOWN RD","","MORGANTOWN","WV","26508-2494","Full service hydraulic repair and manufacturing capabilities. Hydraulic pumps, motors, valves & cylinders. Testing capabilities to 10,000 PSI. Large CNC and manual machining. In-house surface technologies including chrome plating and laser cladding.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#99;&#111;&#109;&#98;&#115;&#64;&#115;&#119;&#97;&#110;&#115;&#111;&#110;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">kcombs@swansonindustries.com</a>","http://www.swansonindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FCMJKMUAM6E3">24</a>","JBK MACHINING","BRUCE KUFFERATH","","562 CREEK RD","","BERKELEY SPRINGS","WV","25411-6083","Precision CNC Machine Shop","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#98;&#107;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">jbkmachine@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q7QZD3K7G8H4">25</a>","BEST BUSINESS STRATEGIES LLC","SHIRLEY BYARD","","1712 WHEELING AVE","","GLEN DALE","WV","26038-1735","We offer tools to help grow your business. Accounting and Customer Relation Management software sales, support & training, Business Checks & Forms, cloud hosting, email marketing services, Backup services, Credit card services, gift and loyalty cards,","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#64;&#66;&#101;&#115;&#116;&#66;&#117;&#115;&#105;&#110;&#101;&#115;&#115;&#83;&#116;&#114;&#97;&#116;&#101;&#103;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">solutions@BestBusinessStrategies.com</a>","BestBusinessStrategies.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VYW8PNAQDYQ1">26</a>","SERVICE PUMP & SUPPLY CO INC","PATRICK FARRELL","","1111 VERNON ST","","HUNTINGTON","WV","25704-2050","Since 1980, Service Pump and Supply (SPS) has provided expert support and client-focused solutions for customers in the Ohio River Basin and Appalachian region. SPS’s core business rests on solving customers’ water-related problems. This includes sales and service for pumps, motors, and controls and often requires custom fabrication and rehabilitation efforts.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#116;&#114;&#105;&#99;&#107;&#102;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#112;&#117;&#109;&#112;&#46;&#99;&#111;&#109;">patrickfarrell@servicepump.com</a>","http://www.servicepump.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J8YTKKNENCT9">27</a>","COLE TRUCK PARTS, INC","JERRY MCVEY","","1015 BLUEFIELD AVE","","BLUEFIELD","WV","24701-2745","We provide parts for all make of vehicles. From light to Medium Heavy trucks. Have worked with the federal prison in the past.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#109;&#99;&#118;&#101;&#121;&#64;&#99;&#111;&#108;&#101;&#116;&#114;&#117;&#99;&#107;&#112;&#97;&#114;&#116;&#115;&#46;&#99;&#111;&#109;">gmcvey@coletruckparts.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZGBQ7W1GRC5">28</a>","OCEANETICS, INC.","CHRISTOPHER PFAFF","","8446 WELCH PINEVILLE RD","","WELCH","WV","24801-9832","INNOVATION AT ANY DEPTH. Oceanetics delivers unique solutions that serve the breadth of all maritime domains -- from the surface of the ocean, to the depths of the uncharted seafloor. Oceanetics provides turnkey solutions to deliver your unique projects; we specialize in marine requirements, harsh environments, and remote locations. Our specialized services include: Mooring Solutions, Subsea & Seabed Warfare (SSW), Critical Infrastructure Protection (to include Waterside security barriers and harbor security), Renewable Ocean Energy, Engineering & Design, and Custom Fabrication.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#112;&#102;&#97;&#102;&#102;&#64;&#111;&#99;&#101;&#97;&#110;&#101;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">cpfaff@oceanetics.com</a>","http://www.Oceanetics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KSRJWM6WL9W5">29</a>","INSIGHT AUDIO/VISUAL SERVICES, L.L.C.","CHRISTOPHER BURNS","","83 VERONICA LN","","CHARLES TOWN","WV","25414-4150","Selling and Installing Audiovisual equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#98;&#117;&#114;&#110;&#115;&#64;&#97;&#118;&#105;&#110;&#115;&#105;&#103;&#104;&#116;&#46;&#99;&#111;&#109;">cburns@avinsight.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EZGVEEE3BND1">30</a>","SISTERSVILLE TANK WORKS INC","JASON MORGAN","","1942 MCCOY AVE","","SISTERSVILLE","WV","26175-1019","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#115;&#116;&#119;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sales@stwinc.com</a>","http://www.stwinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ECKUUM6UVGN4">31</a>","PEOPLEDOCS LLC","SEAN EIKENBERY","","131 BRIDLE PATH DR","","MARTINSBURG","WV","25404-1322","Web based, zero footprint Document Management Solutions for AEC Construction, FM Facilities Management, Cadastral GIS and Product Data Management including scan, convert, index and secure access on traditional desktops, tablets and mobile devices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#101;&#97;&#110;&#64;&#112;&#101;&#111;&#112;&#108;&#101;&#100;&#111;&#99;&#115;&#46;&#99;&#111;&#109;">sean@peopledocs.com</a>","http://www.peopledocs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F3M6P7KW16N1">32</a>","ED AREY & SONS INC","GERALD AREY","","5357 CLARKSBURG ROAD","","BUCKHANNON","WV","26201-8432","WOOD, HISTORICAL FENCES, HANDSPLIT STACK RAILS, VA WORM FENCE, POST AND RAIL, SLIPBOARD FENCE, MATCHING GATES","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#97;&#114;&#101;&#121;&#115;&#111;&#110;&#115;&#64;&#115;&#117;&#100;&#100;&#101;&#110;&#108;&#105;&#110;&#107;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">edareysons@suddenlinkmail.com</a>","http://www.edareyandsons.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L52VL87SNTE8">33</a>","DIRECT ANSWER, INC.","KATIE ROGERS","","414 SMOKEY HOLLOW RD","","CAPON BRIDGE","WV","26711-2401","Call Center (phone, email, chat, support) Data Entry Document Management (Scanning, Shredding, Storage, Destruction) Warehousing and Storage (Secured Facility in HubZone) Printing (Documents, Mailers, Signage) Fulfillment (Kits, labeling, packing, shipping) Data Processing (manipulation, coding, mailing, storage, conversion) Promotional items (shirts, hats, mugs, stickers, coasters, signs) Lockbox (payment processing, scanning, depositing)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#114;&#111;&#103;&#101;&#114;&#115;&#64;&#100;&#105;&#114;&#101;&#99;&#116;&#97;&#110;&#115;&#119;&#101;&#114;&#46;&#99;&#111;&#109;">krogers@directanswer.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBSBTHM92NE5">34</a>","R. P. R. INDUSTRIES, INC.","JOHNNIE ROSS","","1203 W LITTLE KANAWHA HIGHWAY","BLDG 2A","GRANTSVILLE","WV","26147-8238","RPR Industries, Inc. manufactures life saving equipment, Life Preservers, etc. The company manufactures various products made from coated fabrics and can cement, sew, thermal weld, and RF weld products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#114;&#111;&#115;&#115;&#64;&#114;&#112;&#114;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">johnross@rprind.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJJ4XMDHRGB5">35</a>","CUSTARD STAND FOOD PRODUCTS, LLC","ANGIE COWGER","","364 WEBSTER RD","","WEBSTER SPRINGS","WV","26288-8601","We provide ready-to-eat hot dog chili and chili soup, just heat and serve! Convenient, versatile as a product base for taco meat, pasta sauce, pizza sauce, topping baked potatoes, nachos, fries, and more.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#105;&#101;&#46;&#99;&#111;&#119;&#103;&#101;&#114;&#64;&#99;&#117;&#115;&#116;&#97;&#114;&#100;&#115;&#116;&#97;&#110;&#100;&#46;&#99;&#111;&#109;">angie.cowger@custardstand.com</a>","CustardStand.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y61LKHL86DJ5">36</a>","APPALACHIAN LOG STRUCTURES INC","DOUGLAS PARSONS","","234 FAIR OAKS WAY","","RIPLEY","WV","25271-5572","Manufacturer of Log Homes and heavy timber Structures. Also capable of general lumber production. Special timber milling","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#111;&#117;&#103;&#64;&#97;&#112;&#112;&#108;&#111;&#103;&#46;&#99;&#111;&#109;">doug@applog.com</a>","www.applog.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SJCCMUNDADN1">37</a>","ALLPRO LLC","CLIFF JACKSON","","201 FAIRMONT AVE","","FAIRMONT","WV","26554-2710","We are a specialty contractor providing doors, railing, awnings, canopies, etc. About 80% residential and 20% commercial work.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#102;&#102;&#64;&#97;&#108;&#108;&#112;&#114;&#111;&#119;&#118;&#46;&#99;&#111;&#109;">cliff@allprowv.com</a>","www.allprowv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM9HVGBXLYV3">38</a>","AFFORDABLE SIGNS UNLIMITED, LLC","BETH STONE","","233 N ROBERT STONE WAY","","REEDSVILLE","WV","26547-7511","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#104;&#64;&#97;&#102;&#102;&#111;&#114;&#100;&#97;&#98;&#108;&#101;&#115;&#105;&#103;&#110;&#115;&#117;&#110;&#108;&#105;&#109;&#105;&#116;&#101;&#100;&#46;&#99;&#111;&#109;">beth@affordablesignsunlimited.com</a>","www.affordablesignsunlimited.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CPSDBK4LU774">39</a>","INHALATION EXPOSURE SYSTEMS LLC","WILLIAM GOLDSMITH","","36 AMHERST RD","","MORGANTOWN","WV","26505-3602","IEStechno provides equipment and services to conduct inhalation toxicology (and related) studies and research.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#111;&#108;&#100;&#115;&#109;&#105;&#116;&#104;&#64;&#105;&#101;&#115;&#116;&#101;&#99;&#104;&#110;&#111;&#46;&#99;&#111;&#109;">tgoldsmith@iestechno.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TXG7J3KSH591">40</a>","CORESIVITY INC.","DAVID HAN","","35 CLIFFORD CT","","HARPERS FERRY","WV","25425-3102","Proven contractor with federal, state, and local government contracts providing management consulting, IT service management, as well as Governance, Risk, and Compliance (GRC) consulting. We operationalize excellence facilitating client's compliance with government regulations, alignment to industry standards, and adoption of best practices. Our core capabilities are management consulting, information security, IT consulting, risk management, quality management, purchasing, translation, interpretation, and real estate.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#118;&#101;&#64;&#99;&#111;&#114;&#101;&#115;&#105;&#118;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">dave@coresivity.com</a>","www.coresivity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L9MAZ5SKZAC6">41</a>","MILLER PROSTHETICS & ORTHOTICS LLC","NANCY MILLER","","2311 OHIO AVE","STE B","PARKERSBURG","WV","26101-2559","Miller Prosthetics & Orthotics, LLC provides prosthetic and orthotic services in Belpre, Ohio and Parkersburg, WV. We provide high tech solutions for the best fit and service for all patients. All prosthetic patients are welcome, including below and above knee, foot and upper extremity amputees. Orthotics includes custom fitting and fabrication of arch supports, ankle-foot orthoses, knee braces and back braces to eliminate pain and assist during the healing process, while adding stability when walking or moving. We strive to return patients back to the activity level they desire from walking and moving to running, fishing and hunting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#78;&#97;&#110;&#99;&#121;&#77;&#105;&#108;&#108;&#101;&#114;&#64;&#77;&#105;&#108;&#108;&#101;&#114;&#80;&#79;&#46;&#99;&#111;&#109;">NancyMiller@MillerPO.com</a>","www.MillerProsthetics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LWKGM9BMRXM5">42</a>","SMOKE CAMP CRAFTS LLC","KARA VANECK","","515 CENTER AVE","","WESTON","WV","26452-2120","Smoke Camp Crafts has the capacity to supply jams, jellies and herbal teas in quantities ranging from 24 to 2,400 units per shipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#109;&#111;&#107;&#101;&#99;&#97;&#109;&#112;&#99;&#114;&#97;&#102;&#116;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">smokecampcrafts@gmail.com</a>","www.SmokeCampCrafts.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KC74MHPNN9L6">43</a>","VIVET, LLC","OLUFUNKE SYLVESTER","","610 1/2 RUSSELL ST","","BECKLEY","WV","25801-5740","Provide various medical services including telemedicine/telehealth with the implementation of artificial intelligence (AI) for analyzing individual baseline and implement more advance technology into healthcare.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#108;&#117;&#102;&#117;&#110;&#107;&#101;&#46;&#115;&#121;&#108;&#118;&#101;&#115;&#116;&#101;&#114;&#64;&#118;&#105;&#118;&#101;&#116;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">olufunke.sylvester@vivetglobal.com</a>","www.vivetglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLLGRL46YAB3">44</a>","LEEMAX SAFETY SOLUTIONS LLC","BRIAN ANDERSON","","1310 GREENMONT HILLS DR","","VIENNA","WV","26105-3274","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#46;&#97;&#110;&#100;&#101;&#114;&#115;&#111;&#110;&#64;&#108;&#101;&#101;&#109;&#97;&#120;&#115;&#115;&#46;&#99;&#111;&#109;">brian.anderson@leemaxss.com</a>","www.leemaxss.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EWY8JKMJ6MJ4">45</a>","BUCKLEY IRON WORKS, LLC","WENDY THOMAS","","7181 OHIO RIVER RD","","POINT PLEASANT","WV","25550-3395","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#100;&#121;&#64;&#98;&#117;&#99;&#107;&#108;&#101;&#121;&#105;&#114;&#111;&#110;&#119;&#111;&#114;&#107;&#115;&#46;&#99;&#111;&#109;">wendy@buckleyironworks.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QJE9HJY5M2Z9">46</a>","HOG LICK AGGREGATES LLC","BRIAN REDMOND","","340 HOGLICK HOLW","","FAIRMONT","WV","26554-8128","aggregate, quarry, mining, sandstone, limestone, sand, gravel, stone, noncalcareous, crushed, screened, washed","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#64;&#104;&#108;&#97;&#103;&#103;&#114;&#101;&#103;&#97;&#116;&#101;&#115;&#46;&#99;&#111;&#109;">brian@hlaggregates.com</a>","www.hlaggregates.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZBVXFJZ394K7">47</a>","MARCO MACHINE LLC","HEATHER CYPHERT","","400 WHEELING ST","","MORGANTOWN","WV","26501-3946","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#99;&#121;&#112;&#104;&#101;&#114;&#116;&#64;&#112;&#114;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#116;&#111;&#111;&#108;&#119;&#118;&#46;&#99;&#111;&#109;">hcyphert@precisiontoolwv.com</a>","https://precisiontoolwv.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DQ2DG1NU5457">48</a>","VALKYRIE-SALES LLC","LAURA LAURA","","483 N WASHINGTON ST","","BERKELEY SPRINGS","WV","25411-1831","Design and Manufacturer procedural anatomical models for demonstration and education","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#97;&#117;&#114;&#97;&#64;&#118;&#97;&#108;&#107;&#121;&#114;&#105;&#101;&#45;&#115;&#97;&#108;&#101;&#115;&#46;&#99;&#111;&#109;">laura@valkyrie-sales.com</a>","www.valkyrie-sales.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P1CQKGN9SFC5">49</a>","H2 CONSTRUCTION INC","JOSHUA HOUGHTON","","149 LYNN HAVEN DR SUITE B","","MARTINSBURG","WV","25404-6569","H2 Construction Inc is a small business based out of Martinsburg, West Virginia. Our team of professionals specializes in a variety of services from commercial construction to structural steel fabrication and installation. H2 prioritizes high quality control and provides warranties that exceed the industry standard. We utilize local subcontractors. From start to finish our team provides customers with detailed updates and communicates along the entire process. Please reach out for more information about our services and federal contracting abilities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#111;&#117;&#103;&#104;&#116;&#111;&#110;&#64;&#104;&#50;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jhoughton@h2constructioninc.com</a>","www.h2constructioninc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLTFVKAPJCK2">50</a>","AMERICAN MINE POWER INC.","DENNIS TREADWAY","","157 WILLIS AVE","","CRAB ORCHARD","WV","25827-1700","Since 1998, we have been working with mining companies all over the world including Mexico and Brazil. Founded on the back of hard work, we take pride in our commitment to put out the best possible product. are located in the heart of the Appalachian Mountains. We refurbish and build everything from circuit breakers to power centers. Our territory covers West Virginia, Virginia, Kentucky, Ohio, Pennsylvania, Maryland, Indiana, Illinois, Alabama and anywhere there's a need.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#116;&#114;&#101;&#97;&#100;&#119;&#97;&#121;&#97;&#109;&#112;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dtreadwayamp@gmail.com</a>","http://www.ampwv.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CCU9GJNFFUY1">51</a>","LIBERTY HILL COMPANY","TAD ROBINETTE","","1050 4TH AVE","STE 218","HUNTINGTON","WV","25701-1522","We are a full-service machine shop that can design, manufacture or reverse engineer parts or equipment vital to your supply chain and mission.  With the power of modern CNC equipment, Intelligent Parametric Software and access to a dedicated team, Liberty Hill is ready to serve and deliver quality parts and services to all U.S. Government agencies, Prime Contractors, Sub-Contractors and private enterprises. We are a West Virginia small business that is a Service Disable Veteran Owned Small Business. We also partner with local Socio-Economically Disadvantaged Businesses involved in manufacturing. This alliance is a value-added benefit to our customers who are seeking quality partnerships with Socially and Economically Disadvantaged Small Businesses in West Virginia.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#65;&#78;&#65;&#71;&#69;&#82;&#64;&#76;&#73;&#66;&#72;&#73;&#76;&#76;&#46;&#67;&#79;&#77;">MANAGER@LIBHILL.COM</a>","https://LibHill.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KUWFRP593BK6">52</a>","1854 HOLDINGS, LLC","CHRIS AZUR","","164 N 19TH ST","","WHEELING","WV","26003-7064","From coal mining tools that helped fuel the Industrial Revolution to railroad and other tools used to build the US transportation infrastructure, to our famous entrenching mattock used extensively in World Wars I and II for digging fox holes and trenches, Warwood Tool has been trusted by generations of hard-working Americans. In fact, American soldiers have relied on our Warwood Tool products in every war since the Civil War. As a testament to our rich history, our manufacturing facility was recently featured on the History Channel’s documentary The Men Who Built America.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#114;&#105;&#115;&#64;&#119;&#97;&#114;&#119;&#111;&#111;&#100;&#116;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">chris@warwoodtool.com</a>","http://www.warwoodtool.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.124&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

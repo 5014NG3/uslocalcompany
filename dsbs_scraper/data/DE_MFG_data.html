@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Delaware;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.02 seconds and 1.02 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 57 
+(of 57 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XQDJHJRT7AE5">1</a>","DUHADAWAY TOOL & DIE SHOP INC","ROBERT LEMPA","Marketing Manager","801 DAWSON DR","","NEWARK","DE","19713-3415","MACHINING TO SPECIFICATION METALS,PLASTICS,LONG OR SHORT RUN. FULLY NUMERICALLY CONTROLLED MACHINING. EXTENSIVE CONVENTIONAL MACHINING CAPABILITY. COMPLETELY CERTIFIABLE QC INSPECTION SYSTEM. INHOUSE WELDING OF ALL TYPES. TOOL & DIE MANUFACTURING.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#101;&#109;&#112;&#97;&#64;&#100;&#117;&#104;&#97;&#100;&#97;&#119;&#97;&#121;&#116;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">rlempa@duhadawaytool.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XXQJUKGJE2T8">2</a>","POLYMER TECHNOLOGIES INC","JEREMY DAYTON","SALES COORDINATOR","420 CORPORATE BLVD","","NEWARK","DE","19702-3330","ACOUSTICAL COMPOSITES; NOISE CONTROL MATERIALS; ACOUSTICAL FOAMS, BARRIERS, ABSORBERS, DAMPING. FILTRATION; FREE DESIGN CONSULTING; TECHNICAL SUPPORT. FABRICATED PARTS; LAMINATION LINE & HOT MELT PROCESS, SAW CUT PARTS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#100;&#64;&#112;&#111;&#108;&#121;&#116;&#101;&#99;&#104;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">jd@polytechinc.com</a>","http://www.polytechinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WK5RYJL58YY9">3</a>","TESLA INDUSTRIES INC","DAVID MASILOTTI","General Sales Manager","109 CENTERPOINT BLVD","","HISTORIC NEW CASTLE","DE","19720-4180","THE TESLA GROUND POWER UNIT PROVIDES THE ADVANTAGE OF TOTALLY PORTABLE DC ELECTRICAL GROUND POWERFOR BOTH GENERAL MAINTENANCE SUPPORT AND REMOTE AIRFIELD OPERATIONS.PROVIDES VERSATILE DEPENDABLE ENGINE START POWER AND 24V DC OUTPUT.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#97;&#118;&#101;&#84;&#101;&#115;&#108;&#97;&#64;&#116;&#101;&#115;&#108;&#97;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">DaveTesla@teslaind.com</a>","HTTP://WWW.TESLAIND.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDH8DM4ZGS55">4</a>","DATATECH ENTERPRISES INC","VALEH NAZEMOFF","President","36322 SUNFLOWER BLVD","","SELBYVILLE","DE","19975-3751","25 years,QA,Business Analyst, Data Management Infrastucture,Architectural,Aviation,Training Engineering, Woman-owned,8a, FAA, GSA, SeaPort, ECS-III","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#101;&#104;&#46;&#110;&#97;&#122;&#101;&#109;&#111;&#102;&#102;&#64;&#97;&#99;&#111;&#108;&#121;&#115;&#116;&#46;&#99;&#111;&#109;">valeh.nazemoff@acolyst.com</a>","http://www.acolyst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6WWZ5EHC7C5">5</a>","VERSITRON INC","RICHARD TULL","Product Specialist","83 ALBE DR","STE C","NEWARK","DE","19702-1374","Established in 1958, VERSITRON is a manufacturer of products for clocking, buffering and fiber optic conversion of multiplexed & point-to-point links for LAN and WAN data and voice communications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#105;&#98;&#101;&#114;&#108;&#105;&#110;&#107;&#64;&#118;&#101;&#114;&#115;&#105;&#116;&#114;&#111;&#110;&#46;&#99;&#111;&#109;">fiberlink@versitron.com</a>","https://www.versitron.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=REWHLV68EQ17">6</a>","APPLIED CONTROL ENGINEERING INC","IAN BURNS","Sales Manager","700 CREEK VIEW RD","","NEWARK","DE","19711-8544","With a professional team of engineers and support personnel, we provide creative, effective and affordable solutions for a broad range of control automation and system integration services for process control and information technology applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#117;&#114;&#110;&#115;&#105;&#64;&#97;&#99;&#101;&#45;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">burnsi@ace-net.com</a>","http://www.ace-net.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JARKWEDDKJL4">7</a>","MANUFACTURING SUPPORT INDUSTRIES INC","DONALD HOLLENBECK","President","108 PARK AVENUE","","SEAFORD","DE","19973-9479","Company engages in the contract manufacturing of precision metal machined components and mechanical assemblies. Value-added machining, build to print specs. Medium and large production.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#104;&#111;&#108;&#108;&#101;&#110;&#98;&#101;&#99;&#107;&#64;&#109;&#102;&#103;&#45;&#115;&#117;&#112;&#112;&#111;&#114;&#116;&#46;&#99;&#111;&#109;">Dhollenbeck@mfg-support.com</a>","https://mfg-support.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MVKWJGU5AE54">8</a>","MOHAWK ELECTRICAL SYSTEMS INC","SCOTT WELCH","President","251 S REHOBOTH BLVD","","MILFORD","DE","19963-1568","Mohawk is a custom contract manufacturer of precision cable assemblies, harness assemblies, and electromechanical assemblies. We also mold rubber products. Our customers are OEMs in the military, explosive and medical fields.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#46;&#109;&#46;&#119;&#101;&#108;&#99;&#104;&#64;&#109;&#111;&#104;&#97;&#119;&#107;&#45;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">scott.m.welch@mohawk-usa.com</a>","http://www.mohawk-usa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GFDDQ63RE5F3">9</a>","POTTS WELDING & BOILER REPAIR CO INC","GEORGE SHILLING","Customer Development","1901 OGLETOWN RD","","NEWARK","DE","19711-5437","We maufacture boiler parts. We also have a field service group to repair boilers. Some of the boiler parts we manufacture: Waterwall Panels, Loose Tubes, Burner Panels, Superheaters, Generating Banks, Economizers, Headers Ect. For both Power and Marine","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#115;&#104;&#105;&#108;&#108;&#105;&#110;&#103;&#64;&#112;&#111;&#116;&#116;&#115;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">gshilling@pottswelding.com</a>","www.pottswelding.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F18MQA2MEFH9">10</a>","CREATIVE DEVICES INC.","ROBERT URSTADT","","361 MISTY VALE DR","","MIDDLETOWN","DE","19709-2125","Semiconductor probe stations, LWD microscopes, custom optics-UV,NIR,LWD, laser systems,systems integration, test and measurement equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#64;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#100;&#101;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">creative@creativedevices.com</a>","http://www.creativedevices.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PG9QN7GBQJ49">11</a>","COMPOSITES AUTOMATION LLC","DIRK HEIDER","","9 ADELAIDE CT","","NEWARK","DE","19702-2068","Composites Automation, LLC is a Delaware-based small business partnership with the goal of commercializing composites technologies. CA has transitioned processing equipment to commercial and government customers, evaluated new materials and processes, developed new modeling tools and supported various projects with engineering consulting services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#105;&#100;&#101;&#114;&#64;&#99;&#111;&#109;&#112;&#111;&#115;&#105;&#116;&#101;&#115;&#97;&#117;&#116;&#111;&#109;&#97;&#116;&#105;&#111;&#110;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">heider@compositesautomationllc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KKSRJYZY3MN4">12</a>","DELMACO MANUFACTURING INC","MATTHEW DAVEY","Sales","21424 CEDAR CREEK AVE","","GEORGETOWN","DE","19947-6305","Spring mfg. Light gauge metal stamping, spotwelding, forming, and assembly.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#101;&#101;&#108;&#115;&#64;&#100;&#101;&#108;&#109;&#97;&#99;&#111;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">reels@delmacomfg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFWUWGKETQ25">13</a>","MILES SCIENTIFIC CORP","STEVEN MILES","Sales & Marketing Manager","75 BLUE HEN DR","","NEWARK","DE","19713-3405","Miles Scientific (previously called Analtech) manufactures and sells thin layer chromatography (TLC) plates (over 500 formats) & accessories, including many unique in the industry. We deliver quickly (only manufacturer in the US), welcome custom requests, and supply samples when needed. Also supplied - HPLC columns, SPE cartridges, Membrane Filters, Flash columns.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#116;&#101;&#118;&#101;&#110;&#64;&#109;&#105;&#108;&#101;&#115;&#83;&#99;&#105;&#101;&#110;&#116;&#105;&#102;&#105;&#99;&#46;&#99;&#111;&#109;">Steven@milesScientific.com</a>","https://www.MilesScientific.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GKNAHPKPU3P1">14</a>","ADVANCED FIBER TECHNOLOGIES INC","WARREN SCHIMPF","","8 SPRING CREEK DR","","TOWNSEND","DE","19734-9046","Carbon fiber process/product development, modification. Composite devel. and testing Fiber testing Advanced materials devel. and testing R&D; testing services Consulting services Fiber surface modification technology Obscurants","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#97;&#114;&#114;&#101;&#110;&#46;&#115;&#99;&#104;&#105;&#109;&#112;&#102;&#49;&#64;&#97;&#100;&#118;&#102;&#105;&#98;&#101;&#114;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">warren.schimpf1@advfibertech.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SHZFUX4L3SF6">15</a>","TERRA SYSTEMS, INC.","R. L. RAYMOND","President","130 HICKMAN RD STE 1","","CLAYMONT","DE","19703-3519","Bioremediation products and services for the biodegradation of organic contaminants including petroleum products and chlorinated solvents.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#97;&#121;&#109;&#111;&#110;&#100;&#64;&#116;&#101;&#114;&#114;&#97;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#110;&#101;&#116;">draymond@terrasystems.net</a>","http://www.terrasystems.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J6F3NB9SJWD5">16</a>","VERTEX INDUSTRIES, INC.","ALEXANDER CONFORTI","President","818 SOUTH HEALD STREET","STE C","WILMINGTON","DE","19801-5790","Vertex Industries, Inc, is home of Austenitex & Verocious Motorsports Austenitex brand is a value added stocking distributor of high purity fluid processing components and equipment serving food, beverage, dairy, bio-pharmaceutical, environmental, extraction, paint & paper, and, petrochemical industries. Visit us at https://www.austenitex.com/ Verocious Motorports brand is your Ultimate Fabrication Warehouse stocking the highest quality universal fabrication parts, equipment, and tools for air, oil, fuel, and exhaust systems serving the automotive and transportation industries. Visit us at https://www.verociousmotorsports.com/ We work closely with many major manufacturers who build quality into the products they produce from start to finish. Our products undergo rigorous inspection and documentation processes before they are released for distribution. Prior to leaving our facility, all orders receive a final review and inspection to ensure accuracy of the shipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#102;&#111;&#114;&#116;&#105;&#64;&#118;&#101;&#114;&#116;&#101;&#120;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">conforti@vertexindustries.com</a>","http://www.vertexindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NFKYEDZASGA5">17</a>","LAUREL BRIDGE SOFTWARE INC","BRONSON HOKUF","President","500 CREEK VIEW RD STE 200","","NEWARK","DE","19711-8549","Laurel Bridge Software produces OO DICOM Toolkits for advanced medical or radiological modalities and applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#111;&#110;&#115;&#111;&#110;&#46;&#104;&#111;&#107;&#117;&#102;&#64;&#108;&#97;&#117;&#114;&#101;&#108;&#98;&#114;&#105;&#100;&#103;&#101;&#46;&#99;&#111;&#109;">bronson.hokuf@laurelbridge.com</a>","http://www.laurelbridge.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CV7CKAT3VC79">18</a>","DELMARVA PUMP CENTER INC","RICHARD STRAUSS, JR","Sales Manager","335 STRAUSS AVE","","MARYDEL","DE","19964-2218","Sell and service all makes and models of fire trucks and ambulances. Custome fabrication of speciality fire apparatus.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#115;&#116;&#114;&#97;&#117;&#115;&#115;&#64;&#100;&#112;&#99;&#101;&#109;&#101;&#114;&#103;&#101;&#110;&#99;&#121;&#46;&#99;&#111;&#109;">rickstrauss@dpcemergency.com</a>","http://www.dpcemergency.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CL4HB4WKKMU5">19</a>","LAWALL PROSTHETICS ORTHOTICS INC","JOE COZZA","","1822 AUGUSTINE CUT OFF","","WILMINGTON","DE","19803-4405","prosthetic and orthotic services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#99;&#111;&#122;&#122;&#97;&#64;&#108;&#97;&#119;&#97;&#108;&#108;&#46;&#99;&#111;&#109;">jcozza@lawall.com</a>","WWW.LAWALL.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SXV7MWFEJFG9">20</a>","LABWARE HOLDINGS, INC.","MICHAEL LEARNER","","3 MILL RD STE 102","","WILMINGTON","DE","19806-2146","Laboratory Information Management software and services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#97;&#114;&#110;&#101;&#114;&#64;&#108;&#97;&#98;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">learner@labware.com</a>","http://www.labware.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q8GYFKNMNP48">21</a>","MIDNIGHT BLUE INC","AL MCDONALD","","37091 E WHITE TAIL DR","","SELBYVILLE","DE","19975-3536","McGRAPHIX provides communicative product solutions to government organizations engaged in brand, event and message management. Our services encompass graphics, pre-press, branding and production management of 50,000+ items in five product categories.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#109;&#99;&#103;&#114;&#97;&#112;&#104;&#105;&#120;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">sales@mcgraphixinc.com</a>","https://mcgraphixinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M5VMM6KRMUG3">22</a>","B & W TEK INC","BRIAN PRYOR","","18 SHEA WAY","STE 103","NEWARK","DE","19713-3448","At B&W Tek, we specialize in light generation and delivery systems for medical and biophotonic applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#105;&#97;&#110;&#112;&#64;&#98;&#119;&#116;&#101;&#107;&#109;&#101;&#100;&#46;&#99;&#111;&#109;">brianp@bwtekmed.com</a>","www.bwtekmed.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WMNTYGK2SM97">23</a>","GENERAL SEPARATION TECHNOLOGIES INC","ZACK JI","","625 DAWSON DR","STE A","NEWARK","DE","19713-3433","Manufactures high performance,quality, and cost effective chromatographic columns, sample preparation cartridges and devices, filtration and syringe filters. Expertise in columns and separation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#95;&#106;&#105;&#64;&#103;&#115;&#45;&#116;&#101;&#107;&#46;&#99;&#111;&#109;">z_ji@gs-tek.com</a>","www.gs-tek.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KZH2KUVJ2NC6">24</a>","ACCESS4U INC","BOB HEFFERNAN","","510 RAILROAD AVE","","LEWES","DE","19958-1432","Design, Manufacture Distribute Wheelchair Ramps","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#101;&#102;&#102;&#101;&#114;&#110;&#97;&#110;&#64;&#97;&#99;&#99;&#101;&#115;&#115;&#52;&#117;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">bheffernan@access4uinc.com</a>","http://www.access4uinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U5GCVJVNVFJ4">25</a>","SUPERCRITICAL FLUID TECHNOLOGIES, INC.","KENNETH JAMES","","1 INNOVATION WAY STE 303","","NEWARK","DE","19711-5490","Supercritical Fluid Technologies, Inc has been a worldwide industry leader in Supercritical Fluid Extraction and High Pressure Chemistry for more than 20 years. Supercritical Fluid Technologies offers a range of high pressure extraction and reaction equipment that combines leading edge patented and proprietary technologies with highly customizable designs for use in a variety of specialized applications. Our equipment meets the most exacting standards to ensure highly precise, repeatable results, while offering higher yields, faster reactions, and a more environmentally friendly process compared to the use of traditional solvents or other extraction or reaction methods. Visit us at http://www.supercriticalfluids.com for further information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#101;&#110;&#46;&#106;&#97;&#109;&#101;&#115;&#64;&#115;&#117;&#112;&#101;&#114;&#99;&#114;&#105;&#116;&#105;&#99;&#97;&#108;&#102;&#108;&#117;&#105;&#100;&#115;&#46;&#99;&#111;&#109;">ken.james@supercriticalfluids.com</a>","http://www.supercriticalfluids.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HHU1HRRJATB5">26</a>","ATLANTIS INDUSTRIES CORP","DAN BUTZ","","21490 BALTIMORE AVE","","GEORGETOWN","DE","19947-6415","We produce complex parts and assemblies in the military, medical, automotive, consumer, and industrial markets. These are typically highly engineered, tight-tolerance, plastic injection molded. Our production facility is dedicated to the manufacture of premium quality injection, insert, and overmolded parts. Since our founding, prior to 1965, we have maintained a leadership position in the field of plastics technology to produce high-value components that exceed your expectations in terms of quality, delivery time, and cost.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#98;&#117;&#116;&#122;&#64;&#97;&#116;&#108;&#97;&#110;&#116;&#105;&#115;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">dbutz@atlantisusa.com</a>","http://www.atlantisusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E1FMMM7DANN7">27</a>","ALLIED PRECISION, INC.","JOHN LESS","","106 SLEEPY HOLLOW DR STE C","","MIDDLETOWN","DE","19709-9191","Allied Precision, Inc. manufactures Precision Machine Components for various industries.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#97;&#108;&#108;&#105;&#101;&#100;&#112;&#114;&#101;&#99;&#105;&#115;&#105;&#111;&#110;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">john@alliedprecisionusa.com</a>","http://www.alliedprecisionusa.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=G3NYAD366XW1">28</a>","NEW PROCESS FIBRE CO","SHANNON CREAM","","12655 FIRST ST","","GREENWOOD","DE","19950-4864","If quality means precise adherence to specifications, then New Process Fibre is exceptionally well equipped to meet the contemporary standard. Our production specialists use the latest in non-contact vision measurement systems, with extensive quality management, we strive to keep our products conflict mineral free. The New Process production team commonly goes beyond the standards to add extra quality steps, whether its washers, custom stamping, plastic sheets & rolls we always strive toward continuous improvement in every facet of the customer relationship, from the first inquiry through the final invoice. We take pride in this heritage of achievement. For more information, please visit us at http://www.newprocess.com/","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#114;&#101;&#97;&#109;&#64;&#110;&#101;&#119;&#112;&#114;&#111;&#99;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">scream@newprocess.com</a>","http://www.newprocess.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJTXA8JR29R6">29</a>","PATS AIRCRAFT LLC","MATTHEW HILL","","21652 NANTICOKE AVE","","GEORGETOWN","DE","19947-6308","Aloft AeroArchitects is located at Delaware Coastal Airport and offers the following aircraft capabilities: - U.S. Manufacturing of aircraft components - Aircraft Auxiliary Fuel Tank Systems - Aircraft Maintenance Services and Part 145 Repair Station - Technical Publications - Aircraft VIP Interior completions Please visit www.aloftaeroarchitects.com for more information.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#104;&#101;&#119;&#46;&#104;&#105;&#108;&#108;&#64;&#97;&#108;&#111;&#102;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">matthew.hill@aloftmail.com</a>","http://www.aloftaeroarchitects.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XCJHK3TF3JT7">30</a>","THERMAL PIPE SYSTEMS INC","DAVID CHAMBLISS","","5205 W WOODMILL DR","","WILMINGTON","DE","19808-4068","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#104;&#97;&#109;&#98;&#108;&#105;&#115;&#115;&#64;&#116;&#104;&#101;&#114;&#109;&#97;&#108;&#112;&#105;&#112;&#101;&#115;&#121;&#115;&#116;&#101;&#109;&#115;&#46;&#99;&#111;&#109;">dchambliss@thermalpipesystems.com</a>","www.thermalpipesystems.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JBKPH1A6NWW5">31</a>","ATLANTIC SCREEN & MANUFACTURING INC","PAT LAWSON","","142 BROADKILL RD","","MILTON","DE","19968-1008","Atlantic Screen Manufacturing, Inc. (ASI) manufactures perforated and slotted pipes available in vertical, horizontal, and custom patterns. Since 1980, ASI has expanded from using strictly PVC pipe to also using CPVC, Stainless Steel, HDPE, and PolyButylene. ASI wholesales its products to distributors, consulting firms, industrial, commercial, and residential consumers across the continental United States and exports worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#84;&#76;&#65;&#78;&#84;&#73;&#67;&#64;&#67;&#69;&#46;&#78;&#69;&#84;">ATLANTIC@CE.NET</a>","http://www.atlantic-screen.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MD2HRCQH4N46">32</a>","FIBRE PROCESSING CORP","MARIA CASTIGLIONI","","701 GARASCHES LN","","WILMINGTON","DE","19801-5528","Mattresses of All Sizes, Futons of all Sizes, Cotton Batting, Cotton Bales, Fibre Foam of all Sizes, Certipur Certified Foam","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#114;&#105;&#97;&#64;&#102;&#105;&#98;&#114;&#101;&#112;&#46;&#99;&#111;&#109;">maria@fibrep.com</a>","www.fibrep.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SCQLS5NHWAF8">33</a>","CHIEF TECHNOLOGIES LLC","BROOKS LAYTON","","24787 HOLLIS RD","","GEORGETOWN","DE","19947-5386","Chief Mobile integrates all Chief Technologies services in one app for your mobile device.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#111;&#111;&#107;&#115;&#46;&#108;&#97;&#121;&#116;&#111;&#110;&#64;&#99;&#104;&#105;&#101;&#102;&#51;&#54;&#48;&#46;&#99;&#111;&#109;">brooks.layton@chief360.com</a>","https://chief360.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JN8JL9211WJ9">34</a>","ARIES SECURITY LLC","BRIAN MARKUS","","1226 N KING ST","","WILMINGTON","DE","19801-3232","Company made up of highly skilled Cyber Security personnel with significant experience in both commercial and Aerospace & Defense. Creators of Capture The Packet a Cyber Security Simulator capable of doing training & skills assessments. Security Research & Development Product development (Hardware & Software) Board Advisory Professional Cyber Security/Hacking Event Coordinators","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#109;&#97;&#114;&#107;&#117;&#115;&#64;&#97;&#114;&#105;&#101;&#115;&#115;&#101;&#99;&#117;&#114;&#105;&#116;&#121;&#46;&#99;&#111;&#109;">bmarkus@ariessecurity.com</a>","www.ariessecurity.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NP1UNLBSNW57">35</a>","LINNE INDUSTRIES LLC","SANDRA BURTON","","11 BRIDLEBROOK LN","","NEWARK","DE","19711-2003","Delaware based manufacturer of the patented PondHawk the first fully-integrated,pre-assembled,solar powered aeration system that improves water quality and restores capacity in ponds","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#117;&#114;&#116;&#111;&#110;&#64;&#108;&#105;&#110;&#110;&#101;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">sburton@linneindustries.com</a>","www.linneindustries.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CRA1EHBE5G48">36</a>","TUSKEGEE AERONAUTICAL ENGINEERING INC","WESLEY JOYNER","","3401 N MARKET ST UNIT A","","WILMINGTON","DE","19802-2731","Tuskegee Aeronautical Engineering, Inc.,(TAE, Inc.), minority owned engineering company that engineers, manufactures, procures and packages airplane and other military wartime aircrafts mechanical parts, ground support equipment and miscellaneous hardware Our manufacturing capabilities consist of Set Up, Tooling, Fixturing, Programming, Operating Computer Numerical Controlled (CNC) machining, Manual Milling and/or Turning Machines to manufacture Molds, Dies, Manufactured Parts and Auxiliary Equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#115;&#99;&#101;&#111;&#64;&#116;&#117;&#115;&#107;&#101;&#103;&#101;&#101;&#117;&#115;&#46;&#99;&#111;&#109;">wesceo@tuskegeeus.com</a>","https://tuskegeeus.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FUA5QQ9JLM33">37</a>","DIAMOND INDUSTRIAL INC","JINGWEN LI","","501 SILVERSIDE ROAD","STE 2","WILMINGTON","DE","19809-1375","Diamond Industrial is a small, minority woman owned & operated prime contractor. We are a value-added supply chain partner, experienced & financially stable. We are positioned to support our customers in several core business sectors. First, As a value added supply chain partner handling the sale of spares for Maintenance, Repair, & Overhaul (MRO) to the U.S. Government/U.S. Military. In addition, our Diamond-Alzatech Division provides direct manufacturing capacity in support of customer demand for unique, time sensitive parts. Diamond intends to be an active participant in re-envisioning American Manufacturing by offering 3dimensional part scanning, cad/cam software, CNC turning & milling facilities, & ISO 9000 compliant quality assurance. Strategic Sourcing / Hard-to-Find Items: from commercially available off the shelf [COTS] items to the most difficult hard to find, non-production items, Diamond delivers. Prototypes & First Articles on demand.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#105;&#97;&#109;&#111;&#110;&#100;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#73;&#110;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">DiamondindustrialInc@gmail.com</a>","diamondindustrial-inc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7KYK46KDJ25">38</a>","CHUCK GEORGE INC","SCOTT BRUNEAU","","400 WATER ST","","WILMINGTON","DE","19804-2421","Complete turn key machining service that specializes in precision CNC machining. Precision manufacturing of both metal and composite materials. Prototype, Prototype Machining, Contract Manufacturer, Low to High Value Production","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#116;&#116;&#98;&#64;&#100;&#101;&#108;&#97;&#119;&#97;&#114;&#101;&#109;&#101;&#116;&#97;&#108;&#115;&#46;&#99;&#111;&#109;">scottb@delawaremetals.com</a>","https://www.delawaremetals.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEJ5CYAC6FF5">39</a>","VIBRATING THERAPEUTIC APPAREL, LLC","AMIRA RADOVIC","","132 E DELAWARE AVE STE 100","","NEWARK","DE","19711-4643","Vibrating Therapeutic Apparel, LLC develops drug-free wearable vibration therapy devices for nerve pain management and pain rehabilitation therapy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#105;&#114;&#97;&#64;&#119;&#101;&#97;&#114;&#116;&#104;&#101;&#114;&#97;&#118;&#46;&#99;&#111;&#109;">amira@weartherav.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y2C1T62FE7K4">40</a>","MAS SPECIAL OPERATIONS TRAINING LLC","REMI ERIKSEN","","2915 OGLETOWN RD","# 2408","NEWARK","DE","19713-1927","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#111;&#110;&#116;&#97;&#99;&#116;&#64;&#109;&#97;&#115;&#45;&#115;&#111;&#116;&#46;&#99;&#111;&#109;">contact@mas-sot.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KMSARTU5L9L6">41</a>","APEX MANUFACTURING GROUP INC","JOHN KUKLINSKI","","825 DAWSON DR STE 1","","NEWARK","DE","19713-3438","Apex Manufacturing Group Inc. is the global leader for Advanced Manufacturing, Finishing, and Engineering Solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#112;&#101;&#120;&#109;&#103;&#105;&#46;&#99;&#111;&#109;">sales@apexmgi.com</a>","www.apexmgi.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MD71JHN7V1W1">42</a>","ISWICH LLC","ANGELA OBRIEN","","28 AUSTIN RD","","WILMINGTON","DE","19810-2203","Gourmet ice cream sandwiches","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#101;&#111;&#98;&#102;&#97;&#109;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">theobfam@gmail.com</a>","iSwichGourmet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z6HQN2B1JK67">43</a>","LECTROLYST LLC","GREGORY HUTCHINGS","","200 POWDER MILL RD # E5003403","","WILMINGTON","DE","19803-2907","Providing drop-in, scalable electrochemical synthesis devices for chemical conversion using inexpensive electricity.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#114;&#101;&#103;&#64;&#108;&#101;&#99;&#116;&#114;&#111;&#108;&#121;&#115;&#116;&#46;&#99;&#111;&#109;">greg@lectrolyst.com</a>","www.lectrolyst.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FW1DC74JDGQ6">44</a>","SPEARPOINT LOGISTICS LLC","CARL MARTINEZ","","1 INNOVATION WAY","STE 300","NEWARK","DE","19711-5490","Long-Term Contract and Logistics Fulfillment. Choosing a trusted partner to fulfill a contract shouldn’t be a leap of faith. You need someone with experience, expertise, and a proven track record of excellence in the public and private sectors. Spearpoint Logistics has what it takes to deliver for you. A a veteran-owned business with extensive private sector experience in logistics and complex problem-solving, we leverage our background, our connections, and our dedication to your mission to get the job done.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#97;&#114;&#116;&#105;&#110;&#101;&#122;&#64;&#115;&#112;&#101;&#97;&#114;&#112;&#111;&#105;&#110;&#116;&#108;&#111;&#103;&#46;&#99;&#111;&#109;">cmartinez@spearpointlog.com</a>","www.spearpointlogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L5ANGNV1WL75">45</a>","FROZEN FARMER, LLC, THE","KATEY EVANS","","9843 SEASHORE HWY","","BRIDGEVILLE","DE","19933-4620","The Frozen Farm is the perfect indulgence, sustainably crafted. Rooted in the tradition of our third-generation farm, The Frozen Farmer makes naturally indulgent frozen confections from our own family recipes. Crafted from sustainable, upcycled ingredients for a taste that’s full of flavor, not fat and sugar, for an indulgent treat you can feel good about.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#118;&#97;&#110;&#115;&#102;&#97;&#114;&#109;&#115;&#108;&#108;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">evansfarmsllc@gmail.com</a>","www.TheFrozenFarmer.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S7WVBEDQJ8A7">46</a>","ENDOSPACE CORPORATION","HOWARD LOONAN","","240 N JAMES ST STE 100","","WILMINGTON","DE","19804-3167","MEDICAL DEVICES, GASTROENTEROLOGY PRODUCTS","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#72;&#79;&#87;&#65;&#82;&#68;&#46;&#76;&#79;&#79;&#78;&#65;&#78;&#64;&#69;&#78;&#68;&#79;&#83;&#80;&#65;&#67;&#69;&#67;&#79;&#82;&#80;&#46;&#67;&#79;&#77;">HOWARD.LOONAN@ENDOSPACECORP.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JCKGS93AGJ51">47</a>","ORION TECHNOLOGY GROUP LLC","SETH SPILLER","","1201 N ORANGE ST STE 723","","WILMINGTON","DE","19801-1186","The Orion Technology Group produces a small unmanned aerial and ground robotic control system that enables autonomous artificial intelligence missions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#83;&#83;&#80;&#73;&#76;&#76;&#69;&#82;&#64;&#79;&#82;&#73;&#79;&#78;&#84;&#69;&#67;&#72;&#78;&#79;&#76;&#79;&#71;&#89;&#71;&#82;&#79;&#85;&#80;&#46;&#67;&#79;&#77;">SSPILLER@ORIONTECHNOLOGYGROUP.COM</a>","www.oriontechnologygroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J42SQX21N2K7">48</a>","ESMAN GLOBAL RESOURCES LLC","SHADRACH ELECHI","","1679 S DUPONT HWY STE 100","","DOVER","DE","19901-5164","Esman Global Resources LLC is a veteran owned, SBA 8(a) certified small business providing engineering, procurement, construction, maintenance & repair, management, and other technical and professional services across US Federal and State agencies and the Department of Defense. Our professionals have spent decades providing quality and exceptional services. We are especially proud of our contract start up values and have a proven transition process that allows for both immediate and continuous performance accountability.  Esman Global strives to achieve growth, diversification, and profitability by providing quality products and services, delivered in a timely manner while exceeding customer satisfaction. We go above and beyond to maintain customer confidence, pursuing service excellence and continually improve in safety and environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#100;&#114;&#97;&#99;&#104;&#46;&#101;&#108;&#101;&#99;&#104;&#105;&#64;&#101;&#115;&#109;&#97;&#110;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">shadrach.elechi@esmanglobal.com</a>","www.esmanglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HR5DEUCYTXC6">49</a>","GATEWAY INTERNATIONAL 360 LLC","HARPER ZARKER","","159 MERIDIAN BLVD","","BEAR","DE","19701-6841","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#112;&#101;&#114;&#64;&#103;&#97;&#116;&#101;&#119;&#97;&#121;&#105;&#110;&#116;&#108;&#51;&#54;&#48;&#46;&#99;&#111;&#109;">harper@gatewayintl360.com</a>","https://www.gatewayintl360.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YB1MSJ4WA8W9">50</a>","TURNING POINT COLLECTION LLC","BEVERLY THOMES","","2055 LIMESTONE ROAD","SUITE 302","WILMINGTON","DE","19808-5536","The furniture in your office can be more than just simply functional. By creating a comfortable, stylish and ergonomically sound working environment, you can boost the morale and the productivity of your team. Choosing to install quality office furniture will enhance the overall look of your business, strengthen your brand and make your business more attractive to prospective clients. To purchase robust and stylish workstations, cubicles and ergonomic products, contact the experts at Turning Point Collection LLC. We are a well established commercial furniture dealer in Delaware, Maryland, Pennsylvania, DC and New Jersey. Our Woman Owned business is proudly certified by WBENC. We provide exceptional quality office furniture and ergonomics products with 'white glove' delivery and installation services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#118;&#64;&#116;&#117;&#114;&#110;&#105;&#110;&#103;&#112;&#111;&#105;&#110;&#116;&#102;&#117;&#114;&#110;&#105;&#116;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">bev@turningpointfurniture.com</a>","http://www.turningpointfurniture.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZDJ8LU46S7D9">51</a>","ABILITARE INC","PARTH SHAH","","2140 S DUPONT HWY","","CAMDEN","DE","19934-1249","Abilitare is a consumer electronics manufacturer currently offering assistive technology products. Abilitare provides hands free access to computers and phones to the hand disabled. This is achieved via head controlled mouse; head-wearable containing motion sensors that track the user’s head movements. These head movements in turn control a mouse on the user’s screen. Abilitare screen toolbar and Bluetooth adaptive switch allow users to do all mouse functions like click, zoom, scroll and drag. And Integrated voice dictation makes typing super easy.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#114;&#116;&#104;&#64;&#97;&#98;&#105;&#108;&#105;&#116;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">parth@abilitare.com</a>","https://abilitare.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DSWDGT65EXV4">52</a>","KTM 2 LLC","CAMERON CANNATELLI","","123 DIXON ST","","SELBYVILLE","DE","19975-3022","Arrow Safety Device Co. has a rich history and a strong presence in the safety industry. Founded in 1930, the company has been a pioneer in vehicle safety products, including the development of the first practical turn signal. Arrow Safety Device Co. operates out of a state-of-the-art facility in Selbyville, Delaware. This facility was established in 2008 after consolidating their previous locations in Georgetown, DE, and Mount Holly, NJ2. The company is ISO 9001:2008 certified, ensuring high standards in quality management and continuous improvement. Arrow Safety Device Co. has a robust distribution network that serves a wide range of customers across the United States. They offer a variety of safety products, including vehicle lighting, reflective wear, traffic control devices, and so much more. Arrow Safety Has obtained its Federal Firearms License and is now dealing in weapons and ammunition, making Arrow Safety the one stop shop for police and public safety equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#99;&#97;&#110;&#110;&#97;&#116;&#101;&#108;&#108;&#105;&#64;&#97;&#114;&#114;&#111;&#119;&#115;&#97;&#102;&#101;&#116;&#121;&#100;&#101;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">Tcannatelli@arrowsafetydevice.com</a>","www.arrowsafetydevice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MBGHLL7BJAC9">53</a>","FLOORGUY SUPPLY LLC","ANGELA HENRY","","12 MCCULLOUGH DR","STE 10","HISTORIC NEW CASTLE","DE","19720-2076","FloorGuy Supply sells and ships floor maintenance supplies via ecommerce websites to residential and commercial customers throughout the US. We provide live customer support. Hilway Direct is our own premier brand of floor maintenance products for retail and wholesale distribution.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#103;&#101;&#108;&#97;&#64;&#109;&#121;&#102;&#103;&#115;&#117;&#112;&#112;&#108;&#121;&#46;&#99;&#111;&#109;">angela@myfgsupply.com</a>","https://myfgsupply.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WEXPNM8R26M5">54</a>","MACHINIST MATE SERVICES LLC","WILLIAM BLANKENSHIP","","225 KENMARK RD","","NEWARK","DE","19713-3919","Machinist Mate Services LLC is a Service Disabled Veteran Owned Small Business. William D. Blankenship is a Dessert Storm Veteran with 23 years experience in manufacturing and machining.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#98;&#64;&#109;&#97;&#99;&#104;&#105;&#110;&#105;&#115;&#116;&#109;&#97;&#116;&#101;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#46;&#99;&#111;&#109;">billb@machinistmateservices.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XPH9CMCNGR89">55</a>","YARRELL CONSTRUCTION LLC","LEANDRE YARRELL","","408 KING RAIL CT","","MIDDLETOWN","DE","19709-2205","We're more than just epoxy; we're floor transformation enthusiasts with a sprinkle of fun! At Fin-Tastic Coatings, we're passionate about creating rock-solid epoxy flooring solutions, built on a foundation of conscientious quality and exceptional customer service. Our team of dedicated floor wranglers tackle every project with a smile, ensuring unprecedented quality from meticulous prep work to the final gleaming coat. Whether you're a homeowner seeking a garage makeover or a business needing a functional, high-performance floor, we're here to bring your vision to life, one vibrant, long-lasting square foot at a time. When you choose Fin-Tastic Coatings, you're not just getting an epoxy floor; you're investing in a trusted partner dedicated to exceeding your expectations","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#121;&#97;&#114;&#114;&#101;&#108;&#108;&#64;&#121;&#97;&#114;&#114;&#101;&#108;&#108;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">lyarrell@yarrellconstruction.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DSWBCM9PHRH4">56</a>","CARROLL JAMES C JR","JAMES CARROLL JR","","310 MARINERS CIR","","MILTON","DE","19968-2216","Software, Transportation Energy","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#97;&#114;&#107;&#97;&#114;&#116;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">clarkart@comcast.net</a>","https://clarkartpaintings.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E47XGAKAFE85">57</a>","DELMARVA IRRIGATION, INC","AMANDA MAPP","","11027 DELAWARE AVE","","LAUREL","DE","19956-4402","Sell, service, and install pivot irrigation systems, grain bins, grain systems, and grain handling equipment. Sell, manufacture, service, and install hydraulic doors and windows for residential and commercial consumers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#112;&#112;&#64;&#100;&#101;&#108;&#109;&#97;&#114;&#118;&#97;&#105;&#114;&#114;&#105;&#103;&#97;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">amapp@delmarvairrigation.com</a>","https://www.delmarvairr.com"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.066&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

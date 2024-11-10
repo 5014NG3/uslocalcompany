@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 015 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.92 seconds and 1.97 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 17 
+(of 17 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CN6JHWKMSCD5">1</a>","ISS ACTION INC","PAMELA NEWMAN","CEO","204 E MCKENZIE ST","UNIT E6","PUNTA GORDA","FL","33950-6073","Federal armed contracts, highly trained security guard services, mobile patrols, anti-terrorism planning,electronic surveillance services, emergency preparedness and crisis management","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#110;&#101;&#119;&#109;&#97;&#110;&#64;&#105;&#115;&#115;&#97;&#99;&#116;&#105;&#111;&#110;&#46;&#99;&#111;&#109;">pnewman@issaction.com</a>","www.issaction.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SGYYKTA7HY51">2</a>","ANCHOR LOGISTICS INC","TONY CAPUANO","","14356 PONCE DE LEON TRL","","PORT CHARLOTTE","FL","33981-2670","Truckload Transportation","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#99;&#97;&#112;&#117;&#97;&#110;&#111;&#64;&#97;&#110;&#99;&#104;&#111;&#114;&#108;&#111;&#103;&#105;&#115;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">tcapuano@anchorlogistics.com</a>","www.anchorlogistics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MSPQFML6CKD3">3</a>","B3 SOLUTIONS, LLC","WILLIAM ALMAS","President","4055 TAMIAMI TRL STE 16","","PORT CHARLOTTE","FL","33952-9212","B3 Solutions provides expertise in designing, fielding, and managing program solutions and assures on time delivery of successful programs in logistics management, information technology, program management, supply chain, and acquisition.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#97;&#108;&#109;&#97;&#115;&#64;&#98;&#51;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">balmas@b3solutions.com</a>","http://www.b3solutions.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F2CQMBBFQUF6">4</a>","CANALI INC","EILEEN CANALI","Vice President","4201 EAGLE NEST CT","","PORT CHARLOTTE","FL","33948-5400","Project management, OMB A11-300, info arch., systems design, database design, database arch., application and systems integration, software development, systems mgmt, managed services, hosting, data processing, data mining, business intelligence, security","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#105;&#108;&#101;&#101;&#110;&#99;&#97;&#110;&#97;&#108;&#105;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">eileencanali@yahoo.com</a>","www.fedcms.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DBVFSDM7VKT1">5</a>","QUALITY CALIBRATIONS, INC.","BEVERLY HEIBERGER","","27 SABAL DR","","PUNTA GORDA","FL","33950-5015","Pipette Calibrations, pipette repairs, pipette validations and Pipette Certificates. ISO17025:2017Accredited since 2008. On site and mail in service available. Serving BioTech industry since 1994. NAICS Code 811210 and 541380","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#66;&#101;&#118;&#101;&#114;&#108;&#121;&#64;&#81;&#117;&#97;&#108;&#105;&#116;&#121;&#67;&#97;&#108;&#105;&#98;&#114;&#97;&#116;&#105;&#111;&#110;&#115;&#73;&#110;&#99;&#46;&#99;&#111;&#109;">Beverly@QualityCalibrationsInc.com</a>","http://www.QualityCalibrationsInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VFYNDLNTA8H5">6</a>","AMERICAN SURGICAL INSTRUMENT REPAIR LLC","VICKY ARNOLD","","28260 AIRPARK DR UNIT 110","","PUNTA GORDA","FL","33982-2426","American Surgical Instrument Repair has been in business since 2006 providing a vast array of capabilities including repair of all makes and models of small and large diameter rigid/flexible endoscopes,ultrasound probes, video cameras, surgical power tools,surgical instruments, case carts, rolling stock repairs, positioning devices, etching, autoclave cleaning, and much more. We are proud to be ISO 13485-2016 certified for medical device repairs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#105;&#99;&#107;&#121;&#46;&#97;&#114;&#110;&#111;&#108;&#100;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#45;&#115;&#117;&#114;&#103;&#105;&#99;&#97;&#108;&#46;&#99;&#111;&#109;">vicky.arnold@american-surgical.com</a>","www.american-surgical.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KJPPL3JY6JV6">7</a>","AVANT CONSTRUCTION INC","FRINEE MATTESICH","","16500 BURNT STORE RD UNIT 103","","PUNTA GORDA","FL","33955-9219","General Contractor, Residential and Commercial, Southwest Florida","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#70;&#109;&#97;&#116;&#116;&#101;&#115;&#105;&#99;&#104;&#64;&#103;&#111;&#97;&#118;&#97;&#110;&#116;&#46;&#99;&#111;&#109;">Fmattesich@goavant.com</a>","HTTP://WWW.GOAVANT.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YSPEGRGD3K73">8</a>","ARCADIA AEROSPACE INDUSTRIES, LLC","CHARLES BUSHMAN","","27256 MOONEY AVE BLDG 110","","PUNTA GORDA","FL","33982-2457","Nondestructive Testing Service Integrators include inspection, automated machine design, install, maintain, upgrade, repair and calibration. Quality Program consulting. Ultrasonic testing using TTU and PE. Composite specialists, automation specialists.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#104;&#97;&#114;&#108;&#101;&#115;&#46;&#98;&#117;&#115;&#104;&#109;&#97;&#110;&#64;&#97;&#114;&#99;&#97;&#100;&#105;&#97;&#97;&#101;&#114;&#111;&#115;&#112;&#97;&#99;&#101;&#46;&#99;&#111;&#109;">charles.bushman@arcadiaaerospace.com</a>","http://www.arcadiaaerospace.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TMQ5EFGZMJV3">9</a>","CLEARED SAFE LLC","JON MANTLE","","10405 GREENWAY AVE","","ENGLEWOOD","FL","34224-9343","To clear and confirm safe surface, subsurface, and water environments of unexploded ordnance (UXO) and munitions of explosive concern (MEC). To offer service, support, and guidance for UXO, MEC, and explosive ordnance disposal (EOD) situations, questions, and concerns.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#110;&#109;&#97;&#110;&#116;&#108;&#101;&#64;&#99;&#108;&#101;&#97;&#114;&#101;&#100;&#115;&#97;&#102;&#101;&#46;&#99;&#111;&#109;">jonmantle@clearedsafe.com</a>","clearedsafe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TGS3EENY5556">10</a>","DEL SUR SERVICES, INC.","ERIC GARCIA","","5600 BRONCO RD","","PUNTA GORDA","FL","33982-5505","Del Sur Services Inc specializes in HVAC installation and repairs as well as grounds maintenance and landscaping.Del Sur Services Inc provides comprehensive facility support services to commercial and government entities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#64;&#100;&#101;&#108;&#115;&#117;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">eric@delsurservicesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLUJGNEEJ3B1">11</a>","DEL SUR SDAC JV, LLC","ERIC GARCIA","","5600 BRONCO RD","","PUNTA GORDA","FL","33982-5505","Del Sur SDAC JV is a joint venture between Del Sur Services, Inc., an SBA 8(a)-certified small, disadvantaged, Hispanic-owned general and mechanical contractor and SDAC, an SBA 8(a)-graduated, SDVOSB, HUBZone, MBE/DBE (Ala. and Fla.), ISO 9001:2008 QMS, disadvantaged, Black-owned general/mechanical contractor and facilities support company. Del Sur Services and SDAC's strategic alliance provides federal government customers with an 8(a) team experienced in delivering facility management, maintenance, construction, investment and support to more than 14.5 million square feet in over 140 Federal Government buildings and structures. In addition, JV partner SDAC is on GSA's BMO SB Zones 1-6 MA IDIQ, GSA's 03FAC Schedule and it holds TS FCL with Secret and TS-cleared personnel.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#114;&#105;&#99;&#64;&#100;&#101;&#108;&#115;&#117;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#115;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">eric@delsurservicesinc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K1BEC3AEYYX7">12</a>","PRO ZONE JANITORIAL LLC","MARK LAMB","","7336 POWDER PUFF","","PUNTA GORDA","FL","33955-1144","Prozone specializes in commercial cleaning and disinfecting of all variety's of business. We are a family owned business that takes pride in providing a professional service with great customer service. We are you clean bathroom specialists. We provide services to many condo associations We strive to make your workplace a cleaner more healthy and productive work environment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#108;&#97;&#109;&#98;&#64;&#112;&#114;&#111;&#122;&#111;&#110;&#101;&#57;&#49;&#49;&#46;&#99;&#111;&#109;">mlamb@prozone911.com</a>","prozone911.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WGMLZ6X79C53">13</a>","RESEARCH ANALYTICS CONSULTING LLC","CYNTHIA WALKER RINGEL","","3116 PELLAM BLVD","","PORT CHARLOTTE","FL","33948-6144","We are experts in quantitative and qualitative research methodologies and can assist with any aspect of a research or evaluation project.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#114;&#46;&#99;&#105;&#110;&#100;&#121;&#46;&#109;&#46;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">dr.cindy.m.walker@gmail.com</a>","www.researchanalyticsconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KCRCWGLKJ2X5">14</a>","WE DID IT CONSULTING LLC","STEVEN ESPINAL","","25336 PADRE LN","","PUNTA GORDA","FL","33983-6006","At We Did IT Consulting, we're not just IT specialists; we're architects of reliable, cutting-edge digital environments. Our mission is to empower government and enterprise clients with a comprehensive suite of IT services tailored to the nuances of their operations. From the frontline of technical support to the complexities of cyber defense and cloud innovation, our expertise is both broad and deep, ensuring every technological challenge is met with an effective, customized solution. Our core competencies include robust cyber security measures, agile software development, seamless cloud engineering, and strategic professional staffing—each designed to enhance the efficiency, security, and innovation of our clients. With a veteran-led perspective, we bring a strategic mix of military precision and commercial agility to every project, delivering not just solutions, but strategic advantages in an ever-evolving digital landscape.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#101;&#118;&#101;&#110;&#46;&#101;&#115;&#112;&#105;&#110;&#97;&#108;&#64;&#119;&#101;&#100;&#105;&#100;&#105;&#116;&#99;&#111;&#110;&#115;&#117;&#108;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">steven.espinal@wediditconsulting.com</a>","www.wediditconsulting.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MPJPH82WDRC3">15</a>","ANTHEM INTERNATIONAL, LLC","GEORGE MADOSKY","","35 OAKLAND HILLS CT","","ROTONDA WEST","FL","33947-2236","Anthem International is a promotional product distributor with over 50 years of experience in the retail and Advertising Specialty Market. Anthem Int'l has the capacity to provide customers with thousands of logoed or branded products to meet all their marketing and promotional needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#106;&#114;&#64;&#97;&#110;&#116;&#104;&#101;&#109;&#112;&#114;&#111;&#109;&#111;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">gjr@anthempromotions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XQVSAVBSE968">16</a>","SPOTLESS WATER SYSTEMS, LLC","CHARLES DE WENT","","2565 RIO PALERMO CT","","PUNTA GORDA","FL","33950-6319","We manufacture, sell, and service Reverse Osmosis and De-ionized water systems. These systems are used for multiple Residential and Commercial purposes like the washing and spotless rinsing of Cars, Boats, RV’s, Windows, Solar Panels ect… Countertop and under counter drinking water. Industrial and commercial purposes are in labs, circuit board rinsing, hospitals, boilers, and chemical processing plants, green houses, ect… From design, manufacture, installation and service we are the one stop shop for your Water needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#104;&#117;&#99;&#107;&#100;&#64;&#99;&#114;&#115;&#112;&#111;&#116;&#108;&#101;&#115;&#115;&#46;&#99;&#111;&#109;">Chuckd@crspotless.com</a>","https://crspotless.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4Y1L1PYDBN8">17</a>","PRO-ROOFING OF EVANSVILLE LLC","JODI KAPLAN","","43008 BOARDWALK LOOP","","PUNTA GORDA","FL","33982-2165","Pro-Roofing USA is a leading roofing company serving both Florida and the Midwest, specializing in commercial, residential, and multi-family roofing projects. In the dance between sky and roof, we find the art of protection, elevating homes, multi-family, and commercial structures into havens. Our expertise spans a wide range of roofing systems, including TPO, metal, tile, asphalt shingles, concrete tile, foam, and slate. We offer comprehensive services, from roof replacement and repairs to maintenance and reroofing, ensuring your roof remains in optimal condition. Beyond roofing, we provide services for siding, windows, and gutters, addressing issues such as roof damage and leaky roofs with precision and efficiency. Whether it’s a flat roof, composition roof, or specialized roofing materials like roof tiles and tarps, Pro-Roofing USA is committed to delivering high-quality workmanship tailored to meet the unique needs of our clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#100;&#105;&#64;&#112;&#114;&#111;&#45;&#114;&#111;&#111;&#102;&#105;&#110;&#103;&#117;&#115;&#97;&#46;&#99;&#111;&#109;">jodi@pro-roofingusa.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.917&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 089 of CA;<br/>
+the profile location is in: California;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+2.36 seconds and 2.43 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 42 
+(of 42 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KEP6CP9BHCW7">1</a>","REDDING AIR SERVICE, INC.","TERI NEVILLE","PRESIDENT","6831 AIRWAY AVE","","REDDING","CA","96002-9441","HELICOPTER SERVICE - PART 135 AND 91, 133 AND 145. CHARTER, PAX AND CARGO, LONG LINE, HELI-TORCH, FIRE SUPPRESSION, SIGHT SEEING, POWER AND PIPE LINE PATROL, FORESTRY, SURVEY, RECONN, FILMING AND PHOTO, ANIMAL HURDING, ANIMAL AND BIRD COUNTS, SNOW, ETC.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#101;&#114;&#105;&#64;&#114;&#101;&#100;&#100;&#105;&#110;&#103;&#97;&#105;&#114;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">teri@reddingairservice.com</a>","www.reddingairservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N99SYMCD9JH4">2</a>","WAYNE NORRIS CONSTRUCTION, INC.","WAYNE NORRIS","President & V. President","26917 CAYTON VALLEY RD","","BURNEY","CA","96013-9634","Road Construction, Land Clearing, Riparin Stablization, Fire Breaks, Building Pads, Creek Rehab, Fire Line Rehab","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#109;&#110;&#111;&#114;&#114;&#105;&#115;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#110;&#101;&#116;&#46;&#110;&#101;&#116;">wmnorris@frontiernet.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JVLGZXDSPAN5">3</a>","TRIBAL DATA RESOURCES, INC","LILLIAN ANDERSON","President","2576 HARTNELL AVE STE 5","","REDDING","CA","96002-2345","Tribal Data Resources provides quality products and services which increase the self sufficiency and administrative capabilities of Tribes, tribal service organizations, and those agencies and individuals who serve and assist Native Americans.  ","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#108;&#108;&#105;&#97;&#110;&#64;&#116;&#100;&#114;&#111;&#110;&#108;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">lillian@tdronline.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D8DDK2NTMR39">4</a>","J & J PUMPS, INC.","CYRUS HERRERA JR.","JUNIOR VICE PRESIDENT","4952 S BARNEY RD","","ANDERSON","CA","96007-9783","SUBMERSIBLE PUMP SALES AND INSTALLATIONS. PROVIDE SALES AND SERVICE OF NEW AND USED SYSTEM NEEDS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#106;&#104;&#64;&#106;&#97;&#110;&#100;&#106;&#112;&#117;&#109;&#112;&#115;&#46;&#99;&#111;&#109;">cjh@jandjpumps.com</a>","http://www.jandjpumps.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFHBMPLBNCL3">5</a>","JS MECHANICAL, INC.","JACK SANDERS","Office Manager","8759 AIRPORT RD STE 1A","","REDDING","CA","96002-9329","Installation and repair of heating, ventilation and air-conditioning equipment.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#97;&#110;&#100;&#101;&#114;&#115;&#64;&#97;&#105;&#114;&#111;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">jsanders@airoservice.com</a>","www.airoservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DAMKZ7E89JF8">6</a>","APEX TECHNOLOGY MANAGEMENT, LLC","TOM GRISELL","President, CEO","310 HEMSTED DR STE 300","","REDDING","CA","96002-0935","Computer networking, network support, computer programming, data and phone cabling, telephony support, telephone systems and Voice over IP (VoIP) phone systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#103;&#114;&#105;&#115;&#101;&#108;&#108;&#64;&#97;&#112;&#101;&#120;&#46;&#99;&#111;&#109;">tgrisell@apex.com</a>","http://www.apex.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=S9EPDFVKTKX3">7</a>","MOUNTAINEERS FIRE CREW, INCORPORATED","THOMAS WESLEY","","3777 MEADOW VIEW DR STE 300","","REDDING","CA","96002-9708","Company has over 30 years experience in wild land fire suppression/disaster response. Other services: fuels management,timber felling/thinning/pruning, brush clearing, fuel break/hand line construction, prescribed burning,erosion control. MSPA compliant.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#116;&#110;&#102;&#105;&#114;&#101;&#99;&#114;&#101;&#119;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">mtnfirecrew@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TYERYT8ZA8F1">8</a>","JUSTIN LAWSON","JUSTIN LAWSON","","29710 HIGHWAY 299 E","","ROUND MOUNTAIN","CA","96084-","heavy equipment repairs, parts, rentals, fire apparatus, parts locator, used parts, truck parts, truck repairs, pump tests","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#115;&#116;&#105;&#110;&#64;&#107;&#108;&#101;&#105;&#110;&#101;&#113;&#117;&#105;&#112;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">justin@kleinequipment.com</a>","kleinequipment.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HP2LCSNMSTJ8">9</a>","WESTERN BUSINESS EQUIPMENT, INC.","CRAIG CARREL","","888 LOCUST ST","","REDDING","CA","96001-2737","Office Equipment, Black/White and Color Copiers, Plotters, Document Management, Printers, MFP's, Fax Machines, Paper Shredders, Typewriters, Calculators, Paper Handling, Sales and Service of most all office Equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#114;&#97;&#105;&#103;&#64;&#99;&#97;&#114;&#114;&#101;&#108;&#115;&#46;&#99;&#111;&#109;">craig@carrels.com</a>","http://www.carrels.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RV1CKR5K7K93">10</a>","DURA CRANE, INC.","JOHN DAL POGGETTO","PRESIDENT","5959 EAST ST","","ANDERSON","CA","96007-2731","24-hour crane and trucking company, serving construction, plant maintenance, and transportation industries. We are located near Redding CA. Serving Northern CA. and Southern Oregon. We have cranes from 30-275 tons. We also do pile-driving & dredging.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#100;&#97;&#108;&#64;&#100;&#117;&#114;&#97;&#99;&#114;&#97;&#110;&#101;&#46;&#99;&#111;&#109;">johndal@duracrane.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GG2DDW2MAWL1">11</a>","GAYNOR TELESYSTEMS INC.","MAUREEN GAYNOR","V.P.","9650 TANQUERAY CT","","REDDING","CA","96003-6812","Complete low voltage systems provider including telecommunications systems, CCTV video surveillance, card/door access system, digital video recorders, school systems, paging , Nurse Call, wireless, ID badging, Video Teleconference Equipment","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#103;&#97;&#121;&#110;&#111;&#114;&#64;&#103;&#97;&#121;&#110;&#111;&#114;&#116;&#101;&#108;&#101;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">mgaynor@gaynortelesys.com</a>","http://www.gaynortelesys.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X6AQUJ5NZDA5">12</a>","CONVERSE CONSTRUCTION, INC.","LESLIE CONVERSE","President","20553 SUNSET LN","","REDDING","CA","96002-9675","Converse Construction Inc. (CCI) is a prominent industrial contractor. Our specialty is mechanical, electrical and controls associated with water and waste water. We are a California certified DVBE and SDVOB.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#115;&#64;&#99;&#111;&#110;&#118;&#101;&#114;&#115;&#101;&#99;&#111;&#110;&#46;&#99;&#111;&#109;">les@conversecon.com</a>","http://www.conversecon.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L1ZJZ3DGBKQ4">13</a>","AXNER EXCAVATING, INC.","JULIE TATOM","","2900 OLD OREGON TRL","","REDDING","CA","96003-9323","General engineering contractor specializing in commercial & industrial sitework, underground, excavation, demolition, road construction, ponds, concrete, erosion control, waterway diversion, sewer. Provide material supplies, sand, gravel","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#117;&#108;&#105;&#101;&#116;&#64;&#97;&#120;&#110;&#101;&#114;&#101;&#120;&#99;&#97;&#118;&#97;&#116;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">juliet@axnerexcavating.com</a>","http://www.axnerexcavating.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HN8SJ86NMCN8">14</a>","B-SQUARED TECHNICAL SERVICES AND CONSULTING INC.","VALERIE BURRESCIA","","14990 GREY FOX LN","","OAK RUN","CA","96069-9586","Perform professional engineering and technical services, logistics and supply chain management services, systems engineering and integration services, management/systems consulting services,and software development and integration, education and training, configuration management, administrative services, and technology management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#108;&#101;&#114;&#105;&#101;&#46;&#98;&#117;&#114;&#114;&#101;&#115;&#99;&#105;&#97;&#64;&#98;&#115;&#113;&#117;&#97;&#114;&#101;&#100;&#116;&#115;&#46;&#99;&#111;&#109;">valerie.burrescia@bsquaredts.com</a>","http://bsquaredtsc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LVTSJZF98KC1">15</a>","CORNERSTONE DOOR & WINDOW, INC","MATT PAYNE","","14389 HOLIDAY RD","","REDDING","CA","96003-9411","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#64;&#99;&#111;&#114;&#110;&#101;&#114;&#115;&#116;&#111;&#110;&#101;&#100;&#111;&#111;&#114;&#97;&#110;&#100;&#119;&#105;&#110;&#100;&#111;&#119;&#46;&#99;&#111;&#109;">matt@cornerstonedoorandwindow.com</a>","http://www.cornerstonedoorandwindow.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKQKTFKDLK92">16</a>","ADKINS, RONALD M","RONALD ADKINS","","5098 AUDREY LN","","ANDERSON","CA","96007-9155","FIRE SUPPORT EQUIPMENT REPAIR AND REPLACEMENTS. PARTS AND SERVICE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#108;&#108;&#109;&#97;&#100;&#114;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">shellmadre@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VUKDYHJP8VQ9">17</a>","WORLD TELECOM & SURVEILLANCE, INC.","RYAN BELCASTRO","","2925 INNSBRUCK DR","","REDDING","CA","96003-9335","World Telecom and Surveillance, Inc. is a leader in our industry providing a wide range of services that includes: Telecommunications, Surveillance Systems, Access Control Systems, Fiber Optics, Voice and Data Cabling, as well as Dial Tone and Internet Services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#121;&#97;&#110;&#64;&#119;&#116;&#97;&#110;&#100;&#115;&#46;&#99;&#111;&#109;">ryan@wtands.com</a>","www.wtands.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L3F7G6ADNEF8">18</a>","SPRATT EXCAVATING","ERIC SPRATT","","3111 ARK WAY","","COTTONWOOD","CA","96022-9576","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#110;&#105;&#115;&#112;&#114;&#97;&#64;&#97;&#111;&#108;&#46;&#99;&#111;&#109;">tonispra@aol.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JEKAYM2YDK55">19</a>","MATERIALS TESTING INC","DAVID CYMANSKI","","8798 AIRPORT RD","","REDDING","CA","96002-9212","We provide geotechnical/foundation engineering investigations, environmental assessments, materials testing and special inspections of public and private projects","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#121;&#109;&#97;&#110;&#115;&#107;&#105;&#64;&#107;&#99;&#101;&#110;&#103;&#114;&#46;&#99;&#111;&#109;">dcymanski@kcengr.com</a>","http://www.mti-kcgeotech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EUJNLDBDRTW8">20</a>","ELECTRICAL AND CONTROL SYSTEM ENGINEERING, INC.","DOUG MCHANEY","GEN MGR","950 EXECUTIVE WAY","","REDDING","CA","96002-0630","ELECTRICAL ENGINEERING, CONTROL SYSTEM ENGINEERING, INSTRUMENTATION AND CONTROLS, POWER DISTRIBUTION, FIELD ENGINEERING, TESTING, REPORTS AND STUDIES, MANUALS AND PROCEDURES, FEEDBACK CONTROL, MOTOR CONTROL AND DRIVE SYSTEMS, LIGHTING, COMMERCIAL, INDUSTR","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#99;&#104;&#97;&#110;&#101;&#121;&#64;&#97;&#114;&#99;&#45;&#115;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">dmchaney@arc-sine.com</a>","http://WWW.ARC-SINE.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y13YJMJ8EDP4">21</a>","MCJASM, INC.","CANDACE MURRAY","","1190 BRANSTETTER LN","","REDDING","CA","96001-4322","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#97;&#110;&#100;&#97;&#99;&#101;&#46;&#109;&#112;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">candace.mpf@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VHKDK4PLJ1F9">22</a>","SITE WORK SOLUTIONS","GEORGE WHITMER","","2437 RADIO LN","","REDDING","CA","96001-3810","Site Work Solutions Heavy Civil General Engineering & Building/Const.Excavation,grading,paving,structural&decorative concrete,buildings,hazardous material, specialty.JOC,SABER,MATOC,IDIQ,BOA","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#69;&#115;&#116;&#105;&#109;&#97;&#116;&#105;&#110;&#103;&#64;&#115;&#119;&#115;&#103;&#99;&#46;&#99;&#111;&#109;">Estimating@swsgc.com</a>","http://swsgc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=L6MFNC5L1JR1">23</a>","MILLER COLLISION CENTER, INC","JIM OLIVER","","20303 CHARLANNE DR","","REDDING","CA","96002-9209","As an I-Car Gold facility, we have exacting standards and deliver quality collision repair backed by a lifetime warranty. Our trained and certified staff, and state of the art equipment is why Goverment agencies, fleet , insurance companies choose us.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#99;&#99;&#111;&#117;&#110;&#116;&#105;&#110;&#103;&#64;&#109;&#105;&#108;&#108;&#101;&#114;&#99;&#111;&#108;&#108;&#105;&#115;&#105;&#111;&#110;&#99;&#101;&#110;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">accounting@millercollisioncenter.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JM6FUFK1CRC7">24</a>","HIGH EFFICIENCY SOLUTIONS, INC.","WHITNEE CHANDLER","","2950 INNSBRUCK DR","","REDDING","CA","96003-9303","Commercial and residential heating, ventilating and air conditioning contractor. New construction and add-on/replacement and repairs. Sheet metal fabrication shop.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#87;&#104;&#105;&#116;&#110;&#101;&#101;&#64;&#84;&#105;&#109;&#98;&#101;&#114;&#108;&#105;&#110;&#101;&#104;&#118;&#97;&#99;&#46;&#99;&#111;&#109;">Whitnee@Timberlinehvac.com</a>","http://timberlinehvac.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C8H6MQ32DCH1">25</a>","B&G WATER TENDERS, LLC","TERRY BROCK","","22106 HOMASHEA LN","","ANDERSON","CA","96007-8549","Company provides water tender for fire support for federal and state wildland fires.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#52;&#116;&#98;&#114;&#111;&#99;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">4tbrock@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C8MUY7D5ZQK3">26</a>","T AND S DVBE, INC.","TAREN FORDE","","18981 GRAVEL PLANT RD","","REDDING","CA","96002-4249","Construction Highway/Roads/Bridges, traffic control, pilot car, water tending services, forestry management and prevention services. Trucking, asphalt oil hauling, concrete wash outs. Traffic control Rentals and Sales","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#110;&#100;&#115;&#100;&#118;&#98;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">tandsdvbe@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C6T2SMYB86J1">27</a>","HIGHWAY SPECIALTY COMPANY INC","DUSTAN CURRIER","","6591 EASTSIDE RD","","REDDING","CA","96001-5047","TRAFFIC CONTROL AND ROADSIDE SIGNAGE CONTRACTOR PROVIDING LANE CLOSURES, FLAGGING AND TRAFFIC CONTROL EQUIPMENT SALES/RENTALS. SIGN INSTALLATION FROM TEMPORARY CONSTRUCTION SIGNS BUILT IN HOUSE TO PERMANENT FREEWAY SIGNAGE.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#68;&#85;&#83;&#84;&#65;&#78;&#64;&#72;&#73;&#71;&#72;&#87;&#65;&#89;&#83;&#80;&#69;&#67;&#73;&#65;&#76;&#84;&#89;&#46;&#67;&#79;&#77;">DUSTAN@HIGHWAYSPECIALTY.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XAFNVMH1ACF8">28</a>","TLC SIGN LANGUAGE SERVICES, LLC","TINA COOK","","1135 PINE ST STE 15","","REDDING","CA","96001-0750","Nationally certified American Sign Language Interpreter for Deaf consumers","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#108;&#99;&#115;&#105;&#103;&#110;&#108;&#97;&#110;&#103;&#117;&#97;&#103;&#101;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">tlcsignlanguage@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FRK9JP4PL9R6">29</a>","CLP FIRE SUPPORT LLC","LYNN PRESIDIO","","24527 DERSCH RD","","ANDERSON","CA","96007-9797","Wildland Fire Suppression, Heli-port protection, Water Tender","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#122;&#104;&#97;&#110;&#100;&#108;&#121;&#110;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ezhandlyn@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZYL9J7CAA3N6">30</a>","BULLERT INDUSTRIAL ELECTRIC, INC.","BERNIE HANSEN","","7630 AVIANCA DR","","REDDING","CA","96002-9703","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#114;&#110;&#105;&#101;&#64;&#98;&#117;&#108;&#108;&#101;&#114;&#116;&#105;&#110;&#100;&#117;&#115;&#116;&#114;&#105;&#97;&#108;&#46;&#99;&#111;&#109;">bernie@bullertindustrial.com</a>","www.bullertindustrial.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K3AQNZZK3L61">31</a>","PAUL YOKOYAMA","PAUL YOKOYAMA","","19144 ADAMS RD","","COTTONWOOD","CA","96022-8506","2499 gallon water tender used for support of forestry service during forest fires.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#121;&#111;&#107;&#111;&#46;&#119;&#97;&#116;&#101;&#114;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">pyoko.water@outlook.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D9BWNBAF3NR5">32</a>","THE ANALYTICAL MOOSE LLC","RACHAEL BRADY","","6633 MOUNTAIN SIDE DR","","IGO","CA","96047-9724","Provide NG911 compliant road networks to smaller jurisdictions that cannot hire GIS staff to create and maintain complex road networks.Providing GIS support for Non-Profits and Small Business to comply with Grant reporting requirements.Providing GIS Support to Federal, State, and Local Governments.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#99;&#104;&#97;&#101;&#108;&#46;&#98;&#114;&#97;&#100;&#121;&#64;&#116;&#104;&#101;&#97;&#110;&#97;&#108;&#121;&#116;&#105;&#99;&#97;&#108;&#109;&#111;&#111;&#115;&#101;&#46;&#99;&#111;&#109;">rachael.brady@theanalyticalmoose.com</a>","theanalyticalmoose.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZK5EDSQ5ACL4">33</a>","ROB STRIEFF","ROB STRIEFF","","22078 WHISPERING WATER LN","","ANDERSON","CA","96007-8342","construction demolition fire rescue","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#108;&#115;&#116;&#114;&#105;&#101;&#102;&#102;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">rlstrieff@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M212E6A5PKN4">34</a>","NURSES WITH LITTLES TRAVEL AGENCY LLC","AMANDA LAMAR","","1136 ORANGE AVE","","REDDING","CA","96001-1511","Need some extra help? We offer certified and licensed staff to fill your need and exceed your expectations. We have RAISED THE BAR HIGH with our team of fully vetted RN, LVN , and CNA professionals have made themselves readily available to take on any health related matter you might need. At Nurses with Littles Travel Agency, our caregivers are here to provide a wide range of specialty services while having the support of their families and their agency to combine the best experience with the best quality of care. With an agency that knows what it takes to ensure a successful completion of every assignment for every traveling nurse... We offer efficient medical services in GROUPS or INDIVIDUAL travelers according to your needs. Do you have additional discipline requests? Just ask! Contact us today and learn more about all of our contract staffing solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#110;&#100;&#97;&#64;&#110;&#117;&#114;&#115;&#101;&#115;&#119;&#105;&#116;&#104;&#108;&#105;&#116;&#116;&#108;&#101;&#115;&#116;&#114;&#97;&#118;&#101;&#108;&#97;&#103;&#101;&#110;&#99;&#121;&#46;&#99;&#111;&#109;">amanda@nurseswithlittlestravelagency.com</a>","Www.nurseswithlittlestravelagency.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QTT4PXM95G63">35</a>","STEPHEN L GULLY","STEPHEN GULLY","","16957 ROBIN LINDA LN","","ANDERSON","CA","96007-9572","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#103;&#117;&#108;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">stgul@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MAVADQFN1ZE3">36</a>","JODI E GREEN","JODI GREEN","","1254 ROSE AVE","","REDDING","CA","96001-0409","Indoor trailer mounted Portable/Potable, 12 sink Hand Wash Station. Completed solar and back up.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#100;&#105;&#103;&#114;&#101;&#101;&#110;&#56;&#52;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">jodigreen84@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YNK4UHX2MQS8">37</a>","GRIND FIRE DEFENSE LLC","LORI TEMPLETON","","6200 STAINLESS WAY STE 27","","ANDERSON","CA","96007-2781","We operate with Hand-crews only working for fire prevention/defensible space we: *removal any and all types of ground fuels; including dead and dying brush/branches *chip all materials and remove off the properties  *weed abatement  *fell, buck, and remove/chip trees up to 12” diameter (hand-crew) and  *fell, buck and remove/chip trees up to 24” diameter (if equipment can access) *trim latter fuels *reduce continuous fuels *clear roof line up minimum 10’ *rake/remove ground litter *create fire break to bare mineral soil 10’ or more based off terrain  *create canopy clearance based of terrain slope *provide home owner assessment and guidance  *prep wood/burn piles *burn- when permitted *create elements for alternative exits and/or to increase the width of property driveways  *specialize in rough terrain that is not accessible to machinery (my crew is a solid group of “billy goats”) *have fire suppression personnel and equipment at all jobs","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#105;&#46;&#116;&#101;&#109;&#112;&#108;&#101;&#116;&#111;&#110;&#64;&#103;&#114;&#105;&#110;&#100;&#102;&#105;&#114;&#101;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">lori.templeton@grindfiredefense.com</a>","www.grindfiredefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLTCA2R48UY4">38</a>","LUNTEYS MOUNTAIN WATER CO","KEVIN LUNTEY","","32656 HIGHWAY 299 EAST","","MONTGOMERY CREEK","CA","96065-","As a Mobile Emergency Laundry Unit, we love serving all communities in need. Our trailers are equipped with eighteen large capacity washers and dryers and will meet your needs for fire camp, national disasters, homeland security, shelter and/or military camps. We come with our own mobile infrastructure: Fresh and gray water bladders and generators. Our employees are amazing and share the same passion for people and service as we do","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#100;&#108;&#117;&#110;&#116;&#101;&#121;&#64;&#104;&#111;&#116;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Kdluntey@hotmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SE75AMRVQ3L9">39</a>","ZGWORX LLC","ZACHARY GIBBINS","","1325 3RD ST","","ANDERSON","CA","96007-2825","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#90;&#103;&#119;&#111;&#114;&#120;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Zgworx@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HFJKGA7T9EX6">40</a>","BEAR MOUNTAIN CONSTRUCTION","BRENT HAMILTON","","2435 RADIO LN","","REDDING","CA","96001-3810","Bear Mountain Construction is a General Engineering Contractor with a background in many aspects of Heavy Civil Construction, including underground utilities (traditional utility construction methods as well as specialty utility locating services and trenchless utility construction), concrete structures, demolition, earthwork, site improvements, traffic control, and CCTV Utility Inspections.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#98;&#109;&#99;&#105;&#103;&#99;&#46;&#99;&#111;&#109;">info@bmcigc.com</a>","bmcigc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JGKWB1QVGYY7">41</a>","RANDALL HAUSER","HANNAH RAAB","PRINCIPAL","3179 BECHELLI LN STE 100","","REDDING","CA","96002-2041","Environmental studies, CEQA and NEPA compliance, biological reource surveys, wetland delineations, noise studies, mine reclamation plans, restoration, geographic information systems (GIS) mapping and project permitting.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#114;&#97;&#97;&#98;&#64;&#101;&#110;&#112;&#108;&#97;&#110;&#46;&#99;&#111;&#109;">hraab@enplan.com</a>","http://www.enplan.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PTE7R1Y37BK4">42</a>","VESTRA RESOURCES, INC.","KIMBERLY WILKES","PRESIDENT","5300 AVIATION DR","","REDDING","CA","96002-9379","With over 34 years of experience, VESTRA has developed a reputation within the industry as leaders in GIS/IT, Environmental Services and Engineering.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#119;&#105;&#108;&#107;&#101;&#115;&#64;&#118;&#101;&#115;&#116;&#114;&#97;&#46;&#99;&#111;&#109;">kwilkes@vestra.com</a>","http://www.vestra.com/"
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.816&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

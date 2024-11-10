@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 251 of TX;<br/>
+the profile location is in: Texas;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.99 seconds and 2.07 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 17 
+(of 17 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q6CUZ4N9XS99">1</a>","TESMEC USA, INC.","RICHARD BOWYER","","12520 E FM 917","","ALVARADO","TX","76009-6160","Tesmec designs, manufactures and sells products, technologies and integrated solutions for the construction, maintenance and efficiency of infrastructures related to the transport and distribution of energy, data and material (oil and derivatives, gas, water).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#105;&#99;&#107;&#46;&#98;&#111;&#119;&#121;&#101;&#114;&#64;&#116;&#101;&#115;&#109;&#101;&#99;&#46;&#99;&#111;&#109;">rick.bowyer@tesmec.com</a>","https://www.tesmec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y6DJC3TNYDA7">2</a>","TEXAS AIR COMPRESSOR SERVICE CORPORATION","TERESA VALDES","","1545 HOUSTON RD","","BURLESON","TX","76028-5029","We at Texas Compressor Service know your compressor needs. We have been in business for over 20 years and we have over 35 years of experience in all major air compressor brands.   We are a small and highly experienced compressor air house. Our service and support team provides ethical and reliable overhauls, system designs, system packaging, system installations of air compressors, air blowers and air drying equipment, and vacuum pumps.   We offer complete field repairs in in-shop overhaul service for all major brands of rotary-screw and reciprocating compressors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#69;&#88;&#67;&#79;&#77;&#83;&#69;&#82;&#64;&#65;&#79;&#76;&#46;&#67;&#79;&#77;">TEXCOMSER@AOL.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NZF6WVSEX473">3</a>","RIO STEEL & TOWER, LIMITED PARTNERSHIP","VANCE HAPEMAN","","12017 MITCHELL DR","","ALVARADO","TX","76009-6134","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#97;&#110;&#99;&#101;&#46;&#104;&#97;&#112;&#101;&#109;&#97;&#110;&#64;&#114;&#105;&#111;&#115;&#116;&#101;&#101;&#108;&#46;&#99;&#111;&#109;">vance.hapeman@riosteel.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VKUKPBBF12D8">4</a>","NORTH TEXAS INVESTORS GROUP, INC.","ALTON RUDIN","","12713 WILDCAT WAY N.","","BURLESON","TX","76028-7569","Whitehawk Worldwide provides quality Security, Fire, and Emergency Medical Service’s to a wide range of clients across the US. We ensure that all our service providers are fully state licensed/certified in their fields and service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#46;&#114;&#117;&#100;&#105;&#110;&#64;&#119;&#104;&#105;&#116;&#101;&#104;&#97;&#119;&#107;&#119;&#111;&#114;&#108;&#100;&#119;&#105;&#100;&#101;&#46;&#99;&#111;&#109;">al.rudin@whitehawkworldwide.com</a>","www.whitehawkworldwide.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DKMCJPMKNPF8">5</a>","RELIANT ELEVATOR INSPECTIONS & CONSULTING, LLC","SHARYN FRICKE","","5020 RUNNING BROOK DR","","JOSHUA","TX","76058-5760","We are a WOSB full service elevator inspection and elevator consulting company. Located in North Central Texas with capabilities to work nationwide. We provide ASME, QEI Certified professionals to witness and verify compliance to our private, public, and government clients.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#97;&#114;&#105;&#64;&#114;&#101;&#108;&#105;&#97;&#110;&#116;&#101;&#108;&#101;&#118;&#97;&#116;&#111;&#114;&#105;&#110;&#115;&#112;&#101;&#99;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">shari@reliantelevatorinspections.com</a>","www.reliantelevatorinspection.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J1NWGNWBW571">6</a>","HELPING OPEN PEOPLES EYES INC","CODY CRISP","","619 N MAIN ST","","CLEBURNE","TX","76033-3843","HOPE is a an outpatient treatment center that helps with addiction and substance abuse.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#111;&#100;&#121;&#64;&#116;&#120;&#104;&#111;&#112;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">Cody@txhopeinc.com</a>","http://txhopeinc.org/index.html"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KWLKZGPV3RY5">7</a>","ALAIOLA HEALTHCARE SOLUTIONS, LLC","TERESA USTANIK","","4901 E RENFRO ST","","ALVARADO","TX","76009-8515","Alaiola Healthcare Solutions LLC offers solutions to help customize patient and self-care where chronic wounds needs healing with NPWT, proper irrigating, offloading devices such as mattresses with pressure detection sensors. Alaiola also provides safety and protection with cigarette smoke detectors, voice-activated instructional hand-washing prompters, and sanipulls for bed calls. Alaiola takes pride in offering the top-of-the-line nantechnology cleaners and coatings that are eco-responsible for all substrates and surfaces, including food-safe within kitchens, and fuel-saving for planes/jets. The K2 gun/rifle cleaner and protectant can not be surpassed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#117;&#115;&#116;&#97;&#110;&#105;&#107;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">tustanik1@gmail.com</a>","alaiola.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K5RFHKDN14E7">8</a>","CMN GLOBAL SERVICES, LLC","KAREN PERINI","","2109 WEEPING WILLOW ST","","BURLESON","TX","76028-6622","• CMN Global Services is a Woman, VOSB, SBA owned by Ms. Karen Perini and Mr. Arnold Brannan who have combined 15+ years working directly on contracts in the CENTCOM AOR. • Ms. Perini and Mr. Brannan have worked abroad on numerous US Government contracts since 2009. These have included numerous TFSAFE, TFPOWER, LO OGCAP, BOS-I, KBOSSS and GLASS, ANA/ANP, PEO IWS Acquisition & ILS Service contracts. • Mr. Brannan is a licensed electrician and Program Management certified. • Mr. Brannan has 30 years of Construction Management experience. • Mr. Brannan was instrumental in standing the TFSAFE Program up in Kuwait and CENTCOM AOR in 2016. • Ms. Perini has extensive past proposal, contract and logistics experience with governmental contracts and is CPAA and OSHA certified. • CMN GS brings personal investment to government contracts providing exceptional value in executing programs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#101;&#110;&#46;&#112;&#101;&#114;&#105;&#110;&#105;&#64;&#99;&#109;&#110;&#45;&#103;&#115;&#46;&#99;&#111;&#109;">karen.perini@cmn-gs.com</a>","https://cmn-gs.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LFT5FK5HQGH8">9</a>","S.R. SOLUTIONS, PLLC","CLIFFTON CLARK","","1016 SHANNON DR","","CLEBURNE","TX","76031-0193","To Provide professional Landscaping and Landscape Irrigation services to include Fence Installation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#102;&#102;&#116;&#111;&#110;&#46;&#99;&#108;&#97;&#114;&#107;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cliffton.clark@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMALKQJKKF35">10</a>","COWTOWN CREATIVE, LLC","AMY DAY","","124 S MAIN ST STE 222","","BURLESON","TX","76028-4289","Cowtown Creative offers marketing consulting and implementation support services to include: strategic planning, marketing plans, marketing budgets, website development, website management, social media management, digital advertising, content management, content marketing, graphic design, event management, photography","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#121;&#64;&#99;&#111;&#119;&#116;&#111;&#119;&#110;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#46;&#99;&#111;&#109;">amy@cowtowncreative.com</a>","www.cowtowncreative.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DZBNNM3PA2J5">11</a>","CAUSELABS, PBC","SHERYLE GILLIHAN","","7317 COUNTY ROAD 406","","GRANDVIEW","TX","76050-3489","Strategy, design and development of web apps and websites for socially responsible businesses and programs including nonprofits, social enterprises, B Corps and corporations with a goal of creating positive impact.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#104;&#101;&#114;&#121;&#108;&#101;&#64;&#99;&#97;&#117;&#115;&#101;&#108;&#97;&#98;&#115;&#46;&#99;&#111;&#109;">sheryle@causelabs.com</a>","https://causelabs.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YN6LA166KKA5">12</a>","SANDRA JONES SOCIAL ENTERPRISE LLC","SANDRA JONES","","112 MT VERNON LN","","VENUS","TX","76084-4013","Social Support specializing in job preparation skills training and upstart business creation. SJSE mission is to help establish social services in organizations geared toward making a difference in our communities by activating social change. We aim to provide business development for upstart for-profit and non-profit entities whose desire is to provide programs and activities with social service in mind.Developing, structuring, and strategic planning for upstart non-profit organizations under IRS code section 501 c 3 is our specialty.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#110;&#106;&#111;&#110;&#101;&#115;&#46;&#106;&#111;&#110;&#101;&#115;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">sanjones.jones@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DMZ7TK16WT46">13</a>","MAJOR COMMUNICATIONS INC","MAYRA ORTEGA","","3919 COUNTY ROAD 317","","CLEBURNE","TX","76031-0152","Major Communications specializes in the construction, and maintenance of telecommunications and cellular towers. In addition, we provide disaster recovery services to repair communication lines and transport goods or materials to affected areas.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#121;&#114;&#97;&#64;&#109;&#97;&#106;&#111;&#114;&#99;&#111;&#109;&#109;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">mayra@majorcomminc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KF3WDUKHGMW1">14</a>","JOHN ZAMARIPA","JOHN ZAMARIPA","","101 SE DIAN ST","","BURLESON","TX","76028-5302","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#97;&#121;&#111;&#115;&#97;&#105;&#114;&#46;&#99;&#111;&#109;">john@ayosair.com</a>","www.ayosair.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RU98TQ8E45W7">15</a>","MBLMT INC","MARIUXI BARCCO","","114 JEAN LN","","BURLESON","TX","76028-6149","As a subject matter expert in all health and wellness, MBLMT is dedicated to bring costumers satisfaction to contract its fulfilling.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#98;&#97;&#114;&#99;&#99;&#111;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">mbarcco@yahoo.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=THT7NT1ZEJX4">16</a>","PMR GLOBAL INC","ROSS TAYLOR","","4290 E FM 1187","","BURLESON","TX","76028-7912","PMR Global, Inc., headquartered in Burleson, TX, is an ISO9001 - 2015 AS9100D certified (Woman Owned Small Business) machine shop providing machine parts, sheet-metal fabrication, electronic assemblies, hardware distribution and kitting solutions to our customers across the aerospace, petrochemical and commercial markets. We exceed the highest quality standards by utilizing state of the art American made CNC machines, a fully equipped ESD electronics production and test lab, and rigorous quality controls. We have overseas production to support higher volume applications, while maintaining AS9100 quality standards and protecting the intellectual property of all our customers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#115;&#115;&#46;&#116;&#97;&#121;&#108;&#111;&#114;&#64;&#112;&#109;&#114;&#103;&#108;&#111;&#98;&#97;&#108;&#46;&#99;&#111;&#109;">ross.taylor@pmrglobal.com</a>","www.pmrglobal.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PRJNPHLGXJL8">17</a>","LEX & DREA LIMITED LIABILITY COMPANY","AKIN AKINYOADE","","6953 PRAIRIESIDE TRL","","VENUS","TX","76084-3764","Lex & Drea LLC is a trusted contractor specializing in Project Management and procurement services. With a dedicated team of professionals, we offer comprehensive solutions in various areas, including administrative management facility support services, physical distribution and logistics consulting, environmental consulting, commercial printing, trucking, freight services, courier and express delivery, and management consulting services. Our mission is to deliver exceptional results and exceed our clients' expectations by providing innovative and efficient solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#107;&#105;&#110;&#98;&#111;&#108;&#97;&#115;&#116;&#107;&#115;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">Akinbolastks@outlook.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 4.085&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

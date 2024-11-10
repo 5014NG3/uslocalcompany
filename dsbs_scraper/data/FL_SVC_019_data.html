@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile address is in county code 019 of FL;<br/>
+the profile location is in: Florida;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.86 seconds and 1.93 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 41 
+(of 41 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GLW3ULR2FKC3">1</a>","AVIATION RECRUITING, LLC","SHARON BALLGAE","CEO","2696 COUNTRY SIDE DR","","FLEMING ISLAND","FL","32003-4951","Aviation Recruiting, LLC (ARL) is a full-service recruiting company specializing in the Executive, Management, and Technical staffing needs of the Aviation, Aerospace, and Transportation Industries, worldwide.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#98;&#97;&#108;&#108;&#103;&#97;&#101;&#64;&#97;&#118;&#105;&#97;&#116;&#105;&#111;&#110;&#114;&#101;&#99;&#114;&#117;&#105;&#116;&#105;&#110;&#103;&#46;&#110;&#101;&#116;">sballgae@aviationrecruiting.net</a>","http://www.aviationrecruiting.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=X4MNLYWNC4C8">2</a>","SUNCOAST INDUSTRIAL TESTING SERVICES INC.","DANIEL WEHBY","President","80 INDUSTRIAL LOOP N STE 6A","","ORANGE PARK","FL","32073-6263","Electrical switchgear testing and maintenance. Acceptance testing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#104;&#98;&#121;&#115;&#105;&#115;&#64;&#115;&#117;&#110;&#99;&#111;&#97;&#115;&#116;&#105;&#110;&#100;&#46;&#99;&#111;&#109;">wehbysis@suncoastind.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=U4TVWNEK81K4">3</a>","GOLDEN, WEISE AND ASSOCIATES, LLC","CLIFFORD WEISE","","91 BRANSCOMB RD","STE 10","GREEN COVE SPRINGS","FL","32043-7222","Firing range design and safety services.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#105;&#102;&#102;&#111;&#114;&#100;&#46;&#119;&#101;&#105;&#115;&#101;&#64;&#103;&#119;&#45;&#97;&#46;&#99;&#111;&#109;">clifford.weise@gw-a.com</a>","http://www.gw-a.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CJ8BECHFQMR5">4</a>","CERTIFIED TECH TRAINERS, INC.","ALLEN KEELE","President","1004 GREEN PINE CIR","","ORANGE PARK","FL","32065-2565","CISSP Certified Information Systems Security Professional Custom Training Instructor led training CD-Rom based instructor led training","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#108;&#101;&#110;&#46;&#107;&#101;&#101;&#108;&#101;&#64;&#99;&#101;&#114;&#116;&#105;&#102;&#105;&#101;&#100;&#105;&#110;&#102;&#111;&#115;&#101;&#99;&#46;&#99;&#111;&#109;">allen.keele@certifiedinfosec.com</a>","https://www.certifiedinfosec.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=E7HFJDL7BWX7">5</a>","REMILNET, LLC","SARA SLETTEBO","President","4226 EAGLE LANDING PKWY","","ORANGE PARK","FL","32065-2631","ReMilNet, an EDWOSB and WOSB, is a leading small business with a targeted focus on efficiency and effectiveness. We provide full lifecycle services, solutions, and training in the areas of Acquisition Management, C6ISR, Cybersecurity and Program Management. From BCAT programs through localized customer developed solutions, ReMilNet supports the evaluation and design of new systems, through deployment and sustainment lifecycle. ReMilNet's extensive C6ISR support contributes to the design, training, implementation, and sustainment of new technologies across the globe. From evaluating new technologies to sustaining existing systems, ReMilNet has been providing cradle to grave cybersecurity support for more than 18 years. ReMilNet’s application of best practices help customers maximize limited resources, improve reporting, reduce risk, enhance communications, and increase performance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#114;&#97;&#64;&#114;&#101;&#109;&#105;&#108;&#110;&#101;&#116;&#46;&#99;&#111;&#109;">sara@remilnet.com</a>","http://www.remilnet.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T5X2XELZ7BG4">6</a>","CLEAR SCIENCE, INC","BRUCE FORD","","7435 STATE ROAD 21","SUITE A","KEYSTONE HEIGHTS","FL","32656-9301","Advanced knowledge of climate systems (e.g., climate change; climatology data analytics) with the ability to couple powerful data science/Big Data, visualization and custom software solutions. Advanced experience working with model (climate, meteorology, oceanography, earth science) output, dataset preparation (GRIB2, NetCDF, HDF5) and display. For example, CSI built the Navy's enterprise Climate analysis tool, the Advanced Climate Analysis and Forecast (ACAF) system. Expertise in Cesiumjs, Openlayers, Leaflet and other web-emebled mapping libraries. Development team ready to ensure your success. Software design and implementation. Need help optimizing your business/data/planning with climate dynamics? We can help.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#117;&#99;&#101;&#64;&#99;&#108;&#101;&#97;&#114;&#115;&#99;&#105;&#101;&#110;&#99;&#101;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">bruce@clearscienceinc.com</a>","ClearScienceInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YWECENYCDT97">7</a>","RATCLIFF CONSTRUCTION INC","PAUL RATCLIFF","","24B INDUSTRIAL LOOP E","STE 166","ORANGE PARK","FL","32073-6209","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#114;&#97;&#116;&#99;&#108;&#105;&#102;&#102;&#64;&#114;&#97;&#116;&#99;&#108;&#105;&#102;&#102;&#99;&#111;&#110;&#115;&#116;&#114;&#117;&#99;&#116;&#105;&#111;&#110;&#106;&#97;&#120;&#46;&#99;&#111;&#109;">pratcliff@ratcliffconstructionjax.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QKFLKMDN4ZX9">8</a>","JIMCO SITE SERVICES, INC.","KRISTI SMITH","","909 LEONARD C TAYLOR PKWY","","GREEN COVE SPRINGS","FL","32043-8336","demolition, land clearing, site prep, ponds, bulkheads, interior demo, debris grinding, hauling, tree removal","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#75;&#82;&#73;&#83;&#84;&#73;&#64;&#74;&#73;&#77;&#67;&#79;&#83;&#73;&#84;&#69;&#83;&#69;&#82;&#86;&#73;&#67;&#69;&#83;&#46;&#67;&#79;&#77;">KRISTI@JIMCOSITESERVICES.COM</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QKJ5AHLME5F4">9</a>","ZAC RYAN APPRAISAL SERVICES, INC.","ZAC RYAN","","782 ARTHUR MOORE DR","","GREEN COVE SPRINGS","FL","32043-9509","Our appraisal firm specializes in the valuation of acreage tracts of all types and sizes. The geographic area typically covered extends throughout Florida, Georgia, and South Carolina.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#122;&#97;&#99;&#64;&#102;&#111;&#114;&#101;&#115;&#116;&#101;&#110;&#118;&#105;&#114;&#111;&#110;&#109;&#101;&#110;&#116;&#46;&#99;&#111;&#109;">zac@forestenvironment.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CZ5FSKL414J3">10</a>","ALTERNATE ENERGY TECHNOLOGIES, L.L.C.","TARA PRIETO","","1345 ENERGY COVE CT","","GREEN COVE SPRINGS","FL","32043-4307","AET is the top manufacturers of flat plate solar thremal collectors in the U.S. comprised of the highest quality materials. We heat water within structures and pools. Instead of producing energy, we offset the energy that would have been consumed.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#97;&#114;&#97;&#64;&#97;&#101;&#116;&#115;&#111;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">tara@aetsolar.com</a>","http://www.aetsolar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NSD2F5HGDPY5">11</a>","MOBRO MARINE, INC","TOM HOPKINS","","606 LEONARD C TAYLOR PKWY","","GREEN COVE SPRINGS","FL","32043-8300","Construction equipment rentals, barge rentals, crane rentals, marine towing, marine salvage, heavy lifts","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#104;&#111;&#112;&#107;&#105;&#110;&#115;&#64;&#109;&#111;&#98;&#114;&#111;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">thopkins@mobromarine.com</a>","mobromarine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DT2QX4XUTGU3">12</a>","HORRANGI BUSINESS SOLUTIONS LLC","REGINALD HENDRICKS","","2563 SPRING MEADOWS DR","","MIDDLEBURG","FL","32068-8246","A technology partner in supported of the Government. specilizes in Computer systems facilities management, Operation services, Data processing, Facilities management and operation services, computer systems or data processing support services, Project management, cost control, Asset Protection, supply chain management, defining IT strategy","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#82;&#72;&#101;&#110;&#100;&#114;&#105;&#99;&#107;&#115;&#64;&#104;&#111;&#114;&#114;&#97;&#110;&#103;&#105;&#46;&#99;&#111;&#109;">RHendricks@horrangi.com</a>","https://horrangi.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=N2LQGSHBTMG9">13</a>","DR. KYLE D. ABSHIRE & DR. JAMES R. HOFFMAN, P.A.","JAMES HOFFMAN","","905 PARK AVE","","ORANGE PARK","FL","32073-4101","Examination and treatment of patients in the offices of Optometists providing care and optical goods for the completion of their treatment options","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#80;&#97;&#114;&#107;&#64;&#79;&#114;&#97;&#110;&#103;&#101;&#80;&#97;&#114;&#107;&#69;&#121;&#101;&#67;&#101;&#110;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">Park@OrangeParkEyeCenter.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FXTDZMGL1N79">14</a>","HOLLING ENTERPRISES, LLC","MARCUS HOLLING VI","","1005 BUNKER AVE","","GREEN COVE SPRINGS","FL","32043-8346","Aviation operations and maintenance services, training services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#104;&#111;&#108;&#108;&#105;&#110;&#103;&#64;&#104;&#111;&#108;&#108;&#105;&#110;&#103;&#101;&#110;&#116;&#101;&#114;&#112;&#114;&#105;&#115;&#101;&#115;&#46;&#99;&#111;&#109;">mholling@hollingenterprises.com</a>","http://www.hollingenterprises.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PNA7CHJJRDC1">15</a>","A. N. WATT CONSULTING ENGINEERS, LLC","ALAN WATT","","2243 BIRDWOOD DR","","ORANGE PARK","FL","32073-5339","Consulting Engineering Firm providing mechanical, plumbing and fire protection engineering services, commissioning services and general consulting services, generally in support of Federal Government clients on projects across the country.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#97;&#110;&#64;&#97;&#110;&#119;&#99;&#101;&#46;&#99;&#111;&#109;">alan@anwce.com</a>","anwce.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DGNHQTTPEYK4">16</a>","PRECISION TOWER SYSTEMS LLC","MARK BUNTON","","167 PARKSIDE AVE","","ORANGE PARK","FL","32065-7214","Broadcast Tower design, manufacture, maintenance, repair, and installation. Cell Phone tower manufacture, maintenance, repair, and installation. Power structures manufacture, maintenance,repair and installation, antenna installation, maintenance and service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#98;&#117;&#110;&#116;&#111;&#110;&#64;&#112;&#116;&#115;&#45;&#116;&#111;&#119;&#101;&#114;&#115;&#46;&#99;&#111;&#109;">mbunton@pts-towers.com</a>","www.pts-towers.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KNBCN9NBWYF6">17</a>","NARCORPS SPECIALTIES, LLC","ALYSSA BURR","","417 STOWE AVE STE C","","ORANGE PARK","FL","32073-5580","NARCORPS Specialties, LLC (NARCORPS) is a Certified Woman Owned Small Business (WOSB) founded in 2016. Project Management, Real World Training & Roleplaying Services. Preparing, Managing and Delivering flexible, high quality and realistic Role Player scenarios. Corporate knowledge and vast scenario development implementation experience. Implement cost effective and efficient, start-to-finish training approach. Experienced Program & Project Management teams, Quality Control inspectors and administrative staff. Strict controls regarding technical performance, quality, schedule and costs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#108;&#121;&#115;&#115;&#97;&#46;&#98;&#117;&#114;&#114;&#64;&#110;&#97;&#114;&#99;&#111;&#114;&#112;&#115;&#46;&#99;&#111;&#109;">alyssa.burr@narcorps.com</a>","https://narcorps.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EVU6D68BCGF3">18</a>","PRAETORIAN DEFENSE, INC.","MARY RIZZO","","7465 STATE ROAD 21","","KEYSTONE HEIGHTS","FL","32656-9301","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#109;&#97;&#105;&#108;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">defensemail1@gmail.com</a>","http://www.praetoriandefense.org"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=UNELE6WN67W9">19</a>","LEADING EDGE AEROSPACE SOLUTIONS, LLC","KARL YEAKEL","","3343 TETTERSALL DR","","GREEN COVE SPRINGS","FL","32043-9204","Aerospace Tooling Engineering Services","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#121;&#101;&#97;&#107;&#101;&#108;&#107;&#64;&#99;&#111;&#109;&#99;&#97;&#115;&#116;&#46;&#110;&#101;&#116;">yeakelk@comcast.net</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JE4NZ1JLSX67">20</a>","DCMWARE INC","RACHEL WESEMAN","","1528 VIRGILS WAY","STE 8","GREEN COVE SPRINGS","FL","32043-3781","AccuRoute and Brooktrout implementation and management specialists.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#114;&#64;&#100;&#99;&#109;&#119;&#97;&#114;&#101;&#46;&#99;&#111;&#109;">ar@dcmware.com</a>","dcmware.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F2R8ANJ29ZW6">21</a>","CITIZEN'S HIGH SCHOOL, INC.","ANDREW HERD","","1590 ISLAND LN STE 44","","FLEMING ISLAND","FL","32003-4409","MISSION STATEMENT icon ACCREDITATION icon TESTIMONIALS icon BLOG icon SCHOOL AWARDS icon HISTORY icon NEWSLETTER icon STUDENT SUCCESS icon LEADERSHIP OUR MISSION The Mission of Citizens’ High School is to provide students a quality high school diploma through distance education with a well rounded academic foundation, leading to social and economic mobility","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#104;&#101;&#114;&#100;&#64;&#99;&#105;&#116;&#105;&#122;&#101;&#110;&#115;&#104;&#105;&#103;&#104;&#115;&#99;&#104;&#111;&#111;&#108;&#46;&#99;&#111;&#109;">aherd@citizenshighschool.com</a>","www.CitizensHighSchool.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F6BAQJKCB6B6">22</a>","ICT ULTIMATE SOLUTIONS LLC","JOSEPH CATUDAL","","3545 OGLEBAY DRIVE","","GREEN COVE SPRINGS","FL","32043-8061","Identifying, developing, and supporting customer requirements and relationships with DoD, Joint, Service, Unified Command and Federal and Civilian CIOs and their customers focused on ICT enterprise networks and services, cyber security; data center and service support consolidation; disaster recovery; virtualization; cloud computing; mobile computing, governance, network and technology convergence and innovative C5ISR solutions.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#46;&#99;&#97;&#116;&#117;&#100;&#97;&#108;&#64;&#105;&#99;&#116;&#117;&#108;&#116;&#105;&#109;&#97;&#116;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">tom.catudal@ictultimatesolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YKLANWHRU9L4">23</a>","GLOWACKI ENGINEERING CO","EDMUND GLOWACKI","","1835 EASTWEST PKWY STE 10","","FLEMING ISLAND","FL","32003-5310","Specialize in naval architecture and marine engineering. Additonal expertise in oil, gas and fuel designs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#100;&#64;&#103;&#108;&#111;&#119;&#97;&#99;&#107;&#105;&#101;&#110;&#103;&#105;&#110;&#101;&#101;&#114;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">ed@glowackiengineering.com</a>","www.glowackiengineering.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TP19BEGQY584">24</a>","ESSENTIAL BOOKKEEPING SOLUTIONS, LLC","DAWN BRADY","","1929 PARK AVE","","ORANGE PARK","FL","32073-4914","Essential Bookkeeping Solutions provides full-time, part-time or interim CFO Services as well as business advisory services for small businesses.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#97;&#119;&#110;&#64;&#101;&#98;&#115;&#113;&#98;&#46;&#99;&#111;&#109;">dawn@ebsqb.com</a>","https://www.essentialbookkeepingsolutions.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Z6N1NGC5YXP9">25</a>","8-KOI, INC.","INGA YOUNG","","534 PARK AVE STE 3","","ORANGE PARK","FL","32073-3109","We deliver service excellence across four divisions: Healthcare, Technical & Administrative, Construction, and Design Engineering. 8-koi is a certified 8(a) EDWOSB headquartered in Merritt Island, FL. We are passionate about solving problems and dependably completing projects on time and within budget. We thoughtfully stand ready to help you meet your goals in MEP and structural engineering, building and renovation, SETA, procurement and acquisition, and medical staffing and supplies.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#121;&#111;&#117;&#110;&#103;&#64;&#56;&#45;&#107;&#111;&#105;&#46;&#99;&#111;&#109;">iyoung@8-koi.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FZK2H2LAW519">26</a>","FORTITUDE CREATIVE AGENCY INC","BRENDA MOSLEY","","3135 TOWER OAKS DR","","ORANGE PARK","FL","32065-2548","For many years Fortitude Creative Agency has developed strategic communication and outreach campaign plans for a diverse clientele.We've customized solutions for each client based on their target goal.FCA understands that every need,and every situation is unique;we do not believe in the one-shoe-fits all concept.It is your story, your vision, your journey,and we'll be honored to help you get there!","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#114;&#101;&#110;&#100;&#97;&#46;&#102;&#111;&#114;&#116;&#105;&#116;&#117;&#100;&#101;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">brenda.fortitudecreative@gmail.com</a>","www.fortitudecreativeagency.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KVJFJRW2VZY9">27</a>","ELITE MEDICAL SYSTEMS, LLC","MARK POOLOS","","2224 TRAILWOOD DR","","FLEMING ISLAND","FL","32003-4928","“Elite Medical Systems (EMS), LLC provides medical devices and medical supplies to healthcare providers, with a focus on the Veteran Administration (VA) healthcare systems. EMS is a jointly-owned Service Disabled Owned Veteran Small Business (SDVOSB, pending).EMS provides FDA approved, clinically tested medical devices and supplies to referring clinical providers.” EMS LLC is offering two FDA approved VA contracted products; Natrox; a topical oxygen therapy. Additionally, TheramaZone; a powerful and compact device that uses thermoelectric technology to provide heating and cooling therapy to most anatomical locations, and for a myriad of clinical modalities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#101;&#108;&#105;&#116;&#101;&#109;&#101;&#100;&#105;&#99;&#97;&#108;&#115;&#121;&#115;&#46;&#99;&#111;&#109;">info@elitemedicalsys.com</a>","https://elitemedicalsys.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TQJFD3K47D59">28</a>","CCI FACILITY CONTRACTORS, LLC","JOHN MORRISON","","1857 WELLS RD STE 220","","ORANGE PARK","FL","32073-2340","CCI Facility Contractors, LLC is a small, disadvantaged, 8(a) company and subsidiary of Bristol Bay Construction Holdings LLC, a holding company of Bristol Bay Native Corporation. All BBCH subsidiaries have full access to numerous resources including common executive leadership, administrative support systems, and institutional knowledge based on industry experience, supporting our team in providing clients with a best-value approach to cost-effective, innovative, and sustainable solutions. Current and past work is primarily in construction projects for the federal government. Our construction work focuses on facility sustainment, restoration, and modernization and new construction projects in the $1M to $30M range.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#111;&#114;&#114;&#105;&#115;&#111;&#110;&#64;&#98;&#98;&#99;&#104;&#45;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">dmorrison@bbch-llc.com</a>","https://www.cci-alliance.com/home/cci-facility-contractors-llc-4/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PG5HJM2QQBK1">29</a>","HARMONBK LLC","ANTONETTE HARMON","","573 OAKLEAF PLANTATION PKWY UNIT 821","","ORANGE PARK","FL","32065-3610","Nationwide janitorial, cleaning and portable sanitation rental services are designed to provide business and customer-focused facility solutions. HarmonBK LLC dba In A Pinch Cleaning Service is a full service provider of Portable toilets-Standard, ADA restroom units, handwashing sinks, 2, 4, 8 stall restroom trailer with waste removal and cleaning services as needed by our customers. Inclusive sanitizing and tissue products. Commercial office, warehouse and restroom cleaning with efficient janitorial services. Our local, state, and federal Minority Women and Business Certification, MBE, USDOT DBE, and federal WOSB Certification are complemented by general and restroom cleaning certifications. CAGE: 8TE43 DUNS: 117786480 NAICS: 561720, 562991","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#105;&#110;&#97;&#112;&#105;&#110;&#99;&#104;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@inapinchcleaning.com</a>","https://inapinchcleaning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HEZGLG4K6ZX9">30</a>","SRB INTERNATIONAL INNOVATION LLC","SUMMER BURRELL","","844 FLOYD CIR N","","ORANGE PARK","FL","32073-3802","SRB International Innovation, LLC is a minority, women-owned general contracting business with certification in Lean Six Sigma Black Belt Continuous Process Improvement and international project Management. We have worked in the United State Military supporting CONUS and OCONUS Department of Defense programs and processes. We have experience working in Japan with the Japan Maritime Self-Defense Force in Joint Military initiatives, applying appropriate protocols and rules of engagement when working with sensitive data. We also offer operations project management and personnel training and are the certified by the USMC as Lean Six Sigma Yellow Belt Instructors. We have years of experience in training adult learners Project Management courses as Adjunct Professors and teachers in the public school system. We focus on development of communities education resources, infrastructural construction, and various support during disaster emergencies. We have staff with secret clearance.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#117;&#109;&#109;&#101;&#114;&#64;&#105;&#110;&#110;&#111;&#118;&#97;&#116;&#105;&#111;&#110;&#115;&#114;&#98;&#105;&#105;&#46;&#99;&#111;&#109;">summer@innovationsrbii.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V8LSYGBTNJ98">31</a>","MILLER HOME HEALTH AGENCY INC","BETSY MILLER","","1532 KINGSLEY AVE STE 105","","ORANGE PARK","FL","32073-4536","Home Health Services, Companionship, Home Helper, Personal Care, Respite, Transportation, services to Elderly in their homes.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#101;&#116;&#115;&#121;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#104;&#111;&#109;&#101;&#105;&#110;&#115;&#116;&#101;&#97;&#100;&#46;&#99;&#111;&#109;">betsy.miller@homeinstead.com</a>","www.homeinstead.com/193"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=P8EXVHG1EBW3">32</a>","CLEAN TOUCH JANITORIAL SERVICES, LLC","OLIVIA RICHARD","","2936 COLD CREEK CT","","GREEN COVE SPRINGS","FL","32043-8627","CLEAN TOUCH JANITORIAL SERVICES LLC. WOSB and MBE certified vendor providing service in site preparation,janitorial services, car wash, construction cleaning, commercial cleaning, office cleaning, move-in & move-out cleanings, multifamily residential cleaning,and residential cleaning.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#108;&#101;&#97;&#110;&#116;&#111;&#117;&#99;&#104;&#106;&#97;&#110;&#115;&#101;&#114;&#118;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">cleantouchjanserv@gmail.com</a>","cleantouchjanserv.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J5CLG7E6LW57">33</a>","CLASS MANAGEMENT GROUP LLC","CARLA LOMACK","","573 OAKLEAF PLANTATION PKWY UNIT 548","","ORANGE PARK","FL","32065-3604","Class Management Group has over twenty years of experience as a professional service provider offering administrative, business, and educational support through technical skill in training, consultation, and business service center operations.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#67;&#65;&#82;&#76;&#65;&#64;&#67;&#76;&#65;&#83;&#83;&#77;&#71;&#77;&#84;&#71;&#82;&#79;&#85;&#80;&#46;&#67;&#79;&#77;">CARLA@CLASSMGMTGROUP.COM</a>","WWW.CLASSMGMTGROUP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=F251LEN4F349">34</a>","OUT OF THE BOX PUBLIC RELATIONS INC","GINA BLUME","","2489 COUNTRY SIDE DR","","FLEMING ISLAND","FL","32003-4952","Accredited full-service public relations firm with engineering background providing effective communication with your stakeholders. Services include communications planning, brand messaging, marketing strategy, community engagement, plain language communication, copy editing, proofreading, content for newsletters, graphic design, marketing materials, presentation development, non-trade show event planning and coordination, video conference planning and support.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#117;&#116;&#111;&#102;&#116;&#104;&#101;&#98;&#111;&#120;&#110;&#106;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">outoftheboxnj@gmail.com</a>","https://www.outoftheboxnj.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KLZZDWSK6J35">35</a>","INNOVATIVE BUSINESS MANAGEMENT LLC","MELANIE HARRISON","","823 MOSSWOOD CHASE ST","","ORANGE PARK","FL","32065-5541","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#98;&#109;&#97;&#110;&#97;&#103;&#101;&#109;&#101;&#110;&#116;&#50;&#49;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">ibmanagement21@gmail.com</a>","www.ibm21.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=XT3KL5BJSY56">36</a>","HR STRONG LLC","TALITHA BEVERLY","","2419 DUNDEE CT W","","ORANGE PARK","FL","32065-6389","Human Resources Consulting firm","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#84;&#97;&#108;&#105;&#116;&#111;&#105;&#64;&#111;&#117;&#116;&#108;&#111;&#111;&#107;&#46;&#99;&#111;&#109;">Talitoi@outlook.com</a>","www.hrstrong.biz"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=C1BQGMJV6U81">37</a>","AGILE VECTOR LLC","CHRISTINE MOFFITT","","1763 EAGLE WATCH DR","","FLEMING ISLAND","FL","32003-8642","We are a full-service training and administrative support company, sourcing subject matter experts with recent, relevant talent/skill sets into key positions, projects and teams. Our team tackles critical client problems, identifies opportunities to improve current practices and develops and implements new, innovative, customer-focused process solutions and training. We are uniquely positioned to successfully provide services across CONUS and abroad, representing 25+ years working for and with the US government and our Nation’s Warfighters.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#109;&#111;&#102;&#102;&#105;&#116;&#116;&#64;&#97;&#103;&#105;&#108;&#101;&#45;&#118;&#101;&#99;&#116;&#111;&#114;&#46;&#99;&#111;&#109;">cmoffitt@agile-vector.com</a>","https://www.agile-vector.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CGTSR3SLM753">38</a>","NATIONAL TRAINING INC","TALMAGE MILLER","","5660 COUNTY ROAD 209 S","","GREEN COVE SPRINGS","FL","32043-4953","National Training is approved by the State of Florida and the Department of Highway Safety and Motor Vehicles as a coeducational career school located in Green Cove Springs, FL. We are the proud owners of America’s only 350-acre CDL training grounds which allows students to practice driving in a safe environment, on a private highway specifically designed for learning to drive big rigs. Our instructors are the best in the business and have more than a century of experience as truck drivers and CDL instructors. Employers throughout the extensive truck driving industry throughout the US have ranked National Training’s CDL courses as some of the best in the country, and have placed us in the top tier of all truck driving schools making us your preferred training partner to begin your truck driving career.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#110;&#97;&#116;&#105;&#111;&#110;&#97;&#108;&#116;&#114;&#97;&#105;&#110;&#105;&#110;&#103;&#115;&#99;&#104;&#111;&#111;&#108;&#115;&#46;&#99;&#111;&#109;">tmiller@nationaltrainingschools.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=DY33SG2QF2Q1">39</a>","ORSTO INVESTMENTS LLC","SAMUEL ORTIZ JR","","3064 ZEYNO DR","","MIDDLEBURG","FL","32068-1715","We provide pressure washing and soft washing capabilities on a multitude of exterior surfaces for residential and commercial clients. This will include building exteriors, roof surfaces, flat surfaces (driveways, sidewalks, balconies, garages, parking lots, and more), fences, and fleet vehicles. Our focus is always to provide our clients with superior services at a fair and honest price.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#105;&#110;&#102;&#111;&#64;&#109;&#105;&#100;&#100;&#108;&#101;&#98;&#117;&#114;&#103;&#101;&#120;&#116;&#101;&#114;&#105;&#111;&#114;&#99;&#108;&#101;&#97;&#110;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">info@middleburgexteriorcleaning.com</a>","www.middleburgexteriorcleaning.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CEG1A3MHDT83">40</a>","YOUR DECLUTTER COACH, LLC","WENDYANN ZANDERS","","724 TIMBERMILL LN","","ORANGE PARK","FL","32065-2232","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#119;&#101;&#110;&#100;&#121;&#64;&#121;&#111;&#117;&#114;&#100;&#101;&#99;&#108;&#117;&#116;&#116;&#101;&#114;&#99;&#111;&#97;&#99;&#104;&#46;&#99;&#111;&#109;">wendy@yourdecluttercoach.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FY4NGMBN4LU8">41</a>","C. Y. VIRTUAL SOLUTIONS, LLC","CHARLOTTE LINGARD-YOUNG","","4427 VISTA POINT LN","","ORANGE PARK","FL","32065-2607","C.Y.Virtual solutions provides virtual administrative solutions to various industries to include general, corporate transcription, focus group, medical workshops, seminars and other transcription services, the purchase of supplies and gift cards for your office or business, document and content creation, website design, K-12 Education Consulting and curriculum development, and dance instruction.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#103;&#97;&#114;&#100;&#121;&#64;&#121;&#97;&#104;&#111;&#111;&#46;&#99;&#111;&#109;">lingardy@yahoo.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 3.808&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>

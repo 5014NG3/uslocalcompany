@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en-US" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>SBA - SBA Search Results</title>
+<link     href="/gls/dsp_choosefunction.cfm" accesskey="1" rel="Home" title="Home (Return to GLS Choose Function)">
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.dtv.css?CachedAsOf=2012-06-20T22:15"/><!-- local code -->
+<link     rel="stylesheet" type="text/css" media="all" href="/library/css/sba.strict.css?CachedAsOf=2013-09-20T18:55"/>
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 -->
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- local code -->
+<noscript>
+    <link rel="stylesheet" type="text/css" media="all" href="/library/css/sba.noscript.css?CachedAsOf=2010-10-14T19:23"/>
+</noscript>
+<script>
+var	gSlafDevTestProd					= "Test";
+var	gSlafDevTestProdInd					= "1";
+var	gSlafInlineBlock					= "inline-block";
+var	gSlafInlineTable					= "inline-table";
+var	gSlafMSIE6or7						= false;
+var	gSlafRenderingMode					= "dtv";
+</script>
+<!--[if lte IE 7]>
+<link     href="/library/css/sba.msie.css?CachedAsOf=2013-09-24T16:11"          rel="stylesheet" type="text/css" media="all"/>
+<script src="/library/javascripts/html5/html5shiv.js?CachedAsOf=2010-09-30T19:39:04"></script>
+<noscript>
+    <link href="/library/css/sba.msie.noscript.css?CachedAsOf=2010-10-12T12:04" rel="stylesheet" type="text/css" media="all"/>
+</noscript>
+<script>
+gSlafInlineBlock						= "inline";
+gSlafInlineTable						= "inline";
+gSlafMSIE6or7							= true;
+</script>
+<![endif]--> 
+<link  href="/library/images/sbalookandfeel/favicon.ico"                                  rel="icon" type="image/vnd.microsoft.icon"/> 
+<link  href="/library/css/sbalookandfeel.strict.css?CachedAsOf=2013-04-27T00:38"          rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/mainnav.strict.css?CachedAsOf=2012-06-29T14:07"                 rel="stylesheet" type="text/css" media="all"/> 
+<link  href="/library/css/jquery.mobile/sba.dtv.css?CachedAsOf=2012-06-20T22:15"          rel="stylesheet" type="text/css" media="all"/> 
+<script src="/library/javascripts/DumpObject.js?CachedAsOf=2013-10-10T18:30"></script> 
+<script src="/library/javascripts/jquery/jquery.js?CachedAsOf=2012-09-21T15:37"></script><!-- 1.8.2 --> 
+<script src="/library/javascripts/sbalookandfeel/sbalookandfeel.strict.js?CachedAsOf=2013-10-16T19:23"></script> 
+<script src="/library/javascripts/sbalookandfeel/mainnav.js?CachedAsOf=2010-11-09T17:12"></script>
+<script src="/library/javascripts/jquery/jquery.mobile/sba.jqm.js?CachedAsOf=2013-03-28T16:11"></script><!-- Needed by DoMobileView(). -->
+<!--[if lte IE 9]> 
+<link  href="/library/css/mainnav.msie.pie3d.css?CachedAsOf=2012-06-29T13:24"             rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
+<script>
+gSlafAppNavIsVisible					= false;
+gSlafDebug								= false;
+gSlafRenderingMode						= "dtv"; // "Desktop View"
+gSlafSessionGroupId						= "27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A";
+gSlafSuppressRTE						= false;
+$(document).ready(function				()
+	{
+	MainNavDoThisOnLoad();				// Note, call MainNavDoThisOnLoad BEFORE SlafDoThisOnLoad. 
+	SlafDoThisOnLoad();					// Always.
+	});
+</script>
+<!-- JSInline, begins. -->
+
+<!--
+The following allows search engines to index DSBS profiles, because there isn't any NOFOLLOW in the content. The reason 
+for NOINDEX is that there's no sense in indexing THIS page. That's what the following meta tag is all about: 
+-->
+<meta name="ROBOTS"			content="NOINDEX">
+<script>
+
+function HighlightCurrentRow						()
+	{// If mail-merge is selected, the following does nothing, but also, no harm done: 
+	$("#ProfileTable tr.AlternatingRowBGC4Form0,#ProfileTable tr.AlternatingRowBGC4Form1")
+		.hover(function()
+			{
+			$(this).toggleClass("AlternatingRowBGC4Hover");
+			})
+		.click(function()
+			{
+			$(this).find("td a[name=DUNS]").each(function()
+				{
+				if	(gSlafRenderingMode == "jqm")
+					this.click(); // Hotlink a[name=DUNS] already formulated correctly for jQM, so just use it. 
+				else
+					{
+					top.gFrameIsFullyLoadedAppData	= false;
+					top.SlafSetReadyLightToLoading();
+					top.location.href				= this.href;
+					}
+				});
+			})
+		.each(function()
+			{
+			this.title								= "To view full profile, you may also click anywhere in highlighted row.";
+			});
+	}
+
+if	(gSlafRenderingMode == "jqm")
+	$(document).bind('pageinit', HighlightCurrentRow);
+else // DesktopView
+	$(document).ready			(HighlightCurrentRow);
+
+function JumpToRow									(pStartRow)
+	{
+	document.FirmListForm.StartRow.value			= pStartRow;
+	if	(gSlafRenderingMode !== "jqm")				// Not jQM, therefore, DesktopView, the default:
+		{
+		top.gFrameIsFullyLoadedAppData				= false;
+		top.SlafSetReadyLightToLoading();
+		}
+	document.FirmListForm.submit();
+	}
+
+</script>
+<style>
+#AllowScrollRight
+	{
+	overflow:										auto;
+	}
+#ContactInfo
+	{
+	border:											3px double black;
+	/* Controlling display separately, with inlineblock class. */
+	margin-left:									40px;/* Indentation */
+	padding:										5px;
+	text-align:										left;
+	white-space:									nowrap;/* Controlling wrap explicitly, with br tags. */
+	}
+#EMailOptions
+	{
+	background-color:								#cff;
+	border:											10px outset gray;
+	text-align:										left;
+	}
+#PagingOptions
+	{
+	border:											10px outset gray;
+	text-align:										center;
+	}
+</style>
+
+<!-- JSInline, ends. -->
+<script language="JavaScript" src="/library/javascripts/sbalookandfeel/DoMobileView.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoHelp.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoExit.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoPrint.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoDSBS.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoQuickMarketSearch.js"></script>
+<script language="JavaScript" src="/./javascripts/sbalookandfeel/DoTMOnLine.js"></script>
+<!-- Per GSA instructions, the best place for this script is just before /head: -->
+<script src="/library/javascripts/sbalookandfeel/Federated-Analytics.js"></script>
+</head>
+<body class="dtv"><div class="hide"><!-- Without this div tag, some browsers add whitespace, because form is a block element. -->
+<form name="SlafToggleTextOnlyForm" target="_top" action="/search/dsp_profilelist.cfm?RequestTimeout=180" method="post" onSubmit="
+this.JavaScriptOn.value							= 'Yes';
+return true;
+"><!-- Use of this form is now deprecated. Use SBA Look-and-Feel menu ('question mark menu'), Edit Preferences, instead. -->
+<input type="Hidden" name="JavaScriptOn"		value="No">
+<input type="Hidden" name="SlafToggleTextOnly"	value="Yes">
+</form></div
+><div			id="DivWindow">
+	<div		id="DivMarginT"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginR"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginB"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivMarginL"		onclick="SlafToggleAppData();" title="Maximize data entry region of screen."></div>
+	<div		id="DivEnvelope"><!-- Put the next few greater-thans on subsequent lines to eliminate white space: -->
+		<div	id="DivEnvelopeTop"
+		><div id="DivSkipLinks" class="inlineblock"
+		><a id="LnkSkipNav" title="Skip Navigation" href="#DivAppData" onClick="
+		document.getElementById('DivAppData').focus();	// Focusable because of the tabindex='-1' hack. See DivAppData. 
+		return false;									// Setting focus resets tab order, so don't follow JS-off href. 
+		">Skip Navigation</a>
+		>&nbsp;&nbsp;&nbsp;&nbsp;<a title="Accessibility Options (opens a new window)"
+			href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank">Accessibility Options</a>
+		></div><img src="/library/images/sbalookandfeel/background.bluesteel.png" alt="decorative pattern" border="0"
+		><!-- Entire DivSBALogo is a hotlink (if browser supports it): --><a href="http://www.sba.gov/"
+		><div	id="DivSBALogo"		title="Go To SBA Home Page" role="navigation"
+		><!-- But browser may not support it, so repeat for contents of div too: --><a href="http://www.sba.gov/"
+			><img src="/library/images/sbalookandfeel/sba_logo.sba.png" id="SBALogo" class="Test" alt="Go To SBA Home Page" height="40"></a><!-- logo/hotlink only --></div
+		></a><!-- DivSBALogo and logo/hotlink -->
+		<div	id="DivMainNav"		role="navigation"><div id="DivMainNavButtons">
+			<div id="DivReadyLight" class="ReadyLightLoading">
+				<span title="Please wait. Parts of this page are still loading.">Loading</span>
+			</div>
+			<form name="FormMainNav" action="javascript:void();" method="post" onSubmit="return false;">
+			<!-- (OnSubmit returns false to avoid unnecessary server hit if JavaScript is on.) -->
+			<input type="Hidden" name="TextOnly"			value="No"> 
+<input type="Hidden" name="ExitTo" value="act_exit_search.cfm">
+
+			<div class="inlineblock" style="padding-left:48px;">
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoMobileView(document.FormMainNav);"
+				role="button" style="border:0px;" title="Mobile View">Mobile View</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoPrint(document.FormMainNav);"
+				role="button" style="border:0px;" title="Print">Print</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoExit(document.FormMainNav);"
+				role="button" style="border:0px;" title="Exit">Exit</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoHelp(document.FormMainNav);"
+				role="button" style="border:0px;" title="Help">Help</a></div><br/>
+			<!-- Second row of buttons: -->
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoDSBS(document.FormMainNav);"
+				role="button" style="border:0px;" title="DSBS">DSBS</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoQuickMarketSearch(document.FormMainNav);"
+				role="button" style="border:0px;" title="Quick Market Search">Quick Market Search</a></div>
+			<div class="divmainnavsubmit inlineblock"><a class="mainnavsubmit" href="javascript:top.DoTMOnLine(document.FormMainNav);"
+				role="button" style="border:0px;" title="TM OnLine">TM OnLine</a></div>
+			</div>
+			</form>
+</div>
+
+		</div><!-- DivMainNav -->
+		<div	id="DivAppName"></div><!-- DivAppName just draws 2 vertical lines. -->
+		<div	id="DivAppNameText" class="inlineblock">SBA Search Results</div><!-- DivAppNameText -->
+		</div><!-- DivTopOfEnvelope -->
+		<div	id="DivAppInfo"		class="inthead">
+<div align="center" style="height:100%; width:100%;" class="infodata">
+	SBA Search Results
+</div>
+</div><!-- DivAppInfo -->
+		<div	id="DivAppNav"		class="NoAppNavContents" role="navigation"></div><!-- /DivAppNav -->
+		<div	id="DivAppData"		class="NoAppNavContents" role="main" tabindex="-1">
+<div data-role="content">
+<div data-role="collapsible-set" data-mini="true">
+<div data-role="collapsible"><h3 class="showifjqm">Search Criteria Description</h3>
+<div align="center">
+<p>
+
+
+<font size=+2>Mail-Merge Listing, where</font><br/>
+the firm's business type includes: 1;<br/>
+the profile location is in: Iowa;<br/>
+the profile's status is that of a standard DSBS search;<br/>
+
+
+<p>
+
+</div><!-- /align="center" -->
+
+
+Data validation took 0.00 seconds. 
+The count and search queries took 
+1.09 seconds and 1.10 seconds, respectively.<P>
+
+
+Displaying profiles 1 - 64 
+(of 64 profiles matching criteria): 
+<p>
+</div><!-- /collapsible Search Criteria Description -->
+
+<div id="AllowScrollRight" data-role="collapsible" data-collapsed="false">
+<h3 class="showifjqm">Search Results Detail</h3>
+
+<span style="font-size:10pt;"><pre>"View","Name of Firm","unknown","unknown","Address, line 1","Address, line 2","City","State","Zip","Capabilities Narrative","E-mail Address","WWW Page URL"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=R2GLN4CSZHE9">1</a>","ADVANCED OPTICS INC","WENDY HEIL","MANAGER","110 NE TRILEIN DR STE 4","","ANKENY","IA","50021-2041","Small Woman-Owned manufacturer of custom and precision optical mirrors, windows and otpical flats. Visit us at www.advancedoptics.com or emaill sales@advancedoptics.com for service.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#108;&#101;&#115;&#64;&#97;&#100;&#118;&#97;&#110;&#99;&#101;&#100;&#111;&#112;&#116;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">sales@advancedoptics.com</a>","http://www.advancedoptics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JFFTVZGUJAS4">2</a>","JACKSON D SUMMERS","JACKSON SUMMERS","OWNER","2438 315TH ST","","MISSOURI VALLEY","IA","51555-8059","ENVIRONMENTAL: WETLANDS: DELINEATION, RESTORATION, MITIGATION, CONSTRUCTION; HABITAT RESTORATION; ENDANGERED SPECIES; REMEDIATION, EIS; ENVIRONMENTAL ASSESSMENTS; CONSTRUCTION; ENGINEERING; DESIGN; DREDGING; HYDROSEEDING; HYDROAXE","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#115;&#49;&#48;&#53;&#51;&#52;&#54;&#56;&#64;&#111;&#110;&#101;&#109;&#97;&#105;&#110;&#46;&#99;&#111;&#109;">js1053468@onemain.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SHKVLAPT9JA4">3</a>","HUFFMAN WELDING & MACHINE, INC.","JASON HUFFMAN","","6224 AVENUE O","","FORT MADISON","IA","52627-9533","FABRICATION OF CUSTOM BUILT EQUIPMENT AND PRODUCTION ASSEMBLY LINES FOR GOVERNMENT PRIME CONTRACTORS IN BUILDING AMMUNITION PRODUCING EQUIPMENT. PRECISION MACHINING CAPABILITIES. PROTOTYPE MANUFACTURING. METAL, ALUMINUM, AND STAINLESS STEEL FABRICATORS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#104;&#117;&#102;&#102;&#109;&#97;&#110;&#64;&#104;&#117;&#102;&#102;&#109;&#97;&#110;&#119;&#101;&#108;&#100;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">jhuffman@huffmanwelding.com</a>","http://www.huffmanwelding.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NMV2N4MNEXD5">4</a>","ADVANCED HEAT TREAT CORP","LINDSEY NEWCOMB","PRESIDENT","2825 MIDPORT BLVD","","WATERLOO","IA","50703-9708","Advanced Heat Treat Corp. (AHT) is a recognized leader in providing heat treat services and superior metallurgical solutions to companies across the globe. UltraGlow® Ion (Pulse Plasma) Nitriding is AHT’s signature heat treating process.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#101;&#119;&#99;&#111;&#109;&#98;&#108;&#64;&#97;&#104;&#116;&#99;&#111;&#114;&#112;&#46;&#99;&#111;&#109;">newcombl@ahtcorp.com</a>","HTTP://WWW.AHTCORP.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HDLUML2KLHK5">5</a>","CEMEN TECH, INC.","MARK RINEHART","PRESIDENT","1700 N 14TH ST","","INDIANOLA","IA","50125-1587","DESIGN AND MANUFACTURING OF MIXING OR BLENDING SYSTEMS; MANUFACTURER OF CONCRETE MIXERS AND BIO SOLID MIXERS. **CALL TOLL FREE 800-247-2464**","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#114;&#116;&#115;&#64;&#99;&#101;&#109;&#101;&#110;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">parts@cementech.com</a>","http://www.cementech.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=RB52LJAVTKF5">6</a>","PREMIER SHEEP SUPPLIES LTD","STEPHANIE SEXTON","PRESIDENT","2031 300TH ST","","WASHINGTON","IA","52353-9451","FENCING; SHEARING & CLIPPING EQUIPMENT FOR HORSES, CATTLE, SHEEP, GOATS, ELECTRIC FENCING, HITENSILE FENCING; BREEDING, LAMBING & HANDLING EQUIPMENT FOR SHEEP & GOATS.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#115;&#101;&#120;&#116;&#111;&#110;&#64;&#112;&#114;&#101;&#109;&#105;&#101;&#114;&#49;&#115;&#117;&#112;&#112;&#108;&#105;&#101;&#115;&#46;&#99;&#111;&#109;">ssexton@premier1supplies.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MUENE9145VD8">7</a>","GENOVA TECHNOLOGIES, INC.","KATHY SIMMONS","President","4250 RIVER CENTER CT NE","SUITE A","CEDAR RAPIDS","IA","52402-7547","Genova provides professional IT services and full project lifecycle capabilities such as requirements analysis, software and database development, system and network design and integration, IV&V, project management.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#103;&#101;&#110;&#111;&#118;&#97;&#95;&#99;&#111;&#110;&#116;&#114;&#97;&#99;&#116;&#115;&#64;&#103;&#101;&#110;&#111;&#118;&#97;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">genova_contracts@genovatech.com</a>","https://www.genovatech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HKJ3WFHLKAJ3">8</a>","ZIROUS, INC.","EMILY HOCH","Sales Consultant","1503 42ND ST STE 210","","WEST DES MOINES","IA","50266-1264","Custom Software Development, Oracle database administration. Software development, Application Server implementation, Oracle 10G implementation, JAVA development, WEB development, WEB deployment. Oracle HTML DB Development. Data Warehousing.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#109;&#105;&#108;&#121;&#46;&#104;&#111;&#99;&#104;&#64;&#122;&#105;&#114;&#111;&#117;&#115;&#46;&#99;&#111;&#109;">emily.hoch@zirous.com</a>","http://www.zirous.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GDF6XZHE8DH2">9</a>","GEATER MACHINING AND MANUFACTURING CO.","KEITH DOWNING","President","901 12TH ST NE","","INDEPENDENCE","IA","50644-1016","Contract manufacturer specializing in CNC machining and turning, sheet metal fab and the following secondary finishing and assembling operations: welding, painting, chem. film, silk screening, hdwr. assembly, quality department., and engr. department.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#100;&#111;&#119;&#110;&#105;&#110;&#103;&#64;&#103;&#101;&#97;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">kdowning@geater.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Y4VKCKEHMHP9">10</a>","RACOM CORPORATION","MIKE MILLER","President","201 W STATE ST","","MARSHALLTOWN","IA","50158-5841","Wireless voice & data communications service, equipment,repair, rental,sales,consult, fiber Distribution Center wireless communications, RF Global Positioning ISP Tower leasing Critical Communications, 911 Center, Comm Center","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#46;&#109;&#105;&#108;&#108;&#101;&#114;&#64;&#114;&#97;&#99;&#111;&#109;&#46;&#110;&#101;&#116;">mike.miller@racom.net</a>","http://www.racom.net"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QZ6XND8TKA76">11</a>","SOFTRONICS, LTD.","ROBERT STERNOWSKI","President","1080 E POST RD","STE 1","MARION","IA","52302-5288","Design, build, integration, test and installation of high frequency radio equipment, systems, and software. System analysis for radiowave performance for communications, electronic warfare, and sensors.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#111;&#98;&#115;&#64;&#115;&#111;&#102;&#116;&#114;&#111;&#110;&#105;&#99;&#115;&#108;&#116;&#100;&#46;&#99;&#111;&#109;">bobs@softronicsltd.com</a>","http://www.softronicsltd.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NCR1VLBTRG54">12</a>","DONATECH CORP","PATRICK ADAM","VP of Business Development","2094 185TH ST STE 110","","FAIRFIELD","IA","52556-8758","Mission/Life Critical Engineering (Software, Systems, Hardware), IT, Science, and Miscellaneous Engineering. Maintain a secret clearance with DSS. Specialize in avionics and DoD applications.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#97;&#100;&#97;&#109;&#64;&#100;&#111;&#110;&#97;&#116;&#101;&#99;&#104;&#46;&#99;&#111;&#109;">padam@donatech.com</a>","http://www.donatech.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YGGGPLVSU8Q5">13</a>","AMI PIPE & SUPPLY CO","JOHN ROTHGEB","president","410 JOHNSON ST","","KEOKUK","IA","52632-5442","supplier of industrial and commercial piping products ie. pipe, valves, and fittings","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#104;&#110;&#64;&#97;&#109;&#105;&#112;&#105;&#112;&#101;&#46;&#99;&#111;&#109;">john@amipipe.com</a>","http://www.amipipe.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=PMT6VTKC3CL8">14</a>","MACHINE TOOL ENGINEERING, INC.","KARI UNGS","V/P","2916 HIGHWAY 18","","CHARLES CITY","IA","50616-8810","CNC Machining of various sizes, materials,and complication levels of products; component manufacturing for industry","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#107;&#97;&#114;&#105;&#64;&#103;&#111;&#109;&#116;&#101;&#46;&#99;&#111;&#109;">kari@gomte.com</a>","www.gomte.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=H7ZRKYAYLVT3">15</a>","KUDER INC","DAVID RAWSON","","302 VISIONS PKWY","","ADEL","IA","50003-1632","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#97;&#119;&#115;&#111;&#110;&#100;&#64;&#107;&#117;&#100;&#101;&#114;&#46;&#99;&#111;&#109;">rawsond@kuder.com</a>","https://www.kuder.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=FLWDJQUDCH54">16</a>","AIR CONTROL, INC.","SEAN CONNELL","","80 14TH AVE N","","CLINTON","IA","52732-2928","Products and Services: *API 650 certified tanks *DSM screen boxes *Blow pipe *Cyclones *Spouting *Structural support systems *Hoppers *Custom fabrication *Cut line work stations *Conveyor lines *Line process tables, chutes *Dust collection systems","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#99;&#111;&#110;&#110;&#101;&#108;&#108;&#64;&#97;&#99;&#105;&#102;&#97;&#98;&#114;&#105;&#99;&#97;&#116;&#111;&#114;&#115;&#46;&#99;&#111;&#109;">sconnell@acifabricators.com</a>","www.acifabricators.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJ9CLRUHMTK5">17</a>","PETERSEN MFG. CO.","LEAH VOGT","","2471 HIGHWAY 30","","DENISON","IA","51442-7502","Manufacturers of precast concrete and metal site furniture. Security barriers and large security planters. Product line includes tables, benches, waste receptacles, planters, drinking fountains, bollards, ash urns and custom.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#101;&#97;&#104;&#64;&#112;&#101;&#116;&#101;&#114;&#115;&#101;&#110;&#109;&#102;&#103;&#46;&#99;&#111;&#109;">leah@petersenmfg.com</a>","http://WWW.PETERSENMFG.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JJHCE1SJUTV5">18</a>","KATHLEEN M PARISOT","KATHLEEN PARISOT","owner","1435 BERRYFIELD CT","","BETTENDORF","IA","52722-4563","Provide veterans publications for veterans and their advocates. Annual Book and monthly newsletter.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#112;&#64;&#118;&#101;&#116;&#115;&#105;&#110;&#102;&#111;&#115;&#101;&#114;&#118;&#105;&#99;&#101;&#46;&#99;&#111;&#109;">help@vetsinfoservice.com</a>","www.vetsinfoservice.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M9JUHUM43JC5">19</a>","IOWA FIRE EQUIPMENT CO","DODIE CAUDLE","","2800 DELAWARE AVE","","DES MOINES","IA","50317-3543","We sell and service sprinkler systems and fire extinguishers.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#99;&#97;&#117;&#100;&#108;&#101;&#64;&#105;&#97;&#102;&#105;&#114;&#101;&#46;&#99;&#111;&#109;">dcaudle@iafire.com</a>","www.iafire.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LMN2GL7N51H1">20</a>","ATHENA GTX INC","MARK DARRAH","CEO/General Manager","5900 NW 86TH ST","STE 300","JOHNSTON","IA","50131-2284","Research & Development of medical triage monitoring equipment and sensors. Autonomous Critical Care System - ACCS. manufacturer of WVSM, WI-CAP, Wi-Med miniature wireless vital signs monitor for tracking multiple patients simultaneously. Protective equipment and products for first response teams and telemedicine.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#100;&#97;&#114;&#114;&#97;&#104;&#64;&#97;&#116;&#104;&#101;&#110;&#97;&#103;&#116;&#120;&#46;&#99;&#111;&#109;">mdarrah@athenagtx.com</a>","http://www.athenagtx.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=M65ECMFB3GA7">21</a>","SUNFLOWER ENTERPRISES, INC","CARTER NEWT","President","5 JONES ST STE 2","","DUBUQUE","IA","52001-7674","Marine Construction, General Contracting, Marine Equipment, and Barge Rental","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#110;&#101;&#119;&#116;&#64;&#110;&#101;&#119;&#116;&#109;&#97;&#114;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">cnewt@newtmarine.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LEK8K59L1M47">22</a>","REPUBLIC ELECTRIC COMPANY, LLC","DAN ARENHOLZ","","737 CHARLOTTE ST","","DAVENPORT","IA","52803-5724","Republic is a full line distributor of Electrical and Mechanical products representing 3,500 customers with over 40,000 SKU's. We staff in-house specialists covering Controls, Automation, Power Distribution, and Lighting to name a few.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#114;&#101;&#110;&#104;&#111;&#108;&#122;&#68;&#64;&#114;&#101;&#112;&#117;&#98;&#108;&#105;&#99;&#99;&#111;&#46;&#99;&#111;&#109;">ArenholzD@republicco.com</a>","http://www.republicco.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=CLWLTN3KGLD6">23</a>","INDUSTRIAL LAMINATES NORPLEX, INC","DUSTIN DAVIS","","665 LYBRAND ST","","POSTVILLE","IA","52162-7792","Norplex-Micarta manufactures thermoset laminates in sheets, pre-pregs, rods, molded shapes, and tubes. Norplex-Micarta's composites consist of combinations of a substrate; canvas, paper, fiberglass, or carbon fiber combined with a resin (epoxy, phenolic, silicone, or specialty resin).","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#100;&#97;&#118;&#105;&#115;&#110;&#64;&#110;&#111;&#114;&#112;&#108;&#101;&#120;&#46;&#99;&#111;&#109;">ddavisn@norplex.com</a>","www.norplex-micarta.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LHNGGJTM48K7">24</a>","DESIGN MILL, INC","NATHAN GREINER","","850 WHITE ST","","DUBUQUE","IA","52001-7035","Cutting edge metrology, modeling and engineering design services. Offers data collection and analysis, model creation for visualization and inspection, animation and interactive training, virtual engineering and Learning Mangement Systems.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#116;&#104;&#97;&#110;&#95;&#103;&#114;&#101;&#105;&#110;&#101;&#114;&#64;&#100;&#101;&#115;&#105;&#103;&#110;&#109;&#105;&#108;&#108;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">nathan_greiner@designmillinc.com</a>","http://www.designmillinc.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D673K31BFWK9">25</a>","POWERFILM, INC.","DANIEL STIELER","","1287 XE PL","","AMES","IA","50014-6304","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#115;&#116;&#105;&#101;&#108;&#101;&#114;&#64;&#112;&#111;&#119;&#101;&#114;&#102;&#105;&#108;&#109;&#115;&#111;&#108;&#97;&#114;&#46;&#99;&#111;&#109;">dstieler@powerfilmsolar.com</a>","www.powerfilmsolar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=D7DNAM9US8Y6">26</a>","AMERICAN POWER SYSTEMS, INC.","PHILLIP POTTER","","426 W 2ND ST","","DAVENPORT","IA","52801-1109","APS is a manufacturer of high output alternators for both commercial and military markets. We provide extremely high output, while using factory OEM Cases. We can also design and engineer a solution to fit your special project needs.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#108;&#105;&#112;&#64;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#110;&#112;&#111;&#119;&#101;&#114;&#105;&#110;&#99;&#46;&#99;&#111;&#109;">phillip@americanpowerinc.com</a>","http://www.americanpowerinc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=WJX8XRLTAYT9">27</a>","ACTERRA GROUP INC","BRYAN KOHLER","","220 35TH ST","","MARION","IA","52302-3812","Petroleum Equipment Renewable Energy Tank & Silo Manufacturing Electrical Contracting","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#107;&#111;&#104;&#108;&#101;&#114;&#64;&#97;&#99;&#116;&#101;&#114;&#114;&#97;&#103;&#114;&#111;&#117;&#112;&#46;&#110;&#101;&#116;">bkohler@acterragroup.net</a>","https://www.acterragroup.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KE8ENPQJ1HF7">28</a>","4TOUCH, LLC","DAN MCCARTY","","1555 SE DELAWARE AVE STE R","","ANKENY","IA","50021-4011","QA Graphics delivers high quality custom BAS graphics as well as design services for interactive platforms. Our interactive design team provides a variety of creative services to complement existing marketing and sales strategies. All of our work is completed in-house, with a team comprised of both creative and technical staff, including graphic designers, 3D designers, developers, programmers, architects, and mechanical engineers to ensure we meet the diverse needs of our client base.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#109;&#99;&#99;&#97;&#114;&#116;&#121;&#64;&#113;&#97;&#103;&#114;&#97;&#112;&#104;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">dmccarty@qagraphics.com</a>","http://www.qagraphics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LL6NB4RJHEE7">29</a>","RAMAANCHAR TECHNOLOGIES, INC.","RAMAN ARAVAMUDHAN","","1001 HIGHLAND PARK CIR","","CORALVILLE","IA","52241-9732","Ramaanchar Tech provides Custom Software services delivering full project life cycle activities like Requirements engineering, Project Management, Software Process development, software and database development, Model driven development, Information system planning, Estimation, and Quality assurance","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#117;&#100;&#104;&#97;&#110;&#64;&#114;&#97;&#109;&#97;&#97;&#110;&#99;&#104;&#97;&#114;&#46;&#99;&#111;&#109;">amudhan@ramaanchar.com</a>","http://www.ramaanchar.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JARGBLM4NM54">30</a>","CHENHALLS STAFFING SERVICES, INC.","ROBERT HICKMAN","","2119 E 12TH ST","","DAVENPORT","IA","52803-3706","Chenhall's Staffing Services, is Native Owned and offers Premier Human Resources facility providing complete staff augmentation, Computer Facilities Management Project Management, Commercial Construction Services, Distribution services, Inventory management Services and Call Center Management. Chenhall's is an Indian Economic Enterprise and an Indian Small Business Economic Enterprise.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#105;&#99;&#107;&#109;&#97;&#110;&#64;&#99;&#104;&#101;&#110;&#104;&#97;&#108;&#108;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bhickman@chenhallstaffing.com</a>","https://www.chenhallstaffing.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K528KBA95658">31</a>","QUANTCAD LLC","JENNIFER FLATTE","","1165 OAKES DR","","IOWA CITY","IA","52245-5729","We provide simulation software to emulate device noise in real-world environments. While our emphasis is in quantum technology, we also have the capability to perform optoelectronic device simulations. Our software evaluates semiconductor materials, including the interface and will aid in quantum device design.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#101;&#110;&#110;&#105;&#102;&#101;&#114;&#102;&#108;&#97;&#116;&#116;&#101;&#64;&#113;&#117;&#97;&#110;&#116;&#99;&#97;&#100;&#46;&#99;&#111;&#109;">jenniferflatte@quantcad.com</a>","http://quantcad.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NU4ESW6QXRP4">32</a>","WHEELCHAIR DYNAMICS INC","TIM HAUPERT","","913 PARK ST","","SHELDON","IA","51201-1206","We specialize in patient, home, and vehicle mobility and safety. We provide wheelchair, scooters, lifts, ramps, wheelchair accessible vehicles, and more. We provide service, installation and technical expertise on everything we sell.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#105;&#109;&#64;&#119;&#104;&#101;&#101;&#108;&#99;&#104;&#97;&#105;&#114;&#100;&#121;&#110;&#97;&#109;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">tim@wheelchairdynamics.com</a>","https://www.wheelchairdynamics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=T1NCEJJCVMM3">33</a>","SUELZER OPERATIONS SERVICE LLC","MICHAEL SUELZER","","15 CHERRY LN NE","","IOWA CITY","IA","52240-9110","SOSLLC is a professional services and consulting firm devoted to optimizing operations with the scientific process of transforming data into insight for making better decisions 20-years experience in Biomedical & Healthcare Research, Operations Research, Medical Device and Telecom Quality & Reliability. Certified skills and experience with human and technical process of transforming data into insights:  Analytics Data Analyses, Engineering, and Graphics Optimized Decision Trees and Value Streams Prediction Models, Probability Management, and Simulations Operations Research Quality-Reliability-Risk Management Systems Lean Six Sigma Systems Engineering and Functional Flow Visualizations Compliance with Government Regulations (e.g., 21 CFR Part 830) and International Standards (e.g., ISO 9001, 13485, 14972, 15288, 17025, 24748, & 31000)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#46;&#115;&#117;&#101;&#108;&#122;&#101;&#114;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">michael.suelzer@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V6GRLWCML9M3">34</a>","RIVER CITIES ENGINEERING INC","THOMAS LOUSSAERT","","323 RESEARCH PKWY","","DAVENPORT","IA","52806-7343","Provide exceptional engineering & design services to fulfill the needs of our clients. We are committed to providing the highest level of professionalism, service, project turn-around, quality workmanship all incorporated into industry competitive rates.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#109;&#46;&#108;&#111;&#117;&#115;&#115;&#97;&#101;&#114;&#116;&#64;&#114;&#105;&#118;&#101;&#114;&#99;&#105;&#116;&#105;&#101;&#115;&#46;&#117;&#115;">tom.loussaert@rivercities.us</a>","www.rivercities.us"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=NYNTS25AP9V9">35</a>","RMA ARMAMENT, INC.","BLAKE WALDROP","","22800 DEWEY RD","","CENTERVILLE","IA","52544-8580","RMA Armament is a veteran owned small business manufacturer of ballistic level 4, level 3, level IIIa and SRT protective plates. Our plates are lighter and stronger than any other on the market. We are preparing for sales among government and private buyers alike.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#108;&#97;&#107;&#101;&#64;&#114;&#109;&#97;&#100;&#101;&#102;&#101;&#110;&#115;&#101;&#46;&#99;&#111;&#109;">blake@rmadefense.com</a>","www.rmadefense.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=MC2YEN912K88">36</a>","R3 UNIQ INC","HARI BANDA","","2535 TECH DR","STE 300","BETTENDORF","IA","52722-3278","IT Consulting, Project Outsourcing, Project Management, Systems Programming, Application Development, Hardware, Software Licencing, Computer Peripherals, Cloud Computing, Artificial Intelligence, Machine Learning","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#97;&#114;&#105;&#98;&#97;&#110;&#100;&#97;&#64;&#113;&#117;&#97;&#100;&#121;&#115;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">haribanda@quadyster.com</a>","https://www.quadyster.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=HMA2NBKFALF6">37</a>","Q.C. METALLURGICAL LABORATORY, INC","TODD BLOODSWORTH","","17048 215TH ST","","DAVENPORT","IA","52806-9365","Commercial materials testing laboratory accredited to ISO 17025:2017 and State certified environmental laboratory. QCML provides the following testing and engineering services on metals, polymers and rubber products; mechanical testing, chemical analysis, metallography, weld certification, failure analysis and product testing. State certified environmental testing lab for biodegradable materials, wastewater, drinking water, solid waste and contaminated sites.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#116;&#111;&#100;&#100;&#98;&#64;&#113;&#99;&#109;&#108;&#46;&#99;&#111;&#109;">toddb@qcml.com</a>","www.qcml.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SMZHZ31DN6T3">38</a>","ACT SAFE, L.L.C.","LORNA PUNTILLO","","4121 GORDON DR","","SIOUX CITY","IA","51106-1304","ACT offers Occupational Safety & Health, Environmental and Engineering service provider. Environmental Services: Air Permitting, Contaminant Delineation, Environmental Screens – Lead Based Paint (XRF), Asbestos and Hazardous Material, ESA - Phase I - III, RCRA, SPCC, SWPPP and Stormwater Sampling and Analyses, Environmental Remediation services of non-hazardous and hazardous waste, Groundwater recovery systems (GWR), In-situ mixing of hazardous waste, transportation, and disposal. Soil vapor extraction and air sparging systems, Underground and Aboveground storage tank, inspection, repair, removal, and abandon-in-place. Engineering to include Waterfront Occupational Safety & Health Electric Safety - Lockout / Tagout, Expert Representative & Witness, General / Construction Industries / Maritime, HazMat (OSHA & DOT), HazWOPER, Industrial Hygiene - Air Monitoring, Noise Dosimetry, Control / Ventilation Survey, IAQ, PSM and Training – OSHA Outreach Instructors","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#111;&#114;&#110;&#97;&#64;&#97;&#99;&#116;&#101;&#50;&#115;&#46;&#99;&#111;&#109;">lorna@acte2s.com</a>","https://www.acte2s.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LKCSXKKCFHG4">39</a>","FRONTIER HOSPITALITY GROUP OF ILLINOIS, L.L.C","LAURA CARLINO","","105 W 76TH ST","","DAVENPORT","IA","52806-1340","Holiday Inn Express, provides comfortable lodging at the best prices. We offer complimentary breakfast, Swimming pool, and deluxe suites.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#99;&#97;&#114;&#108;&#105;&#110;&#111;&#64;&#102;&#114;&#111;&#110;&#116;&#105;&#101;&#114;&#104;&#103;&#46;&#99;&#111;&#109;">lcarlino@frontierhg.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=KQDLA3CGX3N3">40</a>","ANKENY HEALTH CARE ENTERPRISES, LLC","CALEB WALTON","","410 NW ASH DR","","ANKENY","IA","50023-1552","Sunny View enjoys a long tradition of excellence within the Ankeny community, and our reputation throughout Central Iowa is impeccable. When you choose Sunny View, you’ll discover more than a residence. You’ll find more than a premier facility. You’ll even find more than a team of dedicated and highly trained nurses and staff. Sunny View is a resident-centered community of care based upon respect for the individual. We are committed to a 360-degree perspective of total health — physical, mental, emotional and spiritual. Personal dignity, the highest standards of medical and residential care, and a compassionate spirit all contribute to the happiness and brighter quality of life enjoyed by every member of our community. Important life transitions don’t have to be difficult. Whether you’re seeking a home with heart or a rehabilitation center that helps you make the most of your recovery, Sunny View is your ideal place.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#99;&#119;&#97;&#108;&#116;&#111;&#110;&#64;&#103;&#115;&#109;&#108;&#116;&#99;&#46;&#99;&#111;&#109;">cwalton@gsmltc.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YD5ZA31DM6J5">41</a>","LAURA L ROACH","LAURA ROACH","","405 SYCAMORE ST","","SABULA","IA","52070-8066","Clients rely on a direct relationship with our team, as DES typically self performs 100% of the delivery to each site. DES has the team, experience, and qualifications to supply high quality material from start to finish. Our experience supplying the government, industrial, and commercial industries, and our strict adherence to quality and safety makes us the right partner for your project","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#100;&#101;&#112;&#111;&#116;&#46;&#101;&#108;&#101;&#99;&#116;&#114;&#105;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">depot.electric@gmail.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=K8Y1GEHS2NA8">42</a>","FIGHTING CHANCE SOLUTIONS LLC","MICHAEL MORGAN","","215 E 2ND ST","","MUSCATINE","IA","52761-4006","Fighting Chance Solutions (FCS), provides door security devices that protect individuals in an active shooter or violent intruder situation by securing the door closer arm found on many doors designed to only lock from the outside. Our door securing devices provide protection against intruders without modification of the door or locking mechanism, independent of the building structure or façade, and are Tested to withstand over 550 ft-lbs of force.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#107;&#101;&#64;&#102;&#105;&#103;&#104;&#116;&#105;&#110;&#103;&#99;&#104;&#97;&#110;&#99;&#101;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">mike@fightingchancesolutions.com</a>","http://fightingchancesolutions.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JC5HJ65XJX51">43</a>","FIREFLY PHOTONICS LLC","MICHAEL JONES","","2500 CROSSPARK RD # E156","","CORALVILLE","IA","52241-4710","We specialize in research and development of mid and long- wave infrared LEDs and lasers and integrating them into sensors, projectors and medical devices.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#114;&#106;&#111;&#110;&#101;&#115;&#64;&#102;&#105;&#114;&#101;&#102;&#108;&#121;&#112;&#104;&#111;&#116;&#111;&#110;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">mrjones@fireflyphotonics.com</a>","fireflyphotonics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=TM2RRN8DCVZ9">44</a>","HORIZON DREAM DESIGN MAKE, LLC","MICHAEL NOLAN","","3116 ALPINE CT","","IOWA CITY","IA","52245-5400","Full service architecture services firm including planning, design, drafting, cost estimation and specification. Design research, interior design, graphic design and product design available.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#105;&#99;&#104;&#97;&#101;&#108;&#64;&#104;&#111;&#114;&#105;&#122;&#111;&#110;&#45;&#97;&#114;&#99;&#104;&#105;&#116;&#101;&#99;&#116;&#117;&#114;&#101;&#46;&#99;&#111;&#109;">michael@horizon-architecture.com</a>","www.horizon-architecture.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LL1TACL6KXS4">45</a>","DARNINGPIXELS, INC","ANDREW VAN FLEET","","402 E 4TH ST","","WATERLOO","IA","50703-5702","Visual Logic is a User Experience design consultancy specializing in making software easy to use. We do so by designing software for humans. Our User Experience (UX) experts include; - Usability Researchers - User Experience Designers - UX Developers - User Testing Experts We design software experiences that help people get their goals accomplished. We have designed software experiences for; - large agriculture machinery companies  - web-application used in farm operation management  - in-vehicle touch screen interface used to control all aspects of the machine - military  - armored vehicles used to detect plastic IED's  - handheld plastic IED detection system  - robotic Gator, driven remotely by soldiers for recon missions - insurance  - designing web-based applications for extreme ease of use by end user Our UX Experts design software experiences that make; - businesses more profitable - brands more attractive - end users feel understood","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#118;&#105;&#115;&#117;&#97;&#108;&#108;&#111;&#103;&#105;&#99;&#103;&#114;&#111;&#117;&#112;&#46;&#99;&#111;&#109;">andy@visuallogicgroup.com</a>","www.VisualLogicUX.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=SAPRLF5ZLKS9">46</a>","CHENHALL SEDONA SOLUTIONS JOINT VENTURE LLC","BOB HICKMAN","","2119 E 12TH ST STE 4","","DAVENPORT","IA","52803-3706","Chenhall's and Sedona Solutions together in this joint venture offer extensive past performance in providing information technology, enterprise level IT services, engineering support services, technical staff augmentation to all levels of government clients including Federal,DoD, State and municipal entities.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#104;&#105;&#99;&#107;&#109;&#97;&#110;&#64;&#99;&#104;&#101;&#110;&#104;&#97;&#108;&#108;&#115;&#116;&#97;&#102;&#102;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">bhickman@chenhallstaffing.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EDDKHZ3MKTA8">47</a>","AABACO HOLDINGS, LIMITED","ROGER BOCKES","","601 E 1ST ST","","GRUNDY CENTER","IA","50638-2047","Manufacturer of New and Re-Manufactured Concrete Paving Equipment. Slip Form Pavers, Form Pavers, Texture Machines, Placer Spreaders, the list goes on! Road Groomer (for gravel roads)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#103;&#101;&#114;&#64;&#104;&#101;&#109;&#112;&#97;&#118;&#105;&#110;&#103;&#46;&#99;&#111;&#109;">roger@hempaving.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=LJD1RVWKAUJ1">48</a>","TINY MAMMOTH GRAPHICS LLC","PHIL WHITING","","175 S 9TH ST","STE 450","WEST DES MOINES","IA","50265-5824","Graphic Design Architectural Interiors Wide Format Printing Environmental Graphic Design Digital Wallcoverings + Murals Privacy & Decorative Window Films Window Graphics Donor + History Walls LED Backlit Signage Fabric + SEG Signage","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#64;&#116;&#105;&#110;&#121;&#109;&#97;&#109;&#109;&#111;&#116;&#104;&#103;&#114;&#97;&#112;&#104;&#105;&#99;&#115;&#46;&#99;&#111;&#109;">phil@tinymammothgraphics.com</a>","www.tinymammothgraphics.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YJ3LN4DZZXC3">49</a>","KNOWLEDGE TECHNOLOGY SOLUTIONS INC","ROBERT LEWIS","","6500 UNIVERSITY AVE","# 205","DES MOINES","IA","50324-1607","Market research doing both qualitative and quantitative as well as hybrid methodologies using artificial intelligence that asks the next questions based on your last response. Able to scale to any project size and meet timelines as short as one week.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#111;&#98;&#101;&#114;&#116;&#46;&#108;&#101;&#119;&#105;&#115;&#64;&#113;&#117;&#101;&#115;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">robert.lewis@quester.com</a>","www.quester.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QGNJKMUQYLJ9">50</a>","VISUAL LOGIC, LLC","ANDREW VAN FLEET","","402 E 4TH ST # 1","","WATERLOO","IA","50703-5702","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#121;&#64;&#118;&#108;&#103;&#117;&#120;&#46;&#99;&#111;&#109;">andy@vlgux.com</a>","www.VisualLogicUX.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=QV71VMZLASK3">51</a>","DOUGLAS MACHINE & ENGINEERING LLC","LORAS SCHAUL","","1721 W 5TH ST","","DAVENPORT","IA","52802-1002","Machining and fabrication of welding and assembly fixtures. Tool and Die work. Jib Mills from 144 inch long and 84 inches wide. Designing capabilities in-house.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#115;&#99;&#104;&#97;&#117;&#108;&#64;&#100;&#111;&#117;&#103;&#45;&#109;&#97;&#99;&#104;&#105;&#110;&#101;&#46;&#99;&#111;&#109;">lschaul@doug-machine.com</a>","www.doug-machine.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZUMWYMH2CQL1">52</a>","SUSTAINABLE ENERGY INC","MARK ROEST","","1835 STAGECOACH TRL","","FAIRFIELD","IA","52556-9033","CTO is a Materials Scientist who invents & will manufacture 1) disruptive battery & solar PV technologies using ceramic semiconductor physics, 2) wind turbines & wind turbine generators, 3) battery-electric vehicles, 4) solar-battery-powered VTOL & STOL aircraft, etc.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#77;&#97;&#114;&#107;&#76;&#82;&#111;&#101;&#115;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">MarkLRoest@gmail.com</a>","https://SustainableEnergyInc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EEMFNCG7F9Y5">53</a>","EVIDENCE & EPIDEMIOLOGY CONSULTING LLC","ANNETTE OCONNOR","","2307 MELROSE AVE","","AMES","IA","50010-4609","Conducts systematic reviews, meta-analysis on a variety of topics, include food production, food safety, nutrition, toxicology, microbiology, animal health, zoonotic diseases, animal welfare, antibiotic use, antibiotic resistance, veterinary science, salmonella, listeria, SARS-Cov-2, campylobacter, beef, dairy, pork, poultry, chicken. We also provide on-line and on-site training and workshops for systematic reviews and meta-analysis.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#111;&#99;&#111;&#110;&#110;&#111;&#114;&#119;&#97;&#108;&#107;&#101;&#114;&#64;&#109;&#115;&#110;&#46;&#99;&#111;&#109;">oconnorwalker@msn.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=V3S6SNRK5VG1">54</a>","COHERENT PHOTON IMAGING, LLC","PETER COLLINS","","2501 N LOOP DR STE 1612","","AMES","IA","50010-8651","We design and manufacture systems capable of conducting large area orientation microscopy analysis to determine, for example, the texture and grain size of advanced materials.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#101;&#116;&#101;&#64;&#97;&#105;&#113;&#97;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">pete@aiqasolutions.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=Q3M2SPS19LV4">55</a>","HADAR MFG., INC.","JOE HADAR","","1515 11TH ST N","","HUMBOLDT","IA","50548-8894","Domestic manufacturer of team sporting goods, primarily covered foam padding and related products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#74;&#111;&#101;&#64;&#104;&#97;&#100;&#97;&#114;&#97;&#116;&#104;&#108;&#101;&#116;&#105;&#99;&#46;&#99;&#111;&#109;">Joe@hadarathletic.com</a>","hadarathletic.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J9LNXT6EVM37">56</a>","SINGLE USE SOLUTIONS LLC","WILLIAM HORNER","","401 E REED ST","","RED OAK","IA","51566-2397","Distributing plant-based bottles (preform/cap)","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#98;&#105;&#108;&#108;&#64;&#115;&#105;&#110;&#103;&#108;&#101;&#45;&#117;&#115;&#101;&#45;&#115;&#111;&#108;&#117;&#116;&#105;&#111;&#110;&#115;&#46;&#99;&#111;&#109;">bill@single-use-solutions.com</a>","WWW.SINGLE-USE-SOLUTIONS.COM"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ZCC3WRWMYVN4">57</a>","PRIME PHYSICIANS PLLC","ADAM JOHNSON","","2800 PIERCE ST STE 414","","SIOUX CITY","IA","51104-3755","Provide medical, clinical, dental, radiological services, temporary physician or other health care provider staffing, lab services, locum tenens, annual physicals, large pool of physicians.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#65;&#100;&#97;&#109;&#46;&#74;&#111;&#104;&#110;&#115;&#111;&#110;&#64;&#112;&#114;&#105;&#109;&#101;&#112;&#104;&#121;&#115;&#105;&#99;&#105;&#97;&#110;&#115;&#46;&#99;&#111;&#109;">Adam.Johnson@primephysicians.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=VP59KABZBP11">58</a>","HOME BASE INSPECTIONS & CODE SERVICES, LLC","AMANDA HARPER","","3805 RIDGE AVE","","SIOUX CITY","IA","51106-1820","","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#109;&#97;&#110;&#100;&#97;&#64;&#104;&#98;&#105;&#99;&#115;&#118;&#115;&#46;&#99;&#111;&#109;">amanda@hbicsvs.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=YYZ5YDTNZTY3">59</a>","KINETIC TECHNOLOGIES LLC","MARK BARGLOF","","500 NORWOOD DR","","ALGONA","IA","50511-1140","Kinetic Technologies is a custom manufacturing business that specializes in highly engineered prototyping, machining and machine building. We can provide small batch, low volume orders with minimal lead times.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#98;&#97;&#114;&#103;&#108;&#111;&#102;&#64;&#107;&#105;&#110;&#101;&#116;&#105;&#99;&#116;&#101;&#99;&#104;&#108;&#108;&#99;&#46;&#99;&#111;&#109;">mbarglof@kinetictechllc.com</a>","www.kinetictechllc.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=ENBAXDLAZMC4">60</a>","GREAT AMERICA WATER, LLC","MATTHEW RANKIN","","2312 STATE HIGHWAY 9","","DECORAH","IA","52101-7827","Great America Water LLC combines proven science-based techniques with innovative technologies to offer scalable services that help solve the most difficult wastewater challenges. Capabilities include eliminating/reducing PFAS, PFOS, PFOA, BOD, COD, TSS, TDS, as well as water with oils, fuel, ammonia, metals, pesticides, herbicides, and many other contaminants. Our focus is on improving the environment with energy efficient systems, repurposing waste, and energy capture. Our patented, proprietary equipment is tailored to the requirement and can eliminate fees/fines by treating PFAS and other highly regulated contaminants to non-detect levels.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#109;&#97;&#116;&#116;&#114;&#97;&#110;&#107;&#105;&#110;&#64;&#103;&#114;&#101;&#97;&#116;&#97;&#109;&#101;&#114;&#105;&#99;&#97;&#119;&#97;&#116;&#101;&#114;&#46;&#99;&#111;&#109;">mattrankin@greatamericawater.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=GMXBHHURMR19">61</a>","STIEFEL ARMS LLC","JOSHUA STIEFEL","","813 E HOWARD ST","","MANCHESTER","IA","52057-1637","We are a manufacturer of firearms specializing in the AR rifle platform. Our goal is to bring a high quality affordable line to the market for Government agencies and the average American citizen.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#116;&#105;&#101;&#102;&#101;&#108;&#97;&#114;&#109;&#115;&#64;&#115;&#116;&#105;&#101;&#102;&#101;&#108;&#97;&#114;&#109;&#115;&#46;&#99;&#111;&#109;">stiefelarms@stiefelarms.com</a>","https://stiefelarms.com"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=J6PFWKHF8GW7">62</a>","THE CREATIVE DIGITAL MARKETER LLC","ANDI FAGEN","","2976 99TH ST","","URBANDALE","IA","50322-5523","Creative DSM is a full service marketing department specializing in data-driven creativity for both online and offline marketing strategies and implementation.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#110;&#100;&#105;&#64;&#99;&#114;&#101;&#97;&#116;&#105;&#118;&#101;&#100;&#115;&#109;&#46;&#99;&#111;&#109;">andi@creativedsm.com</a>",""
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=JUGAPJN5ZHX1">63</a>","ENSISINFO INC.","VENKATAKRISHNA NALLABALLI","","3397 CARRIAGE CT","","MARION","IA","52302-0027","IV&V, Software, Project Management, Independent Verification, Independent validation, verification, validation, testing, design, development, coding, IT Project Management, System Testing, Integration Testing, SAP, Cloud, Azure, AWS, GCP, UML","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#118;&#107;&#109;&#46;&#110;&#101;&#116;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">vkm.net@gmail.com</a>","https://www.ensisinfo.com/"
+"<a name="SAM_UEI" href="/search/dsp_profile.cfm?SAM_UEI=EWN1YJ67XK31">64</a>","APTALOGIC, INC.","LINDA LYNGHOLM","CUST SVC","1111 HYLAND AVE","","AMES","IA","50014-4007","Basic research to develop new biotechnology products.","<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#108;&#105;&#110;&#100;&#97;&#64;&#97;&#112;&#116;&#97;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">linda@aptalogic.com</a>",""
+</pre></span>
+</div><!-- /collapsible Search Results Detail -->
+
+<br/>
+<form name="FirmListForm" action="dsp_profilelist.cfm" data-ajax="false" method="post" onsubmit="
+top.gFrameIsFullyLoadedAppData						= false;
+top.SlafSetReadyLightToLoading();
+">
+<input type="Hidden"	name="StartRow"				value="100000000">
+
+<div align="center">
+
+	No more matches<br/>
+	<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Refine Search">
+	<br/>
+	<div id="EMailOptions" class="inlineblock pad10 nowrap">
+		<input type="Submit" data-inline="true" data-mini="true" name="SubmitButton" value="Save E-mail Addresses for All"><br/>
+		delimited by:<br class="hideifjqm" />
+		<div data-role="controlgroup" data-mini="true">
+			<label><input type="Radio"	name="SaveEmailDelim"		value="s" checked> semi-colon and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="c"> comma and space </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="n"> new line </label><br class="hideifjqm" />
+			<label><input type="Radio"	name="SaveEmailDelim"		value="t"> tab </label><br class="hideifjqm" />
+		</div>
+	</div>
+</div><!-- /align="center" -->
+</form>
+
+
+<!--<p>
+	Please notify SAM if you discover any inaccurate contact information 
+	(address, e-mail address, fax or phone number) in the way most convenient for you: 
+</p>
+<div id="ContactInfo" class="inlineblock">
+	For SAM Customer Service, contact:<br/>
+	<a href="http://www.fsd.gov" target="_blank" title="Opens www.fsd.gov in a new window"
+	>Federal Service Desk</a> (8am - 8pm Eastern Time)<br/>
+	866-606-8220<br/>
+	334-206-7828<br/>
+	DSN: 866-606-8220
+</div>--!>
+
+
+<p><span style="font-size:xx-small;">The structure of this page was last updated 02/01/2013, as part of SBSS 8.1.1.</span></p>
+</div>
+</div><!-- /collapsible-set -->
+</div><!-- /content -->
+
+		</div><!-- DivAppData -->
+		<div	id="DivBotMost" role="navigation">
+			<div id="DivLastModified"><span id="SpanLastModifiedL">Last modified:&nbsp;11/01/2024&nbsp;12:00:00 AM&nbsp;&nbsp;</span><span class="SpanLastModifiedR">SBA Processing:&nbsp; 2.22&nbsp;seconds&nbsp;Version:&nbsp;SBSS 8.1.1<br/>
+			<span id="AppTimeout" title="Estimated time remaining until your session on dsbs.sba.gov times out. (Other SBA servers are not affected.)"
+			role="timer"></span></span></div>		
+			<ul	id="botmostgovlinks">
+					<li><a href="http://connect.sba.gov/Home/Accessibility/" target="_blank">&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&gt;  508 Accessibility  &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;   </a></li>  
+			
+			</ul>
+		
+		</div><!-- DivBotMost -->
+	</div><!-- DivEnvelope -->
+	<!-- Define DivSlafMenuControl after DivEnvelope, and DivSlafMenu after DivSlafMenuControl, for higher z-order. -->
+	<div		id="DivSlafMenuControl" title="Template Menu"></div>
+	<div		id="DivSlafMenu" role="navigation">
+		<a class="menuitem" href="/library/html/sbalookandfeel_help.html"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Template Help</a><br/>
+		<a class="menuitem" href="/library/callbacks/dsp_preferences.cfm?SessionGroupId=27F22AC999744A1BC3419B7CF073DFFE85583CF837609FCE35BB428E7971DD0A"
+			target="_blank" onClick="
+		SlafMenuHide();
+		return true;
+		">Edit Preferences ...</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Print');">Printer-Friendly Print</a><br/>
+		<a class="menuitem" href="javascript:SlafMenuSelect('Show/Hide');">Show/Hide Navigation</a>
+	</div>
+	<div		id="DivAppHidden">
+		<!--
+		Hiding with style="display:none" allows debug display by typing the following URL into the address/location bar: 
+			javascript:alert(gDivAppHidden.style.display="block"); // overlays entire window contents
+			javascript:alert(gDivAppHidden.style.display="none");  // resumes hiding it, revealing previous window contents
+		-->
+		<iframe id="FrmAppHidden" name="AppHidden" src="/library/html/blank.html" 
+			frameborder="0" marginheight="0" marginwidth="0" title="Hidden Frame, sometimes used for server callbacks"
+			width="100%">This application requires a browser that supports IFRAME. Please upgrade your browser.</iframe>
+	</div><!-- DivAppHidden -->
+</div><!-- DivWindow -->
+</body>
+</html>
