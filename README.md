@@ -17,3 +17,9 @@ A web application for searching small businesses in the United States by state a
 - **React** app for the user interface.
 - Uses **React-Bootstrap** for responsive design.
 - **React-Select** is used for state and city selection.
+
+### Instruction:
+- Idk figure what packages you need to install
+- cd into my-app
+- npm start
+
