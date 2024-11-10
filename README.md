@@ -5,7 +5,7 @@ A web application for searching small businesses in the United States by state a
 ## Features:
 
 ### Web Scraper:
-- Scrapes small business data (city/zip code level) from [DSBS](https://dsbs.sba.gov/search/dsp_dsbs.cfm) using Python.
+- Scrapes small business data (city/zip code level) from Small Business Associations(SBA)'s [DSBS](https://dsbs.sba.gov/search/dsp_dsbs.cfm) using Python.
 - Utilizes **BeautifulSoup** to parse HTML data from each page.
 - **Pandas** is used for cleaning and processing the scraped data.
 - Data is stored in an **SQLite** database.
